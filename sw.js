@@ -1,9 +1,10 @@
 /* DramScan service worker — cache powloki aplikacji (dziala offline). */
-const CACHE = "dramscan-v1";
+const CACHE = "bourbon-hunters-v2";
 const ASSETS = [
   "./",
   "./index.html",
   "./manifest.json",
+  "./db/bourbons.json",
   "./icons/icon-192.png",
   "./icons/icon-512.png"
 ];

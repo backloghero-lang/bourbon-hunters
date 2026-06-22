@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="Bourbon Hunters">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
-<title>Bourbon Hunters — skaner whisky i bourbona</title>
+<title>Bourbon Hunters</title>
 <style>
   :root{
     --bg:#100c08; --bg2:#1c150e; --card:#241a10; --card2:#2e2114;
@@ -18,311 +18,478 @@
     --good:#5fc77a; --bad:#e0644a; --new:#d98b3a;
     --shadow:0 10px 30px rgba(0,0,0,.5);
     --serif:Georgia,"Times New Roman",serif;
+    --nav-h:74px;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html,body{margin:0;padding:0}
   body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-    background:radial-gradient(120% 90% at 50% 0%,var(--bg2) 0%,var(--bg) 60%);
-    color:var(--txt);min-height:100vh;min-height:100dvh;
-    padding:env(safe-area-inset-top) env(safe-area-inset-right) calc(env(safe-area-inset-bottom) + 40px) env(safe-area-inset-left);
-    -webkit-font-smoothing:antialiased;}
-  .wrap{max-width:520px;margin:0 auto;padding:16px 16px 0}
-  header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:18px}
-  .brand{display:flex;align-items:center;gap:11px}
-  .logo{width:44px;height:44px;border-radius:12px;background:linear-gradient(145deg,var(--amber2),#8c6322);display:grid;place-items:center;font-size:23px;box-shadow:var(--shadow)}
-  .brand h1{font-family:var(--serif);font-size:18px;margin:0;letter-spacing:1.5px;font-weight:700;line-height:1;text-transform:uppercase}
-  .brand h1 span{color:var(--amber2);display:block;font-size:13px;letter-spacing:3px}
-  .brand p{margin:4px 0 0;font-size:9px;color:var(--muted);letter-spacing:2px;text-transform:uppercase}
-  .lang{display:flex;gap:4px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:3px}
-  .lang button{background:none;border:none;color:var(--muted);font-size:12px;font-weight:700;padding:5px 9px;border-radius:7px;cursor:pointer}
-  .lang button.on{background:var(--amber);color:#241708}
+    background:radial-gradient(130% 80% at 50% 0%,var(--bg2) 0%,var(--bg) 55%);
+    color:var(--txt);min-height:100vh;min-height:100dvh;-webkit-font-smoothing:antialiased;}
+  .app{max-width:520px;margin:0 auto;padding:0 0 calc(var(--nav-h) + env(safe-area-inset-bottom));}
 
-  .hero{background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:20px;padding:22px 18px;text-align:center;box-shadow:var(--shadow)}
+  /* topbar */
+  .topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;
+    padding:calc(env(safe-area-inset-top) + 12px) 16px 12px;
+    background:linear-gradient(180deg,rgba(16,12,8,.96),rgba(16,12,8,.7) 80%,transparent);backdrop-filter:blur(6px)}
+  .tb-brand{display:flex;align-items:center;gap:9px}
+  .tb-logo{width:34px;height:34px;border-radius:9px;background:linear-gradient(145deg,var(--amber2),#8c6322);display:grid;place-items:center;font-size:18px}
+  .tb-brand b{font-family:var(--serif);font-size:15px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700}
+  .tb-brand b span{color:var(--amber2)}
+  .tb-icon{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--card);display:grid;place-items:center;color:var(--amber2);cursor:pointer}
+  .tb-icon svg{width:18px;height:18px}
+
+  /* views */
+  .view{display:none;padding:4px 16px 20px;animation:fade .25s ease}
+  .view.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  /* search */
+  .search{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 14px;margin:6px 0 18px}
+  .search svg{width:18px;height:18px;color:var(--muted);flex:none}
+  .search input{flex:1;background:none;border:none;outline:none;color:var(--txt);font-size:15px}
+  .search input::placeholder{color:var(--muted)}
+
+  .sec-head{display:flex;align-items:center;justify-content:space-between;margin:22px 2px 12px}
+  .sec-head h3{margin:0;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-weight:800}
+  .sec-head a{font-size:12px;color:var(--amber2);font-weight:700;cursor:pointer}
+
+  /* featured carousel */
+  .hscroll{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:6px;margin:0 -16px;padding-left:16px;padding-right:16px}
+  .hscroll::-webkit-scrollbar{display:none}
+  .feat{scroll-snap-align:start;flex:0 0 88%;background:linear-gradient(150deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;gap:14px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .feat .kick{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--amber2);font-weight:800}
+  .feat h4{font-family:var(--serif);font-size:19px;margin:6px 0 4px;line-height:1.15}
+  .feat .sub{font-size:12px;color:var(--muted);margin-bottom:14px}
+  .feat .btn-sm{display:inline-block;background:rgba(0,0,0,.3);border:1px solid var(--amber);color:var(--amber2);font-size:12px;font-weight:800;letter-spacing:.5px;padding:8px 16px;border-radius:10px;text-transform:uppercase;cursor:pointer}
+  .feat .info{flex:1;display:flex;flex-direction:column;justify-content:center}
+  .bottlepic{flex:0 0 84px;border-radius:12px;display:grid;place-items:center;font-size:42px;
+    background:radial-gradient(70% 70% at 50% 30%,rgba(220,184,119,.22),rgba(0,0,0,.25))}
+
+  /* categories */
+  .cats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .cat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 6px;text-align:center;cursor:pointer;transition:transform .08s,border-color .2s}
+  .cat:active{transform:scale(.96)}
+  .cat .ic{width:42px;height:42px;border-radius:50%;margin:0 auto 8px;display:grid;place-items:center;font-size:20px;
+    background:radial-gradient(circle at 50% 35%,rgba(220,184,119,.18),rgba(0,0,0,.25));border:1px solid var(--line)}
+  .cat .lbl{font-size:12px;font-weight:700}
+  .cat .cnt{font-size:10px;color:var(--muted);margin-top:2px}
+
+  /* bottle cards (recently/explore) */
+  .bcard{flex:0 0 130px;scroll-snap-align:start;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;transition:transform .08s}
+  .bcard:active{transform:scale(.97)}
+  .bcard .pic{height:120px;display:grid;place-items:center;font-size:46px;background:radial-gradient(70% 70% at 50% 25%,rgba(220,184,119,.2),rgba(0,0,0,.3))}
+  .bcard .pic img{width:100%;height:100%;object-fit:cover}
+  .bcard .meta{padding:10px}
+  .bcard .bn{font-size:13px;font-weight:800;line-height:1.2;margin-bottom:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:32px}
+  .bcard .bt{font-size:11px;color:var(--amber2);font-weight:700}
+  .bcard .bp{font-size:11px;color:var(--muted);margin-top:2px}
+
+  /* explore grid */
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .grid .bcard{flex:none;width:auto}
+  .chips{display:flex;gap:8px;overflow-x:auto;margin:0 -16px 16px;padding:0 16px 2px}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{flex:none;background:var(--card);border:1px solid var(--line);color:var(--muted);font-size:13px;font-weight:700;padding:8px 14px;border-radius:20px;cursor:pointer;white-space:nowrap}
+  .chip.on{background:var(--amber);color:#241708;border-color:var(--amber)}
+  .empty{color:var(--muted);font-size:13px;text-align:center;padding:30px 10px;line-height:1.6}
+
+  /* detail */
+  .back{display:inline-flex;align-items:center;gap:6px;color:var(--amber2);font-size:14px;font-weight:700;cursor:pointer;margin:6px 0 14px}
+  .back svg{width:16px;height:16px}
+  .dhead{font-family:var(--serif);font-size:24px;font-weight:800;line-height:1.15;margin:0 0 2px}
+  .dtype{font-size:12px;color:var(--amber2);font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .dorigin{font-size:13px;color:var(--muted);margin:2px 0 16px}
+  .verdict{display:flex;align-items:center;gap:14px;background:rgba(0,0,0,.24);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:14px}
+  .score{font-size:34px;font-weight:900;line-height:1;color:var(--gold);min-width:54px;text-align:center}
+  .score small{display:block;font-size:11px;color:var(--muted);font-weight:700;margin-top:4px}
+  .stars{font-size:22px;letter-spacing:2px}
+  .verdict .lbl{font-size:12px;color:var(--muted);font-weight:700;margin-bottom:4px}
+  .verdict .vtxt{font-size:13px;line-height:1.4}
+  .row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .pill{flex:1;min-width:90px;background:rgba(0,0,0,.24);border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}
+  .pill .k{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:700}
+  .pill .v{font-size:14px;font-weight:800;margin-top:3px}
+  .sec-t{font-size:12px;color:var(--amber2);font-weight:800;text-transform:uppercase;letter-spacing:.6px;margin:16px 0 6px}
+  .desc{font-size:14px;line-height:1.65;margin:0 0 10px}
+
+  /* scan */
+  .hero{background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:20px;padding:20px 18px;text-align:center;box-shadow:var(--shadow)}
   .hero .kick{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--amber2);font-weight:800;margin-bottom:6px}
   .hero h2{margin:0 0 6px;font-size:19px;font-family:var(--serif)}
   .hero p{margin:0 0 16px;font-size:13px;color:var(--muted);line-height:1.5}
-
   .shot{width:100%;border:2px dashed var(--line);border-radius:16px;min-height:170px;display:grid;place-items:center;cursor:pointer;background:rgba(0,0,0,.18);overflow:hidden;position:relative}
   .shot .ph{display:grid;place-items:center;gap:8px;color:var(--muted);padding:24px}
   .shot .ph .cam{font-size:40px}
-  .shot .ph small{font-size:12px}
   .shot img{width:100%;display:block;border-radius:14px}
-  .retake{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:9px;padding:6px 10px;font-size:12px;font-weight:700;cursor:pointer;backdrop-filter:blur(4px)}
-
+  .retake{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:9px;padding:6px 10px;font-size:12px;font-weight:700;cursor:pointer}
   .btns{display:flex;gap:10px;margin-top:14px}
-  .btn{flex:1;border:none;border-radius:14px;padding:14px 10px;font-size:15px;font-weight:800;cursor:pointer;transition:transform .08s,opacity .2s;letter-spacing:.3px}
+  .btn{flex:1;border:none;border-radius:14px;padding:14px 10px;font-size:15px;font-weight:800;cursor:pointer;transition:transform .08s,opacity .2s}
   .btn:active{transform:scale(.97)}
   .btn-go{background:linear-gradient(135deg,var(--amber2),#a8761f);color:#241708;box-shadow:var(--shadow)}
   .btn-alt{background:rgba(0,0,0,.25);color:var(--amber2);border:1px solid var(--amber)}
   .btn[disabled]{opacity:.4;cursor:default}
   .note{font-size:11px;color:var(--muted);margin-top:12px;line-height:1.5}
-  .limit{font-size:11px;color:var(--muted);text-align:center;margin-top:10px}
-
-  #result{margin-top:18px;display:none}
-  .card{background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:var(--shadow);margin-bottom:14px}
+  #loading{display:none;text-align:center;padding:24px 0}
+  .spin{width:44px;height:44px;margin:0 auto 14px;border-radius:50%;border:4px solid var(--line);border-top-color:var(--amber2);animation:sp 1s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  #loadtxt{font-size:13px;color:var(--muted)}
+  .err{background:rgba(224,100,74,.12);border:1px solid var(--bad);border-radius:14px;padding:14px;font-size:13px;color:#ffd0c6;margin-top:16px;display:none;line-height:1.5}
   .badge{display:inline-block;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;padding:3px 8px;border-radius:20px;margin-bottom:8px}
   .badge.db{background:rgba(95,199,122,.15);color:var(--good);border:1px solid rgba(95,199,122,.4)}
   .badge.net{background:rgba(217,139,58,.15);color:var(--new);border:1px solid rgba(217,139,58,.4)}
-  .name{font-size:22px;font-weight:800;margin:0 0 2px;line-height:1.2;font-family:var(--serif)}
-  .type{font-size:12px;color:var(--amber2);font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px}
-  .origin{font-size:12px;color:var(--muted);margin-bottom:14px}
-  .prodimg{width:100%;border-radius:12px;margin-bottom:14px}
+  .links{font-size:12px;line-height:1.7}.links a{color:var(--amber);word-break:break-all}
+  .card{background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow);margin-top:16px}
+  .name{font-size:21px;font-weight:800;font-family:var(--serif);margin:0 0 2px}
 
-  .verdict{display:flex;align-items:center;gap:14px;background:rgba(0,0,0,.24);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:14px}
-  .score{font-size:34px;font-weight:900;line-height:1;color:var(--gold);min-width:54px;text-align:center}
-  .score small{display:block;font-size:11px;color:var(--muted);font-weight:700;margin-top:4px}
-  .stars{font-size:23px;letter-spacing:2px;line-height:1}
-  .verdict .lbl{font-size:12px;color:var(--muted);margin-bottom:4px;font-weight:700}
-  .verdict .vtxt{font-size:13px;color:var(--txt);line-height:1.4}
+  .placeholder-view{text-align:center;padding:60px 20px;color:var(--muted)}
+  .placeholder-view .pi{font-size:48px;margin-bottom:14px}
+  .placeholder-view h3{color:var(--txt);font-family:var(--serif);font-size:20px;margin:0 0 8px}
+  .placeholder-view p{font-size:14px;line-height:1.6;margin:0 auto;max-width:300px}
 
-  .row{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
-  .pill{flex:1;min-width:90px;background:rgba(0,0,0,.24);border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}
-  .pill .k{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:700}
-  .pill .v{font-size:14px;font-weight:800;margin-top:3px}
-  .ministars{font-size:13px;letter-spacing:1px}
-
-  .sec-t{font-size:12px;color:var(--amber2);font-weight:800;text-transform:uppercase;letter-spacing:.6px;margin:16px 0 6px}
-  .sec-t:first-child{margin-top:0}
-  .desc{font-size:14px;line-height:1.65;color:var(--txt);margin:0 0 10px}
-  .desc:last-child{margin-bottom:0}
-  .links{font-size:12px;line-height:1.7}
-  .links a{color:var(--amber);word-break:break-all}
-
-  #loading{display:none;text-align:center;padding:26px 0}
-  .spin{width:46px;height:46px;margin:0 auto 14px;border-radius:50%;border:4px solid var(--line);border-top-color:var(--amber2);animation:sp 1s linear infinite}
-  @keyframes sp{to{transform:rotate(360deg)}}
-  #loadtxt{font-size:13px;color:var(--muted);min-height:18px}
-  .err{background:rgba(224,100,74,.12);border:1px solid var(--bad);border-radius:14px;padding:14px;font-size:13px;color:#ffd0c6;margin-top:16px;display:none;line-height:1.5}
-
-  footer{text-align:center;font-size:11px;color:var(--muted);margin:24px 0 8px;line-height:1.6}
+  /* bottom nav */
+  .nav{position:fixed;left:0;right:0;bottom:0;z-index:40;height:calc(var(--nav-h) + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);
+    background:linear-gradient(180deg,rgba(28,21,14,.96),rgba(16,12,8,.99));border-top:1px solid var(--line);
+    display:flex;align-items:center;justify-content:space-around;max-width:520px;margin:0 auto}
+  .nav button{background:none;border:none;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;font-weight:700;cursor:pointer;padding:8px 6px;flex:1;letter-spacing:.3px}
+  .nav button svg{width:23px;height:23px}
+  .nav button.on{color:var(--amber2)}
+  .nav .scanbtn{flex:0 0 auto;position:relative;top:-16px}
+  .nav .scanbtn .ring{width:58px;height:58px;border-radius:50%;background:linear-gradient(145deg,var(--amber2),#a8761f);display:grid;place-items:center;box-shadow:0 6px 18px rgba(0,0,0,.5);border:4px solid var(--bg)}
+  .nav .scanbtn .ring svg{width:26px;height:26px;color:#241708}
+  .nav .scanbtn span{margin-top:2px;color:var(--amber2)}
+  footer{text-align:center;font-size:11px;color:var(--muted);margin:24px 0 6px;line-height:1.6}
   footer a{color:var(--amber)}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <div class="brand">
-      <div class="logo">&#129346;</div>
-      <div>
-        <h1>Bourbon<span>Hunters</span></h1>
-        <p data-i18n="motto">Discover &middot; Track &middot; Hunt</p>
-      </div>
+<div class="app">
+  <div class="topbar">
+    <div class="tb-brand">
+      <div class="tb-logo">&#129346;</div>
+      <b>Bourbon&nbsp;<span>Hunters</span></b>
     </div>
-    <div class="lang">
-      <button data-lang="pl">PL</button>
-      <button data-lang="en">EN</button>
-    </div>
-  </header>
-
-  <div class="hero">
-    <div class="kick" data-i18n="kick">Skaner butelek</div>
-    <h2 data-i18n="heroTitle">Skanuj butelke, poznaj jej wartosc</h2>
-    <p data-i18n="heroDesc">Zrob zdjecie etykiety. Hunter sprawdzi baze, a gdy trzeba - dopyta sieci.</p>
-
-    <div class="shot" id="shot">
-      <div class="ph" id="placeholder">
-        <div class="cam">&#128247;</div>
-        <strong data-i18n="tapShoot">Dotknij, aby zrobic zdjecie</strong>
-        <small data-i18n="tapHint">lub wybrac z galerii</small>
-      </div>
-    </div>
-    <input type="file" id="file" accept="image/*" capture="environment" hidden>
-
-    <div class="btns">
-      <button class="btn btn-go" id="goRate" disabled data-i18n="btnRate">&#11088; Ocena</button>
-      <button class="btn btn-alt" id="goAnalyze" disabled data-i18n="btnAnalyze">&#128270; Analiza AI</button>
-    </div>
-    <p class="note" data-i18n="priceNote">Ceny i oceny orientacyjne. Pij odpowiedzialnie. 18+</p>
-    <div class="limit" id="limit"></div>
+    <div class="tb-icon" id="langToggle" title="PL/EN"><b style="font-size:12px" id="langLbl">PL</b></div>
   </div>
 
-  <div id="loading">
-    <div class="spin"></div>
-    <div id="loadtxt">Rozpoznaje etykiete...</div>
-  </div>
-  <div class="err" id="err"></div>
-  <div id="result"></div>
+  <!-- HOME -->
+  <section class="view active" id="view-home">
+    <div class="search" id="homeSearch">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+      <input type="text" id="homeSearchInput" data-i18n-ph="searchPh" placeholder="Szukaj bourbona lub destylarni..." readonly>
+    </div>
 
-  <footer>
-    <span data-i18n="vibe">Vibe-coded z Claude &middot; projekt weekendowy</span><br>
-    <a href="https://www.linkedin.com/in/dariusz-maslyk" target="_blank">Dariusz Maslyk</a>
-  </footer>
+    <div class="sec-head"><h3 data-i18n="featured">Polecane</h3></div>
+    <div class="hscroll" id="featuredRow"></div>
+
+    <div class="sec-head"><h3 data-i18n="byCat">Przeglądaj wg kategorii</h3><a id="catAll" data-i18n="viewAll">Zobacz wszystkie</a></div>
+    <div class="cats" id="catGrid"></div>
+
+    <div class="sec-head"><h3 data-i18n="recent">Ostatnio dodane</h3><a id="recentAll" data-i18n="viewAll">Zobacz wszystkie</a></div>
+    <div class="hscroll" id="recentRow"></div>
+
+    <footer>
+      <span data-i18n="vibe">Vibe-coded z Claude · projekt weekendowy</span><br>
+      <a href="https://www.linkedin.com/in/dariusz-maslyk" target="_blank">Dariusz Masłyk</a>
+    </footer>
+  </section>
+
+  <!-- EXPLORE -->
+  <section class="view" id="view-explore">
+    <div class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+      <input type="text" id="exploreSearchInput" data-i18n-ph="searchPh" placeholder="Szukaj bourbona lub destylarni...">
+    </div>
+    <div class="chips" id="exploreChips"></div>
+    <div class="grid" id="exploreGrid"></div>
+  </section>
+
+  <!-- DETAIL -->
+  <section class="view" id="view-detail">
+    <span class="back" id="detailBack"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg> <span data-i18n="back">Wstecz</span></span>
+    <div id="detailBody"></div>
+  </section>
+
+  <!-- SCAN -->
+  <section class="view" id="view-scan">
+    <div class="hero">
+      <div class="kick" data-i18n="kick">Skaner butelek</div>
+      <h2 data-i18n="heroTitle">Skanuj butelkę, poznaj jej wartość</h2>
+      <p data-i18n="heroDesc">Zrób zdjęcie etykiety. Hunter sprawdzi bazę, a gdy trzeba — dopyta sieci.</p>
+      <div class="shot" id="shot">
+        <div class="ph" id="placeholder"><div class="cam">&#128247;</div><strong data-i18n="tapShoot">Dotknij, aby zrobić zdjęcie</strong><small data-i18n="tapHint">lub wybrać z galerii</small></div>
+      </div>
+      <input type="file" id="file" accept="image/*" capture="environment" hidden>
+      <div class="btns">
+        <button class="btn btn-go" id="goRate" disabled data-i18n="btnRate">⭐ Ocena</button>
+        <button class="btn btn-alt" id="goAnalyze" disabled data-i18n="btnAnalyze">🔎 Analiza AI</button>
+      </div>
+      <p class="note" data-i18n="priceNote">Ceny i oceny orientacyjne. Pij odpowiedzialnie. 18+</p>
+    </div>
+    <div id="loading"><div class="spin"></div><div id="loadtxt">Rozpoznaję etykietę...</div></div>
+    <div class="err" id="err"></div>
+    <div id="scanResult"></div>
+  </section>
+
+  <!-- COLLECTION -->
+  <section class="view" id="view-collection">
+    <div class="placeholder-view"><div class="pi">&#129347;</div><h3 data-i18n="collTitle">Twoja kolekcja</h3><p data-i18n="collSoon">Wkrótce: zapis zeskanowanych butelek, ulubione i notatki. Budujemy to w kolejnym etapie.</p></div>
+  </section>
+
+  <!-- PROFILE -->
+  <section class="view" id="view-profile">
+    <div class="placeholder-view"><div class="pi">&#129337;</div><h3 data-i18n="profTitle">Profil łowcy</h3><p data-i18n="profSoon">Wkrótce: statystyki, odznaki i ustawienia. Na razie rozejrzyj się po bazie i przeskanuj butelkę.</p></div>
+  </section>
 </div>
+
+<nav class="nav" id="bottomNav">
+  <button data-view="home" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></svg><span data-i18n="navHome">Start</span></button>
+  <button data-view="explore"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg><span data-i18n="navExplore">Odkrywaj</span></button>
+  <button data-view="scan" class="scanbtn"><span class="ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 8V5a1 1 0 011-1h3M16 4h3a1 1 0 011 1v3M20 16v3a1 1 0 01-1 1h-3M8 20H5a1 1 0 01-1-1v-3"/><circle cx="12" cy="12" r="3"/></svg></span><span data-i18n="navScan">Skanuj</span></button>
+  <button data-view="collection"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3.5" y="4" width="7" height="16" rx="1.2"/><rect x="13.5" y="4" width="7" height="16" rx="1.2"/></svg><span data-i18n="navColl">Kolekcja</span></button>
+  <button data-view="profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4.5 20c.8-3.6 4-5.5 7.5-5.5S18.7 16.4 19.5 20"/></svg><span data-i18n="navProfile">Profil</span></button>
+</nav>
 
 <script>
 /* ========= KONFIGURACJA ========= */
 const WORKER_URL = "https://bourbon-hunters.darekmaslyk.workers.dev";
+const DB_URL = "db/bourbons.json";
+const FEATURED_IDS = ["blanton-s-single-barrel","elijah-craig-barrel-proof","weller-12","four-roses-small-batch","wild-turkey-rare-breed"];
 /* ================================ */
 
 const I18N = {
-  pl:{
-    motto:"Discover · Track · Hunt", kick:"Skaner butelek",
-    heroTitle:"Skanuj butelke, poznaj jej wartosc",
-    heroDesc:"Zrob zdjecie etykiety. Hunter sprawdzi baze, a gdy trzeba - dopyta sieci.",
-    tapShoot:"Dotknij, aby zrobic zdjecie", tapHint:"lub wybrac z galerii",
-    btnRate:"⭐ Ocena", btnAnalyze:"🔎 Analiza AI", retake:"Zmien zdjecie",
+  pl:{ searchPh:"Szukaj bourbona lub destylarni...", featured:"Polecane", byCat:"Przeglądaj wg kategorii", viewAll:"Zobacz wszystkie", recent:"Ostatnio dodane",
+    explore:"Odkrywaj", back:"Wstecz", all:"Wszystkie", proof:"proof", from:"od",
+    kick:"Skaner butelek", heroTitle:"Skanuj butelkę, poznaj jej wartość", heroDesc:"Zrób zdjęcie etykiety. Hunter sprawdzi bazę, a gdy trzeba — dopyta sieci.",
+    tapShoot:"Dotknij, aby zrobić zdjęcie", tapHint:"lub wybrać z galerii", btnRate:"⭐ Ocena", btnAnalyze:"🔎 Analiza AI", retake:"Zmień zdjęcie",
     priceNote:"Ceny i oceny orientacyjne. Pij odpowiedzialnie. 18+",
-    vibe:"Vibe-coded z Claude · projekt weekendowy",
-    ldId:"Rozpoznaje etykiete...", ldDb:"Sprawdzam baze...", ldNet:"Pytam sieci o recenzje...", ldPrice:"Sprawdzam ceny...", ldHist:"Szukam historii destylarni...",
-    valLbl:"Jakosc / Cena", quality:"Jakosc", price:"Cena (orient.)",
-    distillery:"Destylarnia", region:"Region", mashbill:"Mash bill", abv:"Moc",
-    descT:"Opis", verdictT:"Werdykt", historyT:"Historia", linksT:"Linki", notesT:"Profil smaku", sourcesT:"Zrodla",
-    fromDb:"Z bazy", fromNet:"Nowosc - z sieci",
-    noWorker:"Brak konfiguracji WORKER_URL w index.html.",
-    notBottle:"Hunter nie widzi tu butelki whisky. Zrob wyrazne zdjecie etykiety i sprobuj jeszcze raz.",
-    errGeneric:"Cos poszlo nie tak. Sprobuj ponownie za chwile.",
-    errRetry:"Gemini chwilowo przeciazony. Daj mu sekunde i kliknij jeszcze raz.",
-    errLimit:"Wykorzystano dzienny limit zapytan. Wroc jutro.",
-    remaining:"Pozostalo zapytan dzis: "
-  },
-  en:{
-    motto:"Discover · Track · Hunt", kick:"Bottle scanner",
-    heroTitle:"Scan a bottle, learn its worth",
-    heroDesc:"Snap the label. Hunter checks the database first, and asks the web only when needed.",
-    tapShoot:"Tap to take a photo", tapHint:"or pick from gallery",
-    btnRate:"⭐ Rating", btnAnalyze:"🔎 AI Analysis", retake:"Change photo",
+    ldId:"Rozpoznaję etykietę...", ldDb:"Sprawdzam bazę...", ldNet:"Pytam sieci o recenzje...", ldPrice:"Sprawdzam ceny...", ldHist:"Szukam historii destylarni...",
+    valLbl:"Jakość / Cena", quality:"Jakość", price:"Cena (orient.)", distillery:"Destylarnia", region:"Region", mashbill:"Mash bill", abv:"Moc",
+    descT:"Opis", historyT:"Historia", linksT:"Linki", notesT:"Profil smaku", sourcesT:"Źródła", fromDb:"Z bazy", fromNet:"Nowość — z sieci", category:"Kategoria",
+    notBottle:"Hunter nie widzi tu butelki whisky. Zrób wyraźne zdjęcie etykiety i spróbuj jeszcze raz.",
+    errGeneric:"Coś poszło nie tak. Spróbuj ponownie za chwilę.", errRetry:"Gemini chwilowo przeciążony. Daj mu sekundę i kliknij jeszcze raz.",
+    vibe:"Vibe-coded z Claude · projekt weekendowy", explore_t:"Odkrywaj",
+    navHome:"Start", navExplore:"Odkrywaj", navScan:"Skanuj", navColl:"Kolekcja", navProfile:"Profil",
+    collTitle:"Twoja kolekcja", collSoon:"Wkrótce: zapis zeskanowanych butelek, ulubione i notatki. Budujemy to w kolejnym etapie.",
+    profTitle:"Profil łowcy", profSoon:"Wkrótce: statystyki, odznaki i ustawienia. Na razie rozejrzyj się po bazie i przeskanuj butelkę.",
+    emptyCat:"Brak pozycji w tej kategorii (na razie). Dodamy więcej!", scanAdd:"Nie ma w bazie? Zeskanuj ją w zakładce Skanuj.",
+    catBourbon:"Bourbon", catRye:"Rye", catTenn:"Tennessee", catWheat:"Wheated", catScotch:"Scotch", catWorld:"Świat" },
+  en:{ searchPh:"Search bourbon or distillery...", featured:"Featured", byCat:"Browse by category", viewAll:"View all", recent:"Recently added",
+    explore:"Explore", back:"Back", all:"All", proof:"proof", from:"from",
+    kick:"Bottle scanner", heroTitle:"Scan a bottle, learn its worth", heroDesc:"Snap the label. Hunter checks the database first, and asks the web only when needed.",
+    tapShoot:"Tap to take a photo", tapHint:"or pick from gallery", btnRate:"⭐ Rating", btnAnalyze:"🔎 AI Analysis", retake:"Change photo",
     priceNote:"Prices and ratings are approximate. Drink responsibly. 18+",
-    vibe:"Vibe-coded with Claude · a weekend project",
     ldId:"Reading the label...", ldDb:"Checking the database...", ldNet:"Asking the web for reviews...", ldPrice:"Checking prices...", ldHist:"Digging up distillery history...",
-    valLbl:"Quality / Price", quality:"Quality", price:"Price (approx.)",
-    distillery:"Distillery", region:"Region", mashbill:"Mash bill", abv:"ABV",
-    descT:"Description", verdictT:"Verdict", historyT:"History", linksT:"Links", notesT:"Tasting notes", sourcesT:"Sources",
-    fromDb:"From database", fromNet:"New - from the web",
-    noWorker:"WORKER_URL not set in index.html.",
+    valLbl:"Quality / Price", quality:"Quality", price:"Price (approx.)", distillery:"Distillery", region:"Region", mashbill:"Mash bill", abv:"ABV",
+    descT:"Description", historyT:"History", linksT:"Links", notesT:"Tasting notes", sourcesT:"Sources", fromDb:"From database", fromNet:"New — from the web", category:"Category",
     notBottle:"Hunter sees no whisky bottle here. Take a clear photo of the label and try again.",
-    errGeneric:"Something went wrong. Please try again shortly.",
-    errRetry:"Gemini is briefly overloaded. Give it a second and tap again.",
-    errLimit:"Daily request limit reached. Come back tomorrow.",
-    remaining:"Requests left today: "
-  }
+    errGeneric:"Something went wrong. Please try again shortly.", errRetry:"Gemini is briefly overloaded. Give it a second and tap again.",
+    vibe:"Vibe-coded with Claude · a weekend project", explore_t:"Explore",
+    navHome:"Home", navExplore:"Explore", navScan:"Scan", navColl:"Collection", navProfile:"Profile",
+    collTitle:"Your collection", collSoon:"Coming soon: save scanned bottles, favourites and notes. We build this in the next stage.",
+    profTitle:"Hunter profile", profSoon:"Coming soon: stats, badges and settings. For now, browse the database and scan a bottle.",
+    emptyCat:"No items in this category (yet). More coming!", scanAdd:"Not in the database? Scan it in the Scan tab.",
+    catBourbon:"Bourbon", catRye:"Rye", catTenn:"Tennessee", catWheat:"Wheated", catScotch:"Scotch", catWorld:"World" }
 };
 
-function detectLang(){
-  const s=localStorage.getItem("bh_lang"); if(s==="pl"||s==="en") return s;
-  const nav=(navigator.language||navigator.userLanguage||"en").toLowerCase();
-  return nav.indexOf("pl")===0?"pl":"en";
-}
-let lang=detectLang(), imgData=null, imgMime="image/jpeg", busy=false;
+const CATS = [
+  {key:"bourbon", i:"catBourbon", emoji:"🥃"},
+  {key:"rye", i:"catRye", emoji:"🌾"},
+  {key:"tennessee", i:"catTenn", emoji:"🎵"},
+  {key:"wheated", i:"catWheat", emoji:"🌿"},
+  {key:"scotch", i:"catScotch", emoji:"🏴"},
+  {key:"world", i:"catWorld", emoji:"🌍"}
+];
+
+function detectLang(){ const s=localStorage.getItem("bh_lang"); if(s==="pl"||s==="en") return s; const n=(navigator.language||"en").toLowerCase(); return n.indexOf("pl")===0?"pl":"en"; }
+let lang=detectLang(), DB=[], curCat="all";
 function t(k){ return (I18N[lang]&&I18N[lang][k])||I18N.pl[k]||k; }
+function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function starStr(n){ n=Math.max(0,Math.min(5,Math.round(n||0))); return "★★★★★".slice(0,n)+"☆☆☆☆☆".slice(0,5-n); }
+
+function catOf(b){
+  const ty=(b.type||"").toLowerCase();
+  if(ty.indexOf("wheated")>=0) return "wheated";
+  if(ty.indexOf("rye")>=0) return "rye";
+  if(ty.indexOf("tennessee")>=0) return "tennessee";
+  if(ty.indexOf("scotch")>=0) return "scotch";
+  if(ty.indexOf("bourbon")>=0) return "bourbon";
+  return "world";
+}
 
 function applyLang(){
   document.documentElement.lang=lang;
   document.querySelectorAll("[data-i18n]").forEach(function(el){ const k=el.getAttribute("data-i18n"); if(I18N[lang][k]) el.textContent=I18N[lang][k]; });
-  document.querySelectorAll(".lang button").forEach(function(b){ b.classList.toggle("on", b.getAttribute("data-lang")===lang); });
+  document.querySelectorAll("[data-i18n-ph]").forEach(function(el){ const k=el.getAttribute("data-i18n-ph"); if(I18N[lang][k]) el.placeholder=I18N[lang][k]; });
+  document.getElementById("langLbl").textContent = lang.toUpperCase();
+  if(DB.length){ renderHome(); renderExplore(); }
 }
-document.querySelectorAll(".lang button").forEach(function(b){ b.addEventListener("click",function(){ lang=b.getAttribute("data-lang"); localStorage.setItem("bh_lang",lang); applyLang(); }); });
+document.getElementById("langToggle").addEventListener("click",function(){ lang = lang==="pl"?"en":"pl"; localStorage.setItem("bh_lang",lang); applyLang(); });
 
+/* ---------- NAV ---------- */
+function showView(name){
+  document.querySelectorAll(".view").forEach(function(v){ v.classList.toggle("active", v.id==="view-"+name); });
+  document.querySelectorAll(".nav button").forEach(function(b){ b.classList.toggle("on", b.getAttribute("data-view")===name); });
+  window.scrollTo({top:0,behavior:"instant"});
+}
+document.querySelectorAll(".nav button").forEach(function(b){ b.addEventListener("click",function(){ showView(b.getAttribute("data-view")); }); });
+
+/* ---------- DB ---------- */
+fetch(DB_URL).then(function(r){return r.json();}).then(function(j){ DB=(j.bottles||[]); renderHome(); renderExplore(); }).catch(function(){ DB=[]; });
+
+function bottleCard(b){
+  const pic = b.image ? '<div class="pic"><img src="'+esc(b.image)+'" alt=""></div>' : '<div class="pic">🥃</div>';
+  return '<div class="bcard" data-id="'+esc(b.id)+'">'+pic+
+    '<div class="meta"><div class="bn">'+esc(b.name)+'</div><div class="bt">'+esc(b.category||"")+'</div><div class="bp">'+(b.proof?esc(b.proof)+' '+t("proof"):'')+'</div></div></div>';
+}
+
+function renderHome(){
+  // featured
+  let feats = FEATURED_IDS.map(function(id){ return DB.find(function(b){return b.id===id;}); }).filter(Boolean);
+  if(!feats.length) feats = DB.slice(0,5);
+  document.getElementById("featuredRow").innerHTML = feats.map(function(b){
+    return '<div class="feat"><div class="info"><div class="kick">'+t("featured")+'</div><h4>'+esc(b.name)+'</h4>'+
+      '<div class="sub">'+esc(b.category||"")+(b.proof?' · '+esc(b.proof)+' '+t("proof"):'')+'</div>'+
+      '<span class="btn-sm" data-id="'+esc(b.id)+'">'+t("viewAll").split(" ")[0]+' →</span></div>'+
+      '<div class="bottlepic">'+(b.image?'<img src="'+esc(b.image)+'" style="width:100%;height:100%;object-fit:cover;border-radius:12px">':'🥃')+'</div></div>';
+  }).join("");
+  // categories with counts
+  document.getElementById("catGrid").innerHTML = CATS.map(function(c){
+    const n = DB.filter(function(b){ return catOf(b)===c.key; }).length;
+    return '<div class="cat" data-cat="'+c.key+'"><div class="ic">'+c.emoji+'</div><div class="lbl">'+t(c.i)+'</div><div class="cnt">'+n+'</div></div>';
+  }).join("");
+  // recently added (ostatnie z bazy)
+  const recent = DB.slice(-12).reverse();
+  document.getElementById("recentRow").innerHTML = recent.map(bottleCard).join("");
+}
+
+function renderExplore(){
+  // chips
+  const chips = [{key:"all",label:t("all")}].concat(CATS.map(function(c){ return {key:c.key,label:t(c.i)}; }));
+  document.getElementById("exploreChips").innerHTML = chips.map(function(c){
+    return '<button class="chip'+(c.key===curCat?' on':'')+'" data-cat="'+c.key+'">'+c.label+'</button>';
+  }).join("");
+  const q = (document.getElementById("exploreSearchInput").value||"").toLowerCase().trim();
+  let list = DB.filter(function(b){
+    const okCat = curCat==="all" || catOf(b)===curCat;
+    const okQ = !q || (b.name+" "+b.distillery).toLowerCase().indexOf(q)>=0;
+    return okCat && okQ;
+  });
+  const grid = document.getElementById("exploreGrid");
+  if(!list.length){ grid.innerHTML = '<div class="empty" style="grid-column:1/-1">'+t("emptyCat")+'<br><br>'+t("scanAdd")+'</div>'; return; }
+  grid.innerHTML = list.map(bottleCard).join("");
+}
+
+/* delegacja klikniec na karty/kategorie */
+document.addEventListener("click",function(e){
+  const card = e.target.closest("[data-id]");
+  if(card){ openDetail(card.getAttribute("data-id")); return; }
+  const catCell = e.target.closest(".cat[data-cat]");
+  if(catCell){ curCat=catCell.getAttribute("data-cat"); renderExplore(); showView("explore"); return; }
+  const chip = e.target.closest(".chip[data-cat]");
+  if(chip){ curCat=chip.getAttribute("data-cat"); renderExplore(); return; }
+});
+document.getElementById("catAll").addEventListener("click",function(){ curCat="all"; renderExplore(); showView("explore"); });
+document.getElementById("recentAll").addEventListener("click",function(){ curCat="all"; renderExplore(); showView("explore"); });
+document.getElementById("homeSearch").addEventListener("click",function(){ showView("explore"); setTimeout(function(){ document.getElementById("exploreSearchInput").focus(); },50); });
+document.getElementById("exploreSearchInput").addEventListener("input",renderExplore);
+document.getElementById("detailBack").addEventListener("click",function(){ showView("explore"); });
+
+function openDetail(id){
+  const b = DB.find(function(x){return x.id===id;});
+  if(!b) return;
+  const origin=[b.distillery,b.region].filter(Boolean).map(esc).join(" · ");
+  const pic = b.image ? '<img src="'+esc(b.image)+'" style="width:100%;border-radius:14px;margin-bottom:14px">' : '';
+  document.getElementById("detailBody").innerHTML =
+    (b.source==="net"?'<span class="badge net">'+t("fromNet")+'</span>':'<span class="badge db">'+t("fromDb")+'</span>')+
+    '<div class="dhead">'+esc(b.name)+'</div>'+
+    '<div class="dtype">'+esc(b.type||"")+(b.category?' · '+esc(b.category):'')+'</div>'+
+    (origin?'<div class="dorigin">'+origin+'</div>':'')+pic+
+    '<div class="verdict"><div class="score">'+(b.value||"?")+'<small>/5</small></div>'+
+      '<div style="flex:1"><div class="lbl">'+t("valLbl")+'</div><div class="stars" style="color:var(--gold)">'+starStr(b.value)+'</div>'+
+      (b.desc?'<div class="vtxt" style="margin-top:6px">'+esc(b.desc)+'</div>':'')+'</div></div>'+
+    '<div class="row">'+
+      '<div class="pill"><div class="k">'+t("quality")+'</div><div class="v" style="color:var(--amber2)">'+starStr(b.quality)+'</div></div>'+
+      '<div class="pill"><div class="k">'+t("price")+'</div><div class="v">'+esc(b.price_pln||"-")+'</div></div>'+
+      (b.abv?'<div class="pill"><div class="k">'+t("abv")+'</div><div class="v">'+esc(b.abv)+'%</div></div>':'')+
+      (b.proof?'<div class="pill"><div class="k">Proof</div><div class="v">'+esc(b.proof)+'</div></div>':'')+
+    '</div>'+
+    (b.mashbill?'<div class="sec-t">'+t("mashbill")+'</div><p class="desc">'+esc(b.mashbill)+'</p>':'')+
+    (b.notes?'<div class="sec-t">'+t("notesT")+'</div><p class="desc">'+esc(b.notes)+'</p>':'');
+  showView("detail");
+}
+
+/* ================= SKANER ================= */
+let imgData=null, imgMime="image/jpeg", busy=false, loadTimer=null;
 const shot=document.getElementById("shot"), fileInput=document.getElementById("file");
 const goRate=document.getElementById("goRate"), goAnalyze=document.getElementById("goAnalyze");
-
 shot.addEventListener("click",function(){ if(!busy) fileInput.click(); });
 fileInput.addEventListener("change",function(e){
   const f=e.target.files&&e.target.files[0]; if(!f) return;
   compress(f).then(function(res){
     imgData=res.b64; imgMime=res.mime;
-    shot.innerHTML='<img src="data:'+res.mime+';base64,'+res.b64+'" alt="butelka"><button class="retake" id="retake">'+t("retake")+'</button>';
+    shot.innerHTML='<img src="data:'+res.mime+';base64,'+res.b64+'" alt=""><button class="retake" id="retake">'+t("retake")+'</button>';
     document.getElementById("retake").addEventListener("click",function(ev){ ev.stopPropagation(); fileInput.click(); });
     goRate.disabled=false; goAnalyze.disabled=false;
-    document.getElementById("result").style.display="none"; document.getElementById("err").style.display="none";
+    document.getElementById("scanResult").innerHTML=""; document.getElementById("err").style.display="none";
   });
 });
-
-function compress(file){
-  return new Promise(function(resolve){
-    const img=new Image(), url=URL.createObjectURL(file);
-    img.onload=function(){
-      const max=1024; let w=img.width,h=img.height;
-      if(w>h&&w>max){ h=Math.round(h*max/w); w=max; } else if(h>=w&&h>max){ w=Math.round(w*max/h); h=max; }
-      const c=document.createElement("canvas"); c.width=w; c.height=h; c.getContext("2d").drawImage(img,0,0,w,h);
-      const d=c.toDataURL("image/jpeg",0.72); URL.revokeObjectURL(url); resolve({b64:d.split(",")[1],mime:"image/jpeg"});
-    }; img.src=url;
-  });
-}
-
-let loadTimer=null;
-function startLoading(mode){
-  busy=true; goRate.disabled=true; goAnalyze.disabled=true;
-  document.getElementById("loading").style.display="block";
-  document.getElementById("result").style.display="none"; document.getElementById("err").style.display="none";
-  const msgs = mode==="analyze" ? [t("ldId"),t("ldHist"),t("ldNet"),t("ldPrice")] : [t("ldId"),t("ldDb"),t("ldNet"),t("ldPrice")];
-  let i=0; const lt=document.getElementById("loadtxt"); lt.textContent=msgs[0];
-  loadTimer=setInterval(function(){ i=(i+1)%msgs.length; lt.textContent=msgs[i]; },1800);
-}
+function compress(file){ return new Promise(function(resolve){ const img=new Image(), url=URL.createObjectURL(file);
+  img.onload=function(){ const max=1024; let w=img.width,h=img.height;
+    if(w>h&&w>max){h=Math.round(h*max/w);w=max;}else if(h>=w&&h>max){w=Math.round(w*max/h);h=max;}
+    const c=document.createElement("canvas");c.width=w;c.height=h;c.getContext("2d").drawImage(img,0,0,w,h);
+    const d=c.toDataURL("image/jpeg",0.72);URL.revokeObjectURL(url);resolve({b64:d.split(",")[1],mime:"image/jpeg"}); }; img.src=url; }); }
+function startLoading(mode){ busy=true; goRate.disabled=true; goAnalyze.disabled=true;
+  document.getElementById("loading").style.display="block"; document.getElementById("scanResult").innerHTML=""; document.getElementById("err").style.display="none";
+  const msgs = mode==="analyze"?[t("ldId"),t("ldHist"),t("ldNet"),t("ldPrice")]:[t("ldId"),t("ldDb"),t("ldNet"),t("ldPrice")];
+  let i=0; const lt=document.getElementById("loadtxt"); lt.textContent=msgs[0]; loadTimer=setInterval(function(){ i=(i+1)%msgs.length; lt.textContent=msgs[i]; },1800); }
 function stopLoading(){ busy=false; goRate.disabled=false; goAnalyze.disabled=false; clearInterval(loadTimer); document.getElementById("loading").style.display="none"; }
 function showErr(m){ const e=document.getElementById("err"); e.textContent=m; e.style.display="block"; }
-
 function scan(mode){
-  if(!imgData||busy) return;
-  if(!WORKER_URL){ showErr(t("noWorker")); return; }
+  if(!imgData||busy) return; if(!WORKER_URL){ showErr("WORKER_URL?"); return; }
   startLoading(mode);
-  const params=new URLSearchParams(location.search);
-  if(params.get("bhdev")) localStorage.setItem("bh_dev",params.get("bhdev"));
+  const params=new URLSearchParams(location.search); if(params.get("bhdev")) localStorage.setItem("bh_dev",params.get("bhdev"));
   const dev=localStorage.getItem("bh_dev")||"";
-  fetch(WORKER_URL,{ method:"POST", headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({ image:imgData, mime:imgMime, lang:lang, mode:mode, dev:dev }) })
-  .then(function(r){ return r.json(); })
-  .then(function(data){
+  fetch(WORKER_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({image:imgData,mime:imgMime,lang:lang,mode:mode,dev:dev})})
+  .then(function(r){return r.json();}).then(function(data){
     stopLoading();
-    if(data.limited){ showErr(t("errLimit")); return; }
     if(data.error==="not_bottle"){ showErr(t("notBottle")); return; }
     if(data.retry){ showErr(t("errRetry")); return; }
     if(data.error||!data.result){ showErr(t("errGeneric")+(data.error?" ["+data.error+(data.status?" "+data.status:"")+(data.raw?": "+String(data.raw).slice(0,160):"")+"]":"")); return; }
-    render(data.result, data.mode, data.remaining);
-  })
-  .catch(function(){ stopLoading(); showErr(t("errGeneric")); });
+    renderScan(data.result, data.mode);
+  }).catch(function(){ stopLoading(); showErr(t("errGeneric")); });
 }
 goRate.addEventListener("click",function(){ scan("rate"); });
 goAnalyze.addEventListener("click",function(){ scan("analyze"); });
-
-function starStr(n){ n=Math.max(0,Math.min(5,Math.round(n||0))); return "★★★★★".slice(0,n)+"☆☆☆☆☆".slice(0,5-n); }
-function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
-
-function render(res, mode, remaining){
-  const out=document.getElementById("result");
+function renderScan(res, mode){
   const isNew = res.source==="net" || res.isNew;
-  const badge = isNew ? '<span class="badge net">'+t("fromNet")+'</span>' : '<span class="badge db">'+t("fromDb")+'</span>';
-  const origin = [res.distillery, res.region].filter(Boolean).map(esc).join(" &middot; ");
-  const img = res.image ? '<img class="prodimg" src="'+esc(res.image)+'" alt="">' : '';
-
-  let head =
-    '<div class="card">'+badge+
-      '<div class="name">'+esc(res.name||"-")+'</div>'+
-      (res.type?'<div class="type">'+esc(res.type)+(res.category?' &middot; '+esc(res.category):'')+'</div>':'')+
-      (origin?'<div class="origin">'+origin+'</div>':'')+
-      img+
-      '<div class="verdict">'+
-        '<div class="score">'+(res.value||"?")+'<small>/5</small></div>'+
-        '<div style="flex:1">'+
-          '<div class="lbl">'+t("valLbl")+'</div>'+
-          '<div class="stars" style="color:var(--gold)">'+starStr(res.value)+'</div>'+
-          (res.verdict?'<div class="vtxt" style="margin-top:6px">'+esc(res.verdict)+'</div>':'')+
-        '</div>'+
-      '</div>'+
-      '<div class="row">'+
-        '<div class="pill"><div class="k">'+t("quality")+'</div><div class="v ministars" style="color:var(--amber2)">'+starStr(res.quality)+'</div></div>'+
-        '<div class="pill"><div class="k">'+t("price")+'</div><div class="v">'+esc(res.price||"-")+'</div></div>'+
-        (res.abv?'<div class="pill"><div class="k">'+t("abv")+'</div><div class="v">'+esc(res.abv)+'%</div></div>':'')+
-      '</div>';
-
+  const badge = isNew?'<span class="badge net">'+t("fromNet")+'</span>':'<span class="badge db">'+t("fromDb")+'</span>';
+  const origin=[res.distillery,res.region].filter(Boolean).map(esc).join(" · ");
+  const img=res.image?'<img src="'+esc(res.image)+'" style="width:100%;border-radius:12px;margin-bottom:14px">':'';
+  let head='<div class="card">'+badge+'<div class="name">'+esc(res.name||"-")+'</div>'+
+    (res.type?'<div class="dtype">'+esc(res.type)+(res.category?' · '+esc(res.category):'')+'</div>':'')+
+    (origin?'<div class="dorigin">'+origin+'</div>':'')+img+
+    '<div class="verdict"><div class="score">'+(res.value||"?")+'<small>/5</small></div>'+
+      '<div style="flex:1"><div class="lbl">'+t("valLbl")+'</div><div class="stars" style="color:var(--gold)">'+starStr(res.value)+'</div>'+
+      (res.verdict?'<div class="vtxt" style="margin-top:6px">'+esc(res.verdict)+'</div>':'')+'</div></div>'+
+    '<div class="row"><div class="pill"><div class="k">'+t("quality")+'</div><div class="v" style="color:var(--amber2)">'+starStr(res.quality)+'</div></div>'+
+      '<div class="pill"><div class="k">'+t("price")+'</div><div class="v">'+esc(res.price||"-")+'</div></div>'+
+      (res.abv?'<div class="pill"><div class="k">'+t("abv")+'</div><div class="v">'+esc(res.abv)+'%</div></div>':'')+'</div>';
   let body='';
   if(mode==="analyze"){
     const descs=Array.isArray(res.description)?res.description:(res.description?[res.description]:[]);
     const hist=Array.isArray(res.history)?res.history:(res.history?[res.history]:[]);
-    if(descs.length){ body+='<div class="sec-t">'+t("descT")+'</div>'+descs.map(function(d){return '<p class="desc">'+esc(d)+'</p>';}).join(''); }
-    if(hist.length){ body+='<div class="sec-t">'+t("historyT")+'</div>'+hist.map(function(d){return '<p class="desc">'+esc(d)+'</p>';}).join(''); }
+    if(descs.length) body+='<div class="sec-t">'+t("descT")+'</div>'+descs.map(function(d){return '<p class="desc">'+esc(d)+'</p>';}).join("");
+    if(hist.length) body+='<div class="sec-t">'+t("historyT")+'</div>'+hist.map(function(d){return '<p class="desc">'+esc(d)+'</p>';}).join("");
     const links=res.links||res.sources||[];
-    if(links.length){ body+='<div class="sec-t">'+t("linksT")+'</div><div class="links">'+links.slice(0,6).map(function(s){ const u=esc(s.url||s); const tt=esc(s.title||s.url||s); return u?'<a href="'+u+'" target="_blank">'+tt+'</a>':tt; }).join('<br>')+'</div>'; }
+    if(links.length) body+='<div class="sec-t">'+t("linksT")+'</div><div class="links">'+links.slice(0,6).map(function(s){const u=esc(s.url||s);const tt=esc(s.title||s.url||s);return u?'<a href="'+u+'" target="_blank">'+tt+'</a>':tt;}).join("<br>")+'</div>';
   } else {
-    if(res.mashbill){ body+='<div class="sec-t">'+t("mashbill")+'</div><p class="desc">'+esc(res.mashbill)+'</p>'; }
-    if(res.notes){ body+='<div class="sec-t">'+t("notesT")+'</div><p class="desc">'+esc(res.notes)+'</p>'; }
+    if(res.mashbill) body+='<div class="sec-t">'+t("mashbill")+'</div><p class="desc">'+esc(res.mashbill)+'</p>';
+    if(res.notes) body+='<div class="sec-t">'+t("notesT")+'</div><p class="desc">'+esc(res.notes)+'</p>';
     const links=res.sources||[];
-    if(links.length){ body+='<div class="sec-t">'+t("sourcesT")+'</div><div class="links">'+links.slice(0,5).map(function(s){ const u=esc(s.url||s); const tt=esc(s.title||s.url||s); return u?'<a href="'+u+'" target="_blank">'+tt+'</a>':tt; }).join('<br>')+'</div>'; }
+    if(links.length) body+='<div class="sec-t">'+t("sourcesT")+'</div><div class="links">'+links.slice(0,5).map(function(s){const u=esc(s.url||s);const tt=esc(s.title||s.url||s);return u?'<a href="'+u+'" target="_blank">'+tt+'</a>':tt;}).join("<br>")+'</div>';
   }
-
-  out.innerHTML=head+body+'</div>';
-  out.style.display="block";
-  if(remaining!==null&&remaining!==undefined){ document.getElementById("limit").textContent=t("remaining")+remaining; }
-  out.scrollIntoView({behavior:"smooth",block:"start"});
+  document.getElementById("scanResult").innerHTML=head+body+'</div>';
+  document.getElementById("scanResult").scrollIntoView({behavior:"smooth",block:"start"});
 }
 
 applyLang();
