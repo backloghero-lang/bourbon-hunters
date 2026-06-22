@@ -90,7 +90,7 @@ export default {
     const ip=request.headers.get("CF-Connecting-IP")||"anon";
     const key="q:"+ip+":"+new Date().toISOString().slice(0,10);
     let used=0;
-    if(!owner && env.DS_KV){ used=parseInt((await env.DS_KV.get(key))||"0",10); if(used>=LIMIT) return J({limited:true,remaining:0,limit:LIMIT},200,cors); }
+    if(!owner && env.DS_KV && LIMIT>0){ used=parseInt((await env.DS_KV.get(key))||"0",10); if(used>=LIMIT) return J({limited:true,remaining:0,limit:LIMIT},200,cors); }
 
     // ---- KROK 1: rozpoznanie nazwy (wizja, bez netu) ----
     const identPayload={
@@ -149,7 +149,7 @@ export default {
       systemInstruction:{parts:[{text:system}]},
       contents:[{role:"user",parts:[{text:ctx+" Przygotuj ROZBUDOWANA analize. Wyszukaj w sieci historie destylarni i ciekawostki, podaj realne linki. Zwroc TYLKO JSON: {\"name\",\"type\",\"distillery\",\"region\",\"price\",\"quality\":1-5,\"value\":1-5,\"verdict\":\"jedno zdanie z jajem\",\"description\":[\"2-4 akapity: profil smaku, dla kogo, czy warto\"],\"history\":[\"1-2 akapity o destylarni i historii marki\"],\"links\":[{\"title\",\"url\"}]}."}]}],
       tools:[{google_search:{}}],
-      generationConfig:{ temperature:parseFloat(env.TEMP_ANALYZE||"0.7"), maxOutputTokens:parseInt(env.MAX_ANALYZE||"2400",10), thinkingConfig:{thinkingBudget:parseInt(env.THINK_ANALYZE||"1024",10)} }
+      generationConfig:{ temperature:parseFloat(env.TEMP_ANALYZE||"0.7"), maxOutputTokens:parseInt(env.MAX_ANALYZE||"3500",10), thinkingConfig:{thinkingBudget:parseInt(env.THINK_ANALYZE||"0",10)} }
     };
     const ga=await callGemini(env, analyzePayload);
     if(ga.err) return J({error:"upstream",status:ga.err.status,detail:ga.err.detail,retry:true},503,cors);

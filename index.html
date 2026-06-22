@@ -266,7 +266,7 @@ function scan(mode){
     if(data.limited){ showErr(t("errLimit")); return; }
     if(data.error==="not_bottle"){ showErr(t("notBottle")); return; }
     if(data.retry){ showErr(t("errRetry")); return; }
-    if(data.error||!data.result){ showErr(t("errGeneric")); return; }
+    if(data.error||!data.result){ showErr(t("errGeneric")+(data.error?" ["+data.error+(data.status?" "+data.status:"")+(data.raw?": "+String(data.raw).slice(0,160):"")+"]":"")); return; }
     render(data.result, data.mode, data.remaining);
   })
   .catch(function(){ stopLoading(); showErr(t("errGeneric")); });
