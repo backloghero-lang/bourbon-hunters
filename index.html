@@ -97,6 +97,31 @@
   .chip.on{background:var(--amber);color:#241708;border-color:var(--amber)}
   .empty{color:var(--muted);font-size:13px;text-align:center;padding:30px 10px;line-height:1.6}
 
+  /* list rows (Odkrywaj / Lista życzeń) */
+  .blist{display:flex;flex-direction:column;gap:10px}
+  .brow{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px;cursor:pointer;transition:transform .08s,border-color .2s}
+  .brow:active{transform:scale(.99)}
+  .brow .pic{flex:0 0 54px;height:74px;border-radius:9px;overflow:hidden;display:grid;place-items:center;font-size:30px;background:radial-gradient(70% 70% at 50% 25%,rgba(220,184,119,.16),rgba(0,0,0,.3))}
+  .brow .pic img{width:100%;height:100%;object-fit:contain}
+  .brow .info{flex:1;min-width:0}
+  .brow .bn{font-size:15px;font-weight:800;line-height:1.2;margin-bottom:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .brow .bt{font-size:12px;color:var(--amber2);font-weight:600}
+  .brow .bpf{font-size:12px;color:var(--muted);margin-top:1px}
+  .brow .right{flex:0 0 auto;display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+  .brow .rate{display:inline-flex;align-items:center;gap:4px;font-size:14px;font-weight:800;color:var(--gold)}
+  .brow .rate.none{color:var(--line)}
+  .heart{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;cursor:pointer;color:var(--muted);border:1px solid var(--line);background:rgba(0,0,0,.2);flex:none}
+  .heart svg{width:17px;height:17px}
+  .heart.on{color:var(--bad);border-color:rgba(224,100,74,.5)}
+  .heart.on svg{fill:var(--bad)}
+  .heart.pulse{animation:hpulse .3s ease}
+  @keyframes hpulse{0%{transform:scale(1)}45%{transform:scale(1.35)}100%{transform:scale(1)}}
+  /* toast */
+  #toast{position:fixed;left:50%;bottom:calc(var(--nav-h) + 18px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);
+    background:var(--card2);border:1px solid var(--amber);color:var(--gold);font-size:13px;font-weight:700;padding:11px 18px;border-radius:24px;
+    box-shadow:var(--shadow);z-index:60;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;max-width:90%}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
   /* detail */
   .back{display:inline-flex;align-items:center;gap:6px;color:var(--amber2);font-size:14px;font-weight:700;cursor:pointer;margin:6px 0 14px}
   .back svg{width:16px;height:16px}
@@ -212,7 +237,7 @@
       <input type="text" id="exploreSearchInput" data-i18n-ph="searchPh" placeholder="Szukaj bourbona lub destylarni...">
     </div>
     <div class="chips" id="exploreChips"></div>
-    <div class="grid" id="exploreGrid"></div>
+    <div id="exploreGrid"></div>
     <div id="exploreMore" style="display:flex;justify-content:center;padding:18px 0"></div>
   </section>
 
@@ -242,11 +267,13 @@
     <div id="scanResult"></div>
   </section>
 
-  <!-- COLLECTION (placeholdery: wishlist / hunted / collection) -->
+  <!-- COLLECTION: lista życzeń (działa) + hunted/kolekcja (placeholdery) -->
   <section class="view" id="view-collection">
-    <div class="sec-head" style="margin-top:8px"><h3 data-i18n="navColl">Kolekcja</h3></div>
-    <div class="feat" style="margin-bottom:12px"><div class="info"><div class="kick"><span data-i18n="soonTag">Wkrótce</span></div><h4 data-i18n="wlT">Lista życzeń</h4><div class="sub" data-i18n="wlD">Zapisuj bourbony, które chcesz upolować.</div></div><div class="bottlepic">⭐</div></div>
+    <div class="sec-head" style="margin-top:8px"><h3 data-i18n="wlT">Lista życzeń</h3></div>
+    <div id="wlList"></div>
+    <div class="sec-head" style="margin-top:22px"><h3 data-i18n="huT">Upolowane</h3></div>
     <div class="feat" style="margin-bottom:12px"><div class="info"><div class="kick"><span data-i18n="soonTag">Wkrótce</span></div><h4 data-i18n="huT">Upolowane</h4><div class="sub" data-i18n="huD">Oznaczaj butelki, które już zdobyłeś.</div></div><div class="bottlepic">🎯</div></div>
+    <div class="sec-head" style="margin-top:22px"><h3 data-i18n="coT">Moja kolekcja</h3></div>
     <div class="feat"><div class="info"><div class="kick"><span data-i18n="soonTag">Wkrótce</span></div><h4 data-i18n="coT">Moja kolekcja</h4><div class="sub" data-i18n="coD">Twoja półka — wszystkie posiadane butelki w jednym miejscu.</div></div><div class="bottlepic">🥃</div></div>
   </section>
 
@@ -264,6 +291,7 @@
   <button data-view="profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4.5 20c.8-3.6 4-5.5 7.5-5.5S18.7 16.4 19.5 20"/></svg><span data-i18n="navProfile">Profil</span></button>
 </nav>
 
+<div id="toast"></div>
 <script>
 /* ========= KONFIGURACJA ========= */
 const WORKER_URL = "https://bourbon-hunters.darekmaslyk.workers.dev";
@@ -292,6 +320,7 @@ const I18N = {
     byDist:"Przeglądaj wg destylarni", allDist:"Wszystkie", distLbl:"Destylarnia", loadMore:"Pokaż więcej", results:"poz.",
     priceK:"Cena", statusAvail:"Dostępny", statusSold:"Niedostępny", viewShop:"Zobacz w sklepie ↗", noResults:"Brak wyników dla tego filtra.",
     allCat:"Wszystkie", stWheated:"Wheated", stSingle:"Single Barrel", stSmall:"Small Batch", stProof:"Barrel Proof", stBib:"Bottled-in-Bond", stLimited:"Edycja limitowana", aiBtn:"🔎 Analiza AI",
+    wlAdded:"Dodano do listy życzeń ♥", wlEmpty:"Twoja lista życzeń jest pusta. Dodawaj butelki serduszkiem ♡.",
     wlT:"Lista życzeń", wlD:"Zapisuj bourbony, które chcesz upolować.", huT:"Upolowane", huD:"Oznaczaj butelki, które już zdobyłeś.",
     coT:"Moja kolekcja", coD:"Twoja półka — wszystkie posiadane butelki w jednym miejscu.", soonTag:"Wkrótce" },
   en:{ searchPh:"Search bourbon or distillery...", featured:"Featured", byCat:"Browse by category", viewAll:"View all", recent:"Recently added",
@@ -313,6 +342,7 @@ const I18N = {
     byDist:"Browse by distillery", allDist:"All", distLbl:"Distillery", loadMore:"Load more", results:"items",
     priceK:"Price", statusAvail:"In stock", statusSold:"Sold out", viewShop:"View in shop ↗", noResults:"No results for this filter.",
     allCat:"All", stWheated:"Wheated", stSingle:"Single Barrel", stSmall:"Small Batch", stProof:"Barrel Proof", stBib:"Bottled-in-Bond", stLimited:"Limited Edition", aiBtn:"🔎 AI Analysis",
+    wlAdded:"Added to wishlist ♥", wlEmpty:"Your wishlist is empty. Add bottles with the ♡ heart.",
     wlT:"Wishlist", wlD:"Save the bourbons you want to hunt down.", huT:"Hunted", huD:"Mark the bottles you've already bagged.",
     coT:"My collection", coD:"Your shelf — every bottle you own in one place.", soonTag:"Soon" }
 };
@@ -348,6 +378,35 @@ function styleMatch(b, key){
 function detectLang(){ const s=localStorage.getItem("bh_lang"); if(s==="pl"||s==="en") return s; const n=(navigator.language||"en").toLowerCase(); return n.indexOf("pl")===0?"pl":"en"; }
 let lang=detectLang(), DB=[], curDist="all", curCat="all", renderN=RENDER_LIMIT;
 function fmtPrice(b){ return b.price_str || (b.price!=null?("$"+b.price):"") || b.price_pln || ""; }
+
+/* ---------- lista życzeń (localStorage) ---------- */
+const HEART_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7.5-4.7-10-9.3C.5 8.4 2 5 5.2 5 7.3 5 8.7 6.2 12 9c3.3-2.8 4.7-4 6.8-4C22 5 23.5 8.4 22 11.7 19.5 16.3 12 21 12 21z"/></svg>';
+let WL=(function(){ try{ return JSON.parse(localStorage.getItem("bh_wishlist")||"[]"); }catch(e){ return []; } })();
+function wlHas(id){ return WL.indexOf(id)>=0; }
+function wlSave(){ try{ localStorage.setItem("bh_wishlist",JSON.stringify(WL)); }catch(e){} }
+function wlToggle(id){ const i=WL.indexOf(id); if(i>=0){ WL.splice(i,1); wlSave(); return false; } WL.push(id); wlSave(); return true; }
+let toastTimer=null;
+function toast(msg){ const el=document.getElementById("toast"); if(!el) return; el.textContent=msg; el.classList.add("show"); clearTimeout(toastTimer); toastTimer=setTimeout(function(){ el.classList.remove("show"); },2000); }
+function heartHtml(id){ return '<div class="heart'+(wlHas(id)?' on':'')+'" data-heart="'+esc(id)+'" role="button" aria-label="wishlist">'+HEART_SVG+'</div>'; }
+function rateHtml(b){ const q=(b.quality!=null?b.quality:b.value); return q!=null ? '<span class="rate">★ '+Number(q).toFixed(1)+'</span>' : '<span class="rate none">☆</span>'; }
+
+/* wiersz listy (Odkrywaj / Lista życzeń) */
+function listRow(b){
+  const pic=b.image?'<div class="pic"><img src="'+esc(b.image)+'" alt="'+esc(b.name)+'" loading="lazy" decoding="async"></div>':'<div class="pic">🥃</div>';
+  const proof=b.proof?(b.proof+' Proof'):(b.abv?(b.abv+'% ABV'):'');
+  return '<div class="brow" data-id="'+esc(b.id)+'">'+pic+
+    '<div class="info"><div class="bn">'+esc(b.name)+'</div><div class="bt">'+esc(b.type||b.distillery||"")+'</div>'+(proof?'<div class="bpf">'+esc(proof)+'</div>':'')+'</div>'+
+    '<div class="right">'+rateHtml(b)+heartHtml(b.id)+'</div></div>';
+}
+
+/* karta w stylu "Polecane" (używana też w "Ostatnio dodane") */
+function featCard(b, kick){
+  const price=fmtPrice(b);
+  return '<div class="feat" data-id="'+esc(b.id)+'"><div class="info"><div class="kick">'+esc(kick)+'</div><h4>'+esc(b.name)+'</h4>'+
+    '<div class="sub">'+esc(b.distillery||"")+(price?' · '+esc(price):'')+'</div>'+
+    '<span class="btn-sm" data-id="'+esc(b.id)+'">'+t("viewAll").split(" ")[0]+' →</span></div>'+
+    '<div class="bottlepic">'+(b.image?'<img src="'+esc(b.image)+'" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;border-radius:12px">':'🥃')+'</div></div>';
+}
 function t(k){ return (I18N[lang]&&I18N[lang][k])||I18N.pl[k]||k; }
 function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 function starStr(n){ n=Math.max(0,Math.min(5,Math.round(n||0))); return "★★★★★".slice(0,n)+"☆☆☆☆☆".slice(0,5-n); }
@@ -365,39 +424,33 @@ document.getElementById("langToggle").addEventListener("click",function(){ lang 
 function showView(name){
   document.querySelectorAll(".view").forEach(function(v){ v.classList.toggle("active", v.id==="view-"+name); });
   document.querySelectorAll(".nav button").forEach(function(b){ b.classList.toggle("on", b.getAttribute("data-view")===name); });
+  if(name==="collection") renderWishlist();
   window.scrollTo({top:0,behavior:"instant"});
+}
+function renderWishlist(){
+  const el=document.getElementById("wlList"); if(!el) return;
+  const items=WL.map(function(id){ return DB.find(function(b){return b.id===id;}); }).filter(Boolean);
+  el.innerHTML = items.length ? '<div class="blist">'+items.map(listRow).join("")+'</div>' : '<div class="empty">'+t("wlEmpty")+'</div>';
 }
 document.querySelectorAll(".nav button").forEach(function(b){ b.addEventListener("click",function(){ showView(b.getAttribute("data-view")); }); });
 
 /* ---------- DB ---------- */
 fetch(DB_URL).then(function(r){return r.json();}).then(function(j){ DB=(j.bottles||[]); renderHome(); renderExplore(); }).catch(function(){ DB=[]; });
 
-function bottleCard(b){
-  const pic = b.image ? '<div class="pic"><img src="'+esc(b.image)+'" alt="'+esc(b.name)+'" loading="lazy" decoding="async"></div>' : '<div class="pic">🥃</div>';
-  const price = fmtPrice(b);
-  return '<div class="bcard" data-id="'+esc(b.id)+'">'+pic+
-    '<div class="meta"><div class="bn">'+esc(b.name)+'</div><div class="bt">'+esc(b.distillery||"")+'</div><div class="bp">'+esc(price)+'</div></div></div>';
-}
 
 function renderHome(){
   // featured
   let feats = FEATURED_IDS.map(function(id){ return DB.find(function(b){return b.id===id;}); }).filter(Boolean);
   if(feats.length<3) feats = feats.concat(DB.slice(0,5)).filter(function(v,i,a){return a.indexOf(v)===i;}).slice(0,5);
-  document.getElementById("featuredRow").innerHTML = feats.map(function(b){
-    const price=fmtPrice(b);
-    return '<div class="feat"><div class="info"><div class="kick">'+t("featured")+'</div><h4>'+esc(b.name)+'</h4>'+
-      '<div class="sub">'+esc(b.distillery||"")+(price?' · '+esc(price):'')+'</div>'+
-      '<span class="btn-sm" data-id="'+esc(b.id)+'">'+t("viewAll").split(" ")[0]+' →</span></div>'+
-      '<div class="bottlepic">'+(b.image?'<img src="'+esc(b.image)+'" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;border-radius:12px">':'🥃')+'</div></div>';
-  }).join("");
+  document.getElementById("featuredRow").innerHTML = feats.map(function(b){ return featCard(b, t("featured")); }).join("");
   // kategorie = style bourbona, z licznikami
   document.getElementById("catGrid").innerHTML = STYLES.map(function(s){
     const n = DB.filter(function(b){ return styleMatch(b,s.key); }).length;
     return '<div class="cat" data-style="'+s.key+'"><div class="ic">'+s.emoji+'</div><div class="lbl">'+t(s.i)+'</div><div class="cnt">'+n+'</div></div>';
   }).join("");
-  // recently added (ostatnie z bazy)
+  // recently added (ostatnie z bazy) — styl jak "Polecane"
   const recent = DB.slice(-12).reverse();
-  document.getElementById("recentRow").innerHTML = recent.map(bottleCard).join("");
+  document.getElementById("recentRow").innerHTML = recent.map(function(b){ return featCard(b, t("recent")); }).join("");
 }
 
 function renderExplore(){
@@ -422,10 +475,9 @@ function renderExplore(){
     return okDist && okCat && okQ;
   });
   const grid = document.getElementById("exploreGrid");
-  if(!list.length){ grid.innerHTML = '<div class="empty" style="grid-column:1/-1">'+t("noResults")+'<br><br>'+t("scanAdd")+'</div>'; return; }
+  if(!list.length){ grid.innerHTML = '<div class="empty">'+t("noResults")+'<br><br>'+t("scanAdd")+'</div>'; document.getElementById("exploreMore").innerHTML=""; return; }
   const shown = list.slice(0, renderN);
-  let html = shown.map(bottleCard).join("");
-  grid.innerHTML = html;
+  grid.innerHTML = '<div class="blist">'+shown.map(listRow).join("")+'</div>';
   // pasek: licznik + "pokaz wiecej"
   const bar = document.getElementById("exploreMore");
   if(list.length > renderN){
@@ -437,6 +489,16 @@ function renderExplore(){
 
 /* delegacja klikniec na karty/destylarnie */
 document.addEventListener("click",function(e){
+  const heartEl = e.target.closest("[data-heart]");
+  if(heartEl){
+    e.stopPropagation();
+    const id=heartEl.getAttribute("data-heart"); const added=wlToggle(id);
+    document.querySelectorAll('.heart[data-heart="'+id+'"]').forEach(function(h){ h.classList.toggle("on",added); });
+    heartEl.classList.add("pulse"); setTimeout(function(){ heartEl.classList.remove("pulse"); },300);
+    if(added) toast(t("wlAdded"));
+    if(document.getElementById("view-collection").classList.contains("active")) renderWishlist();
+    return;
+  }
   const card = e.target.closest("[data-id]");
   if(card){ openDetail(card.getAttribute("data-id")); return; }
   const styleCell = e.target.closest(".cat[data-style]");
@@ -474,7 +536,7 @@ function openDetail(id){
   if(b.abv) pills+='<div class="pill"><div class="k">'+t("abv")+'</div><div class="v">'+esc(b.abv)+'%</div></div>';
   if(b.proof) pills+='<div class="pill"><div class="k">Proof</div><div class="v">'+esc(b.proof)+'</div></div>';
   document.getElementById("detailBody").innerHTML =
-    statusBadge+
+    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">'+statusBadge+heartHtml(b.id)+'</div>'+
     '<div class="dhead">'+esc(b.name)+'</div>'+
     '<div class="dtype">'+esc(b.type||"")+(b.category&&b.category!=="Standard"?' · '+esc(b.category):'')+'</div>'+
     (origin?'<div class="dorigin">'+origin+'</div>':'')+pic+
@@ -567,6 +629,10 @@ if("serviceWorker" in navigator){ window.addEventListener("load",function(){ nav
 </script>
 
 <svg width="0" height="0" style="position:absolute;width:0;height:0" aria-hidden="true"><defs>
+  <path id="bhTopArc" d="M 52,200 A 148,148 0 0,1 348,200"></path>
+  <path id="bhBotArc" d="M 36,200 A 164,164 0 0,0 364,200"></path>
+  <radialGradient id="bhBg" cx="50%" cy="38%" r="72%"><stop offset="0%" stop-color="#1E3D28"></stop><stop offset="100%" stop-color="#0D1E12"></stop></radialGradient>
+  <radialGradient id="bhBottleG" cx="38%" cy="28%" r="68%" fx="38%" fy="28%"><stop offset="0%" stop-color="#EED068"></stop><stop offset="55%" stop-color="#C49A30"></stop><stop offset="100%" stop-color="#8A6020"></stop></radialGradient>
   <filter id="bhBurnTurb" x="-15%" y="-15%" width="130%" height="130%">
     <feTurbulence type="fractalNoise" baseFrequency="0.014 0.03" numOctaves="3" seed="7" result="n"></feTurbulence>
     <feDisplacementMap in="SourceGraphic" in2="n" scale="26" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
@@ -581,24 +647,48 @@ if("serviceWorker" in navigator){ window.addEventListener("load",function(){ nav
     <rect x="-40" y="-40" width="470" height="924" fill="url(#bhBurnGrad)" filter="url(#bhBurnTurb)"></rect>
   </mask>
 </defs></svg>
-<div id="bhIntro" style="position:fixed;inset:0;z-index:9999;overflow:hidden;background:#120c07;">
+<div id="bhIntro" style="position:fixed;inset:0;z-index:9999;overflow:hidden;background:#0C1810;">
   <div id="bhStage" style="position:absolute;left:50%;top:50%;width:390px;height:844px;transform:translate(-50%,-50%);--burnY:-120px;">
-    <div id="bhSplash" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 36px;background:radial-gradient(105% 70% at 50% 38%, rgba(150,98,46,0.22), transparent 60%), linear-gradient(180deg,#1d150d,#120c07);-webkit-mask:url(#bhBurnMask);mask:url(#bhBurnMask);">
-      <div style="position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 120px 40px rgba(8,5,3,0.8);"></div>
+    <div id="bhSplash" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 36px;background:radial-gradient(110% 80% at 50% 42%, rgba(38,80,50,0.85), transparent 62%), linear-gradient(180deg,#121E14,#0C1810);-webkit-mask:url(#bhBurnMask);mask:url(#bhBurnMask);">
+      <div style="position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 100px 40px rgba(4,8,6,0.85);"></div>
       <div style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;">
-        <div style="font-size:10px;letter-spacing:4px;font-weight:700;color:#C49C55;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:9px;"><span>Texas</span><span style="color:#8C6B33;font-size:11px;">&#9733;</span><span>Kentucky</span></div>
-        <div style="font-family:'Ultra',Georgia,serif;font-size:54px;line-height:0.9;letter-spacing:1px;background:linear-gradient(180deg,#F4DDA2,#DBB66A 44%,#B68C42 74%,#92702F);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 3px 12px rgba(0,0,0,0.6));">BOURBON</div>
-        <div style="display:flex;align-items:center;gap:15px;margin-top:9px;">
-          <span style="color:#8C6B33;font-size:17px;">&#9733;</span>
-          <span style="font-family:'Ultra',Georgia,serif;font-size:30px;letter-spacing:7px;background:linear-gradient(180deg,#F4DDA2,#C79E54);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;">HUNTERS</span>
-          <span style="color:#8C6B33;font-size:17px;">&#9733;</span>
+        <div style="filter:drop-shadow(0 8px 28px rgba(0,0,0,0.85));">
+          <svg viewBox="0 0 400 400" width="300" height="300" style="display:block;">
+            <circle cx="200" cy="200" r="197" fill="url(#bhBg)"></circle>
+            <circle cx="200" cy="200" r="194" fill="none" stroke="#C8A028" stroke-width="4.5"></circle>
+            <circle cx="200" cy="200" r="188" fill="none" stroke="#C8A028" stroke-width="5.5" stroke-dasharray="7 53" stroke-dashoffset="-7" stroke-linecap="round"></circle>
+            <circle cx="200" cy="200" r="182" fill="none" stroke="#C8A028" stroke-width="1"></circle>
+            <circle cx="200" cy="200" r="136" fill="none" stroke="#C8A028" stroke-width="1.8"></circle>
+            <circle cx="200" cy="200" r="130" fill="none" stroke="#C8A028" stroke-width="0.6" stroke-dasharray="4 6"></circle>
+            <polygon points="200,74 194,160 200,200 206,160" fill="#C8A028"></polygon>
+            <polygon transform="rotate(90 200 200)" points="200,74 194,160 200,200 206,160" fill="#C8A028"></polygon>
+            <polygon transform="rotate(180 200 200)" points="200,74 194,160 200,200 206,160" fill="#C8A028"></polygon>
+            <polygon transform="rotate(270 200 200)" points="200,74 194,160 200,200 206,160" fill="#C8A028"></polygon>
+            <polygon transform="rotate(45 200 200)" points="200,100 192,164 200,200 208,164" fill="#2E6030" opacity="0.92"></polygon>
+            <polygon transform="rotate(135 200 200)" points="200,100 192,164 200,200 208,164" fill="#2E6030" opacity="0.92"></polygon>
+            <polygon transform="rotate(225 200 200)" points="200,100 192,164 200,200 208,164" fill="#2E6030" opacity="0.92"></polygon>
+            <polygon transform="rotate(315 200 200)" points="200,100 192,164 200,200 208,164" fill="#2E6030" opacity="0.92"></polygon>
+            <circle cx="200" cy="200" r="8" fill="#0E1E12" stroke="#C8A028" stroke-width="1.6"></circle>
+            <circle cx="200" cy="200" r="3" fill="#C8A028"></circle>
+            <rect x="193" y="86" width="14" height="8" rx="3" fill="#6B3A10"></rect>
+            <ellipse cx="200" cy="93" rx="9" ry="4.5" fill="#8B1A18"></ellipse>
+            <rect x="196" y="94" width="8" height="24" fill="url(#bhBottleG)"></rect>
+            <path d="M 196,118 C 182,127 178,140 178,154 L 178,222 L 222,222 L 222,154 C 222,140 218,127 204,118 Z" fill="url(#bhBottleG)"></path>
+            <rect x="182" y="158" width="36" height="46" rx="2.5" fill="#0D1C12" stroke="#C8A028" stroke-width="1.3"></rect>
+            <text x="200" y="172" text-anchor="middle" font-size="5.1" fill="#F0ECD0" font-family="Ultra,Georgia,serif" letter-spacing="0.3">MAN'S HOBBY</text>
+            <line x1="184" y1="176" x2="216" y2="176" stroke="#C8A028" stroke-width="0.6"></line>
+            <text x="200" y="185" text-anchor="middle" font-size="5" fill="#C8A028" font-family="Georgia,serif" letter-spacing="0.4">BOURBON</text>
+            <text x="200" y="194" text-anchor="middle" font-size="5" fill="#C8A028" font-family="Georgia,serif" letter-spacing="0.4">HUNTERS</text>
+            <ellipse cx="200" cy="223" rx="24" ry="5" fill="#6A5010" opacity="0.65"></ellipse>
+            <g transform="translate(51,184)" opacity="0.92"><path d="M -11,0 L -8,27 Q 0,32 8,27 L 11,0 Z" fill="none" stroke="#C8A028" stroke-width="1.7" stroke-linejoin="round"></path><line x1="-11" y1="0" x2="11" y2="0" stroke="#C8A028" stroke-width="2"></line><path d="M -7,17 L -5.5,26 Q 0,30 5.5,26 L 7,17 Z" fill="#C8A028" opacity="0.42"></path></g>
+            <g transform="translate(349,184)" opacity="0.92"><path d="M -11,0 L -8,27 Q 0,32 8,27 L 11,0 Z" fill="none" stroke="#C8A028" stroke-width="1.7" stroke-linejoin="round"></path><line x1="-11" y1="0" x2="11" y2="0" stroke="#C8A028" stroke-width="2"></line><path d="M -7,17 L -5.5,26 Q 0,30 5.5,26 L 7,17 Z" fill="#C8A028" opacity="0.42"></path></g>
+            <text font-family="Ultra,Georgia,serif" font-size="30" letter-spacing="2.5" fill="#C8A028"><textPath href="#bhTopArc" startOffset="50%" text-anchor="middle">MAN'S HOBBY</textPath></text>
+            <text font-family="Ultra,Georgia,serif" font-size="29" letter-spacing="2.5" fill="#C8A028"><textPath href="#bhBotArc" startOffset="50%" text-anchor="middle">BOURBON HUNTERS</textPath></text>
+            <text x="48" y="208" font-size="15" fill="#C8A028" text-anchor="middle">&#9733;</text>
+            <text x="352" y="208" font-size="15" fill="#C8A028" text-anchor="middle">&#9733;</text>
+          </svg>
         </div>
-        <div style="display:flex;align-items:center;gap:12px;margin-top:30px;">
-          <span style="width:46px;height:1px;background:linear-gradient(90deg,transparent,#7E6233);"></span>
-          <span style="transform:rotate(45deg);width:5px;height:5px;border:1px solid #B08C45;"></span>
-          <span style="width:46px;height:1px;background:linear-gradient(90deg,#7E6233,transparent);"></span>
-        </div>
-        <div style="margin-top:18px;font-size:12px;letter-spacing:5px;font-weight:600;color:#C9A15A;text-transform:uppercase;">Discover &middot; Track &middot; Hunt</div>
+        <div style="margin-top:18px;font-size:11.5px;letter-spacing:5px;font-weight:600;color:rgba(200,160,40,0.82);text-transform:uppercase;">Discover &middot; Track &middot; Hunt</div>
       </div>
     </div>
     <div id="bhEmber" style="position:absolute;left:0;right:0;top:var(--burnY);height:0;z-index:3;opacity:0;mix-blend-mode:screen;pointer-events:none;">

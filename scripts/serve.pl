@@ -15,8 +15,13 @@ my %MIME = (
 my $srv = IO::Socket::INET->new(LocalAddr=>'127.0.0.1', LocalPort=>$port,
   Proto=>'tcp', Listen=>20, ReuseAddr=>1) or die "bind $port: $!";
 $| = 1; print "serving on http://127.0.0.1:$port\n";
+$SIG{CHLD} = 'IGNORE';   # reap children automatically
 while (1) {
   my $c = $srv->accept or next;
+  my $pid = fork();
+  if (!defined $pid) { close $c; next; }   # fork failed -> drop
+  if ($pid) { close $c; next; }            # parent: keep accepting
+  # --- child handles one request then exits ---
   eval {
   my $req = <$c>; $req //= '';
   my ($path) = $req =~ m{^GET\s+(\S+)\s+HTTP}; $path //= '/';
@@ -33,4 +38,5 @@ while (1) {
   }
   };  # end eval
   close $c;
+  exit 0;   # child done
 }
