@@ -1,5 +1,5 @@
 /* DramScan service worker — cache powloki aplikacji (dziala offline). */
-const CACHE = "bourbon-hunters-v4";
+const CACHE = "bourbon-hunters-v5";
 const ASSETS = [
   "./",
   "./index.html",

@@ -2707,7 +2707,7 @@
       },
       {
          "abv" : 57,
-         "category" : "PeÅna moc beczki",
+         "category" : "Pełna moc beczki",
          "desc" : "W. L. Weller Full Proof Bourbon Non Chill-Filtered Single Barrel Select Indulge in the rare and exquisite W.L. Weller Full Proof Bourbon , hand-selected by Wooden Cork for its unparalleled quality and exceptional taste. This single barrel selection represents the epitome of the Weller tradition, offering a full-bodied and unfiltered bourbon experience that is both luxurious and deeply satisfying. Exceptional Taste and Quality With a robust 114 proof, this bourbon delivers a rich and intense flavor profile that whiskey enthusiasts will appreciate. The deep amber color hints at the complexityâ¦",
          "distillery" : "Buffalo Trace Distillery",
          "id" : "w-l-weller-full-proof-bourbon-non-chill-filtered-single-barrel-select-by-wooden-cork-114-proof",
@@ -2729,7 +2729,7 @@
       },
       {
          "abv" : 57,
-         "category" : "PeÅna moc beczki",
+         "category" : "Pełna moc beczki",
          "desc" : "W. L. Weller Full Proof Bourbon Single Barrel Select Indulge in the rare and exquisite W.L. Weller Full Proof Bourbon , hand-selected by Wooden Cork for its unparalleled quality and exceptional taste. This single barrel selection represents the epitome of the Weller tradition, offering a full-bodied and unfiltered bourbon experience that is both luxurious and deeply satisfying. Exceptional Taste and Quality With a robust 114 proof, this bourbon delivers a rich and intense flavor profile that whiskey enthusiasts will appreciate. The deep amber color hints at the complexity within, while theâ¦",
          "distillery" : "Buffalo Trace Distillery",
          "id" : "w-l-weller-full-proof-bourbon-single-barrel-select-by-wooden-cork",
@@ -4075,7 +4075,7 @@
       },
       {
          "abv" : 78,
-         "category" : "PeÅna moc beczki",
+         "category" : "Pełna moc beczki",
          "desc" : "Elijah Craig Barrel Proof Batch #C925 is a must-have for bourbon lovers seeking a bold and unforgettable experience. This 9-year, 1-month-old bourbon is uncut, unfiltered, and bottled straight from the barrel, offering a robust 129 proof that promises intensity and complexity in every sip. What Makes It Special This batch is the final release of 2025 from Heaven Hill’s celebrated series, capturing a singular moment in time. It honors the legacy of Reverend Elijah Craig, often hailed as the “Father of Bourbon,” showcasing the depth, richness, and layered character achieved through years ofâ¦",
          "distillery" : "Heaven Hill Distillery",
          "id" : "elijah-craig-barrel-proof-batch-c925",
@@ -4163,7 +4163,7 @@
       },
       {
          "abv" : 78,
-         "category" : "MaÅa partia",
+         "category" : "Mała partia",
          "desc" : "Elijah Craig Small Batch Bourbon. Heaven Hill Distillery, Bardstown, Kentucky — a small batch Kentucky straight bourbon named for the Reverend Elijah Craig, the 18th-century Baptist minister credited by Kentucky folklore as the inventor of charred oak barrel aging, matured in new charred American oak barrels on the upper floors of Heaven Hill's rick houses where heat cycling drives deeper wood interaction, delivering classic caramel, vanilla, and toasted oak with a warm, spiced finish at 94 proof. The name Elijah Craig carries specific historical weight in Kentucky bourbon lore. Reverendâ¦",
          "distillery" : "Heaven Hill Distillery",
          "id" : "elijah-craig-small-batch-bourbon",
@@ -4185,7 +4185,7 @@
       },
       {
          "abv" : 47,
-         "category" : "MaÅa partia",
+         "category" : "Mała partia",
          "desc" : "The Elijah Craig Small Batch Bourbon Old Fashioned Cocktail Kit brings together a 750ml bottle of Elijah Craig Small Batch, a premium Old Fashioned cocktail mix, and a measuring jigger — everything needed to make a bar-quality Old Fashioned at home. Elijah Craig Small Batch is produced by Heaven Hill Distillery in Kentucky — aged in new charred American oak and bottled at 94 proof (47% ABV), giving it the backbone to stand up in a cocktail without getting lost behind the mix. The higher proof is deliberate: a 94-proof bourbon in an Old Fashioned tastes bold and defined, not watered down overâ¦",
          "distillery" : "Heaven Hill Distillery",
          "id" : "elijah-craig-small-batch-bourbon-old-fashioned-cocktail-kit-1",
@@ -4230,7 +4230,7 @@
       },
       {
          "abv" : 47,
-         "category" : "MaÅa partia",
+         "category" : "Mała partia",
          "desc" : "Elijah Craig Small Batch Old Label — a pre-reformulation era bottling of Heaven Hill's flagship small batch bourbon carrying the original \"Old Label\" presentation that preceded the current standard packaging. The Old Label designation identifies this as a production-era collector piece from before Heaven Hill updated the Elijah Craig Small Batch visual identity. Elijah Craig Small Batch is Heaven Hill's most widely distributed premium small batch bourbon — a high-rye mash bill expression that delivers the distillery's signature caramel, vanilla, and oak-forward character. The Old Label formatâ¦",
          "distillery" : "Heaven Hill Distillery",
          "id" : "elijah-craig-small-batch-old-label",
@@ -4433,7 +4433,7 @@
       },
       {
          "abv" : null,
-         "category" : "PeÅna moc beczki",
+         "category" : "Pełna moc beczki",
          "desc" : "The first edition of Heaven Hill's Heritage Collection — a new annual limited series released each spring. 17 years. Barrel proof. Aged oak, cigar box, leather, caramel. A companion to the fall Parker's Heritage Collection, now Heaven Hill has two major annual prestige bourbon events. Heaven Hill Distillery is the second-largest American-owned bourbon producer in the United States and home to some of the industry's most storied annual releases. The Parker's Heritage Collection — a fall annual tribute to the late Master Distiller Parker Beam — has been one of the most anticipated events inâ¦",
          "distillery" : "Heaven Hill Distillery",
          "id" : "heaven-hill-heritage-collection-17-year-old-barrel-proof-bourbon-first-edition",
@@ -4612,7 +4612,7 @@
       },
       {
          "abv" : null,
-         "category" : "MaÅa partia",
+         "category" : "Mała partia",
          "desc" : "16 years. Small batch. William Heavenhill — Heaven Hill's prestige aged expression honoring the Heavenhill family patriarch, at 16 years of Kentucky straight bourbon maturation. Between the 14-year and 17-year expressions in Heaven Hill's William Heavenhill range. The William Heavenhill name corrects a piece of history: the land where Heaven Hill's original distillery was built belonged to the Heavenhill family, and a clerical transcription error separated their surname into two words — \"Heaven Hill\" — that became the permanent brand name. William Heavenhill honors the family patriarch,â¦",
          "distillery" : "Heaven Hill Distillery",
          "id" : "william-heavenhill-16-year-old-small-batch-bourbon-whiskey",
@@ -4634,7 +4634,7 @@
       },
       {
          "abv" : null,
-         "category" : "MaÅa partia",
+         "category" : "Mała partia",
          "desc" : "17 years. Small batch. William Heavenhill — Heaven Hill's prestige aged expression honoring the Heavenhill family, the original landowners whose property gave the distillery its name. One of the oldest small batch releases in Heaven Hill's regular production program. Heaven Hill Distillery takes its name from a transcription error — the land where the original distillery was built was owned by the Heavenhill family, and a clerical mistake separated the family name into two words: \"Heaven Hill.\" The William Heavenhill expression honors William Heavenhill, the family patriarch, connecting theâ¦",
          "distillery" : "Heaven Hill Distillery",
          "id" : "william-heavenhill-17-year-old-small-batch-bourbon-whiskey",
@@ -4656,7 +4656,7 @@
       },
       {
          "abv" : 54.5,
-         "category" : "MaÅa partia",
+         "category" : "Mała partia",
          "desc" : "15 years. 109 proof. Small batch. Named for William Heavenhill — the farmer on whose land the original Heaven Hill Distillery was established in 1935 — a tribute to the founding provenance of one of Kentucky's great bourbon families. Heaven Hill Distillery was established in 1935 by the Shapira family in Bardstown, Kentucky. The name \"Heaven Hill\" derives from William Heavenhill, the farmer who originally owned the land on which the distillery was built. The William Heavenhill Small Batch release honors this founding connection — a premium expression named for the land's original steward. Atâ¦",
          "distillery" : "Heaven Hill Distillery",
          "id" : "william-heavenhill-small-batch-15-year-kentucky-straight-bourbon-109-proof",
@@ -4861,7 +4861,7 @@
       },
       {
          "abv" : null,
-         "category" : "MaÅa partia",
+         "category" : "Mała partia",
          "desc" : "Jefferson's Ocean Aged At Sea Wheated Very Small Batch Bourbon is a unique and premium whiskey that offers an extraordinary tasting experience. This small batch bourbon is aged on OCEARCH boats as they travel the seas. The constant movement of the liquid in the barrels ages the whiskey faster because more of the liquid is in contact with the wood more often. The result is a spirit with rich and complex flavors. Unique Aging Process Unlike traditional bourbons, Jefferson's Ocean Aged At Sea is aged on the high seas. The barrels are subjected to the constant motion of the ocean, whichâ¦",
          "distillery" : "Jefferson's (Castle Brands)",
          "id" : "jeffersons-ocean-aged-at-sea-wheated-very-small-batch-bourbon",
@@ -4927,7 +4927,7 @@
       },
       {
          "abv" : null,
-         "category" : "PeÅna moc beczki",
+         "category" : "Pełna moc beczki",
          "desc" : "Jefferson’s Ocean Aged at Sea Cask Strength Blended Straight Bourbon is aged at sea — traveling across five continents and crossing the equator four times — with the constant motion and varying climates building a complex flavor profile distinct from traditionally aged bourbon. Bottled at cask strength for a bold, intense taste. The deep amber color and aroma of caramel, vanilla, and sea salt are the signature of the Ocean program. Each Voyage cask is taken on a journey by sea, with the rocking motion and humidity shifts of ocean conditions producing accelerated oak extraction and aâ¦",
          "distillery" : "Jefferson's (Castle Brands)",
          "id" : "jeffersons-ocean-aged-at-sea-cask-strength-blended-straight-bourbon",
@@ -5081,7 +5081,7 @@
       },
       {
          "abv" : 15,
-         "category" : "MaÅa partia",
+         "category" : "Mała partia",
          "desc" : "Jefferson's Very Small Batch is a balanced, approachable bourbon — blended from up to four Kentucky straight bourbons of varying ages for a complex, consistent flavor profile. The meticulous blending of different aged bourbons gives Jefferson's a rich yet smooth character that suits both seasoned bourbon drinkers and newcomers. Excellent neat, on the rocks, or in cocktails. Tasting Notes Aroma: Vanilla, caramel, oak Palate: Smooth and balanced — spice, fruit, touch of sweetness Finish: Long and warm Specs Brand: Jefferson's Style: Very Small Batch Kentucky Straight Bourbon ABV: 41.15% Size:â¦",
          "distillery" : "Jefferson's (Castle Brands)",
          "id" : "jeffersons-very-small-batch-bourbon",
@@ -6729,7 +6729,7 @@
       },
       {
          "abv" : 55,
-         "category" : "PeÅna moc beczki",
+         "category" : "Pełna moc beczki",
          "desc" : "Maker's Mark Cask Strength 7 Year is the wheated Maker's Mark bottled uncut and unfiltered at natural barrel strength, carrying a 7-year-plus age statement — often labeled down to the month — with proof varying by batch, typically around 109.6 to 112.8. Built on Maker's Mark's signature red winter wheat mash bill, the Cask Strength 7 Year takes fully matured bourbon and bottles it at barrel strength without dilution or chill filtration. The wheated recipe keeps the texture plush and the flavors dessert-forward even at high proof. Because it is released in batches when the whiskey reaches theâ¦",
          "distillery" : "Maker's Mark",
          "id" : "makers-mark-cask-strength-7-year-bourbon-750ml",
@@ -6773,7 +6773,7 @@
       },
       {
          "abv" : 45,
-         "category" : "PeÅna moc beczki",
+         "category" : "Pełna moc beczki",
          "desc" : "Maker's Mark Cask Strength is the wheated Maker's Mark bottled at barrel proof — amplifying the front-palate richness of the standard expression with more intensity while keeping the soft, wheated smoothness intact. Built on the same wheated mash bill of corn, red winter wheat, and malted barley that defines Maker's Mark, the Cask Strength version is bottled at a higher, barrel-driven proof. That extra strength pushes the signature oak, vanilla, caramel, and spice further forward, delivering a fuller and more robust take on the familiar profile without the harshness that wheat is specificallyâ¦",
          "distillery" : "Maker's Mark",
          "id" : "makers-mark-cask-strength-bourbon-whisky",
@@ -10854,7 +10854,7 @@
       },
       {
          "abv" : 56.4,
-         "category" : "PeÅna moc beczki",
+         "category" : "Pełna moc beczki",
          "desc" : "Wild Turkey Rare Breed Barrel Proof 112.8 Proof is a specific barrel proof batch of Wild Turkey's Rare Breed expression — produced from a blend of 6, 8, and 12-year-old Wild Turkey bourbons, bottled uncut and non-chill filtered at 112.8 proof (56.4% ABV), representing a slightly softer and more approachable barrel proof profile than later higher-proof Rare Breed batches while delivering the signature mature Wild Turkey character that collectors seek. Wild Turkey Rare Breed was introduced in 1991 as one of the first barrel proof bourbons available on the commercial market — predating much ofâ¦",
          "distillery" : "Wild Turkey Distillery",
          "id" : "wild-turkey-rare-breed-barrel-proof-112-8-proof",

@@ -233,8 +233,7 @@
       </div>
       <input type="file" id="file" accept="image/*" capture="environment" hidden>
       <div class="btns">
-        <button class="btn btn-go" id="goRate" disabled data-i18n="btnRate">⭐ Ocena</button>
-        <button class="btn btn-alt" id="goAnalyze" disabled data-i18n="btnAnalyze">🔎 Analiza AI</button>
+        <button class="btn btn-go" id="goRate" disabled data-i18n="btnRate" style="flex:1">⭐ Ocena</button>
       </div>
       <p class="note" data-i18n="priceNote">Ceny i oceny orientacyjne. Pij odpowiedzialnie. 18+</p>
     </div>
@@ -275,7 +274,7 @@ const RENDER_LIMIT = 60; /* ile kart renderujemy na raz (wydajnosc przy tysiacac
 
 const I18N = {
   pl:{ searchPh:"Szukaj bourbona lub destylarni...", featured:"Polecane", byCat:"Przeglądaj wg kategorii", viewAll:"Zobacz wszystkie", recent:"Ostatnio dodane",
-    explore:"Odkrywaj", back:"Wstecz", all:"Wszystkie", proof:"proof", from:"od", byCat:"Przeglądaj wg destylarni",
+    explore:"Odkrywaj", back:"Wstecz", all:"Wszystkie", proof:"proof", from:"od", byCat:"Przeglądaj wg kategorii",
     kick:"Skaner butelek", heroTitle:"Skanuj butelkę, poznaj jej wartość", heroDesc:"Zrób zdjęcie etykiety. Hunter sprawdzi bazę, a gdy trzeba — dopyta sieci.",
     tapShoot:"Dotknij, aby zrobić zdjęcie", tapHint:"lub wybrać z galerii", btnRate:"⭐ Ocena", btnAnalyze:"🔎 Analiza AI", retake:"Zmień zdjęcie",
     priceNote:"Ceny i oceny orientacyjne. Pij odpowiedzialnie. 18+",
@@ -283,7 +282,7 @@ const I18N = {
     valLbl:"Jakość / Cena", quality:"Jakość", price:"Cena (orient.)", distillery:"Destylarnia", region:"Region", mashbill:"Mash bill", abv:"Moc",
     descT:"Opis", historyT:"Historia", linksT:"Linki", notesT:"Profil smaku", sourcesT:"Źródła", fromDb:"Z bazy", fromNet:"Nowość — z sieci", category:"Kategoria",
     notBottle:"Hunter nie widzi tu butelki whisky. Zrób wyraźne zdjęcie etykiety i spróbuj jeszcze raz.",
-    errGeneric:"Coś poszło nie tak. Spróbuj ponownie za chwilę.", errRetry:"Gemini chwilowo przeciążony. Daj mu sekundę i kliknij jeszcze raz.",
+    errGeneric:"Coś poszło nie tak. Spróbuj ponownie za chwilę.", errRetry:"Hunter jest chwilowo przeciążony. Daj mu sekundę i kliknij jeszcze raz.",
     vibe:"Vibe-coded z Claude · projekt weekendowy", explore_t:"Odkrywaj",
     navHome:"Start", navExplore:"Odkrywaj", navScan:"Skanuj", navColl:"Kolekcja", navProfile:"Profil",
     collTitle:"Twoja kolekcja", collSoon:"Wkrótce: zapis zeskanowanych butelek, ulubione i notatki. Budujemy to w kolejnym etapie.",
@@ -292,10 +291,11 @@ const I18N = {
     catBourbon:"Bourbon", catRye:"Rye", catTenn:"Tennessee", catWheat:"Wheated", catScotch:"Scotch", catWorld:"Świat",
     byDist:"Przeglądaj wg destylarni", allDist:"Wszystkie", distLbl:"Destylarnia", loadMore:"Pokaż więcej", results:"poz.",
     priceK:"Cena", statusAvail:"Dostępny", statusSold:"Niedostępny", viewShop:"Zobacz w sklepie ↗", noResults:"Brak wyników dla tego filtra.",
+    allCat:"Wszystkie", stWheated:"Wheated", stSingle:"Single Barrel", stSmall:"Small Batch", stProof:"Barrel Proof", stBib:"Bottled-in-Bond", stLimited:"Edycja limitowana", aiBtn:"🔎 Analiza AI",
     wlT:"Lista życzeń", wlD:"Zapisuj bourbony, które chcesz upolować.", huT:"Upolowane", huD:"Oznaczaj butelki, które już zdobyłeś.",
     coT:"Moja kolekcja", coD:"Twoja półka — wszystkie posiadane butelki w jednym miejscu.", soonTag:"Wkrótce" },
   en:{ searchPh:"Search bourbon or distillery...", featured:"Featured", byCat:"Browse by category", viewAll:"View all", recent:"Recently added",
-    explore:"Explore", back:"Back", all:"All", proof:"proof", from:"from", byCat:"Browse by distillery",
+    explore:"Explore", back:"Back", all:"All", proof:"proof", from:"from", byCat:"Browse by category",
     kick:"Bottle scanner", heroTitle:"Scan a bottle, learn its worth", heroDesc:"Snap the label. Hunter checks the database first, and asks the web only when needed.",
     tapShoot:"Tap to take a photo", tapHint:"or pick from gallery", btnRate:"⭐ Rating", btnAnalyze:"🔎 AI Analysis", retake:"Change photo",
     priceNote:"Prices and ratings are approximate. Drink responsibly. 18+",
@@ -303,7 +303,7 @@ const I18N = {
     valLbl:"Quality / Price", quality:"Quality", price:"Price (approx.)", distillery:"Distillery", region:"Region", mashbill:"Mash bill", abv:"ABV",
     descT:"Description", historyT:"History", linksT:"Links", notesT:"Tasting notes", sourcesT:"Sources", fromDb:"From database", fromNet:"New — from the web", category:"Category",
     notBottle:"Hunter sees no whisky bottle here. Take a clear photo of the label and try again.",
-    errGeneric:"Something went wrong. Please try again shortly.", errRetry:"Gemini is briefly overloaded. Give it a second and tap again.",
+    errGeneric:"Something went wrong. Please try again shortly.", errRetry:"Hunter is briefly overloaded. Give it a second and tap again.",
     vibe:"Vibe-coded with Claude · a weekend project", explore_t:"Explore",
     navHome:"Home", navExplore:"Explore", navScan:"Scan", navColl:"Collection", navProfile:"Profile",
     collTitle:"Your collection", collSoon:"Coming soon: save scanned bottles, favourites and notes. We build this in the next stage.",
@@ -312,6 +312,7 @@ const I18N = {
     catBourbon:"Bourbon", catRye:"Rye", catTenn:"Tennessee", catWheat:"Wheated", catScotch:"Scotch", catWorld:"World",
     byDist:"Browse by distillery", allDist:"All", distLbl:"Distillery", loadMore:"Load more", results:"items",
     priceK:"Price", statusAvail:"In stock", statusSold:"Sold out", viewShop:"View in shop ↗", noResults:"No results for this filter.",
+    allCat:"All", stWheated:"Wheated", stSingle:"Single Barrel", stSmall:"Small Batch", stProof:"Barrel Proof", stBib:"Bottled-in-Bond", stLimited:"Limited Edition", aiBtn:"🔎 AI Analysis",
     wlT:"Wishlist", wlD:"Save the bourbons you want to hunt down.", huT:"Hunted", huD:"Mark the bottles you've already bagged.",
     coT:"My collection", coD:"Your shelf — every bottle you own in one place.", soonTag:"Soon" }
 };
@@ -324,8 +325,28 @@ function distilleryList(){
     .sort(function(a,b){ return b.count-a.count || a.name.localeCompare(b.name); });
 }
 
+/* kategorie = style bourbona (do sekcji na Home i filtra w Explore) */
+const STYLES = [
+  {key:"wheated", i:"stWheated", emoji:"🌾"},
+  {key:"single",  i:"stSingle",  emoji:"🛢️"},
+  {key:"small",   i:"stSmall",   emoji:"👯"},
+  {key:"proof",   i:"stProof",   emoji:"🔥"},
+  {key:"bib",     i:"stBib",     emoji:"🏛️"},
+  {key:"limited", i:"stLimited", emoji:"💎"}
+];
+function styleMatch(b, key){
+  const ty=(b.type||"").toLowerCase(), c=(b.category||"");
+  if(key==="wheated") return ty.indexOf("pszenicz")>=0 || ty.indexOf("wheat")>=0;
+  if(key==="single")  return c==="Pojedyncza beczka";
+  if(key==="small")   return c==="Mała partia";
+  if(key==="proof")   return c==="Pełna moc beczki";
+  if(key==="bib")     return c==="Bottled-in-Bond";
+  if(key==="limited") return c==="Edycja limitowana";
+  return false;
+}
+
 function detectLang(){ const s=localStorage.getItem("bh_lang"); if(s==="pl"||s==="en") return s; const n=(navigator.language||"en").toLowerCase(); return n.indexOf("pl")===0?"pl":"en"; }
-let lang=detectLang(), DB=[], curDist="all", renderN=RENDER_LIMIT;
+let lang=detectLang(), DB=[], curDist="all", curCat="all", renderN=RENDER_LIMIT;
 function fmtPrice(b){ return b.price_str || (b.price!=null?("$"+b.price):"") || b.price_pln || ""; }
 function t(k){ return (I18N[lang]&&I18N[lang][k])||I18N.pl[k]||k; }
 function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
@@ -369,10 +390,10 @@ function renderHome(){
       '<span class="btn-sm" data-id="'+esc(b.id)+'">'+t("viewAll").split(" ")[0]+' →</span></div>'+
       '<div class="bottlepic">'+(b.image?'<img src="'+esc(b.image)+'" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;border-radius:12px">':'🥃')+'</div></div>';
   }).join("");
-  // top destylarnie z licznikami
-  const tops = distilleryList().slice(0,9);
-  document.getElementById("catGrid").innerHTML = tops.map(function(d){
-    return '<div class="cat" data-dist="'+esc(d.name)+'"><div class="ic">🥃</div><div class="lbl">'+esc(d.name.replace(/ Distillery.*$/,""))+'</div><div class="cnt">'+d.count+'</div></div>';
+  // kategorie = style bourbona, z licznikami
+  document.getElementById("catGrid").innerHTML = STYLES.map(function(s){
+    const n = DB.filter(function(b){ return styleMatch(b,s.key); }).length;
+    return '<div class="cat" data-style="'+s.key+'"><div class="ic">'+s.emoji+'</div><div class="lbl">'+t(s.i)+'</div><div class="cnt">'+n+'</div></div>';
   }).join("");
   // recently added (ostatnie z bazy)
   const recent = DB.slice(-12).reverse();
@@ -380,9 +401,14 @@ function renderHome(){
 }
 
 function renderExplore(){
-  // chips = Wszystkie + destylarnie (z licznikami)
+  // aktywna kategoria (styl) jako kasowalny chip + chips destylarni
+  let chips = "";
+  if(curCat!=="all"){
+    const st=STYLES.filter(function(s){return s.key===curCat;})[0];
+    chips += '<button class="chip on" data-clearcat="1">'+(st?st.emoji+" "+t(st.i):curCat)+' ✕</button>';
+  }
   const dl = distilleryList();
-  const chips = '<button class="chip'+(curDist==="all"?' on':'')+'" data-dist="all">'+t("allDist")+'</button>' +
+  chips += '<button class="chip'+(curDist==="all"?' on':'')+'" data-dist="all">'+t("allDist")+'</button>' +
     dl.map(function(d){
       const short=d.name.replace(/ Distillery.*$/,"");
       return '<button class="chip'+(d.name===curDist?' on':'')+'" data-dist="'+esc(d.name)+'">'+esc(short)+' '+d.count+'</button>';
@@ -391,8 +417,9 @@ function renderExplore(){
   const q = (document.getElementById("exploreSearchInput").value||"").toLowerCase().trim();
   let list = DB.filter(function(b){
     const okDist = curDist==="all" || b.distillery===curDist;
+    const okCat  = curCat==="all" || styleMatch(b,curCat);
     const okQ = !q || (b.name+" "+(b.distillery||"")).toLowerCase().indexOf(q)>=0;
-    return okDist && okQ;
+    return okDist && okCat && okQ;
   });
   const grid = document.getElementById("exploreGrid");
   if(!list.length){ grid.innerHTML = '<div class="empty" style="grid-column:1/-1">'+t("noResults")+'<br><br>'+t("scanAdd")+'</div>'; return; }
@@ -412,14 +439,17 @@ function renderExplore(){
 document.addEventListener("click",function(e){
   const card = e.target.closest("[data-id]");
   if(card){ openDetail(card.getAttribute("data-id")); return; }
-  const distCell = e.target.closest(".cat[data-dist]");
-  if(distCell){ curDist=distCell.getAttribute("data-dist"); renderN=RENDER_LIMIT; renderExplore(); showView("explore"); return; }
+  const styleCell = e.target.closest(".cat[data-style]");
+  if(styleCell){ curCat=styleCell.getAttribute("data-style"); curDist="all"; renderN=RENDER_LIMIT; renderExplore(); showView("explore"); return; }
+  const clearCat = e.target.closest(".chip[data-clearcat]");
+  if(clearCat){ curCat="all"; renderN=RENDER_LIMIT; renderExplore(); return; }
   const chip = e.target.closest(".chip[data-dist]");
   if(chip){ curDist=chip.getAttribute("data-dist"); renderN=RENDER_LIMIT; renderExplore(); return; }
   if(e.target.id==="loadMoreBtn"){ renderN+=RENDER_LIMIT; renderExplore(); return; }
+  if(e.target.id==="goAnalyzeBtn"){ scan("analyze"); return; }
 });
-document.getElementById("catAll").addEventListener("click",function(){ curDist="all"; renderN=RENDER_LIMIT; renderExplore(); showView("explore"); });
-document.getElementById("recentAll").addEventListener("click",function(){ curDist="all"; renderN=RENDER_LIMIT; renderExplore(); showView("explore"); });
+document.getElementById("catAll").addEventListener("click",function(){ curDist="all"; curCat="all"; renderN=RENDER_LIMIT; renderExplore(); showView("explore"); });
+document.getElementById("recentAll").addEventListener("click",function(){ curDist="all"; curCat="all"; renderN=RENDER_LIMIT; renderExplore(); showView("explore"); });
 document.getElementById("homeSearch").addEventListener("click",function(){ showView("explore"); setTimeout(function(){ document.getElementById("exploreSearchInput").focus(); },50); });
 document.getElementById("exploreSearchInput").addEventListener("input",function(){ renderN=RENDER_LIMIT; renderExplore(); });
 document.getElementById("detailBack").addEventListener("click",function(){ showView("explore"); });
@@ -460,7 +490,7 @@ function openDetail(id){
 /* ================= SKANER ================= */
 let imgData=null, imgMime="image/jpeg", busy=false, loadTimer=null;
 const shot=document.getElementById("shot"), fileInput=document.getElementById("file");
-const goRate=document.getElementById("goRate"), goAnalyze=document.getElementById("goAnalyze");
+const goRate=document.getElementById("goRate");
 shot.addEventListener("click",function(){ if(!busy) fileInput.click(); });
 fileInput.addEventListener("change",function(e){
   const f=e.target.files&&e.target.files[0]; if(!f) return;
@@ -468,7 +498,7 @@ fileInput.addEventListener("change",function(e){
     imgData=res.b64; imgMime=res.mime;
     shot.innerHTML='<img src="data:'+res.mime+';base64,'+res.b64+'" alt=""><button class="retake" id="retake">'+t("retake")+'</button>';
     document.getElementById("retake").addEventListener("click",function(ev){ ev.stopPropagation(); fileInput.click(); });
-    goRate.disabled=false; goAnalyze.disabled=false;
+    goRate.disabled=false;
     document.getElementById("scanResult").innerHTML=""; document.getElementById("err").style.display="none";
   });
 });
@@ -477,11 +507,11 @@ function compress(file){ return new Promise(function(resolve){ const img=new Ima
     if(w>h&&w>max){h=Math.round(h*max/w);w=max;}else if(h>=w&&h>max){w=Math.round(w*max/h);h=max;}
     const c=document.createElement("canvas");c.width=w;c.height=h;c.getContext("2d").drawImage(img,0,0,w,h);
     const d=c.toDataURL("image/jpeg",0.72);URL.revokeObjectURL(url);resolve({b64:d.split(",")[1],mime:"image/jpeg"}); }; img.src=url; }); }
-function startLoading(mode){ busy=true; goRate.disabled=true; goAnalyze.disabled=true;
+function startLoading(mode){ busy=true; goRate.disabled=true;
   document.getElementById("loading").style.display="block"; document.getElementById("scanResult").innerHTML=""; document.getElementById("err").style.display="none";
   const msgs = mode==="analyze"?[t("ldId"),t("ldHist"),t("ldNet"),t("ldPrice")]:[t("ldId"),t("ldDb"),t("ldNet"),t("ldPrice")];
   let i=0; const lt=document.getElementById("loadtxt"); lt.textContent=msgs[0]; loadTimer=setInterval(function(){ i=(i+1)%msgs.length; lt.textContent=msgs[i]; },1800); }
-function stopLoading(){ busy=false; goRate.disabled=false; goAnalyze.disabled=false; clearInterval(loadTimer); document.getElementById("loading").style.display="none"; }
+function stopLoading(){ busy=false; goRate.disabled=false; clearInterval(loadTimer); document.getElementById("loading").style.display="none"; }
 function showErr(m){ const e=document.getElementById("err"); e.textContent=m; e.style.display="block"; }
 function scan(mode){
   if(!imgData||busy) return; if(!WORKER_URL){ showErr("WORKER_URL?"); return; }
@@ -498,7 +528,6 @@ function scan(mode){
   }).catch(function(){ stopLoading(); showErr(t("errGeneric")); });
 }
 goRate.addEventListener("click",function(){ scan("rate"); });
-goAnalyze.addEventListener("click",function(){ scan("analyze"); });
 function renderScan(res, mode){
   const isNew = res.source==="net" || res.isNew;
   const badge = isNew?'<span class="badge net">'+t("fromNet")+'</span>':'<span class="badge db">'+t("fromDb")+'</span>';
@@ -527,7 +556,9 @@ function renderScan(res, mode){
     const links=res.sources||[];
     if(links.length) body+='<div class="sec-t">'+t("sourcesT")+'</div><div class="links">'+links.slice(0,5).map(function(s){const u=esc(s.url||s);const tt=esc(s.title||s.url||s);return u?'<a href="'+u+'" target="_blank">'+tt+'</a>':tt;}).join("<br>")+'</div>';
   }
-  document.getElementById("scanResult").innerHTML=head+body+'</div>';
+  // w trybie Ocena: na dole przycisk do glebokiej Analizy AI (agent na zadanie)
+  const extra = (mode!=="analyze") ? '<button class="btn btn-alt" id="goAnalyzeBtn" style="width:100%;margin-top:14px">'+t("aiBtn")+'</button>' : '';
+  document.getElementById("scanResult").innerHTML=head+body+'</div>'+extra;
   document.getElementById("scanResult").scrollIntoView({behavior:"smooth",block:"start"});
 }
 

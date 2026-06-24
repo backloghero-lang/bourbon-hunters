@@ -117,7 +117,7 @@ export default {
     if(mode==="rate"){
       if(hit){
         const result={ name:hit.name, type:hit.type, category:hit.category, distillery:hit.distillery, region:hit.region,
-          mashbill:hit.mashbill, abv:hit.abv, proof:hit.proof, price:hit.price_pln, quality:hit.quality, value:hit.value,
+          mashbill:hit.mashbill, abv:hit.abv, proof:hit.proof, price:(hit.price_str||hit.price_pln), quality:hit.quality, value:hit.value,
           verdict:hit.desc, notes:hit.notes, image:hit.image||"", source:"baza", isNew:false };
         return J({result:result, mode:mode, remaining:consume(), owner:owner, matched:hit.id}, 200, cors);
       }
@@ -144,7 +144,7 @@ export default {
 
     // =================== TRYB ANALYZE ===================
     let ctx="Butelka rozpoznana ze zdjecia: \""+bottleName+"\".";
-    if(hit){ ctx+=" Dane z naszej bazy (uzyj jako fakty): "+JSON.stringify({name:hit.name,distillery:hit.distillery,region:hit.region,type:hit.type,category:hit.category,proof:hit.proof,mashbill:hit.mashbill,price:hit.price_pln,quality:hit.quality,value:hit.value}); }
+    if(hit){ ctx+=" Dane z naszej bazy (uzyj jako fakty): "+JSON.stringify({name:hit.name,distillery:hit.distillery,region:hit.region,type:hit.type,category:hit.category,proof:hit.proof,mashbill:hit.mashbill,price:(hit.price_str||hit.price_pln),quality:hit.quality,value:hit.value}); }
     const analyzePayload={
       systemInstruction:{parts:[{text:system}]},
       contents:[{role:"user",parts:[{text:ctx+" Przygotuj ROZBUDOWANA analize. Wyszukaj w sieci historie destylarni i ciekawostki, podaj realne linki. Zwroc TYLKO JSON: {\"name\",\"type\",\"distillery\",\"region\",\"price\",\"quality\":1-5,\"value\":1-5,\"verdict\":\"jedno zdanie z jajem\",\"description\":[\"2-4 akapity: profil smaku, dla kogo, czy warto\"],\"history\":[\"1-2 akapity o destylarni i historii marki\"],\"links\":[{\"title\",\"url\"}]}."}]}],
@@ -156,7 +156,7 @@ export default {
     const ra=parseJson(ga.txt);
     if(!ra) return J({error:"parse",raw:(ga.txt||"").slice(0,200)},502,cors);
     if((!ra.links||!ra.links.length) && ga.sources.length) ra.links=ga.sources;
-    if(hit){ ra.source="baza"; ra.image=hit.image||""; if(ra.price==null) ra.price=hit.price_pln; if(ra.quality==null) ra.quality=hit.quality; if(ra.value==null) ra.value=hit.value; }
+    if(hit){ ra.source="baza"; ra.image=hit.image||""; if(ra.price==null) ra.price=(hit.price_str||hit.price_pln); if(ra.quality==null) ra.quality=hit.quality; if(ra.value==null) ra.value=hit.value; }
     else { ra.source="net"; ra.isNew=true; ra.image=""; }
     return J({result:ra, mode:mode, remaining:consume(), owner:owner, matched:hit?hit.id:null}, 200, cors);
   }
