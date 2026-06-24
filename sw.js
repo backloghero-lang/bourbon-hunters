@@ -1,5 +1,5 @@
-/* DramScan service worker — cache powloki aplikacji (dziala offline). */
-const CACHE = "bourbon-hunters-v7";
+/* Bourbon Hunters service worker - network-first dla aktualizacji aplikacji i bazy. */
+const CACHE = "bourbon-hunters-v8";
 const ASSETS = [
   "./",
   "./index.html",
@@ -22,20 +22,35 @@ self.addEventListener("activate", function(e){
   );
 });
 
+function shouldNetworkFirst(url){
+  return url.endsWith("/") || url.indexOf("/index.html")!==-1 || url.indexOf("/db/bourbons.json")!==-1 || url.indexOf("/sw.js")!==-1;
+}
+
 self.addEventListener("fetch", function(e){
   const req = e.request;
-  // Zapytania do API (POST / Worker) zawsze z sieci — nie cache'ujemy.
   if (req.method !== "GET" || req.url.indexOf("workers.dev") !== -1 || req.url.indexOf("/api/") !== -1) return;
-  // Powloka aplikacji: najpierw cache, potem siec (z aktualizacja cache).
-  e.respondWith(
-    caches.match(req).then(function(hit){
-      const net = fetch(req).then(function(res){
+
+  if (shouldNetworkFirst(req.url)){
+    e.respondWith(
+      fetch(req).then(function(res){
         if (res && res.status===200 && res.type==="basic"){
-          const copy = res.clone(); caches.open(CACHE).then(function(c){ c.put(req, copy); });
+          const copy=res.clone(); caches.open(CACHE).then(function(c){ c.put(req, copy); });
         }
         return res;
-      }).catch(function(){ return hit; });
-      return hit || net;
+      }).catch(function(){ return caches.match(req); })
+    );
+    return;
+  }
+
+  e.respondWith(
+    caches.match(req).then(function(hit){
+      if(hit) return hit;
+      return fetch(req).then(function(res){
+        if (res && res.status===200 && res.type==="basic"){
+          const copy=res.clone(); caches.open(CACHE).then(function(c){ c.put(req, copy); });
+        }
+        return res;
+      });
     })
   );
 });

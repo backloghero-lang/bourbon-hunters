@@ -121,6 +121,26 @@
     background:var(--card2);border:1px solid var(--amber);color:var(--gold);font-size:13px;font-weight:700;padding:11px 18px;border-radius:24px;
     box-shadow:var(--shadow);z-index:60;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;max-width:90%}
   #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  /* collection tabs */
+  .tabs{display:flex;gap:8px;overflow-x:auto;margin:4px -16px 16px;padding:0 16px 2px}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex:none;border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:999px;padding:9px 13px;font-size:13px;font-weight:800;cursor:pointer;white-space:nowrap}
+  .tab.on{background:var(--amber);border-color:var(--amber);color:#241708}
+
+  /* unified bottle image frame */
+  .dphoto{width:100%;height:300px;border-radius:16px;border:1px solid var(--line);display:grid;place-items:center;margin:16px 0;background:radial-gradient(70% 70% at 50% 28%,rgba(220,184,119,.18),rgba(0,0,0,.32));overflow:hidden}
+  .dphoto img{max-width:82%;max-height:92%;width:auto;height:auto;object-fit:contain;filter:drop-shadow(0 14px 18px rgba(0,0,0,.45))}
+  .shot img{width:100%;height:100%;object-fit:cover}
+
+  /* tasting / rating */
+  .taste-grid{display:grid;grid-template-columns:1fr;gap:8px;margin:10px 0 4px}
+  .taste-row{border:1px solid var(--line);background:rgba(0,0,0,.16);border-radius:12px;padding:10px 12px}
+  .taste-row .k{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:900;margin-bottom:3px}
+  .taste-row .v{font-size:13px;line-height:1.35;color:var(--txt)}
+  .user-stars{display:flex;gap:5px;align-items:center;font-size:23px;line-height:1;color:var(--line);user-select:none}
+  .user-stars span{cursor:pointer;transition:transform .08s,color .15s}
+  .user-stars span.on{color:var(--gold)}
+  .user-stars span:active{transform:scale(.88)}
 
   /* detail */
   .back{display:inline-flex;align-items:center;gap:6px;color:var(--amber2);font-size:14px;font-weight:700;cursor:pointer;margin:6px 0 14px}
@@ -267,14 +287,15 @@
     <div id="scanResult"></div>
   </section>
 
-  <!-- COLLECTION: lista życzeń (działa) + hunted/kolekcja (placeholdery) -->
+  <!-- COLLECTION -->
   <section class="view" id="view-collection">
-    <div class="sec-head" style="margin-top:8px"><h3 data-i18n="wlT">Lista życzeń</h3></div>
-    <div id="wlList"></div>
-    <div class="sec-head" style="margin-top:22px"><h3 data-i18n="huT">Upolowane</h3></div>
-    <div class="feat" style="margin-bottom:12px"><div class="info"><div class="kick"><span data-i18n="soonTag">Wkrótce</span></div><h4 data-i18n="huT">Upolowane</h4><div class="sub" data-i18n="huD">Oznaczaj butelki, które już zdobyłeś.</div></div><div class="bottlepic">🎯</div></div>
-    <div class="sec-head" style="margin-top:22px"><h3 data-i18n="coT">Moja kolekcja</h3></div>
-    <div class="feat"><div class="info"><div class="kick"><span data-i18n="soonTag">Wkrótce</span></div><h4 data-i18n="coT">Moja kolekcja</h4><div class="sub" data-i18n="coD">Twoja półka — wszystkie posiadane butelki w jednym miejscu.</div></div><div class="bottlepic">🥃</div></div>
+    <div class="sec-head" style="margin-top:8px"><h3 data-i18n="navColl">Kolekcja</h3></div>
+    <div class="tabs" id="collectionTabs">
+      <button class="tab on" data-ctab="wishlist" data-i18n="wlT">Lista życzeń</button>
+      <button class="tab" data-ctab="hunted" data-i18n="huT">Upolowane</button>
+      <button class="tab" data-ctab="owned" data-i18n="coT">Moja kolekcja</button>
+    </div>
+    <div id="collectionList"></div>
   </section>
 
   <!-- PROFILE -->
@@ -320,7 +341,7 @@ const I18N = {
     byDist:"Przeglądaj wg destylarni", allDist:"Wszystkie", distLbl:"Destylarnia", loadMore:"Pokaż więcej", results:"poz.",
     priceK:"Cena", statusAvail:"Dostępny", statusSold:"Niedostępny", viewShop:"Zobacz w sklepie ↗", noResults:"Brak wyników dla tego filtra.",
     allCat:"Wszystkie", stWheated:"Wheated", stSingle:"Single Barrel", stSmall:"Small Batch", stProof:"Barrel Proof", stBib:"Bottled-in-Bond", stLimited:"Edycja limitowana", aiBtn:"🔎 Analiza AI",
-    wlAdded:"Dodano do listy życzeń ♥", wlEmpty:"Twoja lista życzeń jest pusta. Dodawaj butelki serduszkiem ♡.",
+    wlAdded:"Dodano do listy życzeń ♥", wlEmpty:"Twoja lista życzeń jest pusta. Dodawaj butelki serduszkiem ♡.", emptyHunted:"Nie masz jeszcze upolowanych butelek.", emptyCollection:"Twoja kolekcja jest pusta.", noseT:"Nos", tasteT:"Smak", finishT:"Finisz", suggestedPrice:"Cena sugerowana", dbQuality:"Jakość z bazy", userQuality:"Twoja jakość",
     wlT:"Lista życzeń", wlD:"Zapisuj bourbony, które chcesz upolować.", huT:"Upolowane", huD:"Oznaczaj butelki, które już zdobyłeś.",
     coT:"Moja kolekcja", coD:"Twoja półka — wszystkie posiadane butelki w jednym miejscu.", soonTag:"Wkrótce" },
   en:{ searchPh:"Search bourbon or distillery...", featured:"Featured", byCat:"Browse by category", viewAll:"View all", recent:"Recently added",
@@ -342,7 +363,7 @@ const I18N = {
     byDist:"Browse by distillery", allDist:"All", distLbl:"Distillery", loadMore:"Load more", results:"items",
     priceK:"Price", statusAvail:"In stock", statusSold:"Sold out", viewShop:"View in shop ↗", noResults:"No results for this filter.",
     allCat:"All", stWheated:"Wheated", stSingle:"Single Barrel", stSmall:"Small Batch", stProof:"Barrel Proof", stBib:"Bottled-in-Bond", stLimited:"Limited Edition", aiBtn:"🔎 AI Analysis",
-    wlAdded:"Added to wishlist ♥", wlEmpty:"Your wishlist is empty. Add bottles with the ♡ heart.",
+    wlAdded:"Added to wishlist ♥", wlEmpty:"Your wishlist is empty. Add bottles with the ♡ heart.", emptyHunted:"No hunted bottles yet.", emptyCollection:"Your collection is empty.", noseT:"Nose", tasteT:"Taste", finishT:"Finish", suggestedPrice:"Suggested price", dbQuality:"Database quality", userQuality:"Your quality",
     wlT:"Wishlist", wlD:"Save the bourbons you want to hunt down.", huT:"Hunted", huD:"Mark the bottles you've already bagged.",
     coT:"My collection", coD:"Your shelf — every bottle you own in one place.", soonTag:"Soon" }
 };
@@ -388,7 +409,13 @@ function wlToggle(id){ const i=WL.indexOf(id); if(i>=0){ WL.splice(i,1); wlSave(
 let toastTimer=null;
 function toast(msg){ const el=document.getElementById("toast"); if(!el) return; el.textContent=msg; el.classList.add("show"); clearTimeout(toastTimer); toastTimer=setTimeout(function(){ el.classList.remove("show"); },2000); }
 function heartHtml(id){ return '<div class="heart'+(wlHas(id)?' on':'')+'" data-heart="'+esc(id)+'" role="button" aria-label="wishlist">'+HEART_SVG+'</div>'; }
-function rateHtml(b){ const q=(b.quality!=null?b.quality:b.value); return q!=null ? '<span class="rate">★ '+Number(q).toFixed(1)+'</span>' : '<span class="rate none">☆</span>'; }
+const HUNT=(function(){ try{ return JSON.parse(localStorage.getItem("bh_hunted")||"[]"); }catch(e){ return []; } })();
+const OWNED=(function(){ try{ return JSON.parse(localStorage.getItem("bh_collection")||"[]"); }catch(e){ return []; } })();
+let collectionTab="wishlist";
+const UR=(function(){ try{ return JSON.parse(localStorage.getItem("bh_user_ratings")||"{}"); }catch(e){ return {}; } })();
+function urSave(){ try{ localStorage.setItem("bh_user_ratings",JSON.stringify(UR)); }catch(e){} }
+function urStars(id){ const n=Number(UR[id]||0); let out='<div class="user-stars" data-userstars="'+esc(id)+'">'; for(let i=1;i<=5;i++){ out+='<span data-ur="'+esc(id)+'" data-v="'+i+'" class="'+(i<=n?'on':'')+'">★</span>'; } return out+'</div>'; }
+function rateHtml(b){ const q=(b.quality!=null?b.quality:b.value); return q!=null ? '<span class="rate">'+starStr(q)+'</span>' : '<span class="rate none">☆☆☆☆☆</span>'; }
 
 /* wiersz listy (Odkrywaj / Lista życzeń) */
 function listRow(b){
@@ -399,6 +426,33 @@ function listRow(b){
     '<div class="right">'+rateHtml(b)+heartHtml(b.id)+'</div></div>';
 }
 
+function firstVal(o, keys){ for(const k of keys){ if(o && o[k]!=null && String(o[k]).trim()) return String(o[k]).trim(); } return ""; }
+function tastingParts(o){
+  const notes=firstVal(o,["notes","tasting_notes","profile"]);
+  return {
+    nose:firstVal(o,["nose","aroma","scent"]),
+    taste:firstVal(o,["taste","palate","flavor"]) || notes,
+    finish:firstVal(o,["finish","aftertaste"])
+  };
+}
+function tastingBlock(o){
+  const p=tastingParts(o);
+  return '<div class="sec-t">'+t("notesT")+'</div><div class="taste-grid">'+
+    '<div class="taste-row"><div class="k">'+t("noseT")+'</div><div class="v">'+esc(p.nose||'-')+'</div></div>'+
+    '<div class="taste-row"><div class="k">'+t("tasteT")+'</div><div class="v">'+esc(p.taste||'-')+'</div></div>'+
+    '<div class="taste-row"><div class="k">'+t("finishT")+'</div><div class="v">'+esc(p.finish||'-')+'</div></div>'+
+  '</div>';
+}
+function ratingPanel(o){
+  const id=o.id||o.handle||o.name||"scan";
+  let pills='';
+  if(o.proof) pills+='<div class="pill"><div class="k">Proof</div><div class="v">'+esc(o.proof)+'</div></div>';
+  const price=fmtPrice(o)||o.price||o.price_str||o.price_pln||"-";
+  pills+='<div class="pill"><div class="k">'+t("suggestedPrice")+'</div><div class="v" style="color:var(--gold)">'+esc(price)+'</div></div>';
+  if(o.quality!=null) pills+='<div class="pill"><div class="k">'+t("dbQuality")+'</div><div class="v" style="color:var(--amber2)">'+starStr(o.quality)+'</div></div>';
+  pills+='<div class="pill"><div class="k">'+t("userQuality")+'</div><div class="v">'+urStars(id)+'</div></div>';
+  return '<div class="row">'+pills+'</div>';
+}
 /* karta w stylu "Polecane" (używana też w "Ostatnio dodane") */
 function featCard(b, kick){
   const price=fmtPrice(b);
@@ -424,13 +478,17 @@ document.getElementById("langToggle").addEventListener("click",function(){ lang 
 function showView(name){
   document.querySelectorAll(".view").forEach(function(v){ v.classList.toggle("active", v.id==="view-"+name); });
   document.querySelectorAll(".nav button").forEach(function(b){ b.classList.toggle("on", b.getAttribute("data-view")===name); });
-  if(name==="collection") renderWishlist();
+  if(name==="collection") renderCollection(collectionTab);
   window.scrollTo({top:0,behavior:"instant"});
 }
-function renderWishlist(){
-  const el=document.getElementById("wlList"); if(!el) return;
-  const items=WL.map(function(id){ return DB.find(function(b){return b.id===id;}); }).filter(Boolean);
-  el.innerHTML = items.length ? '<div class="blist">'+items.map(listRow).join("")+'</div>' : '<div class="empty">'+t("wlEmpty")+'</div>';
+function renderCollection(tab){
+  collectionTab=tab||collectionTab||"wishlist";
+  document.querySelectorAll("#collectionTabs .tab").forEach(function(b){ b.classList.toggle("on", b.getAttribute("data-ctab")===collectionTab); });
+  const el=document.getElementById("collectionList"); if(!el) return;
+  const ids = collectionTab==="wishlist" ? WL : (collectionTab==="hunted" ? HUNT : OWNED);
+  const emptyKey = collectionTab==="wishlist" ? "wlEmpty" : (collectionTab==="hunted" ? "emptyHunted" : "emptyCollection");
+  const items=ids.map(function(id){ return DB.find(function(b){return b.id===id;}); }).filter(Boolean);
+  el.innerHTML = items.length ? '<div class="blist">'+items.map(listRow).join("")+'</div>' : '<div class="empty">'+t(emptyKey)+'</div>';
 }
 document.querySelectorAll(".nav button").forEach(function(b){ b.addEventListener("click",function(){ showView(b.getAttribute("data-view")); }); });
 
@@ -489,6 +547,10 @@ function renderExplore(){
 
 /* delegacja klikniec na karty/destylarnie */
 document.addEventListener("click",function(e){
+  const ctab=e.target.closest("[data-ctab]");
+  if(ctab){ renderCollection(ctab.getAttribute("data-ctab")); return; }
+  const ur=e.target.closest("[data-ur]");
+  if(ur){ e.stopPropagation(); const id=ur.getAttribute("data-ur"), v=Number(ur.getAttribute("data-v")); UR[id]=v; urSave(); document.querySelectorAll('[data-userstars="'+id+'"] span').forEach(function(st){ st.classList.toggle("on", Number(st.getAttribute("data-v"))<=v); }); return; }
   const heartEl = e.target.closest("[data-heart]");
   if(heartEl){
     e.stopPropagation();
@@ -496,7 +558,7 @@ document.addEventListener("click",function(e){
     document.querySelectorAll('.heart[data-heart="'+id+'"]').forEach(function(h){ h.classList.toggle("on",added); });
     heartEl.classList.add("pulse"); setTimeout(function(){ heartEl.classList.remove("pulse"); },300);
     if(added) toast(t("wlAdded"));
-    if(document.getElementById("view-collection").classList.contains("active")) renderWishlist();
+    if(document.getElementById("view-collection").classList.contains("active")) renderCollection(collectionTab);
     return;
   }
   const card = e.target.closest("[data-id]");
@@ -519,36 +581,26 @@ document.getElementById("detailBack").addEventListener("click",function(){ showV
 function openDetail(id){
   const b = DB.find(function(x){return x.id===id;});
   if(!b) return;
-  const origin=[b.distillery,b.region].filter(Boolean).map(esc).join(" · ");
-  const pic = b.image ? '<img src="'+esc(b.image)+'" loading="lazy" decoding="async" style="width:100%;border-radius:14px;margin-bottom:14px">' : '';
   const price = fmtPrice(b);
-  const statusBadge = b.status==="sold_out"
+  const origin = [b.distillery,b.region].filter(Boolean).map(esc).join(" · ");
+  const pic = b.image ? '<div class="dphoto"><img src="'+esc(b.image)+'" alt="'+esc(b.name)+'" loading="eager" decoding="async"></div>' : '<div class="dphoto">🥃</div>';
+  const statusBadge = b.status==="sold_out" || b.available===false
     ? '<span class="badge net">'+t("statusSold")+'</span>'
     : '<span class="badge db">'+t("statusAvail")+'</span>';
-  // verdict tylko gdy mamy ocene jakosc/cena (z bazy kuratorskiej)
-  const verdict = (b.value!=null)
-    ? '<div class="verdict"><div class="score">'+b.value+'<small>/5</small></div>'+
-        '<div style="flex:1"><div class="lbl">'+t("valLbl")+'</div><div class="stars" style="color:var(--gold)">'+starStr(b.value)+'</div></div></div>'
+  const valueBlock = (b.value!=null)
+    ? '<div class="verdict"><div class="score">'+b.value+'<small>/5</small></div><div style="flex:1"><div class="lbl">'+t("valLbl")+'</div><div class="stars" style="color:var(--gold)">'+starStr(b.value)+'</div></div></div>'
     : '';
-  let pills='';
-  if(price) pills+='<div class="pill"><div class="k">'+t("priceK")+'</div><div class="v" style="color:var(--gold)">'+esc(price)+'</div></div>';
-  if(b.quality!=null) pills+='<div class="pill"><div class="k">'+t("quality")+'</div><div class="v" style="color:var(--amber2)">'+starStr(b.quality)+'</div></div>';
-  if(b.abv) pills+='<div class="pill"><div class="k">'+t("abv")+'</div><div class="v">'+esc(b.abv)+'%</div></div>';
-  if(b.proof) pills+='<div class="pill"><div class="k">Proof</div><div class="v">'+esc(b.proof)+'</div></div>';
   document.getElementById("detailBody").innerHTML =
     '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">'+statusBadge+heartHtml(b.id)+'</div>'+
     '<div class="dhead">'+esc(b.name)+'</div>'+
     '<div class="dtype">'+esc(b.type||"")+(b.category&&b.category!=="Standard"?' · '+esc(b.category):'')+'</div>'+
     (origin?'<div class="dorigin">'+origin+'</div>':'')+pic+
-    verdict+
-    (pills?'<div class="row">'+pills+'</div>':'')+
+    valueBlock+ratingPanel(b)+tastingBlock(b)+
     (b.desc?'<div class="sec-t">'+t("descT")+'</div><p class="desc">'+esc(b.desc)+'</p>':'')+
     (b.mashbill?'<div class="sec-t">'+t("mashbill")+'</div><p class="desc">'+esc(b.mashbill)+'</p>':'')+
-    (b.notes?'<div class="sec-t">'+t("notesT")+'</div><p class="desc">'+esc(b.notes)+'</p>':'')+
     (b.url?'<div class="links" style="margin-top:14px"><a href="'+esc(b.url)+'" target="_blank" rel="noopener">'+t("viewShop")+'</a></div>':'');
   showView("detail");
 }
-
 /* ================= SKANER ================= */
 let imgData=null, imgMime="image/jpeg", busy=false, loadTimer=null;
 const shot=document.getElementById("shot"), fileInput=document.getElementById("file");
@@ -594,16 +646,13 @@ function renderScan(res, mode){
   const isNew = res.source==="net" || res.isNew;
   const badge = isNew?'<span class="badge net">'+t("fromNet")+'</span>':'<span class="badge db">'+t("fromDb")+'</span>';
   const origin=[res.distillery,res.region].filter(Boolean).map(esc).join(" · ");
-  const img=res.image?'<img src="'+esc(res.image)+'" style="width:100%;border-radius:12px;margin-bottom:14px">':'';
+  const img=res.image?'<div class="dphoto"><img src="'+esc(res.image)+'" alt="'+esc(res.name||"")+'" loading="eager" decoding="async"></div>':'';
   let head='<div class="card">'+badge+'<div class="name">'+esc(res.name||"-")+'</div>'+
     (res.type?'<div class="dtype">'+esc(res.type)+(res.category?' · '+esc(res.category):'')+'</div>':'')+
     (origin?'<div class="dorigin">'+origin+'</div>':'')+img+
     '<div class="verdict"><div class="score">'+(res.value||"?")+'<small>/5</small></div>'+
       '<div style="flex:1"><div class="lbl">'+t("valLbl")+'</div><div class="stars" style="color:var(--gold)">'+starStr(res.value)+'</div>'+
-      (res.verdict?'<div class="vtxt" style="margin-top:6px">'+esc(res.verdict)+'</div>':'')+'</div></div>'+
-    '<div class="row"><div class="pill"><div class="k">'+t("quality")+'</div><div class="v" style="color:var(--amber2)">'+starStr(res.quality)+'</div></div>'+
-      '<div class="pill"><div class="k">'+t("price")+'</div><div class="v">'+esc(res.price||"-")+'</div></div>'+
-      (res.abv?'<div class="pill"><div class="k">'+t("abv")+'</div><div class="v">'+esc(res.abv)+'%</div></div>':'')+'</div>';
+      (res.verdict?'<div class="vtxt" style="margin-top:6px">'+esc(res.verdict)+'</div>':'')+'</div></div>'+ratingPanel(res)+tastingBlock(res);
   let body='';
   if(mode==="analyze"){
     const descs=Array.isArray(res.description)?res.description:(res.description?[res.description]:[]);
@@ -614,16 +663,13 @@ function renderScan(res, mode){
     if(links.length) body+='<div class="sec-t">'+t("linksT")+'</div><div class="links">'+links.slice(0,6).map(function(s){const u=esc(s.url||s);const tt=esc(s.title||s.url||s);return u?'<a href="'+u+'" target="_blank">'+tt+'</a>':tt;}).join("<br>")+'</div>';
   } else {
     if(res.mashbill) body+='<div class="sec-t">'+t("mashbill")+'</div><p class="desc">'+esc(res.mashbill)+'</p>';
-    if(res.notes) body+='<div class="sec-t">'+t("notesT")+'</div><p class="desc">'+esc(res.notes)+'</p>';
     const links=res.sources||[];
     if(links.length) body+='<div class="sec-t">'+t("sourcesT")+'</div><div class="links">'+links.slice(0,5).map(function(s){const u=esc(s.url||s);const tt=esc(s.title||s.url||s);return u?'<a href="'+u+'" target="_blank">'+tt+'</a>':tt;}).join("<br>")+'</div>';
   }
-  // w trybie Ocena: na dole przycisk do glebokiej Analizy AI (agent na zadanie)
   const extra = (mode!=="analyze") ? '<button class="btn btn-alt" id="goAnalyzeBtn" style="width:100%;margin-top:14px">'+t("aiBtn")+'</button>' : '';
   document.getElementById("scanResult").innerHTML=head+body+'</div>'+extra;
   document.getElementById("scanResult").scrollIntoView({behavior:"smooth",block:"start"});
 }
-
 applyLang();
 if("serviceWorker" in navigator){ window.addEventListener("load",function(){ navigator.serviceWorker.register("sw.js").catch(function(){}); }); }
 </script>
@@ -634,13 +680,13 @@ if("serviceWorker" in navigator){ window.addEventListener("load",function(){ nav
   <radialGradient id="bhBg" cx="50%" cy="38%" r="72%"><stop offset="0%" stop-color="#1E3D28"></stop><stop offset="100%" stop-color="#0D1E12"></stop></radialGradient>
   <radialGradient id="bhBottleG" cx="38%" cy="28%" r="68%" fx="38%" fy="28%"><stop offset="0%" stop-color="#EED068"></stop><stop offset="55%" stop-color="#C49A30"></stop><stop offset="100%" stop-color="#8A6020"></stop></radialGradient>
   <filter id="bhBurnTurb" x="-15%" y="-15%" width="130%" height="130%">
-    <feTurbulence type="fractalNoise" baseFrequency="0.014 0.03" numOctaves="3" seed="7" result="n"></feTurbulence>
-    <feDisplacementMap in="SourceGraphic" in2="n" scale="26" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+    <feTurbulence type="fractalNoise" baseFrequency="0.008 0.018" numOctaves="2" seed="7" result="n"></feTurbulence>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="12" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
   </filter>
   <linearGradient id="bhBurnGrad" gradientUnits="userSpaceOnUse" x1="0" y1="-120" x2="0" y2="844">
     <stop offset="0" stop-color="#000"></stop>
     <stop id="bhStop2" offset="0" stop-color="#000"></stop>
-    <stop id="bhStop3" offset="0.022" stop-color="#fff"></stop>
+    <stop id="bhStop3" offset="0.04" stop-color="#fff"></stop>
     <stop offset="1" stop-color="#fff"></stop>
   </linearGradient>
   <mask id="bhBurnMask" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="0" y="0" width="390" height="844">
@@ -669,17 +715,15 @@ if("serviceWorker" in navigator){ window.addEventListener("load",function(){ nav
             <polygon transform="rotate(225 200 200)" points="200,100 192,164 200,200 208,164" fill="#2E6030" opacity="0.92"></polygon>
             <polygon transform="rotate(315 200 200)" points="200,100 192,164 200,200 208,164" fill="#2E6030" opacity="0.92"></polygon>
             <circle cx="200" cy="200" r="8" fill="#0E1E12" stroke="#C8A028" stroke-width="1.6"></circle>
-            <circle cx="200" cy="200" r="3" fill="#C8A028"></circle>
-            <rect x="193" y="86" width="14" height="8" rx="3" fill="#6B3A10"></rect>
-            <ellipse cx="200" cy="93" rx="9" ry="4.5" fill="#8B1A18"></ellipse>
-            <rect x="196" y="94" width="8" height="24" fill="url(#bhBottleG)"></rect>
-            <path d="M 196,118 C 182,127 178,140 178,154 L 178,222 L 222,222 L 222,154 C 222,140 218,127 204,118 Z" fill="url(#bhBottleG)"></path>
-            <rect x="182" y="158" width="36" height="46" rx="2.5" fill="#0D1C12" stroke="#C8A028" stroke-width="1.3"></rect>
-            <text x="200" y="172" text-anchor="middle" font-size="5.1" fill="#F0ECD0" font-family="Ultra,Georgia,serif" letter-spacing="0.3">MAN'S HOBBY</text>
-            <line x1="184" y1="176" x2="216" y2="176" stroke="#C8A028" stroke-width="0.6"></line>
-            <text x="200" y="185" text-anchor="middle" font-size="5" fill="#C8A028" font-family="Georgia,serif" letter-spacing="0.4">BOURBON</text>
-            <text x="200" y="194" text-anchor="middle" font-size="5" fill="#C8A028" font-family="Georgia,serif" letter-spacing="0.4">HUNTERS</text>
-            <ellipse cx="200" cy="223" rx="24" ry="5" fill="#6A5010" opacity="0.65"></ellipse>
+            <circle cx="200" cy="200" r="3" fill="#C8A028"></circle>            <path d="M196 86c4-7 11-6 16-1-4 1-7 3-8 7 5-1 8 1 10 5-5 1-10 0-14-4-3 3-7 4-12 3 2-4 5-6 8-6z" fill="#C8A028"></path>
+            <rect x="193" y="95" width="14" height="8" rx="3" fill="#6B3A10"></rect>
+            <ellipse cx="200" cy="103" rx="9" ry="4.5" fill="#8B1A18"></ellipse>
+            <rect x="195" y="104" width="10" height="22" rx="3" fill="url(#bhBottleG)"></rect>
+            <path d="M195,126 C181,134 174,151 176,170 C178,191 179,211 183,224 C190,232 210,232 217,224 C221,211 222,191 224,170 C226,151 219,134 205,126 Z" fill="url(#bhBottleG)"></path>
+            <rect x="183" y="163" width="34" height="39" rx="6" fill="#0D1C12" stroke="#C8A028" stroke-width="1.3"></rect>
+            <line x1="187" y1="176" x2="213" y2="176" stroke="#C8A028" stroke-width="0.6"></line>
+            <text x="200" y="188" text-anchor="middle" font-size="6" fill="#C8A028" font-family="Ultra,Georgia,serif" letter-spacing="0.6">BH</text>
+            <ellipse cx="200" cy="226" rx="25" ry="5" fill="#6A5010" opacity="0.65"></ellipse>
             <g transform="translate(51,184)" opacity="0.92"><path d="M -11,0 L -8,27 Q 0,32 8,27 L 11,0 Z" fill="none" stroke="#C8A028" stroke-width="1.7" stroke-linejoin="round"></path><line x1="-11" y1="0" x2="11" y2="0" stroke="#C8A028" stroke-width="2"></line><path d="M -7,17 L -5.5,26 Q 0,30 5.5,26 L 7,17 Z" fill="#C8A028" opacity="0.42"></path></g>
             <g transform="translate(349,184)" opacity="0.92"><path d="M -11,0 L -8,27 Q 0,32 8,27 L 11,0 Z" fill="none" stroke="#C8A028" stroke-width="1.7" stroke-linejoin="round"></path><line x1="-11" y1="0" x2="11" y2="0" stroke="#C8A028" stroke-width="2"></line><path d="M -7,17 L -5.5,26 Q 0,30 5.5,26 L 7,17 Z" fill="#C8A028" opacity="0.42"></path></g>
             <text font-family="Ultra,Georgia,serif" font-size="30" letter-spacing="2.5" fill="#C8A028"><textPath href="#bhTopArc" startOffset="50%" text-anchor="middle">MAN'S HOBBY</textPath></text>
@@ -692,7 +736,7 @@ if("serviceWorker" in navigator){ window.addEventListener("load",function(){ nav
       </div>
     </div>
     <div id="bhEmber" style="position:absolute;left:0;right:0;top:var(--burnY);height:0;z-index:3;opacity:0;mix-blend-mode:screen;pointer-events:none;">
-      <div style="position:absolute;left:-6%;width:112%;top:-80px;height:152px;transform-origin:center bottom;animation:bhFlicker 0.42s ease-in-out infinite;background:radial-gradient(46% 70% at 18% 56%, rgba(255,206,120,0.9), rgba(255,140,45,0.45) 45%, transparent 72%), radial-gradient(40% 76% at 50% 50%, rgba(255,182,72,0.95), rgba(228,82,22,0.5) 48%, transparent 74%), radial-gradient(46% 70% at 82% 56%, rgba(255,215,130,0.85), rgba(255,120,35,0.4) 45%, transparent 72%), linear-gradient(180deg, rgba(255,170,60,0) 0%, rgba(255,150,55,0.34) 50%, rgba(120,35,8,0) 100%);filter:blur(9px);"></div>
+      <div style="position:absolute;left:-6%;width:112%;top:-80px;height:152px;transform-origin:center bottom;animation:bhFlicker 0.42s ease-in-out infinite;background:radial-gradient(46% 70% at 18% 56%, rgba(255,206,120,0.9), rgba(255,140,45,0.45) 45%, transparent 72%), radial-gradient(40% 76% at 50% 50%, rgba(255,182,72,0.95), rgba(228,82,22,0.5) 48%, transparent 74%), radial-gradient(46% 70% at 82% 56%, rgba(255,215,130,0.85), rgba(255,120,35,0.4) 45%, transparent 72%), linear-gradient(180deg, rgba(255,170,60,0) 0%, rgba(255,150,55,0.34) 50%, rgba(120,35,8,0) 100%);filter:blur(14px);"></div>
       <div style="position:absolute;left:0;width:100%;top:-2px;height:4px;border-radius:50%;filter:blur(1.4px);background:linear-gradient(90deg,transparent,rgba(255,150,55,0.6) 8%,#ffe2a0 42%,#fff6dc 50%,#ffe2a0 58%,rgba(255,150,55,0.6) 92%,transparent);"></div>
     </div>
     <div id="bhSmoke" style="position:absolute;left:0;right:0;top:var(--burnY);height:1px;z-index:4;opacity:0;pointer-events:none;"></div>
@@ -711,19 +755,19 @@ if("serviceWorker" in navigator){ window.addEventListener("load",function(){ nav
   fit(); window.addEventListener("resize",fit);
   try{
     var sm="",sp="";
-    for(var i=0;i<14;i++){ var x=(Math.random()*100).toFixed(1), w=(40+Math.random()*55).toFixed(0), d=(Math.random()*1.2).toFixed(2), du=(1.6+Math.random()*1.1).toFixed(2);
+    for(var i=0;i<10;i++){ var x=(Math.random()*100).toFixed(1), w=(40+Math.random()*55).toFixed(0), d=(Math.random()*1.2).toFixed(2), du=(1.6+Math.random()*1.1).toFixed(2);
       sm+='<span style="position:absolute;bottom:0;left:'+x+'%;width:'+w+'px;height:'+w+'px;border-radius:50%;background:radial-gradient(circle,rgba(74,58,44,.7),transparent 70%);filter:blur(7px);animation:bhSmoke '+du+'s ease-out '+d+'s infinite;"></span>'; }
-    for(var j=0;j<20;j++){ var sx=(Math.random()*100).toFixed(1), dx=(Math.random()*60-30).toFixed(0), sd=(Math.random()*0.9).toFixed(2), sdu=(0.7+Math.random()*0.8).toFixed(2), sz=(2+Math.random()*2).toFixed(1);
+    for(var j=0;j<12;j++){ var sx=(Math.random()*100).toFixed(1), dx=(Math.random()*60-30).toFixed(0), sd=(Math.random()*0.9).toFixed(2), sdu=(0.7+Math.random()*0.8).toFixed(2), sz=(2+Math.random()*2).toFixed(1);
       sp+='<span style="position:absolute;bottom:0;left:'+sx+'%;width:'+sz+'px;height:'+sz+'px;border-radius:50%;background:#ffd98a;box-shadow:0 0 6px 1px rgba(255,170,70,.9);--dx:'+dx+'px;animation:bhSpark '+sdu+'s ease-out '+sd+'s infinite;"></span>'; }
     smoke.innerHTML=sm; sparks.innerHTML=sp;
   }catch(e){}
-  var DUR=2050, HOLD=520, start=null, done=false;
-  function finish(){ if(done) return; done=true; intro.style.transition="opacity .35s ease"; intro.style.opacity="0"; setTimeout(function(){ if(intro&&intro.parentNode) intro.parentNode.removeChild(intro); },400); }
+  var DUR=3900, HOLD=850, start=null, done=false;
+  function finish(){ if(done) return; done=true; intro.style.transition="opacity .7s ease"; intro.style.opacity="0"; setTimeout(function(){ if(intro&&intro.parentNode) intro.parentNode.removeChild(intro); },760); }
   function ease(t){ return t<.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2; }
   function frame(ts){ if(start===null) start=ts; var el=ts-start;
     if(el<HOLD){ raf(frame); return; }
     var p=Math.min(1,(el-HOLD)/DUR); var e=ease(p);
-    var o2=e, o3=Math.min(1.04,e+0.022);
+    var o2=e, o3=Math.min(1.04,e+0.04);
     if(s2&&s2.setAttribute){ s2.setAttribute("offset",o2.toFixed(4)); s3.setAttribute("offset",o3.toFixed(4)); }
     stage.style.setProperty("--burnY", (-120+o3*964).toFixed(1)+"px");
     var fx = p<=0?0:(p<0.12? p/0.12 : (p>0.9? Math.max(0,(1-p)/0.1) : 1));
@@ -732,7 +776,7 @@ if("serviceWorker" in navigator){ window.addEventListener("load",function(){ nav
   }
   raf(frame);
   intro.addEventListener("click", finish);
-  setTimeout(finish, HOLD+DUR+1400); // bezpiecznik
+  setTimeout(finish, HOLD+DUR+1800); // bezpiecznik
 })();
 </script>
 </body>
