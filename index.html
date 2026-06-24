@@ -677,7 +677,8 @@ if("serviceWorker" in navigator){ window.addEventListener("load",function(){ nav
 <style>
   @keyframes bhIntroExit{0%,86%{opacity:1}100%{opacity:0;visibility:hidden}}
   @keyframes bhBlackLift{0%,11.5%{opacity:1}24%,100%{opacity:0;visibility:hidden}}
-  @keyframes bhLogoReveal{0%,30%{opacity:0;transform:translateY(12px) scale(.965);filter:brightness(.35) blur(1.5px)}52%{opacity:.78;filter:brightness(.8) blur(.2px)}72%,100%{opacity:1;transform:none;filter:brightness(1)}}
+  @keyframes bhLogoReveal{0%,30%{opacity:0;transform:translate(-50%,-50%) translateY(12px) scale(.965);filter:brightness(.35) blur(1.5px)}52%{opacity:.78;transform:translate(-50%,-50%) translateY(4px) scale(.985);filter:brightness(.8) blur(.2px)}72%,100%{opacity:1;transform:translate(-50%,-50%) scale(1);filter:brightness(1)}}
+  @keyframes bhTextReveal{0%,30%{opacity:0;transform:translateY(12px);filter:brightness(.35) blur(1.5px)}52%{opacity:.78;transform:translateY(4px);filter:brightness(.8) blur(.2px)}72%,100%{opacity:1;transform:none;filter:brightness(1)}}
   @keyframes bhCopperGlow{0%,48%{filter:drop-shadow(0 0 0 rgba(215,112,38,0)) brightness(.65)}66%{filter:drop-shadow(0 0 18px rgba(255,119,36,.58)) brightness(1.14)}82%,100%{filter:drop-shadow(0 0 10px rgba(194,86,32,.38)) brightness(.98)}}
   @keyframes bhFireRing{0%,50%{opacity:0;transform:translate(-50%,-50%) rotate(-18deg) scale(.95)}65%{opacity:1;transform:translate(-50%,-50%) rotate(4deg) scale(1.02)}80%{opacity:.86}100%{opacity:0;transform:translate(-50%,-50%) rotate(22deg) scale(1.03)}}
   @keyframes bhHeatRing{0%,45%{opacity:0}62%{opacity:.42}86%{opacity:.28}100%{opacity:.12}}
@@ -700,7 +701,7 @@ if("serviceWorker" in navigator){ window.addEventListener("load",function(){ nav
   .bh-smoke{position:absolute;left:50%;top:33%;width:240px;height:210px;transform:translateX(-50%);z-index:6;pointer-events:none;opacity:0;animation:bhSmokeRise 4s ease forwards;background:radial-gradient(70px 84px at 45% 50%,rgba(110,103,92,.18),transparent 72%),radial-gradient(86px 110px at 62% 36%,rgba(100,94,83,.14),transparent 74%),radial-gradient(80px 92px at 34% 24%,rgba(92,86,78,.11),transparent 72%);filter:blur(8px)}
   .bh-sparks{position:absolute;inset:0;z-index:7;pointer-events:none}
   .bh-sparks i{position:absolute;left:var(--x);top:var(--y);width:var(--s);height:var(--s);border-radius:50%;background:#ffae54;box-shadow:0 0 8px 2px rgba(255,110,26,.75);opacity:0;animation:bhSparkFly var(--du) ease-out var(--dl) both}
-  .bh-tagline{position:absolute;left:0;right:0;top:67%;text-align:center;color:#b76e25;font-size:12px;font-weight:900;letter-spacing:2.8px;text-transform:uppercase;opacity:0;animation:bhLogoReveal 4s ease forwards;animation-delay:.08s;z-index:5}
+  .bh-tagline{position:absolute;left:0;right:0;top:67%;text-align:center;color:#b76e25;font-size:12px;font-weight:900;letter-spacing:2.8px;text-transform:uppercase;opacity:0;animation:bhTextReveal 4s ease forwards;animation-delay:.08s;z-index:5}
   .bh-tagline:after{content:"";display:block;width:156px;height:1px;margin:11px auto 0;background:linear-gradient(90deg,transparent,#8f5a23 18%,#d09b4a 50%,#8f5a23 82%,transparent)}
 </style>
 <div id="bhIntro" aria-hidden="true">
