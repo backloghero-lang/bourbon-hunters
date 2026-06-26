@@ -1,9 +1,10 @@
 /* Bourbon Hunters service worker - network-first dla aktualizacji aplikacji i bazy. */
-const CACHE = "bourbon-hunters-v10";
+const CACHE = "bourbon-hunters-v11";
 const ASSETS = [
   "./",
   "./index.html",
   "./manifest.json",
+  "./assets/intro/bourbon-hunters-intro.mp4",
   "./db/bourbons.json",
   "./icons/icon-192.png",
   "./icons/icon-512.png"

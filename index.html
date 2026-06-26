@@ -703,8 +703,21 @@ if("serviceWorker" in navigator){ window.addEventListener("load",function(){ nav
   .bh-sparks i{position:absolute;left:var(--x);top:var(--y);width:var(--s);height:var(--s);border-radius:50%;background:#ffae54;box-shadow:0 0 8px 2px rgba(255,110,26,.75);opacity:0;animation:bhSparkFly var(--du) ease-out var(--dl) both}
   .bh-tagline{position:absolute;left:0;right:0;top:67%;text-align:center;color:#b76e25;font-size:12px;font-weight:900;letter-spacing:2.8px;text-transform:uppercase;opacity:0;animation:bhTextReveal 4s ease forwards;animation-delay:.08s;z-index:5}
   .bh-tagline:after{content:"";display:block;width:156px;height:1px;margin:11px auto 0;background:linear-gradient(90deg,transparent,#8f5a23 18%,#d09b4a 50%,#8f5a23 82%,transparent)}
+  #bhIntro{animation:none}
+  #bhIntro:before{display:none}
+  #bhIntro .bh-stage{display:none}
+  #bhIntro.is-fading{opacity:0;transition:opacity .55s ease}
+  .bh-intro-video{position:absolute;inset:0;background:#000;overflow:hidden}
+  .bh-intro-video video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000}
+  .bh-star-mask{position:absolute;right:0;bottom:0;width:min(38vw,190px);height:min(26vh,190px);pointer-events:none;background:radial-gradient(ellipse at 72% 72%,#020101 0%,#020101 28%,rgba(2,1,1,.96) 43%,rgba(2,1,1,.72) 58%,rgba(2,1,1,0) 78%);filter:blur(1.5px);z-index:2}
+  .bh-skip{position:absolute;right:16px;top:calc(env(safe-area-inset-top) + 14px);z-index:3;border:1px solid rgba(220,184,119,.35);background:rgba(0,0,0,.46);color:#e8cd93;border-radius:999px;padding:9px 13px;font-size:12px;font-weight:800;letter-spacing:.4px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);cursor:pointer}
 </style>
 <div id="bhIntro" aria-hidden="true">
+  <div class="bh-intro-video">
+    <video id="bhIntroVideo" src="assets/intro/bourbon-hunters-intro.mp4" autoplay muted playsinline webkit-playsinline preload="auto"></video>
+    <div class="bh-star-mask"></div>
+    <button class="bh-skip" id="bhIntroSkip" type="button">Pomiń</button>
+  </div>
   <div class="bh-stage">
     <div class="bh-status"><span>9:41</span><span class="bh-phone-icons">▮▮▮ ◜◝ ▰</span></div>
     <div class="bh-heat"></div>
@@ -747,10 +760,19 @@ if("serviceWorker" in navigator){ window.addEventListener("load",function(){ nav
 <script>
 (function(){
   var intro=document.getElementById("bhIntro"); if(!intro) return;
+  var video=document.getElementById("bhIntroVideo");
+  var skip=document.getElementById("bhIntroSkip");
   var done=false;
-  function finish(){ if(done) return; done=true; intro.style.transition="opacity .55s ease"; intro.style.opacity="0"; setTimeout(function(){ if(intro&&intro.parentNode) intro.parentNode.removeChild(intro); },620); }
-  intro.addEventListener("click",finish);
-  setTimeout(finish,4300);
+  function finish(){ if(done) return; done=true; intro.classList.add("is-fading"); setTimeout(function(){ if(intro&&intro.parentNode) intro.parentNode.removeChild(intro); },620); }
+  if(skip) skip.addEventListener("click",function(e){ e.preventDefault(); e.stopPropagation(); finish(); });
+  if(video){
+    video.muted=true;
+    video.addEventListener("ended",finish);
+    video.addEventListener("error",function(){ setTimeout(finish,650); });
+    var play=video.play();
+    if(play && play.catch) play.catch(function(){});
+  }
+  setTimeout(finish,9000);
 })();
 </script>
 </body>
