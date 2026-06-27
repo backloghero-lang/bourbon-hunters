@@ -162,32 +162,49 @@
   .desc{font-size:14px;line-height:1.65;margin:0 0 10px}
 
   /* scan */
-  .hero{background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:20px;padding:20px 18px;text-align:center;box-shadow:var(--shadow)}
-  .hero .kick{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--amber2);font-weight:800;margin-bottom:6px}
-  .hero h2{margin:0 0 6px;font-size:19px;font-family:var(--serif)}
-  .hero p{margin:0 0 16px;font-size:13px;color:var(--muted);line-height:1.5}
-  .shot{width:100%;border:2px dashed var(--line);border-radius:16px;min-height:170px;display:grid;place-items:center;cursor:pointer;background:rgba(0,0,0,.18);overflow:hidden;position:relative}
-  .shot .ph{display:grid;place-items:center;gap:8px;color:var(--muted);padding:24px}
-  .shot .ph .cam{font-size:40px}
-  .shot img{width:100%;display:block;border-radius:14px}
-  .retake{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:9px;padding:6px 10px;font-size:12px;font-weight:700;cursor:pointer}
-  .btns{display:flex;gap:10px;margin-top:14px}
+  .scan-view{padding-left:0;padding-right:0}
+  .hero{position:relative;overflow:hidden;margin:-4px -2px 0;padding:18px 16px 22px;text-align:center;border:1px solid rgba(184,106,51,.28);border-radius:22px;box-shadow:var(--shadow);
+    background:linear-gradient(180deg,rgba(3,2,1,.18),rgba(3,2,1,.72)),url("design/figma-assets/scanner-pack-v1/scan-screen-bg.png") center/cover no-repeat}
+  .hero:before{content:"";position:absolute;inset:0;background:url("design/figma-assets/asset-pack-v1/noise-overlay.png") center/cover repeat;opacity:.16;pointer-events:none}
+  .hero>*{position:relative;z-index:1}
+  .scan-brand{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+  .scan-brand .brand-copy{flex:1;min-width:0;text-align:center}
+  .hero .kick{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#6FA36A;font-weight:900;margin-bottom:3px}
+  .hero h2{margin:0;font-size:18px;font-family:var(--serif);line-height:1.12;color:#F6E6C8;letter-spacing:.4px}
+  .hero p{margin:8px auto 14px;font-size:12px;color:#C9B493;line-height:1.45;max-width:320px}
+  .scan-round{width:42px;height:42px;border-radius:50%;border:1px solid rgba(184,106,51,.55);background:rgba(8,6,4,.72);display:grid;place-items:center;color:#E2B070;font-size:12px;font-weight:900;box-shadow:0 0 18px rgba(184,106,51,.15)}
+  .scan-detected{display:inline-flex;align-items:center;justify-content:center;width:206px;height:43px;margin:0 auto -2px;background:url("design/figma-assets/scanner-pack-v1/bottle-detected-badge.png") center/contain no-repeat;color:transparent;opacity:.72;pointer-events:none}
+  .shot{width:100%;aspect-ratio:760/980;max-height:54vh;border:none;border-radius:20px;display:grid;place-items:center;cursor:pointer;overflow:hidden;position:relative;background:rgba(3,2,1,.46);box-shadow:inset 0 0 80px rgba(0,0,0,.75)}
+  .shot:before{content:"";position:absolute;inset:0;background:url("design/figma-assets/scanner-pack-v1/scan-frame.png") center/100% 100% no-repeat;z-index:3;pointer-events:none;filter:drop-shadow(0 0 16px rgba(218,106,45,.38))}
+  .shot:after{content:"";position:absolute;left:8%;right:8%;top:48%;height:80px;background:url("design/figma-assets/scanner-pack-v1/scan-beam.png") center/100% 100% no-repeat;z-index:4;opacity:.58;pointer-events:none}
+  .shot .ph{display:grid;place-items:center;gap:8px;color:#E2B070;padding:32px;text-shadow:0 2px 12px #000}
+  .shot .ph .cam{width:120px;height:120px;background:url("design/figma-assets/scanner-pack-v1/hunter-loading-mark.png") center/contain no-repeat;font-size:0;filter:drop-shadow(0 0 18px rgba(184,106,51,.32))}
+  .shot img{position:absolute;inset:6%;width:88%;height:88%;object-fit:cover;border-radius:14px;z-index:1;filter:saturate(1.05) contrast(1.02)}
+  .shot.has-shot:after{opacity:.8}
+  .shot.is-loading:after{animation:scanBeam 1.35s ease-in-out infinite}
+  .shot.is-loading .scan-overlay{opacity:1}
+  .scan-overlay{position:absolute;inset:0;background:url("design/figma-assets/scanner-pack-v1/analyzing-overlay.png") center/cover no-repeat;z-index:2;opacity:0;transition:opacity .2s;pointer-events:none}
+  @keyframes scanBeam{0%,100%{transform:translateY(-34%);opacity:.35}50%{transform:translateY(34%);opacity:1}}
+  .retake{position:absolute;right:13px;bottom:13px;width:86px;height:86px;border:none;border-radius:50%;background:url("design/figma-assets/scanner-pack-v1/retake-button.png") center/contain no-repeat;color:transparent;z-index:5;cursor:pointer}
+  .btns{display:grid;grid-template-columns:96px 1fr 96px;align-items:center;gap:10px;margin-top:14px}
+  .scan-side{width:86px;height:86px;border:0;border-radius:50%;background:url("design/figma-assets/scanner-pack-v1/gallery-button.png") center/contain no-repeat;justify-self:center;color:transparent;cursor:pointer}
+  #retakeQuick{background-image:url("design/figma-assets/scanner-pack-v1/retake-button.png")}
   .btn{flex:1;border:none;border-radius:14px;padding:14px 10px;font-size:15px;font-weight:800;cursor:pointer;transition:transform .08s,opacity .2s}
   .btn:active{transform:scale(.97)}
-  .btn-go{background:linear-gradient(135deg,var(--amber2),#a8761f);color:#241708;box-shadow:var(--shadow)}
+  .btn-go{min-height:112px;background:url("design/figma-assets/scanner-pack-v1/scan-button.png") center top/86px 86px no-repeat;color:#F6E1BC;text-shadow:0 2px 8px #000;box-shadow:none;padding:86px 0 0;font-size:12px;letter-spacing:.9px;text-transform:uppercase}
   .btn-alt{background:rgba(0,0,0,.25);color:var(--amber2);border:1px solid var(--amber)}
   .btn[disabled]{opacity:.4;cursor:default}
   .note{font-size:11px;color:var(--muted);margin-top:12px;line-height:1.5}
-  #loading{display:none;text-align:center;padding:24px 0}
-  .spin{width:44px;height:44px;margin:0 auto 14px;border-radius:50%;border:4px solid var(--line);border-top-color:var(--amber2);animation:sp 1s linear infinite}
+  #loading{display:none;text-align:center;padding:18px 16px}
+  .spin{width:88px;height:88px;margin:0 auto 10px;background:url("design/figma-assets/scanner-pack-v1/hunter-loading-mark.png") center/contain no-repeat;filter:drop-shadow(0 0 18px rgba(184,106,51,.35));animation:sp 1.6s linear infinite}
   @keyframes sp{to{transform:rotate(360deg)}}
   #loadtxt{font-size:13px;color:var(--muted)}
-  .err{background:rgba(224,100,74,.12);border:1px solid var(--bad);border-radius:14px;padding:14px;font-size:13px;color:#ffd0c6;margin-top:16px;display:none;line-height:1.5}
+  .err{background:rgba(224,100,74,.12);border:1px solid var(--bad);border-radius:14px;padding:14px 14px 14px 74px;font-size:13px;color:#ffd0c6;margin:16px;display:none;line-height:1.5;min-height:70px;background-image:url("design/figma-assets/scanner-pack-v1/error-state-icon.png");background-size:54px;background-position:12px center;background-repeat:no-repeat}
   .badge{display:inline-block;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;padding:3px 8px;border-radius:20px;margin-bottom:8px}
   .badge.db{background:rgba(95,199,122,.15);color:var(--good);border:1px solid rgba(95,199,122,.4)}
   .badge.net{background:rgba(217,139,58,.15);color:var(--new);border:1px solid rgba(217,139,58,.4)}
   .links{font-size:12px;line-height:1.7}.links a{color:var(--amber);word-break:break-all}
-  .card{background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow);margin-top:16px}
+  .card{background:linear-gradient(160deg,rgba(29,27,24,.9),rgba(16,12,8,.94)),url("design/figma-assets/scanner-pack-v1/result-card-bg.png") center/cover no-repeat;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow);margin:16px}
   .name{font-size:21px;font-weight:800;font-family:var(--serif);margin:0 0 2px}
 
   .placeholder-view{text-align:center;padding:60px 20px;color:var(--muted)}
@@ -268,17 +285,27 @@
   </section>
 
   <!-- SCAN -->
-  <section class="view" id="view-scan">
+  <section class="view scan-view" id="view-scan">
     <div class="hero">
+      <div class="scan-brand">
+        <button class="scan-round" id="scanLangMirror" type="button">PL</button>
+        <div class="brand-copy">
       <div class="kick" data-i18n="kick">Skaner butelek</div>
       <h2 data-i18n="heroTitle">Skanuj butelkę, poznaj jej wartość</h2>
       <p data-i18n="heroDesc">Zrób zdjęcie etykiety. Hunter sprawdzi bazę, a gdy trzeba — dopyta sieci.</p>
+        </div>
+        <div class="scan-round" aria-hidden="true">BH</div>
+      </div>
+      <div class="scan-detected" aria-hidden="true">Bottle detected</div>
       <div class="shot" id="shot">
         <div class="ph" id="placeholder"><div class="cam">&#128247;</div><strong data-i18n="tapShoot">Dotknij, aby zrobić zdjęcie</strong><small data-i18n="tapHint">lub wybrać z galerii</small></div>
+        <div class="scan-overlay" aria-hidden="true"></div>
       </div>
       <input type="file" id="file" accept="image/*" capture="environment" hidden>
       <div class="btns">
-        <button class="btn btn-go" id="goRate" disabled data-i18n="btnRate" style="flex:1">⭐ Ocena</button>
+        <button class="scan-side" id="pickGallery" type="button" aria-label="Galeria">Galeria</button>
+        <button class="btn btn-go" id="goRate" disabled data-i18n="btnRate">⭐ Ocena</button>
+        <button class="scan-side" id="retakeQuick" type="button" aria-label="Ponów">Ponów</button>
       </div>
       <p class="note" data-i18n="priceNote">Ceny i oceny orientacyjne. Pij odpowiedzialnie. 18+</p>
     </div>
@@ -470,6 +497,7 @@ function applyLang(){
   document.querySelectorAll("[data-i18n]").forEach(function(el){ const k=el.getAttribute("data-i18n"); if(I18N[lang][k]) el.textContent=I18N[lang][k]; });
   document.querySelectorAll("[data-i18n-ph]").forEach(function(el){ const k=el.getAttribute("data-i18n-ph"); if(I18N[lang][k]) el.placeholder=I18N[lang][k]; });
   document.getElementById("langLbl").textContent = lang.toUpperCase();
+  const slm=document.getElementById("scanLangMirror"); if(slm) slm.textContent=lang.toUpperCase();
   if(DB.length){ renderHome(); renderExplore(); }
 }
 document.getElementById("langToggle").addEventListener("click",function(){ lang = lang==="pl"?"en":"pl"; localStorage.setItem("bh_lang",lang); applyLang(); });
@@ -605,12 +633,17 @@ function openDetail(id){
 let imgData=null, imgMime="image/jpeg", busy=false, loadTimer=null;
 const shot=document.getElementById("shot"), fileInput=document.getElementById("file");
 const goRate=document.getElementById("goRate");
+const pickGallery=document.getElementById("pickGallery"), retakeQuick=document.getElementById("retakeQuick"), scanLangMirror=document.getElementById("scanLangMirror");
 shot.addEventListener("click",function(){ if(!busy) fileInput.click(); });
+if(pickGallery) pickGallery.addEventListener("click",function(){ if(!busy) fileInput.click(); });
+if(retakeQuick) retakeQuick.addEventListener("click",function(){ if(!busy) fileInput.click(); });
+if(scanLangMirror) scanLangMirror.addEventListener("click",function(){ document.getElementById("langToggle").click(); });
 fileInput.addEventListener("change",function(e){
   const f=e.target.files&&e.target.files[0]; if(!f) return;
   compress(f).then(function(res){
     imgData=res.b64; imgMime=res.mime;
-    shot.innerHTML='<img src="data:'+res.mime+';base64,'+res.b64+'" alt=""><button class="retake" id="retake">'+t("retake")+'</button>';
+    shot.classList.add("has-shot");
+    shot.innerHTML='<img src="data:'+res.mime+';base64,'+res.b64+'" alt=""><div class="scan-overlay" aria-hidden="true"></div><button class="retake" id="retake">'+t("retake")+'</button>';
     document.getElementById("retake").addEventListener("click",function(ev){ ev.stopPropagation(); fileInput.click(); });
     goRate.disabled=false;
     document.getElementById("scanResult").innerHTML=""; document.getElementById("err").style.display="none";
@@ -621,11 +654,11 @@ function compress(file){ return new Promise(function(resolve){ const img=new Ima
     if(w>h&&w>max){h=Math.round(h*max/w);w=max;}else if(h>=w&&h>max){w=Math.round(w*max/h);h=max;}
     const c=document.createElement("canvas");c.width=w;c.height=h;c.getContext("2d").drawImage(img,0,0,w,h);
     const d=c.toDataURL("image/jpeg",0.72);URL.revokeObjectURL(url);resolve({b64:d.split(",")[1],mime:"image/jpeg"}); }; img.src=url; }); }
-function startLoading(mode){ busy=true; goRate.disabled=true;
+function startLoading(mode){ busy=true; goRate.disabled=true; shot.classList.add("is-loading");
   document.getElementById("loading").style.display="block"; document.getElementById("scanResult").innerHTML=""; document.getElementById("err").style.display="none";
   const msgs = mode==="analyze"?[t("ldId"),t("ldHist"),t("ldNet"),t("ldPrice")]:[t("ldId"),t("ldDb"),t("ldNet"),t("ldPrice")];
   let i=0; const lt=document.getElementById("loadtxt"); lt.textContent=msgs[0]; loadTimer=setInterval(function(){ i=(i+1)%msgs.length; lt.textContent=msgs[i]; },1800); }
-function stopLoading(){ busy=false; goRate.disabled=false; clearInterval(loadTimer); document.getElementById("loading").style.display="none"; }
+function stopLoading(){ busy=false; goRate.disabled=false; shot.classList.remove("is-loading"); clearInterval(loadTimer); document.getElementById("loading").style.display="none"; }
 function showErr(m){ const e=document.getElementById("err"); e.textContent=m; e.style.display="block"; }
 function scan(mode){
   if(!imgData||busy) return; if(!WORKER_URL){ showErr("WORKER_URL?"); return; }
