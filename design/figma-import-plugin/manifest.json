@@ -1,0 +1,12 @@
+{
+  "name": "Bourbon Hunters Asset Importer",
+  "id": "bourbon-hunters-asset-importer",
+  "api": "1.0.0",
+  "main": "code.js",
+  "editorType": ["figma"],
+  "documentAccess": "dynamic-page",
+  "networkAccess": {
+    "allowedDomains": ["https://backloghero-lang.github.io"],
+    "reasoning": "The plugin imports Bourbon Hunters asset PNG files published from the GitHub Pages repository into the user's Figma file."
+  }
+}

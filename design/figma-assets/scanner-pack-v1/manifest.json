@@ -1,0 +1,177 @@
+﻿[
+    {
+        "name":  "ai-analysis-button.png",
+        "path":  "design/figma-assets/scanner-pack-v1/ai-analysis-button.png",
+        "width":  266,
+        "height":  72,
+        "bytes":  28554
+    },
+    {
+        "name":  "analyzing-overlay.png",
+        "path":  "design/figma-assets/scanner-pack-v1/analyzing-overlay.png",
+        "width":  260,
+        "height":  187,
+        "bytes":  57468
+    },
+    {
+        "name":  "bottle-detected-badge.png",
+        "path":  "design/figma-assets/scanner-pack-v1/bottle-detected-badge.png",
+        "width":  206,
+        "height":  43,
+        "bytes":  15632
+    },
+    {
+        "name":  "confidence-badge.png",
+        "path":  "design/figma-assets/scanner-pack-v1/confidence-badge.png",
+        "width":  210,
+        "height":  44,
+        "bytes":  15497
+    },
+    {
+        "name":  "error-state-icon.png",
+        "path":  "design/figma-assets/scanner-pack-v1/error-state-icon.png",
+        "width":  136,
+        "height":  136,
+        "bytes":  23300
+    },
+    {
+        "name":  "gallery-button.png",
+        "path":  "design/figma-assets/scanner-pack-v1/gallery-button.png",
+        "width":  85,
+        "height":  86,
+        "bytes":  12962
+    },
+    {
+        "name":  "hunter-loading-mark.png",
+        "path":  "design/figma-assets/scanner-pack-v1/hunter-loading-mark.png",
+        "width":  101,
+        "height":  104,
+        "bytes":  17662
+    },
+    {
+        "name":  "rating-chip-empty.png",
+        "path":  "design/figma-assets/scanner-pack-v1/rating-chip-empty.png",
+        "width":  72,
+        "height":  73,
+        "bytes":  8908
+    },
+    {
+        "name":  "rating-chip-filled.png",
+        "path":  "design/figma-assets/scanner-pack-v1/rating-chip-filled.png",
+        "width":  72,
+        "height":  73,
+        "bytes":  9253
+    },
+    {
+        "name":  "result-card-bg.png",
+        "path":  "design/figma-assets/scanner-pack-v1/result-card-bg.png",
+        "width":  430,
+        "height":  158,
+        "bytes":  97980
+    },
+    {
+        "name":  "retake-button.png",
+        "path":  "design/figma-assets/scanner-pack-v1/retake-button.png",
+        "width":  85,
+        "height":  86,
+        "bytes":  12526
+    },
+    {
+        "name":  "scan-beam.png",
+        "path":  "design/figma-assets/scanner-pack-v1/scan-beam.png",
+        "width":  340,
+        "height":  40,
+        "bytes":  23208
+    },
+    {
+        "name":  "scan-button.png",
+        "path":  "design/figma-assets/scanner-pack-v1/scan-button.png",
+        "width":  132,
+        "height":  132,
+        "bytes":  38808
+    },
+    {
+        "name":  "scan-corner-bottom-left.png",
+        "path":  "design/figma-assets/scanner-pack-v1/scan-corner-bottom-left.png",
+        "width":  153,
+        "height":  80,
+        "bytes":  8304
+    },
+    {
+        "name":  "scan-corner-bottom-right.png",
+        "path":  "design/figma-assets/scanner-pack-v1/scan-corner-bottom-right.png",
+        "width":  153,
+        "height":  80,
+        "bytes":  8225
+    },
+    {
+        "name":  "scan-corner-top-left.png",
+        "path":  "design/figma-assets/scanner-pack-v1/scan-corner-top-left.png",
+        "width":  153,
+        "height":  80,
+        "bytes":  8388
+    },
+    {
+        "name":  "scan-corner-top-right.png",
+        "path":  "design/figma-assets/scanner-pack-v1/scan-corner-top-right.png",
+        "width":  153,
+        "height":  80,
+        "bytes":  7951
+    },
+    {
+        "name":  "scan-frame.png",
+        "path":  "design/figma-assets/scanner-pack-v1/scan-frame.png",
+        "width":  300,
+        "height":  390,
+        "bytes":  122666
+    },
+    {
+        "name":  "scan-screen-bg.png",
+        "path":  "design/figma-assets/scanner-pack-v1/scan-screen-bg.png",
+        "width":  268,
+        "height":  457,
+        "bytes":  177017
+    },
+    {
+        "name":  "scanner-color-palette.png",
+        "path":  "design/figma-assets/scanner-pack-v1/scanner-color-palette.png",
+        "width":  365,
+        "height":  122,
+        "bytes":  48133
+    },
+    {
+        "name":  "scanner-icon-style.png",
+        "path":  "design/figma-assets/scanner-pack-v1/scanner-icon-style.png",
+        "width":  309,
+        "height":  122,
+        "bytes":  34205
+    },
+    {
+        "name":  "scanner-notes.png",
+        "path":  "design/figma-assets/scanner-pack-v1/scanner-notes.png",
+        "width":  249,
+        "height":  122,
+        "bytes":  39179
+    },
+    {
+        "name":  "scanner-screen-preview.png",
+        "path":  "design/figma-assets/scanner-pack-v1/scanner-screen-preview.png",
+        "width":  380,
+        "height":  778,
+        "bytes":  451214
+    },
+    {
+        "name":  "scanner-typography.png",
+        "path":  "design/figma-assets/scanner-pack-v1/scanner-typography.png",
+        "width":  257,
+        "height":  122,
+        "bytes":  40571
+    },
+    {
+        "name":  "source-board.png",
+        "path":  "design/figma-assets/scanner-pack-v1/source-board.png",
+        "width":  1216,
+        "height":  1294,
+        "bytes":  1729222
+    }
+]
