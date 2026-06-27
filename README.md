@@ -15,6 +15,14 @@
 
 ---
 
+## Test na komputerze
+
+Stały launcher testowy:
+
+[test-index.html](https://backloghero-lang.github.io/bourbon-hunters/test-index.html)
+
+Po deployu kliknij w nim `Odswiez build`. Launcher dodaje cache-busting do aplikacji i pokazuje aktualna wersje service workera.
+
 ## 🎯 Co potrafi (dziś)
 
 **Skaner butelek z bazą 108 bourbonów.** Robisz zdjęcie etykiety, a agent **Hunter**:

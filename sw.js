@@ -1,8 +1,9 @@
 /* Bourbon Hunters service worker - network-first dla aktualizacji aplikacji i bazy. */
-const CACHE = "bourbon-hunters-v12";
+const CACHE = "bourbon-hunters-v13";
 const ASSETS = [
   "./",
   "./index.html",
+  "./test-index.html",
   "./manifest.json",
   "./assets/intro/bourbon-hunters-intro.mp4",
   "./db/bourbons.json",
@@ -24,7 +25,7 @@ self.addEventListener("activate", function(e){
 });
 
 function shouldNetworkFirst(url){
-  return url.endsWith("/") || url.indexOf("/index.html")!==-1 || url.indexOf("/db/bourbons.json")!==-1 || url.indexOf("/sw.js")!==-1;
+  return url.endsWith("/") || url.indexOf("/index.html")!==-1 || url.indexOf("/test-index.html")!==-1 || url.indexOf("/db/bourbons.json")!==-1 || url.indexOf("/sw.js")!==-1;
 }
 
 self.addEventListener("fetch", function(e){
