@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="banner.png" alt="Bourbon Hunters" width="100%">
+  <img src="assets/readme/flaming-logo.png" alt="Bourbon Hunters flaming logo" width="420">
 </p>
 
 <p align="center">
