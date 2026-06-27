@@ -50,10 +50,11 @@
   /* home pack */
   .home-hero{position:relative;overflow:hidden;margin:0 -16px 14px;padding:22px 18px 18px;min-height:154px;
     background:
-      linear-gradient(180deg,rgba(16,12,8,.18),rgba(16,12,8,.72)),
-      url("design/figma-assets/asset-pack-v1/header.png") center/cover no-repeat;
+      radial-gradient(90% 68% at 50% 0%,rgba(184,99,51,.28),transparent 70%),
+      linear-gradient(180deg,#1f1209 0%,#130c07 72%,#100c08 100%);
     border-bottom:1px solid rgba(200,130,55,.28);
     box-shadow:0 18px 34px rgba(0,0,0,.32)}
+  .home-hero:before{content:"";position:absolute;inset:0;background:url("design/figma-assets/asset-pack-v1/noise-overlay.png") center/cover repeat;opacity:.14;pointer-events:none}
   .home-hero:after{content:"";position:absolute;left:0;right:0;bottom:0;height:54px;
     background:url("design/figma-assets/asset-pack-v1/glow.png") center bottom/100% 100% no-repeat;opacity:.78;pointer-events:none}
   .home-lockup{position:relative;z-index:1;width:min(290px,86vw);height:107px;margin:0 auto;
@@ -64,8 +65,7 @@
 
   /* search */
   .search{display:flex;align-items:center;gap:10px;background:
-    linear-gradient(180deg,rgba(31,21,13,.82),rgba(20,13,8,.92)),
-    url("design/figma-assets/asset-pack-v1/search-bar.png") center/100% 100% no-repeat;
+    linear-gradient(180deg,rgba(31,21,13,.88),rgba(20,13,8,.96));
     border:1px solid rgba(184,99,51,.5);border-radius:14px;padding:13px 14px;margin:6px 0 18px;box-shadow:inset 0 0 18px rgba(0,0,0,.34)}
   .search svg{width:18px;height:18px;color:var(--muted);flex:none}
   .search input{flex:1;background:none;border:none;outline:none;color:var(--txt);font-size:15px}
@@ -79,14 +79,16 @@
   .hscroll{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:6px;margin:0 -16px;padding-left:16px;padding-right:16px}
   .hscroll::-webkit-scrollbar{display:none}
   .feat{scroll-snap-align:start;flex:0 0 88%;background:
-    linear-gradient(90deg,rgba(42,27,15,.94),rgba(35,22,12,.72)),
-    url("design/figma-assets/asset-pack-v1/featured-card.png") center/cover no-repeat;
+    radial-gradient(110px 110px at 85% 50%,rgba(232,156,66,.22),transparent 70%),
+    linear-gradient(135deg,rgba(47,29,15,.96),rgba(28,18,10,.98));
     border:1px solid rgba(184,99,51,.5);border-radius:18px;padding:18px;display:flex;gap:14px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .feat:before{content:"";position:absolute;inset:0;background:url("design/figma-assets/asset-pack-v1/noise-overlay.png") center/cover repeat;opacity:.08;pointer-events:none}
+  .feat:after{content:"";position:absolute;left:14px;right:14px;bottom:0;height:1px;background:linear-gradient(90deg,transparent,rgba(232,156,66,.88),transparent);pointer-events:none}
   .feat .kick{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--amber2);font-weight:800}
   .feat h4{font-family:var(--serif);font-size:19px;margin:6px 0 4px;line-height:1.15}
   .feat .sub{font-size:12px;color:var(--muted);margin-bottom:14px}
   .feat .btn-sm{display:inline-block;background:rgba(0,0,0,.3);border:1px solid var(--amber);color:var(--amber2);font-size:12px;font-weight:800;letter-spacing:.5px;padding:8px 16px;border-radius:10px;text-transform:uppercase;cursor:pointer}
-  .feat .info{flex:1;display:flex;flex-direction:column;justify-content:center}
+  .feat .info{flex:1;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1;min-width:0}
   .bottlepic{flex:0 0 84px;border-radius:12px;display:grid;place-items:center;font-size:42px;overflow:hidden;
     background:linear-gradient(180deg,#f8f3e9,#f0e1c8);box-shadow:inset 0 0 0 1px rgba(255,255,255,.28),0 8px 18px rgba(0,0,0,.38)}
   .bottlepic img{max-width:88%;max-height:92%;width:auto!important;height:auto!important;object-fit:contain!important;border-radius:0!important;filter:drop-shadow(0 9px 10px rgba(0,0,0,.32))}
@@ -94,16 +96,10 @@
   /* categories */
   .cats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
   .cat{background:
-    linear-gradient(180deg,rgba(44,28,16,.9),rgba(34,21,12,.96)),
-    url("design/figma-assets/asset-pack-v1/category-cards.png") center/cover no-repeat;
-    background-size:auto,600% 100%;
-    background-position:center,0% 50%;
+    radial-gradient(58px 58px at 50% 18%,rgba(232,156,66,.15),transparent 72%),
+    linear-gradient(180deg,rgba(44,28,16,.96),rgba(27,17,10,.98));
     border:1px solid rgba(184,99,51,.42);border-radius:14px;padding:14px 6px;text-align:center;cursor:pointer;transition:transform .08s,border-color .2s;box-shadow:0 9px 22px rgba(0,0,0,.24)}
-  .cat:nth-child(2){background-position:center,20% 50%}
-  .cat:nth-child(3){background-position:center,40% 50%}
-  .cat:nth-child(4){background-position:center,60% 50%}
-  .cat:nth-child(5){background-position:center,80% 50%}
-  .cat:nth-child(6){background-position:center,100% 50%}
+  .cat:hover{border-color:rgba(232,156,66,.72)}
   .cat:active{transform:scale(.96)}
   .cat .ic{width:42px;height:42px;border-radius:50%;margin:0 auto 8px;display:grid;place-items:center;font-size:20px;
     background:radial-gradient(circle at 50% 35%,rgba(220,184,119,.18),rgba(0,0,0,.25));border:1px solid var(--line)}
@@ -247,8 +243,8 @@
   /* bottom nav */
   .nav{position:fixed;left:0;right:0;bottom:0;z-index:40;height:calc(var(--nav-h) + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);
     background:
-      linear-gradient(180deg,rgba(28,21,14,.62),rgba(16,12,8,.9)),
-      url("design/figma-assets/asset-pack-v1/bottom-nav.png") center/100% 100% no-repeat;
+      radial-gradient(70% 120% at 50% 0%,rgba(200,130,55,.16),transparent 58%),
+      linear-gradient(180deg,rgba(28,21,14,.96),rgba(13,8,5,.99));
     border-top:1px solid rgba(184,99,51,.28);
     display:flex;align-items:center;justify-content:space-around;max-width:520px;margin:0 auto}
   .nav button{background:none;border:none;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;font-weight:700;cursor:pointer;padding:8px 6px;flex:1;letter-spacing:.3px}
@@ -256,8 +252,7 @@
   .nav button.on{color:var(--amber2)}
   .nav .scanbtn{flex:0 0 auto;position:relative;top:-16px}
   .nav .scanbtn .ring{width:58px;height:58px;border-radius:50%;background:
-    linear-gradient(145deg,rgba(220,184,119,.36),rgba(168,118,31,.32)),
-    url("design/figma-assets/asset-pack-v1/scan-button.png") center/contain no-repeat;
+    radial-gradient(circle at 50% 38%,rgba(245,203,119,.92),rgba(178,112,34,.96) 62%,rgba(86,45,16,.98));
     display:grid;place-items:center;box-shadow:0 6px 18px rgba(0,0,0,.5);border:4px solid var(--bg)}
   .nav .scanbtn .ring svg{width:26px;height:26px;color:#241708}
   .nav .scanbtn span{margin-top:2px;color:var(--amber2)}
