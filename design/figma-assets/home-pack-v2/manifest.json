@@ -3,16 +3,16 @@
   "description": "Optimized home screen assets used directly by the Bourbon Hunters PWA.",
   "assets": [
     {
-      "name": "home-header-v2.jpg",
-      "path": "design/figma-assets/home-pack-v2/home-header-v2.jpg",
-      "width": 1000,
-      "height": 574
+      "name": "home-header-v3.jpg",
+      "path": "design/figma-assets/home-pack-v2/home-header-v3.jpg",
+      "width": 1200,
+      "height": 444
     },
     {
-      "name": "app-background-v2.jpg",
-      "path": "design/figma-assets/home-pack-v2/app-background-v2.jpg",
+      "name": "app-background-v3.jpg",
+      "path": "design/figma-assets/home-pack-v2/app-background-v3.jpg",
       "width": 900,
-      "height": 1732
+      "height": 1787
     },
     {
       "name": "small-batch.png",
