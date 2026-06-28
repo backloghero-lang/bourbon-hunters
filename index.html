@@ -44,6 +44,7 @@
   .tb-brand b span{color:var(--amber2)}
   .tb-icon{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--card);display:grid;place-items:center;color:var(--amber2);cursor:pointer}
   .tb-icon svg{width:18px;height:18px}
+  .tb-stamp{width:62px;height:62px;flex:0 0 62px;background:url("design/figma-assets/asset-pack-v1/stamp.png") center/contain no-repeat;filter:drop-shadow(0 7px 16px rgba(0,0,0,.6))}
 
   /* views */
   .view{display:none;padding:4px 16px 20px;animation:fade .25s ease}
@@ -67,7 +68,7 @@
   /* featured carousel */
   .hscroll{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:6px;margin:0 -16px;padding-left:16px;padding-right:16px}
   .hscroll::-webkit-scrollbar{display:none}
-  .feat{scroll-snap-align:start;flex:0 0 92%;min-height:178px;background:
+  .feat{scroll-snap-align:start;flex:0 0 92%;height:190px;background:
     radial-gradient(160px 140px at 82% 56%,rgba(232,156,66,.26),transparent 70%),
     radial-gradient(120px 120px at 24% 0%,rgba(46,90,79,.35),transparent 72%),
     linear-gradient(135deg,rgba(16,42,32,.98),rgba(22,18,12,.98) 54%,rgba(9,8,6,.99));
@@ -75,15 +76,15 @@
   .feat:before{content:"";position:absolute;inset:0;background:url("design/figma-assets/asset-pack-v1/noise-overlay.png") center/cover repeat;opacity:.08;pointer-events:none}
   .feat:after{content:"";position:absolute;left:14px;right:14px;bottom:0;height:1px;background:linear-gradient(90deg,transparent,rgba(232,156,66,.88),transparent);pointer-events:none}
   .feat .kick{display:inline-flex;align-self:flex-start;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#7FD096;border:1px solid rgba(127,208,150,.55);border-radius:6px;padding:4px 7px;font-weight:900;background:rgba(23,73,49,.28)}
-  .feat h4{font-family:var(--serif);font-size:21px;margin:10px 0 5px;line-height:1.04;color:#F6E1BC;text-shadow:0 2px 12px rgba(0,0,0,.65)}
-  .feat .sub{font-size:12px;color:#C6A984;margin-bottom:8px;line-height:1.35}
+  .feat h4{font-family:var(--serif);font-size:21px;margin:10px 0 5px;line-height:1.04;color:#F6E1BC;text-shadow:0 2px 12px rgba(0,0,0,.65);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .feat .sub{font-size:12px;color:#C6A984;margin-bottom:8px;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .feat .price{font-size:18px;color:#F2E1B8;font-weight:800;margin-bottom:10px}
   .feat .btn-sm{display:inline-block;background:rgba(0,0,0,.22);border:1px solid #E2B070;color:#E2B070;font-size:11px;font-weight:900;letter-spacing:.7px;padding:8px 15px;border-radius:9px;text-transform:uppercase;cursor:pointer}
   .feat .info{flex:1;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1;min-width:0}
   .feat-tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}
   .feat-tag{font-size:10px;line-height:1;border:1px solid rgba(127,208,150,.5);color:#7FD096;background:rgba(23,73,49,.22);border-radius:6px;padding:5px 7px;text-transform:uppercase;font-weight:900;letter-spacing:.5px}
   .feat-rate{position:absolute;right:12px;bottom:10px;z-index:2;font-size:12px;color:#F2E1B8;background:rgba(0,0,0,.48);border:1px solid rgba(226,176,112,.42);border-radius:8px;padding:5px 7px;font-weight:900}
-  .bottlepic{flex:0 0 124px;border-radius:16px;display:grid;place-items:center;font-size:42px;overflow:visible;position:relative;z-index:1;
+  .bottlepic{flex:0 0 124px;width:124px;height:154px;align-self:center;border-radius:16px;display:grid;place-items:center;font-size:42px;overflow:visible;position:relative;z-index:1;
     background:radial-gradient(80% 70% at 50% 56%,rgba(245,218,172,.22),transparent 72%)}
   .bottlepic img{max-width:112px;max-height:152px;width:auto!important;height:auto!important;object-fit:contain!important;border-radius:0!important;filter:drop-shadow(0 18px 18px rgba(0,0,0,.55))}
 
@@ -96,8 +97,14 @@
     flex:0 0 88px;min-height:126px;scroll-snap-align:start;border:1px solid rgba(184,99,51,.48);border-radius:14px;padding:13px 7px;text-align:center;cursor:pointer;transition:transform .08s,border-color .2s;box-shadow:0 9px 22px rgba(0,0,0,.24)}
   .cat:hover{border-color:rgba(232,156,66,.72)}
   .cat:active{transform:scale(.96)}
-  .cat .ic{width:44px;height:44px;border-radius:50%;margin:0 auto 11px;display:grid;place-items:center;font-size:21px;
-    background:radial-gradient(circle at 50% 35%,rgba(226,176,112,.28),rgba(0,0,0,.32));border:1px solid rgba(226,176,112,.32);box-shadow:0 0 18px rgba(226,176,112,.16)}
+  .cat .ic{width:52px;height:52px;border-radius:50%;margin:0 auto 11px;display:grid;place-items:center;font-size:0;color:transparent;
+    background-color:rgba(7,6,5,.48);background-image:url("design/figma-assets/asset-pack-v1/category-cards.png");background-repeat:no-repeat;background-size:525px 148px;background-position:-17px -10px;
+    border:1px solid rgba(226,176,112,.32);box-shadow:0 0 18px rgba(226,176,112,.16)}
+  .cat:nth-child(2) .ic{background-position:-105px -10px}
+  .cat:nth-child(3) .ic{background-position:-193px -10px}
+  .cat:nth-child(4) .ic{background-position:-280px -10px}
+  .cat:nth-child(5) .ic{background-position:-368px -10px}
+  .cat:nth-child(6) .ic{background-position:-455px -10px}
   .cat .lbl{font-size:11px;font-weight:900;line-height:1.15;color:#F6E1BC}
   .cat .cnt{font-size:10px;color:#C6A984;margin-top:6px;font-weight:700}
 
@@ -196,6 +203,7 @@
   .hero h2{margin:0;font-size:18px;font-family:var(--serif);line-height:1.12;color:#F6E6C8;letter-spacing:.4px}
   .hero p{margin:8px auto 14px;font-size:12px;color:#C9B493;line-height:1.45;max-width:320px}
   .scan-round{width:42px;height:42px;border-radius:50%;border:1px solid rgba(184,106,51,.55);background:rgba(8,6,4,.72);display:grid;place-items:center;color:#E2B070;font-size:12px;font-weight:900;box-shadow:0 0 18px rgba(184,106,51,.15)}
+  .scan-spacer{visibility:hidden}
   .scan-detected{display:inline-flex;align-items:center;justify-content:center;width:206px;height:43px;margin:0 auto -2px;background:url("design/figma-assets/scanner-pack-v1/bottle-detected-badge.png") center/contain no-repeat;color:transparent;opacity:.72;pointer-events:none}
   .shot{width:100%;aspect-ratio:760/980;max-height:54vh;border:none;border-radius:20px;display:grid;place-items:center;cursor:pointer;overflow:hidden;position:relative;background:rgba(3,2,1,.46);box-shadow:inset 0 0 80px rgba(0,0,0,.75)}
   .shot:before{content:"";position:absolute;inset:0;background:url("design/figma-assets/scanner-pack-v1/scan-frame.png") center/100% 100% no-repeat;z-index:3;pointer-events:none;filter:drop-shadow(0 0 16px rgba(218,106,45,.38))}
@@ -219,8 +227,10 @@
   .btn[disabled]{opacity:.4;cursor:default}
   .note{font-size:11px;color:var(--muted);margin-top:12px;line-height:1.5}
   #loading{display:none;text-align:center;padding:18px 16px}
-  .spin{width:88px;height:88px;margin:0 auto 10px;background:url("design/figma-assets/scanner-pack-v1/hunter-loading-mark.png") center/contain no-repeat;filter:drop-shadow(0 0 18px rgba(184,106,51,.35));animation:sp 1.6s linear infinite}
-  @keyframes sp{to{transform:rotate(360deg)}}
+  .spin{position:relative;width:94px;height:72px;margin:0 auto 12px;background:url("design/figma-assets/asset-pack-v1/barrel.png") center/contain no-repeat;filter:drop-shadow(0 0 16px rgba(226,176,112,.28));animation:barrelRoll 1.05s linear infinite}
+  .spin:after{content:"";position:absolute;left:18px;right:18px;bottom:-9px;height:9px;border-radius:50%;background:rgba(0,0,0,.48);filter:blur(5px);animation:barrelShadow 1.05s ease-in-out infinite}
+  @keyframes barrelRoll{0%{transform:translateX(-8px) rotate(0deg)}50%{transform:translateX(8px) rotate(180deg)}100%{transform:translateX(-8px) rotate(360deg)}}
+  @keyframes barrelShadow{0%,100%{transform:scaleX(.82);opacity:.36}50%{transform:scaleX(1.08);opacity:.62}}
   #loadtxt{font-size:13px;color:var(--muted)}
   .err{background:rgba(224,100,74,.12);border:1px solid var(--bad);border-radius:14px;padding:14px 14px 14px 74px;font-size:13px;color:#ffd0c6;margin:16px;display:none;line-height:1.5;min-height:70px;background-image:url("design/figma-assets/scanner-pack-v1/error-state-icon.png");background-size:54px;background-position:12px center;background-repeat:no-repeat}
   .badge{display:inline-block;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;padding:3px 8px;border-radius:20px;margin-bottom:8px}
@@ -263,31 +273,29 @@
   .tb-kick span{color:#8C6B33}
   .tb-word{font-family:var(--serif);font-size:16px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;line-height:1;margin-top:2px;
     background:linear-gradient(180deg,#EFD79B,#C79E54);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-  .app.is-home .topbar{position:relative;margin:calc(env(safe-area-inset-top) + 10px) 12px 14px;padding:18px 18px;min-height:112px;border:1px solid rgba(184,99,51,.5);border-radius:20px;overflow:hidden;
+  .app.is-home .topbar{position:relative;margin:calc(env(safe-area-inset-top) + 10px) 12px 14px;padding:18px 18px;min-height:112px;border:1px solid rgba(184,99,51,.5);border-radius:20px;overflow:hidden;gap:14px;
     background:
       radial-gradient(100% 120% at 72% 12%,rgba(46,90,79,.62),transparent 58%),
       radial-gradient(80% 75% at 18% 12%,rgba(184,99,51,.24),transparent 64%),
       linear-gradient(135deg,rgba(19,31,24,.98),rgba(12,10,8,.98));
     box-shadow:0 18px 36px rgba(0,0,0,.44)}
   .app.is-home .topbar:before{content:"";position:absolute;inset:0;background:url("design/figma-assets/asset-pack-v1/noise-overlay.png") center/cover repeat;opacity:.13;pointer-events:none}
-  .app.is-home .topbar:after{content:"";position:absolute;right:42px;bottom:-32px;width:128px;height:128px;background:url("design/figma-assets/asset-pack-v1/stamp.png") center/contain no-repeat;opacity:.18;pointer-events:none}
+  .app.is-home .topbar:after{content:"";position:absolute;right:82px;bottom:-26px;width:118px;height:118px;background:url("design/figma-assets/asset-pack-v1/barrel.png") center/contain no-repeat;opacity:.32;pointer-events:none;filter:drop-shadow(0 8px 14px rgba(0,0,0,.6))}
   .app.is-home .tb-icon{position:relative;z-index:1;width:44px;height:44px;border-color:rgba(184,99,51,.55);background:rgba(16,10,6,.58);box-shadow:inset 0 0 18px rgba(232,156,66,.08)}
-  .app.is-home .tb-brandC{position:relative;z-index:1;text-align:left;padding-left:4px}
+  .app.is-home .tb-brandC{position:relative;z-index:1;text-align:left;padding-left:4px;flex:1}
   .app.is-home .tb-kick{font-size:9px;color:#E2B070;letter-spacing:2.7px}
   .app.is-home .tb-word{font-size:24px;line-height:.98;letter-spacing:2px;max-width:210px}
+  .app.is-home .tb-stamp{position:relative;z-index:1;width:82px;height:82px;flex-basis:82px;opacity:.96}
 </style>
 </head>
 <body>
 <div class="app is-home" id="appRoot">
   <div class="topbar">
-    <div class="tb-icon" id="langToggle" title="PL/EN"><b style="font-size:12px" id="langLbl">PL</b></div>
     <div class="tb-brandC">
       <div class="tb-kick">Texas <span>&#9733;</span> Kentucky</div>
       <div class="tb-word">Bourbon <span>Hunters</span></div>
     </div>
-    <div class="tb-icon" id="bellBtn" title="Bourbon Hunters">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8.5a6 6 0 1 0-12 0c0 6-2.4 7.5-2.4 7.5h16.8S18 14.5 18 8.5z"></path><path d="M10.4 19.4a2 2 0 0 0 3.2 0"></path></svg>
-    </div>
+    <div class="tb-stamp" aria-hidden="true"></div>
   </div>
 
   <!-- HOME -->
@@ -328,7 +336,7 @@
   <section class="view scan-view" id="view-scan">
     <div class="hero">
       <div class="scan-brand">
-        <button class="scan-round" id="scanLangMirror" type="button">PL</button>
+        <div class="scan-round scan-spacer" aria-hidden="true"></div>
         <div class="brand-copy">
       <div class="kick" data-i18n="kick">Skaner butelek</div>
       <h2 data-i18n="heroTitle">Skanuj butelkę, poznaj jej wartość</h2>
@@ -342,6 +350,7 @@
         <div class="scan-overlay" aria-hidden="true"></div>
       </div>
       <input type="file" id="file" accept="image/*" capture="environment" hidden>
+      <input type="file" id="galleryFile" accept="image/*" hidden>
       <div class="btns">
         <button class="scan-side" id="pickGallery" type="button" aria-label="Galeria">Galeria</button>
         <button class="btn btn-go" id="goRate" disabled data-i18n="btnRate">⭐ Ocena</button>
@@ -463,7 +472,11 @@ function styleMatch(b, key){
   return false;
 }
 
-function detectLang(){ const s=localStorage.getItem("bh_lang"); if(s==="pl"||s==="en") return s; const n=(navigator.language||"en").toLowerCase(); return n.indexOf("pl")===0?"pl":"en"; }
+function detectLang(){
+  const list=(navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||"en"]);
+  const n=String(list[0]||"en").toLowerCase();
+  return n.indexOf("pl")===0?"pl":"en";
+}
 let lang=detectLang(), DB=[], curDist="all", curCat="all", renderN=RENDER_LIMIT;
 function fmtPrice(b){ return b.price_str || (b.price!=null?("$"+b.price):"") || b.price_pln || ""; }
 
@@ -540,11 +553,8 @@ function applyLang(){
   document.documentElement.lang=lang;
   document.querySelectorAll("[data-i18n]").forEach(function(el){ const k=el.getAttribute("data-i18n"); if(I18N[lang][k]) el.textContent=I18N[lang][k]; });
   document.querySelectorAll("[data-i18n-ph]").forEach(function(el){ const k=el.getAttribute("data-i18n-ph"); if(I18N[lang][k]) el.placeholder=I18N[lang][k]; });
-  document.getElementById("langLbl").textContent = lang.toUpperCase();
-  const slm=document.getElementById("scanLangMirror"); if(slm) slm.textContent=lang.toUpperCase();
   if(DB.length){ renderHome(); renderExplore(); }
 }
-document.getElementById("langToggle").addEventListener("click",function(){ lang = lang==="pl"?"en":"pl"; localStorage.setItem("bh_lang",lang); applyLang(); });
 
 /* ---------- NAV ---------- */
 function showView(name){
@@ -676,24 +686,31 @@ function openDetail(id){
 }
 /* ================= SKANER ================= */
 let imgData=null, imgMime="image/jpeg", busy=false, loadTimer=null;
-const shot=document.getElementById("shot"), fileInput=document.getElementById("file");
+const shot=document.getElementById("shot"), fileInput=document.getElementById("file"), galleryInput=document.getElementById("galleryFile");
 const goRate=document.getElementById("goRate");
-const pickGallery=document.getElementById("pickGallery"), retakeQuick=document.getElementById("retakeQuick"), scanLangMirror=document.getElementById("scanLangMirror");
+const pickGallery=document.getElementById("pickGallery"), retakeQuick=document.getElementById("retakeQuick");
 shot.addEventListener("click",function(){ if(!busy) fileInput.click(); });
-if(pickGallery) pickGallery.addEventListener("click",function(){ if(!busy) fileInput.click(); });
-if(retakeQuick) retakeQuick.addEventListener("click",function(){ if(!busy) fileInput.click(); });
-if(scanLangMirror) scanLangMirror.addEventListener("click",function(){ document.getElementById("langToggle").click(); });
-fileInput.addEventListener("change",function(e){
+if(pickGallery) pickGallery.addEventListener("click",function(){ if(!busy) galleryInput.click(); });
+if(retakeQuick) retakeQuick.addEventListener("click",function(){ if(!busy){ resetShot(); fileInput.click(); } });
+fileInput.addEventListener("change",handlePickedFile);
+galleryInput.addEventListener("change",handlePickedFile);
+function resetShot(){
+  imgData=null; imgMime="image/jpeg"; goRate.disabled=true;
+  shot.classList.remove("has-shot","is-loading");
+  shot.innerHTML='<div class="ph" id="placeholder"><div class="cam">&#128247;</div><strong data-i18n="tapShoot">'+t("tapShoot")+'</strong><small data-i18n="tapHint">'+t("tapHint")+'</small></div><div class="scan-overlay" aria-hidden="true"></div>';
+  document.getElementById("scanResult").innerHTML=""; document.getElementById("err").style.display="none";
+}
+function handlePickedFile(e){
   const f=e.target.files&&e.target.files[0]; if(!f) return;
+  e.target.value="";
   compress(f).then(function(res){
     imgData=res.b64; imgMime=res.mime;
     shot.classList.add("has-shot");
-    shot.innerHTML='<img src="data:'+res.mime+';base64,'+res.b64+'" alt=""><div class="scan-overlay" aria-hidden="true"></div><button class="retake" id="retake">'+t("retake")+'</button>';
-    document.getElementById("retake").addEventListener("click",function(ev){ ev.stopPropagation(); fileInput.click(); });
+    shot.innerHTML='<img src="data:'+res.mime+';base64,'+res.b64+'" alt=""><div class="scan-overlay" aria-hidden="true"></div>';
     goRate.disabled=false;
     document.getElementById("scanResult").innerHTML=""; document.getElementById("err").style.display="none";
   });
-});
+}
 function compress(file){ return new Promise(function(resolve){ const img=new Image(), url=URL.createObjectURL(file);
   img.onload=function(){ const max=1024; let w=img.width,h=img.height;
     if(w>h&&w>max){h=Math.round(h*max/w);w=max;}else if(h>=w&&h>max){w=Math.round(w*max/h);h=max;}
