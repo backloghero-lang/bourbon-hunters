@@ -131,7 +131,8 @@ const HOME_V2 = {
   sections: [
     { title: "1. Home Header + App Background", x: 44, y: 244, w: 1676, h: 360, assets: [
       { name: "home-header-v3.jpg", w: 1200, h: 444, x: 18, y: 58, cardW: 620, cardH: 250 },
-      { name: "app-background-v3.jpg", w: 900, h: 1787, x: 680, y: 58, cardW: 320, cardH: 250 }
+      { name: "app-background-v3.jpg", w: 900, h: 1787, x: 680, y: 58, cardW: 320, cardH: 250 },
+      { name: "card-background-v1.jpg", w: 1100, h: 477, x: 1040, y: 58, cardW: 560, cardH: 250 }
     ]},
     { title: "2. Category Icons", x: 44, y: 644, w: 1676, h: 260, assets: [
       { name: "small-batch.png", w: 256, h: 256, x: 18, y: 58, cardW: 220, cardH: 160 },

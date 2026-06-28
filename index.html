@@ -74,8 +74,8 @@
   .swipe-dot{width:6px;height:6px;border-radius:999px;background:rgba(226,176,112,.28);transition:width .2s,background .2s,opacity .2s;opacity:.8}
   .swipe-dot.on{width:18px;background:#E2B070;opacity:1}
   .feat{scroll-snap-align:start;flex:0 0 92%;height:210px;background:
-    radial-gradient(190px 160px at 82% 56%,rgba(232,156,66,.30),transparent 70%),
-    radial-gradient(120px 120px at 24% 0%,rgba(46,90,79,.35),transparent 72%),
+    linear-gradient(90deg,rgba(5,7,5,.86) 0%,rgba(6,7,5,.68) 48%,rgba(9,6,4,.16) 100%),
+    url("design/figma-assets/home-pack-v2/card-background-v1.jpg") center/cover no-repeat,
     linear-gradient(135deg,rgba(16,42,32,.98),rgba(22,18,12,.98) 48%,rgba(9,8,6,.99));
     border:1px solid rgba(184,99,51,.72);border-radius:20px;padding:20px;display:flex;gap:16px;box-shadow:0 18px 42px rgba(0,0,0,.42);position:relative;overflow:hidden}
   .feat:before{content:"";position:absolute;inset:0;background:url("design/figma-assets/asset-pack-v1/noise-overlay.png") center/cover repeat;opacity:.08;pointer-events:none}
@@ -92,7 +92,7 @@
   .bottlepic{flex:0 0 132px;width:132px;height:180px;align-self:center;border-radius:16px;display:grid;place-items:center;font-size:42px;overflow:visible;position:relative;z-index:1;
     background:radial-gradient(86% 74% at 52% 58%,rgba(232,156,66,.32),rgba(86,45,16,.18) 44%,transparent 74%)}
   .bottlepic:after{content:"";position:absolute;left:22px;right:22px;bottom:7px;height:12px;border-radius:50%;background:rgba(0,0,0,.45);filter:blur(7px);z-index:-1}
-  .bottlepic img{max-width:120px;max-height:176px;width:auto!important;height:auto!important;object-fit:contain!important;border-radius:0!important;mix-blend-mode:multiply;filter:contrast(1.08) saturate(1.12) drop-shadow(0 18px 18px rgba(0,0,0,.58))}
+  .bottlepic img{max-width:120px;max-height:176px;width:auto!important;height:auto!important;object-fit:contain!important;border-radius:0!important;filter:contrast(1.08) saturate(1.12) drop-shadow(0 18px 18px rgba(0,0,0,.58))}
 
   /* categories */
   .cats{display:flex;gap:10px;overflow-x:auto;margin:0 -16px;padding:0 16px 8px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
@@ -391,7 +391,30 @@
 /* ========= KONFIGURACJA ========= */
 const WORKER_URL = "https://bourbon-hunters.darekmaslyk.workers.dev";
 const DB_URL = "db/bourbons.json";
-const FEATURED_IDS = ["buffalo-trace-bourbon-1","blantons-original-single-barrel-bourbon-whiskey-700ml","eagle-rare-10-year-kentucky-straight-bourbon-whiskey-700ml","elijah-craig-small-batch-bourbon","woodford-reserve-bourbon"];
+const TEST_BOTTLE_IDS = [
+  "buffalo-trace-bourbon-1",
+  "blantons-original-single-barrel-bourbon-whiskey-700ml",
+  "eagle-rare-10-year-kentucky-straight-bourbon-whiskey-700ml",
+  "w-l-weller-700ml-12-year-bourbon",
+  "woodford-reserve-bourbon",
+  "woodford-reserve-double-oaked-bourbon",
+  "jim-beam-white-label",
+  "knob-creek-kentucky-straight-bourbon",
+  "knob-creek-bourbon-12-year",
+  "makers-mark-101-proof-bourbon-whisky",
+  "basil-hayden-s-kentucky-straight-bourbon",
+  "russels-reserve-10-year-bourbon",
+  "austin-nichols-wild-turkey-kentucky-straight-bourbon-whiskey-70cl",
+  "four-roses",
+  "elijah-craig-small-batch-bourbon",
+  "old-forester-1897-bottled-in-bond",
+  "old-forester-1910-old-fine-whiskey-bourbon-whiskey",
+  "1792-single-barrel-kentucky-straight-bourbon",
+  "yellowstone-select-kentucky-straight-bourbon",
+  "michters-bourbon"
+];
+const FEATURED_IDS = ["buffalo-trace-bourbon-1","blantons-original-single-barrel-bourbon-whiskey-700ml","eagle-rare-10-year-kentucky-straight-bourbon-whiskey-700ml","woodford-reserve-bourbon","knob-creek-kentucky-straight-bourbon"];
+const TEST_CUTOUT_DIR = "assets/bourbons/cutouts-test/";
 const RENDER_LIMIT = 60; /* ile kart renderujemy na raz (wydajnosc przy tysiacach rekordow) */
 /* ================================ */
 
@@ -565,6 +588,20 @@ function applyLang(){
   if(DB.length){ renderHome(); renderExplore(); }
 }
 
+function prepareBottleDataset(list){
+  const byId = {};
+  (list||[]).forEach(function(b){ byId[b.id]=b; });
+  return TEST_BOTTLE_IDS.map(function(id){
+    const b = byId[id];
+    if(!b) return null;
+    const copy = Object.assign({}, b);
+    copy.originalImage = b.image;
+    copy.image = TEST_CUTOUT_DIR + id + ".png";
+    copy.cutoutStatus = "test";
+    return copy;
+  }).filter(Boolean);
+}
+
 /* ---------- NAV ---------- */
 function showView(name){
   document.getElementById("appRoot").className = "app is-" + name;
@@ -615,7 +652,7 @@ function setupHomeSwipeDots(){
 }
 
 /* ---------- DB ---------- */
-fetch(DB_URL).then(function(r){return r.json();}).then(function(j){ DB=(j.bottles||[]); renderHome(); renderExplore(); }).catch(function(){ DB=[]; });
+fetch(DB_URL).then(function(r){return r.json();}).then(function(j){ DB=prepareBottleDataset(j.bottles||[]); renderHome(); renderExplore(); }).catch(function(){ DB=[]; });
 
 
 function renderHome(){
