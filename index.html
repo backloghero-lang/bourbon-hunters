@@ -82,6 +82,7 @@
   .feat:after{content:"";position:absolute;left:14px;right:14px;bottom:0;height:1px;background:linear-gradient(90deg,transparent,rgba(232,156,66,.88),transparent);pointer-events:none}
   .feat h4{font-family:var(--serif);font-size:21px;margin:0 0 7px;line-height:1.08;color:#F6E1BC;text-shadow:0 2px 12px rgba(0,0,0,.65);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;min-height:68px}
   .feat.long-name h4{font-size:19px;line-height:1.1}
+  .feat.long-name .sub{display:none}
   .feat .sub{font-size:12px;color:#C68752;margin-bottom:8px;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .feat .price{font-size:20px;color:#E28A3D;font-weight:900;margin-bottom:8px;letter-spacing:.5px}
   .feat .btn-sm{display:inline-block;background:rgba(0,0,0,.22);border:1px solid #E2B070;color:#E2B070;font-size:11px;font-weight:900;letter-spacing:.7px;padding:8px 15px;border-radius:9px;text-transform:uppercase;cursor:pointer}
@@ -113,7 +114,7 @@
   .bcard{flex:0 0 130px;scroll-snap-align:start;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;transition:transform .08s}
   .bcard:active{transform:scale(.97)}
   .bcard .pic{height:120px;display:grid;place-items:center;font-size:46px;background:radial-gradient(70% 70% at 50% 25%,rgba(220,184,119,.2),rgba(0,0,0,.3))}
-  .bcard .pic img{width:100%;height:100%;object-fit:cover}
+  .bcard .pic img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
   .bcard .meta{padding:10px}
   .bcard .bn{font-size:13px;font-weight:800;line-height:1.2;margin-bottom:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:32px}
   .bcard .bt{font-size:11px;color:var(--amber2);font-weight:700}
@@ -133,7 +134,7 @@
   .brow{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px;cursor:pointer;transition:transform .08s,border-color .2s}
   .brow:active{transform:scale(.99)}
   .brow .pic{flex:0 0 54px;height:74px;border-radius:9px;overflow:hidden;display:grid;place-items:center;font-size:30px;background:radial-gradient(70% 70% at 50% 25%,rgba(220,184,119,.16),rgba(0,0,0,.3))}
-  .brow .pic img{width:100%;height:100%;object-fit:contain}
+  .brow .pic img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;object-position:center}
   .brow .info{flex:1;min-width:0}
   .brow .bn{font-size:15px;font-weight:800;line-height:1.2;margin-bottom:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .brow .bt{font-size:12px;color:var(--amber2);font-weight:600}
@@ -141,11 +142,12 @@
   .brow .right{flex:0 0 auto;display:flex;flex-direction:column;align-items:flex-end;gap:8px}
   .brow .rate{display:inline-flex;align-items:center;gap:4px;font-size:14px;font-weight:800;color:var(--gold)}
   .brow .rate.none{color:var(--line)}
-  .heart{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;cursor:pointer;color:var(--muted);border:1px solid var(--line);background:rgba(0,0,0,.2);flex:none}
-  .heart svg{width:17px;height:17px}
-  .heart.on{color:var(--bad);border-color:rgba(224,100,74,.5)}
-  .heart.on svg{fill:var(--bad)}
+  .heart{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;cursor:pointer;border:1px solid var(--line);background:rgba(0,0,0,.2) url("design/figma-assets/home-pack-v2/wishlist-barrel.png") center/22px 22px no-repeat;flex:none;filter:grayscale(.55) saturate(.45) brightness(.82);opacity:.64}
+  .heart.on{border-color:rgba(224,100,74,.62);filter:saturate(1.25) brightness(1.12) drop-shadow(0 0 8px rgba(224,100,74,.32));opacity:1}
   .heart.pulse{animation:hpulse .3s ease}
+  .own{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;cursor:pointer;border:1px solid var(--line);background:rgba(0,0,0,.2) url("design/figma-assets/home-pack-v2/collection-add.png") center/22px 22px no-repeat;flex:none;filter:saturate(.8);opacity:.76}
+  .own.on{border-color:rgba(226,176,112,.72);filter:saturate(1.18) drop-shadow(0 0 8px rgba(226,176,112,.28));opacity:1}
+  .own.pulse{animation:hpulse .3s ease}
   @keyframes hpulse{0%{transform:scale(1)}45%{transform:scale(1.35)}100%{transform:scale(1)}}
   /* toast */
   #toast{position:fixed;left:50%;bottom:calc(var(--nav-h) + 18px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);
@@ -160,7 +162,7 @@
 
   /* unified bottle image frame */
   .dphoto{width:100%;height:300px;border-radius:16px;border:1px solid var(--line);display:grid;place-items:center;margin:16px 0;background:radial-gradient(70% 70% at 50% 28%,rgba(220,184,119,.18),rgba(0,0,0,.32));overflow:hidden}
-  .dphoto img{max-width:82%;max-height:92%;width:auto;height:auto;object-fit:contain;filter:drop-shadow(0 14px 18px rgba(0,0,0,.45))}
+  .dphoto img{max-width:82%!important;max-height:92%!important;width:auto!important;height:auto!important;object-fit:contain!important;object-position:center!important;filter:drop-shadow(0 14px 18px rgba(0,0,0,.45))}
   .shot img{width:100%;height:100%;object-fit:cover}
 
   /* tasting / rating */
@@ -208,10 +210,10 @@
   .scan-detected{display:inline-flex;align-items:center;justify-content:center;width:206px;height:43px;margin:0 auto -2px;background:url("design/figma-assets/scanner-pack-v1/bottle-detected-badge.png") center/contain no-repeat;color:transparent;opacity:.72;pointer-events:none}
   .shot{width:100%;aspect-ratio:760/980;max-height:54vh;border:none;border-radius:20px;display:grid;place-items:center;cursor:pointer;overflow:hidden;position:relative;background:rgba(3,2,1,.46);box-shadow:inset 0 0 80px rgba(0,0,0,.75)}
   .shot:before{content:"";position:absolute;inset:0;background:url("design/figma-assets/scanner-pack-v1/scan-frame.png") center/100% 100% no-repeat;z-index:3;pointer-events:none;filter:drop-shadow(0 0 16px rgba(218,106,45,.38))}
-  .shot:after{content:"";position:absolute;left:8%;right:8%;top:48%;height:80px;background:url("design/figma-assets/scanner-pack-v1/scan-beam.png") center/100% 100% no-repeat;z-index:4;opacity:.58;pointer-events:none}
+  .shot:after{content:"";position:absolute;left:8%;right:8%;top:48%;height:38px;background:linear-gradient(180deg,transparent,rgba(255,158,62,.08) 18%,rgba(255,204,128,.42) 48%,rgba(255,111,28,.16) 72%,transparent);box-shadow:0 0 20px rgba(255,132,42,.16);z-index:4;opacity:.34;pointer-events:none;mix-blend-mode:screen}
   .shot .ph{display:grid;place-items:center;gap:8px;color:#E2B070;padding:32px;text-shadow:0 2px 12px #000}
   .shot .ph .cam{width:120px;height:120px;background:url("design/figma-assets/scanner-pack-v1/hunter-loading-mark.png") center/contain no-repeat;font-size:0;filter:drop-shadow(0 0 18px rgba(184,106,51,.32))}
-  .shot img{position:absolute;inset:6%;width:88%;height:88%;object-fit:cover;border-radius:14px;z-index:1;filter:saturate(1.05) contrast(1.02)}
+  .shot img{position:absolute;inset:6%;width:88%;height:88%;object-fit:contain;border-radius:14px;z-index:1;filter:saturate(1.05) contrast(1.02)}
   .shot.has-shot:after{opacity:.8}
   .shot.is-loading:after{animation:scanBeam 1.35s ease-in-out infinite}
   .shot.is-loading .scan-overlay{opacity:1}
@@ -220,7 +222,10 @@
   .retake{position:absolute;right:13px;bottom:13px;width:86px;height:86px;border:none;border-radius:50%;background:url("design/figma-assets/scanner-pack-v1/retake-button.png") center/contain no-repeat;color:transparent;z-index:5;cursor:pointer}
   .btns{display:grid;grid-template-columns:96px 1fr 96px;align-items:center;gap:10px;margin-top:14px}
   .scan-side{width:86px;height:86px;border:0;border-radius:50%;background:url("design/figma-assets/scanner-pack-v1/gallery-button.png") center/contain no-repeat;justify-self:center;color:transparent;cursor:pointer}
-  #retakeQuick{background-image:url("design/figma-assets/scanner-pack-v1/retake-button.png")}
+  #retakeQuick{position:relative;background:radial-gradient(circle at 50% 34%,rgba(245,203,119,.34),rgba(18,10,5,.96) 62%);border:1px solid rgba(226,176,112,.8);box-shadow:0 0 20px rgba(226,128,40,.18),inset 0 0 20px rgba(226,176,112,.08)}
+  #retakeQuick:before{content:"+";position:absolute;inset:0;display:grid;place-items:center;color:#F6D48A;font-size:38px;font-weight:800;line-height:1;text-shadow:0 0 12px rgba(226,176,112,.44)}
+  #retakeQuick.has-shot{background:url("design/figma-assets/scanner-pack-v1/retake-button.png") center/contain no-repeat;border:0;box-shadow:none}
+  #retakeQuick.has-shot:before{display:none}
   .btn{flex:1;border:none;border-radius:14px;padding:14px 10px;font-size:15px;font-weight:800;cursor:pointer;transition:transform .08s,opacity .2s}
   .btn:active{transform:scale(.97)}
   .btn-go{min-height:112px;background:url("design/figma-assets/scanner-pack-v1/scan-button.png") center top/86px 86px no-repeat;color:#F6E1BC;text-shadow:0 2px 8px #000;box-shadow:none;padding:86px 0 0;font-size:12px;letter-spacing:.9px;text-transform:uppercase}
@@ -228,9 +233,9 @@
   .btn[disabled]{opacity:.4;cursor:default}
   .note{font-size:11px;color:var(--muted);margin-top:12px;line-height:1.5}
   #loading{display:none;text-align:center;padding:18px 16px}
-  .spin{position:relative;width:94px;height:72px;margin:0 auto 12px;background:url("design/figma-assets/asset-pack-v1/barrel.png") center/contain no-repeat;filter:drop-shadow(0 0 16px rgba(226,176,112,.28));animation:barrelRoll 1.05s linear infinite}
-  .spin:after{content:"";position:absolute;left:18px;right:18px;bottom:-9px;height:9px;border-radius:50%;background:rgba(0,0,0,.48);filter:blur(5px);animation:barrelShadow 1.05s ease-in-out infinite}
-  @keyframes barrelRoll{0%{transform:translateX(-8px) rotate(0deg)}50%{transform:translateX(8px) rotate(180deg)}100%{transform:translateX(-8px) rotate(360deg)}}
+  .spin{position:relative;width:108px;height:90px;margin:0 auto 12px;background:url("design/figma-assets/home-pack-v2/rolling-barrel.png") center/contain no-repeat;filter:drop-shadow(0 0 18px rgba(226,176,112,.32));animation:barrelRoll 2.35s ease-in-out infinite;will-change:transform}
+  .spin:after{content:"";position:absolute;left:18px;right:18px;bottom:0;height:9px;border-radius:50%;background:rgba(0,0,0,.5);filter:blur(5px);animation:barrelShadow 1.18s ease-in-out infinite}
+  @keyframes barrelRoll{0%{transform:translateX(calc(-50vw + 78px)) rotate(0deg)}46%{transform:translateX(calc(50vw - 174px)) rotate(720deg)}52%{transform:translateX(calc(50vw - 174px)) rotate(746deg)}100%{transform:translateX(calc(-50vw + 78px)) rotate(0deg)}}
   @keyframes barrelShadow{0%,100%{transform:scaleX(.82);opacity:.36}50%{transform:scaleX(1.08);opacity:.62}}
   #loadtxt{font-size:13px;color:var(--muted)}
   .err{background:rgba(224,100,74,.12);border:1px solid var(--bad);border-radius:14px;padding:14px 14px 14px 74px;font-size:13px;color:#ffd0c6;margin:16px;display:none;line-height:1.5;min-height:70px;background-image:url("design/figma-assets/scanner-pack-v1/error-state-icon.png");background-size:54px;background-position:12px center;background-repeat:no-repeat}
@@ -286,6 +291,7 @@
   .app.is-home .tb-kick{font-size:9px;color:#E2B070;letter-spacing:2.7px}
   .app.is-home .tb-word{font-size:24px;line-height:.98;letter-spacing:2px;max-width:210px}
   .app.is-home .tb-stamp{display:none}
+  .app:not(.is-home) .tb-stamp{display:none}
 </style>
 </head>
 <body>
@@ -366,7 +372,6 @@
     <div class="sec-head" style="margin-top:8px"><h3 data-i18n="navColl">Kolekcja</h3></div>
     <div class="tabs" id="collectionTabs">
       <button class="tab on" data-ctab="wishlist" data-i18n="wlT">Lista życzeń</button>
-      <button class="tab" data-ctab="hunted" data-i18n="huT">Upolowane</button>
       <button class="tab" data-ctab="owned" data-i18n="coT">Moja kolekcja</button>
     </div>
     <div id="collectionList"></div>
@@ -438,7 +443,7 @@ const I18N = {
     byDist:"Przeglądaj wg destylarni", allDist:"Wszystkie", distLbl:"Destylarnia", loadMore:"Pokaż więcej", results:"poz.",
     priceK:"Cena", statusAvail:"Dostępny", statusSold:"Niedostępny", viewShop:"Zobacz w sklepie ↗", noResults:"Brak wyników dla tego filtra.",
     allCat:"Wszystkie", stWheated:"Wheated", stSingle:"Single Barrel", stSmall:"Small Batch", stProof:"Barrel Proof", stBib:"Bottled-in-Bond", stLimited:"Edycja limitowana", aiBtn:"🔎 Analiza AI",
-    wlAdded:"Dodano do listy życzeń ♥", wlEmpty:"Twoja lista życzeń jest pusta. Dodawaj butelki serduszkiem ♡.", emptyHunted:"Nie masz jeszcze upolowanych butelek.", emptyCollection:"Twoja kolekcja jest pusta.", noseT:"Nos", tasteT:"Smak", finishT:"Finisz", suggestedPrice:"Cena sugerowana", dbQuality:"Jakość z bazy", userQuality:"Twoja jakość",
+    wlAdded:"Dodano do listy życzeń ♥", ownAdded:"Dodano do kolekcji", wlEmpty:"Twoja lista życzeń jest pusta. Dodawaj butelki serduszkiem ♡.", emptyHunted:"Nie masz jeszcze upolowanych butelek.", emptyCollection:"Twoja kolekcja jest pusta.", noseT:"Nos", tasteT:"Smak", finishT:"Finisz", suggestedPrice:"Cena sugerowana", dbQuality:"Jakość z bazy", userQuality:"Twoja jakość",
     wlT:"Lista życzeń", wlD:"Zapisuj bourbony, które chcesz upolować.", huT:"Upolowane", huD:"Oznaczaj butelki, które już zdobyłeś.",
     coT:"Moja kolekcja", coD:"Twoja półka — wszystkie posiadane butelki w jednym miejscu.", soonTag:"Wkrótce" },
   en:{ searchPh:"Search bourbon or distillery...", featured:"Featured", byCat:"Browse by category", viewAll:"View all", recent:"Recently added",
@@ -460,7 +465,7 @@ const I18N = {
     byDist:"Browse by distillery", allDist:"All", distLbl:"Distillery", loadMore:"Load more", results:"items",
     priceK:"Price", statusAvail:"In stock", statusSold:"Sold out", viewShop:"View in shop ↗", noResults:"No results for this filter.",
     allCat:"All", stWheated:"Wheated", stSingle:"Single Barrel", stSmall:"Small Batch", stProof:"Barrel Proof", stBib:"Bottled-in-Bond", stLimited:"Limited Edition", aiBtn:"🔎 AI Analysis",
-    wlAdded:"Added to wishlist ♥", wlEmpty:"Your wishlist is empty. Add bottles with the ♡ heart.", emptyHunted:"No hunted bottles yet.", emptyCollection:"Your collection is empty.", noseT:"Nose", tasteT:"Taste", finishT:"Finish", suggestedPrice:"Suggested price", dbQuality:"Database quality", userQuality:"Your quality",
+    wlAdded:"Added to wishlist ♥", ownAdded:"Added to collection", wlEmpty:"Your wishlist is empty. Add bottles with the ♡ heart.", emptyHunted:"No hunted bottles yet.", emptyCollection:"Your collection is empty.", noseT:"Nose", tasteT:"Taste", finishT:"Finish", suggestedPrice:"Suggested price", dbQuality:"Database quality", userQuality:"Your quality",
     wlT:"Wishlist", wlD:"Save the bourbons you want to hunt down.", huT:"Hunted", huD:"Mark the bottles you've already bagged.",
     coT:"My collection", coD:"Your shelf — every bottle you own in one place.", soonTag:"Soon" }
 };
@@ -512,16 +517,19 @@ let lang=detectLang(), DB=[], curDist="all", curCat="all", renderN=RENDER_LIMIT;
 function fmtPrice(b){ return b.price_str || (b.price!=null?("$"+b.price):"") || b.price_pln || ""; }
 
 /* ---------- lista życzeń (localStorage) ---------- */
-const HEART_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7.5-4.7-10-9.3C.5 8.4 2 5 5.2 5 7.3 5 8.7 6.2 12 9c3.3-2.8 4.7-4 6.8-4C22 5 23.5 8.4 22 11.7 19.5 16.3 12 21 12 21z"/></svg>';
 let WL=(function(){ try{ return JSON.parse(localStorage.getItem("bh_wishlist")||"[]"); }catch(e){ return []; } })();
 function wlHas(id){ return WL.indexOf(id)>=0; }
 function wlSave(){ try{ localStorage.setItem("bh_wishlist",JSON.stringify(WL)); }catch(e){} }
 function wlToggle(id){ const i=WL.indexOf(id); if(i>=0){ WL.splice(i,1); wlSave(); return false; } WL.push(id); wlSave(); return true; }
 let toastTimer=null;
 function toast(msg){ const el=document.getElementById("toast"); if(!el) return; el.textContent=msg; el.classList.add("show"); clearTimeout(toastTimer); toastTimer=setTimeout(function(){ el.classList.remove("show"); },2000); }
-function heartHtml(id){ return '<div class="heart'+(wlHas(id)?' on':'')+'" data-heart="'+esc(id)+'" role="button" aria-label="wishlist">'+HEART_SVG+'</div>'; }
+function heartHtml(id){ return '<div class="heart'+(wlHas(id)?' on':'')+'" data-heart="'+esc(id)+'" role="button" aria-label="wishlist"></div>'; }
 const HUNT=(function(){ try{ return JSON.parse(localStorage.getItem("bh_hunted")||"[]"); }catch(e){ return []; } })();
-const OWNED=(function(){ try{ return JSON.parse(localStorage.getItem("bh_collection")||"[]"); }catch(e){ return []; } })();
+let OWNED=(function(){ try{ return JSON.parse(localStorage.getItem("bh_collection")||"[]"); }catch(e){ return []; } })();
+function ownHas(id){ return OWNED.indexOf(id)>=0; }
+function ownSave(){ try{ localStorage.setItem("bh_collection",JSON.stringify(OWNED)); }catch(e){} }
+function ownToggle(id){ const i=OWNED.indexOf(id); if(i>=0){ OWNED.splice(i,1); ownSave(); return false; } OWNED.push(id); ownSave(); return true; }
+function ownHtml(id){ return '<div class="own'+(ownHas(id)?' on':'')+'" data-own="'+esc(id)+'" role="button" aria-label="collection"></div>'; }
 let collectionTab="wishlist";
 const UR=(function(){ try{ return JSON.parse(localStorage.getItem("bh_user_ratings")||"{}"); }catch(e){ return {}; } })();
 function urSave(){ try{ localStorage.setItem("bh_user_ratings",JSON.stringify(UR)); }catch(e){} }
@@ -534,7 +542,7 @@ function listRow(b){
   const proof=b.proof?(b.proof+' Proof'):(b.abv?(b.abv+'% ABV'):'');
   return '<div class="brow" data-id="'+esc(b.id)+'">'+pic+
     '<div class="info"><div class="bn">'+esc(b.name)+'</div><div class="bt">'+esc(b.type||b.distillery||"")+'</div>'+(proof?'<div class="bpf">'+esc(proof)+'</div>':'')+'</div>'+
-    '<div class="right">'+rateHtml(b)+heartHtml(b.id)+'</div></div>';
+    '<div class="right">'+rateHtml(b)+'<div style="display:flex;gap:7px">'+ownHtml(b.id)+heartHtml(b.id)+'</div></div></div>';
 }
 
 function firstVal(o, keys){ for(const k of keys){ if(o && o[k]!=null && String(o[k]).trim()) return String(o[k]).trim(); } return ""; }
@@ -570,7 +578,8 @@ function featCard(b, kick){
   const tag=categoryLabel(b);
   const rate=(b.quality!=null) ? '<div class="feat-rate">&#9733; '+esc(Number(b.quality).toFixed(1).replace(".0",""))+'</div>' : '';
   const longName = String(b.name||"").length > 34 ? " long-name" : "";
-  return '<div class="feat'+longName+'" data-id="'+esc(b.id)+'"><div class="info"><h4>'+esc(b.name)+'</h4>'+
+  const shownName = longName ? String(b.name||"").slice(0,40).replace(/\s+\S*$/,"")+'...' : String(b.name||"");
+  return '<div class="feat'+longName+'" data-id="'+esc(b.id)+'"><div class="info"><h4>'+esc(shownName)+'</h4>'+
     '<div class="sub">'+esc(b.distillery||"")+'</div>'+
     (price?'<div class="price">'+esc(price)+'</div>':'')+
     '<div class="feat-tags"><span class="feat-tag">'+esc(tag)+'</span></div>'+
@@ -612,10 +621,11 @@ function showView(name){
 }
 function renderCollection(tab){
   collectionTab=tab||collectionTab||"wishlist";
+  if(collectionTab==="hunted") collectionTab="wishlist";
   document.querySelectorAll("#collectionTabs .tab").forEach(function(b){ b.classList.toggle("on", b.getAttribute("data-ctab")===collectionTab); });
   const el=document.getElementById("collectionList"); if(!el) return;
-  const ids = collectionTab==="wishlist" ? WL : (collectionTab==="hunted" ? HUNT : OWNED);
-  const emptyKey = collectionTab==="wishlist" ? "wlEmpty" : (collectionTab==="hunted" ? "emptyHunted" : "emptyCollection");
+  const ids = collectionTab==="wishlist" ? WL : OWNED;
+  const emptyKey = collectionTab==="wishlist" ? "wlEmpty" : "emptyCollection";
   const items=ids.map(function(id){ return DB.find(function(b){return b.id===id;}); }).filter(Boolean);
   el.innerHTML = items.length ? '<div class="blist">'+items.map(listRow).join("")+'</div>' : '<div class="empty">'+t(emptyKey)+'</div>';
 }
@@ -721,6 +731,16 @@ document.addEventListener("click",function(e){
     if(document.getElementById("view-collection").classList.contains("active")) renderCollection(collectionTab);
     return;
   }
+  const ownEl = e.target.closest("[data-own]");
+  if(ownEl){
+    e.stopPropagation();
+    const id=ownEl.getAttribute("data-own"); const added=ownToggle(id);
+    document.querySelectorAll('.own[data-own="'+id+'"]').forEach(function(o){ o.classList.toggle("on",added); });
+    ownEl.classList.add("pulse"); setTimeout(function(){ ownEl.classList.remove("pulse"); },300);
+    if(added) toast(t("ownAdded"));
+    if(document.getElementById("view-collection").classList.contains("active")) renderCollection(collectionTab);
+    return;
+  }
   const card = e.target.closest("[data-id]");
   if(card){ openDetail(card.getAttribute("data-id")); return; }
   const styleCell = e.target.closest(".cat[data-style]");
@@ -750,7 +770,7 @@ function openDetail(id){
     ? '<div class="verdict"><div class="score">'+b.value+'<small>/5</small></div><div style="flex:1"><div class="lbl">'+t("valLbl")+'</div><div class="stars" style="color:var(--gold)">'+starStr(b.value)+'</div></div></div>'
     : '';
   document.getElementById("detailBody").innerHTML =
-    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">'+statusBadge+heartHtml(b.id)+'</div>'+
+    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">'+statusBadge+'<div style="display:flex;gap:8px">'+ownHtml(b.id)+heartHtml(b.id)+'</div></div>'+
     '<div class="dhead">'+esc(b.name)+'</div>'+
     '<div class="dtype">'+esc(categoryLabel(b))+'</div>'+
     (origin?'<div class="dorigin">'+origin+'</div>':'')+pic+
@@ -767,12 +787,13 @@ const goRate=document.getElementById("goRate");
 const pickGallery=document.getElementById("pickGallery"), retakeQuick=document.getElementById("retakeQuick");
 shot.addEventListener("click",function(){ if(!busy) fileInput.click(); });
 if(pickGallery) pickGallery.addEventListener("click",function(){ if(!busy) galleryInput.click(); });
-if(retakeQuick) retakeQuick.addEventListener("click",function(){ if(!busy){ resetShot(); fileInput.click(); } });
+if(retakeQuick) retakeQuick.addEventListener("click",function(){ if(busy) return; if(imgData) resetShot(); fileInput.click(); });
 fileInput.addEventListener("change",handlePickedFile);
 galleryInput.addEventListener("change",handlePickedFile);
 function resetShot(){
   imgData=null; imgMime="image/jpeg"; goRate.disabled=true;
   shot.classList.remove("has-shot","is-loading");
+  if(retakeQuick) retakeQuick.classList.remove("has-shot");
   shot.innerHTML='<div class="ph" id="placeholder"><div class="cam">&#128247;</div><strong data-i18n="tapShoot">'+t("tapShoot")+'</strong><small data-i18n="tapHint">'+t("tapHint")+'</small></div><div class="scan-overlay" aria-hidden="true"></div>';
   document.getElementById("scanResult").innerHTML=""; document.getElementById("err").style.display="none";
 }
@@ -782,6 +803,7 @@ function handlePickedFile(e){
   compress(f).then(function(res){
     imgData=res.b64; imgMime=res.mime;
     shot.classList.add("has-shot");
+    if(retakeQuick) retakeQuick.classList.add("has-shot");
     shot.innerHTML='<img src="data:'+res.mime+';base64,'+res.b64+'" alt=""><div class="scan-overlay" aria-hidden="true"></div>';
     goRate.disabled=false;
     document.getElementById("scanResult").innerHTML=""; document.getElementById("err").style.display="none";

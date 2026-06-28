@@ -127,7 +127,7 @@ const HOME_V2 = {
   boardName: "Bourbon Hunters / Home Runtime Pack v2",
   subtitle: "Optimized runtime assets used by the current home screen",
   folder: "home-pack-v2",
-  board: { w: 1780, h: 980 },
+  board: { w: 1780, h: 1180 },
   sections: [
     { title: "1. Home Header + App Background", x: 44, y: 244, w: 1676, h: 360, assets: [
       { name: "home-header-v3.jpg", w: 1200, h: 444, x: 18, y: 58, cardW: 620, cardH: 250 },
@@ -141,6 +141,11 @@ const HOME_V2 = {
       { name: "barrel-proof.png", w: 256, h: 256, x: 738, y: 58, cardW: 220, cardH: 160 },
       { name: "rye-whiskey.png", w: 256, h: 256, x: 978, y: 58, cardW: 220, cardH: 160 },
       { name: "limited-edition.png", w: 256, h: 256, x: 1218, y: 58, cardW: 220, cardH: 160 }
+    ]},
+    { title: "3. Action Icons", x: 44, y: 924, w: 1676, h: 210, assets: [
+      { name: "collection-add.png", w: 256, h: 256, x: 18, y: 58, cardW: 180, cardH: 120 },
+      { name: "wishlist-barrel.png", w: 256, h: 256, x: 218, y: 58, cardW: 180, cardH: 120 },
+      { name: "rolling-barrel.png", w: 192, h: 160, x: 418, y: 58, cardW: 180, cardH: 120 }
     ]}
   ]
 };

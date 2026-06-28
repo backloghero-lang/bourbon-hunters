@@ -55,6 +55,24 @@
       "path": "design/figma-assets/home-pack-v2/limited-edition.png",
       "width": 256,
       "height": 256
+    },
+    {
+      "name": "collection-add.png",
+      "path": "design/figma-assets/home-pack-v2/collection-add.png",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "wishlist-barrel.png",
+      "path": "design/figma-assets/home-pack-v2/wishlist-barrel.png",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "rolling-barrel.png",
+      "path": "design/figma-assets/home-pack-v2/rolling-barrel.png",
+      "width": 192,
+      "height": 160
     }
   ]
 }
