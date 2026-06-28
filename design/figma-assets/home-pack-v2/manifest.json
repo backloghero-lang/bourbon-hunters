@@ -1,0 +1,54 @@
+{
+  "name": "Home Runtime Pack v2",
+  "description": "Optimized home screen assets used directly by the Bourbon Hunters PWA.",
+  "assets": [
+    {
+      "name": "home-header.jpg",
+      "path": "design/figma-assets/home-pack-v2/home-header.jpg",
+      "width": 1000,
+      "height": 574
+    },
+    {
+      "name": "app-background.jpg",
+      "path": "design/figma-assets/home-pack-v2/app-background.jpg",
+      "width": 900,
+      "height": 1350
+    },
+    {
+      "name": "small-batch.png",
+      "path": "design/figma-assets/home-pack-v2/small-batch.png",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "single-barrel.png",
+      "path": "design/figma-assets/home-pack-v2/single-barrel.png",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "bottled-in-bond.png",
+      "path": "design/figma-assets/home-pack-v2/bottled-in-bond.png",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "barrel-proof.png",
+      "path": "design/figma-assets/home-pack-v2/barrel-proof.png",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "rye-whiskey.png",
+      "path": "design/figma-assets/home-pack-v2/rye-whiskey.png",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "limited-edition.png",
+      "path": "design/figma-assets/home-pack-v2/limited-edition.png",
+      "width": 256,
+      "height": 256
+    }
+  ]
+}

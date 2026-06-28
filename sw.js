@@ -1,11 +1,19 @@
 /* Bourbon Hunters service worker - network-first dla aktualizacji aplikacji i bazy. */
-const CACHE = "bourbon-hunters-v19";
+const CACHE = "bourbon-hunters-v21";
 const ASSETS = [
   "./",
   "./index.html",
   "./test-index.html",
   "./manifest.json",
   "./assets/intro/bourbon-hunters-intro.mp4",
+  "./design/figma-assets/home-pack-v2/app-background.jpg",
+  "./design/figma-assets/home-pack-v2/home-header.jpg",
+  "./design/figma-assets/home-pack-v2/small-batch.png",
+  "./design/figma-assets/home-pack-v2/single-barrel.png",
+  "./design/figma-assets/home-pack-v2/bottled-in-bond.png",
+  "./design/figma-assets/home-pack-v2/barrel-proof.png",
+  "./design/figma-assets/home-pack-v2/rye-whiskey.png",
+  "./design/figma-assets/home-pack-v2/limited-edition.png",
   "./db/bourbons.json",
   "./icons/icon-192.png",
   "./icons/icon-512.png"

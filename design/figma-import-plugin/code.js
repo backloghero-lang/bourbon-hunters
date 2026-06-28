@@ -122,6 +122,28 @@ const REFERENCE = {
   ]
 };
 
+const HOME_V2 = {
+  pageName: "Bourbon Hunters Asset Packs",
+  boardName: "Bourbon Hunters / Home Runtime Pack v2",
+  subtitle: "Optimized runtime assets used by the current home screen",
+  folder: "home-pack-v2",
+  board: { w: 1780, h: 980 },
+  sections: [
+    { title: "1. Home Header + App Background", x: 44, y: 244, w: 1676, h: 360, assets: [
+      { name: "home-header.jpg", w: 1000, h: 574, x: 18, y: 58, cardW: 620, cardH: 250 },
+      { name: "app-background.jpg", w: 900, h: 1350, x: 680, y: 58, cardW: 320, cardH: 250 }
+    ]},
+    { title: "2. Category Icons", x: 44, y: 644, w: 1676, h: 260, assets: [
+      { name: "small-batch.png", w: 256, h: 256, x: 18, y: 58, cardW: 220, cardH: 160 },
+      { name: "single-barrel.png", w: 256, h: 256, x: 258, y: 58, cardW: 220, cardH: 160 },
+      { name: "bottled-in-bond.png", w: 256, h: 256, x: 498, y: 58, cardW: 220, cardH: 160 },
+      { name: "barrel-proof.png", w: 256, h: 256, x: 738, y: 58, cardW: 220, cardH: 160 },
+      { name: "rye-whiskey.png", w: 256, h: 256, x: 978, y: 58, cardW: 220, cardH: 160 },
+      { name: "limited-edition.png", w: 256, h: 256, x: 1218, y: 58, cardW: 220, cardH: 160 }
+    ]}
+  ]
+};
+
 function paint(color, opacity = 1) {
   return [{ type: "SOLID", color, opacity }];
 }
@@ -228,7 +250,7 @@ async function build() {
   const pageName = "Bourbon Hunters Asset Packs";
   let page = figma.root.children.find((p) => p.name === pageName);
   if (!page) {
-    page = figma.createPage();
+    page = figma.currentPage;
     page.name = pageName;
   }
   await figma.setCurrentPageAsync(page);
@@ -237,7 +259,8 @@ async function build() {
   const homeBoard = await buildPack(page, HOME, 80, 80);
   const scannerBoard = await buildPack(page, SCANNER, 1940, 80);
   const referenceBoard = await buildPack(page, REFERENCE, 80, 2720);
-  figma.viewport.scrollAndZoomIntoView([homeBoard, scannerBoard, referenceBoard]);
+  const homeV2Board = await buildPack(page, HOME_V2, 1940, 2720);
+  figma.viewport.scrollAndZoomIntoView([homeBoard, scannerBoard, referenceBoard, homeV2Board]);
   figma.notify("Bourbon Hunters asset packs imported into one page.");
   figma.closePlugin();
 }
