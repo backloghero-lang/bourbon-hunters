@@ -106,6 +106,22 @@ const SCANNER = {
   ]
 };
 
+const REFERENCE = {
+  pageName: "Bourbon Hunters Asset Packs",
+  boardName: "Bourbon Hunters / Background + Explore References",
+  subtitle: "New visual references / app background and Explore screen source images",
+  folder: "reference-pack-v1",
+  board: { w: 1780, h: 1120 },
+  sections: [
+    { title: "1. Application Background", x: 44, y: 244, w: 820, h: 800, assets: [
+      { name: "app-background.png", w: 1024, h: 1536, x: 18, y: 58, cardW: 784, cardH: 700 }
+    ]},
+    { title: "2. Explore Screen", x: 900, y: 244, w: 820, h: 800, assets: [
+      { name: "explore-screen.png", w: 1024, h: 1536, x: 18, y: 58, cardW: 784, cardH: 700 }
+    ]}
+  ]
+};
+
 function paint(color, opacity = 1) {
   return [{ type: "SOLID", color, opacity }];
 }
@@ -187,16 +203,8 @@ async function addSwatch(parent, hex, x, y) {
   await addText(parent, `Label / ${hex}`, hex, x + 56, y + 13, 13, COLORS.muted, "Regular");
 }
 
-async function buildPack(pack) {
-  let page = figma.root.children.find((p) => p.name === pack.pageName);
-  if (!page) {
-    page = figma.createPage();
-    page.name = pack.pageName;
-  }
-  await figma.setCurrentPageAsync(page);
-  for (const child of [...page.children]) child.remove();
-
-  const board = addFrame(page, pack.boardName, 80, 80, pack.board.w, pack.board.h, COLORS.bg, 22);
+async function buildPack(page, pack, x, y) {
+  const board = addFrame(page, pack.boardName, x, y, pack.board.w, pack.board.h, COLORS.bg, 22);
   await addText(board, "Title", "BOURBON HUNTERS", 44, 34, 48, COLORS.copper, "Bold");
   await addText(board, "Subtitle", pack.subtitle, 44, 92, 18, COLORS.text, "Regular");
   await addText(board, "Source", `${ROOT_URL}${pack.folder}/`, 44, 124, 13, COLORS.muted, "Regular");
@@ -217,10 +225,20 @@ async function buildPack(pack) {
 
 async function build() {
   await loadFonts();
-  const homeBoard = await buildPack(HOME);
-  const scannerBoard = await buildPack(SCANNER);
-  figma.viewport.scrollAndZoomIntoView([scannerBoard, homeBoard]);
-  figma.notify("Bourbon Hunters home and scanner asset packs imported.");
+  const pageName = "Bourbon Hunters Asset Packs";
+  let page = figma.root.children.find((p) => p.name === pageName);
+  if (!page) {
+    page = figma.createPage();
+    page.name = pageName;
+  }
+  await figma.setCurrentPageAsync(page);
+  for (const child of [...page.children]) child.remove();
+
+  const homeBoard = await buildPack(page, HOME, 80, 80);
+  const scannerBoard = await buildPack(page, SCANNER, 1940, 80);
+  const referenceBoard = await buildPack(page, REFERENCE, 80, 2720);
+  figma.viewport.scrollAndZoomIntoView([homeBoard, scannerBoard, referenceBoard]);
+  figma.notify("Bourbon Hunters asset packs imported into one page.");
   figma.closePlugin();
 }
 

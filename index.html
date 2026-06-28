@@ -68,25 +68,28 @@
   /* featured carousel */
   .hscroll{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:6px;margin:0 -16px;padding-left:16px;padding-right:16px}
   .hscroll::-webkit-scrollbar{display:none}
-  .feat{scroll-snap-align:start;flex:0 0 92%;height:190px;background:
-    radial-gradient(160px 140px at 82% 56%,rgba(232,156,66,.26),transparent 70%),
+  .swipe-dots{display:flex;justify-content:center;align-items:center;gap:6px;margin:8px 0 4px;min-height:8px}
+  .swipe-dot{width:6px;height:6px;border-radius:999px;background:rgba(226,176,112,.28);transition:width .2s,background .2s,opacity .2s;opacity:.8}
+  .swipe-dot.on{width:18px;background:#E2B070;opacity:1}
+  .feat{scroll-snap-align:start;flex:0 0 92%;height:210px;background:
+    radial-gradient(190px 160px at 82% 56%,rgba(232,156,66,.30),transparent 70%),
     radial-gradient(120px 120px at 24% 0%,rgba(46,90,79,.35),transparent 72%),
-    linear-gradient(135deg,rgba(16,42,32,.98),rgba(22,18,12,.98) 54%,rgba(9,8,6,.99));
-    border:1px solid rgba(184,99,51,.62);border-radius:20px;padding:18px;display:flex;gap:14px;box-shadow:0 18px 42px rgba(0,0,0,.42);position:relative;overflow:hidden}
+    linear-gradient(135deg,rgba(16,42,32,.98),rgba(22,18,12,.98) 48%,rgba(9,8,6,.99));
+    border:1px solid rgba(184,99,51,.72);border-radius:20px;padding:20px;display:flex;gap:16px;box-shadow:0 18px 42px rgba(0,0,0,.42);position:relative;overflow:hidden}
   .feat:before{content:"";position:absolute;inset:0;background:url("design/figma-assets/asset-pack-v1/noise-overlay.png") center/cover repeat;opacity:.08;pointer-events:none}
   .feat:after{content:"";position:absolute;left:14px;right:14px;bottom:0;height:1px;background:linear-gradient(90deg,transparent,rgba(232,156,66,.88),transparent);pointer-events:none}
-  .feat .kick{display:inline-flex;align-self:flex-start;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#7FD096;border:1px solid rgba(127,208,150,.55);border-radius:6px;padding:4px 7px;font-weight:900;background:rgba(23,73,49,.28)}
-  .feat h4{font-family:var(--serif);font-size:21px;margin:10px 0 5px;line-height:1.04;color:#F6E1BC;text-shadow:0 2px 12px rgba(0,0,0,.65);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-  .feat .sub{font-size:12px;color:#C6A984;margin-bottom:8px;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .feat .price{font-size:18px;color:#F2E1B8;font-weight:800;margin-bottom:10px}
+  .feat h4{font-family:var(--serif);font-size:25px;margin:0 0 8px;line-height:1.02;color:#F6E1BC;text-shadow:0 2px 12px rgba(0,0,0,.65);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .feat .sub{font-size:13px;color:#C68752;margin-bottom:10px;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .feat .price{font-size:22px;color:#E28A3D;font-weight:900;margin-bottom:10px;letter-spacing:.5px}
   .feat .btn-sm{display:inline-block;background:rgba(0,0,0,.22);border:1px solid #E2B070;color:#E2B070;font-size:11px;font-weight:900;letter-spacing:.7px;padding:8px 15px;border-radius:9px;text-transform:uppercase;cursor:pointer}
-  .feat .info{flex:1;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1;min-width:0}
+  .feat .info{flex:1;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1;min-width:0;padding-right:4px}
   .feat-tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}
   .feat-tag{font-size:10px;line-height:1;border:1px solid rgba(127,208,150,.5);color:#7FD096;background:rgba(23,73,49,.22);border-radius:6px;padding:5px 7px;text-transform:uppercase;font-weight:900;letter-spacing:.5px}
   .feat-rate{position:absolute;right:12px;bottom:10px;z-index:2;font-size:12px;color:#F2E1B8;background:rgba(0,0,0,.48);border:1px solid rgba(226,176,112,.42);border-radius:8px;padding:5px 7px;font-weight:900}
-  .bottlepic{flex:0 0 124px;width:124px;height:154px;align-self:center;border-radius:16px;display:grid;place-items:center;font-size:42px;overflow:visible;position:relative;z-index:1;
-    background:radial-gradient(80% 70% at 50% 56%,rgba(245,218,172,.22),transparent 72%)}
-  .bottlepic img{max-width:112px;max-height:152px;width:auto!important;height:auto!important;object-fit:contain!important;border-radius:0!important;filter:drop-shadow(0 18px 18px rgba(0,0,0,.55))}
+  .bottlepic{flex:0 0 148px;width:148px;height:180px;align-self:center;border-radius:16px;display:grid;place-items:center;font-size:42px;overflow:visible;position:relative;z-index:1;
+    background:radial-gradient(86% 74% at 52% 58%,rgba(232,156,66,.32),rgba(86,45,16,.18) 44%,transparent 74%)}
+  .bottlepic:after{content:"";position:absolute;left:22px;right:22px;bottom:7px;height:12px;border-radius:50%;background:rgba(0,0,0,.45);filter:blur(7px);z-index:-1}
+  .bottlepic img{max-width:132px;max-height:176px;width:auto!important;height:auto!important;object-fit:contain!important;border-radius:0!important;mix-blend-mode:multiply;filter:contrast(1.08) saturate(1.12) drop-shadow(0 18px 18px rgba(0,0,0,.58))}
 
   /* categories */
   .cats{display:flex;gap:10px;overflow-x:auto;margin:0 -16px;padding:0 16px 8px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
@@ -97,14 +100,14 @@
     flex:0 0 88px;min-height:126px;scroll-snap-align:start;border:1px solid rgba(184,99,51,.48);border-radius:14px;padding:13px 7px;text-align:center;cursor:pointer;transition:transform .08s,border-color .2s;box-shadow:0 9px 22px rgba(0,0,0,.24)}
   .cat:hover{border-color:rgba(232,156,66,.72)}
   .cat:active{transform:scale(.96)}
-  .cat .ic{width:52px;height:52px;border-radius:50%;margin:0 auto 11px;display:grid;place-items:center;font-size:0;color:transparent;
-    background-color:rgba(7,6,5,.48);background-image:url("design/figma-assets/asset-pack-v1/category-cards.png");background-repeat:no-repeat;background-size:525px 148px;background-position:-17px -10px;
+  .cat .ic{width:56px;height:56px;border-radius:50%;margin:0 auto 11px;display:grid;place-items:center;font-size:0;color:transparent;
+    background-color:rgba(7,6,5,.48);background-image:url("design/figma-assets/asset-pack-v1/category-cards.png");background-repeat:no-repeat;background-size:420px 118px;background-position:-7px -7px;
     border:1px solid rgba(226,176,112,.32);box-shadow:0 0 18px rgba(226,176,112,.16)}
-  .cat:nth-child(2) .ic{background-position:-105px -10px}
-  .cat:nth-child(3) .ic{background-position:-193px -10px}
-  .cat:nth-child(4) .ic{background-position:-280px -10px}
-  .cat:nth-child(5) .ic{background-position:-368px -10px}
-  .cat:nth-child(6) .ic{background-position:-455px -10px}
+  .cat:nth-child(2) .ic{background-position:-77px -7px}
+  .cat:nth-child(3) .ic{background-position:-147px -7px}
+  .cat:nth-child(4) .ic{background-position:-217px -7px}
+  .cat:nth-child(5) .ic{background-position:-287px -7px}
+  .cat:nth-child(6) .ic{background-position:-357px -7px}
   .cat .lbl{font-size:11px;font-weight:900;line-height:1.15;color:#F6E1BC}
   .cat .cnt{font-size:10px;color:#C6A984;margin-top:6px;font-weight:700}
 
@@ -300,19 +303,17 @@
 
   <!-- HOME -->
   <section class="view active" id="view-home">
-    <div class="search" id="homeSearch">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
-      <input type="text" id="homeSearchInput" data-i18n-ph="searchPh" placeholder="Szukaj bourbona lub destylarni..." readonly>
-    </div>
-
     <div class="sec-head"><h3 data-i18n="featured">Polecane</h3></div>
     <div class="hscroll" id="featuredRow"></div>
+    <div class="swipe-dots" id="featuredDots" aria-hidden="true"></div>
 
     <div class="sec-head"><h3 data-i18n="byCat">Przeglądaj wg kategorii</h3><a id="catAll" data-i18n="viewAll">Zobacz wszystkie</a></div>
     <div class="cats" id="catGrid"></div>
+    <div class="swipe-dots" id="catDots" aria-hidden="true"></div>
 
     <div class="sec-head"><h3 data-i18n="recent">Ostatnio dodane</h3><a id="recentAll" data-i18n="viewAll">Zobacz wszystkie</a></div>
     <div class="hscroll" id="recentRow"></div>
+    <div class="swipe-dots" id="recentDots" aria-hidden="true"></div>
   </section>
 
   <!-- EXPLORE -->
@@ -454,22 +455,32 @@ function distilleryList(){
 
 /* kategorie = style bourbona (do sekcji na Home i filtra w Explore) */
 const STYLES = [
-  {key:"wheated", i:"stWheated", emoji:"🌾"},
-  {key:"single",  i:"stSingle",  emoji:"🛢️"},
-  {key:"small",   i:"stSmall",   emoji:"👯"},
-  {key:"proof",   i:"stProof",   emoji:"🔥"},
-  {key:"bib",     i:"stBib",     emoji:"🏛️"},
-  {key:"limited", i:"stLimited", emoji:"💎"}
+  {key:"small",   label:"Small Batch"},
+  {key:"single",  label:"Single Barrel"},
+  {key:"bib",     label:"Bottled in Bond"},
+  {key:"proof",   label:"Barrel Proof"},
+  {key:"rye",     label:"Rye Whiskey"},
+  {key:"limited", label:"Limited"}
 ];
 function styleMatch(b, key){
   const ty=(b.type||"").toLowerCase(), c=(b.category||"");
-  if(key==="wheated") return ty.indexOf("pszenicz")>=0 || ty.indexOf("wheat")>=0;
   if(key==="single")  return c==="Pojedyncza beczka";
   if(key==="small")   return c==="Mała partia";
   if(key==="proof")   return c==="Pełna moc beczki";
   if(key==="bib")     return c==="Bottled-in-Bond";
+  if(key==="rye")      return ty.indexOf("rye")>=0 || c.toLowerCase().indexOf("rye")>=0;
   if(key==="limited") return c==="Edycja limitowana";
   return false;
+}
+function categoryLabel(b){
+  const c=(b.category||"").toLowerCase(), ty=(b.type||"").toLowerCase();
+  if(c==="mała partia") return "Small Batch";
+  if(c==="pojedyncza beczka") return "Single Barrel";
+  if(c==="bottled-in-bond") return "Bottled in Bond";
+  if(c==="pełna moc beczki") return "Barrel Proof";
+  if(c==="edycja limitowana") return "Limited";
+  if(ty.indexOf("rye")>=0 || c.indexOf("rye")>=0) return "Rye Whiskey";
+  return b.type || "Bourbon";
 }
 
 function detectLang(){
@@ -536,9 +547,9 @@ function ratingPanel(o){
 /* karta w stylu "Polecane" (używana też w "Ostatnio dodane") */
 function featCard(b, kick){
   const price=fmtPrice(b);
-  const tag=(b.category && b.category!=="Standard") ? b.category : (b.type || "Bourbon");
+  const tag=categoryLabel(b);
   const rate=(b.quality!=null) ? '<div class="feat-rate">&#9733; '+esc(Number(b.quality).toFixed(1).replace(".0",""))+'</div>' : '';
-  return '<div class="feat" data-id="'+esc(b.id)+'"><div class="info"><div class="kick">'+esc(kick)+'</div><h4>'+esc(b.name)+'</h4>'+
+  return '<div class="feat" data-id="'+esc(b.id)+'"><div class="info"><h4>'+esc(b.name)+'</h4>'+
     '<div class="sub">'+esc(b.distillery||"")+'</div>'+
     (price?'<div class="price">'+esc(price)+'</div>':'')+
     '<div class="feat-tags"><span class="feat-tag">'+esc(tag)+'</span></div>'+
@@ -575,6 +586,36 @@ function renderCollection(tab){
 }
 document.querySelectorAll(".nav button").forEach(function(b){ b.addEventListener("click",function(){ showView(b.getAttribute("data-view")); }); });
 
+function setupSwipeDots(scrollerId, dotsId){
+  const scroller=document.getElementById(scrollerId), dots=document.getElementById(dotsId);
+  if(!scroller||!dots) return;
+  const items=Array.from(scroller.children);
+  dots.innerHTML=items.map(function(){ return '<span class="swipe-dot"></span>'; }).join("");
+  const dotEls=Array.from(dots.children);
+  function update(){
+    if(!items.length) return;
+    const center=scroller.scrollLeft + scroller.clientWidth/2;
+    let active=0, best=Infinity;
+    items.forEach(function(item,i){
+      const itemCenter=item.offsetLeft + item.offsetWidth/2;
+      const dist=Math.abs(itemCenter-center);
+      if(dist<best){ best=dist; active=i; }
+    });
+    dotEls.forEach(function(dot,i){ dot.classList.toggle("on",i===active); });
+  }
+  scroller._bhDotUpdate = update;
+  if(!scroller._bhDotBound){
+    scroller.addEventListener("scroll",function(){ requestAnimationFrame(update); },{passive:true});
+    scroller._bhDotBound=true;
+  }
+  requestAnimationFrame(update);
+}
+function setupHomeSwipeDots(){
+  setupSwipeDots("featuredRow","featuredDots");
+  setupSwipeDots("catGrid","catDots");
+  setupSwipeDots("recentRow","recentDots");
+}
+
 /* ---------- DB ---------- */
 fetch(DB_URL).then(function(r){return r.json();}).then(function(j){ DB=(j.bottles||[]); renderHome(); renderExplore(); }).catch(function(){ DB=[]; });
 
@@ -587,11 +628,12 @@ function renderHome(){
   // kategorie = style bourbona, z licznikami
   document.getElementById("catGrid").innerHTML = STYLES.map(function(s){
     const n = DB.filter(function(b){ return styleMatch(b,s.key); }).length;
-    return '<div class="cat" data-style="'+s.key+'"><div class="ic">'+s.emoji+'</div><div class="lbl">'+t(s.i)+'</div><div class="cnt">'+n+'</div></div>';
+    return '<div class="cat" data-style="'+s.key+'"><div class="ic" aria-hidden="true"></div><div class="lbl">'+esc(s.label)+'</div><div class="cnt">'+n+'</div></div>';
   }).join("");
   // recently added (ostatnie z bazy) — styl jak "Polecane"
   const recent = DB.slice(-12).reverse();
   document.getElementById("recentRow").innerHTML = recent.map(function(b){ return featCard(b, t("recent")); }).join("");
+  setupHomeSwipeDots();
 }
 
 function renderExplore(){
@@ -599,7 +641,7 @@ function renderExplore(){
   let chips = "";
   if(curCat!=="all"){
     const st=STYLES.filter(function(s){return s.key===curCat;})[0];
-    chips += '<button class="chip on" data-clearcat="1">'+(st?st.emoji+" "+t(st.i):curCat)+' ✕</button>';
+    chips += '<button class="chip on" data-clearcat="1">'+(st?esc(st.label):esc(curCat))+' ✕</button>';
   }
   const dl = distilleryList();
   chips += '<button class="chip'+(curDist==="all"?' on':'')+'" data-dist="all">'+t("allDist")+'</button>' +
@@ -657,7 +699,6 @@ document.addEventListener("click",function(e){
 });
 document.getElementById("catAll").addEventListener("click",function(){ curDist="all"; curCat="all"; renderN=RENDER_LIMIT; renderExplore(); showView("explore"); });
 document.getElementById("recentAll").addEventListener("click",function(){ curDist="all"; curCat="all"; renderN=RENDER_LIMIT; renderExplore(); showView("explore"); });
-document.getElementById("homeSearch").addEventListener("click",function(){ showView("explore"); setTimeout(function(){ document.getElementById("exploreSearchInput").focus(); },50); });
 document.getElementById("exploreSearchInput").addEventListener("input",function(){ renderN=RENDER_LIMIT; renderExplore(); });
 document.getElementById("detailBack").addEventListener("click",function(){ showView("explore"); });
 
@@ -676,7 +717,7 @@ function openDetail(id){
   document.getElementById("detailBody").innerHTML =
     '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">'+statusBadge+heartHtml(b.id)+'</div>'+
     '<div class="dhead">'+esc(b.name)+'</div>'+
-    '<div class="dtype">'+esc(b.type||"")+(b.category&&b.category!=="Standard"?' · '+esc(b.category):'')+'</div>'+
+    '<div class="dtype">'+esc(categoryLabel(b))+'</div>'+
     (origin?'<div class="dorigin">'+origin+'</div>':'')+pic+
     valueBlock+ratingPanel(b)+tastingBlock(b)+
     (b.desc?'<div class="sec-t">'+t("descT")+'</div><p class="desc">'+esc(b.desc)+'</p>':'')+
@@ -743,7 +784,7 @@ function renderScan(res, mode){
   const origin=[res.distillery,res.region].filter(Boolean).map(esc).join(" · ");
   const img=res.image?'<div class="dphoto"><img src="'+esc(res.image)+'" alt="'+esc(res.name||"")+'" loading="eager" decoding="async"></div>':'';
   let head='<div class="card">'+badge+'<div class="name">'+esc(res.name||"-")+'</div>'+
-    (res.type?'<div class="dtype">'+esc(res.type)+(res.category?' · '+esc(res.category):'')+'</div>':'')+
+    '<div class="dtype">'+esc(categoryLabel(res))+'</div>'+
     (origin?'<div class="dorigin">'+origin+'</div>':'')+img+
     '<div class="verdict"><div class="score">'+(res.value||"?")+'<small>/5</small></div>'+
       '<div style="flex:1"><div class="lbl">'+t("valLbl")+'</div><div class="stars" style="color:var(--gold)">'+starStr(res.value)+'</div>'+

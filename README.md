@@ -23,6 +23,7 @@
 | Launcher testowy | [test-index.html](https://backloghero-lang.github.io/bourbon-hunters/test-index.html) |
 | Assety Home | [`design/figma-assets/asset-pack-v1`](design/figma-assets/asset-pack-v1) |
 | Assety Scanner | [`design/figma-assets/scanner-pack-v1`](design/figma-assets/scanner-pack-v1) |
+| Assety referencyjne | [`design/figma-assets/reference-pack-v1`](design/figma-assets/reference-pack-v1) |
 | Figma importer | [`design/figma-import-plugin`](design/figma-import-plugin) |
 
 ## Test na komputerze
@@ -39,6 +40,7 @@ Projekt ma prosty pipeline dla assetów: GitHub przechowuje pliki produkcyjne, a
 |---|---|---:|---|
 | Home Asset Pack v1 | header, logo, search, featured card, kategorie, bottom nav, efekty | 24 | [`design/figma-assets/asset-pack-v1`](design/figma-assets/asset-pack-v1) |
 | Scanner Pack v1 | tło skanera, ramka, scan beam, przyciski, overlay analizy, badges, stany | 26 | [`design/figma-assets/scanner-pack-v1`](design/figma-assets/scanner-pack-v1) |
+| Reference Pack v1 | tło aplikacji i ekran Odkrywaj jako referencje projektowe | 2 | [`design/figma-assets/reference-pack-v1`](design/figma-assets/reference-pack-v1) |
 
 Assety są publikowane przez GitHub Pages, więc aplikacja i Figma używają tych samych plików. Import do Figmy robi lokalny plugin:
 
@@ -52,10 +54,9 @@ W Figmie uruchom:
 Plugins → Development → Bourbon Hunters Asset Importer
 ```
 
-Plugin tworzy albo odświeża strony:
+Plugin tworzy albo odświeża jedną stronę:
 
-- `Home Pack v1 - Imported`
-- `Scanner Pack v1 - Imported`
+- `Bourbon Hunters Asset Packs`
 
 Po dodaniu nowej paczki: wrzuć assety do repo, uruchom `WYSLIJ-NA-GITHUB.bat`, odczekaj chwilę na GitHub Pages i ponownie uruchom importer w Figmie.
 

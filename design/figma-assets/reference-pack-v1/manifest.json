@@ -1,0 +1,18 @@
+{
+  "name": "Reference Pack v1",
+  "description": "Application background and Explore screen visual references for Bourbon Hunters.",
+  "assets": [
+    {
+      "name": "app-background.png",
+      "path": "design/figma-assets/reference-pack-v1/app-background.png",
+      "width": 1024,
+      "height": 1536
+    },
+    {
+      "name": "explore-screen.png",
+      "path": "design/figma-assets/reference-pack-v1/explore-screen.png",
+      "width": 1024,
+      "height": 1536
+    }
+  ]
+}
