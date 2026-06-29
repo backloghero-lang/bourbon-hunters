@@ -217,12 +217,14 @@
   .scan-round{width:42px;height:42px;border-radius:50%;border:1px solid rgba(184,106,51,.55);background:rgba(8,6,4,.72);display:grid;place-items:center;color:#E2B070;font-size:12px;font-weight:900;box-shadow:0 0 18px rgba(184,106,51,.15)}
   .scan-spacer{visibility:hidden}
   .scan-detected{display:inline-flex;align-items:center;justify-content:center;width:206px;height:43px;margin:0 auto -2px;background:url("design/figma-assets/scanner-pack-v1/bottle-detected-badge.png") center/contain no-repeat;color:transparent;opacity:.72;pointer-events:none}
-  .shot{width:100%;aspect-ratio:760/980;max-height:54vh;border:none;border-radius:20px;display:grid;place-items:center;cursor:pointer;overflow:hidden;position:relative;background:linear-gradient(180deg,rgba(5,3,2,.08),rgba(3,2,1,.54)),url("assets/detail/bottle-detail-bg.png") center bottom/cover no-repeat;box-shadow:inset 0 0 80px rgba(0,0,0,.52)}
-  .shot:before{content:"";position:absolute;inset:0;background:url("design/figma-assets/scanner-pack-v1/scan-frame.png") center/100% 100% no-repeat;z-index:3;pointer-events:none;filter:drop-shadow(0 0 16px rgba(218,106,45,.38))}
+  .shot{width:100%;aspect-ratio:760/980;max-height:54vh;border:1px solid rgba(226,176,112,.48);border-radius:20px;display:grid;place-items:center;cursor:pointer;overflow:hidden;position:relative;background:linear-gradient(180deg,rgba(5,3,2,.08),rgba(3,2,1,.54)),url("assets/detail/bottle-detail-bg.png") center bottom/cover no-repeat;box-shadow:inset 0 0 80px rgba(0,0,0,.52),0 0 18px rgba(218,106,45,.18)}
+  .shot:before{content:"";position:absolute;inset:10px;border-radius:16px;border:1px solid rgba(226,176,112,.5);z-index:3;pointer-events:none;box-shadow:inset 0 0 22px rgba(255,151,58,.18),0 0 16px rgba(218,106,45,.28)}
   .shot:after{content:"";position:absolute;left:9%;right:9%;top:12%;height:5px;border-radius:999px;background:linear-gradient(90deg,transparent,rgba(112,255,174,.72),rgba(255,215,132,.95),rgba(112,255,174,.72),transparent);box-shadow:0 0 18px rgba(255,190,92,.58),0 0 34px rgba(74,255,159,.28);z-index:4;opacity:0;pointer-events:none;mix-blend-mode:screen}
   .shot .ph{display:grid;place-items:center;gap:8px;color:#E2B070;padding:32px;text-shadow:0 2px 12px #000}
   .shot .ph .cam{width:120px;height:120px;background:url("design/figma-assets/scanner-pack-v1/hunter-loading-mark.png") center/contain no-repeat;font-size:0;filter:drop-shadow(0 0 18px rgba(184,106,51,.32))}
-  .shot img{position:absolute;inset:6%;width:88%;height:88%;object-fit:contain;border-radius:14px;z-index:2;filter:saturate(1.05) contrast(1.02)}
+  .shot .scan-preview{position:absolute;inset:6%;width:88%;height:88%;object-fit:contain;border-radius:14px;z-index:2;filter:saturate(1.05) contrast(1.02);display:none}
+  .shot.has-shot .scan-preview{display:block}
+  .shot.has-shot .ph{display:none}
   .shot.has-shot:after{opacity:.22}
   .shot.is-loading:after{opacity:1;animation:scanBeam 1.05s cubic-bezier(.34,0,.18,1) infinite}
   .shot.is-loading .scan-overlay{opacity:.24}
@@ -357,6 +359,7 @@
       </div>
       <div class="scan-detected" aria-hidden="true">Bottle detected</div>
       <div class="shot" id="shot">
+        <img id="scanPreview" class="scan-preview" alt="">
         <div class="ph" id="placeholder"><div class="cam">&#128247;</div><strong data-i18n="tapShoot">Dotknij, aby zrobić zdjęcie</strong><small data-i18n="tapHint">lub wybrać z galerii</small></div>
         <div class="scan-overlay" aria-hidden="true"></div>
       </div>
@@ -1159,8 +1162,9 @@ function openDetail(id){
   showView("detail");
 }
 /* ================= SKANER ================= */
-let imgData=null, imgMime="image/jpeg", busy=false, loadTimer=null, previewUrl=null;
+let imgData=null, imgMime="image/jpeg", busy=false, loadTimer=null;
 const shot=document.getElementById("shot"), fileInput=document.getElementById("file"), galleryInput=document.getElementById("galleryFile");
+const scanPreview=document.getElementById("scanPreview");
 const goRate=document.getElementById("goRate");
 const pickGallery=document.getElementById("pickGallery"), retakeQuick=document.getElementById("retakeQuick");
 shot.addEventListener("click",function(){ if(!busy) fileInput.click(); });
@@ -1170,49 +1174,46 @@ fileInput.addEventListener("change",handlePickedFile);
 galleryInput.addEventListener("change",handlePickedFile);
 function resetShot(){
   imgData=null; imgMime="image/jpeg"; goRate.disabled=true;
-  if(previewUrl){ URL.revokeObjectURL(previewUrl); previewUrl=null; }
+  if(scanPreview) scanPreview.removeAttribute("src");
   shot.classList.remove("has-shot","is-loading");
   if(retakeQuick) retakeQuick.classList.remove("has-shot");
-  shot.innerHTML='<div class="ph" id="placeholder"><div class="cam">&#128247;</div><strong data-i18n="tapShoot">'+t("tapShoot")+'</strong><small data-i18n="tapHint">'+t("tapHint")+'</small></div><div class="scan-overlay" aria-hidden="true"></div>';
   document.getElementById("scanResult").innerHTML=""; document.getElementById("err").style.display="none";
 }
 function setShotPreview(src){
-  shot.replaceChildren();
-  const img=document.createElement("img");
-  img.className="scan-photo";
-  img.alt="";
-  img.src=src;
-  const overlay=document.createElement("div");
-  overlay.className="scan-overlay";
-  overlay.setAttribute("aria-hidden","true");
-  shot.appendChild(img);
-  shot.appendChild(overlay);
+  if(!scanPreview) return;
+  scanPreview.src=src;
+  shot.classList.add("has-shot");
+}
+function readLocalPreview(file){
+  return new Promise(function(resolve,reject){
+    const reader=new FileReader();
+    reader.onload=function(){ resolve(String(reader.result||"")); };
+    reader.onerror=function(){ reject(new Error("preview")); };
+    reader.readAsDataURL(file);
+  });
 }
 function handlePickedFile(e){
   const input=e.target;
   const f=input.files&&input.files[0]; if(!f) return;
   let shouldAutoRate=false;
-  if(previewUrl){ URL.revokeObjectURL(previewUrl); previewUrl=null; }
-  previewUrl=URL.createObjectURL(f);
-  shot.classList.add("has-shot");
   shot.classList.remove("is-loading");
   if(retakeQuick) retakeQuick.classList.add("has-shot");
-  setShotPreview(previewUrl);
   goRate.disabled=true;
   document.getElementById("err").style.display="none";
+  document.getElementById("scanResult").innerHTML="";
+  readLocalPreview(f).then(function(src){ if(src) setShotPreview(src); }).catch(function(){});
   compress(f).then(function(res){
     imgData=res.b64; imgMime=res.mime;
     shot.classList.add("has-shot");
     shot.classList.remove("is-loading");
     if(retakeQuick) retakeQuick.classList.add("has-shot");
     setShotPreview("data:"+res.mime+";base64,"+res.b64);
-    if(previewUrl){ URL.revokeObjectURL(previewUrl); previewUrl=null; }
     goRate.disabled=false;
     document.getElementById("scanResult").innerHTML=""; document.getElementById("err").style.display="none";
     shouldAutoRate=true;
   }).catch(function(){
-    if(previewUrl){ URL.revokeObjectURL(previewUrl); previewUrl=null; }
     imgData=null; imgMime="image/jpeg"; goRate.disabled=true;
+    if(scanPreview) scanPreview.removeAttribute("src");
     shot.classList.remove("has-shot");
     if(retakeQuick) retakeQuick.classList.remove("has-shot");
     showErr(lang==="pl"?"Nie udalo sie wczytac zdjecia. Sprobuj innym plikiem albo zrob nowe zdjecie.":"Could not load this photo. Try another file or take a new photo.");
