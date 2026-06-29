@@ -62,7 +62,7 @@
   .search input{flex:1;background:none;border:none;outline:none;color:var(--txt);font-size:15px}
   .search input::placeholder{color:var(--muted)}
 
-  .sec-head{display:flex;align-items:center;justify-content:space-between;margin:24px 8px 12px}
+  .sec-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:24px 8px 12px;white-space:nowrap}
   .sec-head h3{margin:0;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#D3904F;font-weight:900}
   .sec-head h3:before{content:"";display:inline-block;width:18px;height:1px;margin-right:8px;vertical-align:middle;background:linear-gradient(90deg,#B86A33,transparent)}
   .sec-head a{font-size:12px;color:#E2B070;font-weight:800;cursor:pointer}
@@ -96,19 +96,19 @@
   .bottlepic img{max-width:120px;max-height:176px;width:auto!important;height:auto!important;object-fit:contain!important;border-radius:0!important;filter:contrast(1.08) saturate(1.12) drop-shadow(0 18px 18px rgba(0,0,0,.58))}
 
   /* categories */
-  .cats{display:flex;gap:10px;overflow-x:auto;margin:0 -16px;padding:0 16px 8px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+  .cats{display:flex;gap:12px;overflow-x:auto;margin:0 -16px;padding:0 16px 8px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
   .cats::-webkit-scrollbar{display:none}
   .cat{background:
     radial-gradient(58px 58px at 50% 22%,rgba(232,156,66,.22),transparent 72%),
     linear-gradient(180deg,rgba(28,48,35,.94),rgba(22,15,10,.98));
-    flex:0 0 88px;min-height:126px;scroll-snap-align:start;border:1px solid rgba(184,99,51,.48);border-radius:14px;padding:13px 7px;text-align:center;cursor:pointer;transition:transform .08s,border-color .2s;box-shadow:0 9px 22px rgba(0,0,0,.24)}
+    flex:0 0 118px;min-height:138px;scroll-snap-align:start;border:1px solid rgba(184,99,51,.48);border-radius:18px;padding:13px 9px 11px;text-align:center;cursor:pointer;transition:transform .08s,border-color .2s;box-shadow:0 12px 28px rgba(0,0,0,.28)}
   .cat:hover{border-color:rgba(232,156,66,.72)}
   .cat:active{transform:scale(.96)}
-  .cat .ic{width:58px;height:58px;border-radius:50%;margin:0 auto 10px;display:grid;place-items:center;font-size:0;color:transparent;
+  .cat .ic{width:96px;height:96px;border-radius:50%;margin:0 auto 8px;display:grid;place-items:center;font-size:0;color:transparent;
     background-color:rgba(7,6,5,.62);background-image:var(--cat-icon);background-repeat:no-repeat;background-size:cover;background-position:center;
     border:1px solid rgba(226,176,112,.32);box-shadow:0 0 18px rgba(226,176,112,.16)}
-  .cat .lbl{font-size:11px;font-weight:900;line-height:1.15;color:#F6E1BC}
-  .cat .cnt{font-size:10px;color:#C6A984;margin-top:6px;font-weight:700}
+  .cat .lbl{display:none}
+  .cat .cnt{font-size:15px;line-height:1;color:#F6E1BC;margin-top:2px;font-weight:900}
 
   /* bottle cards (recently/explore) */
   .bcard{flex:0 0 130px;scroll-snap-align:start;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;transition:transform .08s}
@@ -165,7 +165,7 @@
   /* unified bottle image frame */
   .dphoto{position:relative;width:100%;height:350px;border-radius:18px;border:1px solid rgba(226,176,112,.22);display:grid;place-items:center;margin:16px 0;background:radial-gradient(58% 62% at 50% 24%,rgba(220,184,119,.18),rgba(11,7,4,.34) 58%,rgba(0,0,0,.62)),linear-gradient(180deg,rgba(255,255,255,.035),rgba(0,0,0,.18));overflow:hidden;box-shadow:inset 0 0 54px rgba(0,0,0,.42),0 18px 36px rgba(0,0,0,.24)}
   .dphoto:before{content:"";position:absolute;inset:0;background:url("design/figma-assets/asset-pack-v1/noise-overlay.png") center/cover repeat;opacity:.12;pointer-events:none}
-  .dphoto img{max-width:78%!important;max-height:88%!important;width:auto!important;height:auto!important;object-fit:contain!important;object-position:center!important;filter:contrast(1.04) saturate(1.04) drop-shadow(0 18px 22px rgba(0,0,0,.55))}
+  .dphoto img{width:auto!important;height:92%!important;max-width:74%!important;max-height:92%!important;object-fit:contain!important;object-position:center!important;filter:contrast(1.04) saturate(1.04) drop-shadow(0 18px 22px rgba(0,0,0,.55))}
   .d-actions{position:absolute;top:12px;right:12px;z-index:3;display:flex;gap:9px}
   .shot img{width:100%;height:100%;object-fit:cover}
 
@@ -314,7 +314,7 @@
     <div class="hscroll" id="featuredRow"></div>
     <div class="swipe-dots" id="featuredDots" aria-hidden="true"></div>
 
-    <div class="sec-head"><h3 data-i18n="byCat">Przeglądaj wg kategorii</h3><a id="catAll" data-i18n="viewAll">Zobacz wszystkie</a></div>
+    <div class="sec-head"><h3 data-i18n="byCat">Kategorie</h3><a id="catAll" data-i18n="viewAll">Zobacz wszystkie</a></div>
     <div class="cats" id="catGrid"></div>
     <div class="swipe-dots" id="catDots" aria-hidden="true"></div>
 
@@ -509,8 +509,8 @@ const RENDER_LIMIT = 60; /* ile kart renderujemy na raz (wydajnosc przy tysiacac
 /* ================================ */
 
 const I18N = {
-  pl:{ searchPh:"Szukaj bourbona lub destylarni...", featured:"Polecane", byCat:"Przeglądaj wg kategorii", viewAll:"Zobacz wszystkie", recent:"Ostatnio dodane",
-    explore:"Odkrywaj", back:"Wstecz", all:"Wszystkie", proof:"proof", from:"od", byCat:"Przeglądaj wg kategorii",
+  pl:{ searchPh:"Szukaj bourbona lub destylarni...", featured:"Polecane", byCat:"Kategorie", viewAll:"Zobacz wszystkie", recent:"Ostatnio dodane",
+    explore:"Odkrywaj", back:"Wstecz", all:"Wszystkie", proof:"proof", from:"od", byCat:"Kategorie",
     kick:"Skaner butelek", heroTitle:"Skanuj butelkę, poznaj jej wartość", heroDesc:"Zrób zdjęcie etykiety. Hunter sprawdzi bazę, a gdy trzeba — dopyta sieci.",
     tapShoot:"Dotknij, aby zrobić zdjęcie", tapHint:"lub wybrać z galerii", btnRate:"⭐ Ocena", btnAnalyze:"🔎 Analiza AI", retake:"Zmień zdjęcie",
     priceNote:"Ceny i oceny orientacyjne. Pij odpowiedzialnie. 18+",
@@ -741,29 +741,113 @@ function normalizeTasting(b){
   return b;
 }
 function styleProfileFallback(o){
-  if(!o || categoryKey(o)!=="single") return {};
-  if(lang==="pl"){
-    return {
+  if(!o) return {};
+  const key=categoryKey(o);
+  const pl={
+    standard:{
+      general:"Klasyczny bourbon o profilu zbudowanym wokół słodyczy kukurydzy, wanilii i dębu.",
+      nose:"Wanilia, karmel i lekki dąb z delikatną nutą zbożową.",
+      taste:"Słodki karmel, wanilia i łagodna przyprawa beczki.",
+      finish:"Średni finisz z dębem, wanilią i miękką słodyczą."
+    },
+    single:{
       general:"Single Barrel pokazuje charakter jednej wybranej beczki, dlatego profil jest bardziej indywidualny niż w standardowej partii.",
       nose:"Wanilia, karmel i dojrzały dąb z lekką przyprawą beczki.",
       taste:"Pełniejsze ciało z nutami toffi, pieczonego cukru i korzennych przypraw.",
       finish:"Średnio długi, rozgrzewający finisz z dębem, wanilią i delikatną słodyczą."
-    };
-  }
-  return {
-    general:"Single Barrel bottlings show the character of one selected cask, so the profile feels more individual than a standard batch.",
-    nose:"Vanilla, caramel and mature oak with a gentle barrel spice.",
-    taste:"Fuller body with notes of toffee, baked sugar and warm baking spice.",
-    finish:"Medium-long and warming, with oak, vanilla and a soft lingering sweetness."
+    },
+    small:{
+      general:"Small Batch stawia na równowagę kilku starannie dobranych beczek i bardziej dopracowany profil niż podstawowa edycja.",
+      nose:"Miód, wanilia i karmel z subtelną nutą owoców.",
+      taste:"Gładki karmel, słodki dąb i łagodne przyprawy korzenne.",
+      finish:"Miękki, czysty finisz z wanilią i lekką pikantnością."
+    },
+    bib:{
+      general:"Bottled in Bond oznacza whiskey z jednej destylarni i sezonu, butelkowaną przy 100 proof po minimum czterech latach dojrzewania.",
+      nose:"Karmel, prażony dąb i przyprawy z wyraźniejszą mocą alkoholu.",
+      taste:"Intensywna wanilia, cukier trzcinowy i pieprzna struktura 100 proof.",
+      finish:"Dłuższy, ciepły finisz z dębem, przyprawą i słodkim ziarnem."
+    },
+    proof:{
+      general:"Barrel Proof pokazuje bourbon bliżej mocy beczki, z większą intensywnością aromatu i smaku.",
+      nose:"Gęsty karmel, ciemny dąb i przyprawa z wyraźnym ciepłem alkoholu.",
+      taste:"Mocne toffi, pieczony cukier i pikantny dąb w pełnym, oleistym ciele.",
+      finish:"Długi, rozgrzewający finisz z dębem, pieprzem i słodką wanilią."
+    },
+    rye:{
+      general:"Rye Whiskey przesuwa profil w stronę żyta, przypraw i bardziej wytrawnej energii.",
+      nose:"Żyto, pieprz, zioła i karmel z lekką nutą skórki cytrusowej.",
+      taste:"Pikantne żyto, wanilia i dąb z bardziej suchą strukturą.",
+      finish:"Żwawy finisz z pieprzem, dębem i ziołową świeżością."
+    },
+    limited:{
+      general:"Edycja limitowana zwykle podkreśla wyjątkową beczkę, rocznik albo specjalne wykończenie.",
+      nose:"Bogatszy aromat wanilii, dębu i słodkich przypraw z nutą deserową.",
+      taste:"Warstwowy smak karmelu, owoców, dębu i przypraw zależny od konkretnej edycji.",
+      finish:"Dłuższy, bardziej złożony finisz z ciepłem beczki i słodką głębią."
+    }
   };
+  const en={
+    standard:{
+      general:"A classic bourbon profile built around corn sweetness, vanilla and oak.",
+      nose:"Vanilla, caramel and light oak with a gentle grain note.",
+      taste:"Sweet caramel, vanilla and mild barrel spice.",
+      finish:"Medium finish with oak, vanilla and a soft sweetness."
+    },
+    single:{
+      general:"Single Barrel bottlings show the character of one selected cask, so the profile feels more individual than a standard batch.",
+      nose:"Vanilla, caramel and mature oak with a gentle barrel spice.",
+      taste:"Fuller body with notes of toffee, baked sugar and warm baking spice.",
+      finish:"Medium-long and warming, with oak, vanilla and a soft lingering sweetness."
+    },
+    small:{
+      general:"Small Batch focuses on balance from a handful of selected barrels and a more polished profile than a base release.",
+      nose:"Honey, vanilla and caramel with a subtle fruit note.",
+      taste:"Smooth caramel, sweet oak and gentle baking spice.",
+      finish:"Soft and clean, with vanilla and a light spicy lift."
+    },
+    bib:{
+      general:"Bottled in Bond whiskey comes from one distillery and season, aged at least four years and bottled at 100 proof.",
+      nose:"Caramel, toasted oak and spice with a clearer proof-driven warmth.",
+      taste:"Intense vanilla, brown sugar and peppery structure at 100 proof.",
+      finish:"Longer and warm, with oak, spice and sweet grain."
+    },
+    proof:{
+      general:"Barrel Proof brings bourbon closer to cask strength, with more intensity in aroma and flavor.",
+      nose:"Dense caramel, dark oak and spice with clear alcohol warmth.",
+      taste:"Bold toffee, baked sugar and spicy oak in a full, oily body.",
+      finish:"Long and warming, with oak, pepper and sweet vanilla."
+    },
+    rye:{
+      general:"Rye Whiskey shifts the profile toward grain spice, dry energy and a livelier edge.",
+      nose:"Rye grain, pepper, herbs and caramel with a light citrus peel note.",
+      taste:"Spicy rye, vanilla and oak with a drier structure.",
+      finish:"Lively finish with pepper, oak and herbal freshness."
+    },
+    limited:{
+      general:"Limited releases usually highlight a special barrel, vintage or finishing style.",
+      nose:"Richer vanilla, oak and sweet spice with a dessert-like accent.",
+      taste:"Layered caramel, fruit, oak and spice shaped by the specific release.",
+      finish:"Longer and more complex, with barrel warmth and sweet depth."
+    }
+  };
+  const map=lang==="pl"?pl:en;
+  return map[key] || map.standard;
+}
+function cleanProfileValue(v){
+  const text=textClean(v);
+  if(!text) return "";
+  if(text.length>150) return "";
+  if(/\b(nose|aroma|palate|taste|finish|aftertaste|general info|tasting notes)\b\s*:/i.test(text)) return "";
+  return text;
 }
 function tastingParts(o){
   const notes=firstVal(o,["notes","tasting_notes","profile"]);
   const fallback=styleProfileFallback(o);
   return {
-    nose:firstVal(o,["nose","aroma","scent"]) || fallback.nose,
-    taste:firstVal(o,["taste","palate","flavor"]) || notes || fallback.taste,
-    finish:firstVal(o,["finish","aftertaste"]) || fallback.finish
+    nose:cleanProfileValue(firstVal(o,["nose","aroma","scent"])) || fallback.nose,
+    taste:cleanProfileValue(firstVal(o,["taste","palate","flavor"]) || notes) || fallback.taste,
+    finish:cleanProfileValue(firstVal(o,["finish","aftertaste"])) || fallback.finish
   };
 }
 function tastingBlock(o){
@@ -776,7 +860,7 @@ function tastingBlock(o){
 }
 function generalInfoBlock(o){
   const fallback=styleProfileFallback(o);
-  const desc=firstVal(o,["desc","description"]) || fallback.general;
+  const desc=firstVal(o,["general","info","desc","description"]) || fallback.general;
   if(!desc) return "";
   return '<div class="sec-t">'+t("infoT")+'</div><p class="desc">'+esc(desc)+'</p>';
 }
@@ -903,7 +987,7 @@ function renderHome(){
   // kategorie = style bourbona, z licznikami
   document.getElementById("catGrid").innerHTML = STYLES.map(function(s){
     const n = DB.filter(function(b){ return styleMatch(b,s.key); }).length;
-    return '<div class="cat" data-style="'+s.key+'" style="--cat-icon:url(&quot;'+esc(s.icon)+'&quot;)"><div class="ic" aria-hidden="true"></div><div class="lbl">'+esc(s.label)+'</div><div class="cnt">'+n+'</div></div>';
+    return '<div class="cat" data-style="'+s.key+'" title="'+esc(s.label)+'" aria-label="'+esc(s.label)+' '+n+'" style="--cat-icon:url(&quot;'+esc(s.icon)+'&quot;)"><div class="ic" aria-hidden="true"></div><div class="cnt">'+n+'</div></div>';
   }).join("");
   // recently added (ostatnie z bazy) — styl jak "Polecane"
   const recent = DB.slice(-12).reverse();
@@ -1076,7 +1160,7 @@ function renderScan(res, mode){
     (origin?'<div class="dorigin">'+origin+'</div>':'')+img+
     '<div class="verdict"><div class="score">'+(res.value||"?")+'<small>/5</small></div>'+
       '<div style="flex:1"><div class="lbl">'+t("valLbl")+'</div><div class="stars" style="color:var(--gold)">'+starStr(res.value)+'</div>'+
-      (res.verdict?'<div class="vtxt" style="margin-top:6px">'+esc(res.verdict)+'</div>':'')+'</div></div>'+ratingPanel(res)+tastingBlock(res);
+      (res.verdict?'<div class="vtxt" style="margin-top:6px">'+esc(res.verdict)+'</div>':'')+'</div></div>'+ratingPanel(res)+generalInfoBlock(res)+tastingBlock(res);
   let body='';
   if(mode==="analyze"){
     const descs=Array.isArray(res.description)?res.description:(res.description?[res.description]:[]);
