@@ -140,14 +140,16 @@
   .brow .bt{font-size:12px;color:var(--amber2);font-weight:600}
   .brow .bpf{font-size:12px;color:var(--muted);margin-top:1px}
   .brow .right{flex:0 0 auto;display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+  .brow-actions{display:flex;gap:8px}
   .brow .rate{display:inline-flex;align-items:center;gap:4px;font-size:14px;font-weight:800;color:var(--gold)}
   .brow .rate.none{color:var(--line)}
-  .heart{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;cursor:pointer;border:1px solid var(--line);background:rgba(0,0,0,.2) url("design/figma-assets/home-pack-v2/wishlist-barrel.png") center/22px 22px no-repeat;flex:none;filter:grayscale(.55) saturate(.45) brightness(.82);opacity:.64}
+  .heart{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;cursor:pointer;border:1px solid rgba(226,176,112,.26);background:rgba(0,0,0,.32) url("design/figma-assets/home-pack-v2/wishlist-barrel.png") center/27px 27px no-repeat;flex:none;filter:grayscale(.55) saturate(.45) brightness(.82);opacity:.72;box-shadow:0 8px 20px rgba(0,0,0,.24)}
   .heart.on{border-color:rgba(224,100,74,.62);filter:saturate(1.25) brightness(1.12) drop-shadow(0 0 8px rgba(224,100,74,.32));opacity:1}
   .heart.pulse{animation:hpulse .3s ease}
-  .own{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;cursor:pointer;border:1px solid var(--line);background:rgba(0,0,0,.2) url("design/figma-assets/home-pack-v2/collection-add.png") center/22px 22px no-repeat;flex:none;filter:saturate(.8);opacity:.76}
+  .own{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;cursor:pointer;border:1px solid rgba(226,176,112,.26);background:rgba(0,0,0,.32) url("design/figma-assets/home-pack-v2/collection-add.png") center/27px 27px no-repeat;flex:none;filter:saturate(.8);opacity:.82;box-shadow:0 8px 20px rgba(0,0,0,.24)}
   .own.on{border-color:rgba(226,176,112,.72);filter:saturate(1.18) drop-shadow(0 0 8px rgba(226,176,112,.28));opacity:1}
   .own.pulse{animation:hpulse .3s ease}
+  .d-actions .heart,.d-actions .own{width:44px;height:44px;background-size:33px 33px;background-color:rgba(5,3,2,.72);border-color:rgba(226,176,112,.42);backdrop-filter:blur(8px)}
   @keyframes hpulse{0%{transform:scale(1)}45%{transform:scale(1.35)}100%{transform:scale(1)}}
   /* toast */
   #toast{position:fixed;left:50%;bottom:calc(var(--nav-h) + 18px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);
@@ -161,8 +163,10 @@
   .tab.on{background:var(--amber);border-color:var(--amber);color:#241708}
 
   /* unified bottle image frame */
-  .dphoto{width:100%;height:300px;border-radius:16px;border:1px solid var(--line);display:grid;place-items:center;margin:16px 0;background:radial-gradient(70% 70% at 50% 28%,rgba(220,184,119,.18),rgba(0,0,0,.32));overflow:hidden}
-  .dphoto img{max-width:82%!important;max-height:92%!important;width:auto!important;height:auto!important;object-fit:contain!important;object-position:center!important;filter:drop-shadow(0 14px 18px rgba(0,0,0,.45))}
+  .dphoto{position:relative;width:100%;height:330px;border-radius:18px;border:1px solid rgba(226,176,112,.22);display:grid;place-items:center;margin:16px 0;background:radial-gradient(58% 62% at 50% 24%,rgba(220,184,119,.18),rgba(11,7,4,.34) 58%,rgba(0,0,0,.62)),linear-gradient(180deg,rgba(255,255,255,.035),rgba(0,0,0,.18));overflow:hidden;box-shadow:inset 0 0 54px rgba(0,0,0,.42),0 18px 36px rgba(0,0,0,.24)}
+  .dphoto:before{content:"";position:absolute;inset:0;background:url("design/figma-assets/asset-pack-v1/noise-overlay.png") center/cover repeat;opacity:.12;pointer-events:none}
+  .dphoto img{max-width:68%!important;max-height:80%!important;width:auto!important;height:auto!important;object-fit:contain!important;object-position:center!important;mix-blend-mode:multiply;filter:contrast(1.03) saturate(.96) drop-shadow(0 18px 22px rgba(0,0,0,.55))}
+  .d-actions{position:absolute;top:12px;right:12px;z-index:3;display:flex;gap:9px}
   .shot img{width:100%;height:100%;object-fit:cover}
 
   /* tasting / rating */
@@ -512,7 +516,7 @@ const I18N = {
     priceNote:"Ceny i oceny orientacyjne. Pij odpowiedzialnie. 18+",
     ldId:"Rozpoznaję etykietę...", ldDb:"Sprawdzam bazę...", ldNet:"Pytam sieci o recenzje...", ldPrice:"Sprawdzam ceny...", ldHist:"Szukam historii destylarni...",
     valLbl:"Jakość / Cena", quality:"Jakość", price:"Cena (orient.)", distillery:"Destylarnia", region:"Region", mashbill:"Mash bill", abv:"Moc",
-    descT:"Opis", historyT:"Historia", linksT:"Linki", notesT:"Profil smaku", sourcesT:"Źródła", fromDb:"Z bazy", fromNet:"Nowość — z sieci", category:"Kategoria",
+    descT:"Opis", infoT:"Informacje ogólne", historyT:"Historia", linksT:"Linki", notesT:"Profil smaku", sourcesT:"Źródła", fromDb:"Z bazy", fromNet:"Nowość — z sieci", category:"Kategoria",
     notBottle:"Hunter nie widzi tu butelki whisky. Zrób wyraźne zdjęcie etykiety i spróbuj jeszcze raz.",
     errGeneric:"Coś poszło nie tak. Spróbuj ponownie za chwilę.", errRetry:"Hunter jest chwilowo przeciążony. Daj mu sekundę i kliknij jeszcze raz.",
     vibe:"Vibe-coded z Claude · projekt weekendowy", explore_t:"Odkrywaj",
@@ -534,7 +538,7 @@ const I18N = {
     priceNote:"Prices and ratings are approximate. Drink responsibly. 18+",
     ldId:"Reading the label...", ldDb:"Checking the database...", ldNet:"Asking the web for reviews...", ldPrice:"Checking prices...", ldHist:"Digging up distillery history...",
     valLbl:"Quality / Price", quality:"Quality", price:"Price (approx.)", distillery:"Distillery", region:"Region", mashbill:"Mash bill", abv:"ABV",
-    descT:"Description", historyT:"History", linksT:"Links", notesT:"Tasting notes", sourcesT:"Sources", fromDb:"From database", fromNet:"New — from the web", category:"Category",
+    descT:"Description", infoT:"General info", historyT:"History", linksT:"Links", notesT:"Tasting notes", sourcesT:"Sources", fromDb:"From database", fromNet:"New — from the web", category:"Category",
     notBottle:"Hunter sees no whisky bottle here. Take a clear photo of the label and try again.",
     errGeneric:"Something went wrong. Please try again shortly.", errRetry:"Hunter is briefly overloaded. Give it a second and tap again.",
     vibe:"Vibe-coded with Claude · a weekend project", explore_t:"Explore",
@@ -649,11 +653,12 @@ function listRow(b){
   const proof=b.proof?(b.proof+' Proof'):(b.abv?(b.abv+'% ABV'):'');
   return '<div class="brow" data-id="'+esc(b.id)+'">'+pic+
     '<div class="info"><div class="bn">'+esc(b.name)+'</div><div class="bt">'+esc(b.type||b.distillery||"")+'</div>'+(proof?'<div class="bpf">'+esc(proof)+'</div>':'')+'</div>'+
-    '<div class="right">'+rateHtml(b)+'<div style="display:flex;gap:7px">'+ownHtml(b.id)+heartHtml(b.id)+'</div></div></div>';
+    '<div class="right">'+rateHtml(b)+'<div class="brow-actions">'+ownHtml(b.id)+heartHtml(b.id)+'</div></div></div>';
 }
 
 function firstVal(o, keys){ for(const k of keys){ if(o && o[k]!=null && String(o[k]).trim()) return String(o[k]).trim(); } return ""; }
 function textClean(v){ return String(v||"").replace(/\s+/g," ").trim(); }
+function searchText(v){ return textClean(v).toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g,""); }
 function trimTasteValue(v){
   return textClean(v)
     .replace(/^[-:;,.]\s*/,"")
@@ -689,8 +694,17 @@ function splitTastingDescription(desc){
   const text=textClean(desc);
   const result={nose:"",taste:"",finish:"",cleanDesc:text};
   if(!text) return result;
-  const parts=text.split(/\s*;\s*/).map(textClean).filter(Boolean);
+  const parts=(text.match(/[^.!?;]+[.!?]?/g)||[text]).map(textClean).filter(Boolean);
   const remaining=parts.slice();
+  function isGeneral(p){
+    const s=searchText(p);
+    return /\b(distillery|company|founded|located|released|debut|brand|history|siedzib|debiut|ofert|roku|destylarni|spolki|kalifornii|nowy jork)\b/.test(s);
+  }
+  function tasteWordCount(p){
+    const s=searchText(p);
+    const m=s.match(/\b(nut\w*|smak\w*|wanili\w*|karmel\w*|oak|deb\w*|miod\w*|honey|fruit\w*|owoc\w*|spice\w*|przypraw\w*|pepper|cinnamon|nutmeg|orange|citrus|cream|toffee|chocolate|cocoa|sweet|slod\w*)\b/g);
+    return m ? m.length : 0;
+  }
   function takePart(test, target){
     if(result[target]) return;
     const i=remaining.findIndex(function(p){ return p && test(p); });
@@ -702,7 +716,10 @@ function splitTastingDescription(desc){
   }
   takePart(function(p){ return /\b(nose|aroma|scent|nos|aromat)\b/i.test(p); }, "nose");
   takePart(function(p){ return /\b(finish|finisz|aftertaste)\b/i.test(p); }, "finish");
-  takePart(function(p){ return /\b(palate|taste|flavo[u]?r|smak|vanilla|caramel|oak|fruit|spice|honey|corn|citrus|pepper|cream|nutmeg|cinnamon|dried|orange|dab|dąb|wanilia|karmel|miod|miód|owoce|przypraw)\b/i.test(p); }, "taste");
+  takePart(function(p){ return /\b(palate|taste|flavo[u]?r|smak)\b/i.test(p); }, "taste");
+  if(!result.taste){
+    takePart(function(p){ return !isGeneral(p) && tasteWordCount(p)>=2; }, "taste");
+  }
   if(result.nose||result.taste||result.finish){
     result.cleanDesc=textClean(remaining.filter(Boolean).join(" "));
   }
@@ -736,6 +753,11 @@ function tastingBlock(o){
     '<div class="taste-row"><div class="k">'+t("tasteT")+'</div><div class="v">'+esc(p.taste||'-')+'</div></div>'+
     '<div class="taste-row"><div class="k">'+t("finishT")+'</div><div class="v">'+esc(p.finish||'-')+'</div></div>'+
   '</div>';
+}
+function generalInfoBlock(o){
+  const desc=firstVal(o,["desc","description"]);
+  if(!desc) return "";
+  return '<div class="sec-t">'+t("infoT")+'</div><p class="desc">'+esc(desc)+'</p>';
 }
 function ratingPanel(o){
   const id=o.id||o.handle||o.name||"scan";
@@ -939,7 +961,8 @@ function openDetail(id){
   if(!b) return;
   const price = fmtPrice(b);
   const origin = [b.distillery,b.region].filter(Boolean).map(esc).join(" · ");
-  const pic = b.image ? '<div class="dphoto"><img src="'+esc(b.image)+'" alt="'+esc(b.name)+'" loading="eager" decoding="async"></div>' : '<div class="dphoto">🥃</div>';
+  const actions = '<div class="d-actions">'+ownHtml(b.id)+heartHtml(b.id)+'</div>';
+  const pic = b.image ? '<div class="dphoto">'+actions+'<img src="'+esc(b.image)+'" alt="'+esc(b.name)+'" loading="eager" decoding="async"></div>' : '<div class="dphoto">'+actions+'🥃</div>';
   const statusBadge = b.status==="sold_out" || b.available===false
     ? '<span class="badge net">'+t("statusSold")+'</span>'
     : '<span class="badge db">'+t("statusAvail")+'</span>';
@@ -947,12 +970,11 @@ function openDetail(id){
     ? '<div class="verdict"><div class="score">'+b.value+'<small>/5</small></div><div style="flex:1"><div class="lbl">'+t("valLbl")+'</div><div class="stars" style="color:var(--gold)">'+starStr(b.value)+'</div></div></div>'
     : '';
   document.getElementById("detailBody").innerHTML =
-    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">'+statusBadge+'<div style="display:flex;gap:8px">'+ownHtml(b.id)+heartHtml(b.id)+'</div></div>'+
+    '<div style="display:flex;justify-content:flex-start;align-items:center;margin-bottom:8px">'+statusBadge+'</div>'+
     '<div class="dhead">'+esc(b.name)+'</div>'+
     '<div class="dtype">'+esc(categoryLabel(b))+'</div>'+
     (origin?'<div class="dorigin">'+origin+'</div>':'')+pic+
-    valueBlock+ratingPanel(b)+tastingBlock(b)+
-    (b.desc?'<div class="sec-t">'+t("descT")+'</div><p class="desc">'+esc(b.desc)+'</p>':'')+
+    valueBlock+ratingPanel(b)+generalInfoBlock(b)+tastingBlock(b)+
     (b.mashbill?'<div class="sec-t">'+t("mashbill")+'</div><p class="desc">'+esc(b.mashbill)+'</p>':'')+
     (b.url?'<div class="links" style="margin-top:14px"><a href="'+esc(b.url)+'" target="_blank" rel="noopener">'+t("viewShop")+'</a></div>':'');
   showView("detail");

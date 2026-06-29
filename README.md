@@ -21,6 +21,11 @@
 |---|---|
 | Aplikacja | [bourbon-hunters](https://backloghero-lang.github.io/bourbon-hunters/) |
 | Launcher testowy | [test-index.html](https://backloghero-lang.github.io/bourbon-hunters/test-index.html) |
+| Wizja i zalozenia | [`PROJECT.md`](PROJECT.md) |
+| Mapa rozwoju | [`ROADMAP.md`](ROADMAP.md) |
+| Bugi i poprawki | [`BUGS.md`](BUGS.md) |
+| Decyzje projektowe | [`DECISIONS.md`](DECISIONS.md) |
+| Pytania produktowe | [`QUESTIONS.md`](QUESTIONS.md) |
 | Assety Home | [`design/figma-assets/asset-pack-v1`](design/figma-assets/asset-pack-v1) |
 | Assety Scanner | [`design/figma-assets/scanner-pack-v1`](design/figma-assets/scanner-pack-v1) |
 | Assety referencyjne | [`design/figma-assets/reference-pack-v1`](design/figma-assets/reference-pack-v1) |
