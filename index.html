@@ -349,13 +349,11 @@
   <section class="view scan-view" id="view-scan">
     <div class="hero">
       <div class="scan-brand">
-        <div class="scan-round scan-spacer" aria-hidden="true"></div>
         <div class="brand-copy">
       <div class="kick" data-i18n="kick">Skaner butelek</div>
       <h2 data-i18n="heroTitle">Skanuj butelkę, poznaj jej wartość</h2>
       <p data-i18n="heroDesc">Zrób zdjęcie etykiety. Hunter sprawdzi bazę, a gdy trzeba — dopyta sieci.</p>
         </div>
-        <div class="scan-round" aria-hidden="true">BH</div>
       </div>
       <div class="scan-detected" aria-hidden="true">Bottle detected</div>
       <div class="shot" id="shot">
@@ -1178,6 +1176,18 @@ function resetShot(){
   shot.innerHTML='<div class="ph" id="placeholder"><div class="cam">&#128247;</div><strong data-i18n="tapShoot">'+t("tapShoot")+'</strong><small data-i18n="tapHint">'+t("tapHint")+'</small></div><div class="scan-overlay" aria-hidden="true"></div>';
   document.getElementById("scanResult").innerHTML=""; document.getElementById("err").style.display="none";
 }
+function setShotPreview(src){
+  shot.replaceChildren();
+  const img=document.createElement("img");
+  img.className="scan-photo";
+  img.alt="";
+  img.src=src;
+  const overlay=document.createElement("div");
+  overlay.className="scan-overlay";
+  overlay.setAttribute("aria-hidden","true");
+  shot.appendChild(img);
+  shot.appendChild(overlay);
+}
 function handlePickedFile(e){
   const input=e.target;
   const f=input.files&&input.files[0]; if(!f) return;
@@ -1185,16 +1195,17 @@ function handlePickedFile(e){
   if(previewUrl){ URL.revokeObjectURL(previewUrl); previewUrl=null; }
   previewUrl=URL.createObjectURL(f);
   shot.classList.add("has-shot");
+  shot.classList.remove("is-loading");
   if(retakeQuick) retakeQuick.classList.add("has-shot");
-  shot.innerHTML='<img src="'+previewUrl+'" alt=""><div class="scan-overlay" aria-hidden="true"></div>';
+  setShotPreview(previewUrl);
   goRate.disabled=true;
-  shot.classList.add("is-loading");
   document.getElementById("err").style.display="none";
   compress(f).then(function(res){
     imgData=res.b64; imgMime=res.mime;
     shot.classList.add("has-shot");
+    shot.classList.remove("is-loading");
     if(retakeQuick) retakeQuick.classList.add("has-shot");
-    shot.innerHTML='<img src="data:'+res.mime+';base64,'+res.b64+'" alt=""><div class="scan-overlay" aria-hidden="true"></div>';
+    setShotPreview("data:"+res.mime+";base64,"+res.b64);
     if(previewUrl){ URL.revokeObjectURL(previewUrl); previewUrl=null; }
     goRate.disabled=false;
     document.getElementById("scanResult").innerHTML=""; document.getElementById("err").style.display="none";
@@ -1208,7 +1219,7 @@ function handlePickedFile(e){
   }).finally(function(){
     input.value="";
     if(shouldAutoRate){
-      requestAnimationFrame(function(){ scan("rate"); });
+      setTimeout(function(){ scan("rate"); },1000);
     } else {
       shot.classList.remove("is-loading");
     }
