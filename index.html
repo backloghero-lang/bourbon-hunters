@@ -222,11 +222,11 @@
   .shot:after{content:"";position:absolute;left:9%;right:9%;top:12%;height:5px;border-radius:999px;background:linear-gradient(90deg,transparent,rgba(112,255,174,.72),rgba(255,215,132,.95),rgba(112,255,174,.72),transparent);box-shadow:0 0 18px rgba(255,190,92,.58),0 0 34px rgba(74,255,159,.28);z-index:4;opacity:0;pointer-events:none;mix-blend-mode:screen}
   .shot .ph{display:grid;place-items:center;gap:8px;color:#E2B070;padding:32px;text-shadow:0 2px 12px #000}
   .shot .ph .cam{width:120px;height:120px;background:url("design/figma-assets/scanner-pack-v1/hunter-loading-mark.png") center/contain no-repeat;font-size:0;filter:drop-shadow(0 0 18px rgba(184,106,51,.32))}
-  .shot img{position:absolute;inset:6%;width:88%;height:88%;object-fit:contain;border-radius:14px;z-index:1;filter:saturate(1.05) contrast(1.02)}
+  .shot img{position:absolute;inset:6%;width:88%;height:88%;object-fit:contain;border-radius:14px;z-index:2;filter:saturate(1.05) contrast(1.02)}
   .shot.has-shot:after{opacity:.22}
   .shot.is-loading:after{opacity:1;animation:scanBeam 1.05s cubic-bezier(.34,0,.18,1) infinite}
-  .shot.is-loading .scan-overlay{opacity:1}
-  .scan-overlay{position:absolute;inset:0;background:url("design/figma-assets/scanner-pack-v1/analyzing-overlay.png") center/cover no-repeat;z-index:2;opacity:0;transition:opacity .2s;pointer-events:none}
+  .shot.is-loading .scan-overlay{opacity:.24}
+  .scan-overlay{position:absolute;inset:0;background:url("design/figma-assets/scanner-pack-v1/analyzing-overlay.png") center/cover no-repeat;z-index:1;opacity:0;transition:opacity .2s;pointer-events:none;mix-blend-mode:screen}
   @keyframes scanBeam{0%{transform:translateY(-5vh) scaleX(.72);opacity:.05}12%{opacity:1}78%{opacity:1}100%{transform:translateY(43vh) scaleX(1);opacity:.08}}
   .retake{position:absolute;right:13px;bottom:13px;width:86px;height:86px;border:none;border-radius:50%;background:url("design/figma-assets/scanner-pack-v1/retake-button.png") center/contain no-repeat;color:transparent;z-index:5;cursor:pointer}
   .btns{display:grid;grid-template-columns:86px 86px;align-items:center;justify-content:space-between;gap:10px;margin:14px 8px 0}
@@ -1161,7 +1161,7 @@ function openDetail(id){
   showView("detail");
 }
 /* ================= SKANER ================= */
-let imgData=null, imgMime="image/jpeg", busy=false, loadTimer=null;
+let imgData=null, imgMime="image/jpeg", busy=false, loadTimer=null, previewUrl=null;
 const shot=document.getElementById("shot"), fileInput=document.getElementById("file"), galleryInput=document.getElementById("galleryFile");
 const goRate=document.getElementById("goRate");
 const pickGallery=document.getElementById("pickGallery"), retakeQuick=document.getElementById("retakeQuick");
@@ -1172,6 +1172,7 @@ fileInput.addEventListener("change",handlePickedFile);
 galleryInput.addEventListener("change",handlePickedFile);
 function resetShot(){
   imgData=null; imgMime="image/jpeg"; goRate.disabled=true;
+  if(previewUrl){ URL.revokeObjectURL(previewUrl); previewUrl=null; }
   shot.classList.remove("has-shot","is-loading");
   if(retakeQuick) retakeQuick.classList.remove("has-shot");
   shot.innerHTML='<div class="ph" id="placeholder"><div class="cam">&#128247;</div><strong data-i18n="tapShoot">'+t("tapShoot")+'</strong><small data-i18n="tapHint">'+t("tapHint")+'</small></div><div class="scan-overlay" aria-hidden="true"></div>';
@@ -1181,6 +1182,11 @@ function handlePickedFile(e){
   const input=e.target;
   const f=input.files&&input.files[0]; if(!f) return;
   let shouldAutoRate=false;
+  if(previewUrl){ URL.revokeObjectURL(previewUrl); previewUrl=null; }
+  previewUrl=URL.createObjectURL(f);
+  shot.classList.add("has-shot");
+  if(retakeQuick) retakeQuick.classList.add("has-shot");
+  shot.innerHTML='<img src="'+previewUrl+'" alt=""><div class="scan-overlay" aria-hidden="true"></div>';
   goRate.disabled=true;
   shot.classList.add("is-loading");
   document.getElementById("err").style.display="none";
@@ -1189,10 +1195,15 @@ function handlePickedFile(e){
     shot.classList.add("has-shot");
     if(retakeQuick) retakeQuick.classList.add("has-shot");
     shot.innerHTML='<img src="data:'+res.mime+';base64,'+res.b64+'" alt=""><div class="scan-overlay" aria-hidden="true"></div>';
+    if(previewUrl){ URL.revokeObjectURL(previewUrl); previewUrl=null; }
     goRate.disabled=false;
     document.getElementById("scanResult").innerHTML=""; document.getElementById("err").style.display="none";
     shouldAutoRate=true;
   }).catch(function(){
+    if(previewUrl){ URL.revokeObjectURL(previewUrl); previewUrl=null; }
+    imgData=null; imgMime="image/jpeg"; goRate.disabled=true;
+    shot.classList.remove("has-shot");
+    if(retakeQuick) retakeQuick.classList.remove("has-shot");
     showErr(lang==="pl"?"Nie udalo sie wczytac zdjecia. Sprobuj innym plikiem albo zrob nowe zdjecie.":"Could not load this photo. Try another file or take a new photo.");
   }).finally(function(){
     input.value="";
@@ -1389,7 +1400,7 @@ if("serviceWorker" in navigator){ window.addEventListener("load",function(){ nav
   var intro=document.getElementById("bhIntro"); if(!intro) return;
   var video=document.getElementById("bhIntroVideo");
   var skip=document.getElementById("bhIntroSkip");
-  var introStart=5;
+  var introStart=5.25;
   var done=false;
   function finish(){ if(done) return; done=true; intro.classList.add("is-fading"); setTimeout(function(){ if(intro&&intro.parentNode) intro.parentNode.removeChild(intro); },620); }
   if(skip) skip.addEventListener("click",function(e){ e.preventDefault(); e.stopPropagation(); finish(); });
