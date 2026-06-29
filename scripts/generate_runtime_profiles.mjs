@@ -186,6 +186,134 @@ const plTextures = [
   "bardziej wytrawny, gdy przejmuje go d\u0105b"
 ];
 
+const enNoseModifiers = [
+  "clean grain sweetness",
+  "dry baking spice",
+  "a light floral lift",
+  "a toasted barrel edge",
+  "soft brown sugar",
+  "a compact citrus snap",
+  "a richer char note",
+  "a mellow honey tone",
+  "a dusty oak accent",
+  "a warm pastry note",
+  "a gentle herbal touch",
+  "a polished vanilla core"
+];
+
+const plNoseModifiers = [
+  "czysta s\u0142odycz zbo\u017ca",
+  "sucha przyprawa korzenna",
+  "lekka kwiatowa nuta",
+  "akcent pra\u017conej beczki",
+  "\u0142agodny br\u0105zowy cukier",
+  "kr\u00f3tki cytrusowy b\u0142ysk",
+  "bogatsza nuta opalenia",
+  "mi\u0119kki ton miodu",
+  "pylisty akcent d\u0119bu",
+  "ciep\u0142a nuta wypieku",
+  "\u0142agodny zio\u0142owy dotyk",
+  "wyg\u0142adzony rdze\u0144 wanilii"
+];
+
+const enTasteModifiers = [
+  "the sweetness stays controlled",
+  "the oak keeps the sip structured",
+  "spice arrives without turning sharp",
+  "the middle stays rounded",
+  "barrel notes add grip",
+  "the grain note keeps it clear",
+  "sweetness and oak stay in balance",
+  "the texture stays compact",
+  "warm spice fills the middle",
+  "the caramel note stays clean",
+  "a dry edge tightens the sip",
+  "vanilla softens the oak"
+];
+
+const plTasteModifiers = [
+  "s\u0142odycz pozostaje pod kontrol\u0105",
+  "d\u0105b trzyma struktur\u0119 \u0142yku",
+  "przyprawy nie robi\u0105 si\u0119 ostre",
+  "\u015brodek pozostaje zaokr\u0105glony",
+  "nuty beczki dodaj\u0105 chwytu",
+  "zbo\u017ce utrzymuje czysty profil",
+  "s\u0142odycz i d\u0105b zostaj\u0105 w r\u00f3wnowadze",
+  "tekstura pozostaje zwarta",
+  "ciep\u0142e przyprawy wype\u0142niaj\u0105 \u015brodek",
+  "karmel pozostaje czysty",
+  "wytrawna kraw\u0119d\u017a porz\u0105dkuje \u0142yk",
+  "wanilia \u0142agodzi d\u0105b"
+];
+
+const enFinishShapes = [
+  "with a clean fade",
+  "with a dry final edge",
+  "with a rounded last impression",
+  "with a short spice echo",
+  "with a polished oak return",
+  "with a soft sweet close",
+  "with a tidy barrel grip",
+  "with a warm final pulse",
+  "with a measured oak fade",
+  "with a calm vanilla return",
+  "with a compact dry close",
+  "with a lingering spice trace"
+];
+
+const plFinishShapes = [
+  "z czystym wygasaniem",
+  "z wytrawn\u0105 ko\u0144c\u00f3wk\u0105",
+  "z zaokr\u0105glonym ostatnim wra\u017ceniem",
+  "z kr\u00f3tkim echem przypraw",
+  "z powrotem wyg\u0142adzonego d\u0119bu",
+  "z mi\u0119kkim s\u0142odkim domkni\u0119ciem",
+  "ze zwartym chwytem beczki",
+  "z ciep\u0142ym ko\u0144cowym pulsem",
+  "z miarowym wygasaniem d\u0119bu",
+  "ze spokojnym powrotem wanilii",
+  "ze zwartym wytrawnym domkni\u0119ciem",
+  "z d\u0142u\u017cszym \u015bladem przypraw"
+];
+
+const enFinishDetails = [
+  "soft barrel spice and a clean vanilla trail",
+  "dry oak, caramel warmth and a light cinnamon lift",
+  "toasted sugar, gentle oak and a calm spice fade",
+  "vanilla cream, polished wood and a light pepper touch",
+  "brown sugar, oak grip and a measured sweet fade",
+  "caramelized grain, baking spice and mellow barrel heat",
+  "orange peel, toasted oak and a clean drying edge",
+  "honeyed sweetness, oak tannin and a short spice echo",
+  "dark caramel, vanilla and a tidy oak close",
+  "sweet grain, clove warmth and a rounded oak finish",
+  "maple-like sweetness, dry wood and soft char",
+  "light cocoa, barrel spice and a balanced vanilla return",
+  "baked sugar, oak polish and a gentle pepper snap",
+  "toffee, warm spice and a smooth drying close",
+  "vanilla, leathered oak and a quiet toasted note",
+  "caramel, nutmeg and a compact barrel-spice fade"
+];
+
+const plFinishDetails = [
+  "\u0142agodn\u0105 przypraw\u0105 beczki i czystym \u015bladem wanilii",
+  "suchym d\u0119bem, ciep\u0142em karmelu i lekkim cynamonem",
+  "pra\u017conym cukrem, \u0142agodnym d\u0119bem i spokojnym wygasaniem przypraw",
+  "kremem waniliowym, wyg\u0142adzonym drewnem i lekkim pieprzem",
+  "br\u0105zowym cukrem, d\u0119bowym chwytem i miarowym s\u0142odkim zej\u015bciem",
+  "karmelizowanym ziarnem, przyprawami korzennymi i ciep\u0142em beczki",
+  "sk\u00f3rk\u0105 pomara\u0144czy, pra\u017conym d\u0119bem i czyst\u0105 wytrawno\u015bci\u0105",
+  "miodow\u0105 s\u0142odycz\u0105, tanin\u0105 d\u0119bu i kr\u00f3tkim echem przypraw",
+  "ciemnym karmelem, wanili\u0105 i uporz\u0105dkowanym d\u0119bowym zamkni\u0119ciem",
+  "s\u0142odkim ziarnem, ciep\u0142em go\u017adzika i zaokr\u0105glonym d\u0119bem",
+  "klonow\u0105 s\u0142odycz\u0105, suchym drewnem i \u0142agodnym opaleniem",
+  "lekkim kakao, przypraw\u0105 beczki i powrotem wanilii",
+  "pieczonym cukrem, wyg\u0142adzonym d\u0119bem i delikatnym pieprzem",
+  "toffi, ciep\u0142ymi przyprawami i g\u0142adkim wytrawnym domkni\u0119ciem",
+  "wanili\u0105, dojrzalszym d\u0119bem i cich\u0105 nut\u0105 tostow\u0105",
+  "karmelem, ga\u0142k\u0105 muszkato\u0142ow\u0105 i zwartym echem beczki"
+];
+
 function joinNotes(items) {
   return `${items[0]}, ${items[1]}, ${items[2]} and ${items[3]}`;
 }
@@ -202,21 +330,28 @@ function enProfile(b) {
   const distillery = clean(b.distillery) || "its producer";
   const proof = clean(b.proof);
   const proofText = proof ? ` at ${proof} proof` : "";
+  const proofNote = proof ? ` in its ${proof} proof frame` : "";
   const style = styleName(key);
   const intensity = tier === "high" ? "high-strength" : tier === "bold" ? "fuller-proof" : tier === "soft" ? "softer" : "classic";
   const accent = pick(enAccents, b.id, 1);
   const texture = pick(enTextures, b.id, 2);
+  const finish = pick(enFinishDetails, b.id, 3);
+  const noseMod = pick(enNoseModifiers, b.id, 4);
+  const tasteMod = pick(enTasteModifiers, b.id, 5);
+  const finishShape = pick(enFinishShapes, b.id, 6);
+  const finishAnchor = `${family[0]} and ${family[2]}`;
+  const finishProof = proof ? ` at ${proof} proof` : ` in a ${style} frame`;
   return {
-    general: `${name} is a ${intensity} ${style} from ${distillery}${proofText}, profiled from the bottle data and known house style.`,
-    nose: `${name} opens with ${joinNotes(family)}, plus ${accent}.`,
+    general: `${name} is a ${intensity} ${style} from ${distillery}${proofText}, built around the producer's house style and the bottle's strength.`,
+    nose: `Vanilla-led aromas bring ${joinNotes(family)}, plus ${accent} and ${noseMod}${proofNote}.`,
     taste: key === "rye"
-      ? `${name} is spice-led on the palate, balancing rye grain, caramel sweetness and a drier oak structure.`
-      : `${name} feels ${texture} on the palate, carrying ${family[1]}, ${family[3]} and rounded vanilla sweetness.`,
+      ? `Spice leads the palate, balancing rye grain, caramel sweetness and a drier oak structure; ${tasteMod}${proofNote}.`
+      : `The palate feels ${texture}, carrying ${family[1]}, ${family[3]} and rounded vanilla sweetness; ${tasteMod}${proofNote}.`,
     finish: tier === "high"
-      ? `${name} finishes long and warming, with oak spice, dark sweetness and lingering barrel heat.`
+      ? `Long, warming finish with ${finish}, ${finishAnchor} and lingering barrel heat${finishProof}, ${finishShape}.`
       : tier === "bold"
-        ? `${name} finishes steady and warm, leaving oak, caramel and spice after the sweetness fades.`
-        : `${name} finishes balanced and moderate, with vanilla, oak and gentle spice trailing off cleanly.`
+        ? `Steady, warm finish with ${finish}, ${finishAnchor} after the sweetness fades${finishProof}, ${finishShape}.`
+        : `Balanced medium finish with ${finish}, ${finishAnchor}${finishProof}, ${finishShape}.`
   };
 }
 
@@ -228,21 +363,28 @@ function plProfile(b) {
   const distillery = clean(b.distillery) || "producenta";
   const proof = clean(b.proof);
   const proofText = proof ? ` przy ${proof} proof` : "";
+  const proofNote = proof ? ` w ramie ${proof} proof` : "";
   const style = plStyleName(key);
   const intensity = tier === "high" ? "mocniejszy" : tier === "bold" ? "pe\u0142niejszy" : tier === "soft" ? "\u0142agodniejszy" : "klasyczny";
   const accent = pick(plAccents, b.id, 1);
   const texture = pick(plTextures, b.id, 2);
+  const finish = pick(plFinishDetails, b.id, 3);
+  const noseMod = pick(plNoseModifiers, b.id, 4);
+  const tasteMod = pick(plTasteModifiers, b.id, 5);
+  const finishShape = pick(plFinishShapes, b.id, 6);
+  const finishAnchor = `${family[0]} i ${family[2]}`;
+  const finishProof = proof ? ` przy ${proof} proof` : ` w ramie stylu ${style}`;
   return {
-    general: `${name} to ${intensity} ${style} od ${distillery}${proofText}, opisany na podstawie danych butelki i stylu producenta.`,
-    nose: `W aromacie ${name} pojawiaj\u0105 si\u0119 ${joinNotesPl(family)}, do tego ${accent}.`,
+    general: `${name} to ${intensity} ${style} od ${distillery}${proofText}, zbudowany wok\u00f3\u0142 stylu producenta i mocy tej butelki.`,
+    nose: `Aromat prowadzi zestaw: ${joinNotesPl(family)}, do tego ${accent} oraz ${noseMod}${proofNote}.`,
     taste: key === "rye"
-      ? `Na podniebieniu ${name} prowadzi przyprawa \u017cyta, karmel i bardziej wytrawna struktura d\u0119bu.`
-      : `Na podniebieniu ${name} jest ${texture}, z ${family[1]}, ${family[3]} i zaokr\u0105glon\u0105 waniliow\u0105 s\u0142odycz\u0105.`,
+      ? `Na podniebieniu prowadzi przyprawa \u017cyta, karmel i bardziej wytrawna struktura d\u0119bu; ${tasteMod}${proofNote}.`
+      : `Na podniebieniu profil jest ${texture}; w tle s\u0105 ${family[1]}, ${family[3]} i zaokr\u0105glona waniliowa s\u0142odycz; ${tasteMod}${proofNote}.`,
     finish: tier === "high"
-      ? `Finisz ${name} jest d\u0142ugi i rozgrzewaj\u0105cy, z d\u0119bow\u0105 przypraw\u0105, ciemn\u0105 s\u0142odycz\u0105 i ciep\u0142em beczki.`
+      ? `D\u0142ugi, rozgrzewaj\u0105cy finisz z ${finish}, ${finishAnchor} i ciep\u0142em beczki${finishProof}, ${finishShape}.`
       : tier === "bold"
-        ? `Finisz ${name} jest stabilny i ciep\u0142y, zostawiaj\u0105c d\u0105b, karmel i przyprawy po wyga\u015bni\u0119ciu s\u0142odyczy.`
-        : `Finisz ${name} jest zbalansowany i \u015bredni, z wanili\u0105, d\u0119bem i \u0142agodn\u0105 przypraw\u0105.`
+        ? `Stabilny, ciep\u0142y finisz zostawia ${finish}, ${finishAnchor} po wyga\u015bni\u0119ciu s\u0142odyczy${finishProof}, ${finishShape}.`
+        : `Zbalansowany, \u015bredni finisz z ${finish}, ${finishAnchor}${finishProof}, ${finishShape}.`
   };
 }
 

@@ -48,6 +48,10 @@ for (const id of runtimeIds) {
       if (value.length < 24) errors.push(`${id}: too short profile.${lang}.${field}`);
       if (lang === "en" && hasPolish(value)) errors.push(`${id}: Polish chars in EN ${field}`);
       if (hasMojibake(value)) errors.push(`${id}: mojibake in ${lang}.${field}`);
+      if (["nose", "taste", "finish"].includes(field)) {
+        const name = String(bottle.name || "").trim().toLowerCase();
+        if (name && value.toLowerCase().startsWith(name)) errors.push(`${id}: ${lang}.${field} starts with bottle name`);
+      }
       const key = `${lang}:${field}:${value}`;
       seen.set(key, (seen.get(key) || 0) + 1);
     }
