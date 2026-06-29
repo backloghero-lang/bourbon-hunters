@@ -595,7 +595,32 @@ function detectLang(){
   return n.indexOf("pl")===0?"pl":"en";
 }
 let lang=detectLang(), DB=[], curDist="all", curCat="all", renderN=RENDER_LIMIT;
-function fmtPrice(b){ return b.price_str || (b.price!=null?("$"+b.price):"") || b.price_pln || ""; }
+const PLN_PER_USD = 4.0; // orientacyjne UI; docelowo kurs moze przyjsc z Workera
+function numPrice(v){
+  if(v==null || v==="") return null;
+  const n=Number(String(v).replace(/[^0-9.,-]/g,"").replace(",","."));
+  return Number.isFinite(n)?n:null;
+}
+function money(v, currency){
+  const n=numPrice(v);
+  if(n==null) return "";
+  if(currency==="PLN") return new Intl.NumberFormat("pl-PL",{maximumFractionDigits:n%1?2:0}).format(n)+" zł";
+  return new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",minimumFractionDigits:n%1?2:0,maximumFractionDigits:2}).format(n);
+}
+function fmtPrice(b){
+  const raw=String((b&&b.price_str)||"");
+  const pln=String((b&&b.price_pln)||"");
+  const val=b&&b.price;
+  if(lang==="pl"){
+    if(pln) return pln;
+    if(raw.indexOf("zł")>=0 || raw.indexOf("zl")>=0) return raw;
+    if(raw.indexOf("$")>=0) return money(numPrice(raw)*PLN_PER_USD,"PLN");
+    return money(val,"PLN");
+  }
+  if(raw.indexOf("$")>=0) return raw;
+  if(pln || raw || val!=null) return money(numPrice(pln||raw||val)/PLN_PER_USD,"USD");
+  return "";
+}
 
 /* ---------- lista życzeń (localStorage) ---------- */
 let WL=(function(){ try{ return JSON.parse(localStorage.getItem("bh_wishlist")||"[]"); }catch(e){ return []; } })();
