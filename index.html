@@ -165,7 +165,7 @@
   /* unified bottle image frame */
   .dphoto{position:relative;width:100%;height:350px;border-radius:18px;border:1px solid rgba(226,176,112,.22);display:grid;place-items:center;margin:16px 0;background:radial-gradient(58% 62% at 50% 24%,rgba(220,184,119,.18),rgba(11,7,4,.34) 58%,rgba(0,0,0,.62)),linear-gradient(180deg,rgba(255,255,255,.035),rgba(0,0,0,.18));overflow:hidden;box-shadow:inset 0 0 54px rgba(0,0,0,.42),0 18px 36px rgba(0,0,0,.24)}
   .dphoto:before{content:"";position:absolute;inset:0;background:url("design/figma-assets/asset-pack-v1/noise-overlay.png") center/cover repeat;opacity:.12;pointer-events:none}
-  .dphoto img{max-width:78%!important;max-height:88%!important;width:auto!important;height:auto!important;object-fit:contain!important;object-position:center!important;mix-blend-mode:multiply;filter:contrast(1.03) saturate(.96) drop-shadow(0 18px 22px rgba(0,0,0,.55))}
+  .dphoto img{max-width:78%!important;max-height:88%!important;width:auto!important;height:auto!important;object-fit:contain!important;object-position:center!important;filter:contrast(1.04) saturate(1.04) drop-shadow(0 18px 22px rgba(0,0,0,.55))}
   .d-actions{position:absolute;top:12px;right:12px;z-index:3;display:flex;gap:9px}
   .shot img{width:100%;height:100%;object-fit:cover}
 
@@ -572,24 +572,26 @@ const STYLES = [
   {key:"rye",     label:"Rye Whiskey", icon:"design/figma-assets/home-pack-v2/rye-whiskey.png"},
   {key:"limited", label:"Limited", icon:"design/figma-assets/home-pack-v2/limited-edition.png"}
 ];
-function styleMatch(b, key){
-  const ty=(b.type||"").toLowerCase(), c=(b.category||"");
-  if(key==="single")  return c==="Pojedyncza beczka";
-  if(key==="small")   return c==="Mała partia";
-  if(key==="proof")   return c==="Pełna moc beczki";
-  if(key==="bib")     return c==="Bottled-in-Bond";
-  if(key==="rye")      return ty.indexOf("rye")>=0 || c.toLowerCase().indexOf("rye")>=0;
-  if(key==="limited") return c==="Edycja limitowana";
-  return false;
+function categoryKey(b){
+  const c=searchText((b&&b.category)||"").replace(/-/g," ");
+  const ty=searchText((b&&b.type)||"");
+  if(c==="pojedyncza beczka") return "single";
+  if(c==="mala partia") return "small";
+  if(c==="pelna moc beczki") return "proof";
+  if(c==="bottled in bond") return "bib";
+  if(c==="edycja limitowana") return "limited";
+  if(ty.indexOf("rye")>=0 || c.indexOf("rye")>=0) return "rye";
+  return "standard";
 }
+function styleMatch(b, key){ return categoryKey(b)===key; }
 function categoryLabel(b){
-  const c=(b.category||"").toLowerCase(), ty=(b.type||"").toLowerCase();
-  if(c==="mała partia") return "Small Batch";
-  if(c==="pojedyncza beczka") return "Single Barrel";
-  if(c==="bottled-in-bond") return "Bottled in Bond";
-  if(c==="pełna moc beczki") return "Barrel Proof";
-  if(c==="edycja limitowana") return "Limited";
-  if(ty.indexOf("rye")>=0 || c.indexOf("rye")>=0) return "Rye Whiskey";
+  const key=categoryKey(b);
+  if(key==="small") return "Small Batch";
+  if(key==="single") return "Single Barrel";
+  if(key==="bib") return "Bottled in Bond";
+  if(key==="proof") return "Barrel Proof";
+  if(key==="limited") return "Limited";
+  if(key==="rye") return "Rye Whiskey";
   return b.type || "Bourbon";
 }
 
@@ -658,7 +660,7 @@ function listRow(b){
 
 function firstVal(o, keys){ for(const k of keys){ if(o && o[k]!=null && String(o[k]).trim()) return String(o[k]).trim(); } return ""; }
 function textClean(v){ return String(v||"").replace(/\s+/g," ").trim(); }
-function searchText(v){ return textClean(v).toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g,""); }
+function searchText(v){ return textClean(v).toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g,"").replace(/\u0142/g,"l"); }
 function trimTasteValue(v){
   return textClean(v)
     .replace(/^[-:;,.]\s*/,"")
@@ -738,12 +740,30 @@ function normalizeTasting(b){
   }
   return b;
 }
+function styleProfileFallback(o){
+  if(!o || categoryKey(o)!=="single") return {};
+  if(lang==="pl"){
+    return {
+      general:"Single Barrel pokazuje charakter jednej wybranej beczki, dlatego profil jest bardziej indywidualny niż w standardowej partii.",
+      nose:"Wanilia, karmel i dojrzały dąb z lekką przyprawą beczki.",
+      taste:"Pełniejsze ciało z nutami toffi, pieczonego cukru i korzennych przypraw.",
+      finish:"Średnio długi, rozgrzewający finisz z dębem, wanilią i delikatną słodyczą."
+    };
+  }
+  return {
+    general:"Single Barrel bottlings show the character of one selected cask, so the profile feels more individual than a standard batch.",
+    nose:"Vanilla, caramel and mature oak with a gentle barrel spice.",
+    taste:"Fuller body with notes of toffee, baked sugar and warm baking spice.",
+    finish:"Medium-long and warming, with oak, vanilla and a soft lingering sweetness."
+  };
+}
 function tastingParts(o){
   const notes=firstVal(o,["notes","tasting_notes","profile"]);
+  const fallback=styleProfileFallback(o);
   return {
-    nose:firstVal(o,["nose","aroma","scent"]),
-    taste:firstVal(o,["taste","palate","flavor"]) || notes,
-    finish:firstVal(o,["finish","aftertaste"])
+    nose:firstVal(o,["nose","aroma","scent"]) || fallback.nose,
+    taste:firstVal(o,["taste","palate","flavor"]) || notes || fallback.taste,
+    finish:firstVal(o,["finish","aftertaste"]) || fallback.finish
   };
 }
 function tastingBlock(o){
@@ -755,7 +775,8 @@ function tastingBlock(o){
   '</div>';
 }
 function generalInfoBlock(o){
-  const desc=firstVal(o,["desc","description"]);
+  const fallback=styleProfileFallback(o);
+  const desc=firstVal(o,["desc","description"]) || fallback.general;
   if(!desc) return "";
   return '<div class="sec-t">'+t("infoT")+'</div><p class="desc">'+esc(desc)+'</p>';
 }
