@@ -89,11 +89,14 @@
   .feat .info{flex:1;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1;min-width:0;padding-right:4px}
   .feat-tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}
   .feat-tag{font-size:10px;line-height:1;border:1px solid rgba(127,208,150,.5);color:#7FD096;background:rgba(23,73,49,.22);border-radius:6px;padding:5px 7px;text-transform:uppercase;font-weight:900;letter-spacing:.5px}
-  .feat-rate{position:absolute;right:12px;bottom:10px;z-index:2;font-size:12px;color:#F2E1B8;background:rgba(0,0,0,.48);border:1px solid rgba(226,176,112,.42);border-radius:8px;padding:5px 7px;font-weight:900}
   .bottlepic{flex:0 0 132px;width:132px;height:180px;align-self:center;border-radius:16px;display:grid;place-items:center;font-size:42px;overflow:visible;position:relative;z-index:1;
     background:radial-gradient(86% 74% at 52% 58%,rgba(232,156,66,.32),rgba(86,45,16,.18) 44%,transparent 74%)}
   .bottlepic:after{content:"";position:absolute;left:22px;right:22px;bottom:7px;height:12px;border-radius:50%;background:rgba(0,0,0,.45);filter:blur(7px);z-index:-1}
   .bottlepic img{max-width:120px;max-height:176px;width:auto!important;height:auto!important;object-fit:contain!important;border-radius:0!important;filter:contrast(1.08) saturate(1.12) drop-shadow(0 18px 18px rgba(0,0,0,.58))}
+  .value-badge{position:absolute;right:9px;bottom:8px;z-index:4;min-width:44px;text-align:center;border:1px solid rgba(226,176,112,.72);border-radius:999px;background:linear-gradient(180deg,rgba(33,19,8,.92),rgba(7,4,2,.88));color:#F6D48A;font-size:12px;font-weight:950;line-height:1;padding:7px 8px;box-shadow:0 9px 20px rgba(0,0,0,.38),0 0 14px rgba(226,176,112,.18);cursor:pointer;user-select:none}
+  .value-badge:active{transform:scale(.94)}
+  .dphoto .value-badge{right:14px;bottom:14px;font-size:15px;min-width:54px;padding:9px 10px}
+  .brow .value-badge{right:3px;bottom:3px;min-width:31px;padding:4px 5px;font-size:10px;border-radius:8px}
 
   /* categories */
   .cats{display:flex;gap:12px;overflow-x:auto;margin:0 -16px;padding:0 16px 8px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
@@ -113,7 +116,7 @@
   /* bottle cards (recently/explore) */
   .bcard{flex:0 0 130px;scroll-snap-align:start;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;transition:transform .08s}
   .bcard:active{transform:scale(.97)}
-  .bcard .pic{height:120px;display:grid;place-items:center;font-size:46px;background:radial-gradient(70% 70% at 50% 25%,rgba(220,184,119,.2),rgba(0,0,0,.3))}
+  .bcard .pic{height:120px;display:grid;place-items:center;font-size:46px;background:radial-gradient(70% 70% at 50% 25%,rgba(220,184,119,.2),rgba(0,0,0,.3));position:relative}
   .bcard .pic img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
   .bcard .meta{padding:10px}
   .bcard .bn{font-size:13px;font-weight:800;line-height:1.2;margin-bottom:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:32px}
@@ -133,7 +136,7 @@
   .blist{display:flex;flex-direction:column;gap:10px}
   .brow{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px;cursor:pointer;transition:transform .08s,border-color .2s}
   .brow:active{transform:scale(.99)}
-  .brow .pic{flex:0 0 54px;height:74px;border-radius:9px;overflow:hidden;display:grid;place-items:center;font-size:30px;background:radial-gradient(70% 70% at 50% 25%,rgba(220,184,119,.16),rgba(0,0,0,.3))}
+  .brow .pic{flex:0 0 54px;height:74px;border-radius:9px;overflow:hidden;display:grid;place-items:center;font-size:30px;background:radial-gradient(70% 70% at 50% 25%,rgba(220,184,119,.16),rgba(0,0,0,.3));position:relative}
   .brow .pic img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;object-position:center}
   .brow .info{flex:1;min-width:0}
   .brow .bn{font-size:15px;font-weight:800;line-height:1.2;margin-bottom:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
@@ -174,6 +177,8 @@
   .taste-row{border:1px solid var(--line);background:rgba(0,0,0,.16);border-radius:12px;padding:10px 12px}
   .taste-row .k{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:900;margin-bottom:3px}
   .taste-row .v{font-size:13px;line-height:1.35;color:var(--txt)}
+  .shop-pitch{display:inline-flex;align-items:center;justify-content:center;margin-top:10px;border:1px solid rgba(226,176,112,.42);border-radius:999px;background:rgba(0,0,0,.22);color:var(--amber2);font-size:12px;font-weight:850;padding:8px 12px;cursor:pointer}
+  .shop-pitch:active{transform:scale(.97)}
   .user-stars{display:flex;gap:2px;align-items:center;justify-content:center;font-size:18px;line-height:1;color:var(--line);user-select:none;white-space:nowrap}
   .user-stars span{cursor:pointer;transition:transform .08s,color .15s}
   .user-stars span.on{color:var(--gold)}
@@ -214,15 +219,15 @@
   .scan-detected{display:inline-flex;align-items:center;justify-content:center;width:206px;height:43px;margin:0 auto -2px;background:url("design/figma-assets/scanner-pack-v1/bottle-detected-badge.png") center/contain no-repeat;color:transparent;opacity:.72;pointer-events:none}
   .shot{width:100%;aspect-ratio:760/980;max-height:54vh;border:none;border-radius:20px;display:grid;place-items:center;cursor:pointer;overflow:hidden;position:relative;background:linear-gradient(180deg,rgba(5,3,2,.08),rgba(3,2,1,.54)),url("assets/detail/bottle-detail-bg.png") center bottom/cover no-repeat;box-shadow:inset 0 0 80px rgba(0,0,0,.52)}
   .shot:before{content:"";position:absolute;inset:0;background:url("design/figma-assets/scanner-pack-v1/scan-frame.png") center/100% 100% no-repeat;z-index:3;pointer-events:none;filter:drop-shadow(0 0 16px rgba(218,106,45,.38))}
-  .shot:after{content:"";position:absolute;left:8%;right:8%;top:48%;height:38px;background:linear-gradient(180deg,transparent,rgba(255,158,62,.08) 18%,rgba(255,204,128,.42) 48%,rgba(255,111,28,.16) 72%,transparent);box-shadow:0 0 20px rgba(255,132,42,.16);z-index:4;opacity:.34;pointer-events:none;mix-blend-mode:screen}
+  .shot:after{content:"";position:absolute;left:9%;right:9%;top:12%;height:5px;border-radius:999px;background:linear-gradient(90deg,transparent,rgba(112,255,174,.72),rgba(255,215,132,.95),rgba(112,255,174,.72),transparent);box-shadow:0 0 18px rgba(255,190,92,.58),0 0 34px rgba(74,255,159,.28);z-index:4;opacity:0;pointer-events:none;mix-blend-mode:screen}
   .shot .ph{display:grid;place-items:center;gap:8px;color:#E2B070;padding:32px;text-shadow:0 2px 12px #000}
   .shot .ph .cam{width:120px;height:120px;background:url("design/figma-assets/scanner-pack-v1/hunter-loading-mark.png") center/contain no-repeat;font-size:0;filter:drop-shadow(0 0 18px rgba(184,106,51,.32))}
   .shot img{position:absolute;inset:6%;width:88%;height:88%;object-fit:contain;border-radius:14px;z-index:1;filter:saturate(1.05) contrast(1.02)}
-  .shot.has-shot:after{opacity:.8}
-  .shot.is-loading:after{animation:scanBeam 1.35s ease-in-out infinite}
+  .shot.has-shot:after{opacity:.22}
+  .shot.is-loading:after{opacity:1;animation:scanBeam 1.05s cubic-bezier(.34,0,.18,1) infinite}
   .shot.is-loading .scan-overlay{opacity:1}
   .scan-overlay{position:absolute;inset:0;background:url("design/figma-assets/scanner-pack-v1/analyzing-overlay.png") center/cover no-repeat;z-index:2;opacity:0;transition:opacity .2s;pointer-events:none}
-  @keyframes scanBeam{0%,100%{transform:translateY(-34%);opacity:.35}50%{transform:translateY(34%);opacity:1}}
+  @keyframes scanBeam{0%{transform:translateY(-5vh) scaleX(.72);opacity:.05}12%{opacity:1}78%{opacity:1}100%{transform:translateY(43vh) scaleX(1);opacity:.08}}
   .retake{position:absolute;right:13px;bottom:13px;width:86px;height:86px;border:none;border-radius:50%;background:url("design/figma-assets/scanner-pack-v1/retake-button.png") center/contain no-repeat;color:transparent;z-index:5;cursor:pointer}
   .btns{display:grid;grid-template-columns:96px 1fr 96px;align-items:center;gap:10px;margin-top:14px}
   .scan-side{width:86px;height:86px;border:0;border-radius:50%;background:url("design/figma-assets/scanner-pack-v1/gallery-button.png") center/contain no-repeat;justify-self:center;color:transparent;cursor:pointer}
@@ -529,7 +534,7 @@ const I18N = {
     byDist:"Przeglądaj wg destylarni", allDist:"Wszystkie", distLbl:"Destylarnia", loadMore:"Pokaż więcej", results:"poz.",
     priceK:"Cena", statusAvail:"Dostępny", statusSold:"Niedostępny", viewShop:"Zobacz w sklepie ↗", noResults:"Brak wyników dla tego filtra.",
     allCat:"Wszystkie", stWheated:"Wheated", stSingle:"Single Barrel", stSmall:"Small Batch", stProof:"Barrel Proof", stBib:"Bottled-in-Bond", stLimited:"Edycja limitowana", aiBtn:"🔎 Analiza AI",
-    wlAdded:"Dodano do listy życzeń ♥", ownAdded:"Dodano do kolekcji", wlEmpty:"Twoja lista życzeń jest pusta. Dodawaj butelki serduszkiem ♡.", emptyHunted:"Nie masz jeszcze upolowanych butelek.", emptyCollection:"Twoja kolekcja jest pusta.", noseT:"Nos", tasteT:"Smak", finishT:"Finisz", suggestedPrice:"Cena sugerowana", dbQuality:"Jakość z bazy", userQuality:"Twoja jakość",
+    wlAdded:"Dodano do listy życzeń ♥", ownAdded:"Dodano do kolekcji", wlEmpty:"Twoja lista życzeń jest pusta. Dodawaj butelki serduszkiem ♡.", emptyHunted:"Nie masz jeszcze upolowanych butelek.", emptyCollection:"Twoja kolekcja jest pusta.", noseT:"Nos", tasteT:"Smak", finishT:"Finisz", suggestedPrice:"Cena sugerowana", dbQuality:"Ocena społeczności", userQuality:"Twoja ocena",
     wlT:"Lista życzeń", wlD:"Zapisuj bourbony, które chcesz upolować.", huT:"Upolowane", huD:"Oznaczaj butelki, które już zdobyłeś.",
     coT:"Moja kolekcja", coD:"Twoja półka — wszystkie posiadane butelki w jednym miejscu.", soonTag:"Wkrótce" },
   en:{ searchPh:"Search bourbon or distillery...", featured:"Featured", byCat:"Browse by category", viewAll:"View all", recent:"Recently added",
@@ -551,7 +556,7 @@ const I18N = {
     byDist:"Browse by distillery", allDist:"All", distLbl:"Distillery", loadMore:"Load more", results:"items",
     priceK:"Price", statusAvail:"In stock", statusSold:"Sold out", viewShop:"View in shop ↗", noResults:"No results for this filter.",
     allCat:"All", stWheated:"Wheated", stSingle:"Single Barrel", stSmall:"Small Batch", stProof:"Barrel Proof", stBib:"Bottled-in-Bond", stLimited:"Limited Edition", aiBtn:"🔎 AI Analysis",
-    wlAdded:"Added to wishlist ♥", ownAdded:"Added to collection", wlEmpty:"Your wishlist is empty. Add bottles with the ♡ heart.", emptyHunted:"No hunted bottles yet.", emptyCollection:"Your collection is empty.", noseT:"Nose", tasteT:"Taste", finishT:"Finish", suggestedPrice:"Suggested price", dbQuality:"Database quality", userQuality:"Your quality",
+    wlAdded:"Added to wishlist ♥", ownAdded:"Added to collection", wlEmpty:"Your wishlist is empty. Add bottles with the ♡ heart.", emptyHunted:"No hunted bottles yet.", emptyCollection:"Your collection is empty.", noseT:"Nose", tasteT:"Taste", finishT:"Finish", suggestedPrice:"Suggested price", dbQuality:"Community rating", userQuality:"Your rating",
     wlT:"Wishlist", wlD:"Save the bourbons you want to hunt down.", huT:"Hunted", huD:"Mark the bottles you've already bagged.",
     coT:"My collection", coD:"Your shelf — every bottle you own in one place.", soonTag:"Soon" }
 };
@@ -636,6 +641,19 @@ function wlSave(){ try{ localStorage.setItem("bh_wishlist",JSON.stringify(WL)); 
 function wlToggle(id){ const i=WL.indexOf(id); if(i>=0){ WL.splice(i,1); wlSave(); return false; } WL.push(id); wlSave(); return true; }
 let toastTimer=null;
 function toast(msg){ const el=document.getElementById("toast"); if(!el) return; el.textContent=msg; el.classList.add("show"); clearTimeout(toastTimer); toastTimer=setTimeout(function(){ el.classList.remove("show"); },2000); }
+function valueScore(o){
+  const raw=o && (o.value!=null ? o.value : (o.value_score!=null ? o.value_score : o.price_value));
+  const n=Number(raw);
+  if(!Number.isFinite(n) || n<=0) return "";
+  return String(Math.max(1,Math.min(5,Math.round(n))));
+}
+function valueBadgeHtml(o){
+  const score=valueScore(o);
+  return score ? '<button class="value-badge" type="button" data-value-score="'+esc(score)+'" aria-label="'+esc(t("valLbl"))+'">'+esc(score)+'/5</button>' : '';
+}
+function shopPitchHtml(){
+  return '<button class="shop-pitch" type="button" data-shop-pitch="1">'+(lang==="pl"?"To moze byc Twoj sklep":"This could be your shop")+'</button>';
+}
 function heartHtml(id){ return '<div class="heart'+(wlHas(id)?' on':'')+'" data-heart="'+esc(id)+'" role="button" aria-label="wishlist"></div>'; }
 const HUNT=(function(){ try{ return JSON.parse(localStorage.getItem("bh_hunted")||"[]"); }catch(e){ return []; } })();
 let OWNED=(function(){ try{ return JSON.parse(localStorage.getItem("bh_collection")||"[]"); }catch(e){ return []; } })();
@@ -652,7 +670,7 @@ function rateHtml(b){ const q=(b.quality!=null?b.quality:b.value); return q!=nul
 /* wiersz listy (Odkrywaj / Lista życzeń) */
 function listRow(b){
   const img=b.thumb||b.image;
-  const pic=img?'<div class="pic"><img src="'+esc(img)+'" alt="'+esc(b.name)+'" loading="lazy" decoding="async"></div>':'<div class="pic">🥃</div>';
+  const pic=img?'<div class="pic"><img src="'+esc(img)+'" alt="'+esc(b.name)+'" loading="lazy" decoding="async">'+valueBadgeHtml(b)+'</div>':'<div class="pic">🥃'+valueBadgeHtml(b)+'</div>';
   const proof=b.proof?(b.proof+' Proof'):(b.abv?(b.abv+'% ABV'):'');
   return '<div class="brow" data-id="'+esc(b.id)+'">'+pic+
     '<div class="info"><div class="bn">'+esc(b.name)+'</div><div class="bt">'+esc(b.type||b.distillery||"")+'</div>'+(proof?'<div class="bpf">'+esc(proof)+'</div>':'')+'</div>'+
@@ -915,7 +933,6 @@ function bottleActionsHtml(o){
 function featCard(b, kick){
   const price=fmtPrice(b);
   const tag=categoryLabel(b);
-  const rate=(b.quality!=null) ? '<div class="feat-rate">&#9733; '+esc(Number(b.quality).toFixed(1).replace(".0",""))+'</div>' : '';
   const longName = String(b.name||"").length > 34 ? " long-name" : "";
   const shownName = longName ? String(b.name||"").slice(0,40).replace(/\s+\S*$/,"")+'...' : String(b.name||"");
   return '<div class="feat'+longName+'" data-id="'+esc(b.id)+'"><div class="info"><h4>'+esc(shownName)+'</h4>'+
@@ -923,7 +940,7 @@ function featCard(b, kick){
     (price?'<div class="price">'+esc(price)+'</div>':'')+
     '<div class="feat-tags"><span class="feat-tag">'+esc(tag)+'</span></div>'+
     '<span class="btn-sm" data-id="'+esc(b.id)+'">'+t("viewAll").split(" ")[0]+' →</span></div>'+
-    '<div class="bottlepic">'+(b.image?'<img src="'+esc(b.image)+'" loading="lazy" decoding="async" alt="">':'🥃')+'</div>'+rate+'</div>';
+    '<div class="bottlepic">'+(b.image?'<img src="'+esc(b.image)+'" loading="lazy" decoding="async" alt="">':'🥃')+valueBadgeHtml(b)+'</div></div>';
 }
 function t(k){ return (I18N[lang]&&I18N[lang][k])||I18N.pl[k]||k; }
 function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
@@ -1078,6 +1095,10 @@ function renderExplore(){
 document.addEventListener("click",function(e){
   const ctab=e.target.closest("[data-ctab]");
   if(ctab){ renderCollection(ctab.getAttribute("data-ctab")); return; }
+  const valueEl=e.target.closest("[data-value-score]");
+  if(valueEl){ e.stopPropagation(); toast((lang==="pl"?"Stosunek ceny do jakosci":"Quality-to-price ratio")+": "+valueEl.getAttribute("data-value-score")+"/5"); return; }
+  const shopPitch=e.target.closest("[data-shop-pitch]");
+  if(shopPitch){ e.stopPropagation(); toast(lang==="pl"?"To moze byc Twoj sklep":"This could be your shop"); return; }
   const ur=e.target.closest("[data-ur]");
   if(ur){ e.stopPropagation(); const id=ur.getAttribute("data-ur"), v=Number(ur.getAttribute("data-v")); UR[id]=v; urSave(); document.querySelectorAll('[data-userstars="'+id+'"] span').forEach(function(st){ st.classList.toggle("on", Number(st.getAttribute("data-v"))<=v); }); return; }
   const heartEl = e.target.closest("[data-heart]");
@@ -1122,7 +1143,7 @@ function openDetail(id){
   const price = fmtPrice(b);
   const origin = [b.distillery,b.region].filter(Boolean).map(esc).join(" · ");
   const actions = bottleActionsHtml(b);
-  const pic = b.image ? '<div class="dphoto">'+actions+'<img src="'+esc(b.image)+'" alt="'+esc(b.name)+'" loading="eager" decoding="async"></div>' : '<div class="dphoto">'+actions+'🥃</div>';
+  const pic = b.image ? '<div class="dphoto">'+actions+'<img src="'+esc(b.image)+'" alt="'+esc(b.name)+'" loading="eager" decoding="async">'+valueBadgeHtml(b)+'</div>' : '<div class="dphoto">'+actions+'🥃'+valueBadgeHtml(b)+'</div>';
   const statusBadge = b.status==="sold_out" || b.available===false
     ? '<span class="badge net">'+t("statusSold")+'</span>'
     : '<span class="badge db">'+t("statusAvail")+'</span>';
@@ -1136,7 +1157,7 @@ function openDetail(id){
     (origin?'<div class="dorigin">'+origin+'</div>':'')+pic+
     valueBlock+ratingPanel(b)+generalInfoBlock(b)+tastingBlock(b)+
     (b.mashbill?'<div class="sec-t">'+t("mashbill")+'</div><p class="desc">'+esc(localizedMashbill(b.mashbill))+'</p>':'')+
-    (b.url?'<div class="links" style="margin-top:14px"><a href="'+esc(b.url)+'" target="_blank" rel="noopener">'+t("viewShop")+'</a></div>':'');
+    (b.url?'<div class="links" style="margin-top:14px"><a href="'+esc(b.url)+'" target="_blank" rel="noopener">'+t("viewShop")+'</a><br>'+shopPitchHtml()+'</div>':'');
   showView("detail");
 }
 /* ================= SKANER ================= */
@@ -1157,8 +1178,11 @@ function resetShot(){
   document.getElementById("scanResult").innerHTML=""; document.getElementById("err").style.display="none";
 }
 function handlePickedFile(e){
-  const f=e.target.files&&e.target.files[0]; if(!f) return;
-  e.target.value="";
+  const input=e.target;
+  const f=input.files&&input.files[0]; if(!f) return;
+  goRate.disabled=true;
+  shot.classList.add("is-loading");
+  document.getElementById("err").style.display="none";
   compress(f).then(function(res){
     imgData=res.b64; imgMime=res.mime;
     shot.classList.add("has-shot");
@@ -1166,13 +1190,41 @@ function handlePickedFile(e){
     shot.innerHTML='<img src="data:'+res.mime+';base64,'+res.b64+'" alt=""><div class="scan-overlay" aria-hidden="true"></div>';
     goRate.disabled=false;
     document.getElementById("scanResult").innerHTML=""; document.getElementById("err").style.display="none";
+  }).catch(function(){
+    showErr(lang==="pl"?"Nie udalo sie wczytac zdjecia. Sprobuj innym plikiem albo zrob nowe zdjecie.":"Could not load this photo. Try another file or take a new photo.");
+  }).finally(function(){
+    input.value="";
+    shot.classList.remove("is-loading");
   });
 }
-function compress(file){ return new Promise(function(resolve){ const img=new Image(), url=URL.createObjectURL(file);
-  img.onload=function(){ const max=1024; let w=img.width,h=img.height;
-    if(w>h&&w>max){h=Math.round(h*max/w);w=max;}else if(h>=w&&h>max){w=Math.round(w*max/h);h=max;}
-    const c=document.createElement("canvas");c.width=w;c.height=h;c.getContext("2d").drawImage(img,0,0,w,h);
-    const d=c.toDataURL("image/jpeg",0.72);URL.revokeObjectURL(url);resolve({b64:d.split(",")[1],mime:"image/jpeg"}); }; img.src=url; }); }
+function compress(file){ return new Promise(function(resolve,reject){
+  if(!file || (file.type && file.type.indexOf("image/")!==0)){ reject(new Error("not-image")); return; }
+  const max=1280;
+  function drawImageToCanvas(source,w,h,cleanup){
+    try{
+      if(w>h&&w>max){h=Math.round(h*max/w);w=max;}else if(h>=w&&h>max){w=Math.round(w*max/h);h=max;}
+      const c=document.createElement("canvas"); c.width=w; c.height=h;
+      const ctx=c.getContext("2d"); if(!ctx){ throw new Error("no-canvas"); }
+      ctx.drawImage(source,0,0,w,h);
+      const d=c.toDataURL("image/jpeg",0.76);
+      if(cleanup) cleanup();
+      resolve({b64:d.split(",")[1],mime:"image/jpeg"});
+    }catch(err){ if(cleanup) cleanup(); reject(err); }
+  }
+  function fallbackImage(){
+    const img=new Image(), url=URL.createObjectURL(file);
+    img.onload=function(){ drawImageToCanvas(img,img.naturalWidth||img.width,img.naturalHeight||img.height,function(){ URL.revokeObjectURL(url); }); };
+    img.onerror=function(){ URL.revokeObjectURL(url); reject(new Error("decode")); };
+    img.src=url;
+  }
+  if(window.createImageBitmap){
+    createImageBitmap(file,{imageOrientation:"from-image"}).then(function(bitmap){
+      drawImageToCanvas(bitmap,bitmap.width,bitmap.height,function(){ if(bitmap.close) bitmap.close(); });
+    }).catch(fallbackImage);
+  } else {
+    fallbackImage();
+  }
+}); }
 function startLoading(mode){ busy=true; goRate.disabled=true; shot.classList.add("is-loading");
   document.getElementById("loading").style.display="block"; document.getElementById("scanResult").innerHTML=""; document.getElementById("err").style.display="none";
   const msgs = mode==="analyze"?[t("ldId"),t("ldHist"),t("ldNet"),t("ldPrice")]:[t("ldId"),t("ldDb"),t("ldNet"),t("ldPrice")];
@@ -1208,7 +1260,7 @@ function renderScan(res, mode){
   const isNew = res.source==="net" || res.isNew;
   const badge = isNew?'<span class="badge net">'+t("fromNet")+'</span>':'<span class="badge db">'+t("fromDb")+'</span>';
   const origin=[res.distillery,res.region].filter(Boolean).map(esc).join(" · ");
-  const img=res.image?'<div class="dphoto">'+bottleActionsHtml(res)+'<img src="'+esc(res.image)+'" alt="'+esc(res.name||"")+'" loading="eager" decoding="async"></div>':'';
+  const img=res.image?'<div class="dphoto">'+bottleActionsHtml(res)+'<img src="'+esc(res.image)+'" alt="'+esc(res.name||"")+'" loading="eager" decoding="async">'+valueBadgeHtml(res)+'</div>':'';
   let head='<div class="card">'+badge+'<div class="name">'+esc(res.name||"-")+'</div>'+
     '<div class="dtype">'+esc(categoryLabel(res))+'</div>'+
     (origin?'<div class="dorigin">'+origin+'</div>':'')+img+
@@ -1222,11 +1274,11 @@ function renderScan(res, mode){
     if(descs.length) body+='<div class="sec-t">'+t("descT")+'</div>'+descs.map(function(d){return '<p class="desc">'+esc(d)+'</p>';}).join("");
     if(hist.length) body+='<div class="sec-t">'+t("historyT")+'</div>'+hist.map(function(d){return '<p class="desc">'+esc(d)+'</p>';}).join("");
     const links=res.links||res.sources||[];
-    if(links.length) body+='<div class="sec-t">'+t("linksT")+'</div><div class="links">'+links.slice(0,6).map(function(s){const u=esc(s.url||s);const tt=esc(s.title||s.url||s);return u?'<a href="'+u+'" target="_blank">'+tt+'</a>':tt;}).join("<br>")+'</div>';
+    if(links.length) body+='<div class="sec-t">'+t("linksT")+'</div><div class="links">'+links.slice(0,6).map(function(s){const u=esc(s.url||s);const tt=esc(s.title||s.url||s);return u?'<a href="'+u+'" target="_blank">'+tt+'</a>':tt;}).join("<br>")+'<br>'+shopPitchHtml()+'</div>';
   } else {
     if(res.mashbill) body+='<div class="sec-t">'+t("mashbill")+'</div><p class="desc">'+esc(localizedMashbill(res.mashbill))+'</p>';
     const links=res.sources||[];
-    if(links.length) body+='<div class="sec-t">'+t("sourcesT")+'</div><div class="links">'+links.slice(0,5).map(function(s){const u=esc(s.url||s);const tt=esc(s.title||s.url||s);return u?'<a href="'+u+'" target="_blank">'+tt+'</a>':tt;}).join("<br>")+'</div>';
+    if(links.length) body+='<div class="sec-t">'+t("sourcesT")+'</div><div class="links">'+links.slice(0,5).map(function(s){const u=esc(s.url||s);const tt=esc(s.title||s.url||s);return u?'<a href="'+u+'" target="_blank">'+tt+'</a>':tt;}).join("<br>")+'<br>'+shopPitchHtml()+'</div>';
   }
   const extra = (mode!=="analyze") ? '<button class="btn btn-alt" id="goAnalyzeBtn" style="width:100%;margin-top:14px">'+t("aiBtn")+'</button>' : '';
   document.getElementById("scanResult").innerHTML=head+body+'</div>'+extra;
