@@ -229,7 +229,7 @@
   .scan-overlay{position:absolute;inset:0;background:url("design/figma-assets/scanner-pack-v1/analyzing-overlay.png") center/cover no-repeat;z-index:2;opacity:0;transition:opacity .2s;pointer-events:none}
   @keyframes scanBeam{0%{transform:translateY(-5vh) scaleX(.72);opacity:.05}12%{opacity:1}78%{opacity:1}100%{transform:translateY(43vh) scaleX(1);opacity:.08}}
   .retake{position:absolute;right:13px;bottom:13px;width:86px;height:86px;border:none;border-radius:50%;background:url("design/figma-assets/scanner-pack-v1/retake-button.png") center/contain no-repeat;color:transparent;z-index:5;cursor:pointer}
-  .btns{display:grid;grid-template-columns:96px 1fr 96px;align-items:center;gap:10px;margin-top:14px}
+  .btns{display:grid;grid-template-columns:86px 86px;align-items:center;justify-content:space-between;gap:10px;margin:14px 8px 0}
   .scan-side{width:86px;height:86px;border:0;border-radius:50%;background:url("design/figma-assets/scanner-pack-v1/gallery-button.png") center/contain no-repeat;justify-self:center;color:transparent;cursor:pointer}
   #retakeQuick{position:relative;background:radial-gradient(circle at 50% 34%,rgba(245,203,119,.34),rgba(18,10,5,.96) 62%);border:1px solid rgba(226,176,112,.8);box-shadow:0 0 20px rgba(226,128,40,.18),inset 0 0 20px rgba(226,176,112,.08)}
   #retakeQuick:before{content:"+";position:absolute;inset:0;display:grid;place-items:center;color:#F6D48A;font-size:38px;font-weight:800;line-height:1;text-shadow:0 0 12px rgba(226,176,112,.44)}
@@ -237,7 +237,7 @@
   #retakeQuick.has-shot:before{display:none}
   .btn{flex:1;border:none;border-radius:14px;padding:14px 10px;font-size:15px;font-weight:800;cursor:pointer;transition:transform .08s,opacity .2s}
   .btn:active{transform:scale(.97)}
-  .btn-go{min-height:112px;background:url("design/figma-assets/scanner-pack-v1/scan-button.png") center top/86px 86px no-repeat;color:#F6E1BC;text-shadow:0 2px 8px #000;box-shadow:none;padding:86px 0 0;font-size:12px;letter-spacing:.9px;text-transform:uppercase}
+  .btn-go{display:none;min-height:112px;background:url("design/figma-assets/scanner-pack-v1/scan-button.png") center top/86px 86px no-repeat;color:#F6E1BC;text-shadow:0 2px 8px #000;box-shadow:none;padding:86px 0 0;font-size:12px;letter-spacing:.9px;text-transform:uppercase}
   .btn-alt{background:rgba(0,0,0,.25);color:var(--amber2);border:1px solid var(--amber)}
   .btn[disabled]{opacity:.4;cursor:default}
   .note{font-size:11px;color:var(--muted);margin-top:12px;line-height:1.5}
@@ -1180,6 +1180,7 @@ function resetShot(){
 function handlePickedFile(e){
   const input=e.target;
   const f=input.files&&input.files[0]; if(!f) return;
+  let shouldAutoRate=false;
   goRate.disabled=true;
   shot.classList.add("is-loading");
   document.getElementById("err").style.display="none";
@@ -1190,11 +1191,16 @@ function handlePickedFile(e){
     shot.innerHTML='<img src="data:'+res.mime+';base64,'+res.b64+'" alt=""><div class="scan-overlay" aria-hidden="true"></div>';
     goRate.disabled=false;
     document.getElementById("scanResult").innerHTML=""; document.getElementById("err").style.display="none";
+    shouldAutoRate=true;
   }).catch(function(){
     showErr(lang==="pl"?"Nie udalo sie wczytac zdjecia. Sprobuj innym plikiem albo zrob nowe zdjecie.":"Could not load this photo. Try another file or take a new photo.");
   }).finally(function(){
     input.value="";
-    shot.classList.remove("is-loading");
+    if(shouldAutoRate){
+      requestAnimationFrame(function(){ scan("rate"); });
+    } else {
+      shot.classList.remove("is-loading");
+    }
   });
 }
 function compress(file){ return new Promise(function(resolve,reject){
