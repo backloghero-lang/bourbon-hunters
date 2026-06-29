@@ -122,9 +122,10 @@ export default {
         return J({result:result, mode:mode, remaining:consume(), owner:owner, matched:hit.id}, 200, cors);
       }
       // brak w bazie -> net
+      const profileSchema="{\"en\":{\"general\":\"one short factual sentence\",\"nose\":\"one short tasting sentence\",\"taste\":\"one short tasting sentence\",\"finish\":\"one short tasting sentence\"},\"pl\":{\"general\":\"jedno krotkie zdanie informacyjne\",\"nose\":\"jedno krotkie zdanie degustacyjne\",\"taste\":\"jedno krotkie zdanie degustacyjne\",\"finish\":\"jedno krotkie zdanie degustacyjne\"}}";
       const ratePayload={
         systemInstruction:{parts:[{text:system}]},
-        contents:[{role:"user",parts:[{text:"Butelka: \""+bottleName+"\". Wyszukaj w sieci recenzje i orientacyjna cene (PL/PLN), potem zwroc TYLKO JSON: {\"name\",\"type\",\"category\",\"distillery\",\"region\",\"price\",\"quality\":1-5,\"value\":1-5,\"verdict\",\"general\":\"1 krotkie zdanie informacji ogolnej\",\"nose\":\"1 krotkie zdanie\",\"taste\":\"1 krotkie zdanie\",\"finish\":\"1 krotkie zdanie\",\"notes\"}."}]}],
+        contents:[{role:"user",parts:[{text:"Bottle: \""+bottleName+"\". Research reviews and an indicative price, then return ONLY JSON: {\"name\",\"type\",\"category\",\"distillery\",\"region\",\"price\",\"quality\":1-5,\"value\":1-5,\"verdict\",\"profile\":"+profileSchema+",\"notes\"}. The profile.en fields must be English. The profile.pl fields must be Polish translations/paraphrases of the same facts."}]}],
         tools:[{google_search:{}}],
         generationConfig:{ temperature:parseFloat(env.TEMP_RATE||"0.4"), maxOutputTokens:parseInt(env.MAX_RATE||"1200",10), thinkingConfig:{thinkingBudget:0} }
       };
@@ -147,7 +148,7 @@ export default {
     if(hit){ ctx+=" Dane z naszej bazy (uzyj jako fakty): "+JSON.stringify({name:hit.name,distillery:hit.distillery,region:hit.region,type:hit.type,category:hit.category,proof:hit.proof,mashbill:hit.mashbill,price:(hit.price_str||hit.price_pln),quality:hit.quality,value:hit.value}); }
     const analyzePayload={
       systemInstruction:{parts:[{text:system}]},
-      contents:[{role:"user",parts:[{text:ctx+" Przygotuj ROZBUDOWANA analize. Wyszukaj w sieci historie destylarni i ciekawostki, podaj realne linki. Zwroc TYLKO JSON: {\"name\",\"type\",\"category\",\"distillery\",\"region\",\"price\",\"quality\":1-5,\"value\":1-5,\"verdict\":\"jedno zdanie z jajem\",\"general\":\"1 krotkie zdanie informacji ogolnej\",\"nose\":\"1 krotkie zdanie\",\"taste\":\"1 krotkie zdanie\",\"finish\":\"1 krotkie zdanie\",\"description\":[\"2-4 akapity: profil smaku, dla kogo, czy warto\"],\"history\":[\"1-2 akapity o destylarni i historii marki\"],\"links\":[{\"title\",\"url\"}]}."}]}],
+      contents:[{role:"user",parts:[{text:ctx+" Prepare an expanded analysis. Research distillery history and relevant facts, include real links. Return ONLY JSON: {\"name\",\"type\",\"category\",\"distillery\",\"region\",\"price\",\"quality\":1-5,\"value\":1-5,\"verdict\":\"one memorable sentence\",\"profile\":"+profileSchema+",\"description\":[\"2-4 paragraphs: flavor profile, who it suits, whether it is worth it\"],\"history\":[\"1-2 paragraphs about the distillery and brand history\"],\"links\":[{\"title\",\"url\"}]}. The profile.en fields must be English. The profile.pl fields must be Polish translations/paraphrases of the same facts."}]}],
       tools:[{google_search:{}}],
       generationConfig:{ temperature:parseFloat(env.TEMP_ANALYZE||"0.7"), maxOutputTokens:parseInt(env.MAX_ANALYZE||"3500",10), thinkingConfig:{thinkingBudget:parseInt(env.THINK_ANALYZE||"0",10)} }
     };

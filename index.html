@@ -400,6 +400,7 @@
 /* ========= KONFIGURACJA ========= */
 const WORKER_URL = "https://bourbon-hunters.darekmaslyk.workers.dev";
 const DB_URL = "db/bourbons.json";
+const PROFILES_URL = "db/profiles-runtime.json";
 const RUNTIME_BOTTLE_IDS = [
   "buffalo-trace-bourbon-1",
   "blantons-original-single-barrel-bourbon-whiskey-700ml",
@@ -834,6 +835,17 @@ function styleProfileFallback(o){
   const map=lang==="pl"?pl:en;
   return map[key] || map.standard;
 }
+function localizedProfile(o){
+  const p=(o&&o.profile)||{};
+  const chosen=(lang==="pl" && p.pl) ? p.pl : (p.en || p.pl || null);
+  if(!chosen) return {};
+  return {
+    general:textClean(chosen.general),
+    nose:textClean(chosen.nose),
+    taste:textClean(chosen.taste),
+    finish:textClean(chosen.finish)
+  };
+}
 function cleanProfileValue(v){
   const text=textClean(v);
   if(!text) return "";
@@ -842,12 +854,13 @@ function cleanProfileValue(v){
   return text;
 }
 function tastingParts(o){
-  const notes=firstVal(o,["notes","tasting_notes","profile"]);
+  const notes=firstVal(o,["notes","tasting_notes"]);
+  const profile=localizedProfile(o);
   const fallback=styleProfileFallback(o);
   return {
-    nose:cleanProfileValue(firstVal(o,["nose","aroma","scent"])) || fallback.nose,
-    taste:cleanProfileValue(firstVal(o,["taste","palate","flavor"]) || notes) || fallback.taste,
-    finish:cleanProfileValue(firstVal(o,["finish","aftertaste"])) || fallback.finish
+    nose:profile.nose || cleanProfileValue(firstVal(o,["nose","aroma","scent"])) || fallback.nose,
+    taste:profile.taste || cleanProfileValue(firstVal(o,["taste","palate","flavor"]) || notes) || fallback.taste,
+    finish:profile.finish || cleanProfileValue(firstVal(o,["finish","aftertaste"])) || fallback.finish
   };
 }
 function tastingBlock(o){
@@ -859,8 +872,9 @@ function tastingBlock(o){
   '</div>';
 }
 function generalInfoBlock(o){
+  const profile=localizedProfile(o);
   const fallback=styleProfileFallback(o);
-  const desc=firstVal(o,["general","info","desc","description"]) || fallback.general;
+  const desc=profile.general || firstVal(o,["general","info","desc","description"]) || fallback.general;
   if(!desc) return "";
   return '<div class="sec-t">'+t("infoT")+'</div><p class="desc">'+esc(desc)+'</p>';
 }
@@ -924,6 +938,17 @@ function prepareBottleDataset(list){
     return copy;
   }).filter(Boolean);
 }
+function applyProfiles(list, profileData){
+  const profiles=(profileData&&profileData.profiles)||{};
+  return (list||[]).map(function(b){
+    const entry=profiles[b.id];
+    if(!entry) return b;
+    const copy=Object.assign({}, b);
+    if(entry.profile) copy.profile=entry.profile;
+    if(entry.meta) copy.profile_meta=entry.meta;
+    return copy;
+  });
+}
 
 /* ---------- NAV ---------- */
 function showView(name){
@@ -976,7 +1001,14 @@ function setupHomeSwipeDots(){
 }
 
 /* ---------- DB ---------- */
-fetch(DB_URL).then(function(r){return r.json();}).then(function(j){ DB=prepareBottleDataset(j.bottles||[]); renderHome(); renderExplore(); }).catch(function(){ DB=[]; });
+Promise.all([
+  fetch(DB_URL).then(function(r){return r.json();}),
+  fetch(PROFILES_URL).then(function(r){ return r.ok ? r.json() : {profiles:{}}; }).catch(function(){ return {profiles:{}}; })
+]).then(function(res){
+  DB=applyProfiles(prepareBottleDataset(res[0].bottles||[]), res[1]);
+  renderHome();
+  renderExplore();
+}).catch(function(){ DB=[]; });
 
 
 function renderHome(){
@@ -1145,6 +1177,15 @@ function scan(mode){
     if(data.error==="not_bottle"){ showErr(t("notBottle")); return; }
     if(data.retry){ showErr(t("errRetry")); return; }
     if(data.error||!data.result){ showErr(t("errGeneric")+(data.error?" ["+data.error+(data.status?" "+data.status:"")+(data.raw?": "+String(data.raw).slice(0,160):"")+"]":"")); return; }
+    if(data.matched){
+      const local=DB.find(function(b){ return b.id===data.matched; });
+      if(local){
+        data.result=Object.assign({}, local, data.result, {
+          profile: local.profile || data.result.profile,
+          profile_meta: local.profile_meta || data.result.profile_meta
+        });
+      }
+    }
     renderScan(data.result, data.mode);
   }).catch(function(){ stopLoading(); showErr(t("errGeneric")); });
 }

@@ -1,5 +1,5 @@
 /* Bourbon Hunters service worker - network-first dla aktualizacji aplikacji i bazy. */
-const CACHE = "bourbon-hunters-v36";
+const CACHE = "bourbon-hunters-v37";
 const ASSETS = [
   "./",
   "./index.html",
@@ -39,6 +39,7 @@ const ASSETS = [
   "./assets/bourbons/cutouts-test/yellowstone-select-kentucky-straight-bourbon.png",
   "./assets/bourbons/cutouts-test/michters-bourbon.png",
   "./db/bourbons.json",
+  "./db/profiles-runtime.json",
   "./icons/icon-192.png",
   "./icons/icon-512.png"
 ];
@@ -57,7 +58,7 @@ self.addEventListener("activate", function(e){
 });
 
 function shouldNetworkFirst(url){
-  return url.endsWith("/") || url.indexOf("/index.html")!==-1 || url.indexOf("/test-index.html")!==-1 || url.indexOf("/db/bourbons.json")!==-1 || url.indexOf("/sw.js")!==-1;
+  return url.endsWith("/") || url.indexOf("/index.html")!==-1 || url.indexOf("/test-index.html")!==-1 || url.indexOf("/db/bourbons.json")!==-1 || url.indexOf("/db/profiles-runtime.json")!==-1 || url.indexOf("/sw.js")!==-1;
 }
 
 self.addEventListener("fetch", function(e){
