@@ -170,7 +170,7 @@
   .taste-row{border:1px solid var(--line);background:rgba(0,0,0,.16);border-radius:12px;padding:10px 12px}
   .taste-row .k{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:900;margin-bottom:3px}
   .taste-row .v{font-size:13px;line-height:1.35;color:var(--txt)}
-  .user-stars{display:flex;gap:5px;align-items:center;font-size:23px;line-height:1;color:var(--line);user-select:none}
+  .user-stars{display:flex;gap:2px;align-items:center;justify-content:center;font-size:18px;line-height:1;color:var(--line);user-select:none;white-space:nowrap}
   .user-stars span{cursor:pointer;transition:transform .08s,color .15s}
   .user-stars span.on{color:var(--gold)}
   .user-stars span:active{transform:scale(.88)}
@@ -184,13 +184,13 @@
   .verdict{display:flex;align-items:center;gap:14px;background:rgba(0,0,0,.24);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:14px}
   .score{font-size:34px;font-weight:900;line-height:1;color:var(--gold);min-width:54px;text-align:center}
   .score small{display:block;font-size:11px;color:var(--muted);font-weight:700;margin-top:4px}
-  .stars{font-size:22px;letter-spacing:2px}
+  .stars{font-size:20px;letter-spacing:1px;white-space:nowrap}
   .verdict .lbl{font-size:12px;color:var(--muted);font-weight:700;margin-bottom:4px}
   .verdict .vtxt{font-size:13px;line-height:1.4}
   .row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
-  .pill{flex:1;min-width:90px;background:rgba(0,0,0,.24);border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}
+  .pill{flex:1 1 calc(50% - 8px);min-width:0;background:rgba(0,0,0,.24);border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}
   .pill .k{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:700}
-  .pill .v{font-size:14px;font-weight:800;margin-top:3px}
+  .pill .v{font-size:14px;font-weight:800;margin-top:3px;overflow:hidden}
   .sec-t{font-size:12px;color:var(--amber2);font-weight:800;text-transform:uppercase;letter-spacing:.6px;margin:16px 0 6px}
   .desc{font-size:14px;line-height:1.65;margin:0 0 10px}
 
@@ -396,7 +396,7 @@
 /* ========= KONFIGURACJA ========= */
 const WORKER_URL = "https://bourbon-hunters.darekmaslyk.workers.dev";
 const DB_URL = "db/bourbons.json";
-const TEST_BOTTLE_IDS = [
+const RUNTIME_BOTTLE_IDS = [
   "buffalo-trace-bourbon-1",
   "blantons-original-single-barrel-bourbon-whiskey-700ml",
   "eagle-rare-10-year-kentucky-straight-bourbon-whiskey-700ml",
@@ -416,10 +416,91 @@ const TEST_BOTTLE_IDS = [
   "old-forester-1910-old-fine-whiskey-bourbon-whiskey",
   "1792-single-barrel-kentucky-straight-bourbon",
   "yellowstone-select-kentucky-straight-bourbon",
-  "michters-bourbon"
+  "michters-bourbon",
+  "buffalo-trace-kosher-wheat-recipe-bourbon",
+  "eagle-rare-12-year-old-bourbon",
+  "w-l-weller-bourbon-12-year-1-75l",
+  "w-l-weller-single-barrel",
+  "weller-special-reserve",
+  "blanton-s-gold-edition-single-barrel-select",
+  "blantons-130-proof-straight-from-the-barrel-bourbon",
+  "colonel-e-h-taylor-four-grain-bourbon-whiskey",
+  "colonel-e-h-taylor-jr-warehouse-c-bourbon-whiskey",
+  "stagg-jr",
+  "old-rip-van-winkle-10-year-bourbon",
+  "pappy-van-winkle-15-year-bourbon",
+  "wild-turkey-longbranch-straight-bourbon",
+  "wild-turkey-rare-breed-barrel-proof-bez-opakowania",
+  "wild-turkey-101-bourbon",
+  "wild-turkey-12-year-old-101-proof",
+  "wild-turkey-8-year-101-proof-5-24-94",
+  "russells-reserve-single-barrel-barrel-select-bourbon",
+  "russells-reserve-15-year-old-limited-release-bourbon",
+  "four-roses-obsf-single-barrel-bourbon",
+  "four-roses-obsk-single-barrel-bourbon",
+  "four-roses-oesk-single-barrel-bourbon",
+  "four-roses-oeso-single-barrel-bourbon",
+  "elijah-craig-15-year-old-single-barrel",
+  "elijah-craig-21-year-single-barrel-bourbon",
+  "elijah-craig-small-batch-old-label",
+  "elijah-craig-21-year-barrel-27-10-30-90",
+  "knob-creek-9-year-old-single-barrel-reserve",
+  "knob-creek-12-year-cask-strength-bourbon",
+  "knob-creek-120-proof-9-year-single-barrel-reserve-bourbon",
+  "knob-creek-18-year-old-bourbon",
+  "maker-s-mark-no-46-french-oaked",
+  "makers-mark-46-frenched-oak-bills-recipe",
+  "makers-mark-46-cask-strength-bourbon-limited-edition",
+  "michters-fort-nelson-reserve-barrel-strength-bourbon",
+  "old-bardstown-straight-bourbon-black-label",
+  "bardstown-fusion-series-no-5-kentucky-straight-bourbon",
+  "bardstown-bourbon-company-copper-kings-10-year-muscat-finish-94-proof-first-release",
+  "bardstown-bourbon-chateau-de-laubade",
+  "old-forester-1924-10-year-old-kentucky-straight-bourbon-whisky",
+  "old-forester-statesman-bourbon",
+  "old-forester-1910-extra-old-117-series-bourbon-whiskey",
+  "old-forester-bourbon",
+  "old-forester-king-ranch-edition-bourbon",
+  "heaven-hill-7yo-bottled-in-bond-bourbon",
+  "heaven-hill-bottled-in-bond-7-year-old-bourbon",
+  "heaven-hill-heritage-collection-17-year-old-barrel-proof-bourbon-first-edition",
+  "woodford-reserve-double-oaked-bez-opakowania",
+  "woodford-reserve-double-double-oaked-bourbon",
+  "woodford-reserve-masters-collection-1838-style-white-corn-kentucky-straight-bourbon",
+  "woodford-reserve-masters-collection-brandy-cask-finish-kentucky-straight-bourbon",
+  "jeffersons-ocean-aged-at-sea-blended-straight-bourbon",
+  "jeffersons-ocean-aged-at-sea-bourbon-whiskey",
+  "jeffersons-ocean-aged-at-sea-cask-strength-blended-straight-bourbon",
+  "rare-character-brook-hill-bourbon-blahzay-10-year-130-13-proof",
+  "rare-character-batch-no-01-bourbon",
+  "new-riff-8-year-old-kentucky-straight-bourbon-whiskey",
+  "new-riff-bottled-in-bond-kentucky-straight-bourbon-whiskey",
+  "jim-beam-black-extra-aged-unpacked",
+  "jim-beam-black-7-letni",
+  "jim-beam-kentucky-dram",
+  "basil-hayden-10-year-old-kentucky-straight-bourbon",
+  "basil-hayden-toast-kentucky-straight-bourbon",
+  "1792-bottled-in-bond-kentucky-straight-bourbon",
+  "1792-full-proof-kentucky-straight-bourbon",
+  "yellowstone-family-recipe-6-year-old-kentucky-straight-bourbon",
+  "angel-s-envy-kentucky-straight-bourbon-finished-in-port-barrels",
+  "evan-williams-kentucky-straight-bourbon",
+  "evan-williams-kentucky-straight-bourbon-black-label",
+  "ezra-brooks-99-proof-kentucky-straight-bourbon",
+  "ezra-brooks-99-proof-kentucky-straight-bourbon-port-cas-finish",
+  "penelope-architect-straight-bourbon",
+  "penelope-four-grain-straight-bourbon-whiskey",
+  "penelope-rio-straight-bourbon-whiskey",
+  "willett-pot-still-reserve-kentucky-straight-bourbon",
+  "old-grand-dad-bonded-100-proof",
+  "old-grand-dad",
+  "rebel-yell-kentucky-straight-bourbon",
+  "rebel-kentucky-straight-bourbon-cabernet-sauvignon-barrels",
+  "noah-s-mill-kentucky-bourbon"
 ];
 const FEATURED_IDS = ["buffalo-trace-bourbon-1","blantons-original-single-barrel-bourbon-whiskey-700ml","eagle-rare-10-year-kentucky-straight-bourbon-whiskey-700ml","woodford-reserve-bourbon","knob-creek-kentucky-straight-bourbon"];
-const TEST_CUTOUT_DIR = "assets/bourbons/cutouts-test/";
+const RUNTIME_IMAGE_DIR = "assets/bourbons/runtime-100/";
+const RUNTIME_THUMB_DIR = "assets/bourbons/list-thumbs/";
 const RENDER_LIMIT = 60; /* ile kart renderujemy na raz (wydajnosc przy tysiacach rekordow) */
 /* ================================ */
 
@@ -538,7 +619,8 @@ function rateHtml(b){ const q=(b.quality!=null?b.quality:b.value); return q!=nul
 
 /* wiersz listy (Odkrywaj / Lista życzeń) */
 function listRow(b){
-  const pic=b.image?'<div class="pic"><img src="'+esc(b.image)+'" alt="'+esc(b.name)+'" loading="lazy" decoding="async"></div>':'<div class="pic">🥃</div>';
+  const img=b.thumb||b.image;
+  const pic=img?'<div class="pic"><img src="'+esc(img)+'" alt="'+esc(b.name)+'" loading="lazy" decoding="async"></div>':'<div class="pic">🥃</div>';
   const proof=b.proof?(b.proof+' Proof'):(b.abv?(b.abv+'% ABV'):'');
   return '<div class="brow" data-id="'+esc(b.id)+'">'+pic+
     '<div class="info"><div class="bn">'+esc(b.name)+'</div><div class="bt">'+esc(b.type||b.distillery||"")+'</div>'+(proof?'<div class="bpf">'+esc(proof)+'</div>':'')+'</div>'+
@@ -546,6 +628,74 @@ function listRow(b){
 }
 
 function firstVal(o, keys){ for(const k of keys){ if(o && o[k]!=null && String(o[k]).trim()) return String(o[k]).trim(); } return ""; }
+function textClean(v){ return String(v||"").replace(/\s+/g," ").trim(); }
+function trimTasteValue(v){
+  return textClean(v)
+    .replace(/^[-:;,.]\s*/,"")
+    .replace(/^a\s+/i,"")
+    .replace(/^(deep,\s*)?satisfying\s+nose\s+of\s+/i,"")
+    .replace(/^(nose|aroma|scent|nos|aromat)\s*(of|:|-)?\s*/i,"")
+    .replace(/^(palate|taste|flavo[u]?r|smak)\s*(of|:|-)?\s*/i,"")
+    .replace(/^(medium|long|short|warm|smooth|dry|sweet)?\s*finish\s+of\s+/i,"")
+    .replace(/^(finish|finisz|aftertaste)\s*(of|:|-)?\s*/i,"")
+    .replace(/[.;]\s*$/,"");
+}
+function extractTastingPart(part, target){
+  const text=textClean(part);
+  let m=null;
+  if(target==="nose"){
+    m=text.match(/^(.*?)(?:^|\.\s+|\s+)(?:a\s+)?(?:(?:deep|rich|bold),\s*)?(?:satisfying\s+)?(?:nose|aroma|scent|nos|aromat)\s*(?:of|:|-)?\s+(.+)$/i);
+  } else if(target==="finish"){
+    m=text.match(/^(.*?)(?:^|\.\s+|\s+)(?:(?:medium|long|short|warm|smooth|dry|sweet)\s+)?(?:finish|finisz|aftertaste)\s*(?:of|:|-)?\s+(.+)$/i);
+  } else if(target==="taste"){
+    m=text.match(/^(.*?)(?:^|\.\s+|\s+)(?:palate|taste|flavo[u]?r|smak)\s*(?:of|:|-)?\s+(.+)$/i);
+  }
+  if(m){
+    let value=textClean(m[2]);
+    let rest="";
+    const sentence=value.match(/^(.+?[.!?])\s+([A-ZĄĆĘŁŃÓŚŹŻ].+)$/);
+    if(sentence){ value=sentence[1]; rest=sentence[2]; }
+    const prefix=textClean(m[1].replace(/[.;]\s*$/,""));
+    return { value:trimTasteValue(value), remaining:textClean([prefix,rest].filter(Boolean).join(" ")) };
+  }
+  return { value:trimTasteValue(text), remaining:"" };
+}
+function splitTastingDescription(desc){
+  const text=textClean(desc);
+  const result={nose:"",taste:"",finish:"",cleanDesc:text};
+  if(!text) return result;
+  const parts=text.split(/\s*;\s*/).map(textClean).filter(Boolean);
+  const remaining=parts.slice();
+  function takePart(test, target){
+    if(result[target]) return;
+    const i=remaining.findIndex(function(p){ return p && test(p); });
+    if(i>=0){
+      const extracted=extractTastingPart(remaining[i], target);
+      result[target]=extracted.value;
+      remaining[i]=extracted.remaining;
+    }
+  }
+  takePart(function(p){ return /\b(nose|aroma|scent|nos|aromat)\b/i.test(p); }, "nose");
+  takePart(function(p){ return /\b(finish|finisz|aftertaste)\b/i.test(p); }, "finish");
+  takePart(function(p){ return /\b(palate|taste|flavo[u]?r|smak|vanilla|caramel|oak|fruit|spice|honey|corn|citrus|pepper|cream|nutmeg|cinnamon|dried|orange|dab|dąb|wanilia|karmel|miod|miód|owoce|przypraw)\b/i.test(p); }, "taste");
+  if(result.nose||result.taste||result.finish){
+    result.cleanDesc=textClean(remaining.filter(Boolean).join(" "));
+  }
+  return result;
+}
+function normalizeTasting(b){
+  if(!b) return b;
+  const desc=firstVal(b,["desc","description"]);
+  const parsed=splitTastingDescription(desc);
+  if(!firstVal(b,["nose","aroma","scent"]) && parsed.nose) b.nose=parsed.nose;
+  if(!firstVal(b,["taste","palate","flavor"]) && parsed.taste) b.taste=parsed.taste;
+  if(!firstVal(b,["finish","aftertaste"]) && parsed.finish) b.finish=parsed.finish;
+  if(parsed.cleanDesc && parsed.cleanDesc!==desc){
+    if(b.desc!=null) b.desc=parsed.cleanDesc;
+    else if(b.description!=null) b.description=parsed.cleanDesc;
+  }
+  return b;
+}
 function tastingParts(o){
   const notes=firstVal(o,["notes","tasting_notes","profile"]);
   return {
@@ -600,13 +750,15 @@ function applyLang(){
 function prepareBottleDataset(list){
   const byId = {};
   (list||[]).forEach(function(b){ byId[b.id]=b; });
-  return TEST_BOTTLE_IDS.map(function(id){
+  return RUNTIME_BOTTLE_IDS.map(function(id){
     const b = byId[id];
     if(!b) return null;
     const copy = Object.assign({}, b);
     copy.originalImage = b.image;
-    copy.image = TEST_CUTOUT_DIR + id + ".png";
-    copy.cutoutStatus = "test";
+    copy.image = RUNTIME_IMAGE_DIR + id + ".png";
+    copy.thumb = RUNTIME_THUMB_DIR + id + ".png";
+    copy.cutoutStatus = "runtime";
+    normalizeTasting(copy);
     return copy;
   }).filter(Boolean);
 }
@@ -836,6 +988,7 @@ function scan(mode){
 }
 goRate.addEventListener("click",function(){ scan("rate"); });
 function renderScan(res, mode){
+  if(!Array.isArray(res.description)) normalizeTasting(res);
   const isNew = res.source==="net" || res.isNew;
   const badge = isNew?'<span class="badge net">'+t("fromNet")+'</span>':'<span class="badge db">'+t("fromDb")+'</span>';
   const origin=[res.distillery,res.region].filter(Boolean).map(esc).join(" · ");
@@ -900,15 +1053,22 @@ if("serviceWorker" in navigator){ window.addEventListener("load",function(){ nav
   #bhIntro:before{display:none}
   #bhIntro .bh-stage{display:none}
   #bhIntro.is-fading{opacity:0;transition:opacity .55s ease}
-  .bh-intro-video{position:absolute;inset:0;background:#000;overflow:hidden}
+  .bh-intro-video{position:absolute;inset:0;background:#000;overflow:hidden;display:grid;place-items:center}
+  .bh-intro-frame{position:relative;width:100%;height:100%;overflow:hidden;background:#000}
   .bh-intro-video video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000}
-  .bh-star-mask{position:absolute;right:0;bottom:0;width:min(38vw,190px);height:min(26vh,190px);pointer-events:none;background:radial-gradient(ellipse at 72% 72%,#020101 0%,#020101 28%,rgba(2,1,1,.96) 43%,rgba(2,1,1,.72) 58%,rgba(2,1,1,0) 78%);filter:blur(1.5px);z-index:2}
+  .bh-star-mask{position:absolute;right:0;bottom:0;width:min(30vw,150px);height:min(20vh,150px);pointer-events:none;background:radial-gradient(ellipse at 82% 82%,#030101 0%,#030101 34%,rgba(3,1,1,.98) 48%,rgba(3,1,1,.70) 62%,rgba(3,1,1,0) 82%);filter:blur(1px);z-index:2}
   .bh-skip{position:absolute;right:16px;top:calc(env(safe-area-inset-top) + 14px);z-index:3;border:1px solid rgba(220,184,119,.35);background:rgba(0,0,0,.46);color:#e8cd93;border-radius:999px;padding:9px 13px;font-size:12px;font-weight:800;letter-spacing:.4px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);cursor:pointer}
+  @media (min-width:700px){
+    .bh-intro-frame{width:min(100vw,480px);height:min(100vh,853px);aspect-ratio:9/16;border-radius:32px;box-shadow:0 0 0 1px rgba(220,184,119,.18),0 28px 90px rgba(0,0,0,.75)}
+    .bh-skip{left:calc(50% + min(50vw,240px) - 76px);right:auto}
+  }
 </style>
 <div id="bhIntro" aria-hidden="true">
   <div class="bh-intro-video">
-    <video id="bhIntroVideo" src="assets/intro/bourbon-hunters-intro.mp4" autoplay muted playsinline webkit-playsinline preload="auto"></video>
-    <div class="bh-star-mask"></div>
+    <div class="bh-intro-frame">
+      <video id="bhIntroVideo" src="assets/intro/nowe%20intro.mp4" muted playsinline webkit-playsinline preload="auto"></video>
+      <div class="bh-star-mask"></div>
+    </div>
     <button class="bh-skip" id="bhIntroSkip" type="button">Pomiń</button>
   </div>
   <div class="bh-stage">
@@ -955,17 +1115,30 @@ if("serviceWorker" in navigator){ window.addEventListener("load",function(){ nav
   var intro=document.getElementById("bhIntro"); if(!intro) return;
   var video=document.getElementById("bhIntroVideo");
   var skip=document.getElementById("bhIntroSkip");
+  var introStart=5;
   var done=false;
   function finish(){ if(done) return; done=true; intro.classList.add("is-fading"); setTimeout(function(){ if(intro&&intro.parentNode) intro.parentNode.removeChild(intro); },620); }
   if(skip) skip.addEventListener("click",function(e){ e.preventDefault(); e.stopPropagation(); finish(); });
   if(video){
     video.muted=true;
+    video.load();
+    function playIntro(){
+      var play=video.play();
+      if(play && play.catch) play.catch(function(){});
+    }
+    video.addEventListener("loadedmetadata",function(){
+      if(video.duration && video.duration>introStart+0.5){
+        try{ video.currentTime=introStart; }catch(e){ playIntro(); }
+      } else {
+        playIntro();
+      }
+    },{once:true});
+    video.addEventListener("seeked",playIntro,{once:true});
     video.addEventListener("ended",finish);
     video.addEventListener("error",function(){ setTimeout(finish,650); });
-    var play=video.play();
-    if(play && play.catch) play.catch(function(){});
+    setTimeout(function(){ if(video.paused && !done) playIntro(); },900);
   }
-  setTimeout(finish,9000);
+  setTimeout(finish,8500);
 })();
 </script>
 </body>

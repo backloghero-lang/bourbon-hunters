@@ -1,11 +1,11 @@
 /* Bourbon Hunters service worker - network-first dla aktualizacji aplikacji i bazy. */
-const CACHE = "bourbon-hunters-v29";
+const CACHE = "bourbon-hunters-v31";
 const ASSETS = [
   "./",
   "./index.html",
   "./test-index.html",
   "./manifest.json",
-  "./assets/intro/bourbon-hunters-intro.mp4",
+  "./assets/intro/nowe intro.mp4",
   "./design/figma-assets/home-pack-v2/app-background-v3.jpg",
   "./design/figma-assets/home-pack-v2/home-header-v3.jpg",
   "./design/figma-assets/home-pack-v2/card-background-v1.jpg",
