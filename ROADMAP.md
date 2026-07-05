@@ -40,6 +40,40 @@ Ten plik sluzy do planowania kolejnych prac. Szczegoly bugow trzymamy w `BUGS.md
 - Dodac telemetrie dopiero po ustabilizowaniu core aplikacji.
 - Dodac konta dopiero po potwierdzeniu, ze core flow dziala i ma sens produktowy.
 
+## Plan dojscia do pelnoprawnej aplikacji
+
+1. Konta uzytkownikow
+   - Rejestracja, logowanie, odzysk hasla i podstawowy profil.
+   - Decyzja do podjecia: czy startujemy od email+password, Google/Apple, czy magic link.
+
+2. Backend i baza online
+   - Przeniesienie kolekcji, wishlisty, ocen, limitow skanow i historii skanow poza `localStorage`.
+   - Kandydaci: Cloudflare Workers + D1/R2/KV albo Firebase/Supabase, do decyzji przed implementacja.
+
+3. Scanner API jako produktowy core
+   - Stabilny endpoint: upload zdjecia, rozpoznanie butelki, wynik z bazy, fallback do sieci/AI.
+   - Wprowadzic statusy: `uploaded`, `recognized`, `matched`, `needs_web_search`, `failed`.
+
+4. Synchronizacja danych usera
+   - Kolekcja i wishlist maja dzialac po zmianie telefonu.
+   - Tryb offline/PWA zostaje, ale dane po zalogowaniu synchronizuja sie z backendem.
+
+5. Pro, reklamy i limity
+   - Limit darmowych skanow zostaje kierunkiem produktowym, ale licznik musi byc backendowy po wprowadzeniu kont.
+   - Wersja Pro: brak reklam, wiecej skanow, historia, eksport lub zaawansowane AI - zakres do decyzji.
+
+6. Telemetria produktowa
+   - Mierzyc skany, trafienia w bazie, porzucenia flow, dodania do kolekcji/wishlisty.
+   - Wdrozyc dopiero po domknieciu core UX i po dodaniu zgód/prywatnosci.
+
+7. Production PWA hardening
+   - Stabilne wersjonowanie cache, update flow, obsluga bledow offline, monitoring Workera.
+   - Testy na telefonach: Android Chrome, iOS Safari/PWA, desktop preview.
+
+8. Store readiness i rynek USA
+   - Wrapper Android/iOS, polityka prywatnosci, regulamin, age gate 18+, przygotowanie pod Google Play.
+   - Marketingowo utrzymac pierwszy ekran jako aplikacje, nie landing page.
+
 ## Kamienie milowe
 
 | Etap | Cel | Status |
@@ -51,6 +85,9 @@ Ten plik sluzy do planowania kolejnych prac. Szczegoly bugow trzymamy w `BUGS.md
 | M5 | Mechanika zakrytych i odblokowanych butelek | plan |
 | M6 | Worker/agent do obrobki zdjec userow | plan |
 | M7 | Google Play + USA marketing + monetyzacja | pozniej |
+| M8 | Konta + backendowa synchronizacja kolekcji | plan |
+| M9 | Pro/reklamy + limity skanow | plan |
+| M10 | Store-ready aplikacja mobilna | plan |
 
 ## Zasada pracy
 

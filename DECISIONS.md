@@ -18,6 +18,10 @@ Ten plik trzyma stale ustalenia, zeby nie ginely w dlugich watkach.
 - MVP powstaje bez logowania.
 - Telemetria i konta sa etapem pozniejszym, po dopracowaniu core aplikacji.
 - Limit 20 darmowych skanow traktujemy jako decyzje kierunkowa; sposob liczenia doprecyzujemy pozniej, tymczasowo kandydatem jest limit per urzadzenie.
+- Home pokazuje skrot `Moja kolekcja` jako karuzele z tych samych danych, ktore sa w dolnej zakladce `Kolekcja`.
+- Widok `Profil` na etapie prototypu pokazuje wyszarzone sekcje: Profil, Konto, Wersja Pro, Ustawienia. Klikniecie pokazuje toast `W budowie`.
+- Pelna aplikacja zaczyna sie wtedy, gdy kolekcja, wishlisty, oceny, limity skanow i historia skanow sa zapisywane na backendzie, a nie tylko w `localStorage`.
+- `localStorage` zostaje dobry dla MVP/prototypu, ale nie jest docelowym miejscem danych uzytkownika.
 
 ## Jezyk
 
@@ -52,6 +56,8 @@ Ten plik trzyma stale ustalenia, zeby nie ginely w dlugich watkach.
 - Obecny Worker rozpoznaje nazwe butelki ze zdjecia, sprawdza baze i dopiero potem uzywa sieci.
 - Brak trafienia w bazie moze zapisac nowosc do KV.
 - Docelowo powstanie drugi Worker/agent do obrobki nowych zdjec userow i wdrazania ich do widokow.
+- Scanner API ma byc traktowany jako core produktu: baza lokalna/online najpierw, siec/AI dopiero jako fallback.
+- Po wdrozeniu kont limit skanow powinien byc liczony po stronie backendu, nie tylko per urzadzenie.
 
 ## Guardrails dla zespolu
 

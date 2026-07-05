@@ -164,6 +164,11 @@
   .tabs::-webkit-scrollbar{display:none}
   .tab{flex:none;border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:999px;padding:9px 13px;font-size:13px;font-weight:800;cursor:pointer;white-space:nowrap}
   .tab.on{background:var(--amber);border-color:var(--amber);color:#241708}
+  .home-empty{flex:0 0 92%;scroll-snap-align:start;min-height:152px;display:grid;place-items:center;text-align:center;color:var(--muted);font-size:14px;line-height:1.55;border:1px dashed rgba(226,176,112,.28);border-radius:18px;background:rgba(0,0,0,.18);padding:22px}
+  .profile-menu{display:flex;flex-direction:column;gap:12px;margin-top:12px}
+  .profile-tab{width:100%;display:flex;align-items:center;justify-content:space-between;gap:14px;border:1px solid rgba(226,176,112,.18);border-radius:16px;background:rgba(0,0,0,.22);color:rgba(246,225,188,.42);padding:16px 18px;text-align:left;font-size:15px;font-weight:900;letter-spacing:.2px;cursor:pointer;filter:grayscale(1);opacity:.62}
+  .profile-tab small{font-size:11px;color:rgba(226,176,112,.46);font-weight:800;text-transform:uppercase;letter-spacing:1px}
+  .profile-tab:active{transform:scale(.99)}
 
   /* unified bottle image frame */
   .dphoto{position:relative;width:100%;height:430px;border-radius:18px;border:1px solid rgba(226,176,112,.22);display:grid;place-items:center;margin:16px 0;background:linear-gradient(180deg,rgba(4,3,2,.02),rgba(4,2,1,.12)),url("assets/detail/bottle-detail-bg.png") center bottom/cover no-repeat;overflow:hidden;box-shadow:inset 0 0 54px rgba(0,0,0,.36),0 18px 36px rgba(0,0,0,.24)}
@@ -333,6 +338,10 @@
     <div class="sec-head"><h3 data-i18n="recent">Ostatnio dodane</h3><a id="recentAll" data-i18n="viewAll">Zobacz wszystkie</a></div>
     <div class="hscroll" id="recentRow"></div>
     <div class="swipe-dots" id="recentDots" aria-hidden="true"></div>
+
+    <div class="sec-head"><h3 data-i18n="homeCollection">Moja kolekcja</h3><a id="homeCollectionAll" data-i18n="viewAll">Zobacz wszystkie</a></div>
+    <div class="hscroll" id="homeCollectionRow"></div>
+    <div class="swipe-dots" id="homeCollectionDots" aria-hidden="true"></div>
   </section>
 
   <!-- EXPLORE -->
@@ -394,7 +403,13 @@
 
   <!-- PROFILE -->
   <section class="view" id="view-profile">
-    <div class="placeholder-view"><div class="pi">&#129337;</div><h3 data-i18n="profTitle">Profil łowcy</h3><p data-i18n="profSoon">Wkrótce: statystyki, odznaki i ustawienia. Na razie rozejrzyj się po bazie i przeskanuj butelkę.</p></div>
+    <div class="sec-head" style="margin-top:8px"><h3 data-i18n="navProfile">Profil</h3></div>
+    <div class="profile-menu">
+      <button class="profile-tab" type="button" data-profile-action="profile"><span data-i18n="profileTab">Profil</span><small data-i18n="soonTag">Wkrótce</small></button>
+      <button class="profile-tab" type="button" data-profile-action="account"><span data-i18n="accountTab">Konto</span><small data-i18n="soonTag">Wkrótce</small></button>
+      <button class="profile-tab" type="button" data-profile-action="pro"><span data-i18n="proTab">Wersja Pro</span><small data-i18n="soonTag">Wkrótce</small></button>
+      <button class="profile-tab" type="button" data-profile-action="settings"><span data-i18n="settingsTab">Ustawienia</span><small data-i18n="soonTag">Wkrótce</small></button>
+    </div>
   </section>
 </div>
 
@@ -532,7 +547,7 @@ const I18N = {
     notBottle:"Hunter nie widzi tu butelki whisky. Zrób wyraźne zdjęcie etykiety i spróbuj jeszcze raz.",
     errGeneric:"Coś poszło nie tak. Spróbuj ponownie za chwilę.", errRetry:"Hunter jest chwilowo przeciążony. Daj mu sekundę i kliknij jeszcze raz.",
     vibe:"Vibe-coded z Claude · projekt weekendowy", explore_t:"Odkrywaj",
-    navHome:"Start", navExplore:"Odkrywaj", navScan:"Skanuj", navColl:"Kolekcja", navProfile:"Profil",
+    navHome:"Start", navExplore:"Odkrywaj", navScan:"Skanuj", navColl:"Kolekcja", navProfile:"Profil", homeCollection:"Moja kolekcja",
     collTitle:"Twoja kolekcja", collSoon:"Wkrótce: zapis zeskanowanych butelek, ulubione i notatki. Budujemy to w kolejnym etapie.",
     profTitle:"Profil łowcy", profSoon:"Wkrótce: statystyki, odznaki i ustawienia. Na razie rozejrzyj się po bazie i przeskanuj butelkę.",
     emptyCat:"Brak pozycji w tej kategorii (na razie). Dodamy więcej!", scanAdd:"Nie ma w bazie? Zeskanuj ją w zakładce Skanuj.",
@@ -542,7 +557,7 @@ const I18N = {
     allCat:"Wszystkie", stWheated:"Wheated", stSingle:"Single Barrel", stSmall:"Small Batch", stProof:"Barrel Proof", stBib:"Bottled-in-Bond", stLimited:"Edycja limitowana", aiBtn:"🔎 Analiza AI",
     wlAdded:"Dodano do listy życzeń ♥", ownAdded:"Dodano do kolekcji", wlEmpty:"Twoja lista życzeń jest pusta. Dodawaj butelki serduszkiem ♡.", emptyHunted:"Nie masz jeszcze upolowanych butelek.", emptyCollection:"Twoja kolekcja jest pusta.", noseT:"Nos", tasteT:"Smak", finishT:"Finisz", suggestedPrice:"Cena sugerowana", dbQuality:"Ocena społeczności", userQuality:"Twoja ocena",
     wlT:"Lista życzeń", wlD:"Zapisuj bourbony, które chcesz upolować.", huT:"Upolowane", huD:"Oznaczaj butelki, które już zdobyłeś.",
-    coT:"Moja kolekcja", coD:"Twoja półka — wszystkie posiadane butelki w jednym miejscu.", soonTag:"Wkrótce" },
+    coT:"Moja kolekcja", coD:"Twoja półka — wszystkie posiadane butelki w jednym miejscu.", profileTab:"Profil", accountTab:"Konto", proTab:"Wersja Pro", settingsTab:"Ustawienia", inProgress:"W budowie", soonTag:"Wkrótce" },
   en:{ searchPh:"Search bourbon or distillery...", featured:"Featured", byCat:"Browse by category", viewAll:"View all", recent:"Recently added",
     explore:"Explore", back:"Back", all:"All", proof:"proof", from:"from", byCat:"Browse by category",
     kick:"Bottle scanner", heroTitle:"Scan a bottle, learn its worth", heroDesc:"Snap the label. Hunter checks the database first, and asks the web only when needed.",
@@ -554,7 +569,7 @@ const I18N = {
     notBottle:"Hunter sees no whisky bottle here. Take a clear photo of the label and try again.",
     errGeneric:"Something went wrong. Please try again shortly.", errRetry:"Hunter is briefly overloaded. Give it a second and tap again.",
     vibe:"Vibe-coded with Claude · a weekend project", explore_t:"Explore",
-    navHome:"Home", navExplore:"Explore", navScan:"Scan", navColl:"Collection", navProfile:"Profile",
+    navHome:"Home", navExplore:"Explore", navScan:"Scan", navColl:"Collection", navProfile:"Profile", homeCollection:"My collection",
     collTitle:"Your collection", collSoon:"Coming soon: save scanned bottles, favourites and notes. We build this in the next stage.",
     profTitle:"Hunter profile", profSoon:"Coming soon: stats, badges and settings. For now, browse the database and scan a bottle.",
     emptyCat:"No items in this category (yet). More coming!", scanAdd:"Not in the database? Scan it in the Scan tab.",
@@ -564,7 +579,7 @@ const I18N = {
     allCat:"All", stWheated:"Wheated", stSingle:"Single Barrel", stSmall:"Small Batch", stProof:"Barrel Proof", stBib:"Bottled-in-Bond", stLimited:"Limited Edition", aiBtn:"🔎 AI Analysis",
     wlAdded:"Added to wishlist ♥", ownAdded:"Added to collection", wlEmpty:"Your wishlist is empty. Add bottles with the ♡ heart.", emptyHunted:"No hunted bottles yet.", emptyCollection:"Your collection is empty.", noseT:"Nose", tasteT:"Taste", finishT:"Finish", suggestedPrice:"Suggested price", dbQuality:"Community rating", userQuality:"Your rating",
     wlT:"Wishlist", wlD:"Save the bourbons you want to hunt down.", huT:"Hunted", huD:"Mark the bottles you've already bagged.",
-    coT:"My collection", coD:"Your shelf — every bottle you own in one place.", soonTag:"Soon" }
+    coT:"My collection", coD:"Your shelf — every bottle you own in one place.", profileTab:"Profile", accountTab:"Account", proTab:"Pro version", settingsTab:"Settings", inProgress:"In progress", soonTag:"Soon" }
 };
 
 /* lista destylarni z licznikami, posortowana wg liczby butelek (do filtra) */
@@ -1034,6 +1049,7 @@ function setupHomeSwipeDots(){
   setupSwipeDots("featuredRow","featuredDots");
   setupSwipeDots("catGrid","catDots");
   setupSwipeDots("recentRow","recentDots");
+  setupSwipeDots("homeCollectionRow","homeCollectionDots");
 }
 
 /* ---------- DB ---------- */
@@ -1060,7 +1076,18 @@ function renderHome(){
   // recently added (ostatnie z bazy) — styl jak "Polecane"
   const recent = DB.slice(-12).reverse();
   document.getElementById("recentRow").innerHTML = recent.map(function(b){ return featCard(b, t("recent")); }).join("");
+  renderHomeCollection();
   setupHomeSwipeDots();
+}
+
+function renderHomeCollection(){
+  const row=document.getElementById("homeCollectionRow");
+  if(!row) return;
+  const items=OWNED.slice().reverse().map(function(id){ return DB.find(function(b){return b.id===id;}); }).filter(Boolean);
+  row.innerHTML = items.length
+    ? items.map(function(b){ return featCard(b, t("homeCollection")); }).join("")
+    : '<div class="home-empty">'+t("emptyCollection")+'</div>';
+  setupSwipeDots("homeCollectionRow","homeCollectionDots");
 }
 
 function renderExplore(){
@@ -1101,6 +1128,8 @@ function renderExplore(){
 document.addEventListener("click",function(e){
   const ctab=e.target.closest("[data-ctab]");
   if(ctab){ renderCollection(ctab.getAttribute("data-ctab")); return; }
+  const profileAction=e.target.closest("[data-profile-action]");
+  if(profileAction){ toast(t("inProgress")); return; }
   const valueEl=e.target.closest("[data-value-score]");
   if(valueEl){ e.stopPropagation(); toast((lang==="pl"?"Stosunek ceny do jakosci":"Quality-to-price ratio")+": "+valueEl.getAttribute("data-value-score")+"/5"); return; }
   const shopPitch=e.target.closest("[data-shop-pitch]");
@@ -1125,6 +1154,7 @@ document.addEventListener("click",function(e){
     ownEl.classList.add("pulse"); setTimeout(function(){ ownEl.classList.remove("pulse"); },300);
     if(added) toast(t("ownAdded"));
     if(document.getElementById("view-collection").classList.contains("active")) renderCollection(collectionTab);
+    renderHomeCollection();
     return;
   }
   const card = e.target.closest("[data-id]");
@@ -1140,6 +1170,7 @@ document.addEventListener("click",function(e){
 });
 document.getElementById("catAll").addEventListener("click",function(){ curDist="all"; curCat="all"; renderN=RENDER_LIMIT; renderExplore(); showView("explore"); });
 document.getElementById("recentAll").addEventListener("click",function(){ curDist="all"; curCat="all"; renderN=RENDER_LIMIT; renderExplore(); showView("explore"); });
+document.getElementById("homeCollectionAll").addEventListener("click",function(){ collectionTab="owned"; renderCollection("owned"); showView("collection"); });
 document.getElementById("exploreSearchInput").addEventListener("input",function(){ renderN=RENDER_LIMIT; renderExplore(); });
 document.getElementById("detailBack").addEventListener("click",function(){ showView("explore"); });
 
