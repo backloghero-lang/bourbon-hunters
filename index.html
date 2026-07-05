@@ -464,9 +464,9 @@
       <p class="auth-sub" data-i18n="registerIntro">Create your hunter profile to sync your collection when accounts go live.</p>
     </div>
     <form class="auth-form" id="registerForm">
-      <div class="field"><label>Email<span>*</span></label><input type="email" autocomplete="email" placeholder="e.g. hunter@mail.com"></div>
-      <div class="field"><label>Password<span>*</span></label><input type="password" autocomplete="new-password" placeholder="******"></div>
-      <div class="field"><label>Username<span>*</span></label><input type="text" autocomplete="username" placeholder="e.g. barrelhunter"></div>
+      <div class="field"><label>Email<span>*</span></label><input name="email" type="email" autocomplete="email" placeholder="e.g. hunter@mail.com" required></div>
+      <div class="field"><label>Password<span>*</span></label><input name="password" type="password" autocomplete="new-password" placeholder="******" required minlength="8"></div>
+      <div class="field"><label>Username<span>*</span></label><input name="username" type="text" autocomplete="username" placeholder="e.g. barrelhunter" required></div>
       <button class="auth-primary" type="submit" data-i18n="signUpBtn">Sign Up</button>
       <div class="auth-divider"><span>Or</span></div>
       <button class="google-btn" type="button" data-auth-action="google"><span class="google-mark">G</span><span data-i18n="googleSignUp">Sign up with Google</span></button>
@@ -483,8 +483,8 @@
       <p class="auth-sub" data-i18n="signInIntro">Return to your shelf, scans and tasting notes.</p>
     </div>
     <form class="auth-form" id="signinForm">
-      <div class="field"><label>Email<span>*</span></label><input type="email" autocomplete="email" placeholder="e.g. hunter@mail.com"></div>
-      <div class="field"><label>Password<span>*</span></label><input type="password" autocomplete="current-password" placeholder="******"></div>
+      <div class="field"><label>Email<span>*</span></label><input name="email" type="email" autocomplete="email" placeholder="e.g. hunter@mail.com" required></div>
+      <div class="field"><label>Password<span>*</span></label><input name="password" type="password" autocomplete="current-password" placeholder="******" required></div>
       <button class="auth-primary" type="submit" data-i18n="signInBtn">Sign In</button>
       <div class="auth-divider"><span>Or</span></div>
       <button class="google-btn" type="button" data-auth-action="google"><span class="google-mark">G</span><span data-i18n="googleSignIn">Sign in with Google</span></button>
@@ -542,6 +542,8 @@
 const WORKER_URL = "https://bourbon-hunters.darekmaslyk.workers.dev";
 const DB_URL = "db/bourbons.json";
 const PROFILES_URL = "db/profiles-runtime.json";
+const AUTH_TOKEN_KEY = "bh_auth_token";
+const AUTH_USER_KEY = "bh_auth_user";
 const RUNTIME_BOTTLE_IDS = [
   "buffalo-trace-bourbon-1",
   "blantons-original-single-barrel-bourbon-whiskey-700ml",
@@ -649,6 +651,8 @@ const RUNTIME_IMAGE_DIR = "assets/bourbons/runtime-100/";
 const RUNTIME_THUMB_DIR = "assets/bourbons/list-thumbs/";
 const RENDER_LIMIT = 60; /* ile kart renderujemy na raz (wydajnosc przy tysiacach rekordow) */
 /* ================================ */
+let AUTH_TOKEN=(function(){ try{ return localStorage.getItem(AUTH_TOKEN_KEY)||""; }catch(e){ return ""; } })();
+let AUTH_USER=(function(){ try{ return JSON.parse(localStorage.getItem(AUTH_USER_KEY)||"null"); }catch(e){ return null; } })();
 
 const I18N = {
   pl:{ searchPh:"Szukaj bourbona lub destylarni...", featured:"Polecane", byCat:"Kategorie", viewAll:"Zobacz wszystkie", recent:"Ostatnio dodane",
@@ -669,10 +673,10 @@ const I18N = {
     catBourbon:"Bourbon", catRye:"Rye", catTenn:"Tennessee", catWheat:"Wheated", catScotch:"Scotch", catWorld:"Świat",
     byDist:"Przeglądaj wg destylarni", allDist:"Wszystkie", distLbl:"Destylarnia", loadMore:"Pokaż więcej", results:"poz.",
     priceK:"Cena", statusAvail:"Dostępny", statusSold:"Niedostępny", viewShop:"Zobacz w sklepie ↗", noResults:"Brak wyników dla tego filtra.",
-    allCat:"Wszystkie", stWheated:"Wheated", stSingle:"Single Barrel", stSmall:"Small Batch", stProof:"Barrel Proof", stBib:"Bottled-in-Bond", stLimited:"Edycja limitowana", aiBtn:"🔎 Analiza AI",
+    allCat:"Wszystkie", stWheated:"Wheated", stSingle:"Single Barrel", stSmall:"Small Batch", stProof:"Barrel Proof", stBib:"Bottled-in-Bond", stLimited:"Edycja limitowana", aiBtn:"🔎 Analiza AI", aiPlusBtn:"Hunter AI Plus", lowConfTitle:"Nie mam pewnego trafienia", lowConfBody:"Nie podam losowego wyniku. Pewność dopasowania jest poniżej progu 80%. Hunter AI Plus będzie mógł sprawdzić zdjęcie głębiej, znaleźć dane i przygotować profil butelki.",
     wlAdded:"Dodano do listy życzeń ♥", ownAdded:"Dodano do kolekcji", wlEmpty:"Twoja lista życzeń jest pusta. Dodawaj butelki serduszkiem ♡.", emptyHunted:"Nie masz jeszcze upolowanych butelek.", emptyCollection:"Twoja kolekcja jest pusta.", noseT:"Nos", tasteT:"Smak", finishT:"Finisz", suggestedPrice:"Cena sugerowana", dbQuality:"Ocena społeczności", userQuality:"Twoja ocena",
     wlT:"Lista życzeń", wlD:"Zapisuj bourbony, które chcesz upolować.", huT:"Upolowane", huD:"Oznaczaj butelki, które już zdobyłeś.",
-    coT:"Moja kolekcja", coD:"Twoja półka — wszystkie posiadane butelki w jednym miejscu.", registerTab:"Register", signInTab:"Sign In", articlesTab:"Articles", proTab:"Wersja Pro", settingsTab:"Ustawienia", profileName:"Bourbon Hunters", profileCopy:"Zaloguj się, aby później synchronizować kolekcję, skany i notatki między urządzeniami.", proStrip:"Więcej funkcji. Bez reklam.", joinPro:"Join Pro", later:"Later", registerTitle:"Sign up", registerIntro:"Utwórz profil łowcy, aby przygotować synchronizację konta.", signInTitle:"Sign in", signInIntro:"Wróć do swojej półki, skanów i notatek degustacyjnych.", signUpBtn:"Sign Up", signInBtn:"Sign In", googleSignUp:"Sign up with Google", googleSignIn:"Sign in with Google", alreadyAccount:"Already have an account?", noAccount:"No account yet?", authConsent:"By proceeding, you agree to our", andText:"and", authPending:"Logowanie będzie podłączone po wdrożeniu Cloudflare D1.", inProgress:"W budowie", soonTag:"Wkrótce" },
+    coT:"Moja kolekcja", coD:"Twoja półka — wszystkie posiadane butelki w jednym miejscu.", registerTab:"Register", signInTab:"Sign In", articlesTab:"Articles", proTab:"Wersja Pro", settingsTab:"Ustawienia", profileName:"Bourbon Hunters", profileCopy:"Zaloguj się, aby później synchronizować kolekcję, skany i notatki między urządzeniami.", proStrip:"Więcej funkcji. Bez reklam.", joinPro:"Join Pro", later:"Later", registerTitle:"Sign up", registerIntro:"Utwórz profil łowcy, aby synchronizować kolekcję.", signInTitle:"Sign in", signInIntro:"Wróć do swojej półki, skanów i notatek degustacyjnych.", signUpBtn:"Sign Up", signInBtn:"Sign In", googleSignUp:"Sign up with Google", googleSignIn:"Sign in with Google", alreadyAccount:"Already have an account?", noAccount:"No account yet?", authConsent:"By proceeding, you agree to our", andText:"and", authPending:"Google Sign-In podłączymy w kolejnym etapie.", inProgress:"W budowie", soonTag:"Wkrótce" },
   en:{ searchPh:"Search bourbon or distillery...", featured:"Featured", byCat:"Browse by category", viewAll:"View all", recent:"Recently added",
     explore:"Explore", back:"Back", all:"All", proof:"proof", from:"from", byCat:"Browse by category",
     kick:"Bottle scanner", heroTitle:"Scan a bottle, learn its worth", heroDesc:"Snap the label. Hunter checks the database first, and asks the web only when needed.",
@@ -691,10 +695,10 @@ const I18N = {
     catBourbon:"Bourbon", catRye:"Rye", catTenn:"Tennessee", catWheat:"Wheated", catScotch:"Scotch", catWorld:"World",
     byDist:"Browse by distillery", allDist:"All", distLbl:"Distillery", loadMore:"Load more", results:"items",
     priceK:"Price", statusAvail:"In stock", statusSold:"Sold out", viewShop:"View in shop ↗", noResults:"No results for this filter.",
-    allCat:"All", stWheated:"Wheated", stSingle:"Single Barrel", stSmall:"Small Batch", stProof:"Barrel Proof", stBib:"Bottled-in-Bond", stLimited:"Limited Edition", aiBtn:"🔎 AI Analysis",
+    allCat:"All", stWheated:"Wheated", stSingle:"Single Barrel", stSmall:"Small Batch", stProof:"Barrel Proof", stBib:"Bottled-in-Bond", stLimited:"Limited Edition", aiBtn:"🔎 AI Analysis", aiPlusBtn:"Hunter AI Plus", lowConfTitle:"No confident match", lowConfBody:"I will not show a random bottle. Match confidence is below the 80% gate. Hunter AI Plus will inspect the photo deeper, find data and prepare the bottle profile.",
     wlAdded:"Added to wishlist ♥", ownAdded:"Added to collection", wlEmpty:"Your wishlist is empty. Add bottles with the ♡ heart.", emptyHunted:"No hunted bottles yet.", emptyCollection:"Your collection is empty.", noseT:"Nose", tasteT:"Taste", finishT:"Finish", suggestedPrice:"Suggested price", dbQuality:"Community rating", userQuality:"Your rating",
     wlT:"Wishlist", wlD:"Save the bourbons you want to hunt down.", huT:"Hunted", huD:"Mark the bottles you've already bagged.",
-    coT:"My collection", coD:"Your shelf — every bottle you own in one place.", registerTab:"Register", signInTab:"Sign In", articlesTab:"Articles", proTab:"Pro version", settingsTab:"Settings", profileName:"Bourbon Hunters", profileCopy:"Sign in to sync your shelf, scans and tasting notes across devices.", proStrip:"More features. No ads.", joinPro:"Join Pro", later:"Later", registerTitle:"Sign up", registerIntro:"Create your hunter profile to sync your collection when accounts go live.", signInTitle:"Sign in", signInIntro:"Return to your shelf, scans and tasting notes.", signUpBtn:"Sign Up", signInBtn:"Sign In", googleSignUp:"Sign up with Google", googleSignIn:"Sign in with Google", alreadyAccount:"Already have an account?", noAccount:"No account yet?", authConsent:"By proceeding, you agree to our", andText:"and", authPending:"Account backend will be connected after Cloudflare D1 setup.", inProgress:"In progress", soonTag:"Soon" }
+    coT:"My collection", coD:"Your shelf — every bottle you own in one place.", registerTab:"Register", signInTab:"Sign In", articlesTab:"Articles", proTab:"Pro version", settingsTab:"Settings", profileName:"Bourbon Hunters", profileCopy:"Sign in to sync your shelf, scans and tasting notes across devices.", proStrip:"More features. No ads.", joinPro:"Join Pro", later:"Later", registerTitle:"Sign up", registerIntro:"Create your hunter profile to sync your collection.", signInTitle:"Sign in", signInIntro:"Return to your shelf, scans and tasting notes.", signUpBtn:"Sign Up", signInBtn:"Sign In", googleSignUp:"Sign up with Google", googleSignIn:"Sign in with Google", alreadyAccount:"Already have an account?", noAccount:"No account yet?", authConsent:"By proceeding, you agree to our", andText:"and", authPending:"Google Sign-In will be connected in the next stage.", inProgress:"In progress", soonTag:"Soon" }
 };
 
 /* lista destylarni z licznikami, posortowana wg liczby butelek (do filtra) */
@@ -802,6 +806,97 @@ const UR=(function(){ try{ return JSON.parse(localStorage.getItem("bh_user_ratin
 function urSave(){ try{ localStorage.setItem("bh_user_ratings",JSON.stringify(UR)); }catch(e){} }
 function urStars(id){ const n=Number(UR[id]||0); let out='<div class="user-stars" data-userstars="'+esc(id)+'">'; for(let i=1;i<=5;i++){ out+='<span data-ur="'+esc(id)+'" data-v="'+i+'" class="'+(i<=n?'on':'')+'">★</span>'; } return out+'</div>'; }
 function rateHtml(b){ const q=(b.quality!=null?b.quality:b.value); return q!=null ? '<span class="rate">'+starStr(q)+'</span>' : '<span class="rate none">☆☆☆☆☆</span>'; }
+function authText(en,pl){ return lang==="pl" ? pl : en; }
+function saveAuth(data){
+  AUTH_TOKEN=data&&data.token?data.token:"";
+  AUTH_USER=data&&data.user?data.user:null;
+  try{
+    if(AUTH_TOKEN) localStorage.setItem(AUTH_TOKEN_KEY,AUTH_TOKEN); else localStorage.removeItem(AUTH_TOKEN_KEY);
+    if(AUTH_USER) localStorage.setItem(AUTH_USER_KEY,JSON.stringify(AUTH_USER)); else localStorage.removeItem(AUTH_USER_KEY);
+  }catch(e){}
+}
+function bhApi(path,opts){
+  opts=opts||{};
+  const headers=Object.assign({"Content-Type":"application/json"},opts.headers||{});
+  if(AUTH_TOKEN) headers.Authorization="Bearer "+AUTH_TOKEN;
+  return fetch(WORKER_URL+path,Object.assign({},opts,{headers:headers})).then(function(r){
+    return r.json().catch(function(){ return {}; }).then(function(data){
+      if(!r.ok) throw data;
+      return data;
+    });
+  });
+}
+function uniqueList(list){
+  const seen={};
+  return (list||[]).filter(function(id){ id=String(id||""); if(!id||seen[id]) return false; seen[id]=1; return true; });
+}
+function bottlePayload(id){
+  const b=DB.find(function(x){ return x.id===id; });
+  return b ? {id:b.id,name:b.name,distillery:b.distillery,category:b.category,type:b.type,proof:b.proof,image:b.image} : {id:id};
+}
+function applyBootstrap(boot){
+  if(!boot) return;
+  WL=uniqueList(boot.wishlist||WL); wlSave();
+  OWNED=uniqueList(boot.collection||OWNED); ownSave();
+  Object.keys(UR).forEach(function(k){ delete UR[k]; });
+  Object.assign(UR,boot.ratings||{}); urSave();
+  if(DB.length){ renderHome(); renderExplore(); renderHomeCollection(); }
+  if(document.getElementById("view-collection").classList.contains("active")) renderCollection(collectionTab);
+}
+function syncBootstrap(pushLocal){
+  if(!AUTH_TOKEN || !WORKER_URL) return Promise.resolve();
+  const opts=pushLocal
+    ? {method:"POST",body:JSON.stringify({wishlist:WL,collection:OWNED,ratings:UR})}
+    : {method:"GET"};
+  return bhApi("/me/bootstrap",opts).then(function(data){
+    if(data.user) saveAuth({token:AUTH_TOKEN,user:data.user});
+    applyBootstrap(data.bootstrap);
+  }).catch(function(err){
+    if(err&&err.error==="unauthorized") saveAuth(null);
+    if(err&&err.error==="d1_missing") toast(authText("Cloudflare D1 is not connected yet.","Cloudflare D1 nie jest jeszcze podpięte."));
+  });
+}
+function syncList(type,id,active){
+  if(!AUTH_TOKEN) return;
+  bhApi("/me/"+type,{method:"POST",body:JSON.stringify({bottle_id:id,active:!!active,bottle_data:bottlePayload(id)})}).catch(function(){});
+}
+function syncRating(id,rating){
+  if(!AUTH_TOKEN) return;
+  bhApi("/me/rating",{method:"POST",body:JSON.stringify({bottle_id:id,rating:rating})}).catch(function(){});
+}
+function syncScanResult(res){
+  if(!AUTH_TOKEN || !res) return;
+  const id=bottleActionId(res);
+  bhApi("/me/scan",{method:"POST",body:JSON.stringify({bottle_id:id,bottle_name:res.name||"",source:res.source||"",result:res})}).catch(function(){});
+}
+function authErrorMessage(err){
+  const code=err&&err.error;
+  if(code==="d1_missing") return authText("Cloudflare D1 is not connected to the Worker yet.","Cloudflare D1 nie jest jeszcze podpięte do Workera.");
+  if(code==="user_exists") return authText("This email or username is already taken.","Ten email albo username jest już zajęty.");
+  if(code==="weak_password") return authText("Password must have at least 8 characters.","Hasło musi mieć minimum 8 znaków.");
+  if(code==="bad_login") return authText("Wrong email or password.","Błędny email albo hasło.");
+  if(code==="bad_email") return authText("Check the email address.","Sprawdź adres email.");
+  return authText("Account service is unavailable for a moment.","Usługa kont jest chwilowo niedostępna.");
+}
+function submitAuth(kind,form){
+  const fd=new FormData(form);
+  const body={email:String(fd.get("email")||""),password:String(fd.get("password")||"")};
+  if(kind==="register") body.username=String(fd.get("username")||"");
+  const btn=form.querySelector("button[type=submit]");
+  if(btn) btn.disabled=true;
+  bhApi(kind==="register"?"/auth/register":"/auth/login",{method:"POST",body:JSON.stringify(body)}).then(function(data){
+    saveAuth(data);
+    return syncBootstrap(true).then(function(){
+      toast(kind==="register" ? authText("Account created and synced.","Konto utworzone i zsynchronizowane.") : authText("Signed in and synced.","Zalogowano i zsynchronizowano."));
+      showView("profile");
+      form.reset();
+    });
+  }).catch(function(err){
+    toast(authErrorMessage(err));
+  }).finally(function(){
+    if(btn) btn.disabled=false;
+  });
+}
 
 /* wiersz listy (Odkrywaj / Lista życzeń) */
 function listRow(b){
@@ -1176,6 +1271,7 @@ Promise.all([
   DB=applyProfiles(prepareBottleDataset(res[0].bottles||[]), res[1]);
   renderHome();
   renderExplore();
+  syncBootstrap(false);
 }).catch(function(){ DB=[]; });
 
 
@@ -1250,6 +1346,8 @@ document.addEventListener("click",function(e){
   if(closePro){ e.preventDefault(); e.stopPropagation(); document.getElementById("proStrip").classList.add("hidden"); return; }
   const authAction=e.target.closest("[data-auth-action]");
   if(authAction){ e.preventDefault(); toast(t("authPending")); return; }
+  const aiPlusAction=e.target.closest("[data-ai-plus]");
+  if(aiPlusAction){ e.preventDefault(); toast(t("inProgress")); return; }
   const profileAction=e.target.closest("[data-profile-action]");
   if(profileAction){ toast(t("inProgress")); return; }
   const valueEl=e.target.closest("[data-value-score]");
@@ -1257,11 +1355,12 @@ document.addEventListener("click",function(e){
   const shopPitch=e.target.closest("[data-shop-pitch]");
   if(shopPitch){ e.stopPropagation(); toast(lang==="pl"?"To moze byc Twoj sklep":"This could be your shop"); return; }
   const ur=e.target.closest("[data-ur]");
-  if(ur){ e.stopPropagation(); const id=ur.getAttribute("data-ur"), v=Number(ur.getAttribute("data-v")); UR[id]=v; urSave(); document.querySelectorAll('[data-userstars="'+id+'"] span').forEach(function(st){ st.classList.toggle("on", Number(st.getAttribute("data-v"))<=v); }); return; }
+  if(ur){ e.stopPropagation(); const id=ur.getAttribute("data-ur"), v=Number(ur.getAttribute("data-v")); UR[id]=v; urSave(); syncRating(id,v); document.querySelectorAll('[data-userstars="'+id+'"] span').forEach(function(st){ st.classList.toggle("on", Number(st.getAttribute("data-v"))<=v); }); return; }
   const heartEl = e.target.closest("[data-heart]");
   if(heartEl){
     e.stopPropagation();
     const id=heartEl.getAttribute("data-heart"); const added=wlToggle(id);
+    syncList("wishlist",id,added);
     document.querySelectorAll('.heart[data-heart="'+id+'"]').forEach(function(h){ h.classList.toggle("on",added); });
     heartEl.classList.add("pulse"); setTimeout(function(){ heartEl.classList.remove("pulse"); },300);
     if(added) toast(t("wlAdded"));
@@ -1272,6 +1371,7 @@ document.addEventListener("click",function(e){
   if(ownEl){
     e.stopPropagation();
     const id=ownEl.getAttribute("data-own"); const added=ownToggle(id);
+    syncList("collection",id,added);
     document.querySelectorAll('.own[data-own="'+id+'"]').forEach(function(o){ o.classList.toggle("on",added); });
     ownEl.classList.add("pulse"); setTimeout(function(){ ownEl.classList.remove("pulse"); },300);
     if(added) toast(t("ownAdded"));
@@ -1295,10 +1395,10 @@ document.getElementById("recentAll").addEventListener("click",function(){ curDis
 document.getElementById("homeCollectionAll").addEventListener("click",function(){ collectionTab="owned"; renderCollection("owned"); showView("collection"); });
 document.getElementById("exploreSearchInput").addEventListener("input",function(){ renderN=RENDER_LIMIT; renderExplore(); });
 document.getElementById("detailBack").addEventListener("click",function(){ showView("explore"); });
-["registerForm","signinForm"].forEach(function(id){
-  const form=document.getElementById(id);
-  if(form) form.addEventListener("submit",function(e){ e.preventDefault(); toast(t("authPending")); });
-});
+const registerForm=document.getElementById("registerForm");
+if(registerForm) registerForm.addEventListener("submit",function(e){ e.preventDefault(); submitAuth("register",registerForm); });
+const signinForm=document.getElementById("signinForm");
+if(signinForm) signinForm.addEventListener("submit",function(e){ e.preventDefault(); submitAuth("login",signinForm); });
 
 function openDetail(id){
   const b = DB.find(function(x){return x.id===id;});
@@ -1422,6 +1522,22 @@ function startLoading(mode){ busy=true; goRate.disabled=true; shot.classList.add
   let i=0; const lt=document.getElementById("loadtxt"); lt.textContent=msgs[0]; loadTimer=setInterval(function(){ i=(i+1)%msgs.length; lt.textContent=msgs[i]; },1800); }
 function stopLoading(){ busy=false; goRate.disabled=false; shot.classList.remove("is-loading"); clearInterval(loadTimer); document.getElementById("loading").style.display="none"; }
 function showErr(m){ const e=document.getElementById("err"); e.textContent=m; e.style.display="block"; }
+function pct(v){ const n=Number(v); return Number.isFinite(n) ? Math.round(Math.max(0,Math.min(1,n))*100) : 0; }
+function renderLowConfidence(data){
+  const candidate=data&&data.candidate ? data.candidate : "";
+  const confidence=pct(data&&data.confidence);
+  const min=pct(data&&data.minConfidence) || 80;
+  document.getElementById("scanResult").innerHTML =
+    '<div class="card">'+
+      '<span class="badge net">'+t("soonTag")+'</span>'+
+      '<div class="name">'+t("lowConfTitle")+'</div>'+
+      (candidate?'<div class="dorigin">'+esc(candidate)+'</div>':'')+
+      '<p class="desc">'+t("lowConfBody")+'</p>'+
+      '<div class="row"><div class="pill"><div class="k">'+(lang==="pl"?"Pewność":"Confidence")+'</div><div class="v">'+confidence+'%</div></div><div class="pill"><div class="k">'+(lang==="pl"?"Próg":"Required")+'</div><div class="v">'+min+'%</div></div></div>'+
+      '<button class="btn btn-alt" type="button" data-ai-plus="1" style="width:100%;margin-top:14px">'+t("aiPlusBtn")+'</button>'+
+    '</div>';
+  document.getElementById("scanResult").scrollIntoView({behavior:"smooth",block:"start"});
+}
 function scan(mode){
   if(!imgData||busy) return; if(!WORKER_URL){ showErr("WORKER_URL?"); return; }
   startLoading(mode);
@@ -1431,6 +1547,7 @@ function scan(mode){
   .then(function(r){return r.json();}).then(function(data){
     stopLoading();
     if(data.error==="not_bottle"){ showErr(t("notBottle")); return; }
+    if(data.needsPro || data.error==="low_confidence"){ renderLowConfidence(data); return; }
     if(data.retry){ showErr(t("errRetry")); return; }
     if(data.error||!data.result){ showErr(t("errGeneric")+(data.error?" ["+data.error+(data.status?" "+data.status:"")+(data.raw?": "+String(data.raw).slice(0,160):"")+"]":"")); return; }
     if(data.matched){
@@ -1448,6 +1565,7 @@ function scan(mode){
 goRate.addEventListener("click",function(){ scan("rate"); });
 function renderScan(res, mode){
   if(!Array.isArray(res.description)) normalizeTasting(res);
+  syncScanResult(res);
   const isNew = res.source==="net" || res.isNew;
   const badge = isNew?'<span class="badge net">'+t("fromNet")+'</span>':'<span class="badge db">'+t("fromDb")+'</span>';
   const origin=[res.distillery,res.region].filter(Boolean).map(esc).join(" · ");

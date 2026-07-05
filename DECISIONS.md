@@ -80,3 +80,18 @@ Ten plik trzyma stale ustalenia, zeby nie ginely w dlugich watkach.
 - Jesli telefon trzyma stara wersje: `Wyczysc cache/PWA`.
 - GitHub Pages powinien publikowac aplikacje przez workflow `.github/workflows/deploy-pages.yml`, ktory pakuje tylko pliki produkcyjne do `_site`.
 - Nie publikujemy calego roboczego repo jako artifact Pages, bo pakuje design/previews i niepotrzebnie zwieksza artifact.
+## 2026-07-05 - Skaner nie zgaduje ponizej 80% pewnosci
+
+- Podstawowy skaner pokazuje wynik z bazy tylko wtedy, gdy laczna pewnosc dopasowania wynosi minimum 80%.
+- Przy nizszej pewnosci aplikacja nie pokazuje losowej butelki i nie uruchamia zwyklego wyszukiwania jako wyniku podstawowego.
+- Niska pewnosc prowadzi do stanu `Hunter AI Plus`, ktory bedzie osobna funkcja Pro/paywall.
+- Hunter AI Plus docelowo ma szukac danych w sieci, uzupelniac profil smaku i zapisac zdjecie/nowa butelke do roboczej bazy.
+- Zdjecia uzytkownika wymagaja osobnego etapu storage/obrobki, najlepiej Cloudflare R2 + pipeline do tla Bourbon Hunters.
+
+## 2026-07-05 - Cloudflare D1 jako sync kont uzytkownikow
+
+- Aplikacja zostaje local-first: wishlist, kolekcja i oceny dzialaja od razu w `localStorage`.
+- Po rejestracji/logowaniu frontend wysyla lokalny stan do Cloudflare i pobiera stan uzytkownika z D1.
+- Worker zapisuje konta, sesje, wishlist, kolekcje, oceny i historie skanow.
+- Hasla nie sa zapisywane jawnie; Worker uzywa PBKDF2 SHA-256 i zapisuje tylko hash oraz sol.
+- Google Sign-In zostaje jako przycisk UI do pozniejszego podpiecia.

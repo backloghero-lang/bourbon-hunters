@@ -160,3 +160,23 @@ Ten plik sluzy do planowania kolejnych prac. Szczegoly bugow trzymamy w `BUGS.md
 - Przy wiekszych zmianach frontu podbijamy cache w `sw.js`.
 - Po zmianach sprawdzamy `git diff --check` i `git status --short`.
 - Jesli GitHub Pages deploy z `Deploy from a branch` bedzie niestabilny, uzywamy workflow `Deploy Bourbon Hunters Pages` i w Settings -> Pages ustawiamy source na `GitHub Actions`.
+## Hunter AI Plus - etap Pro
+
+- [x] Zablokowac zwykly wynik skanera ponizej 80% pewnosci.
+- [x] Pokazac kontrolowany ekran `Hunter AI Plus` zamiast losowego trafienia.
+- [ ] Dodac paywall/pro entitlement.
+- [ ] Dodac storage na zdjecia uzytkownika, rekomendacja: Cloudflare R2.
+- [ ] Dodac pipeline obrobki zdjecia do formatu Bourbon Hunters na naszym tle.
+- [ ] Dodac kolejke/akceptacje nowych butelek przed publikacja do glownej bazy.
+- [ ] Agent AI Plus: dopasowanie z web search, profil general/nose/taste/finish, zapis roboczy.
+
+## Aktualny krok - konta i zapis Cloudflare
+
+- [x] UI Register / Sign In w aplikacji.
+- [x] Schemat D1 dla kont, sesji, wishlisty, kolekcji, ocen i historii skanow.
+- [x] Endpointy Workera dla rejestracji, logowania i syncu.
+- [x] Frontend local-first z synchronizacja po zalogowaniu.
+- [ ] Podpiac binding `DB` w Cloudflare Worker.
+- [ ] Wykonac `agent/d1-schema.sql` w Cloudflare D1.
+- [ ] Wkleic i wdrozyc aktualny `agent/worker.js`.
+- [ ] Test: utworzyc konto, dodac butelke do kolekcji, odswiezyc appke i sprawdzic sync.
