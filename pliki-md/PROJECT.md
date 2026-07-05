@@ -14,7 +14,7 @@ Rdzen zabawy ma dzialac jak kolekcjonerski indeks: czesc butelek jest zakryta zn
 
 - Skanowanie etykiety butelki.
 - Szybka ocena z lokalnej bazy.
-- Fallback do wyszukiwania w sieci, jesli butelki nie ma w bazie.
+- Brak pewnego trafienia nie moze zwracac losowej butelki; ponizej 80% pewnosci pokazujemy stan Hunter AI Plus.
 - Przegladanie bazy bourbonow.
 - Wyszukiwanie butelek.
 - Dodawanie do listy zyczen.
@@ -29,16 +29,16 @@ Rdzen zabawy ma dzialac jak kolekcjonerski indeks: czesc butelek jest zakryta zn
 - Pierwszy ekran ma byc aplikacja, nie marketingowy landing page.
 - Szybka ocena ma korzystac najpierw z lokalnej bazy.
 - Jesli butelka jest w bazie, user dostaje instant info.
-- Jesli butelki nie ma w bazie, wlacza sie wyszukiwanie informacji w sieci.
-- Hunter AI jest funkcja rozszerzona, wolniejsza i bardziej opisowa.
+- Jesli dopasowanie ma ponizej 80% pewnosci, zwykly skaner nie zgaduje i kieruje do Hunter AI Plus.
+- Hunter AI / Hunter AI Plus jest funkcja rozszerzona, wolniejsza i bardziej opisowa.
 - User nie widzi nazwy dostawcy AI; w UI uzywamy nazwy Hunter.
 - Aplikacja dobiera jezyk z telefonu lub przegladarki: `pl*` -> polski, reszta -> angielski.
 - Nie pokazujemy widocznego przelacznika jezyka.
 - Nazwy wlasne, destylarnie i kategorie stylu zostaja po angielsku.
 - Docelowo produkt ma byc gotowy pod Google Play i akcje marketingowa na USA.
 - Na finiszu planowany jest limit darmowych skanow, np. 20, a potem reklamy lub inny model monetyzacji.
-- Najpierw budujemy core aplikacji bez logowania.
-- Telemetria i konta wchodza dopiero po ustabilizowaniu core flow.
+- Core aplikacji zostaje local-first, ale rozpoczelismy etap kont i synchronizacji przez Cloudflare Worker + D1.
+- Telemetria wchodzi pozniej, po ustabilizowaniu core flow i polityk prywatnosci.
 
 ## Styl
 

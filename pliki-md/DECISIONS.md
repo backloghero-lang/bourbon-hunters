@@ -8,19 +8,19 @@ Ten plik trzyma stale ustalenia, zeby nie ginely w dlugich watkach.
 - Szybka ocena butelki ma bazowac na lokalnej bazie, gdy to mozliwe.
 - Skanowanie etykiety jest glownym use case'em produktu.
 - Jesli butelka jest w bazie, pokazujemy wynik natychmiast.
-- Jesli butelki nie ma w bazie, odpalamy wyszukiwanie informacji w sieci.
+- Jesli dopasowanie ma ponizej 80% pewnosci, podstawowy skaner nie zgaduje i nie pokazuje losowego wyniku.
 - Analiza Hunter AI jest osobna funkcja rozszerzona.
 - W UI nie pokazujemy nazwy dostawcy AI.
 - Produkt ma byc budowany z mysla o pozniejszym Google Play i rynku USA.
 - Docelowy model monetyzacji do sprawdzenia: 20 darmowych skanow, potem reklamy lub inny wariant.
 - Glowna mechanika kolekcjonerska: czesc butelek jest zakryta, a user odblokowuje je przez skanowanie.
 - Produkt ma dawac fun odkrywania podobny do kolekcjonerskiego indeksu.
-- MVP powstaje bez logowania.
-- Telemetria i konta sa etapem pozniejszym, po dopracowaniu core aplikacji.
+- MVP pozostaje local-first, ale etap kont i synchronizacji Cloudflare D1 zostal rozpoczety.
+- Telemetria jest etapem pozniejszym, po dopracowaniu core aplikacji i polityk prywatnosci.
 - Limit 20 darmowych skanow traktujemy jako decyzje kierunkowa; sposob liczenia doprecyzujemy pozniej, tymczasowo kandydatem jest limit per urzadzenie.
 - Home pokazuje skrot `Moja kolekcja` jako karuzele z tych samych danych, ktore sa w dolnej zakladce `Kolekcja`.
 - Widok `Profil` na etapie prototypu pokazuje: Register, Sign In, Articles, Wersja Pro i Ustawienia.
-- `Register` i `Sign In` maja gotowy frontendowy flow, ale realna autoryzacja zostanie podpieta dopiero po wdrozeniu Cloudflare Worker + D1.
+- `Register` i `Sign In` sa podpiete do Cloudflare Worker + D1 dla email/password; Google Sign-In zostaje nieaktywny do kolejnego etapu.
 - `Articles` jest miejscem na przyszlego Workera/agenta od newsow i tresci ze swiata whiskey.
 - Pelna aplikacja zaczyna sie wtedy, gdy kolekcja, wishlisty, oceny, limity skanow i historia skanow sa zapisywane na backendzie, a nie tylko w `localStorage`.
 - `localStorage` zostaje dobry dla MVP/prototypu, ale nie jest docelowym miejscem danych uzytkownika.
@@ -59,17 +59,17 @@ Ten plik trzyma stale ustalenia, zeby nie ginely w dlugich watkach.
 
 ## Worker i agenci
 
-- Obecny Worker rozpoznaje nazwe butelki ze zdjecia, sprawdza baze i dopiero potem uzywa sieci.
-- Brak trafienia w bazie moze zapisac nowosc do KV.
+- Obecny Worker rozpoznaje nazwe butelki ze zdjecia i sprawdza baze; zwykly wynik wymaga minimum 80% pewnosci.
+- Brak pewnego trafienia w bazie prowadzi do stanu Hunter AI Plus; zapis nowych znalezisk wymaga osobnego etapu Pro/storage.
 - Docelowo powstanie drugi Worker/agent do obrobki nowych zdjec userow i wdrazania ich do widokow.
-- Scanner API ma byc traktowany jako core produktu: baza lokalna/online najpierw, siec/AI dopiero jako fallback.
+- Scanner API ma byc traktowany jako core produktu: baza lokalna/online najpierw, a siec/AI jako funkcja Hunter AI Plus albo analiza dla pewnych trafien.
 - Po wdrozeniu kont limit skanow powinien byc liczony po stronie backendu, nie tylko per urzadzenie.
 
 ## Guardrails dla zespolu
 
 - Jesli pojawi sie pomysl sprzeczny z powyzszymi decyzjami, Codex ma zatrzymac prace i przypomniec ustalenie przed implementacja.
 - Decyzje mozna zmieniac, ale tylko swiadomie: najpierw aktualizacja `DECISIONS.md`, potem kod.
-- Nie dodajemy logowania, kont ani telemetrii przed zamknieciem core flow bez osobnej decyzji.
+- Nie dodajemy telemetrii przed zamknieciem core flow bez osobnej decyzji; konta email/password sa juz osobnym rozpoczetym etapem D1.
 - Nie publikujemy zdjec userow do wspolnej bazy bez osobnej decyzji o zgodach i moderacji.
 
 ## Deploy i test

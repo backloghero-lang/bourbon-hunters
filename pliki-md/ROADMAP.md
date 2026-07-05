@@ -19,13 +19,13 @@ Ten plik sluzy do planowania kolejnych prac. Szczegoly bugow trzymamy w `BUGS.md
 - Dodac empty state dla list kolekcji.
 - Uporzadkowac lokalizacje PL/EN w calym UI.
 - Dodac ceny PLN dla PL oraz USD dla EN/innych jezykow.
-- Rozdzielic szybka ocene z bazy od rozszerzonej analizy Hunter AI.
+- Utrzymac quality gate skanera: wynik podstawowy tylko przy pewnosci >= 80%, reszta do Hunter AI Plus.
 - Zbudowac startowy zestaw ok. 50 generowanych butelek AI jako bezpieczny komercyjnie pack wizualny.
 - Przygotowac zasady podobienstwa generowanych butelek: rozpoznawalny typ i klimat, bez kopiowania realnych etykiet 1:1.
 - Rozszerzac opisy, profile smaku, nos, smak i finisz dla wiekszej liczby pozycji.
 - Przygotowac onboarding/tutorial: skan -> odblokowanie -> wishlist -> kolekcja.
-- Zaprojektowac local-first core bez logowania.
-- Dopracowac frontendowy flow Profile/Register/Sign In/Terms/Privacy bez podpinania prawdziwego auth.
+- Utrzymac local-first core, ale rozwijac sync po zalogowaniu przez D1.
+- Dopracowac stan zalogowania w Profile po podpieciu Register/Sign In do Cloudflare D1.
 
 ## Pozniej
 
@@ -39,7 +39,7 @@ Ten plik sluzy do planowania kolejnych prac. Szczegoly bugow trzymamy w `BUGS.md
 - Przygotowac produkt pod Google Play i kampanie marketingowa w USA.
 - Zaprojektowac monetyzacje: pierwsze 20 skanow free, potem reklamy lub inny model.
 - Dodac telemetrie dopiero po ustabilizowaniu core aplikacji.
-- Dodac konta dopiero po potwierdzeniu, ze core flow dziala i ma sens produktowy.
+- Rozwijac konto uzytkownika etapami: email/password juz istnieje, Google/Apple pozniej.
 
 ## Plan dojscia do pelnoprawnej aplikacji
 
@@ -52,7 +52,7 @@ Ten plik sluzy do planowania kolejnych prac. Szczegoly bugow trzymamy w `BUGS.md
    - Kandydaci: Cloudflare Workers + D1/R2/KV albo Firebase/Supabase, do decyzji przed implementacja.
 
 3. Scanner API jako produktowy core
-   - Stabilny endpoint: upload zdjecia, rozpoznanie butelki, wynik z bazy, fallback do sieci/AI.
+   - Stabilny endpoint: upload zdjecia, rozpoznanie butelki, wynik z bazy tylko przy pewnosci >= 80%, a reszta do Hunter AI Plus.
    - Wprowadzic statusy: `uploaded`, `recognized`, `matched`, `needs_web_search`, `failed`.
 
 4. Synchronizacja danych usera
@@ -111,7 +111,7 @@ Ten plik sluzy do planowania kolejnych prac. Szczegoly bugow trzymamy w `BUGS.md
 
 6. Produkcyjny scanner API
    - Upload zdjecia do backendu/R2, status skanu i wynik z bazy.
-   - Najpierw dopasowanie do bazy, potem fallback do sieci/AI.
+- Najpierw dopasowanie do bazy; ponizej 80% pewnosci nie zgadujemy i kierujemy do Hunter AI Plus.
    - Zapisywac historie skanow oraz statusy: `uploaded`, `recognized`, `matched`, `needs_web_search`, `failed`.
    - Wynik: skaner staje sie produkcyjnym core, a nie tylko frontowym flow.
 
@@ -176,7 +176,7 @@ Ten plik sluzy do planowania kolejnych prac. Szczegoly bugow trzymamy w `BUGS.md
 - [x] Schemat D1 dla kont, sesji, wishlisty, kolekcji, ocen i historii skanow.
 - [x] Endpointy Workera dla rejestracji, logowania i syncu.
 - [x] Frontend local-first z synchronizacja po zalogowaniu.
-- [ ] Podpiac binding `DB` w Cloudflare Worker.
-- [ ] Wykonac `agent/d1-schema.sql` w Cloudflare D1.
-- [ ] Wkleic i wdrozyc aktualny `agent/worker.js`.
+- [x] Podpiac binding `DB` w Cloudflare Worker.
+- [x] Wykonac `agent/d1-schema.sql` w Cloudflare D1.
+- [x] Wkleic i wdrozyc aktualny `agent/worker.js`.
 - [ ] Test: utworzyc konto, dodac butelke do kolekcji, odswiezyc appke i sprawdzic sync.

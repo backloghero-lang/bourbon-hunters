@@ -3,116 +3,64 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/typ-PWA-c8a25a?style=for-the-badge">
+  <img src="https://img.shields.io/badge/type-PWA-c8a25a?style=for-the-badge">
   <img src="https://img.shields.io/badge/backend-Cloudflare%20Worker-f38020?style=for-the-badge&logo=cloudflare&logoColor=white">
   <img src="https://img.shields.io/badge/AI-Hunter-c8a25a?style=for-the-badge">
   <img src="https://img.shields.io/badge/hosting-GitHub%20Pages-181717?style=for-the-badge&logo=github&logoColor=white">
 </p>
 
-<h1 align="center">🥃 Bourbon Hunters</h1>
-<p align="center"><b>DISCOVER · TRACK · HUNT</b></p>
-<p align="center">PWA dla łowców bourbona: baza butelek, kolekcja, wishlist i skaner etykiet wspierany przez Hunter AI.</p>
+<h1 align="center">Bourbon Hunters</h1>
+<p align="center"><b>DISCOVER - TRACK - HUNT</b></p>
+<p align="center">Premium PWA concept for bourbon discovery, bottle scanning, wishlist and collection tracking.</p>
 
 ---
 
-## Szybkie linki
+## Quick Links
 
-| Widok | Link |
+| View | Link |
 |---|---|
-| Aplikacja | [bourbon-hunters](https://backloghero-lang.github.io/bourbon-hunters/) |
-| Launcher testowy | [test-index.html](https://backloghero-lang.github.io/bourbon-hunters/test-index.html) |
-| Wizja i zalozenia | [`PROJECT.md`](PROJECT.md) |
-| Mapa rozwoju | [`ROADMAP.md`](ROADMAP.md) |
-| Bugi i poprawki | [`BUGS.md`](BUGS.md) |
-| Decyzje projektowe | [`DECISIONS.md`](DECISIONS.md) |
-| Pytania produktowe | [`QUESTIONS.md`](QUESTIONS.md) |
-| Assety Home | [`design/figma-assets/asset-pack-v1`](design/figma-assets/asset-pack-v1) |
-| Assety Scanner | [`design/figma-assets/scanner-pack-v1`](design/figma-assets/scanner-pack-v1) |
-| Assety referencyjne | [`design/figma-assets/reference-pack-v1`](design/figma-assets/reference-pack-v1) |
+| App | [bourbon-hunters](https://backloghero-lang.github.io/bourbon-hunters/) |
+| Test launcher | [test-index.html](https://backloghero-lang.github.io/bourbon-hunters/test-index.html) |
+| Project docs | [`pliki-md`](pliki-md) |
 | Figma importer | [`design/figma-import-plugin`](design/figma-import-plugin) |
 
-## Test na komputerze
+## What It Does Today
 
-Stały launcher testowy jest dostępny jako [`test-index.html`](https://backloghero-lang.github.io/bourbon-hunters/test-index.html).
+The scanner reads a bottle label photo and asks Hunter to match it against the bourbon database.
 
-Po deployu kliknij w nim `Odswiez build`. Launcher dodaje cache-busting do aplikacji, pokazuje aktualną wersję service workera i pozwala wyczyścić cache/PWA bez grzebania w DevTools.
+Current quality rule:
 
-## Asset pipeline
+1. Hunter recognizes the bottle name from the photo.
+2. The Worker checks `db/bourbons.json` first.
+3. A normal result is shown only when match confidence is at least 80%.
+4. Lower-confidence scans do not return a random bottle. They show the planned `Hunter AI Plus` state.
 
-Projekt ma prosty pipeline dla assetów: GitHub przechowuje pliki produkcyjne, a Figma służy jako katalog wizualny i miejsce projektowania ekranów.
-
-| Paczka | Zawartość | Pliki | Ścieżka |
-|---|---|---:|---|
-| Home Asset Pack v1 | header, logo, search, featured card, kategorie, bottom nav, efekty | 24 | [`design/figma-assets/asset-pack-v1`](design/figma-assets/asset-pack-v1) |
-| Scanner Pack v1 | tło skanera, ramka, scan beam, przyciski, overlay analizy, badges, stany | 26 | [`design/figma-assets/scanner-pack-v1`](design/figma-assets/scanner-pack-v1) |
-| Reference Pack v1 | tło aplikacji i ekran Odkrywaj jako referencje projektowe | 2 | [`design/figma-assets/reference-pack-v1`](design/figma-assets/reference-pack-v1) |
-
-Assety są publikowane przez GitHub Pages, więc aplikacja i Figma używają tych samych plików. Import do Figmy robi lokalny plugin:
-
-```text
-design/figma-import-plugin/manifest.json
-```
-
-W Figmie uruchom:
-
-```text
-Plugins → Development → Bourbon Hunters Asset Importer
-```
-
-Plugin tworzy albo odświeża jedną stronę:
-
-- `Bourbon Hunters Asset Packs`
-
-Po dodaniu nowej paczki: wrzuć assety do repo, uruchom `WYSLIJ-NA-GITHUB.bat`, odczekaj chwilę na GitHub Pages i ponownie uruchom importer w Figmie.
-
-## 🎯 Co potrafi (dziś)
-
-**Skaner butelek z bazą 539 bourbonów i 539 lokalnych zdjęć.** Robisz zdjęcie etykiety, a agent **Hunter**:
-
-1. 🔍 rozpoznaje butelkę,
-2. 📚 **najpierw sprawdza lokalną bazę** `db/bourbons.json` — odpowiedź jest natychmiastowa i darmowa,
-3. 🌐 jeśli butelki nie ma w bazie → dopiero wtedy pyta sieci, a znalezisko zapisuje jako **nowość** (do późniejszego uzupełnienia o zdjęcie przez agenta cyklicznego).
-
-Dwa tryby (dwa przyciski):
-
-| Przycisk | Co robi |
+| Feature | Status |
 |---|---|
-| ⭐ **Ocena** | gwiazdki **jakość/cena** (5★ = świetna i tania, 1★ = kiepska i droga), profil smaku, cena orient. PLN |
-| 🔎 **Analiza AI** | rozbudowany opis + **historia destylarni** z linkami |
+| Fast rating | Database-first result with price/value and tasting profile |
+| AI analysis | Deeper description for confident matches |
+| Hunter AI Plus | Planned Pro feature for deeper matching, web search, profile creation and saving new finds |
+| Accounts | Email/password through Cloudflare Worker + D1 |
+| Google Sign-In | UI placeholder, not connected yet |
 
-Język **dobiera się do telefonu** (PL/EN). Instalowalna PWA, działa offline. Klucz AI jest ukryty w Cloudflare Workerze.
+## Architecture
 
-## 🗺️ Plan (etapami)
-
-| Etap | Zakres | Status |
-|---|---|---|
-| A | 🔫 Skaner butelek (zdjęcie → ocena) | ✅ gotowe |
-| B | Szkielet nawigacji + ekran HOME (liczniki) | ⏳ |
-| C | Moja kolekcja + zapis butelek | ⏳ |
-| D | Przeglądaj whisky + szczegóły | ⏳ |
-| E | Mapa destylarni, odznaki, notatki | ⏳ |
-
-Pełne notatki projektowe i paleta: `design/DESIGN.md`.
-
-## 🏗️ Architektura
-
-```
-[Telefon / PWA]  ──zdjęcie──►  [Cloudflare Worker]  ──►  [Hunter AI + web search]
-   index.html                     worker.js                rozpoznanie + recenzje + cena
-        ▲                            │
-        └──── JSON: ocena, opis, źródła ◄──────────────────────────────────────────────┘
+```text
+Phone / PWA -> Cloudflare Worker -> database match / Hunter AI
+index.html     agent/worker.js      D1, KV, bourbon JSON data
 ```
 
-- **Front:** `index.html` + `manifest.json` + `sw.js` (GitHub Pages).
-- **Backend:** `agent/worker.js` — chowa klucz AI, woła Huntera z wyszukiwarką, limituje zapytania.
-- **Prompt:** `agent/prompt.txt` — edytujesz i commitujesz, Worker sam podciąga.
+- Frontend: `index.html`, `manifest.json`, `sw.js`.
+- Backend: `agent/worker.js` on Cloudflare Workers.
+- User data: Cloudflare D1 for accounts, sessions, wishlist, collection, ratings and scan history.
+- Static hosting: GitHub Pages.
+- Project docs and planning files: `pliki-md/`.
+- Figma asset importer code: `design/figma-import-plugin/`.
 
-## 🚀 Uruchomienie
+## Project Direction
 
-Instrukcja krok po kroku: **`INSTRUKCJA.md`**.
+This public repo is a showcase/prototype. The commercial version should move into a private production repo before adding paywall, Google Play release work, advanced AI Plus logic, image storage and business integrations.
 
-## 🧪 O projekcie
+## Responsible Use
 
-Projekt weekendowy, **vibe-coded z Claude**. — [Dariusz Masłyk](https://www.linkedin.com/in/dariusz-maslyk)
-
-> ⚠️ Ceny i oceny są orientacyjne. Pij odpowiedzialnie. 18+
+Prices and ratings are approximate. Drink responsibly. 18+

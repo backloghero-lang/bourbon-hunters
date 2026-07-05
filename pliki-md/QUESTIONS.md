@@ -7,8 +7,10 @@ Ten plik trzyma pytania, ktore trzeba rozstrzygnac jako product owner + dev team
 - Zdjecia userow moga kiedys zasilac wspolna baze, ale MVP traktuje je jako prywatny element kolekcji i odkrywania.
 - Główna mechanika: zakryte butelki odblokowywane przez skan, jak kolekcjonerski indeks.
 - Limit 20 skanow zostaje jako kierunek na pozniejsza faze; kandydat: per urzadzenie.
-- MVP najpierw bez logowania; konta i telemetria dopiero po core aplikacji.
+- MVP zaczal jako local-first bez logowania; konta email/password sa juz podpiete jako etap D1, telemetria zostaje na pozniej.
 - Generowane butelki maja isc w klimat/podobienstwo, ale bez kopiowania realnych etykiet 1:1.
+- Dla zwyklego skanera obowiazuje prog 80% pewnosci; ponizej tego nie pokazujemy losowego wyniku.
+- Startowy model kont: email+password przez Cloudflare Worker + D1. Google Sign-In zostaje na pozniejszy etap.
 
 ## Najwazniejsze na teraz
 
@@ -18,15 +20,15 @@ Ten plik trzyma pytania, ktore trzeba rozstrzygnac jako product owner + dev team
 - Czy rynek startowy to USA-only, czy PL/EN od poczatku zostaje jako przewaga?
 - Jak bardzo mozemy zblizac generowane butelki do realnych marek, zeby zachowac rozpoznawalnosc bez ryzyka prawnego?
 - Czy baza opisow ma opisywac realne butelki, czy wprowadzamy tez "inspired by" / kategorie zamiast nazw marek?
-- Jaki model kont wybieramy na start: email+password, Google/Apple, magic link, czy kombinacja?
-- Jak dokladnie konfigurujemy Cloudflare D1/R2/KV dla danych usera, zdjec i limitow skanow?
+- Jak i kiedy dodajemy Google/Apple Sign-In albo magic link?
+- Jak dokladnie konfigurujemy R2/KV dla zdjec, AI Plus i limitow skanow?
 - Czy `Wersja Pro` ma oznaczac brak reklam, wiecej skanow, historie skanow, zaawansowana analize AI, czy pakiet tych funkcji?
 - Czy limit 20 skanow ma resetowac sie miesiecznie, byc jednorazowy, czy zalezec od reklam?
 - Jakie minimalne dane usera zbieramy przy koncie, zeby nie komplikowac prywatnosci i regulaminu?
 - Czy kolekcja po zalogowaniu ma miec import danych z obecnego `localStorage`?
 - Czy aplikacja mobilna ma isc najpierw jako PWA, potem wrapper, czy od razu przez Capacitor/TWA pod Google Play?
 - Jakie zdarzenia telemetrii sa absolutnie potrzebne do decyzji biznesowych, a ktore mozemy pominac w MVP?
-- Czy startujemy tylko od email/password, czy od razu dodajemy Google Sign-In?
+- Kiedy Google Sign-In staje sie priorytetem po email/password?
 - Jaki kontakt i nazwa podmiotu maja wejsc do finalnych Terms of Service i Privacy Policy?
 - Czy Articles maja byc tylko newsami, czy tez poradnikami kolekcjonerskimi i rankingami butelek?
 

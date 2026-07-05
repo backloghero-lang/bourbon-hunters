@@ -106,7 +106,7 @@ Prompt (zachowanie AI) edytujesz w `agent/prompt.txt`, commitujesz — Worker sa
 Coś nie działa? Skopiuj komunikat błędu i wróć do nowego wątku Claude. 🙂
 ## ETAP 5 - Konta i zapis danych w Cloudflare D1
 
-Po tej wersji frontend ma gotowe Register / Sign In i sync danych, ale zapis ruszy dopiero po podpieciu D1 do Workera.
+Frontend ma gotowe Register / Sign In i sync danych. Zapis dziala dopiero wtedy, gdy D1 jest utworzone, schema wykonana, binding `DB` podpiety do Workera i aktualny `agent/worker.js` wdrozony.
 
 1. Cloudflare Dashboard -> **Workers & Pages** -> **D1 SQL Database** -> **Create database**.
 2. Nazwa bazy: `bourbon-hunters-db`.
