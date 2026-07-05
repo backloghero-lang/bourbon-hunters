@@ -25,6 +25,7 @@ Ten plik sluzy do planowania kolejnych prac. Szczegoly bugow trzymamy w `BUGS.md
 - Rozszerzac opisy, profile smaku, nos, smak i finisz dla wiekszej liczby pozycji.
 - Przygotowac onboarding/tutorial: skan -> odblokowanie -> wishlist -> kolekcja.
 - Zaprojektowac local-first core bez logowania.
+- Dopracowac frontendowy flow Profile/Register/Sign In/Terms/Privacy bez podpinania prawdziwego auth.
 
 ## Pozniej
 
@@ -73,6 +74,69 @@ Ten plik sluzy do planowania kolejnych prac. Szczegoly bugow trzymamy w `BUGS.md
 8. Store readiness i rynek USA
    - Wrapper Android/iOS, polityka prywatnosci, regulamin, age gate 18+, przygotowanie pod Google Play.
    - Marketingowo utrzymac pierwszy ekran jako aplikacje, nie landing page.
+
+## Plan wdrozenia - kolejnosc prac
+
+1. Domkniecie local-first MVP
+   - Doprowadzic Home, Explore, Details, Scan, Collection i Profile do spojnego UX.
+   - Naprawic krytyczne bugi skanera, wyswietlania zdjec, kart butelek i cache.
+   - Utrzymac zapis kolekcji, wishlisty i ocen w `localStorage`, ale traktowac to jako warstwe tymczasowa.
+   - Wynik: aplikacja nadaje sie do pokazow, testow marketingowych i zbierania feedbacku.
+
+2. Kontrakt danych i architektura backendu
+   - Spisac minimalne modele: `user`, `bottle`, `scan`, `collection_item`, `wishlist_item`, `rating`, `unlock`, `subscription`.
+   - Ustalic, ktore dane zostaja publiczne, ktore prywatne, a ktore wymagaja zgody usera.
+   - Wybrac backend: preferowany kierunek to Cloudflare, bo Worker juz istnieje.
+   - Przyjac D1 jako docelowa baze SQL dla kont i danych usera, a R2 jako storage zdjec.
+   - Wynik: wiemy, co przenosimy z frontu do backendu i jak aplikacja bedzie z tym gadac.
+
+3. Backend foundation
+   - Zrobic podstawowe endpointy Workera dla danych usera i skanow.
+   - Przygotowac storage: D1 dla danych relacyjnych, R2 dla zdjec, KV/cache dla szybkich lookupow i limitow.
+   - Dodac wersjonowanie API oraz podstawowe logowanie bledow.
+   - Wynik: backend istnieje, nawet jesli UI nadal dziala lokalnie.
+
+4. Konta i migracja danych
+   - Wdrozyc logowanie/rejestracje po wybraniu modelu kont.
+   - Podpiac gotowe ekrany Register i Sign In do endpointow Workera.
+   - Po pierwszym logowaniu zaproponowac przeniesienie danych z `localStorage` do konta.
+   - Po zalogowaniu pokazac w sekcji Profile stan konta zamiast CTA Register/Sign In.
+   - Wynik: user moze zmienic telefon i nie traci kolekcji.
+
+5. Synchronizacja kolekcji, wishlisty i ocen
+   - Przepiac `bh_collection`, `bh_wishlist` i `bh_user_ratings` na API.
+   - Zostawic lokalny cache dla PWA/offline, ale backend ma byc zrodlem prawdy po zalogowaniu.
+   - Dodac obsluge konfliktow: ostatnia zmiana wygrywa na start.
+   - Wynik: kolekcja i oceny sa realna funkcja aplikacji, nie tylko stanem w przegladarce.
+
+6. Produkcyjny scanner API
+   - Upload zdjecia do backendu/R2, status skanu i wynik z bazy.
+   - Najpierw dopasowanie do bazy, potem fallback do sieci/AI.
+   - Zapisywac historie skanow oraz statusy: `uploaded`, `recognized`, `matched`, `needs_web_search`, `failed`.
+   - Wynik: skaner staje sie produkcyjnym core, a nie tylko frontowym flow.
+
+7. Pro, limity, reklamy i telemetria
+   - Wprowadzic backendowy licznik darmowych skanow.
+   - Doprecyzowac `Wersja Pro`: brak reklam, wiecej skanow, historia, zaawansowane AI albo pakiet.
+   - Dodac minimalna telemetrie: skan start, skan sukces, brak trafienia, dodanie do kolekcji, dodanie do wishlisty.
+   - Wynik: zaczynamy mierzyc i monetyzowac produkt bez rozwalania core UX.
+
+8. Store readiness i release mobile
+   - Utwardzic PWA: offline, update flow, monitoring, privacy/terms, age gate 18+.
+   - Wybrac droge mobilna: PWA -> TWA/Capacitor -> Google Play.
+   - Przygotowac materialy pod rynek USA: screenshoty, opis, polityki, onboarding.
+   - Wynik: Bourbon Hunters jest gotowe do pierwszego publicznego release'u jako aplikacja.
+
+## Najblizsza kolejnosc robocza
+
+1. Skonczyc local-first MVP i aktualny UX.
+2. Ustalic backend i model kont.
+3. Spisac kontrakt danych.
+4. Postawic backend foundation.
+5. Przepiac kolekcje/wishlist/oceny.
+6. Uprodukcyjnić skaner.
+7. Dodac limity, Pro i telemetrie.
+8. Przygotowac wrapper/store.
 
 ## Kamienie milowe
 

@@ -19,9 +19,15 @@ Ten plik trzyma stale ustalenia, zeby nie ginely w dlugich watkach.
 - Telemetria i konta sa etapem pozniejszym, po dopracowaniu core aplikacji.
 - Limit 20 darmowych skanow traktujemy jako decyzje kierunkowa; sposob liczenia doprecyzujemy pozniej, tymczasowo kandydatem jest limit per urzadzenie.
 - Home pokazuje skrot `Moja kolekcja` jako karuzele z tych samych danych, ktore sa w dolnej zakladce `Kolekcja`.
-- Widok `Profil` na etapie prototypu pokazuje wyszarzone sekcje: Profil, Konto, Wersja Pro, Ustawienia. Klikniecie pokazuje toast `W budowie`.
+- Widok `Profil` na etapie prototypu pokazuje: Register, Sign In, Articles, Wersja Pro i Ustawienia.
+- `Register` i `Sign In` maja gotowy frontendowy flow, ale realna autoryzacja zostanie podpieta dopiero po wdrozeniu Cloudflare Worker + D1.
+- `Articles` jest miejscem na przyszlego Workera/agenta od newsow i tresci ze swiata whiskey.
 - Pelna aplikacja zaczyna sie wtedy, gdy kolekcja, wishlisty, oceny, limity skanow i historia skanow sa zapisywane na backendzie, a nie tylko w `localStorage`.
 - `localStorage` zostaje dobry dla MVP/prototypu, ale nie jest docelowym miejscem danych uzytkownika.
+- Nie uzywamy pliku `data.db` w repo/GitHub Pages jako produkcyjnej bazy userow. GitHub Pages jest statyczny i nie nadaje sie do bezpiecznego zapisu kont.
+- Docelowa baza kont i danych usera: Cloudflare D1, czyli SQL/SQLite-style baza pod Workerem.
+- Zdjecia userow i skanow docelowo trzymamy w Cloudflare R2, a nie w D1.
+- Zamykany banner `Join Pro` w profilu znika tylko na biezace wejscie w widok. Po ponownym wejsciu w Profil ma wrocic.
 
 ## Jezyk
 

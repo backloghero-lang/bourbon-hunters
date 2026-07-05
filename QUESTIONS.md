@@ -19,13 +19,16 @@ Ten plik trzyma pytania, ktore trzeba rozstrzygnac jako product owner + dev team
 - Jak bardzo mozemy zblizac generowane butelki do realnych marek, zeby zachowac rozpoznawalnosc bez ryzyka prawnego?
 - Czy baza opisow ma opisywac realne butelki, czy wprowadzamy tez "inspired by" / kategorie zamiast nazw marek?
 - Jaki model kont wybieramy na start: email+password, Google/Apple, magic link, czy kombinacja?
-- Jaki backend wybieramy dla danych usera: Cloudflare D1/R2/KV, Firebase, Supabase, czy inny?
+- Jak dokladnie konfigurujemy Cloudflare D1/R2/KV dla danych usera, zdjec i limitow skanow?
 - Czy `Wersja Pro` ma oznaczac brak reklam, wiecej skanow, historie skanow, zaawansowana analize AI, czy pakiet tych funkcji?
 - Czy limit 20 skanow ma resetowac sie miesiecznie, byc jednorazowy, czy zalezec od reklam?
 - Jakie minimalne dane usera zbieramy przy koncie, zeby nie komplikowac prywatnosci i regulaminu?
 - Czy kolekcja po zalogowaniu ma miec import danych z obecnego `localStorage`?
 - Czy aplikacja mobilna ma isc najpierw jako PWA, potem wrapper, czy od razu przez Capacitor/TWA pod Google Play?
 - Jakie zdarzenia telemetrii sa absolutnie potrzebne do decyzji biznesowych, a ktore mozemy pominac w MVP?
+- Czy startujemy tylko od email/password, czy od razu dodajemy Google Sign-In?
+- Jaki kontakt i nazwa podmiotu maja wejsc do finalnych Terms of Service i Privacy Policy?
+- Czy Articles maja byc tylko newsami, czy tez poradnikami kolekcjonerskimi i rankingami butelek?
 
 ## Do wyjasnienia: akceptacja zdjec
 
