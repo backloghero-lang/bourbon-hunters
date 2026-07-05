@@ -95,3 +95,7 @@ Ten plik trzyma stale ustalenia, zeby nie ginely w dlugich watkach.
 - Worker zapisuje konta, sesje, wishlist, kolekcje, oceny i historie skanow.
 - Hasla nie sa zapisywane jawnie; Worker uzywa PBKDF2 SHA-256 i zapisuje tylko hash oraz sol.
 - Google Sign-In zostaje jako przycisk UI do pozniejszego podpiecia.
+- Rejestracja email/password nie wysyla jeszcze maili. Maile powitalne i usuniecia danych wymagaja osobnego dostawcy email oraz adresu domenowego.
+- Szablony email sa trzymane w `pliki-md/email-templates/` i zostana podlaczone dopiero po wyborze providera.
+- Rejestracja wymaga daty urodzenia. Domyslny prog to 18+, a dla USA mozemy szybko podniesc go zmienna Workera `AGE_GATE_MIN=21`.
+- Reset hasla ma juz ekran i endpoint placeholder, ale realna wysylka linku resetujacego wymaga providera email.

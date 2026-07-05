@@ -5,6 +5,10 @@ CREATE TABLE IF NOT EXISTS users (
   password_hash TEXT NOT NULL,
   password_salt TEXT NOT NULL,
   password_algo TEXT NOT NULL,
+  birth_date TEXT,
+  age_gate_country TEXT,
+  age_gate_min INTEGER,
+  age_verified_at TEXT,
   created_at TEXT NOT NULL,
   updated_at TEXT NOT NULL
 );

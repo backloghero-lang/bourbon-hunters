@@ -50,15 +50,79 @@ async function hashPassword(password, saltHex){
 function publicUser(row){ return row ? {id:row.id,email:row.email,username:row.username,created_at:row.created_at} : null; }
 function cleanEmail(v){ return String(v||"").trim().toLowerCase(); }
 function cleanUsername(v){ return String(v||"").trim().replace(/\s+/g," ").slice(0,40); }
+function cleanBirthDate(v){ const s=String(v||"").trim(); return /^\d{4}-\d{2}-\d{2}$/.test(s) ? s : ""; }
+function ageGateMin(env){ const n=parseInt(env.AGE_GATE_MIN||"18",10); return Number.isFinite(n) && n>=18 ? n : 18; }
+function isOldEnough(birthDate, minAge){
+  const m=String(birthDate||"").match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if(!m) return false;
+  const y=parseInt(m[1],10), mo=parseInt(m[2],10)-1, d=parseInt(m[3],10);
+  const born=new Date(Date.UTC(y,mo,d));
+  if(born.getUTCFullYear()!==y || born.getUTCMonth()!==mo || born.getUTCDate()!==d) return false;
+  const now=new Date();
+  let age=now.getUTCFullYear()-y;
+  const monthDiff=now.getUTCMonth()-mo;
+  if(monthDiff<0 || (monthDiff===0 && now.getUTCDate()<d)) age--;
+  return age>=minAge;
+}
+function usernameBase(username,email){
+  let base=norm(username||"").replace(/\s+/g,"_").replace(/^_+|_+$/g,"").slice(0,24);
+  if(base.length<2) base=norm(String(email||"").split("@")[0]).replace(/\s+/g,"_").slice(0,24);
+  if(base.length<2) base="hunter";
+  return base;
+}
 async function readBody(request){ try{ return await request.json(); }catch(e){ return {}; } }
-function apiCors(env){
-  return {
-    "Access-Control-Allow-Origin": env.ALLOW_ORIGIN || "*",
+function corsOrigin(value){
+  value=String(value||"").trim();
+  if(!value || value==="*") return value||"*";
+  try{ return new URL(value).origin; }catch(e){ return value.replace(/\/+$/,""); }
+}
+function apiCors(env, request){
+  const raw=String(env.ALLOW_ORIGIN||"*").trim();
+  let allow="*";
+  if(raw && raw!=="*"){
+    const requestOrigin=request&&request.headers ? request.headers.get("Origin")||"" : "";
+    const allowed=raw.split(",").map(corsOrigin).filter(Boolean);
+    allow=allowed.indexOf(requestOrigin)>=0 ? requestOrigin : (allowed[0]||"*");
+  }
+  const headers={
+    "Access-Control-Allow-Origin": allow,
     "Access-Control-Allow-Methods": "GET, POST, DELETE, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type, Authorization"
   };
+  if(allow!=="*") headers.Vary="Origin";
+  return headers;
 }
 function needDB(env,cors){ if(env.DB) return null; return J({error:"d1_missing",message:"Cloudflare D1 binding DB is not configured."},501,cors); }
+async function userColumns(env){
+  const rows=await env.DB.prepare("PRAGMA table_info(users)").all();
+  const out={};
+  (rows.results||[]).forEach(function(r){ if(r.name) out[String(r.name)]=true; });
+  return out;
+}
+async function suggestUsernames(env, desired, email){
+  const base=usernameBase(desired,email);
+  const pool=[
+    base+"_hunter",
+    base+"_barrel",
+    base+"_bh",
+    base+"_88",
+    base+"_21",
+    base+"_"+new Date().getUTCFullYear(),
+    "bourbon_"+base
+  ];
+  const out=[];
+  for(let i=0;i<pool.length && out.length<5;i++){
+    const name=pool[i].slice(0,40);
+    const taken=await env.DB.prepare("SELECT id FROM users WHERE username=?").bind(name).first();
+    if(!taken && out.indexOf(name)<0) out.push(name);
+  }
+  for(let i=2;out.length<5 && i<200;i++){
+    const name=(base+"_"+i).slice(0,40);
+    const taken=await env.DB.prepare("SELECT id FROM users WHERE username=?").bind(name).first();
+    if(!taken) out.push(name);
+  }
+  return out;
+}
 async function createSession(env, request, userId){
   const token=randHex(32);
   const tokenHash=await sha256Hex(token);
@@ -108,27 +172,55 @@ async function upsertRating(env, userId, bottleId, rating){
     .bind(userId,bottleId,n,now,now).run();
 }
 async function handleApi(request, env, cors){
-  const dbErr=needDB(env,cors); if(dbErr) return dbErr;
   const url=new URL(request.url);
   const path=url.pathname.replace(/\/+$/,"");
+  if(path==="/auth/health" && request.method==="GET"){
+    let schema=false, detail="";
+    if(env.DB){
+      try{
+        await env.DB.prepare("SELECT id FROM users LIMIT 1").first();
+        const cols=await userColumns(env);
+        schema=!!(cols.id && cols.email && cols.username && cols.birth_date && cols.age_verified_at);
+        if(!schema) detail="users table exists, but age-gate columns are missing";
+      }
+      catch(e){ detail=String(e&&e.message?e.message:e).slice(0,220); }
+    }
+    return J({ok:true,worker:"bourbon-hunters",d1:!!env.DB,schema:schema,detail:detail,time:new Date().toISOString()},200,cors);
+  }
+  const dbErr=needDB(env,cors); if(dbErr) return dbErr;
   if(path==="/auth/register" && request.method==="POST"){
     const body=await readBody(request);
     const email=cleanEmail(body.email);
     const username=cleanUsername(body.username);
     const password=String(body.password||"");
+    const birthDate=cleanBirthDate(body.birth_date||body.birthDate);
+    const minAge=ageGateMin(env);
+    const ageCountry=String(body.age_gate_country||body.country||"global").trim().slice(0,24)||"global";
     if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return J({error:"bad_email"},400,cors);
-    if(username.length<2) return J({error:"bad_username"},400,cors);
+    if(!/^[a-zA-Z0-9_.-]{2,40}$/.test(username)) return J({error:"bad_username"},400,cors);
     if(password.length<8) return J({error:"weak_password"},400,cors);
-    const exists=await env.DB.prepare("SELECT id FROM users WHERE email=? OR username=?").bind(email,username).first();
-    if(exists) return J({error:"user_exists"},409,cors);
+    if(!birthDate) return J({error:"age_required",min_age:minAge},400,cors);
+    if(!isOldEnough(birthDate,minAge)) return J({error:"age_restricted",min_age:minAge},403,cors);
+    const emailExists=await env.DB.prepare("SELECT id FROM users WHERE email=?").bind(email).first();
+    if(emailExists) return J({error:"email_exists"},409,cors);
+    const usernameExists=await env.DB.prepare("SELECT id FROM users WHERE username=?").bind(username).first();
+    if(usernameExists) return J({error:"username_exists",suggestions:await suggestUsernames(env,username,email)},409,cors);
+    const cols=await userColumns(env);
+    if(!cols.birth_date || !cols.age_verified_at) return J({error:"schema_age_missing",message:"Run the latest D1 migration for age-gate columns."},501,cors);
     const salt=randHex(16);
     const hash=await hashPassword(password,salt);
     const now=new Date().toISOString();
     const id=crypto.randomUUID();
-    await env.DB.prepare("INSERT INTO users (id,email,username,password_hash,password_salt,password_algo,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?)")
-      .bind(id,email,username,hash,salt,"pbkdf2-sha256-120000",now,now).run();
+    await env.DB.prepare("INSERT INTO users (id,email,username,password_hash,password_salt,password_algo,birth_date,age_gate_country,age_gate_min,age_verified_at,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)")
+      .bind(id,email,username,hash,salt,"pbkdf2-sha256-120000",birthDate,ageCountry,minAge,now,now,now).run();
     const token=await createSession(env,request,id);
     return J({token:token,user:{id:id,email:email,username:username,created_at:now},bootstrap:{wishlist:[],collection:[],ratings:{}}},200,cors);
+  }
+  if(path==="/auth/password-reset" && request.method==="POST"){
+    const body=await readBody(request);
+    const email=cleanEmail(body.email);
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return J({error:"bad_email"},400,cors);
+    return J({ok:true,email_ready:false,message:"Password reset email provider is not connected yet."},200,cors);
   }
   if(path==="/auth/login" && request.method==="POST"){
     const body=await readBody(request);
@@ -225,10 +317,13 @@ async function callGemini(env, payload){
 
 export default {
   async fetch(request, env){
-    const cors=apiCors(env);
+    const cors=apiCors(env, request);
     if(request.method==="OPTIONS") return new Response(null,{headers:cors});
     const path=new URL(request.url).pathname;
-    if(path.indexOf("/auth/")===0 || path.indexOf("/me")===0) return handleApi(request, env, cors);
+    if(path.indexOf("/auth/")===0 || path.indexOf("/me")===0){
+      try{ return await handleApi(request, env, cors); }
+      catch(e){ return J({error:"server_error",detail:String(e&&e.message?e.message:e).slice(0,240)},500,cors); }
+    }
     if(request.method!=="POST") return J({error:"POST only"},405,cors);
 
     let body; try{ body=await request.json(); }catch(e){ return J({error:"bad json"},400,cors); }

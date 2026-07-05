@@ -179,7 +179,7 @@
   .profile-ico svg{width:24px;height:24px}
   .profile-row .chev{font-size:25px;color:#E2B070;line-height:1}
   .auth-view,.legal-view{padding-top:0}
-  .app.is-register .topbar,.app.is-signin .topbar,.app.is-terms .topbar,.app.is-privacy .topbar{display:none}
+  .app.is-register .topbar,.app.is-signin .topbar,.app.is-reset .topbar,.app.is-terms .topbar,.app.is-privacy .topbar{display:none}
   .auth-head,.legal-head{margin:0 -16px 24px;padding:18px 16px 24px;background:linear-gradient(180deg,rgba(10,7,5,.98),rgba(10,7,5,.88));border-bottom:1px solid rgba(226,176,112,.16)}
   .auth-nav,.legal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
   .auth-back,.legal-back,.auth-later{border:0;background:transparent;color:#E2B070;font-weight:900;cursor:pointer;padding:8px 0}
@@ -191,8 +191,13 @@
   .field label{display:block;color:#C9B493;font-size:12px;font-weight:850;letter-spacing:.4px;margin:0 0 7px}
   .field label span{color:#E28A3D}
   .field input{width:100%;height:58px;border:1px solid rgba(226,176,112,.16);border-radius:18px;background:rgba(246,225,188,.08);color:#F6E1BC;padding:0 16px;font-size:15px;outline:none}
+  .field input[type="date"]{color-scheme:dark}
   .field input::placeholder{color:rgba(201,180,147,.55)}
   .field input:focus{border-color:rgba(226,176,112,.58);box-shadow:0 0 0 3px rgba(226,176,112,.08)}
+  .field-help{margin:8px 0 0;color:#A99572;font-size:11px;line-height:1.45}
+  .username-suggestions{display:flex;flex-wrap:wrap;gap:8px;margin-top:-5px}
+  .username-suggestions:empty{display:none}
+  .username-suggestions button{border:1px solid rgba(226,176,112,.32);border-radius:999px;background:rgba(226,176,112,.1);color:#F6E1BC;padding:8px 11px;font-size:12px;font-weight:900;cursor:pointer}
   .auth-primary{height:58px;border:0;border-radius:18px;margin-top:14px;background:linear-gradient(180deg,#E2B070,#B86A33);color:#1B1008;font-size:15px;font-weight:950;cursor:pointer;box-shadow:0 16px 30px rgba(184,106,51,.25)}
   .auth-divider{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:14px;color:#C9B493;font-size:12px;font-weight:900;margin:2px 34px}
   .auth-divider:before,.auth-divider:after{content:"";height:1px;background:rgba(226,176,112,.22)}
@@ -467,6 +472,8 @@
       <div class="field"><label>Email<span>*</span></label><input name="email" type="email" autocomplete="email" placeholder="e.g. hunter@mail.com" required></div>
       <div class="field"><label>Password<span>*</span></label><input name="password" type="password" autocomplete="new-password" placeholder="******" required minlength="8"></div>
       <div class="field"><label>Username<span>*</span></label><input name="username" type="text" autocomplete="username" placeholder="e.g. barrelhunter" required></div>
+      <div class="username-suggestions" id="usernameSuggestions" aria-live="polite"></div>
+      <div class="field"><label>Date of birth<span>*</span></label><input name="birth_date" type="date" autocomplete="bday" required><p class="field-help">Bourbon Hunters is only for adults. Current minimum: 18+.</p></div>
       <button class="auth-primary" type="submit" data-i18n="signUpBtn">Sign Up</button>
       <div class="auth-divider"><span>Or</span></div>
       <button class="google-btn" type="button" data-auth-action="google"><span class="google-mark">G</span><span data-i18n="googleSignUp">Sign up with Google</span></button>
@@ -489,6 +496,21 @@
       <div class="auth-divider"><span>Or</span></div>
       <button class="google-btn" type="button" data-auth-action="google"><span class="google-mark">G</span><span data-i18n="googleSignIn">Sign in with Google</span></button>
       <p class="auth-switch"><span data-i18n="noAccount">No account yet?</span> <button class="text-link" type="button" data-open-view="register" data-i18n="registerTab">Register</button></p>
+      <p class="auth-legal"><button class="text-link" type="button" data-open-view="reset">Forgot password?</button> &middot; <button class="text-link" type="button" data-open-view="terms">Terms of Service</button> &middot; <button class="text-link" type="button" data-open-view="privacy">Privacy Policy</button></p>
+    </form>
+  </section>
+
+  <!-- RESET PASSWORD -->
+  <section class="view auth-view" id="view-reset">
+    <div class="auth-head">
+      <div class="auth-nav"><button class="auth-back" type="button" data-open-view="signin" aria-label="Back">&lsaquo;</button><button class="auth-later" type="button" data-open-view="profile" data-i18n="later">Later</button></div>
+      <h1 class="auth-title">Reset password</h1>
+      <p class="auth-sub">Enter your account email. We will send a reset link after transactional email is connected.</p>
+    </div>
+    <form class="auth-form" id="resetForm">
+      <div class="field"><label>Email<span>*</span></label><input name="email" type="email" autocomplete="email" placeholder="e.g. hunter@mail.com" required></div>
+      <button class="auth-primary" type="submit">Send reset link</button>
+      <p class="auth-legal"><button class="text-link" type="button" data-open-view="signin">Back to Sign In</button> &middot; <button class="text-link" type="button" data-open-view="terms">Terms of Service</button> &middot; <button class="text-link" type="button" data-open-view="privacy">Privacy Policy</button></p>
     </form>
   </section>
 
@@ -824,6 +846,10 @@ function bhApi(path,opts){
       if(!r.ok) throw data;
       return data;
     });
+  }).catch(function(err){
+    if(err&&err.error) throw err;
+    try{ console.warn("Bourbon Hunters API error",err); }catch(e){}
+    throw {error:"network_or_cors",detail:String(err&&err.message?err.message:err).slice(0,180)};
   });
 }
 function uniqueList(list){
@@ -869,8 +895,29 @@ function syncScanResult(res){
   const id=bottleActionId(res);
   bhApi("/me/scan",{method:"POST",body:JSON.stringify({bottle_id:id,bottle_name:res.name||"",source:res.source||"",result:res})}).catch(function(){});
 }
+function renderUsernameSuggestions(list){
+  const box=document.getElementById("usernameSuggestions");
+  if(!box) return;
+  box.innerHTML="";
+  (list||[]).slice(0,5).forEach(function(name){
+    const btn=document.createElement("button");
+    btn.type="button";
+    btn.setAttribute("data-username-suggestion",name);
+    btn.textContent=name;
+    box.appendChild(btn);
+  });
+}
 function authErrorMessage(err){
   const code=err&&err.error;
+  if(code==="network_or_cors") return authText("Cannot reach the account service. Check Worker deploy, CORS and internet connection.","Nie mo\u017cna po\u0142\u0105czy\u0107 si\u0119 z us\u0142ug\u0105 kont. Sprawd\u017a deploy Workera, CORS i internet.");
+  if(code==="server_error") return authText("Account service error: "+(err.detail||"unknown"),"B\u0142\u0105d us\u0142ugi kont: "+(err.detail||"nieznany"));
+  if(code==="bad_username") return authText("Username must have at least 2 characters.","Username musi mie\u0107 minimum 2 znaki.");
+  if(code==="email_exists") return authText("This email already has an account. Sign in instead.","Ten email ma ju\u017c konto. Zaloguj si\u0119.");
+  if(code==="username_exists") return authText("This username is taken. Pick one of the suggestions.","Ten username jest zaj\u0119ty. Wybierz jedn\u0105 z podpowiedzi.");
+  if(code==="age_required") return authText("Date of birth is required.","Data urodzenia jest wymagana.");
+  if(code==="age_restricted") return authText("You must be at least "+(err.min_age||18)+" to create an account.","Musisz mie\u0107 minimum "+(err.min_age||18)+" lat, aby utworzy\u0107 konto.");
+  if(code==="schema_age_missing") return authText("D1 age-gate migration is missing. Run the latest migration.","Brakuje migracji age-gate w D1. Uruchom najnowsz\u0105 migracj\u0119.");
+  if(code==="reset_not_configured") return authText("Password reset email will work after an email provider is connected.","Reset has\u0142a zadzia\u0142a po podpi\u0119ciu dostawcy email.");
   if(code==="d1_missing") return authText("Cloudflare D1 is not connected to the Worker yet.","Cloudflare D1 nie jest jeszcze podpięte do Workera.");
   if(code==="user_exists") return authText("This email or username is already taken.","Ten email albo username jest już zajęty.");
   if(code==="weak_password") return authText("Password must have at least 8 characters.","Hasło musi mieć minimum 8 znaków.");
@@ -879,9 +926,14 @@ function authErrorMessage(err){
   return authText("Account service is unavailable for a moment.","Usługa kont jest chwilowo niedostępna.");
 }
 function submitAuth(kind,form){
+  renderUsernameSuggestions([]);
   const fd=new FormData(form);
   const body={email:String(fd.get("email")||""),password:String(fd.get("password")||"")};
-  if(kind==="register") body.username=String(fd.get("username")||"");
+  if(kind==="register"){
+    body.username=String(fd.get("username")||"");
+    body.birth_date=String(fd.get("birth_date")||"");
+    body.age_gate_country="global";
+  }
   const btn=form.querySelector("button[type=submit]");
   if(btn) btn.disabled=true;
   bhApi(kind==="register"?"/auth/register":"/auth/login",{method:"POST",body:JSON.stringify(body)}).then(function(data){
@@ -891,6 +943,21 @@ function submitAuth(kind,form){
       showView("profile");
       form.reset();
     });
+  }).catch(function(err){
+    if(err&&err.suggestions) renderUsernameSuggestions(err.suggestions);
+    toast(authErrorMessage(err));
+  }).finally(function(){
+    if(btn) btn.disabled=false;
+  });
+}
+function submitPasswordReset(form){
+  const fd=new FormData(form);
+  const btn=form.querySelector("button[type=submit]");
+  if(btn) btn.disabled=true;
+  bhApi("/auth/password-reset",{method:"POST",body:JSON.stringify({email:String(fd.get("email")||"")})}).then(function(){
+    toast(authText("Password reset email will be connected in the email stage.","Reset has\u0142a podepniemy w etapie maili."));
+    showView("signin");
+    form.reset();
   }).catch(function(err){
     toast(authErrorMessage(err));
   }).finally(function(){
@@ -1342,6 +1409,14 @@ document.addEventListener("click",function(e){
   if(ctab){ renderCollection(ctab.getAttribute("data-ctab")); return; }
   const openView=e.target.closest("[data-open-view]");
   if(openView){ e.preventDefault(); showView(openView.getAttribute("data-open-view")); return; }
+  const usernameSuggestion=e.target.closest("[data-username-suggestion]");
+  if(usernameSuggestion){
+    e.preventDefault();
+    const input=document.querySelector('#registerForm input[name="username"]');
+    if(input) input.value=usernameSuggestion.getAttribute("data-username-suggestion")||"";
+    renderUsernameSuggestions([]);
+    return;
+  }
   const closePro=e.target.closest("#closeProStrip");
   if(closePro){ e.preventDefault(); e.stopPropagation(); document.getElementById("proStrip").classList.add("hidden"); return; }
   const authAction=e.target.closest("[data-auth-action]");
@@ -1399,6 +1474,13 @@ const registerForm=document.getElementById("registerForm");
 if(registerForm) registerForm.addEventListener("submit",function(e){ e.preventDefault(); submitAuth("register",registerForm); });
 const signinForm=document.getElementById("signinForm");
 if(signinForm) signinForm.addEventListener("submit",function(e){ e.preventDefault(); submitAuth("login",signinForm); });
+const resetForm=document.getElementById("resetForm");
+if(resetForm) resetForm.addEventListener("submit",function(e){ e.preventDefault(); submitPasswordReset(resetForm); });
+const birthInput=document.querySelector('#registerForm input[name="birth_date"]');
+if(birthInput){
+  const d=new Date(); d.setFullYear(d.getFullYear()-18);
+  birthInput.max=d.toISOString().slice(0,10);
+}
 
 function openDetail(id){
   const b = DB.find(function(x){return x.id===id;});

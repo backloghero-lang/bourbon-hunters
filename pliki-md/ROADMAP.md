@@ -179,4 +179,10 @@ Ten plik sluzy do planowania kolejnych prac. Szczegoly bugow trzymamy w `BUGS.md
 - [x] Podpiac binding `DB` w Cloudflare Worker.
 - [x] Wykonac `agent/d1-schema.sql` w Cloudflare D1.
 - [x] Wkleic i wdrozyc aktualny `agent/worker.js`.
+- [x] Dodac endpoint diagnostyczny `/auth/health` dla D1 i schematu kont.
+- [x] Przygotowac szablony maila powitalnego i potwierdzenia rezygnacji/usuniecia danych.
+- [x] Dodac age gate przy rejestracji oraz migracje D1 dla daty urodzenia.
+- [x] Dodac flow przypomnienia hasla jako UI + endpoint placeholder.
+- [x] Rozdzielic konflikt email i username oraz dodac podpowiedzi wolnych username.
+- [ ] Wybrac dostawce email i podpiac realna wysylke maili transakcyjnych.
 - [ ] Test: utworzyc konto, dodac butelke do kolekcji, odswiezyc appke i sprawdzic sync.
