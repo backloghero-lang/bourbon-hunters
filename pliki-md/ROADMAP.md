@@ -186,3 +186,15 @@ Ten plik sluzy do planowania kolejnych prac. Szczegoly bugow trzymamy w `BUGS.md
 - [x] Rozdzielic konflikt email i username oraz dodac podpowiedzi wolnych username.
 - [ ] Wybrac dostawce email i podpiac realna wysylke maili transakcyjnych.
 - [ ] Test: utworzyc konto, dodac butelke do kolekcji, odswiezyc appke i sprawdzic sync.
+
+## Jutro - provider email transakcyjny
+
+- [ ] Wybrac providera: rekomendacja startowa `Resend`.
+- [ ] Przygotowac domenę/subdomenę mailowa, np. `mail.bourbonhunters.app` albo docelowa domena projektu.
+- [ ] Ustawic DNS zgodnie z Resend: SPF/DKIM/verification records.
+- [ ] Dodac sekret Workera `RESEND_API_KEY`.
+- [ ] Dodac zmienne Workera: `MAIL_FROM`, `APP_URL`, `SUPPORT_EMAIL`.
+- [ ] Podpiac wysylke welcome email po `/auth/register`.
+- [ ] Podpiac realny reset hasla: token jednorazowy, expiry, mail resetujacy, endpoint ustawienia nowego hasla.
+- [ ] Podpiac mail potwierdzajacy request usuniecia danych.
+- [ ] Zaktualizowac Privacy/Terms po wyborze realnego providera email.

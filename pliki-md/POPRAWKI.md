@@ -5,6 +5,7 @@ Zasada: zbieramy tutaj, a gdy powiesz "robimy bugi" - lecę z całej listy naraz
 ## Otwarte
 - [ ] Pełna lokalizacja PL/EN wg języka urządzenia. Reguła docelowa: jeżeli język telefonu zaczyna się od `pl`, aplikacja jest po polsku i pokazuje ceny w zł; każdy inny język telefonu = aplikacja po angielsku i ceny w USD. Nazwy własne zostają bez tłumaczenia: Bourbon Hunters, destylarnie, nazwy alkoholi. UI już wykrywa język urządzenia, ale dane/opisy wymagają docelowo pól `desc_pl`/`desc_en` oraz lepszego kursu z backendu.
 - [ ] Synchronizacja Figma po deployu: po kliknięciu "Wyślij na gita" uruchomić w Figmie lokalny plugin `Bourbon Hunters Asset Importer`, aby zaciągnął aktualne assety z GitHub Pages bez tworzenia nowych stron.
+- [ ] Provider email transakcyjny: jutro podpiąć Resend albo alternatywę. Maile: welcome, reset hasła, potwierdzenie/usunięcie danych. Wymaga DNS domeny, sekretu `RESEND_API_KEY` i zmiennych `MAIL_FROM`, `APP_URL`, `SUPPORT_EMAIL`.
 
 ## Do zrobienia później (zaplanowane)
 - [ ] Oceny użytkownika (własne gwiazdki) - obecnie dodajemy lokalny user rating; później można rozbudować o notatki i synchronizację.

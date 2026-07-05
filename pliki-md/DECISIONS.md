@@ -99,3 +99,4 @@ Ten plik trzyma stale ustalenia, zeby nie ginely w dlugich watkach.
 - Szablony email sa trzymane w `pliki-md/email-templates/` i zostana podlaczone dopiero po wyborze providera.
 - Rejestracja wymaga daty urodzenia. Domyslny prog to 18+, a dla USA mozemy szybko podniesc go zmienna Workera `AGE_GATE_MIN=21`.
 - Reset hasla ma juz ekran i endpoint placeholder, ale realna wysylka linku resetujacego wymaga providera email.
+- Rekomendacja na start dla maili transakcyjnych: Resend, bo jest prosty do podpiecia z Cloudflare Workerem. Finalna decyzja wymaga domeny/subdomeny i rekordow DNS.

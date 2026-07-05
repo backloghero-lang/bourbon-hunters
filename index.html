@@ -80,8 +80,8 @@
     border:1px solid rgba(184,99,51,.72);border-radius:20px;padding:20px;display:flex;gap:16px;box-shadow:0 18px 42px rgba(0,0,0,.42);position:relative;overflow:hidden}
   .feat:before{content:"";position:absolute;inset:0;background:url("design/figma-assets/asset-pack-v1/noise-overlay.png") center/cover repeat;opacity:.08;pointer-events:none}
   .feat:after{content:"";position:absolute;left:14px;right:14px;bottom:0;height:1px;background:linear-gradient(90deg,transparent,rgba(232,156,66,.88),transparent);pointer-events:none}
-  .feat h4{font-family:var(--serif);font-size:21px;margin:0 0 7px;line-height:1.08;color:#F6E1BC;text-shadow:0 2px 12px rgba(0,0,0,.65);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;min-height:68px}
-  .feat.long-name h4{font-size:19px;line-height:1.1}
+  .feat h4{font-family:var(--serif);font-size:21px;margin:0 0 7px;line-height:1.08;color:#F6E1BC;text-shadow:0 2px 12px rgba(0,0,0,.65);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;height:68px;max-height:68px}
+  .feat.long-name h4{font-size:19px;line-height:1.1;height:63px;max-height:63px}
   .feat.long-name .sub{display:none}
   .feat .sub{font-size:12px;color:#C68752;margin-bottom:8px;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .feat .price{font-size:20px;color:#E28A3D;font-weight:900;margin-bottom:8px;letter-spacing:.5px}
@@ -130,6 +130,8 @@
   .chips::-webkit-scrollbar{display:none}
   .chip{flex:none;background:var(--card);border:1px solid var(--line);color:var(--muted);font-size:13px;font-weight:700;padding:8px 14px;border-radius:20px;cursor:pointer;white-space:nowrap}
   .chip.on{background:var(--amber);color:#241708;border-color:var(--amber)}
+  .chip.style-chip{font-weight:900;border-color:rgba(226,176,112,.28)}
+  .chip.style-chip.on{box-shadow:0 0 0 2px rgba(226,176,112,.12)}
   .empty{color:var(--muted);font-size:13px;text-align:center;padding:30px 10px;line-height:1.6}
 
   /* list rows (Odkrywaj / Lista życzeń) */
@@ -164,6 +166,7 @@
   .tabs::-webkit-scrollbar{display:none}
   .tab{flex:none;border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:999px;padding:9px 13px;font-size:13px;font-weight:800;cursor:pointer;white-space:nowrap}
   .tab.on{background:var(--amber);border-color:var(--amber);color:#241708}
+  .collection-style-chips{margin-top:-7px;margin-bottom:15px}
   .home-empty{flex:0 0 92%;scroll-snap-align:start;min-height:152px;display:grid;place-items:center;text-align:center;color:var(--muted);font-size:14px;line-height:1.55;border:1px dashed rgba(226,176,112,.28);border-radius:18px;background:rgba(0,0,0,.18);padding:22px}
   .profile-hero{margin:0 -16px 20px;padding:0 16px 18px;border-bottom:1px solid rgba(226,176,112,.18);text-align:center}
   .pro-strip{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:12px;margin:0 -16px 24px;padding:11px 16px;background:radial-gradient(120% 140% at 82% 0%,rgba(226,176,112,.24),transparent 58%),linear-gradient(90deg,rgba(18,13,9,.96),rgba(46,33,20,.94));border-top:1px solid rgba(226,176,112,.18);border-bottom:1px solid rgba(184,99,51,.38);color:#F6E1BC;font-size:13px;font-weight:900;box-shadow:0 10px 24px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.04)}
@@ -307,6 +310,15 @@
   .links{font-size:12px;line-height:1.7}.links a{color:var(--amber);word-break:break-all}
   .card{background:linear-gradient(160deg,rgba(29,27,24,.9),rgba(16,12,8,.94)),url("design/figma-assets/scanner-pack-v1/result-card-bg.png") center/cover no-repeat;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow);margin:16px}
   .name{font-size:21px;font-weight:800;font-family:var(--serif);margin:0 0 2px}
+  .age-gate{position:fixed;inset:0;z-index:9998;display:none;place-items:center;padding:22px;background:rgba(3,2,1,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+  .age-gate.show{display:grid}
+  .age-card{width:min(420px,100%);border:1px solid rgba(226,176,112,.42);border-radius:20px;background:linear-gradient(160deg,rgba(33,24,16,.96),rgba(8,6,4,.98));box-shadow:0 24px 70px rgba(0,0,0,.66),inset 0 1px 0 rgba(255,255,255,.05);padding:22px}
+  .age-card h2{font-family:var(--serif);font-size:27px;line-height:1.05;margin:0 0 9px;color:#F6E1BC}
+  .age-card p{margin:0 0 16px;color:#C9B493;font-size:13px;line-height:1.55}
+  .age-card input{width:100%;height:54px;border:1px solid rgba(226,176,112,.22);border-radius:16px;background:rgba(246,225,188,.08);color:#F6E1BC;padding:0 14px;font-size:15px;color-scheme:dark;outline:none}
+  .age-actions{display:grid;grid-template-columns:1fr;gap:10px;margin-top:16px}
+  .age-actions button{height:52px;border:0;border-radius:16px;background:linear-gradient(180deg,#E2B070,#B86A33);color:#1B1008;font-weight:950;cursor:pointer}
+  .age-note{font-size:11px!important;color:#9F8B69!important;margin-top:12px!important}
 
   .placeholder-view{text-align:center;padding:60px 20px;color:var(--muted)}
   .placeholder-view .pi{font-size:48px;margin-bottom:14px}
@@ -439,6 +451,7 @@
       <button class="tab on" data-ctab="wishlist" data-i18n="wlT">Lista życzeń</button>
       <button class="tab" data-ctab="owned" data-i18n="coT">Moja kolekcja</button>
     </div>
+    <div class="chips collection-style-chips" id="collectionStyleChips"></div>
     <div id="collectionList"></div>
   </section>
 
@@ -473,12 +486,12 @@
       <div class="field"><label>Password<span>*</span></label><input name="password" type="password" autocomplete="new-password" placeholder="******" required minlength="8"></div>
       <div class="field"><label>Username<span>*</span></label><input name="username" type="text" autocomplete="username" placeholder="e.g. barrelhunter" required></div>
       <div class="username-suggestions" id="usernameSuggestions" aria-live="polite"></div>
-      <div class="field"><label>Date of birth<span>*</span></label><input name="birth_date" type="date" autocomplete="bday" required><p class="field-help">Bourbon Hunters is only for adults. Current minimum: 18+.</p></div>
+      <div class="field"><label><span data-i18n="birthDateLabel">Date of birth</span><span>*</span></label><input name="birth_date" type="date" autocomplete="bday" required><p class="field-help" data-i18n="birthDateHelp">Bourbon Hunters is only for adults. Current minimum: 18+.</p></div>
       <button class="auth-primary" type="submit" data-i18n="signUpBtn">Sign Up</button>
       <div class="auth-divider"><span>Or</span></div>
       <button class="google-btn" type="button" data-auth-action="google"><span class="google-mark">G</span><span data-i18n="googleSignUp">Sign up with Google</span></button>
       <p class="auth-switch"><span data-i18n="alreadyAccount">Already have an account?</span> <button class="text-link" type="button" data-open-view="signin" data-i18n="signInTab">Sign In</button></p>
-      <p class="auth-legal"><span data-i18n="authConsent">By proceeding, you agree to our</span> <button class="text-link" type="button" data-open-view="terms">Terms of Service</button> <span data-i18n="andText">and</span> <button class="text-link" type="button" data-open-view="privacy">Privacy Policy</button>.</p>
+      <p class="auth-legal"><span data-i18n="authConsent">By proceeding, you agree to our</span> <button class="text-link" type="button" data-open-view="terms" data-i18n="termsTitle">Terms of Service</button> <span data-i18n="andText">and</span> <button class="text-link" type="button" data-open-view="privacy" data-i18n="privacyTitle">Privacy Policy</button>.</p>
     </form>
   </section>
 
@@ -496,7 +509,7 @@
       <div class="auth-divider"><span>Or</span></div>
       <button class="google-btn" type="button" data-auth-action="google"><span class="google-mark">G</span><span data-i18n="googleSignIn">Sign in with Google</span></button>
       <p class="auth-switch"><span data-i18n="noAccount">No account yet?</span> <button class="text-link" type="button" data-open-view="register" data-i18n="registerTab">Register</button></p>
-      <p class="auth-legal"><button class="text-link" type="button" data-open-view="reset">Forgot password?</button> &middot; <button class="text-link" type="button" data-open-view="terms">Terms of Service</button> &middot; <button class="text-link" type="button" data-open-view="privacy">Privacy Policy</button></p>
+      <p class="auth-legal"><button class="text-link" type="button" data-open-view="reset" data-i18n="forgotPassword">Forgot password?</button> &middot; <button class="text-link" type="button" data-open-view="terms" data-i18n="termsTitle">Terms of Service</button> &middot; <button class="text-link" type="button" data-open-view="privacy" data-i18n="privacyTitle">Privacy Policy</button></p>
     </form>
   </section>
 
@@ -504,13 +517,13 @@
   <section class="view auth-view" id="view-reset">
     <div class="auth-head">
       <div class="auth-nav"><button class="auth-back" type="button" data-open-view="signin" aria-label="Back">&lsaquo;</button><button class="auth-later" type="button" data-open-view="profile" data-i18n="later">Later</button></div>
-      <h1 class="auth-title">Reset password</h1>
-      <p class="auth-sub">Enter your account email. We will send a reset link after transactional email is connected.</p>
+      <h1 class="auth-title" data-i18n="resetTitle">Reset password</h1>
+      <p class="auth-sub" data-i18n="resetIntro">Enter your account email. We will send a reset link after transactional email is connected.</p>
     </div>
     <form class="auth-form" id="resetForm">
       <div class="field"><label>Email<span>*</span></label><input name="email" type="email" autocomplete="email" placeholder="e.g. hunter@mail.com" required></div>
-      <button class="auth-primary" type="submit">Send reset link</button>
-      <p class="auth-legal"><button class="text-link" type="button" data-open-view="signin">Back to Sign In</button> &middot; <button class="text-link" type="button" data-open-view="terms">Terms of Service</button> &middot; <button class="text-link" type="button" data-open-view="privacy">Privacy Policy</button></p>
+      <button class="auth-primary" type="submit" data-i18n="resetBtn">Send reset link</button>
+      <p class="auth-legal"><button class="text-link" type="button" data-open-view="signin" data-i18n="backToSignIn">Back to Sign In</button> &middot; <button class="text-link" type="button" data-open-view="terms" data-i18n="termsTitle">Terms of Service</button> &middot; <button class="text-link" type="button" data-open-view="privacy" data-i18n="privacyTitle">Privacy Policy</button></p>
     </form>
   </section>
 
@@ -518,7 +531,7 @@
   <section class="view legal-view" id="view-terms">
     <div class="legal-head">
       <div class="legal-nav"><button class="legal-back" type="button" data-open-view="register" aria-label="Back">&lsaquo;</button></div>
-      <h1 class="legal-title">Terms of Service</h1>
+      <h1 class="legal-title" data-i18n="termsTitle">Terms of Service</h1>
     </div>
     <div class="legal-body">
       <p class="legal-note">Draft placeholder for product validation. Final legal copy should be reviewed before public launch.</p>
@@ -535,7 +548,7 @@
   <section class="view legal-view" id="view-privacy">
     <div class="legal-head">
       <div class="legal-nav"><button class="legal-back" type="button" data-open-view="register" aria-label="Back">&lsaquo;</button></div>
-      <h1 class="legal-title">Privacy Policy</h1>
+      <h1 class="legal-title" data-i18n="privacyTitle">Privacy Policy</h1>
     </div>
     <div class="legal-body">
       <p class="legal-note">Draft placeholder based on standard mobile app disclosure categories. Final policy must match the real backend and Google Play Data Safety form.</p>
@@ -548,6 +561,18 @@
       <h3>Contact</h3><p>Before public launch, add the developer/company name, privacy contact email and public policy URL required by app stores.</p>
     </div>
   </section>
+</div>
+
+<div class="age-gate" id="ageGate" aria-modal="true" role="dialog" aria-labelledby="ageGateTitle">
+  <div class="age-card">
+    <h2 id="ageGateTitle" data-i18n="ageGateTitle">Confirm your age</h2>
+    <p data-i18n="ageGateBody">Bourbon Hunters is for adults of legal drinking age. Enter your date of birth to continue.</p>
+    <input id="ageGateBirthDate" type="date" autocomplete="bday" aria-label="Date of birth">
+    <div class="age-actions">
+      <button id="ageGateConfirm" type="button" data-i18n="ageGateContinue">Continue</button>
+    </div>
+    <p class="age-note" data-i18n="ageGateNote">Default access is 18+. For US mode this can be changed to 21+ in the product configuration.</p>
+  </div>
 </div>
 
 <nav class="nav" id="bottomNav">
@@ -723,6 +748,24 @@ const I18N = {
     coT:"My collection", coD:"Your shelf — every bottle you own in one place.", registerTab:"Register", signInTab:"Sign In", articlesTab:"Articles", proTab:"Pro version", settingsTab:"Settings", profileName:"Bourbon Hunters", profileCopy:"Sign in to sync your shelf, scans and tasting notes across devices.", proStrip:"More features. No ads.", joinPro:"Join Pro", later:"Later", registerTitle:"Sign up", registerIntro:"Create your hunter profile to sync your collection.", signInTitle:"Sign in", signInIntro:"Return to your shelf, scans and tasting notes.", signUpBtn:"Sign Up", signInBtn:"Sign In", googleSignUp:"Sign up with Google", googleSignIn:"Sign in with Google", alreadyAccount:"Already have an account?", noAccount:"No account yet?", authConsent:"By proceeding, you agree to our", andText:"and", authPending:"Google Sign-In will be connected in the next stage.", inProgress:"In progress", soonTag:"Soon" }
 };
 
+Object.assign(I18N.pl,{
+  registerTab:"Rejestracja", signInTab:"Logowanie", articlesTab:"Artyku\u0142y", joinPro:"Do\u0142\u0105cz Pro", later:"P\u00f3\u017aniej",
+  registerTitle:"Rejestracja", signInTitle:"Logowanie", signUpBtn:"Utw\u00f3rz konto", signInBtn:"Zaloguj",
+  googleSignUp:"Zarejestruj z Google", googleSignIn:"Zaloguj z Google", alreadyAccount:"Masz ju\u017c konto?", noAccount:"Nie masz konta?",
+  authConsent:"Kontynuuj\u0105c, akceptujesz", andText:"oraz", termsTitle:"Regulamin", privacyTitle:"Polityka prywatno\u015bci",
+  forgotPassword:"Nie pami\u0119tasz has\u0142a?", resetTitle:"Reset has\u0142a", resetIntro:"Podaj email konta. Link resetuj\u0105cy wy\u015blemy po podpi\u0119ciu maili transakcyjnych.",
+  resetBtn:"Wy\u015blij link resetuj\u0105cy", backToSignIn:"Wr\u00f3\u0107 do logowania", birthDateLabel:"Data urodzenia", birthDateHelp:"Bourbon Hunters jest tylko dla doros\u0142ych. Aktualny limit: 18+.",
+  ageGateTitle:"Potwierd\u017a wiek", ageGateBody:"Bourbon Hunters jest dla os\u00f3b pe\u0142noletnich. Podaj dat\u0119 urodzenia, aby przej\u015b\u0107 dalej.",
+  ageGateContinue:"Kontynuuj", ageGateNote:"Domy\u015blny dost\u0119p to 18+. Dla trybu USA mo\u017cemy zmieni\u0107 limit na 21+.", ageGateBlocked:"Musisz mie\u0107 minimum 18 lat, aby korzysta\u0107 z aplikacji."
+});
+Object.assign(I18N.en,{
+  termsTitle:"Terms of Service", privacyTitle:"Privacy Policy", forgotPassword:"Forgot password?", resetTitle:"Reset password",
+  resetIntro:"Enter your account email. We will send a reset link after transactional email is connected.", resetBtn:"Send reset link", backToSignIn:"Back to Sign In",
+  birthDateLabel:"Date of birth", birthDateHelp:"Bourbon Hunters is only for adults. Current minimum: 18+.",
+  ageGateTitle:"Confirm your age", ageGateBody:"Bourbon Hunters is for adults of legal drinking age. Enter your date of birth to continue.",
+  ageGateContinue:"Continue", ageGateNote:"Default access is 18+. For US mode this can be changed to 21+ in the product configuration.", ageGateBlocked:"You must be at least 18 to use the app."
+});
+
 /* lista destylarni z licznikami, posortowana wg liczby butelek (do filtra) */
 function distilleryList(){
   const m={};
@@ -752,6 +795,27 @@ function categoryKey(b){
   return "standard";
 }
 function styleMatch(b, key){ return categoryKey(b)===key; }
+function styleMeta(key){ return STYLES.filter(function(s){ return s.key===key; })[0] || null; }
+function styleLabel(key){ const st=styleMeta(key); return st ? st.label : key; }
+function styleCounts(list){
+  const counts={};
+  (list||[]).forEach(function(b){ const k=categoryKey(b); if(styleMeta(k)) counts[k]=(counts[k]||0)+1; });
+  return counts;
+}
+function styleChipHtml(prefix, counts, active){
+  active=active||[];
+  const keys=STYLES.map(function(s){ return s.key; }).filter(function(k){ return (counts&&counts[k])>0; });
+  let html='<button class="chip style-chip'+(!active.length?' on':'')+'" data-'+prefix+'-style-all="1">'+t("all")+'</button>';
+  html+=keys.map(function(k){
+    const on=active.indexOf(k)>=0;
+    return '<button class="chip style-chip'+(on?' on':'')+'" data-'+prefix+'-style="'+esc(k)+'">'+esc(styleLabel(k))+' '+counts[k]+'</button>';
+  }).join("");
+  return html;
+}
+function toggleValue(list,key){
+  const i=list.indexOf(key);
+  if(i>=0) list.splice(i,1); else list.push(key);
+}
 function categoryLabel(b){
   const key=categoryKey(b);
   if(key==="small") return "Small Batch";
@@ -769,6 +833,8 @@ function detectLang(){
   return n.indexOf("pl")===0?"pl":"en";
 }
 let lang=detectLang(), DB=[], curDist="all", curCat="all", renderN=RENDER_LIMIT;
+let exploreStyles=[];
+const collectionStyles={wishlist:[],owned:[]};
 const PLN_PER_USD = 4.0; // orientacyjne UI; docelowo kurs moze przyjsc z Workera
 function numPrice(v){
   if(v==null || v==="") return null;
@@ -1232,8 +1298,8 @@ function featCard(b, kick){
   const price=fmtPrice(b);
   const tag=categoryLabel(b);
   const longName = String(b.name||"").length > 34 ? " long-name" : "";
-  const shownName = longName ? String(b.name||"").slice(0,40).replace(/\s+\S*$/,"")+'...' : String(b.name||"");
-  return '<div class="feat'+longName+'" data-id="'+esc(b.id)+'"><div class="info"><h4>'+esc(shownName)+'</h4>'+
+  const shownName = String(b.name||"");
+  return '<div class="feat'+longName+'" data-id="'+esc(b.id)+'"><div class="info"><h4 title="'+esc(shownName)+'">'+esc(shownName)+'</h4>'+
     '<div class="sub">'+esc(b.distillery||"")+'</div>'+
     (price?'<div class="price">'+esc(price)+'</div>':'')+
     '<div class="feat-tags"><span class="feat-tag">'+esc(tag)+'</span></div>'+
@@ -1243,6 +1309,37 @@ function featCard(b, kick){
 function t(k){ return (I18N[lang]&&I18N[lang][k])||I18N.pl[k]||k; }
 function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 function starStr(n){ n=Math.max(0,Math.min(5,Math.round(n||0))); return "★★★★★".slice(0,n)+"☆☆☆☆☆".slice(0,5-n); }
+
+const AGE_GATE_KEY="bh_age_gate_ok_v1";
+const AGE_GATE_MIN=18;
+function dateYearsAgo(years){
+  const d=new Date();
+  d.setFullYear(d.getFullYear()-years);
+  return d.toISOString().slice(0,10);
+}
+function isAdultBirthDate(value,minAge){
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(String(value||""))) return false;
+  return String(value)<=dateYearsAgo(minAge);
+}
+function showAgeGateIfNeeded(){
+  let ok=false;
+  try{ ok=localStorage.getItem(AGE_GATE_KEY)==="1"; }catch(e){}
+  const gate=document.getElementById("ageGate");
+  if(!ok && gate) gate.classList.add("show");
+}
+function setupAgeGate(){
+  const gate=document.getElementById("ageGate");
+  const input=document.getElementById("ageGateBirthDate");
+  const btn=document.getElementById("ageGateConfirm");
+  if(!gate||!input||!btn) return;
+  input.max=dateYearsAgo(AGE_GATE_MIN);
+  btn.addEventListener("click",function(){
+    if(!isAdultBirthDate(input.value,AGE_GATE_MIN)){ toast(t("ageGateBlocked")); return; }
+    try{ localStorage.setItem(AGE_GATE_KEY,"1"); }catch(e){}
+    gate.classList.remove("show");
+  });
+}
+window.BH_SHOW_AGE_GATE=showAgeGateIfNeeded;
 
 function applyLang(){
   document.documentElement.lang=lang;
@@ -1294,7 +1391,14 @@ function renderCollection(tab){
   const el=document.getElementById("collectionList"); if(!el) return;
   const ids = collectionTab==="wishlist" ? WL : OWNED;
   const emptyKey = collectionTab==="wishlist" ? "wlEmpty" : "emptyCollection";
-  const items=ids.map(function(id){ return DB.find(function(b){return b.id===id;}); }).filter(Boolean);
+  const allItems=ids.map(function(id){ return DB.find(function(b){return b.id===id;}); }).filter(Boolean);
+  const chips=document.getElementById("collectionStyleChips");
+  const active=collectionStyles[collectionTab]||[];
+  const counts=styleCounts(allItems);
+  const validActive=active.filter(function(k){ return counts[k]>0; });
+  collectionStyles[collectionTab]=validActive;
+  if(chips) chips.innerHTML = allItems.length ? styleChipHtml("coll",counts,validActive) : "";
+  const items=validActive.length ? allItems.filter(function(b){ return validActive.indexOf(categoryKey(b))>=0; }) : allItems;
   el.innerHTML = items.length ? '<div class="blist">'+items.map(listRow).join("")+'</div>' : '<div class="empty">'+t(emptyKey)+'</div>';
 }
 document.querySelectorAll(".nav button").forEach(function(b){ b.addEventListener("click",function(){ showView(b.getAttribute("data-view")); }); });
@@ -1370,6 +1474,27 @@ function renderHomeCollection(){
 }
 
 function renderExplore(){
+  {
+  const counts=styleCounts(DB);
+  document.getElementById("exploreChips").innerHTML = styleChipHtml("explore",counts,exploreStyles);
+  const q = (document.getElementById("exploreSearchInput").value||"").toLowerCase().trim();
+  let list = DB.filter(function(b){
+    const okCat  = !exploreStyles.length || exploreStyles.indexOf(categoryKey(b))>=0;
+    const okQ = !q || (b.name+" "+(b.distillery||"")).toLowerCase().indexOf(q)>=0;
+    return okCat && okQ;
+  });
+  const grid = document.getElementById("exploreGrid");
+  if(!list.length){ grid.innerHTML = '<div class="empty">'+t("noResults")+'<br><br>'+t("scanAdd")+'</div>'; document.getElementById("exploreMore").innerHTML=""; return; }
+  const shown = list.slice(0, renderN);
+  grid.innerHTML = '<div class="blist">'+shown.map(listRow).join("")+'</div>';
+  const bar = document.getElementById("exploreMore");
+  if(list.length > renderN){
+    bar.innerHTML = '<button class="chip" id="loadMoreBtn" style="margin:0 auto">'+t("loadMore")+' ('+(list.length-renderN)+')</button>';
+  } else {
+    bar.innerHTML = '<span style="font-size:12px;color:var(--muted)">'+list.length+' '+t("results")+'</span>';
+  }
+  return;
+  }
   // aktywna kategoria (styl) jako kasowalny chip + chips destylarni
   let chips = "";
   if(curCat!=="all"){
@@ -1407,6 +1532,14 @@ function renderExplore(){
 document.addEventListener("click",function(e){
   const ctab=e.target.closest("[data-ctab]");
   if(ctab){ renderCollection(ctab.getAttribute("data-ctab")); return; }
+  const exploreAll=e.target.closest("[data-explore-style-all]");
+  if(exploreAll){ exploreStyles=[]; renderN=RENDER_LIMIT; renderExplore(); return; }
+  const exploreStyle=e.target.closest("[data-explore-style]");
+  if(exploreStyle){ toggleValue(exploreStyles,exploreStyle.getAttribute("data-explore-style")); renderN=RENDER_LIMIT; renderExplore(); return; }
+  const collAll=e.target.closest("[data-coll-style-all]");
+  if(collAll){ collectionStyles[collectionTab]=[]; renderCollection(collectionTab); return; }
+  const collStyle=e.target.closest("[data-coll-style]");
+  if(collStyle){ toggleValue(collectionStyles[collectionTab],collStyle.getAttribute("data-coll-style")); renderCollection(collectionTab); return; }
   const openView=e.target.closest("[data-open-view]");
   if(openView){ e.preventDefault(); showView(openView.getAttribute("data-open-view")); return; }
   const usernameSuggestion=e.target.closest("[data-username-suggestion]");
@@ -1457,7 +1590,7 @@ document.addEventListener("click",function(e){
   const card = e.target.closest("[data-id]");
   if(card){ openDetail(card.getAttribute("data-id")); return; }
   const styleCell = e.target.closest(".cat[data-style]");
-  if(styleCell){ curCat=styleCell.getAttribute("data-style"); curDist="all"; renderN=RENDER_LIMIT; renderExplore(); showView("explore"); return; }
+  if(styleCell){ exploreStyles=[styleCell.getAttribute("data-style")]; curDist="all"; curCat="all"; renderN=RENDER_LIMIT; renderExplore(); showView("explore"); return; }
   const clearCat = e.target.closest(".chip[data-clearcat]");
   if(clearCat){ curCat="all"; renderN=RENDER_LIMIT; renderExplore(); return; }
   const chip = e.target.closest(".chip[data-dist]");
@@ -1465,8 +1598,8 @@ document.addEventListener("click",function(e){
   if(e.target.id==="loadMoreBtn"){ renderN+=RENDER_LIMIT; renderExplore(); return; }
   if(e.target.id==="goAnalyzeBtn"){ scan("analyze"); return; }
 });
-document.getElementById("catAll").addEventListener("click",function(){ curDist="all"; curCat="all"; renderN=RENDER_LIMIT; renderExplore(); showView("explore"); });
-document.getElementById("recentAll").addEventListener("click",function(){ curDist="all"; curCat="all"; renderN=RENDER_LIMIT; renderExplore(); showView("explore"); });
+document.getElementById("catAll").addEventListener("click",function(){ curDist="all"; curCat="all"; exploreStyles=[]; renderN=RENDER_LIMIT; renderExplore(); showView("explore"); });
+document.getElementById("recentAll").addEventListener("click",function(){ curDist="all"; curCat="all"; exploreStyles=[]; renderN=RENDER_LIMIT; renderExplore(); showView("explore"); });
 document.getElementById("homeCollectionAll").addEventListener("click",function(){ collectionTab="owned"; renderCollection("owned"); showView("collection"); });
 document.getElementById("exploreSearchInput").addEventListener("input",function(){ renderN=RENDER_LIMIT; renderExplore(); });
 document.getElementById("detailBack").addEventListener("click",function(){ showView("explore"); });
@@ -1481,6 +1614,8 @@ if(birthInput){
   const d=new Date(); d.setFullYear(d.getFullYear()-18);
   birthInput.max=d.toISOString().slice(0,10);
 }
+setupAgeGate();
+window.addEventListener("load",function(){ setTimeout(function(){ if(!document.getElementById("bhIntro")) showAgeGateIfNeeded(); },900); });
 
 function openDetail(id){
   const b = DB.find(function(x){return x.id===id;});
@@ -1776,7 +1911,7 @@ if("serviceWorker" in navigator){ window.addEventListener("load",function(){ nav
   var skip=document.getElementById("bhIntroSkip");
   var introStart=5.25;
   var done=false;
-  function finish(){ if(done) return; done=true; intro.classList.add("is-fading"); setTimeout(function(){ if(intro&&intro.parentNode) intro.parentNode.removeChild(intro); },620); }
+  function finish(){ if(done) return; done=true; intro.classList.add("is-fading"); setTimeout(function(){ if(intro&&intro.parentNode) intro.parentNode.removeChild(intro); if(window.BH_SHOW_AGE_GATE) window.BH_SHOW_AGE_GATE(); },620); }
   if(skip) skip.addEventListener("click",function(e){ e.preventDefault(); e.stopPropagation(); finish(); });
   if(video){
     video.muted=true;
