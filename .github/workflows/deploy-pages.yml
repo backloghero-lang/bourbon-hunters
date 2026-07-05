@@ -1,0 +1,69 @@
+name: Deploy Bourbon Hunters Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build Pages artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf _site
+          mkdir -p _site
+
+          cp index.html test-index.html sw.js manifest.json _site/
+          cp -R db icons _site/
+
+          mkdir -p _site/assets
+          mkdir -p _site/assets/bourbons
+          cp -R assets/detail _site/assets/
+          cp -R assets/intro _site/assets/
+          cp -R assets/bourbons/runtime-100 _site/assets/bourbons/
+          cp -R assets/bourbons/list-thumbs _site/assets/bourbons/
+          cp -R assets/bourbons/cutouts-test _site/assets/bourbons/
+
+          mkdir -p _site/design/figma-assets
+          cp -R design/figma-assets/asset-pack-v1 _site/design/figma-assets/
+          cp -R design/figma-assets/home-pack-v2 _site/design/figma-assets/
+          cp -R design/figma-assets/scanner-pack-v1 _site/design/figma-assets/
+
+          touch _site/.nojekyll
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        with:
+          timeout: 600000

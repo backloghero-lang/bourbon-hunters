@@ -159,3 +159,4 @@ Ten plik sluzy do planowania kolejnych prac. Szczegoly bugow trzymamy w `BUGS.md
 - Pracujemy w istniejacej strukturze.
 - Przy wiekszych zmianach frontu podbijamy cache w `sw.js`.
 - Po zmianach sprawdzamy `git diff --check` i `git status --short`.
+- Jesli GitHub Pages deploy z `Deploy from a branch` bedzie niestabilny, uzywamy workflow `Deploy Bourbon Hunters Pages` i w Settings -> Pages ustawiamy source na `GitHub Actions`.

@@ -78,3 +78,5 @@ Ten plik trzyma stale ustalenia, zeby nie ginely w dlugich watkach.
 - Launcher testowy: `https://backloghero-lang.github.io/bourbon-hunters/test-index.html`.
 - Po deployu w launcherze: `Odswiez build`.
 - Jesli telefon trzyma stara wersje: `Wyczysc cache/PWA`.
+- GitHub Pages powinien publikowac aplikacje przez workflow `.github/workflows/deploy-pages.yml`, ktory pakuje tylko pliki produkcyjne do `_site`.
+- Nie publikujemy calego roboczego repo jako artifact Pages, bo pakuje design/previews i niepotrzebnie zwieksza artifact.
