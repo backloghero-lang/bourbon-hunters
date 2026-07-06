@@ -16,6 +16,7 @@ const DEFAULT_PROMPT_URL = "https://raw.githubusercontent.com/" + REPO + "/main/
 const DEFAULT_DB_URL = "https://raw.githubusercontent.com/" + REPO + "/main/db/bourbons.json";
 const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters. Krotko, z jajem, ale rzeczowo. quality=jakosc 1-5, value=jakosc/cena 1-5 (5 swietna i tania, 1 slaba i droga). Pisz {{LANG}}. Zwroc tylko JSON.";
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
+const AUTH_VERSION = "auth-pbkdf2-100000-v2";
 const PBKDF2_ITERATIONS = 100000;
 
 let _p = { t:null, at:0 }, _db = { d:null, at:0 };
@@ -242,7 +243,7 @@ async function handleApi(request, env, cors){
       }
       catch(e){ detail=String(e&&e.message?e.message:e).slice(0,220); }
     }
-    return J({ok:true,worker:"bourbon-hunters",d1:!!env.DB,schema:schema,reset_schema:reset_schema,email_ready:mailConfigured(env),detail:detail,time:new Date().toISOString()},200,cors);
+    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,email_ready:mailConfigured(env),detail:detail,time:new Date().toISOString()},200,cors);
   }
   const dbErr=needDB(env,cors); if(dbErr) return dbErr;
   if(path==="/auth/register" && request.method==="POST"){

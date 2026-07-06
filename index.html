@@ -1419,7 +1419,7 @@ function t(k){ return (I18N[lang]&&I18N[lang][k])||I18N.pl[k]||k; }
 function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 function starStr(n){ n=Math.max(0,Math.min(5,Math.round(n||0))); return "★★★★★".slice(0,n)+"☆☆☆☆☆".slice(0,5-n); }
 
-const AGE_GATE_KEY="bh_age_gate_ok_v1";
+const AGE_GATE_KEY="bh_age_gate_ok_v2";
 const AGE_GATE_MIN=18;
 function hasAgeGateOk(){
   try{ return localStorage.getItem(AGE_GATE_KEY)==="1"; }catch(e){ return false; }
