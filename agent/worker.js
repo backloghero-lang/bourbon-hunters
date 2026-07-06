@@ -16,6 +16,7 @@ const DEFAULT_PROMPT_URL = "https://raw.githubusercontent.com/" + REPO + "/main/
 const DEFAULT_DB_URL = "https://raw.githubusercontent.com/" + REPO + "/main/db/bourbons.json";
 const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters. Krotko, z jajem, ale rzeczowo. quality=jakosc 1-5, value=jakosc/cena 1-5 (5 swietna i tania, 1 slaba i droga). Pisz {{LANG}}. Zwroc tylko JSON.";
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
+const PBKDF2_ITERATIONS = 100000;
 
 let _p = { t:null, at:0 }, _db = { d:null, at:0 };
 async function getText(url, ttl){ const r = await fetch(url, { cf:{ cacheTtl:ttl, cacheEverything:true } }); return r.ok ? await r.text() : null; }
@@ -44,7 +45,7 @@ async function sha256Hex(s){ return hex(await crypto.subtle.digest("SHA-256", en
 async function hashPassword(password, saltHex){
   const salt=new Uint8Array((saltHex.match(/.{1,2}/g)||[]).map(function(x){ return parseInt(x,16); }));
   const key=await crypto.subtle.importKey("raw", encText(password), "PBKDF2", false, ["deriveBits"]);
-  const bits=await crypto.subtle.deriveBits({name:"PBKDF2",salt:salt,iterations:120000,hash:"SHA-256"}, key, 256);
+  const bits=await crypto.subtle.deriveBits({name:"PBKDF2",salt:salt,iterations:PBKDF2_ITERATIONS,hash:"SHA-256"}, key, 256);
   return hex(bits);
 }
 function publicUser(row){ return row ? {id:row.id,email:row.email,username:row.username,created_at:row.created_at} : null; }
@@ -268,7 +269,7 @@ async function handleApi(request, env, cors){
     const now=new Date().toISOString();
     const id=crypto.randomUUID();
     await env.DB.prepare("INSERT INTO users (id,email,username,password_hash,password_salt,password_algo,birth_date,age_gate_country,age_gate_min,age_verified_at,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)")
-      .bind(id,email,username,hash,salt,"pbkdf2-sha256-120000",birthDate,ageCountry,minAge,now,now,now).run();
+      .bind(id,email,username,hash,salt,"pbkdf2-sha256-"+PBKDF2_ITERATIONS,birthDate,ageCountry,minAge,now,now,now).run();
     const token=await createSession(env,request,id);
     const mail=await sendWelcomeEmail(env,{email:email,username:username}).catch(function(e){ return {sent:false,detail:String(e&&e.message?e.message:e).slice(0,160)}; });
     return J({token:token,user:{id:id,email:email,username:username,created_at:now},bootstrap:{wishlist:[],collection:[],ratings:{}},email_ready:!!mail.sent},200,cors);
@@ -309,7 +310,7 @@ async function handleApi(request, env, cors){
     const salt=randHex(16);
     const hash=await hashPassword(password,salt);
     await env.DB.prepare("UPDATE users SET password_hash=?,password_salt=?,password_algo=?,updated_at=? WHERE id=?")
-      .bind(hash,salt,"pbkdf2-sha256-120000",now,row.user_id).run();
+      .bind(hash,salt,"pbkdf2-sha256-"+PBKDF2_ITERATIONS,now,row.user_id).run();
     await env.DB.prepare("UPDATE password_reset_tokens SET used_at=? WHERE id=?").bind(now,row.id).run();
     await env.DB.prepare("DELETE FROM sessions WHERE user_id=?").bind(row.user_id).run();
     return J({ok:true},200,cors);
