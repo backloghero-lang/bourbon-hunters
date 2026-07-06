@@ -16,7 +16,7 @@ Ten plik trzyma stale ustalenia, zeby nie ginely w dlugich watkach.
 - Glowna mechanika kolekcjonerska: czesc butelek jest zakryta, a user odblokowuje je przez skanowanie.
 - Produkt ma dawac fun odkrywania podobny do kolekcjonerskiego indeksu.
 - MVP pozostaje local-first, ale etap kont i synchronizacji Cloudflare D1 zostal rozpoczety.
-- Telemetria jest etapem pozniejszym, po dopracowaniu core aplikacji i polityk prywatnosci.
+- Telemetria jest etapem pozniejszym, po dopracowaniu core aplikacji i polityk prywatnosci. Plan zdarzen trzymamy w `TELEMETRY.md`, ale nie wlaczamy zapisu bez osobnej decyzji.
 - Limit 20 darmowych skanow traktujemy jako decyzje kierunkowa; sposob liczenia doprecyzujemy pozniej, tymczasowo kandydatem jest limit per urzadzenie.
 - Home pokazuje skrot `Moja kolekcja` jako karuzele z tych samych danych, ktore sa w dolnej zakladce `Kolekcja`.
 - Widok `Profil` na etapie prototypu pokazuje: Register, Sign In, Articles, Wersja Pro i Ustawienia.
@@ -95,8 +95,8 @@ Ten plik trzyma stale ustalenia, zeby nie ginely w dlugich watkach.
 - Worker zapisuje konta, sesje, wishlist, kolekcje, oceny i historie skanow.
 - Hasla nie sa zapisywane jawnie; Worker uzywa PBKDF2 SHA-256 i zapisuje tylko hash oraz sol.
 - Google Sign-In zostaje jako przycisk UI do pozniejszego podpiecia.
-- Rejestracja email/password nie wysyla jeszcze maili. Maile powitalne i usuniecia danych wymagaja osobnego dostawcy email oraz adresu domenowego.
+- Rejestracja email/password moze wyslac mail powitalny po podpieciu providera Resend przez `RESEND_API_KEY` i `MAIL_FROM`.
 - Szablony email sa trzymane w `pliki-md/email-templates/` i zostana podlaczone dopiero po wyborze providera.
 - Rejestracja wymaga daty urodzenia. Domyslny prog to 18+, a dla USA mozemy szybko podniesc go zmienna Workera `AGE_GATE_MIN=21`.
-- Reset hasla ma juz ekran i endpoint placeholder, ale realna wysylka linku resetujacego wymaga providera email.
+- Reset hasla ma endpoint tokenowy, tabele D1 `password_reset_tokens` i ekran ustawienia nowego hasla z linku `?reset=...`; realna wysylka wymaga providera email.
 - Rekomendacja na start dla maili transakcyjnych: Resend, bo jest prosty do podpiecia z Cloudflare Workerem. Finalna decyzja wymaga domeny/subdomeny i rekordow DNS.

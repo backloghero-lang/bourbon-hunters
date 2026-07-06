@@ -59,7 +59,7 @@ index.html     agent/worker.js      D1, KV, bourbon JSON data
 - Frontend: `index.html`, `manifest.json`, `sw.js`.
 - Backend: `agent/worker.js` on Cloudflare Workers.
 - User data: Cloudflare D1 for accounts, sessions, wishlist, collection, ratings and scan history.
-- D1 migrations: run `agent/d1-schema.sql` for a fresh database and `agent/d1-migration-v57-auth-age.sql` for existing databases that need age-gate columns.
+- D1 migrations: run `agent/d1-schema.sql` for a fresh database. Existing databases may need `agent/d1-migration-v57-auth-age.sql` and `agent/d1-migration-v60-password-reset.sql`.
 - Static hosting: GitHub Pages.
 - Project docs and planning files: `pliki-md/`.
 - Figma asset importer code: `design/figma-import-plugin/`.
@@ -69,7 +69,7 @@ index.html     agent/worker.js      D1, KV, bourbon JSON data
 - Registration requires email, password, username and date of birth.
 - Passwords are stored as PBKDF2 SHA-256 hashes with salt, never as plain text.
 - The Worker exposes `/auth/health` for a quick D1/schema check.
-- Transactional emails are not active yet. Welcome, password reset and data deletion templates live in `pliki-md/email-templates/`.
+- Transactional emails use Resend when `RESEND_API_KEY` and `MAIL_FROM` are configured. Welcome, password reset and data deletion templates live in `pliki-md/email-templates/`.
 - Google Sign-In is intentionally left as a UI placeholder until OAuth is implemented.
 
 ## Project Direction

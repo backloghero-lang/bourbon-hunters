@@ -38,7 +38,7 @@ Ten plik sluzy do planowania kolejnych prac. Szczegoly bugow trzymamy w `BUGS.md
 - Rozwazyc mape destylarni, odznaki i notatki.
 - Przygotowac produkt pod Google Play i kampanie marketingowa w USA.
 - Zaprojektowac monetyzacje: pierwsze 20 skanow free, potem reklamy lub inny model.
-- Dodac telemetrie dopiero po ustabilizowaniu core aplikacji.
+- Dodac telemetrie dopiero po ustabilizowaniu core aplikacji; bazowy plan jest w `TELEMETRY.md`.
 - Rozwijac konto uzytkownika etapami: email/password juz istnieje, Google/Apple pozniej.
 
 ## Plan dojscia do pelnoprawnej aplikacji
@@ -178,23 +178,27 @@ Ten plik sluzy do planowania kolejnych prac. Szczegoly bugow trzymamy w `BUGS.md
 - [x] Frontend local-first z synchronizacja po zalogowaniu.
 - [x] Podpiac binding `DB` w Cloudflare Worker.
 - [x] Wykonac `agent/d1-schema.sql` w Cloudflare D1.
+- [ ] Wykonac `agent/d1-migration-v60-password-reset.sql` w Cloudflare D1.
+- [ ] Ustawic `RESEND_API_KEY`, `MAIL_FROM`, `APP_URL` i `SUPPORT_EMAIL` w Cloudflare Worker.
+- [ ] Przetestowac reset hasla z prawdziwego linku mailowego.
 - [x] Wkleic i wdrozyc aktualny `agent/worker.js`.
 - [x] Dodac endpoint diagnostyczny `/auth/health` dla D1 i schematu kont.
 - [x] Przygotowac szablony maila powitalnego i potwierdzenia rezygnacji/usuniecia danych.
 - [x] Dodac age gate przy rejestracji oraz migracje D1 dla daty urodzenia.
-- [x] Dodac flow przypomnienia hasla jako UI + endpoint placeholder.
+- [x] Dodac flow przypomnienia hasla jako UI + endpoint tokenowy.
 - [x] Rozdzielic konflikt email i username oraz dodac podpowiedzi wolnych username.
-- [ ] Wybrac dostawce email i podpiac realna wysylke maili transakcyjnych.
+- [x] Wybrac dostawce email: startowo Resend.
+- [x] Podpiac realna wysylke welcome/reset w Workerze, aktywna po ustawieniu sekretow.
 - [ ] Test: utworzyc konto, dodac butelke do kolekcji, odswiezyc appke i sprawdzic sync.
 
 ## Jutro - provider email transakcyjny
 
-- [ ] Wybrac providera: rekomendacja startowa `Resend`.
+- [x] Wybrac providera: rekomendacja startowa `Resend`.
 - [ ] Przygotowac domenę/subdomenę mailowa, np. `mail.bourbonhunters.app` albo docelowa domena projektu.
 - [ ] Ustawic DNS zgodnie z Resend: SPF/DKIM/verification records.
 - [ ] Dodac sekret Workera `RESEND_API_KEY`.
 - [ ] Dodac zmienne Workera: `MAIL_FROM`, `APP_URL`, `SUPPORT_EMAIL`.
-- [ ] Podpiac wysylke welcome email po `/auth/register`.
-- [ ] Podpiac realny reset hasla: token jednorazowy, expiry, mail resetujacy, endpoint ustawienia nowego hasla.
+- [x] Podpiac wysylke welcome email po `/auth/register`.
+- [x] Podpiac realny reset hasla: token jednorazowy, expiry, mail resetujacy, endpoint ustawienia nowego hasla.
 - [ ] Podpiac mail potwierdzajacy request usuniecia danych.
 - [ ] Zaktualizowac Privacy/Terms po wyborze realnego providera email.

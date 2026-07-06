@@ -50,6 +50,50 @@ async function hashPassword(password, saltHex){
 function publicUser(row){ return row ? {id:row.id,email:row.email,username:row.username,created_at:row.created_at} : null; }
 function cleanEmail(v){ return String(v||"").trim().toLowerCase(); }
 function cleanUsername(v){ return String(v||"").trim().replace(/\s+/g," ").slice(0,40); }
+function mailConfigured(env){ return !!(env.RESEND_API_KEY && env.MAIL_FROM); }
+function appUrl(env){
+  const raw=String(env.APP_URL||"https://backloghero-lang.github.io/bourbon-hunters/").trim()||"https://backloghero-lang.github.io/bourbon-hunters/";
+  return raw.replace(/\/?$/,"/");
+}
+function supportEmail(env){ return String(env.SUPPORT_EMAIL||"support@bourbonhunters.app").trim(); }
+function htmlEscape(s){
+  return String(s||"").replace(/[&<>"']/g,function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];
+  });
+}
+async function sendEmail(env, message){
+  if(!mailConfigured(env)) return {sent:false,reason:"not_configured"};
+  const res=await fetch("https://api.resend.com/emails",{
+    method:"POST",
+    headers:{"Authorization":"Bearer "+env.RESEND_API_KEY,"Content-Type":"application/json"},
+    body:JSON.stringify({
+      from:String(env.MAIL_FROM),
+      to:message.to,
+      subject:message.subject,
+      html:message.html,
+      text:message.text
+    })
+  });
+  if(!res.ok) return {sent:false,status:res.status,detail:(await res.text()).slice(0,240)};
+  return {sent:true};
+}
+async function sendWelcomeEmail(env, user){
+  const name=htmlEscape(user.username||"Hunter");
+  return sendEmail(env,{
+    to:user.email,
+    subject:"Welcome to Bourbon Hunters",
+    text:"Welcome to Bourbon Hunters, "+(user.username||"Hunter")+". Your account is ready. Open "+appUrl(env),
+    html:'<div style="font-family:Arial,sans-serif;background:#100a06;color:#f6e1bc;padding:24px"><h1 style="color:#e2b070">Welcome to Bourbon Hunters</h1><p>Hi '+name+', your hunter profile is ready.</p><p>You can now sync your wishlist, collection, ratings and scans across devices.</p><p><a href="'+htmlEscape(appUrl(env))+'" style="color:#e2b070">Open Bourbon Hunters</a></p><p style="color:#c9b493;font-size:12px">Drink responsibly. 18+.</p></div>'
+  });
+}
+async function sendPasswordResetEmail(env, user, resetUrl){
+  return sendEmail(env,{
+    to:user.email,
+    subject:"Reset your Bourbon Hunters password",
+    text:"Use this link to reset your Bourbon Hunters password: "+resetUrl+" The link expires in 60 minutes. If this was not you, ignore this email.",
+    html:'<div style="font-family:Arial,sans-serif;background:#100a06;color:#f6e1bc;padding:24px"><h1 style="color:#e2b070">Reset your password</h1><p>Use the button below to set a new Bourbon Hunters password. This link expires in 60 minutes.</p><p><a href="'+htmlEscape(resetUrl)+'" style="display:inline-block;background:#e2b070;color:#1b1008;padding:12px 18px;border-radius:12px;text-decoration:none;font-weight:700">Set new password</a></p><p style="color:#c9b493;font-size:12px">If this was not you, ignore this email or contact '+htmlEscape(supportEmail(env))+'.</p></div>'
+  });
+}
 function cleanBirthDate(v){ const s=String(v||"").trim(); return /^\d{4}-\d{2}-\d{2}$/.test(s) ? s : ""; }
 function ageGateMin(env){ const n=parseInt(env.AGE_GATE_MIN||"18",10); return Number.isFinite(n) && n>=18 ? n : 18; }
 function isOldEnough(birthDate, minAge){
@@ -98,6 +142,10 @@ async function userColumns(env){
   const out={};
   (rows.results||[]).forEach(function(r){ if(r.name) out[String(r.name)]=true; });
   return out;
+}
+async function tableExists(env, name){
+  const row=await env.DB.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name=?").bind(String(name||"")).first();
+  return !!row;
 }
 async function suggestUsernames(env, desired, email){
   const base=usernameBase(desired,email);
@@ -175,17 +223,19 @@ async function handleApi(request, env, cors){
   const url=new URL(request.url);
   const path=url.pathname.replace(/\/+$/,"");
   if(path==="/auth/health" && request.method==="GET"){
-    let schema=false, detail="";
+    let schema=false, reset_schema=false, detail="";
     if(env.DB){
       try{
         await env.DB.prepare("SELECT id FROM users LIMIT 1").first();
         const cols=await userColumns(env);
         schema=!!(cols.id && cols.email && cols.username && cols.birth_date && cols.age_verified_at);
         if(!schema) detail="users table exists, but age-gate columns are missing";
+        reset_schema=await tableExists(env,"password_reset_tokens");
+        if(schema && !reset_schema) detail="password_reset_tokens table is missing";
       }
       catch(e){ detail=String(e&&e.message?e.message:e).slice(0,220); }
     }
-    return J({ok:true,worker:"bourbon-hunters",d1:!!env.DB,schema:schema,detail:detail,time:new Date().toISOString()},200,cors);
+    return J({ok:true,worker:"bourbon-hunters",d1:!!env.DB,schema:schema,reset_schema:reset_schema,email_ready:mailConfigured(env),detail:detail,time:new Date().toISOString()},200,cors);
   }
   const dbErr=needDB(env,cors); if(dbErr) return dbErr;
   if(path==="/auth/register" && request.method==="POST"){
@@ -214,13 +264,49 @@ async function handleApi(request, env, cors){
     await env.DB.prepare("INSERT INTO users (id,email,username,password_hash,password_salt,password_algo,birth_date,age_gate_country,age_gate_min,age_verified_at,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)")
       .bind(id,email,username,hash,salt,"pbkdf2-sha256-120000",birthDate,ageCountry,minAge,now,now,now).run();
     const token=await createSession(env,request,id);
-    return J({token:token,user:{id:id,email:email,username:username,created_at:now},bootstrap:{wishlist:[],collection:[],ratings:{}}},200,cors);
+    const mail=await sendWelcomeEmail(env,{email:email,username:username}).catch(function(e){ return {sent:false,detail:String(e&&e.message?e.message:e).slice(0,160)}; });
+    return J({token:token,user:{id:id,email:email,username:username,created_at:now},bootstrap:{wishlist:[],collection:[],ratings:{}},email_ready:!!mail.sent},200,cors);
   }
   if(path==="/auth/password-reset" && request.method==="POST"){
     const body=await readBody(request);
     const email=cleanEmail(body.email);
     if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return J({error:"bad_email"},400,cors);
-    return J({ok:true,email_ready:false,message:"Password reset email provider is not connected yet."},200,cors);
+    if(!(await tableExists(env,"password_reset_tokens"))) return J({ok:true,email_ready:false,reset_ready:false,message:"Password reset migration is not applied yet."},200,cors);
+    const row=await env.DB.prepare("SELECT id,email,username FROM users WHERE email=?").bind(email).first();
+    let sent=false;
+    if(row){
+      const now=new Date();
+      const expires=new Date(now.getTime()+1000*60*60);
+      const rawToken=randHex(32);
+      const tokenHash=await sha256Hex(rawToken);
+      await env.DB.prepare("DELETE FROM password_reset_tokens WHERE user_id=? OR expires_at<? OR used_at IS NOT NULL").bind(row.id,now.toISOString()).run();
+      await env.DB.prepare("INSERT INTO password_reset_tokens (id,user_id,token_hash,created_at,expires_at,ip,user_agent) VALUES (?,?,?,?,?,?,?)")
+        .bind(crypto.randomUUID(),row.id,tokenHash,now.toISOString(),expires.toISOString(),request.headers.get("CF-Connecting-IP")||"",request.headers.get("User-Agent")||"").run();
+      const resetUrl=appUrl(env)+"?reset="+encodeURIComponent(rawToken);
+      const mail=await sendPasswordResetEmail(env,row,resetUrl).catch(function(e){ return {sent:false,detail:String(e&&e.message?e.message:e).slice(0,160)}; });
+      sent=!!mail.sent;
+    }
+    return J({ok:true,email_ready:sent,reset_ready:true},200,cors);
+  }
+  if(path==="/auth/password-update" && request.method==="POST"){
+    if(!(await tableExists(env,"password_reset_tokens"))) return J({error:"schema_reset_missing"},501,cors);
+    const body=await readBody(request);
+    const token=String(body.token||"").trim();
+    const password=String(body.password||"");
+    if(password.length<8) return J({error:"weak_password"},400,cors);
+    if(!/^[a-f0-9]{64}$/i.test(token)) return J({error:"reset_token_invalid"},400,cors);
+    const tokenHash=await sha256Hex(token);
+    const now=new Date().toISOString();
+    const row=await env.DB.prepare("SELECT prt.id,prt.user_id FROM password_reset_tokens prt WHERE prt.token_hash=? AND prt.expires_at>? AND prt.used_at IS NULL")
+      .bind(tokenHash,now).first();
+    if(!row) return J({error:"reset_token_invalid"},400,cors);
+    const salt=randHex(16);
+    const hash=await hashPassword(password,salt);
+    await env.DB.prepare("UPDATE users SET password_hash=?,password_salt=?,password_algo=?,updated_at=? WHERE id=?")
+      .bind(hash,salt,"pbkdf2-sha256-120000",now,row.user_id).run();
+    await env.DB.prepare("UPDATE password_reset_tokens SET used_at=? WHERE id=?").bind(now,row.id).run();
+    await env.DB.prepare("DELETE FROM sessions WHERE user_id=?").bind(row.user_id).run();
+    return J({ok:true},200,cors);
   }
   if(path==="/auth/login" && request.method==="POST"){
     const body=await readBody(request);

@@ -30,7 +30,7 @@ echo Aktualne zmiany:
 git status --short
 echo.
 
-git add -A -- index.html sw.js manifest.json test-index.html .nojekyll .github/workflows/deploy-pages.yml README.md WYSLIJ-NA-GITHUB.bat OTWORZ-PLUGIN-FIGMA-ASSETY.bat pliki-md assets/detail/bottle-detail-bg.png db/bourbons.json db/profiles-runtime.json scripts/generate_runtime_profiles.mjs scripts/validate_profiles.mjs agent/worker.js agent/d1-schema.sql agent/d1-migration-v57-auth-age.sql agent/prompt.txt design/figma-import-plugin/code.js design/figma-import-plugin/manifest.json
+git add -A -- index.html sw.js manifest.json test-index.html .nojekyll .github/workflows/deploy-pages.yml README.md WYSLIJ-NA-GITHUB.bat OTWORZ-PLUGIN-FIGMA-ASSETY.bat pliki-md assets/detail/bottle-detail-bg.png db/bourbons.json db/profiles-runtime.json scripts/generate_runtime_profiles.mjs scripts/validate_profiles.mjs agent/worker.js agent/d1-schema.sql agent/d1-migration-v57-auth-age.sql agent/d1-migration-v60-password-reset.sql agent/prompt.txt design/figma-import-plugin/code.js design/figma-import-plugin/manifest.json
 
 git diff --cached --quiet
 if not errorlevel 1 (
