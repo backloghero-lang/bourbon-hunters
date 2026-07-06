@@ -2,6 +2,11 @@
 
 Aktualizacja: 2026-07-05.
 
+## Najnowszy handoff
+
+Najnowszy kontekst dla kolejnego etapu jest w `pliki-md/HANDOFF-BH-1.1.md`.
+Uzyj go jako pierwszego dokumentu przy starcie watku `Przekaz Bourbon Hunter 1.1`.
+
 
 ## Aktualizacja 2026-07-05
 

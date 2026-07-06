@@ -11,6 +11,7 @@ Ten folder trzyma dokumenty robocze, decyzje, roadmapy i pomocnicze skrypty.
 - `BUGS.md` - backlog bugow.
 - `POPRAWKI.md` - lista poprawek do robienia hurtem.
 - `HANDOFF.md` - szybki kontekst dla kolejnego watku.
+- `HANDOFF-BH-1.1.md` - aktualny handoff do kolejnego etapu projektu.
 - `INSTRUKCJA.md` - wdrozenie, Worker, D1 i testowanie.
 - `DESIGN.md` - zasady wizualne.
 
@@ -34,3 +35,4 @@ Ten folder trzyma dokumenty robocze, decyzje, roadmapy i pomocnicze skrypty.
 - Slabe trafienia ida do stanu `Hunter AI Plus`, bez losowego wyniku.
 - Email/password jest podpiete do Cloudflare Worker + D1.
 - Google Sign-In nie jest jeszcze podpiete.
+- Aktualny etap startowy dla kolejnego watku: `HANDOFF-BH-1.1.md`.

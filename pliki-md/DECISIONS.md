@@ -29,6 +29,9 @@ Ten plik trzyma stale ustalenia, zeby nie ginely w dlugich watkach.
 - Docelowa baza kont i danych usera: Cloudflare D1, czyli SQL/SQLite-style baza pod Workerem.
 - Zdjecia userow i skanow docelowo trzymamy w Cloudflare R2, a nie w D1.
 - Zamykany banner `Join Pro` w profilu znika tylko na biezace wejscie w widok. Po ponownym wejsciu w Profil ma wrocic.
+- Age gate ma pojawiac sie przed intro. Dopiero potwierdzenie wieku uruchamia intro.
+- W podstawowym UI profilu social login ograniczamy do Google jako przyszly etap; Facebook/Instagram nie wchodza do MVP.
+- Link sklepu w szczegolach butelki moze zostac, ale nie pokazujemy dodatkowego komunikatu `To moze byc Twoj sklep`.
 
 ## Jezyk
 
@@ -99,5 +102,14 @@ Ten plik trzyma stale ustalenia, zeby nie ginely w dlugich watkach.
 - Rejestracja email/password moze wyslac mail powitalny po podpieciu providera Resend przez `RESEND_API_KEY` i `MAIL_FROM`.
 - Szablony email sa trzymane w `pliki-md/email-templates/` i zostana podlaczone dopiero po wyborze providera.
 - Rejestracja wymaga daty urodzenia. Domyslny prog to 18+, a dla USA mozemy szybko podniesc go zmienna Workera `AGE_GATE_MIN=21`.
-- Reset hasla ma endpoint tokenowy, tabele D1 `password_reset_tokens` i ekran ustawienia nowego hasla z linku `?reset=...`; realna wysylka wymaga providera email.
-- Rekomendacja na start dla maili transakcyjnych: Resend, bo jest prosty do podpiecia z Cloudflare Workerem. Finalna decyzja wymaga domeny/subdomeny i rekordow DNS.
+- Reset hasla ma endpoint tokenowy, tabele D1 `password_reset_tokens`, ekran ustawienia nowego hasla z linku `?reset=...` i wysylke przez Resend po konfiguracji sekretow Workera.
+- Rekomendacja na start dla maili transakcyjnych zostala przyjeta: Resend, bo jest prosty do podpiecia z Cloudflare Workerem. Przed produkcja trzeba dopracowac domene/subdomene i rekordy DNS.
+
+## 2026-07-06 - Auth, email i age gate
+
+- Cloudflare D1 jest podpiete do Workera jako binding `DB`.
+- Worker health powinien zwracac `auth_version: auth-pbkdf2-100000-v2`, `pbkdf2_iterations: 100000`, `schema: true`, `reset_schema: true` i `email_ready: true`.
+- Resend jest wybrany jako provider email na etap MVP/prototypu.
+- Maile transakcyjne maja uzywac subtelnych assetow Bourbon Hunters, bez ciezkiego marketingowego layoutu.
+- Entry age gate jest osobnym ekranem przed intro, a data urodzenia zostaje dodatkowo wymagana przy rejestracji konta.
+- Po zmianie samego frontu nie deployujemy Workera; Worker deployujemy tylko po zmianach w `agent/worker.js`.

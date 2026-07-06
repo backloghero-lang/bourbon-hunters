@@ -1,5 +1,38 @@
 # 🛠️ Bourbon Hunters — instrukcja uruchomienia (krok po kroku)
 
+## Aktualna zasada deployu - 2026-07-06
+
+Jesli zmieniasz tylko frontend, assety, dokumentacje albo `sw.js`:
+
+1. Uruchom `WYSLIJ-NA-GITHUB.bat`.
+2. Poczekaj, az GitHub Pages przejdzie na zielono.
+3. W launcherze `test-index.html` kliknij `Odswiez build`.
+4. Jesli telefon trzyma stara wersje, kliknij `Wyczysc cache/PWA`.
+5. Nie deployuj Workera.
+
+Jesli zmieniasz `agent/worker.js`:
+
+1. Wyslij zmiany repo na GitHub, jesli dotycza tez frontu/docs/bazy.
+2. W Cloudflare wklej i zdeployuj aktualny `agent/worker.js`.
+3. Sprawdz `https://bourbon-hunters.darekmaslyk.workers.dev/auth/health`.
+4. Dopiero potem testuj konta, reset hasla, sync i skaner.
+
+Aktualny oczekiwany stan Workera:
+
+```json
+{
+  "ok": true,
+  "auth_version": "auth-pbkdf2-100000-v2",
+  "pbkdf2_iterations": 100000,
+  "d1": true,
+  "schema": true,
+  "reset_schema": true,
+  "email_ready": true
+}
+```
+
+Ponizsze starsze sekcje zostaja jako pomoc historyczna, ale w razie sprzecznosci obowiazuje aktualna zasada powyzej.
+
 > ### ⚡ Wersja 2 (baza + 2 tryby) — kolejnosc ma znaczenie
 > 1. **Wgraj nowy `agent/worker.js`** do Cloudflare (Edit code → wklej → Deploy).
 > 2. **Wypchnij repo na GitHub** (`WYSLIJ-NA-GITHUB.bat`) — Worker czyta baze `db/bourbons.json` i `agent/prompt.txt` prosto z repo, wiec do dzialania bazy repo musi byc opublikowane.

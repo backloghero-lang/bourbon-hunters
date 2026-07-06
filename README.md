@@ -40,14 +40,16 @@ Current quality rule:
 | Feature | Status |
 |---|---|
 | Fast rating | Database-first result with price/value and tasting profile |
+| Bottle details | Concise varied general info plus nose, taste and finish |
 | AI analysis | Deeper description for confident matches |
 | Hunter AI Plus | Planned Pro feature for deeper matching, web search, profile creation and saving new finds |
 | Accounts | Email/password through Cloudflare Worker + D1 |
 | Account sync | Wishlist, collection, user ratings and scan history |
-| Age gate | Date of birth required at registration; default 18+, configurable to 21+ for US mode |
 | Username validation | Duplicate username detection with generated suggestions |
-| Password reset | UI and Worker placeholder ready; transactional email provider still required |
+| Password reset | UI, Worker endpoint and Resend email flow ready |
+| Transactional email | Resend-ready welcome and password reset emails |
 | Google Sign-In | UI placeholder, not connected yet |
+| Age gate | Entry gate before intro plus date of birth at registration |
 
 ## Architecture
 
@@ -70,6 +72,7 @@ index.html     agent/worker.js      D1, KV, bourbon JSON data
 - Passwords are stored as PBKDF2 SHA-256 hashes with salt, never as plain text.
 - The Worker exposes `/auth/health` for a quick D1/schema check.
 - Transactional emails use Resend when `RESEND_API_KEY` and `MAIL_FROM` are configured. Welcome, password reset and data deletion templates live in `pliki-md/email-templates/`.
+- Current Worker health should report `auth-pbkdf2-100000-v2`, D1 schema ready and `email_ready: true`.
 - Google Sign-In is intentionally left as a UI placeholder until OAuth is implemented.
 
 ## Project Direction

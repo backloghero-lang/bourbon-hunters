@@ -4,14 +4,15 @@ Ten plik sluzy do planowania kolejnych prac. Szczegoly bugow trzymamy w `BUGS.md
 
 ## Teraz
 
+- Etap `BH 1.1`: przygotowac projekt pod TWA/Google Play jako nastepny naturalny krok po PWA.
+- Dopracowac stan zalogowany/niezalogowany w profilu.
+- Przetestowac end-to-end konto: register, login, logout, reset hasla, welcome email.
+- Zweryfikowac synchronizacje D1: wishlist, kolekcja, oceny i historia skanow.
+- Sprawdzic po deployu v65 age gate, karty Home i nowe `General info` w szczegolach.
 - Dopisac do UX zalozenie zakrytych butelek: znak zapytania/sylwetka przed odblokowaniem.
-- Poprawic widok szczegolow butelki: oddalic butelke, poprawic stage, ograniczyc widocznosc bialych wyciec.
-- Sprawdzic po deployu, czy kropki swipe dobrze wygladaja na telefonie.
-- Doprecyzowac ikonki kategorii wycinane ze sprite'a `category-cards.png`.
-- Dopracowac karty `Polecane` i `Ostatnio dodane`, jesli mockup ma byc odwzorowany wierniej.
+- Nadal poprawic widok szczegolow butelki: oddalic butelke, poprawic stage, ograniczyc widocznosc bialych wyciec.
 - Przebudowac ekran `Odkrywaj` pod referencje `design/figma-assets/reference-pack-v1/explore-screen.png`.
-- Dokonczyc `Collection`: Lista zyczen, Upolowane, Moja kolekcja.
-- Upewnic sie, ze dodawanie do wishlisty i kolekcji dziala spojnie z Home, Explore i szczegolami.
+- Przygotowac przestrzen UI pod reklamy i Pro, ale nie wlaczac monetyzacji bez osobnej decyzji.
 
 ## Nastepne
 
@@ -25,7 +26,8 @@ Ten plik sluzy do planowania kolejnych prac. Szczegoly bugow trzymamy w `BUGS.md
 - Rozszerzac opisy, profile smaku, nos, smak i finisz dla wiekszej liczby pozycji.
 - Przygotowac onboarding/tutorial: skan -> odblokowanie -> wishlist -> kolekcja.
 - Utrzymac local-first core, ale rozwijac sync po zalogowaniu przez D1.
-- Dopracowac stan zalogowania w Profile po podpieciu Register/Sign In do Cloudflare D1.
+- Dopracowac Google Sign-In jako osobny etap po ustabilizowaniu email/password.
+- Przygotowac R2 jako docelowy storage zdjec usera i wynikow Hunter AI Plus.
 
 ## Pozniej
 

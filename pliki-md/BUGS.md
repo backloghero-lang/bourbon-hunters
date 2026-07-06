@@ -11,6 +11,8 @@ Ten plik jest prostym backlogiem problemow. Nowe rzeczy dopisujemy krotko, bez r
 - Sprawdzic, czy kropki swipe na Home wygladaja dobrze na telefonie po deployu.
 - Zweryfikowac pozycje ikon kategorii ze sprite'a `category-cards.png`.
 - Dopracowac ekran Odkrywaj na podstawie `reference-pack-v1/explore-screen.png`.
+- Po deployu v64 potwierdzic na telefonie, czy hitbox age gate trafia dokladnie w przyciski z assetu.
+- Po deployu v65 potwierdzic, czy karty Home nie pokazuja ucietej czwartej linijki nazwy w `Polecane`, `Ostatnio dodane` i `Moja kolekcja`.
 
 ### Butelki i zdjecia
 
@@ -34,6 +36,12 @@ Ten plik jest prostym backlogiem problemow. Nowe rzeczy dopisujemy krotko, bez r
 - Scanner: osobny input aparatu i galerii.
 - Scanner: retry resetuje zdjecie i odpala aparat.
 - Scanner: loader zmieniony na animowana beczke.
+- Profile/auth: email/password zapisuje konta w Cloudflare D1.
+- Worker: PBKDF2 zmniejszone do 100000 iteracji, zgodnie z limitem Cloudflare.
+- Age gate: przeniesiony przed intro i oparty o asset `assets/brand/age-gate.png`.
+- Home: usuniety pomaranczowy tekst destylarni z kart `Featured`, `Recently added` i `My collection`.
+- Szczegoly: link sklepu zostaje, ale usunieto dodatkowy toast/przycisk `To moze byc Twoj sklep`.
+- Szczegoly: `General info` nie uzywa juz masowego szablonu `destylarnia + proof`; opis jest krotszy i roznicowany przez destylarnie, styl, wiek, finisz albo kontekst wydania.
 
 ## Szablon wpisu
 

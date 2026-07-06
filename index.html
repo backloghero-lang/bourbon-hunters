@@ -80,13 +80,13 @@
     border:1px solid rgba(184,99,51,.72);border-radius:20px;padding:20px;display:flex;gap:16px;box-shadow:0 18px 42px rgba(0,0,0,.42);position:relative;overflow:hidden}
   .feat:before{content:"";position:absolute;inset:0;background:url("design/figma-assets/asset-pack-v1/noise-overlay.png") center/cover repeat;opacity:.08;pointer-events:none}
   .feat:after{content:"";position:absolute;left:14px;right:14px;bottom:0;height:1px;background:linear-gradient(90deg,transparent,rgba(232,156,66,.88),transparent);pointer-events:none}
-  .feat h4{font-family:var(--serif);font-size:21px;margin:0 0 10px;line-height:1.08;color:#F6E1BC;text-shadow:0 2px 12px rgba(0,0,0,.65);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;max-height:68px}
-  .feat.long-name h4{font-size:19px;line-height:1.1;max-height:63px}
+  .feat h4{font-family:var(--serif);font-size:21px;margin:0 0 10px;line-height:22px;color:#F6E1BC;text-shadow:0 2px 12px rgba(0,0,0,.65);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;height:66px;max-height:66px;min-height:66px;word-break:normal}
+  .feat.long-name h4{font-size:19px;line-height:21px;height:63px;max-height:63px;min-height:63px}
   .feat.long-name .sub{display:none}
   .feat .sub{font-size:12px;color:#C68752;margin-bottom:8px;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .feat .price{font-size:20px;color:#E28A3D;font-weight:900;margin-bottom:8px;letter-spacing:.5px}
   .feat .btn-sm{display:inline-flex;align-items:center;justify-content:center;width:min(228px,100%);min-height:34px;background:rgba(0,0,0,.22);border:1px solid #E2B070;color:#E2B070;font-size:11px;font-weight:900;letter-spacing:.7px;padding:8px 15px;border-radius:9px;text-transform:uppercase;cursor:pointer;box-sizing:border-box}
-  .feat .info{flex:1;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1;min-width:0;padding-right:4px}
+  .feat .info{flex:1;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1;min-width:0;padding-right:4px;overflow:hidden}
   .feat-tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px;width:min(228px,100%)}
   .feat-tag{display:inline-flex;align-items:center;justify-content:center;width:100%;min-height:28px;font-size:10px;line-height:1.12;border:1px solid rgba(127,208,150,.5);color:#7FD096;background:rgba(23,73,49,.22);border-radius:6px;padding:5px 7px;text-transform:uppercase;font-weight:900;letter-spacing:.5px;box-sizing:border-box;text-align:center}
   .bottlepic{flex:0 0 132px;width:132px;height:180px;align-self:center;border-radius:16px;display:grid;place-items:center;font-size:42px;overflow:visible;position:relative;z-index:1;
@@ -1362,10 +1362,114 @@ function tastingBlock(o){
     '<div class="taste-row"><div class="k">'+t("finishT")+'</div><div class="v">'+esc(p.finish||'-')+'</div></div>'+
   '</div>';
 }
+function stablePick(seed, arr){
+  if(!arr||!arr.length) return "";
+  const s=String(seed||"");
+  let h=0;
+  for(let i=0;i<s.length;i++) h=(h*31+s.charCodeAt(i))>>>0;
+  return arr[h%arr.length];
+}
+function profileGeneralIsBoilerplate(text){
+  const s=searchText(text);
+  return !s || (
+    (s.indexOf("built around the producer")>=0 && s.indexOf("bottle")>=0) ||
+    (s.indexOf("zbudowany wokol stylu producenta")>=0) ||
+    (s.indexOf("klasyczny bourbon od")>=0 && s.indexOf("mocy tej butelki")>=0)
+  );
+}
+function shortSentence(text, maxLen){
+  const clean=textClean(text).replace(/\s*Browse more.*$/i,"").replace(/\s*Specs\s+.*$/i,"");
+  if(!clean) return "";
+  const parts=(clean.match(/[^.!?]+[.!?]?/g)||[clean]).map(textClean).filter(Boolean);
+  let out="";
+  parts.some(function(p){
+    if(!out) out=p;
+    else if((out+" "+p).length<=maxLen) out+=" "+p;
+    return out.length>=maxLen;
+  });
+  return out.length>maxLen ? out.slice(0,maxLen-1).replace(/\s+\S*$/,"")+"." : out;
+}
+function distilleryInfo(o){
+  const s=searchText(((o&&o.distillery)||"")+" "+((o&&o.name)||""));
+  const facts=[
+    {k:["buffalo trace","weller","blanton","eagle rare","stagg","e h taylor","ancient age"], en:"Buffalo Trace works out of Frankfort, Kentucky, on one of America's oldest continuously operating distilling sites.", pl:"Buffalo Trace dziala we Frankfort w Kentucky, na jednym z najstarszych nieprzerwanie pracujacych miejsc destylacji w USA."},
+    {k:["heaven hill","elijah craig","evan williams","larceny","parkers heritage"], en:"Heaven Hill is a Kentucky family-owned producer with deep Bardstown roots and a large aging footprint.", pl:"Heaven Hill to rodzinna firma z Kentucky, mocno zwiazana z Bardstown i dojrzewaniem bourbonu na duza skale."},
+    {k:["jim beam","knob creek","booker","bakers","basil hayden"], en:"The Beam family line is tied to Clermont, Kentucky, and one of bourbon's longest-running family traditions.", pl:"Linia Beam jest zwiazana z Clermont w Kentucky i jedna z najdluzszych rodzinnych tradycji w bourbonie."},
+    {k:["maker"], en:"Maker's Mark comes from Loretto, Kentucky, and is known for its wheated recipe and hand-dipped red wax.", pl:"Maker's Mark pochodzi z Loretto w Kentucky i slynie z pszenicznej receptury oraz recznie maczanego czerwonego wosku."},
+    {k:["wild turkey","russell"], en:"Wild Turkey is rooted in Lawrenceburg, Kentucky, with the Russell family shaping much of its modern identity.", pl:"Wild Turkey jest zakorzenione w Lawrenceburg w Kentucky, a rodzina Russell mocno uksztaltowala jego wspolczesny styl."},
+    {k:["four roses"], en:"Four Roses is a Lawrenceburg distillery built around ten bourbon recipes from two mash bills and five yeast strains.", pl:"Four Roses to destylarnia z Lawrenceburg, budujaca bourbon z dziesieciu receptur opartych na dwoch mash billach i pieciu szczepach drozdzy."},
+    {k:["woodford"], en:"Woodford Reserve is made near Versailles, Kentucky, on a historic distilling site with copper pot still production in the story.", pl:"Woodford Reserve powstaje pod Versailles w Kentucky, w historycznym miejscu destylacji zwiazanym takze z alembikami miedzianymi."},
+    {k:["old forester","brown-forman"], en:"Old Forester is a Brown-Forman brand from Louisville heritage and is tied to the early idea of sealed bottled bourbon.", pl:"Old Forester to marka Brown-Forman z dziedzictwem Louisville, kojarzona z wczesna idea bourbonu sprzedawanego w zamknietych butelkach."},
+    {k:["bardstown"], en:"Bardstown Bourbon Company is a modern Kentucky producer known for blending, finishing and collaboration releases.", pl:"Bardstown Bourbon Company to nowoczesny producent z Kentucky, znany z blendowania, finiszowania i edycji kolaboracyjnych."},
+    {k:["angel"], en:"Angel's Envy is a Louisville brand best known for bringing wine-cask finishing into a polished bourbon format.", pl:"Angel's Envy to marka z Louisville, znana z eleganckiego wprowadzenia finiszu po winie do bourbonu."},
+    {k:["barton","1792"], en:"Barton 1792 is a Bardstown distillery; the 1792 name nods to the year Kentucky became a state.", pl:"Barton 1792 to destylarnia z Bardstown; nazwa 1792 nawiazuje do roku, w ktorym Kentucky zostalo stanem."},
+    {k:["willett"], en:"Willett is a Bardstown family distillery with a strong following for distinctive small-batch and single-barrel releases.", pl:"Willett to rodzinna destylarnia z Bardstown, ceniona za charakterystyczne edycje small batch i single barrel."},
+    {k:["michter"], en:"Michter's is a Louisville-based whiskey house focused on selected barrels, small batches and polished mature profiles.", pl:"Michter's to whiskey house z Louisville, skupiony na selekcji beczek, malych partiach i dopracowanych dojrzalych profilach."},
+    {k:["jefferson"], en:"Jefferson's is known for experimental maturation ideas, including its Ocean releases aged through sea travel.", pl:"Jefferson's jest znany z eksperymentow z dojrzewaniem, w tym serii Ocean dojrzewajacej podczas morskiej podrozy."},
+    {k:["new riff"], en:"New Riff is a Newport, Kentucky distillery built around grain-to-glass production and bold rye-forward bourbon styles.", pl:"New Riff to destylarnia z Newport w Kentucky, oparta na produkcji grain-to-glass i wyrazistych, zbozowo-przyprawowych stylach."},
+    {k:["penelope"], en:"Penelope is a modern blending-focused bourbon brand, with many releases built around finishing and batch variation.", pl:"Penelope to nowoczesna marka bourbonu skupiona na blendowaniu, finiszowaniu i roznicach miedzy partiami."}
+  ];
+  for(let i=0;i<facts.length;i++){
+    if(facts[i].k.some(function(k){ return s.indexOf(k)>=0; })) return lang==="pl"?facts[i].pl:facts[i].en;
+  }
+  return "";
+}
+function bottleCue(o){
+  const raw=searchText(((o&&o.name)||"")+" "+((o&&o.desc)||"")+" "+((o&&o.description)||"")+" "+((o&&o.category)||"")+" "+((o&&o.type)||""));
+  const age=(raw.match(/\b(\d{2}|\d)\s*year\b/)||[])[1];
+  if(age) return lang==="pl" ? "Wiek "+age+" lat jest tu glownym sygnalem na polce; dalej liczy sie balans beczki i profilu smaku." : "The "+age+" year age statement is the main shelf signal here; the useful read is barrel maturity and balance.";
+  if(/\b(port|cabernet|armagnac|muscat|pinot|brandy|wine|sherry|cognac)\b/.test(raw)) return lang==="pl" ? "Najciekawszy trop to finisz w beczce po innym trunku, ktory powinien dodac owocow, slodyczy albo bardziej deserowej glebi." : "The key hook is cask finishing, which should add fruit, sweetness or a more dessert-like layer.";
+  if(/\bbottled in bond\b|\bbonded\b/.test(raw)) return lang==="pl" ? "Bottled-in-Bond oznacza bardziej rygorystyczny standard: jedna destylarnia, jeden sezon, minimum cztery lata i 100 proof." : "Bottled-in-Bond is the stricter clue: one distillery, one season, at least four years old and 100 proof.";
+  if(/\bsingle barrel\b/.test(raw)) return lang==="pl" ? "Single barrel warto traktowac jak konkretna beczke, a nie anonimowa partie; drobne roznice miedzy butelkami sa czescia zabawy." : "Single barrel should be read as one selected cask rather than an anonymous batch; small bottle-to-bottle differences are part of the appeal.";
+  if(/\bbarrel proof|full proof|cask strength|uncut|unfiltered\b/.test(raw)) return lang==="pl" ? "Moc beczki jest tu waznym sygnalem: wiecej tekstury, ciepla i intensywniejszy kontakt z debem." : "Cask strength is the important signal here: more texture, heat and direct oak intensity.";
+  if(/\blimited|edition|release|batch|collection\b/.test(raw)) return lang==="pl" ? "To bardziej kolekcjonerska edycja niz zwykla polkowa butelka, wiec warto patrzec na rocznik, partie i kontekst wydania." : "This reads more like a collector release than a standard shelf bottle, so vintage, batch and release context matter.";
+  if(/\bwheated|wheat\b/.test(raw)) return lang==="pl" ? "Pszeniczny trop zwykle oznacza mieksza slodycz i mniej ostrej przyprawy niz bourbon z wyzszym udzialem zyta." : "The wheated clue usually means softer sweetness and less sharp spice than higher-rye bourbon.";
+  if(/\brye\b/.test(raw)) return lang==="pl" ? "Zytni trop sugeruje wiecej przypraw, suchej energii i bardziej wyrazisty koniec niz w lagodnym bourbonie." : "The rye clue points toward more spice, drier energy and a sharper finish than a softer bourbon.";
+  return "";
+}
+function awardCue(o){
+  const raw=textClean(((o&&o.desc)||"")+" "+((o&&o.description)||""));
+  if(!raw) return "";
+  const hit=(raw.match(/(?:won|winner|gold medal|double gold|medal|award)[^.]{0,120}(?:\.|$)/i)||[])[0];
+  if(!hit) return "";
+  return shortSentence(hit, 155);
+}
+function smartGeneralInfo(o){
+  const seed=(o&&o.id)||((o&&o.name)||"bottle");
+  const fact=distilleryInfo(o);
+  const cue=bottleCue(o);
+  const award=awardCue(o);
+  const style=String(categoryLabel(o)||((o&&o.type)||"bourbon")).toLowerCase();
+  if(award) return lang==="pl" ? "Warto odnotowac wyroznienie z opisu tej butelki: "+award : "Worth noting from this bottle's source notes: "+award;
+  if(fact && cue) return stablePick(seed,[fact+" "+cue, cue+" "+fact]);
+  if(fact) return stablePick(seed, lang==="pl" ? [
+    fact+" Ten konkretny wybor najlepiej czytac przez styl "+style+" oraz profil smaku ponizej.",
+    fact+" Na polce to butelka, przy ktorej liczy sie kontekst producenta i szybka ocena ceny do jakosci.",
+    fact+" Szczegoly smaku ponizej mowia wiecej niz sama etykieta, wiec to dobry kandydat do porownania w kolekcji."
+  ] : [
+    fact+" This bottle is best read through its "+style+" style and the tasting profile below.",
+    fact+" On the shelf, the producer context and value score matter more than the label alone.",
+    fact+" The tasting profile below tells more than the front label, making it useful for collection comparison."
+  ]);
+  if(cue) return cue;
+  return stablePick(seed, lang==="pl" ? [
+    "To zwiezly wpis do szybkiej decyzji: sprawdz styl, cene i profil smaku, a dopiero potem oceniaj miejsce w kolekcji.",
+    "Ta butelka najlepiej dziala jako porownanie w ramach stylu "+style+"; najwazniejsze informacje sa w cenie, ocenie i nutach smaku.",
+    "Nie ma tu potrzeby dlugiej historii: traktuj ja jako praktyczny wpis do polowania, wishlisty albo porownania z podobnymi butelkami."
+  ] : [
+    "A concise shelf read: check style, price and tasting profile before deciding whether it belongs in the collection.",
+    "This bottle works best as a comparison inside the "+style+" lane; price, rating and tasting notes carry the decision.",
+    "No long backstory needed here: treat it as a practical hunt, wishlist or collection comparison entry."
+  ]);
+}
 function generalInfoBlock(o){
   const profile=localizedProfile(o);
   const fallback=styleProfileFallback(o);
-  const desc=profile.general || firstVal(o,["general","info","desc","description"]) || fallback.general;
+  const profileGeneral=profile.general;
+  const raw=firstVal(o,["general","info","desc","description"]);
+  let desc="";
+  if(profileGeneral && !profileGeneralIsBoilerplate(profileGeneral)) desc=shortSentence(profileGeneral, 260);
+  else desc=smartGeneralInfo(o) || shortSentence(raw, 260) || fallback.general;
   if(!desc) return "";
   return '<div class="sec-t">'+t("infoT")+'</div><p class="desc">'+esc(desc)+'</p>';
 }
