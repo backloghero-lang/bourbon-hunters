@@ -55,6 +55,7 @@ function appUrl(env){
   const raw=String(env.APP_URL||"https://backloghero-lang.github.io/bourbon-hunters/").trim()||"https://backloghero-lang.github.io/bourbon-hunters/";
   return raw.replace(/\/?$/,"/");
 }
+function assetUrl(env, path){ return appUrl(env)+String(path||"").replace(/^\/+/,""); }
 function supportEmail(env){ return String(env.SUPPORT_EMAIL||"support@bourbonhunters.app").trim(); }
 function htmlEscape(s){
   return String(s||"").replace(/[&<>"']/g,function(c){
@@ -79,19 +80,24 @@ async function sendEmail(env, message){
 }
 async function sendWelcomeEmail(env, user){
   const name=htmlEscape(user.username||"Hunter");
+  const header=htmlEscape(assetUrl(env,"design/figma-assets/home-pack-v2/home-header-v3.jpg"));
+  const footer=htmlEscape(assetUrl(env,"assets/brand/email-premium-footer.png"));
+  const openUrl=htmlEscape(appUrl(env));
   return sendEmail(env,{
     to:user.email,
     subject:"Welcome to Bourbon Hunters",
     text:"Welcome to Bourbon Hunters, "+(user.username||"Hunter")+". Your account is ready. Open "+appUrl(env),
-    html:'<div style="font-family:Arial,sans-serif;background:#100a06;color:#f6e1bc;padding:24px"><h1 style="color:#e2b070">Welcome to Bourbon Hunters</h1><p>Hi '+name+', your hunter profile is ready.</p><p>You can now sync your wishlist, collection, ratings and scans across devices.</p><p><a href="'+htmlEscape(appUrl(env))+'" style="color:#e2b070">Open Bourbon Hunters</a></p><p style="color:#c9b493;font-size:12px">Drink responsibly. 18+.</p></div>'
+    html:'<div style="margin:0;background:#080604;padding:24px 12px;font-family:Arial,sans-serif;color:#f6e1bc"><div style="max-width:560px;margin:0 auto;background:#100a06;border:1px solid rgba(226,176,112,.28);border-radius:18px;overflow:hidden"><img src="'+header+'" alt="Bourbon Hunters" style="display:block;width:100%;max-height:142px;object-fit:cover"><div style="padding:24px"><h1 style="margin:0 0 12px;color:#e2b070;font-size:26px;line-height:1.1">Welcome to Bourbon Hunters</h1><p style="margin:0 0 14px;line-height:1.55">Hi '+name+', your hunter profile is ready.</p><p style="margin:0 0 20px;line-height:1.55;color:#d8c4a4">You can now sync your wishlist, collection, ratings and scans across devices.</p><p style="margin:0"><a href="'+openUrl+'" style="display:inline-block;background:#e2b070;color:#1b1008;padding:12px 18px;border-radius:12px;text-decoration:none;font-weight:700">Open Bourbon Hunters</a></p></div><div style="padding:0 24px 20px;text-align:center"><img src="'+footer+'" alt="" style="width:142px;max-width:44%;height:auto;opacity:.72;border-radius:12px"><p style="margin:12px 0 0;color:#9f8b69;font-size:12px;line-height:1.45">Drink responsibly. 18+.</p></div></div></div>'
   });
 }
 async function sendPasswordResetEmail(env, user, resetUrl){
+  const header=htmlEscape(assetUrl(env,"design/figma-assets/home-pack-v2/home-header-v3.jpg"));
+  const footer=htmlEscape(assetUrl(env,"assets/brand/email-premium-footer.png"));
   return sendEmail(env,{
     to:user.email,
     subject:"Reset your Bourbon Hunters password",
     text:"Use this link to reset your Bourbon Hunters password: "+resetUrl+" The link expires in 60 minutes. If this was not you, ignore this email.",
-    html:'<div style="font-family:Arial,sans-serif;background:#100a06;color:#f6e1bc;padding:24px"><h1 style="color:#e2b070">Reset your password</h1><p>Use the button below to set a new Bourbon Hunters password. This link expires in 60 minutes.</p><p><a href="'+htmlEscape(resetUrl)+'" style="display:inline-block;background:#e2b070;color:#1b1008;padding:12px 18px;border-radius:12px;text-decoration:none;font-weight:700">Set new password</a></p><p style="color:#c9b493;font-size:12px">If this was not you, ignore this email or contact '+htmlEscape(supportEmail(env))+'.</p></div>'
+    html:'<div style="margin:0;background:#080604;padding:24px 12px;font-family:Arial,sans-serif;color:#f6e1bc"><div style="max-width:560px;margin:0 auto;background:#100a06;border:1px solid rgba(226,176,112,.28);border-radius:18px;overflow:hidden"><img src="'+header+'" alt="Bourbon Hunters" style="display:block;width:100%;max-height:142px;object-fit:cover"><div style="padding:24px"><h1 style="margin:0 0 12px;color:#e2b070;font-size:26px;line-height:1.1">Reset your password</h1><p style="margin:0 0 18px;line-height:1.55;color:#d8c4a4">Use the button below to set a new Bourbon Hunters password. This link expires in 60 minutes.</p><p style="margin:0 0 18px"><a href="'+htmlEscape(resetUrl)+'" style="display:inline-block;background:#e2b070;color:#1b1008;padding:12px 18px;border-radius:12px;text-decoration:none;font-weight:700">Set new password</a></p><p style="margin:0;color:#c9b493;font-size:12px;line-height:1.5">If this was not you, ignore this email or contact '+htmlEscape(supportEmail(env))+'.</p></div><div style="padding:0 24px 20px;text-align:center"><img src="'+footer+'" alt="" style="width:142px;max-width:44%;height:auto;opacity:.72;border-radius:12px"><p style="margin:12px 0 0;color:#9f8b69;font-size:12px;line-height:1.45">Bourbon Hunters premium service notification.</p></div></div></div>'
   });
 }
 function cleanBirthDate(v){ const s=String(v||"").trim(); return /^\d{4}-\d{2}-\d{2}$/.test(s) ? s : ""; }

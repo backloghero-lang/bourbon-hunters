@@ -159,7 +159,7 @@
   /* toast */
   #toast{position:fixed;left:50%;bottom:calc(var(--nav-h) + 18px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);
     background:var(--card2);border:1px solid var(--amber);color:var(--gold);font-size:13px;font-weight:700;padding:11px 18px;border-radius:24px;
-    box-shadow:var(--shadow);z-index:60;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;max-width:90%}
+    box-shadow:var(--shadow);z-index:10020;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;max-width:90%}
   #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
   /* collection tabs */
   .tabs{display:flex;gap:8px;overflow-x:auto;margin:4px -16px 16px;padding:0 16px 2px}
@@ -214,7 +214,8 @@
   .auth-divider{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:14px;color:#C9B493;font-size:12px;font-weight:900;margin:2px 34px}
   .auth-divider:before,.auth-divider:after{content:"";height:1px;background:rgba(226,176,112,.22)}
   .google-btn{height:58px;border:1px solid rgba(246,225,188,.58);border-radius:18px;background:rgba(0,0,0,.18);color:#F6E1BC;font-size:15px;font-weight:950;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:12px}
-  .google-mark{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:#fff;color:#4285F4;font-weight:950}
+  .google-mark{width:22px;height:22px;display:inline-grid;place-items:center;flex:0 0 22px}
+  .google-mark svg{width:22px;height:22px;display:block}
   .auth-switch,.auth-legal{font-size:13px;line-height:1.6;text-align:center;color:#C9B493}
   .text-link{border:0;background:transparent;color:#E2B070;font-weight:950;cursor:pointer;padding:0 2px}
   .legal-title{font-family:var(--serif);font-size:28px;color:#F6E1BC;margin:0}
@@ -319,15 +320,15 @@
   .links{font-size:12px;line-height:1.7}.links a{color:var(--amber);word-break:break-all}
   .card{background:linear-gradient(160deg,rgba(29,27,24,.9),rgba(16,12,8,.94)),url("design/figma-assets/scanner-pack-v1/result-card-bg.png") center/cover no-repeat;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow);margin:16px}
   .name{font-size:21px;font-weight:800;font-family:var(--serif);margin:0 0 2px}
-  .age-gate{position:fixed;inset:0;z-index:9998;display:none;place-items:center;padding:22px;background:rgba(3,2,1,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+  .age-gate{position:fixed;inset:0;z-index:9998;display:none;place-items:center;padding:12px;background:#000;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
   .age-gate.show{display:grid}
-  .age-card{width:min(420px,100%);border:1px solid rgba(226,176,112,.42);border-radius:20px;background:linear-gradient(160deg,rgba(33,24,16,.96),rgba(8,6,4,.98));box-shadow:0 24px 70px rgba(0,0,0,.66),inset 0 1px 0 rgba(255,255,255,.05);padding:22px}
-  .age-card h2{font-family:var(--serif);font-size:27px;line-height:1.05;margin:0 0 9px;color:#F6E1BC}
-  .age-card p{margin:0 0 16px;color:#C9B493;font-size:13px;line-height:1.55}
-  .age-card input{width:100%;height:54px;border:1px solid rgba(226,176,112,.22);border-radius:16px;background:rgba(246,225,188,.08);color:#F6E1BC;padding:0 14px;font-size:15px;color-scheme:dark;outline:none}
-  .age-actions{display:grid;grid-template-columns:1fr;gap:10px;margin-top:16px}
-  .age-actions button{height:52px;border:0;border-radius:16px;background:linear-gradient(180deg,#E2B070,#B86A33);color:#1B1008;font-weight:950;cursor:pointer}
-  .age-note{font-size:11px!important;color:#9F8B69!important;margin-top:12px!important}
+  .age-card{position:relative;width:min(430px,calc(100vw - 24px));height:min(calc((100vw - 24px) * 1.77),calc(100dvh - 24px),760px);border:0;border-radius:0;background:#000 url("assets/brand/age-gate.png") center top/100% auto no-repeat;box-shadow:0 26px 90px rgba(0,0,0,.82);overflow:hidden}
+  .age-card:after{content:"";position:absolute;left:0;right:0;bottom:0;height:3.7%;background:linear-gradient(180deg,rgba(0,0,0,0),#000 78%);pointer-events:none}
+  .age-card h2,.age-card p{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .age-actions{position:absolute;left:15%;right:15%;top:58.2%;display:grid;gap:4.2%;height:15.6%;z-index:2}
+  .age-actions button{border:0;border-radius:8px;background:rgba(255,255,255,.01);color:transparent;font-size:0;cursor:pointer}
+  .age-actions button:focus-visible{outline:2px solid rgba(226,176,112,.88);outline-offset:3px}
+  .age-note{display:none}
 
   .placeholder-view{text-align:center;padding:60px 20px;color:var(--muted)}
   .placeholder-view .pi{font-size:48px;margin-bottom:14px}
@@ -500,7 +501,7 @@
       <div class="field"><label><span data-i18n="birthDateLabel">Date of birth</span><span>*</span></label><input name="birth_date" type="date" autocomplete="bday" required><p class="field-help" data-i18n="birthDateHelp">Bourbon Hunters is only for adults. Current minimum: 18+.</p></div>
       <button class="auth-primary" type="submit" data-i18n="signUpBtn">Sign Up</button>
       <div class="auth-divider"><span>Or</span></div>
-      <button class="google-btn" type="button" data-auth-action="google"><span class="google-mark">G</span><span data-i18n="googleSignUp">Sign up with Google</span></button>
+      <button class="google-btn" type="button" data-auth-action="google"><span class="google-mark" aria-hidden="true"><svg viewBox="0 0 18 18" focusable="false"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84c-.21 1.12-.84 2.07-1.8 2.71v2.26h2.91c1.7-1.57 2.69-3.88 2.69-6.61z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.19l-2.91-2.26c-.81.54-1.84.86-3.05.86-2.35 0-4.34-1.59-5.05-3.72H.94v2.33A8.997 8.997 0 009 18z"/><path fill="#FBBC05" d="M3.95 10.69A5.41 5.41 0 013.67 9c0-.59.1-1.15.28-1.69V4.98H.94A8.996 8.996 0 000 9c0 1.45.35 2.82.94 4.02l3.01-2.33z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.51.45 3.44 1.35l2.58-2.58C13.46.9 11.42 0 9 0A8.997 8.997 0 00.94 4.98l3.01 2.33C4.66 5.17 6.65 3.58 9 3.58z"/></svg></span><span data-i18n="googleSignUp">Sign up with Google</span></button>
       <p class="auth-switch"><span data-i18n="alreadyAccount">Already have an account?</span> <button class="text-link" type="button" data-open-view="signin" data-i18n="signInTab">Sign In</button></p>
       <p class="auth-legal"><span data-i18n="authConsent">By proceeding, you agree to our</span> <button class="text-link" type="button" data-open-view="terms" data-i18n="termsTitle">Terms of Service</button> <span data-i18n="andText">and</span> <button class="text-link" type="button" data-open-view="privacy" data-i18n="privacyTitle">Privacy Policy</button>.</p>
     </form>
@@ -518,7 +519,7 @@
       <div class="field"><label>Password<span>*</span></label><input name="password" type="password" autocomplete="current-password" placeholder="******" required></div>
       <button class="auth-primary" type="submit" data-i18n="signInBtn">Sign In</button>
       <div class="auth-divider"><span>Or</span></div>
-      <button class="google-btn" type="button" data-auth-action="google"><span class="google-mark">G</span><span data-i18n="googleSignIn">Sign in with Google</span></button>
+      <button class="google-btn" type="button" data-auth-action="google"><span class="google-mark" aria-hidden="true"><svg viewBox="0 0 18 18" focusable="false"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84c-.21 1.12-.84 2.07-1.8 2.71v2.26h2.91c1.7-1.57 2.69-3.88 2.69-6.61z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.19l-2.91-2.26c-.81.54-1.84.86-3.05.86-2.35 0-4.34-1.59-5.05-3.72H.94v2.33A8.997 8.997 0 009 18z"/><path fill="#FBBC05" d="M3.95 10.69A5.41 5.41 0 013.67 9c0-.59.1-1.15.28-1.69V4.98H.94A8.996 8.996 0 000 9c0 1.45.35 2.82.94 4.02l3.01-2.33z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.51.45 3.44 1.35l2.58-2.58C13.46.9 11.42 0 9 0A8.997 8.997 0 00.94 4.98l3.01 2.33C4.66 5.17 6.65 3.58 9 3.58z"/></svg></span><span data-i18n="googleSignIn">Sign in with Google</span></button>
       <p class="auth-switch"><span data-i18n="noAccount">No account yet?</span> <button class="text-link" type="button" data-open-view="register" data-i18n="registerTab">Register</button></p>
       <p class="auth-legal"><button class="text-link" type="button" data-open-view="reset" data-i18n="forgotPassword">Forgot password?</button> &middot; <button class="text-link" type="button" data-open-view="terms" data-i18n="termsTitle">Terms of Service</button> &middot; <button class="text-link" type="button" data-open-view="privacy" data-i18n="privacyTitle">Privacy Policy</button></p>
     </form>
@@ -593,12 +594,11 @@
 <div class="age-gate" id="ageGate" aria-modal="true" role="dialog" aria-labelledby="ageGateTitle">
   <div class="age-card">
     <h2 id="ageGateTitle" data-i18n="ageGateTitle">Confirm your age</h2>
-    <p data-i18n="ageGateBody">Bourbon Hunters is for adults of legal drinking age. Enter your date of birth to continue.</p>
-    <input id="ageGateBirthDate" type="date" autocomplete="bday" aria-label="Date of birth">
+    <p data-i18n="ageGateBody">Bourbon Hunters is for adults of legal drinking age. Confirm that you are at least 18 to continue.</p>
     <div class="age-actions">
-      <button id="ageGateConfirm" type="button" data-i18n="ageGateContinue">Continue</button>
+      <button id="ageGateConfirm" type="button" data-i18n="ageGateContinue" aria-label="I am 18 or older">I am 18 or older</button>
+      <button id="ageGateDeny" type="button" data-i18n="ageGateDeny" aria-label="I am under 18">I am under 18</button>
     </div>
-    <p class="age-note" data-i18n="ageGateNote">Default access is 18+. For US mode this can be changed to 21+ in the product configuration.</p>
   </div>
 </div>
 
@@ -782,8 +782,8 @@ Object.assign(I18N.pl,{
   authConsent:"Kontynuuj\u0105c, akceptujesz", andText:"oraz", termsTitle:"Regulamin", privacyTitle:"Polityka prywatno\u015bci",
   forgotPassword:"Nie pami\u0119tasz has\u0142a?", resetTitle:"Reset has\u0142a", resetIntro:"Podaj email konta. Link resetuj\u0105cy wy\u015blemy po podpi\u0119ciu maili transakcyjnych.",
   resetBtn:"Wy\u015blij link resetuj\u0105cy", backToSignIn:"Wr\u00f3\u0107 do logowania", birthDateLabel:"Data urodzenia", birthDateHelp:"Bourbon Hunters jest tylko dla doros\u0142ych. Aktualny limit: 18+.",
-  ageGateTitle:"Potwierd\u017a wiek", ageGateBody:"Bourbon Hunters jest dla os\u00f3b pe\u0142noletnich. Podaj dat\u0119 urodzenia, aby przej\u015b\u0107 dalej.",
-  ageGateContinue:"Kontynuuj", ageGateNote:"Domy\u015blny dost\u0119p to 18+. Dla trybu USA mo\u017cemy zmieni\u0107 limit na 21+.", ageGateBlocked:"Musisz mie\u0107 minimum 18 lat, aby korzysta\u0107 z aplikacji.",
+  ageGateTitle:"Potwierd\u017a wiek", ageGateBody:"Bourbon Hunters jest dla os\u00f3b pe\u0142noletnich. Potwierd\u017a, \u017ce masz co najmniej 18 lat.",
+  ageGateContinue:"Tak, mam 18 lat lub wi\u0119cej", ageGateDeny:"Nie, mam mniej ni\u017c 18 lat", ageGateNote:"Domy\u015blny dost\u0119p to 18+. Dla trybu USA mo\u017cemy zmieni\u0107 limit na 21+.", ageGateBlocked:"Musisz mie\u0107 minimum 18 lat, aby korzysta\u0107 z aplikacji.",
   profileGuestTitle:"Profil \u0142owcy", profileGuestCopy:"Zaloguj si\u0119 albo utw\u00f3rz konto, aby synchronizowa\u0107 kolekcj\u0119, wishlist\u0119, oceny i skany przez Cloudflare.",
   profileAccountKick:"Konto Bourbon Hunters", freePlan:"Plan Free", profileSyncCopy:"Dane synchronizuj\u0105 si\u0119 po zalogowaniu, a lokalny cache zostaje na telefonie dla PWA.",
   statWishlist:"Wishlist", statCollection:"Kolekcja", statRatings:"Oceny", logoutTab:"Wyloguj", logoutDone:"Wylogowano.",
@@ -796,8 +796,8 @@ Object.assign(I18N.en,{
   termsTitle:"Terms of Service", privacyTitle:"Privacy Policy", forgotPassword:"Forgot password?", resetTitle:"Reset password",
   resetIntro:"Enter your account email. We will send a reset link after transactional email is connected.", resetBtn:"Send reset link", backToSignIn:"Back to Sign In",
   birthDateLabel:"Date of birth", birthDateHelp:"Bourbon Hunters is only for adults. Current minimum: 18+.",
-  ageGateTitle:"Confirm your age", ageGateBody:"Bourbon Hunters is for adults of legal drinking age. Enter your date of birth to continue.",
-  ageGateContinue:"Continue", ageGateNote:"Default access is 18+. For US mode this can be changed to 21+ in the product configuration.", ageGateBlocked:"You must be at least 18 to use the app.",
+  ageGateTitle:"Confirm your age", ageGateBody:"Bourbon Hunters is for adults of legal drinking age. Confirm that you are at least 18 to continue.",
+  ageGateContinue:"Yes, I am 18 or older", ageGateDeny:"No, I am under 18", ageGateNote:"Default access is 18+. For US mode this can be changed to 21+ in the product configuration.", ageGateBlocked:"You must be at least 18 to use the app.",
   profileGuestTitle:"Hunter profile", profileGuestCopy:"Sign in or create an account to sync your collection, wishlist, ratings and scans through Cloudflare.",
   profileAccountKick:"Bourbon Hunters account", freePlan:"Free plan", profileSyncCopy:"Data syncs after sign-in, while the local cache stays on the phone for PWA use.",
   statWishlist:"Wishlist", statCollection:"Collection", statRatings:"Ratings", logoutTab:"Logout", logoutDone:"Signed out.",
@@ -1421,6 +1421,9 @@ function starStr(n){ n=Math.max(0,Math.min(5,Math.round(n||0))); return "★★�
 
 const AGE_GATE_KEY="bh_age_gate_ok_v1";
 const AGE_GATE_MIN=18;
+function hasAgeGateOk(){
+  try{ return localStorage.getItem(AGE_GATE_KEY)==="1"; }catch(e){ return false; }
+}
 function dateYearsAgo(years){
   const d=new Date();
   d.setFullYear(d.getFullYear()-years);
@@ -1431,22 +1434,22 @@ function isAdultBirthDate(value,minAge){
   return String(value)<=dateYearsAgo(minAge);
 }
 function showAgeGateIfNeeded(){
-  let ok=false;
-  try{ ok=localStorage.getItem(AGE_GATE_KEY)==="1"; }catch(e){}
+  const ok=hasAgeGateOk();
   const gate=document.getElementById("ageGate");
-  if(!ok && gate) gate.classList.add("show");
+  if(!ok && gate){ gate.classList.add("show"); return true; }
+  return false;
 }
 function setupAgeGate(){
   const gate=document.getElementById("ageGate");
-  const input=document.getElementById("ageGateBirthDate");
   const btn=document.getElementById("ageGateConfirm");
-  if(!gate||!input||!btn) return;
-  input.max=dateYearsAgo(AGE_GATE_MIN);
+  const deny=document.getElementById("ageGateDeny");
+  if(!gate||!btn) return;
   btn.addEventListener("click",function(){
-    if(!isAdultBirthDate(input.value,AGE_GATE_MIN)){ toast(t("ageGateBlocked")); return; }
     try{ localStorage.setItem(AGE_GATE_KEY,"1"); }catch(e){}
     gate.classList.remove("show");
+    if(window.BH_START_INTRO) window.BH_START_INTRO();
   });
+  if(deny) deny.addEventListener("click",function(){ toast(t("ageGateBlocked")); });
 }
 window.BH_SHOW_AGE_GATE=showAgeGateIfNeeded;
 
@@ -1730,9 +1733,9 @@ if(birthInput){
   birthInput.max=d.toISOString().slice(0,10);
 }
 setupAgeGate();
+showAgeGateIfNeeded();
 renderProfile();
 openResetFromUrl();
-window.addEventListener("load",function(){ setTimeout(function(){ if(!document.getElementById("bhIntro")) showAgeGateIfNeeded(); },900); });
 
 function openDetail(id){
   const b = DB.find(function(x){return x.id===id;});
@@ -1961,6 +1964,7 @@ if("serviceWorker" in navigator){ window.addEventListener("load",function(){ nav
   .bh-tagline{position:absolute;left:0;right:0;top:67%;text-align:center;color:#b76e25;font-size:12px;font-weight:900;letter-spacing:2.8px;text-transform:uppercase;opacity:0;animation:bhTextReveal 4s ease forwards;animation-delay:.08s;z-index:5}
   .bh-tagline:after{content:"";display:block;width:156px;height:1px;margin:11px auto 0;background:linear-gradient(90deg,transparent,#8f5a23 18%,#d09b4a 50%,#8f5a23 82%,transparent)}
   #bhIntro{animation:none}
+  #bhIntro.is-waiting{display:none}
   #bhIntro:before{display:none}
   #bhIntro .bh-stage{display:none}
   #bhIntro.is-fading{opacity:0;transition:opacity .55s ease}
@@ -1974,7 +1978,7 @@ if("serviceWorker" in navigator){ window.addEventListener("load",function(){ nav
     .bh-skip{left:calc(50% + min(50vw,240px) - 76px);right:auto}
   }
 </style>
-<div id="bhIntro" aria-hidden="true">
+<div id="bhIntro" class="is-waiting" aria-hidden="true">
   <div class="bh-intro-video">
     <div class="bh-intro-frame">
       <video id="bhIntroVideo" src="assets/intro/nowe%20intro.mp4" muted playsinline webkit-playsinline preload="auto"></video>
@@ -2028,11 +2032,11 @@ if("serviceWorker" in navigator){ window.addEventListener("load",function(){ nav
   var skip=document.getElementById("bhIntroSkip");
   var introStart=5.25;
   var done=false;
-  function finish(){ if(done) return; done=true; intro.classList.add("is-fading"); setTimeout(function(){ if(intro&&intro.parentNode) intro.parentNode.removeChild(intro); if(window.BH_SHOW_AGE_GATE) window.BH_SHOW_AGE_GATE(); },620); }
+  var started=false;
+  function finish(){ if(done) return; done=true; intro.classList.add("is-fading"); setTimeout(function(){ if(intro&&intro.parentNode) intro.parentNode.removeChild(intro); },620); }
   if(skip) skip.addEventListener("click",function(e){ e.preventDefault(); e.stopPropagation(); finish(); });
   if(video){
     video.muted=true;
-    video.load();
     function playIntro(){
       var play=video.play();
       if(play && play.catch) play.catch(function(){});
@@ -2047,9 +2051,21 @@ if("serviceWorker" in navigator){ window.addEventListener("load",function(){ nav
     video.addEventListener("seeked",playIntro,{once:true});
     video.addEventListener("ended",finish);
     video.addEventListener("error",function(){ setTimeout(finish,650); });
-    setTimeout(function(){ if(video.paused && !done) playIntro(); },900);
   }
-  setTimeout(finish,8500);
+  function startIntro(){
+    if(started || done) return;
+    started=true;
+    intro.classList.remove("is-waiting");
+    if(video){
+      video.load();
+      setTimeout(function(){ if(video.paused && !done) playIntro(); },900);
+    } else {
+      setTimeout(finish,650);
+    }
+    setTimeout(finish,8500);
+  }
+  window.BH_START_INTRO=startIntro;
+  if(typeof hasAgeGateOk==="function" && hasAgeGateOk()) startIntro();
 })();
 </script>
 </body>

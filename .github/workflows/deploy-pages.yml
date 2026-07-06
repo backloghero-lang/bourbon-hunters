@@ -35,6 +35,7 @@ jobs:
           mkdir -p _site/assets
           mkdir -p _site/assets/bourbons
           cp -R assets/detail _site/assets/
+          cp -R assets/brand _site/assets/
           cp -R assets/intro _site/assets/
           cp -R assets/bourbons/runtime-100 _site/assets/bourbons/
           cp -R assets/bourbons/list-thumbs _site/assets/bourbons/

@@ -21,6 +21,7 @@ Ten plik trzyma stale ustalenia, zeby nie ginely w dlugich watkach.
 - Home pokazuje skrot `Moja kolekcja` jako karuzele z tych samych danych, ktore sa w dolnej zakladce `Kolekcja`.
 - Widok `Profil` na etapie prototypu pokazuje: Register, Sign In, Articles, Wersja Pro i Ustawienia.
 - `Register` i `Sign In` sa podpiete do Cloudflare Worker + D1 dla email/password; Google Sign-In zostaje nieaktywny do kolejnego etapu.
+- Login spolecznosciowy na start ograniczamy do Google. Nie dodajemy Facebooka ani Instagrama, zeby nie komplikowac onboardingu i review providerow.
 - `Articles` jest miejscem na przyszlego Workera/agenta od newsow i tresci ze swiata whiskey.
 - Pelna aplikacja zaczyna sie wtedy, gdy kolekcja, wishlisty, oceny, limity skanow i historia skanow sa zapisywane na backendzie, a nie tylko w `localStorage`.
 - `localStorage` zostaje dobry dla MVP/prototypu, ale nie jest docelowym miejscem danych uzytkownika.
