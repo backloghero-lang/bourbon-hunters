@@ -223,12 +223,16 @@ async function authUser(env, request){
 async function bootstrapFor(env, userId){
   const bottles=await env.DB.prepare("SELECT bottle_id,list_type FROM user_bottles WHERE user_id=?").bind(userId).all();
   const ratings=await env.DB.prepare("SELECT bottle_id,rating FROM user_ratings WHERE user_id=?").bind(userId).all();
-  const out={wishlist:[],collection:[],ratings:{}};
+  const out={wishlist:[],collection:[],ratings:{},recommendations_count:0};
   (bottles.results||[]).forEach(function(r){
     if(r.list_type==="wishlist") out.wishlist.push(r.bottle_id);
     if(r.list_type==="collection") out.collection.push(r.bottle_id);
   });
   (ratings.results||[]).forEach(function(r){ out.ratings[r.bottle_id]=r.rating; });
+  if(await tableExists(env,"bottle_recommendations")){
+    const rec=await env.DB.prepare("SELECT COUNT(*) AS count FROM bottle_recommendations WHERE user_id=? AND active=1").bind(userId).first();
+    out.recommendations_count=Number(rec&&rec.count)||0;
+  }
   return out;
 }
 async function upsertBottleList(env, userId, listType, bottleId, active, data){

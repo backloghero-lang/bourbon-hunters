@@ -80,14 +80,15 @@
     border:1px solid rgba(184,99,51,.72);border-radius:20px;padding:18px 16px;display:flex;gap:12px;box-shadow:0 18px 42px rgba(0,0,0,.42);position:relative;overflow:hidden}
   .feat:before{content:"";position:absolute;inset:0;background:url("design/figma-assets/asset-pack-v1/noise-overlay.png") center/cover repeat;opacity:.08;pointer-events:none}
   .feat:after{content:"";position:absolute;left:14px;right:14px;bottom:0;height:1px;background:linear-gradient(90deg,transparent,rgba(232,156,66,.88),transparent);pointer-events:none}
-  .feat h4{font-family:var(--serif);font-size:20px;margin:0 0 10px;padding-top:2px;line-height:21px;color:#F6E1BC;text-shadow:0 2px 12px rgba(0,0,0,.65);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;height:65px;max-height:65px;min-height:65px;word-break:normal}
+  .feat h4{font-family:var(--serif);font-size:20px;margin:0 0 8px;padding-top:2px;line-height:21px;color:#F6E1BC;text-shadow:0 2px 12px rgba(0,0,0,.65);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;height:65px;max-height:65px;min-height:65px;word-break:normal}
   .feat.long-name h4{font-size:17px;line-height:18.5px;height:58px;max-height:58px;min-height:58px}
+  .feat.rec-card h4{font-size:19px;line-height:20px;height:54px;max-height:54px;min-height:54px}
   .feat.long-name .sub{display:none}
   .feat .sub{font-size:12px;color:#C68752;margin-bottom:8px;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .feat .price{font-size:20px;color:#E28A3D;font-weight:900;margin-bottom:8px;letter-spacing:.5px}
-  .feat .btn-sm{display:inline-flex;align-items:center;justify-content:center;width:min(176px,100%);min-height:30px;background:rgba(0,0,0,.22);border:1px solid #E2B070;color:#E2B070;font-size:10px;font-weight:900;letter-spacing:.55px;padding:6px 10px;border-radius:8px;text-transform:uppercase;cursor:pointer;box-sizing:border-box}
+  .feat .btn-sm{display:inline-flex;align-items:center;justify-content:center;width:min(176px,100%);min-height:29px;margin-top:auto;background:rgba(0,0,0,.22);border:1px solid #E2B070;color:#E2B070;font-size:10px;font-weight:900;letter-spacing:.55px;padding:6px 10px;border-radius:8px;text-transform:uppercase;cursor:pointer;box-sizing:border-box}
   .feat .info{flex:1 1 auto;display:flex;flex-direction:column;justify-content:flex-start;position:relative;z-index:1;min-width:0;padding:2px 0 0;overflow:hidden}
-  .feat-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;width:min(176px,100%)}
+  .feat-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:7px;width:min(176px,100%)}
   .feat-tag{display:inline-flex;align-items:center;justify-content:center;width:100%;min-height:24px;font-size:8.5px;line-height:1.08;border:1px solid rgba(127,208,150,.5);color:#7FD096;background:rgba(23,73,49,.22);border-radius:6px;padding:4px 6px;text-transform:uppercase;font-weight:900;letter-spacing:.25px;box-sizing:border-box;text-align:center}
   .feat-visual{flex:0 0 118px;width:118px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;z-index:1}
   .bottlepic{flex:0 0 140px;width:118px;height:140px;align-self:center;border-radius:16px;display:grid;place-items:center;font-size:42px;overflow:visible;position:relative;z-index:1;
@@ -183,11 +184,11 @@
   .profile-account .pa-email{font-size:12px;color:#C9B493;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .profile-account .pa-copy{font-size:13px;line-height:1.5;color:#C9B493;margin:0}
   .profile-account.has-badge{grid-template-columns:78px 1fr;align-items:center}
-  .profile-account.has-badge .pa-badge{grid-row:1 / span 5;width:68px;height:68px;border-radius:50%;background:rgba(0,0,0,.24) center/cover no-repeat;border:1px solid rgba(226,176,112,.34);box-shadow:0 12px 28px rgba(0,0,0,.32),0 0 18px rgba(226,176,112,.14)}
-  .profile-account .pa-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .profile-account.has-badge .pa-badge{grid-row:1 / span 5;width:68px;height:68px;border-radius:50%;background:rgba(0,0,0,.24) center/cover no-repeat;border:1px solid rgba(226,176,112,.34);box-shadow:0 12px 28px rgba(0,0,0,.32),0 0 18px rgba(226,176,112,.14);cursor:pointer}
+  .profile-account .pa-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
   .profile-account .pa-stat{border:1px solid rgba(226,176,112,.16);border-radius:14px;background:rgba(0,0,0,.16);padding:9px 7px;text-align:center}
-  .profile-account .pa-stat strong{display:block;font-size:18px;color:#F6E1BC;line-height:1}
-  .profile-account .pa-stat span{display:block;margin-top:4px;font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:#A99572;font-weight:900}
+  .profile-account .pa-stat strong{display:block;font-size:17px;color:#F6E1BC;line-height:1}
+  .profile-account .pa-stat span{display:block;margin-top:4px;font-size:8px;text-transform:uppercase;letter-spacing:.45px;color:#A99572;font-weight:900}
   .profile-menu{display:flex;flex-direction:column;gap:12px;margin-top:12px}
   .profile-row{width:100%;display:grid;grid-template-columns:54px 1fr 22px;align-items:center;gap:14px;border:1px solid rgba(226,176,112,.18);border-radius:18px;background:linear-gradient(180deg,rgba(29,24,18,.72),rgba(10,7,5,.88));color:#F6E1BC;padding:12px 14px;text-align:left;font-size:15px;font-weight:900;letter-spacing:.2px;cursor:pointer;box-shadow:0 12px 24px rgba(0,0,0,.22)}
   .profile-row:active{transform:scale(.99)}
@@ -205,10 +206,11 @@
   .badge-choice{display:grid;grid-template-columns:54px 1fr;align-items:center;gap:10px;border:1px solid rgba(226,176,112,.18);border-radius:16px;background:rgba(0,0,0,.2);color:#F6E1BC;padding:10px;text-align:left;font-size:13px;font-weight:900;cursor:pointer}
   .badge-choice.on{border-color:rgba(127,208,150,.72);box-shadow:0 0 0 1px rgba(127,208,150,.22),0 0 18px rgba(127,208,150,.12)}
   .profile-badge{display:block;width:48px;height:48px;border-radius:50%;background:rgba(0,0,0,.3) center/cover no-repeat;border:1px solid rgba(226,176,112,.28);box-shadow:0 10px 22px rgba(0,0,0,.28)}
+  .premium-note{margin:-2px 0 14px;border:1px solid rgba(226,176,112,.2);border-radius:14px;background:rgba(226,176,112,.08);color:#D8C4A4;padding:11px 12px;font-size:12px;line-height:1.4;text-align:center;font-weight:850}
   .badge-save{width:100%;border:1px solid rgba(226,176,112,.44);border-radius:14px;background:linear-gradient(180deg,#F1C875,#B86A33);color:#1B1008;padding:13px 16px;font-size:14px;font-weight:950;cursor:pointer}
   .badge-save.secondary{margin-top:10px;background:rgba(0,0,0,.22);color:#E2B070}
-  .rec-by{display:flex;align-items:center;gap:7px;margin-top:8px;min-width:0;color:#C9B493;font-size:10px;font-weight:900}
-  .rec-by .profile-badge{width:24px;height:24px;box-shadow:none}
+  .rec-by{display:flex;align-items:center;gap:7px;margin-top:auto;margin-bottom:6px;min-width:0;color:#C9B493;font-size:10px;font-weight:900}
+  .rec-by .profile-badge{width:22px;height:22px;box-shadow:none}
   .rec-by span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .rec-empty{flex:0 0 92%;scroll-snap-align:start;min-height:152px;display:grid;align-content:center;gap:8px;color:#C9B493;border:1px dashed rgba(226,176,112,.28);border-radius:18px;background:rgba(0,0,0,.18);padding:22px;font-size:13px;line-height:1.45}
   .rec-empty b{display:block;font-family:var(--serif);font-size:20px;color:#F6E1BC;line-height:1.1}
@@ -380,8 +382,9 @@
   .age-card{position:relative;width:min(430px,calc(100vw - 24px));height:min(calc((100vw - 24px) * 1.77),calc(100dvh - 24px),760px);border:0;border-radius:0;background:#000 url("assets/brand/age-gate.png") center top/100% auto no-repeat;box-shadow:0 26px 90px rgba(0,0,0,.82);overflow:hidden}
   .age-card:after{content:"";position:absolute;left:0;right:0;bottom:0;height:3.7%;background:linear-gradient(180deg,rgba(0,0,0,0),#000 78%);pointer-events:none}
   .age-card h2,.age-card p{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-  .age-actions{position:absolute;left:15%;right:15%;top:65.1%;display:grid;gap:14%;height:12.4%;z-index:2}
-  .age-actions button{border:0;border-radius:8px;background:rgba(255,255,255,.01);color:transparent;font-size:0;cursor:pointer}
+  .age-actions{position:absolute;left:14.8%;right:14.8%;top:75.8%;height:15.8%;z-index:2;pointer-events:none}
+  .age-actions button{position:absolute;left:0;width:100%;height:37%;border:0;border-radius:8px;background:rgba(255,255,255,.01);color:transparent;font-size:0;cursor:pointer;pointer-events:auto}
+  .age-actions button:last-child{top:56%}
   .age-actions button:focus-visible{outline:2px solid rgba(226,176,112,.88);outline-offset:3px}
   .age-note{display:none}
 
@@ -560,6 +563,10 @@
     </div>
     <div class="profile-menu">
       <button class="profile-row" type="button" data-open-view="badge-picker"><span class="profile-ico"><span class="profile-badge" id="profileRowBadge"></span></span><span data-i18n="changeBadge">Zmień znacznik</span><span class="chev">&rsaquo;</span></button>
+      <button class="profile-row" type="button" data-profile-action="profile-settings"><span class="profile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.9l.1.1a2 2 0 01-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.9-.3 1.7 1.7 0 00-1 1.6V21a2 2 0 01-4 0v-.1a1.7 1.7 0 00-1-1.6 1.7 1.7 0 00-1.9.3l-.1.1A2 2 0 014.2 17l.1-.1A1.7 1.7 0 004.6 15a1.7 1.7 0 00-1.6-1H3a2 2 0 010-4h.1a1.7 1.7 0 001.6-1 1.7 1.7 0 00-.3-1.9l-.1-.1A2 2 0 017 4.2l.1.1A1.7 1.7 0 009 4.6 1.7 1.7 0 0010 3V3a2 2 0 014 0v.1a1.7 1.7 0 001 1.6 1.7 1.7 0 001.9-.3l.1-.1A2 2 0 0119.8 7l-.1.1a1.7 1.7 0 00-.3 1.9 1.7 1.7 0 001.6 1h.1a2 2 0 010 4H21a1.7 1.7 0 00-1.6 1z"/></svg></span><span data-i18n="profileSettings">Ustawienia profilu</span><span class="chev">&rsaquo;</span></button>
+      <button class="profile-row" type="button" data-profile-action="taste-profile"><span class="profile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M12 12v8M8 20h8"/><path d="M9 6h6"/></svg></span><span data-i18n="tasteProfile">Preferencje smaku</span><span class="chev">&rsaquo;</span></button>
+      <button class="profile-row" type="button" data-profile-action="data-export"><span class="profile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg></span><span data-i18n="dataExport">Eksport danych</span><span class="chev">&rsaquo;</span></button>
+      <button class="profile-row" type="button" data-profile-action="delete-profile"><span class="profile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16"/><path d="M10 11v6M14 11v6"/><path d="M6 7l1 14h10l1-14"/><path d="M9 7V4h6v3"/></svg></span><span data-i18n="deleteProfile">Usuń profil</span><span class="chev">&rsaquo;</span></button>
     </div>
   </section>
 
@@ -574,6 +581,7 @@
       <div><b id="badgePickerName">Szklanka</b><span data-i18n="badgePickerCopy">Znacznik pojawi się przy komentarzach i poleceniach.</span></div>
     </div>
     <div class="badge-grid" id="badgeGrid"></div>
+    <div class="premium-note" data-i18n="premiumBadgeNote">Więcej znaczników odblokujesz w planie Pro.</div>
     <button class="badge-save" type="button" id="saveBadgeBtn" data-i18n="saveProfileBadge">Zapisz profil</button>
     <button class="badge-save secondary" type="button" data-open-view="hunter-profile" data-i18n="skipForNow">Pomiń na razie</button>
   </section>
@@ -824,6 +832,7 @@ const RUNTIME_BOTTLE_IDS = [
   "noah-s-mill-kentucky-bourbon"
 ];
 const FEATURED_IDS = ["buffalo-trace-bourbon-1","blantons-original-single-barrel-bourbon-whiskey-700ml","eagle-rare-10-year-kentucky-straight-bourbon-whiskey-700ml","woodford-reserve-bourbon","knob-creek-kentucky-straight-bourbon"];
+const FALLBACK_RECOMMENDATION_IDS = ["buffalo-trace-bourbon-1","woodford-reserve-bourbon","four-roses","noah-s-mill-kentucky-bourbon"];
 const RUNTIME_IMAGE_DIR = "assets/bourbons/runtime-100/";
 const RUNTIME_THUMB_DIR = "assets/bourbons/list-thumbs/";
 const RENDER_LIMIT = 60; /* ile kart renderujemy na raz (wydajnosc przy tysiacach rekordow) */
@@ -889,7 +898,7 @@ Object.assign(I18N.pl,{
   ageGateContinue:"Tak, mam 18 lat lub wi\u0119cej", ageGateDeny:"Nie, mam mniej ni\u017c 18 lat", ageGateNote:"Domy\u015blny dost\u0119p to 18+. Dla trybu USA mo\u017cemy zmieni\u0107 limit na 21+.", ageGateBlocked:"Musisz mie\u0107 minimum 18 lat, aby korzysta\u0107 z aplikacji.",
   profileGuestTitle:"Profil \u0142owcy", profileGuestCopy:"Zaloguj si\u0119 albo utw\u00f3rz konto, aby synchronizowa\u0107 kolekcj\u0119, wishlist\u0119, oceny i skany przez Cloudflare.",
   profileAccountKick:"Konto Bourbon Hunters", freePlan:"Plan Free", profileSyncCopy:"Dane synchronizuj\u0105 si\u0119 po zalogowaniu, a lokalny cache zostaje na telefonie dla PWA.",
-  statWishlist:"Wishlist", statCollection:"Kolekcja", statRatings:"Oceny", logoutTab:"Wyloguj", logoutDone:"Wylogowano.",
+  statWishlist:"Wishlist", statCollection:"Kolekcja", statRatings:"Oceny", statReviews:"Recenzje", logoutTab:"Wyloguj", logoutDone:"Wylogowano.",
   resetConfirmTitle:"Nowe has\u0142o", resetConfirmIntro:"Ustaw nowe has\u0142o dla swojego konta Bourbon Hunters.",
   newPasswordLabel:"Nowe has\u0142o", repeatPasswordLabel:"Powt\u00f3rz has\u0142o", savePasswordBtn:"Zapisz has\u0142o",
   resetMailSent:"Je\u015bli konto istnieje, wys\u0142ali\u015bmy link resetuj\u0105cy.", resetMailPending:"Reset jest przygotowany, ale dostawca maili transakcyjnych nie jest jeszcze podpi\u0119ty.",
@@ -897,7 +906,8 @@ Object.assign(I18N.pl,{
   noCommunityRatings:"Nikt jeszcze nie oceni\u0142", ratingOne:"1 ocena", ratingMany:"ocen",
   myProfileTab:"M\u00f3j profil", profileBadgeCopy:"Ten znacznik b\u0119dzie widoczny przy Twoich komentarzach i poleceniach.",
   changeBadge:"Zmie\u0144 znacznik", chooseBadgeTitle:"Wybierz znacznik", badgePickerCopy:"Znacznik pojawi si\u0119 przy komentarzach i poleceniach.",
-  saveProfileBadge:"Zapisz profil", skipForNow:"Pomi\u0144 na razie", profileSaved:"Profil zapisany.",
+  saveProfileBadge:"Zapisz profil", skipForNow:"Pomi\u0144 na razie", profileSaved:"Profil zapisany.", premiumBadgeNote:"Wi\u0119cej znacznik\u00f3w odblokujesz w planie Pro.",
+  profileSettings:"Ustawienia profilu", tasteProfile:"Preferencje smaku", dataExport:"Eksport danych", deleteProfile:"Usu\u0144 profil",
   featuredAllTitle:"Polecane przez \u0142owc\u00f3w", recEmptyTitle:"Brak polece\u0144", recEmptyBody:"Dodaj komentarz i ocen\u0119 w szczeg\u00f3\u0142ach butelki, a trafi tutaj jako polecenie.",
   addRecommendation:"Dodaj komentarz", recommendationPlaceholder:"Napisz kr\u00f3tko, dlaczego polecasz t\u0119 butelk\u0119...",
   recommendationHint:"Do polecenia do\u0142\u0105czymy Twoj\u0105 ocen\u0119 z gwiazdek powy\u017cej.", saveRecommendation:"Pole\u0107",
@@ -913,7 +923,7 @@ Object.assign(I18N.en,{
   ageGateContinue:"Yes, I am 18 or older", ageGateDeny:"No, I am under 18", ageGateNote:"Default access is 18+. For US mode this can be changed to 21+ in the product configuration.", ageGateBlocked:"You must be at least 18 to use the app.",
   profileGuestTitle:"Hunter profile", profileGuestCopy:"Sign in or create an account to sync your collection, wishlist, ratings and scans through Cloudflare.",
   profileAccountKick:"Bourbon Hunters account", freePlan:"Free plan", profileSyncCopy:"Data syncs after sign-in, while the local cache stays on the phone for PWA use.",
-  statWishlist:"Wishlist", statCollection:"Collection", statRatings:"Ratings", logoutTab:"Logout", logoutDone:"Signed out.",
+  statWishlist:"Wishlist", statCollection:"Collection", statRatings:"Ratings", statReviews:"Reviews", logoutTab:"Logout", logoutDone:"Signed out.",
   resetConfirmTitle:"Set new password", resetConfirmIntro:"Create a new password for your Bourbon Hunters account.",
   newPasswordLabel:"New password", repeatPasswordLabel:"Repeat password", savePasswordBtn:"Save password",
   resetMailSent:"If the account exists, we sent a reset link.", resetMailPending:"Reset is prepared, but transactional email is not connected yet.",
@@ -921,7 +931,8 @@ Object.assign(I18N.en,{
   noCommunityRatings:"No ratings yet", ratingOne:"1 rating", ratingMany:"ratings",
   myProfileTab:"My profile", profileBadgeCopy:"This marker will appear next to your comments and recommendations.",
   changeBadge:"Change marker", chooseBadgeTitle:"Choose marker", badgePickerCopy:"The marker will appear next to comments and recommendations.",
-  saveProfileBadge:"Save profile", skipForNow:"Skip for now", profileSaved:"Profile saved.",
+  saveProfileBadge:"Save profile", skipForNow:"Skip for now", profileSaved:"Profile saved.", premiumBadgeNote:"Unlock more markers with Pro.",
+  profileSettings:"Profile settings", tasteProfile:"Taste preferences", dataExport:"Data export", deleteProfile:"Delete profile",
   featuredAllTitle:"Recommended by hunters", recEmptyTitle:"No recommendations yet", recEmptyBody:"Add a comment and rating in bottle details, and it will appear here as a recommendation.",
   addRecommendation:"Add comment", recommendationPlaceholder:"Write briefly why you recommend this bottle...",
   recommendationHint:"Your star rating above will be attached to this recommendation.", saveRecommendation:"Recommend",
@@ -1102,7 +1113,7 @@ let USER_PROFILE=(function(){ try{ return JSON.parse(localStorage.getItem(PROFIL
 let pendingBadge=USER_PROFILE.badge||"glass";
 function profileSaveLocal(){ try{ localStorage.setItem(PROFILE_KEY,JSON.stringify(USER_PROFILE||{})); }catch(e){} }
 function badgeMeta(id){ return PROFILE_BADGES.filter(function(b){ return b.id===id; })[0] || PROFILE_BADGES[0]; }
-function badgeStyle(id){ return 'background-image:url(&quot;'+esc(badgeMeta(id).src)+'&quot;)'; }
+function badgeStyle(id){ return "background-image:url('"+badgeMeta(id).src.replace(/'/g,"%27")+"')"; }
 function applyProfileData(profile){
   if(!profile) return;
   USER_PROFILE=Object.assign({},USER_PROFILE,profile);
@@ -1115,6 +1126,12 @@ function applyProfileData(profile){
 }
 let RECS=[];
 let COMMENTS={};
+let USER_STATS=(function(){ try{ return JSON.parse(localStorage.getItem("bh_user_stats")||"{}"); }catch(e){ return {}; } })();
+function userStatsSave(){ try{ localStorage.setItem("bh_user_stats",JSON.stringify(USER_STATS||{})); }catch(e){} }
+function userReviewCount(){
+  const mine=AUTH_USER ? RECS.filter(function(r){ return String(r.user_id)===String(AUTH_USER.id); }).length : 0;
+  return Math.max(Number(USER_STATS.recommendations_count)||0,mine);
+}
 function normalizeRecommendation(r){
   r=r||{};
   return {
@@ -1143,6 +1160,33 @@ function uniqueRecommendations(list){
     seen[r.bottle_id]=1;
     return !!bottleForRec(r);
   });
+}
+function fallbackRecommendations(){
+  return FALLBACK_RECOMMENDATION_IDS.map(function(id,i){
+    const b=DB.find(function(x){ return x.id===id; });
+    if(!b) return null;
+    return normalizeRecommendation({
+      id:"fallback-"+id,
+      user_id:"system",
+      bottle_id:id,
+      bottle_name:b.name,
+      username:"Bourbon Hunters",
+      badge:["glass","barrel","star","seal"][i%4],
+      rating:Math.max(4,Number(valueScore(b))||4),
+      comment:lang==="pl" ? "Dobry stosunek ceny do jakości i bezpieczny wybór do sprawdzenia na start." : "Good value for money and a safe bottle to check first.",
+      created_at:"",
+      updated_at:""
+    });
+  }).filter(Boolean);
+}
+function feedRecommendations(limit){
+  const out=[], seen={};
+  uniqueRecommendations(RECS).concat(fallbackRecommendations()).forEach(function(r){
+    if(!r.bottle_id || seen[r.bottle_id]) return;
+    seen[r.bottle_id]=1;
+    out.push(r);
+  });
+  return out.slice(0,limit||100);
 }
 function commentsFor(id){ return COMMENTS[id]||[]; }
 function dateLabel(value){
@@ -1219,6 +1263,8 @@ function submitRecommendation(id){
     if(textarea) textarea.value="";
     if(data&&data.recommendation){
       COMMENTS[id]=[normalizeRecommendation(data.recommendation)].concat((COMMENTS[id]||[]).filter(function(r){ return r.user_id!==data.recommendation.user_id; }));
+      USER_STATS.recommendations_count=Math.max(Number(USER_STATS.recommendations_count)||0,userReviewCount()+1);
+      userStatsSave();
     }
     if(data&&data.rating_aggregate){
       mergeCommunityRatings((function(){ const o={}; o[id]=data.rating_aggregate; return o; })());
@@ -1295,7 +1341,7 @@ function renderProfile(){
       const badge=badgeMeta(USER_PROFILE.badge||"glass");
       box.classList.add("has-badge");
       box.innerHTML =
-        '<span class="pa-badge" style="'+badgeStyle(badge.id)+'"></span>'+
+        '<span class="pa-badge" style="'+badgeStyle(badge.id)+'" data-open-view="hunter-profile" role="button" aria-label="'+esc(t("myProfileTab"))+'"></span>'+
         '<div class="pa-kick">'+esc(t("profileAccountKick"))+'</div>'+
         '<div class="pa-name">'+esc(AUTH_USER.username||"Bourbon Hunter")+'</div>'+
         '<div class="pa-email">'+esc(AUTH_USER.email||"")+'</div>'+
@@ -1303,6 +1349,7 @@ function renderProfile(){
           '<div class="pa-stat"><strong>'+WL.length+'</strong><span>'+esc(t("statWishlist"))+'</span></div>'+
           '<div class="pa-stat"><strong>'+OWNED.length+'</strong><span>'+esc(t("statCollection"))+'</span></div>'+
           '<div class="pa-stat"><strong>'+Object.keys(UR).length+'</strong><span>'+esc(t("statRatings"))+'</span></div>'+
+          '<div class="pa-stat"><strong>'+userReviewCount()+'</strong><span>'+esc(t("statReviews"))+'</span></div>'+
         '</div>'+
         '<p class="pa-copy">'+esc(t("profileSyncCopy"))+'</p>'+
         '<div class="badge db">'+esc(t("freePlan"))+'</div>';
@@ -1341,12 +1388,14 @@ function renderBadgePicker(){
 function logout(){
   const token=AUTH_TOKEN;
   saveAuth(null);
+  AGE_GATE_RUNTIME_OK=false;
   if(token){
     const headers={"Content-Type":"application/json","Authorization":"Bearer "+token};
     fetch(WORKER_URL+"/auth/logout",{method:"POST",headers:headers}).catch(function(){});
   }
   toast(t("logoutDone"));
   renderProfile();
+  showAgeGateIfNeeded();
 }
 function syncProfile(){
   if(!AUTH_TOKEN) return Promise.resolve();
@@ -1379,6 +1428,7 @@ function applyBootstrap(boot){
   OWNED=uniqueList(boot.collection||OWNED); ownSave();
   Object.keys(UR).forEach(function(k){ delete UR[k]; });
   Object.assign(UR,boot.ratings||{}); urSave();
+  if(boot.recommendations_count!=null){ USER_STATS.recommendations_count=Number(boot.recommendations_count)||0; userStatsSave(); }
   if(DB.length){ renderHome(); renderExplore(); renderHomeCollection(); }
   if(document.getElementById("view-collection").classList.contains("active")) renderCollection(collectionTab);
   renderProfile();
@@ -1918,7 +1968,7 @@ function featCard(b, kick, rec){
   const tag=categoryLabel(b);
   const shownName = compactBottleName(b);
   const longName = shownName.length > 30 ? " long-name" : "";
-  return '<div class="feat'+longName+'" data-id="'+esc(b.id)+'"><div class="info"><h4 title="'+esc(shownName)+'">'+esc(shownName)+'</h4>'+
+  return '<div class="feat'+(rec?' rec-card':'')+longName+'" data-id="'+esc(b.id)+'"><div class="info"><h4 title="'+esc(shownName)+'">'+esc(shownName)+'</h4>'+
     '<div class="feat-tags"><span class="feat-tag">'+esc(tag)+'</span></div>'+
     (rec?recByHtml(rec):'')+
     '<span class="btn-sm" data-id="'+esc(b.id)+'">'+t("viewAll").split(" ")[0]+' →</span></div>'+
@@ -2096,7 +2146,7 @@ Promise.all([
 
 function renderHome(){
   // featured = polecenia userow
-  const recs=uniqueRecommendations(RECS).slice(0,10);
+  const recs=feedRecommendations(10);
   document.getElementById("featuredRow").innerHTML = recs.length
     ? recs.map(function(rec){ return featCard(bottleForRec(rec), t("featured"), rec); }).join("")
     : '<div class="rec-empty"><b>'+esc(t("recEmptyTitle"))+'</b><span>'+esc(t("recEmptyBody"))+'</span></div>';
@@ -2115,7 +2165,7 @@ function renderHome(){
 function renderRecommendationsView(){
   const el=document.getElementById("recommendationsList");
   if(!el) return;
-  const recs=uniqueRecommendations(RECS);
+  const recs=feedRecommendations(100);
   if(!recs.length){
     el.innerHTML='<div class="empty">'+esc(t("recEmptyBody"))+'</div>';
     return;
