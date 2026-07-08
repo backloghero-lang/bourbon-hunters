@@ -68,12 +68,12 @@
   .sec-head a{font-size:12px;color:#E2B070;font-weight:800;cursor:pointer}
 
   /* featured carousel */
-  .hscroll{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:6px;margin:0 -16px;padding-left:16px;padding-right:16px}
+  .hscroll{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;touch-action:pan-x pinch-zoom;overscroll-behavior-x:contain;padding-bottom:6px;margin:0 -16px;padding-left:16px;padding-right:16px}
   .hscroll::-webkit-scrollbar{display:none}
   .swipe-dots{display:flex;justify-content:center;align-items:center;gap:6px;margin:8px 0 4px;min-height:8px}
   .swipe-dot{width:6px;height:6px;border-radius:999px;background:rgba(226,176,112,.28);transition:width .2s,background .2s,opacity .2s;opacity:.8}
   .swipe-dot.on{width:18px;background:#E2B070;opacity:1}
-  .feat{scroll-snap-align:start;flex:0 0 92%;height:196px;background:
+  .feat{scroll-snap-align:start;flex:0 0 86%;height:196px;background:
     linear-gradient(90deg,rgba(5,7,5,.86) 0%,rgba(6,7,5,.68) 48%,rgba(9,6,4,.16) 100%),
     url("design/figma-assets/home-pack-v2/card-background-v1.jpg") center/cover no-repeat,
     linear-gradient(135deg,rgba(16,42,32,.98),rgba(22,18,12,.98) 48%,rgba(9,8,6,.99));
@@ -82,7 +82,7 @@
   .feat:after{content:"";position:absolute;left:14px;right:14px;bottom:0;height:1px;background:linear-gradient(90deg,transparent,rgba(232,156,66,.88),transparent);pointer-events:none}
   .feat h4{font-family:var(--serif);font-size:20px;margin:0 0 8px;padding-top:2px;line-height:21px;color:#F6E1BC;text-shadow:0 2px 12px rgba(0,0,0,.65);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;height:65px;max-height:65px;min-height:65px;word-break:normal}
   .feat.long-name h4{font-size:17px;line-height:18.5px;height:58px;max-height:58px;min-height:58px}
-  .feat.rec-card h4{font-size:19px;line-height:20px;height:54px;max-height:54px;min-height:54px}
+  .feat.rec-card h4{font-size:19px;line-height:20px;height:52px;max-height:52px;min-height:52px}
   .feat.long-name .sub{display:none}
   .feat .sub{font-size:12px;color:#C68752;margin-bottom:8px;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .feat .price{font-size:20px;color:#E28A3D;font-weight:900;margin-bottom:8px;letter-spacing:.5px}
@@ -96,7 +96,7 @@
   .bottlepic:after{content:"";position:absolute;left:22px;right:22px;bottom:7px;height:12px;border-radius:50%;background:rgba(0,0,0,.45);filter:blur(7px);z-index:-1}
   .bottlepic img{max-width:108px;max-height:138px;width:auto!important;height:auto!important;object-fit:contain!important;border-radius:0!important;filter:contrast(1.08) saturate(1.12) drop-shadow(0 18px 18px rgba(0,0,0,.58))}
   .bottlepic .value-badge{right:2px;bottom:7px;min-width:39px;padding:6px 7px;font-size:11px}
-  .feat-price-chip{position:absolute;left:3px;bottom:17px;z-index:5;max-width:70px;padding:2px 6px;border-radius:999px;background:rgba(8,4,2,.74);border:1px solid rgba(226,176,112,.18);color:#E28A3D;font-size:10px;line-height:1.15;font-weight:950;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:0 8px 16px rgba(0,0,0,.34)}
+  .feat-price-chip{position:absolute;right:0;bottom:17px;z-index:5;max-width:78px;padding:3px 7px;border-radius:999px;background:rgba(8,4,2,.76);border:1px solid rgba(226,176,112,.24);color:#E28A3D;font-size:11px;line-height:1.15;font-weight:950;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:0 8px 16px rgba(0,0,0,.34)}
   .value-badge{position:absolute;right:9px;bottom:8px;z-index:4;min-width:44px;text-align:center;border:1px solid rgba(226,176,112,.72);border-radius:999px;background:linear-gradient(180deg,rgba(33,19,8,.92),rgba(7,4,2,.88));color:#F6D48A;font-size:12px;font-weight:950;line-height:1;padding:7px 8px;box-shadow:0 9px 20px rgba(0,0,0,.38),0 0 14px rgba(226,176,112,.18);cursor:pointer;user-select:none}
   .value-badge:active{transform:scale(.94)}
   .dphoto .value-badge{right:14px;bottom:14px;font-size:15px;min-width:54px;padding:9px 10px}
@@ -185,7 +185,7 @@
   .profile-account .pa-copy{font-size:13px;line-height:1.5;color:#C9B493;margin:0}
   .profile-account.has-badge{grid-template-columns:78px 1fr;align-items:center}
   .profile-account.has-badge .pa-badge{grid-row:1 / span 5;width:68px;height:68px;border-radius:50%;background:rgba(0,0,0,.24) center/cover no-repeat;border:1px solid rgba(226,176,112,.34);box-shadow:0 12px 28px rgba(0,0,0,.32),0 0 18px rgba(226,176,112,.14);cursor:pointer}
-  .profile-account .pa-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+  .profile-account .pa-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
   .profile-account .pa-stat{border:1px solid rgba(226,176,112,.16);border-radius:14px;background:rgba(0,0,0,.16);padding:9px 7px;text-align:center}
   .profile-account .pa-stat strong{display:block;font-size:17px;color:#F6E1BC;line-height:1}
   .profile-account .pa-stat span{display:block;margin-top:4px;font-size:8px;text-transform:uppercase;letter-spacing:.45px;color:#A99572;font-weight:900}
@@ -209,9 +209,11 @@
   .premium-note{margin:-2px 0 14px;border:1px solid rgba(226,176,112,.2);border-radius:14px;background:rgba(226,176,112,.08);color:#D8C4A4;padding:11px 12px;font-size:12px;line-height:1.4;text-align:center;font-weight:850}
   .badge-save{width:100%;border:1px solid rgba(226,176,112,.44);border-radius:14px;background:linear-gradient(180deg,#F1C875,#B86A33);color:#1B1008;padding:13px 16px;font-size:14px;font-weight:950;cursor:pointer}
   .badge-save.secondary{margin-top:10px;background:rgba(0,0,0,.22);color:#E2B070}
-  .rec-by{display:flex;align-items:center;gap:7px;margin-top:auto;margin-bottom:6px;min-width:0;color:#C9B493;font-size:10px;font-weight:900}
-  .rec-by .profile-badge{width:22px;height:22px;box-shadow:none}
+  .rec-by{position:absolute;right:12px;top:10px;display:flex;align-items:center;justify-content:center;gap:0;margin:0;min-width:34px;height:28px;color:#F6E1BC;font-size:10px;font-weight:950;z-index:4;border:1px solid rgba(226,176,112,.24);border-radius:999px;background:rgba(8,4,2,.7);box-shadow:0 8px 16px rgba(0,0,0,.32)}
+  .rec-by .profile-badge{width:20px;height:20px;box-shadow:none;margin-left:-4px}
+  .rec-by .profile-badge:first-child{margin-left:0}
   .rec-by span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .rec-by-count{padding:0 7px;color:#E2B070}
   .rec-empty{flex:0 0 92%;scroll-snap-align:start;min-height:152px;display:grid;align-content:center;gap:8px;color:#C9B493;border:1px dashed rgba(226,176,112,.28);border-radius:18px;background:rgba(0,0,0,.18);padding:22px;font-size:13px;line-height:1.45}
   .rec-empty b{display:block;font-family:var(--serif);font-size:20px;color:#F6E1BC;line-height:1.1}
   .rec-list{display:grid;gap:12px}
@@ -382,9 +384,9 @@
   .age-card{position:relative;width:min(430px,calc(100vw - 24px));height:min(calc((100vw - 24px) * 1.77),calc(100dvh - 24px),760px);border:0;border-radius:0;background:#000 url("assets/brand/age-gate.png") center top/100% auto no-repeat;box-shadow:0 26px 90px rgba(0,0,0,.82);overflow:hidden}
   .age-card:after{content:"";position:absolute;left:0;right:0;bottom:0;height:3.7%;background:linear-gradient(180deg,rgba(0,0,0,0),#000 78%);pointer-events:none}
   .age-card h2,.age-card p{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-  .age-actions{position:absolute;left:14.8%;right:14.8%;top:75.8%;height:15.8%;z-index:2;pointer-events:none}
-  .age-actions button{position:absolute;left:0;width:100%;height:37%;border:0;border-radius:8px;background:rgba(255,255,255,.01);color:transparent;font-size:0;cursor:pointer;pointer-events:auto}
-  .age-actions button:last-child{top:56%}
+  .age-actions{position:absolute;left:14.8%;right:14.8%;top:69.2%;height:16.6%;z-index:2;pointer-events:none}
+  .age-actions button{position:absolute;left:0;width:100%;height:34%;border:0;border-radius:8px;background:rgba(255,255,255,.01);color:transparent;font-size:0;cursor:pointer;pointer-events:auto}
+  .age-actions button:last-child{top:55%}
   .age-actions button:focus-visible{outline:2px solid rgba(226,176,112,.88);outline-offset:3px}
   .age-note{display:none}
 
@@ -897,7 +899,7 @@ Object.assign(I18N.pl,{
   ageGateTitle:"Potwierd\u017a wiek", ageGateBody:"Bourbon Hunters jest dla os\u00f3b pe\u0142noletnich. Potwierd\u017a, \u017ce masz co najmniej 18 lat.",
   ageGateContinue:"Tak, mam 18 lat lub wi\u0119cej", ageGateDeny:"Nie, mam mniej ni\u017c 18 lat", ageGateNote:"Domy\u015blny dost\u0119p to 18+. Dla trybu USA mo\u017cemy zmieni\u0107 limit na 21+.", ageGateBlocked:"Musisz mie\u0107 minimum 18 lat, aby korzysta\u0107 z aplikacji.",
   profileGuestTitle:"Profil \u0142owcy", profileGuestCopy:"Zaloguj si\u0119 albo utw\u00f3rz konto, aby synchronizowa\u0107 kolekcj\u0119, wishlist\u0119, oceny i skany przez Cloudflare.",
-  profileAccountKick:"Konto Bourbon Hunters", freePlan:"Plan Free", profileSyncCopy:"Dane synchronizuj\u0105 si\u0119 po zalogowaniu, a lokalny cache zostaje na telefonie dla PWA.",
+  profileAccountKick:"Konto Bourbon Hunters", freePlan:"Plan Free", profileSyncCopy:"Dane synchronizuj\u0105 si\u0119 po zalogowaniu.",
   statWishlist:"Wishlist", statCollection:"Kolekcja", statRatings:"Oceny", statReviews:"Recenzje", logoutTab:"Wyloguj", logoutDone:"Wylogowano.",
   resetConfirmTitle:"Nowe has\u0142o", resetConfirmIntro:"Ustaw nowe has\u0142o dla swojego konta Bourbon Hunters.",
   newPasswordLabel:"Nowe has\u0142o", repeatPasswordLabel:"Powt\u00f3rz has\u0142o", savePasswordBtn:"Zapisz has\u0142o",
@@ -922,7 +924,7 @@ Object.assign(I18N.en,{
   ageGateTitle:"Confirm your age", ageGateBody:"Bourbon Hunters is for adults of legal drinking age. Confirm that you are at least 18 to continue.",
   ageGateContinue:"Yes, I am 18 or older", ageGateDeny:"No, I am under 18", ageGateNote:"Default access is 18+. For US mode this can be changed to 21+ in the product configuration.", ageGateBlocked:"You must be at least 18 to use the app.",
   profileGuestTitle:"Hunter profile", profileGuestCopy:"Sign in or create an account to sync your collection, wishlist, ratings and scans through Cloudflare.",
-  profileAccountKick:"Bourbon Hunters account", freePlan:"Free plan", profileSyncCopy:"Data syncs after sign-in, while the local cache stays on the phone for PWA use.",
+  profileAccountKick:"Bourbon Hunters account", freePlan:"Free plan", profileSyncCopy:"Data syncs after sign-in.",
   statWishlist:"Wishlist", statCollection:"Collection", statRatings:"Ratings", statReviews:"Reviews", logoutTab:"Logout", logoutDone:"Signed out.",
   resetConfirmTitle:"Set new password", resetConfirmIntro:"Create a new password for your Bourbon Hunters account.",
   newPasswordLabel:"New password", repeatPasswordLabel:"Repeat password", savePasswordBtn:"Save password",
@@ -1126,6 +1128,7 @@ function applyProfileData(profile){
 }
 let RECS=[];
 let COMMENTS={};
+let DRAFT_COMMENTS={};
 let USER_STATS=(function(){ try{ return JSON.parse(localStorage.getItem("bh_user_stats")||"{}"); }catch(e){ return {}; } })();
 function userStatsSave(){ try{ localStorage.setItem("bh_user_stats",JSON.stringify(USER_STATS||{})); }catch(e){} }
 function userReviewCount(){
@@ -1151,7 +1154,11 @@ function bottleForRec(rec){
   return DB.find(function(b){ return b.id===rec.bottle_id; }) || null;
 }
 function recByHtml(rec){
-  return '<div class="rec-by"><span class="profile-badge" style="'+badgeStyle(rec.badge||"glass")+'"></span><span>'+esc(t("recommendedBy"))+' '+esc(rec.username||"Hunter")+'</span></div>';
+  const people=(rec&&rec.people)||[rec];
+  const shown=people.slice(0,3);
+  return '<div class="rec-by" title="'+esc(t("recommendedBy"))+'">'+shown.map(function(p){
+    return '<span class="profile-badge" style="'+badgeStyle(p.badge||"glass")+'"></span>';
+  }).join("")+'<span class="rec-by-count">'+(people.length>1?people.length:"1")+'</span></div>';
 }
 function uniqueRecommendations(list){
   const seen={};
@@ -1160,6 +1167,10 @@ function uniqueRecommendations(list){
     seen[r.bottle_id]=1;
     return !!bottleForRec(r);
   });
+}
+function recommendationPeopleFor(bottleId, fallbackRec){
+  const people=uniqueRecommendations(RECS).filter(function(r){ return r.bottle_id===bottleId; });
+  return people.length ? people.slice(0,8) : [fallbackRec].filter(Boolean);
 }
 function fallbackRecommendations(){
   return FALLBACK_RECOMMENDATION_IDS.map(function(id,i){
@@ -1184,6 +1195,7 @@ function feedRecommendations(limit){
   uniqueRecommendations(RECS).concat(fallbackRecommendations()).forEach(function(r){
     if(!r.bottle_id || seen[r.bottle_id]) return;
     seen[r.bottle_id]=1;
+    r.people=recommendationPeopleFor(r.bottle_id,r);
     out.push(r);
   });
   return out.slice(0,limit||100);
@@ -1224,9 +1236,10 @@ function recommendationBlock(b){
   const id=bottleActionId(b);
   const list=commentsFor(id);
   const userRating=Number(UR[id]||0);
+  const draft=DRAFT_COMMENTS[id]||"";
   return '<div class="recommend-box">'+
     '<div class="sec-t" style="margin-top:0">'+esc(t("addRecommendation"))+'</div>'+
-    '<textarea id="recommendText" maxlength="700" placeholder="'+esc(t("recommendationPlaceholder"))+'"></textarea>'+
+    '<textarea id="recommendText" maxlength="700" data-recommend-draft="'+esc(id)+'" placeholder="'+esc(t("recommendationPlaceholder"))+'">'+esc(draft)+'</textarea>'+
     '<div class="recommend-actions"><span class="recommend-hint">'+esc(t("recommendationHint"))+(userRating?' '+starStr(userRating):'')+'</span><button class="recommend-submit" type="button" data-recommend-bottle="'+esc(id)+'">'+esc(t("saveRecommendation"))+'</button></div>'+
     (list.length?'<button class="comments-open" type="button" data-open-comments="'+esc(id)+'">'+esc(t("showComments"))+' ('+list.length+')</button>':'')+
   '</div>';
@@ -1252,15 +1265,17 @@ function submitRecommendation(id){
   if(!AUTH_TOKEN){ toast(t("recommendationNeedLogin")); showView("signin"); return; }
   const b=DB.find(function(x){ return x.id===id; });
   if(!b) return;
-  const rating=Number(UR[id]||0);
-  if(!rating){ toast(t("recommendationNeedRating")); return; }
   const textarea=document.getElementById("recommendText");
   const comment=String(textarea&&textarea.value||"").trim();
+  DRAFT_COMMENTS[id]=comment;
+  const rating=Number(UR[id]||0);
+  if(!rating){ toast(t("recommendationNeedRating")); return; }
   if(comment.length<3){ toast(t("recommendationNeedText")); return; }
   const btn=document.querySelector('[data-recommend-bottle="'+id+'"]');
   if(btn) btn.disabled=true;
   bhApi("/me/recommendation",{method:"POST",body:JSON.stringify({bottle_id:id,bottle_name:b.name,rating:rating,comment:comment,bottle_data:bottlePayload(id)})}).then(function(data){
     if(textarea) textarea.value="";
+    delete DRAFT_COMMENTS[id];
     if(data&&data.recommendation){
       COMMENTS[id]=[normalizeRecommendation(data.recommendation)].concat((COMMENTS[id]||[]).filter(function(r){ return r.user_id!==data.recommendation.user_id; }));
       USER_STATS.recommendations_count=Math.max(Number(USER_STATS.recommendations_count)||0,userReviewCount()+1);
@@ -2054,6 +2069,7 @@ function applyProfiles(list, profileData){
 
 /* ---------- NAV ---------- */
 let currentView="home", detailReturnView="explore", legalReturnView="profile", currentDetailId="";
+let swipeStartX=0, swipeStartY=0, swipeMoved=false;
 function showView(name){
   document.getElementById("appRoot").className = "app is-" + name;
   document.querySelectorAll(".view").forEach(function(v){ v.classList.toggle("active", v.id==="view-"+name); });
@@ -2085,6 +2101,18 @@ function renderCollection(tab){
   el.innerHTML = items.length ? '<div class="blist">'+items.map(listRow).join("")+'</div>' : '<div class="empty">'+t(emptyKey)+'</div>';
 }
 document.querySelectorAll(".nav button").forEach(function(b){ b.addEventListener("click",function(){ showView(b.getAttribute("data-view")); }); });
+document.addEventListener("pointerdown",function(e){
+  if(!e.target.closest(".hscroll")) return;
+  swipeStartX=e.clientX; swipeStartY=e.clientY; swipeMoved=false;
+},{passive:true});
+document.addEventListener("pointermove",function(e){
+  if(!e.target.closest(".hscroll")) return;
+  if(Math.abs(e.clientX-swipeStartX)>8 && Math.abs(e.clientX-swipeStartX)>Math.abs(e.clientY-swipeStartY)) swipeMoved=true;
+},{passive:true});
+document.addEventListener("input",function(e){
+  const draft=e.target&&e.target.closest ? e.target.closest("[data-recommend-draft]") : null;
+  if(draft) DRAFT_COMMENTS[draft.getAttribute("data-recommend-draft")]=draft.value||"";
+});
 
 function setupSwipeDots(scrollerId, dotsId){
   const scroller=document.getElementById(scrollerId), dots=document.getElementById(dotsId);
@@ -2331,7 +2359,7 @@ document.addEventListener("click",function(e){
     return;
   }
   const card = e.target.closest("[data-id]");
-  if(card){ openDetail(card.getAttribute("data-id")); return; }
+  if(card){ if(swipeMoved){ swipeMoved=false; return; } openDetail(card.getAttribute("data-id")); return; }
   const styleCell = e.target.closest(".cat[data-style]");
   if(styleCell){ exploreStyles=[styleCell.getAttribute("data-style")]; curDist="all"; curCat="all"; renderN=RENDER_LIMIT; renderExplore(); showView("explore"); return; }
   const clearCat = e.target.closest(".chip[data-clearcat]");
