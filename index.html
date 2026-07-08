@@ -68,7 +68,7 @@
   .sec-head a{font-size:12px;color:#E2B070;font-weight:800;cursor:pointer}
 
   /* featured carousel */
-  .hscroll{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;touch-action:pan-x pinch-zoom;overscroll-behavior-x:contain;padding-bottom:6px;margin:0 -16px;padding-left:16px;padding-right:16px}
+  .hscroll{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;touch-action:pan-x;padding-bottom:6px;margin:0 -16px;padding-left:16px;padding-right:16px}
   .hscroll::-webkit-scrollbar{display:none}
   .swipe-dots{display:flex;justify-content:center;align-items:center;gap:6px;margin:8px 0 4px;min-height:8px}
   .swipe-dot{width:6px;height:6px;border-radius:999px;background:rgba(226,176,112,.28);transition:width .2s,background .2s,opacity .2s;opacity:.8}
@@ -80,23 +80,23 @@
     border:1px solid rgba(184,99,51,.72);border-radius:20px;padding:18px 16px;display:flex;gap:12px;box-shadow:0 18px 42px rgba(0,0,0,.42);position:relative;overflow:hidden}
   .feat:before{content:"";position:absolute;inset:0;background:url("design/figma-assets/asset-pack-v1/noise-overlay.png") center/cover repeat;opacity:.08;pointer-events:none}
   .feat:after{content:"";position:absolute;left:14px;right:14px;bottom:0;height:1px;background:linear-gradient(90deg,transparent,rgba(232,156,66,.88),transparent);pointer-events:none}
-  .feat h4{font-family:var(--serif);font-size:20px;margin:0 0 8px;padding-top:2px;line-height:21px;color:#F6E1BC;text-shadow:0 2px 12px rgba(0,0,0,.65);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;height:65px;max-height:65px;min-height:65px;word-break:normal}
+  .feat h4{font-family:var(--serif);font-size:20px;margin:0 0 8px;padding-top:2px;line-height:21px;color:#F6E1BC;text-shadow:0 2px 12px rgba(0,0,0,.65);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;height:58px;max-height:58px;min-height:58px;word-break:normal}
   .feat.long-name h4{font-size:17px;line-height:18.5px;height:58px;max-height:58px;min-height:58px}
-  .feat.rec-card h4{font-size:19px;line-height:20px;height:52px;max-height:52px;min-height:52px}
+  .feat.rec-card h4{font-size:19px;line-height:20px;height:58px;max-height:58px;min-height:58px}
   .feat.long-name .sub{display:none}
   .feat .sub{font-size:12px;color:#C68752;margin-bottom:8px;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .feat .price{font-size:20px;color:#E28A3D;font-weight:900;margin-bottom:8px;letter-spacing:.5px}
-  .feat .btn-sm{display:inline-flex;align-items:center;justify-content:center;width:min(176px,100%);min-height:29px;margin-top:auto;background:rgba(0,0,0,.22);border:1px solid #E2B070;color:#E2B070;font-size:10px;font-weight:900;letter-spacing:.55px;padding:6px 10px;border-radius:8px;text-transform:uppercase;cursor:pointer;box-sizing:border-box}
+  .feat .btn-sm{display:inline-flex;align-items:center;justify-content:center;width:min(176px,100%);min-height:29px;background:rgba(0,0,0,.22);border:1px solid #E2B070;color:#E2B070;font-size:10px;font-weight:900;letter-spacing:.55px;padding:6px 10px;border-radius:8px;text-transform:uppercase;cursor:pointer;box-sizing:border-box}
   .feat .info{flex:1 1 auto;display:flex;flex-direction:column;justify-content:flex-start;position:relative;z-index:1;min-width:0;padding:2px 0 0;overflow:hidden}
-  .feat-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:7px;width:min(176px,100%)}
+  .feat-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto;margin-bottom:8px;width:min(176px,100%)}
   .feat-tag{display:inline-flex;align-items:center;justify-content:center;width:100%;min-height:24px;font-size:8.5px;line-height:1.08;border:1px solid rgba(127,208,150,.5);color:#7FD096;background:rgba(23,73,49,.22);border-radius:6px;padding:4px 6px;text-transform:uppercase;font-weight:900;letter-spacing:.25px;box-sizing:border-box;text-align:center}
-  .feat-visual{flex:0 0 118px;width:118px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;z-index:1}
+  .feat-visual{flex:0 0 128px;width:128px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;z-index:1}
   .bottlepic{flex:0 0 140px;width:118px;height:140px;align-self:center;border-radius:16px;display:grid;place-items:center;font-size:42px;overflow:visible;position:relative;z-index:1;
     background:radial-gradient(86% 74% at 52% 58%,rgba(232,156,66,.32),rgba(86,45,16,.18) 44%,transparent 74%)}
   .bottlepic:after{content:"";position:absolute;left:22px;right:22px;bottom:7px;height:12px;border-radius:50%;background:rgba(0,0,0,.45);filter:blur(7px);z-index:-1}
-  .bottlepic img{max-width:108px;max-height:138px;width:auto!important;height:auto!important;object-fit:contain!important;border-radius:0!important;filter:contrast(1.08) saturate(1.12) drop-shadow(0 18px 18px rgba(0,0,0,.58))}
+  .bottlepic img{max-width:112px;max-height:138px;width:auto!important;height:auto!important;object-fit:contain!important;border-radius:0!important;filter:contrast(1.08) saturate(1.12) drop-shadow(0 18px 18px rgba(0,0,0,.58))}
   .bottlepic .value-badge{right:2px;bottom:7px;min-width:39px;padding:6px 7px;font-size:11px}
-  .feat-price-chip{position:absolute;right:0;bottom:17px;z-index:5;max-width:78px;padding:3px 7px;border-radius:999px;background:rgba(8,4,2,.76);border:1px solid rgba(226,176,112,.24);color:#E28A3D;font-size:11px;line-height:1.15;font-weight:950;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:0 8px 16px rgba(0,0,0,.34)}
+  .feat-price-chip{position:absolute;right:2px;bottom:0;z-index:5;max-width:84px;padding:3px 8px;border-radius:999px;background:rgba(8,4,2,.76);border:1px solid rgba(226,176,112,.24);color:#E28A3D;font-size:12px;line-height:1.15;font-weight:950;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:0 8px 16px rgba(0,0,0,.34)}
   .value-badge{position:absolute;right:9px;bottom:8px;z-index:4;min-width:44px;text-align:center;border:1px solid rgba(226,176,112,.72);border-radius:999px;background:linear-gradient(180deg,rgba(33,19,8,.92),rgba(7,4,2,.88));color:#F6D48A;font-size:12px;font-weight:950;line-height:1;padding:7px 8px;box-shadow:0 9px 20px rgba(0,0,0,.38),0 0 14px rgba(226,176,112,.18);cursor:pointer;user-select:none}
   .value-badge:active{transform:scale(.94)}
   .dphoto .value-badge{right:14px;bottom:14px;font-size:15px;min-width:54px;padding:9px 10px}
@@ -173,7 +173,7 @@
   .collection-style-chips{margin-top:-7px;margin-bottom:15px}
   .home-empty{flex:0 0 92%;scroll-snap-align:start;min-height:152px;display:grid;place-items:center;text-align:center;color:var(--muted);font-size:14px;line-height:1.55;border:1px dashed rgba(226,176,112,.28);border-radius:18px;background:rgba(0,0,0,.18);padding:22px}
   .profile-hero{margin:0 -16px 20px;padding:0 16px 18px;border-bottom:1px solid rgba(226,176,112,.18);text-align:center}
-  .pro-strip{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:12px;margin:0 -16px 24px;padding:11px 16px;background:radial-gradient(120% 140% at 82% 0%,rgba(226,176,112,.24),transparent 58%),linear-gradient(90deg,rgba(18,13,9,.96),rgba(46,33,20,.94));border-top:1px solid rgba(226,176,112,.18);border-bottom:1px solid rgba(184,99,51,.38);color:#F6E1BC;font-size:13px;font-weight:900;box-shadow:0 10px 24px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.04)}
+  .pro-strip{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:12px;margin:14px 0 0;padding:11px 14px;background:radial-gradient(120% 140% at 82% 0%,rgba(226,176,112,.24),transparent 58%),linear-gradient(90deg,rgba(18,13,9,.96),rgba(46,33,20,.94));border:1px solid rgba(184,99,51,.38);border-radius:14px;color:#F6E1BC;font-size:13px;font-weight:900;box-shadow:0 10px 24px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.04)}
   .pro-strip.hidden{display:none}
   .pro-strip .join{border:1px solid rgba(246,225,188,.44);border-radius:8px;background:linear-gradient(180deg,#F1C875,#B86A33);color:#1B1008;padding:9px 14px;font-size:13px;font-weight:950;cursor:pointer;box-shadow:0 8px 18px rgba(184,99,51,.24),inset 0 1px 0 rgba(255,255,255,.25)}
   .pro-strip .close{border:0;background:transparent;color:#E2B070;font-size:24px;line-height:1;cursor:pointer;padding:2px 4px}
@@ -209,7 +209,7 @@
   .premium-note{margin:-2px 0 14px;border:1px solid rgba(226,176,112,.2);border-radius:14px;background:rgba(226,176,112,.08);color:#D8C4A4;padding:11px 12px;font-size:12px;line-height:1.4;text-align:center;font-weight:850}
   .badge-save{width:100%;border:1px solid rgba(226,176,112,.44);border-radius:14px;background:linear-gradient(180deg,#F1C875,#B86A33);color:#1B1008;padding:13px 16px;font-size:14px;font-weight:950;cursor:pointer}
   .badge-save.secondary{margin-top:10px;background:rgba(0,0,0,.22);color:#E2B070}
-  .rec-by{position:absolute;right:12px;top:10px;display:flex;align-items:center;justify-content:center;gap:0;margin:0;min-width:34px;height:28px;color:#F6E1BC;font-size:10px;font-weight:950;z-index:4;border:1px solid rgba(226,176,112,.24);border-radius:999px;background:rgba(8,4,2,.7);box-shadow:0 8px 16px rgba(0,0,0,.32)}
+  .rec-by{position:absolute;right:12px;top:10px;display:flex;align-items:center;justify-content:center;gap:0;margin:0;min-width:34px;height:28px;color:#F6E1BC;font-size:10px;font-weight:950;z-index:6;border:1px solid rgba(226,176,112,.24);border-radius:999px;background:rgba(8,4,2,.7);box-shadow:0 8px 16px rgba(0,0,0,.32)}
   .rec-by .profile-badge{width:20px;height:20px;box-shadow:none;margin-left:-4px}
   .rec-by .profile-badge:first-child{margin-left:0}
   .rec-by span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -535,12 +535,12 @@
   <!-- PROFILE -->
   <section class="view" id="view-profile">
     <div class="profile-hero">
+      <div class="profile-banner" role="img" aria-label="Bourbon Hunters"></div>
       <div class="pro-strip" id="proStrip">
         <span data-i18n="proStrip">More features. No ads.</span>
         <button class="join" type="button" data-profile-action="pro" data-i18n="joinPro">Join Pro</button>
         <button class="close" type="button" id="closeProStrip" aria-label="Close">&times;</button>
       </div>
-      <div class="profile-banner" role="img" aria-label="Bourbon Hunters"></div>
     </div>
     <div class="profile-account" id="profileAccount" aria-live="polite"></div>
     <div class="profile-menu">
@@ -1983,9 +1983,10 @@ function featCard(b, kick, rec){
   const tag=categoryLabel(b);
   const shownName = compactBottleName(b);
   const longName = shownName.length > 30 ? " long-name" : "";
-  return '<div class="feat'+(rec?' rec-card':'')+longName+'" data-id="'+esc(b.id)+'"><div class="info"><h4 title="'+esc(shownName)+'">'+esc(shownName)+'</h4>'+
-    '<div class="feat-tags"><span class="feat-tag">'+esc(tag)+'</span></div>'+
+  return '<div class="feat'+(rec?' rec-card':'')+longName+'" data-id="'+esc(b.id)+'">'+
     (rec?recByHtml(rec):'')+
+    '<div class="info"><h4 title="'+esc(shownName)+'">'+esc(shownName)+'</h4>'+
+    '<div class="feat-tags"><span class="feat-tag">'+esc(tag)+'</span></div>'+
     '<span class="btn-sm" data-id="'+esc(b.id)+'">'+t("viewAll").split(" ")[0]+' →</span></div>'+
     '<div class="feat-visual"><div class="bottlepic">'+(b.image?'<img src="'+esc(b.image)+'" loading="lazy" decoding="async" alt="">':'🥃')+valueBadgeHtml(b)+'</div>'+
     (price?'<div class="feat-price-chip">'+esc(price)+'</div>':'')+'</div></div>';
@@ -2069,7 +2070,7 @@ function applyProfiles(list, profileData){
 
 /* ---------- NAV ---------- */
 let currentView="home", detailReturnView="explore", legalReturnView="profile", currentDetailId="";
-let swipeStartX=0, swipeStartY=0, swipeMoved=false;
+let swipeStartX=0, swipeStartY=0, swipeScrollLeft=0, swipeMoved=false, swipeScroller=null;
 function showView(name){
   document.getElementById("appRoot").className = "app is-" + name;
   document.querySelectorAll(".view").forEach(function(v){ v.classList.toggle("active", v.id==="view-"+name); });
@@ -2108,6 +2109,30 @@ document.addEventListener("pointerdown",function(e){
 document.addEventListener("pointermove",function(e){
   if(!e.target.closest(".hscroll")) return;
   if(Math.abs(e.clientX-swipeStartX)>8 && Math.abs(e.clientX-swipeStartX)>Math.abs(e.clientY-swipeStartY)) swipeMoved=true;
+},{passive:true});
+document.addEventListener("touchstart",function(e){
+  const scroller=e.target.closest(".hscroll");
+  if(!scroller || !e.touches || !e.touches[0]) return;
+  swipeScroller=scroller;
+  swipeStartX=e.touches[0].clientX;
+  swipeStartY=e.touches[0].clientY;
+  swipeScrollLeft=scroller.scrollLeft;
+  swipeMoved=false;
+},{passive:true});
+document.addEventListener("touchmove",function(e){
+  if(!swipeScroller || !e.touches || !e.touches[0]) return;
+  const dx=e.touches[0].clientX-swipeStartX;
+  const dy=e.touches[0].clientY-swipeStartY;
+  if(Math.abs(dx)>8 && Math.abs(dx)>Math.abs(dy)){
+    swipeMoved=true;
+    swipeScroller.scrollLeft=swipeScrollLeft-dx;
+    if(swipeScroller._bhDotUpdate) swipeScroller._bhDotUpdate();
+    e.preventDefault();
+  }
+},{passive:false});
+document.addEventListener("touchend",function(){
+  if(swipeScroller && swipeScroller._bhDotUpdate) setTimeout(swipeScroller._bhDotUpdate,120);
+  swipeScroller=null;
 },{passive:true});
 document.addEventListener("input",function(e){
   const draft=e.target&&e.target.closest ? e.target.closest("[data-recommend-draft]") : null;
@@ -2701,6 +2726,9 @@ if("serviceWorker" in navigator){ window.addEventListener("load",function(){ nav
   if(video){
     video.muted=true;
     function playIntro(){
+      try{
+        if(video.duration && video.duration>introStart+0.5 && video.currentTime<introStart-.15) video.currentTime=introStart;
+      }catch(e){}
       var play=video.play();
       if(play && play.catch) play.catch(function(){});
     }
@@ -2721,11 +2749,11 @@ if("serviceWorker" in navigator){ window.addEventListener("load",function(){ nav
     intro.classList.remove("is-waiting");
     if(video){
       video.load();
-      setTimeout(function(){ if(video.paused && !done) playIntro(); },900);
+      setTimeout(function(){ if(!done && video.readyState>=1 && video.paused) playIntro(); },900);
     } else {
       setTimeout(finish,650);
     }
-    setTimeout(finish,8500);
+    setTimeout(finish,3200);
   }
   window.BH_START_INTRO=startIntro;
   if(typeof hasAgeGateOk==="function" && hasAgeGateOk()) startIntro();
