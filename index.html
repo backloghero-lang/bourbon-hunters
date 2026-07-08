@@ -182,6 +182,8 @@
   .profile-account .pa-name{font-family:var(--serif);font-size:22px;line-height:1.1;color:#F6E1BC;font-weight:900}
   .profile-account .pa-email{font-size:12px;color:#C9B493;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .profile-account .pa-copy{font-size:13px;line-height:1.5;color:#C9B493;margin:0}
+  .profile-account.has-badge{grid-template-columns:78px 1fr;align-items:center}
+  .profile-account.has-badge .pa-badge{grid-row:1 / span 5;width:68px;height:68px;border-radius:50%;background:rgba(0,0,0,.24) center/cover no-repeat;border:1px solid rgba(226,176,112,.34);box-shadow:0 12px 28px rgba(0,0,0,.32),0 0 18px rgba(226,176,112,.14)}
   .profile-account .pa-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
   .profile-account .pa-stat{border:1px solid rgba(226,176,112,.16);border-radius:14px;background:rgba(0,0,0,.16);padding:9px 7px;text-align:center}
   .profile-account .pa-stat strong{display:block;font-size:18px;color:#F6E1BC;line-height:1}
@@ -193,6 +195,51 @@
   .profile-ico{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;background:rgba(246,225,188,.08);border:1px solid rgba(226,176,112,.14);color:#E2B070}
   .profile-ico svg{width:24px;height:24px}
   .profile-row .chev{font-size:25px;color:#E2B070;line-height:1}
+  .badge-screen-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:2px 0 18px}
+  .badge-screen-head h2{font-family:var(--serif);font-size:26px;line-height:1.05;margin:0;color:#F6E1BC}
+  .badge-preview{display:flex;align-items:center;gap:14px;margin:0 0 18px;padding:14px;border:1px solid rgba(226,176,112,.22);border-radius:18px;background:linear-gradient(180deg,rgba(29,24,18,.74),rgba(10,7,5,.9))}
+  .badge-preview .profile-badge{width:72px;height:72px;flex:none}
+  .badge-preview b{display:block;font-family:var(--serif);font-size:21px;line-height:1.1;color:#F6E1BC}
+  .badge-preview span{display:block;margin-top:4px;font-size:12px;line-height:1.35;color:#C9B493}
+  .badge-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
+  .badge-choice{display:grid;grid-template-columns:54px 1fr;align-items:center;gap:10px;border:1px solid rgba(226,176,112,.18);border-radius:16px;background:rgba(0,0,0,.2);color:#F6E1BC;padding:10px;text-align:left;font-size:13px;font-weight:900;cursor:pointer}
+  .badge-choice.on{border-color:rgba(127,208,150,.72);box-shadow:0 0 0 1px rgba(127,208,150,.22),0 0 18px rgba(127,208,150,.12)}
+  .profile-badge{display:block;width:48px;height:48px;border-radius:50%;background:rgba(0,0,0,.3) center/cover no-repeat;border:1px solid rgba(226,176,112,.28);box-shadow:0 10px 22px rgba(0,0,0,.28)}
+  .badge-save{width:100%;border:1px solid rgba(226,176,112,.44);border-radius:14px;background:linear-gradient(180deg,#F1C875,#B86A33);color:#1B1008;padding:13px 16px;font-size:14px;font-weight:950;cursor:pointer}
+  .badge-save.secondary{margin-top:10px;background:rgba(0,0,0,.22);color:#E2B070}
+  .rec-by{display:flex;align-items:center;gap:7px;margin-top:8px;min-width:0;color:#C9B493;font-size:10px;font-weight:900}
+  .rec-by .profile-badge{width:24px;height:24px;box-shadow:none}
+  .rec-by span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .rec-empty{flex:0 0 92%;scroll-snap-align:start;min-height:152px;display:grid;align-content:center;gap:8px;color:#C9B493;border:1px dashed rgba(226,176,112,.28);border-radius:18px;background:rgba(0,0,0,.18);padding:22px;font-size:13px;line-height:1.45}
+  .rec-empty b{display:block;font-family:var(--serif);font-size:20px;color:#F6E1BC;line-height:1.1}
+  .rec-list{display:grid;gap:12px}
+  .rec-list-card{display:grid;grid-template-columns:76px 1fr;gap:12px;align-items:center;border:1px solid rgba(226,176,112,.22);border-radius:18px;background:linear-gradient(180deg,rgba(29,24,18,.72),rgba(10,7,5,.9));padding:12px;box-shadow:0 14px 26px rgba(0,0,0,.24);cursor:pointer}
+  .rec-list-card img{width:70px;height:96px;object-fit:contain;filter:drop-shadow(0 12px 14px rgba(0,0,0,.45))}
+  .rec-list-card h4{margin:0 0 6px;font-family:var(--serif);font-size:18px;line-height:1.12;color:#F6E1BC}
+  .rec-list-card p{margin:8px 0 0;color:#C9B493;font-size:12px;line-height:1.42;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .recommend-box{margin:16px 0 0;border:1px solid rgba(226,176,112,.2);border-radius:18px;background:linear-gradient(180deg,rgba(29,24,18,.72),rgba(10,7,5,.9));padding:14px}
+  .recommend-box textarea{width:100%;min-height:92px;resize:vertical;border:1px solid rgba(226,176,112,.24);border-radius:12px;background:rgba(0,0,0,.28);color:#F6E1BC;padding:11px 12px;font:inherit;font-size:13px;line-height:1.45;outline:none}
+  .recommend-box textarea:focus{border-color:rgba(226,176,112,.58);box-shadow:0 0 0 2px rgba(226,176,112,.12)}
+  .recommend-actions{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px}
+  .recommend-hint{font-size:11px;line-height:1.35;color:#A99572}
+  .recommend-submit,.comments-open{border:1px solid rgba(226,176,112,.44);border-radius:12px;background:linear-gradient(180deg,#F1C875,#B86A33);color:#1B1008;padding:10px 13px;font-size:12px;font-weight:950;cursor:pointer;white-space:nowrap}
+  .comments-open{width:100%;margin-top:12px;background:rgba(0,0,0,.24);color:#E2B070}
+  .comment-modal{position:fixed;inset:0;z-index:80;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.62);padding:14px}
+  .comment-modal.show{display:flex}
+  .comment-sheet{width:min(520px,100%);max-height:min(78dvh,720px);overflow:hidden;border:1px solid rgba(226,176,112,.34);border-radius:22px;background:linear-gradient(180deg,rgba(28,22,16,.98),rgba(8,6,4,.99));box-shadow:0 24px 80px rgba(0,0,0,.72)}
+  .comment-sheet-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border-bottom:1px solid rgba(226,176,112,.16)}
+  .comment-sheet-head h3{margin:0;font-family:var(--serif);font-size:21px;color:#F6E1BC}
+  .comment-sheet-head button{border:0;background:transparent;color:#E2B070;font-size:26px;line-height:1;cursor:pointer}
+  #commentModalBody{max-height:calc(min(78dvh,720px) - 58px);overflow:auto;padding:12px 14px 16px}
+  .comment-card{display:grid;grid-template-columns:44px 1fr;gap:10px;padding:12px 0;border-bottom:1px solid rgba(226,176,112,.12)}
+  .comment-card:last-child{border-bottom:0}
+  .comment-card .profile-badge{width:40px;height:40px}
+  .comment-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;color:#A99572;font-size:11px;font-weight:900}
+  .comment-meta b{color:#F6E1BC;font-size:13px}
+  .comment-stars{color:var(--gold);letter-spacing:.5px}
+  .comment-text{margin:6px 0 0;color:#D8C4A4;font-size:13px;line-height:1.48;white-space:pre-wrap}
+  .comment-text.clamped{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;white-space:normal}
+  .comment-more{margin-top:6px;border:0;background:transparent;color:#E2B070;font-weight:900;font-size:12px;padding:0;cursor:pointer}
   .auth-view,.legal-view{padding-top:0}
   .app.is-register .topbar,.app.is-signin .topbar,.app.is-reset .topbar,.app.is-reset-confirm .topbar,.app.is-terms .topbar,.app.is-privacy .topbar{display:none}
   .auth-head,.legal-head{margin:0 -16px 24px;padding:18px 16px 24px;background:linear-gradient(180deg,rgba(10,7,5,.98),rgba(10,7,5,.88));border-bottom:1px solid rgba(226,176,112,.16)}
@@ -245,6 +292,10 @@
   .user-stars span{cursor:pointer;transition:transform .08s,color .15s}
   .user-stars span.on{color:var(--gold)}
   .user-stars span:active{transform:scale(.88)}
+  .community-rating{display:grid;gap:3px;place-items:center}
+  .rating-meta{font-size:10px;line-height:1.2;color:var(--muted);font-weight:850}
+  .rating-empty{display:grid;grid-template-columns:auto 1fr;align-items:center;justify-content:center;gap:7px;color:var(--muted);font-size:11px;line-height:1.15;font-weight:850;text-align:left}
+  .rating-empty:before{content:"";width:26px;height:26px;border-radius:50%;background:radial-gradient(circle at 50% 38%,rgba(226,176,112,.22),rgba(0,0,0,.2) 64%),url("design/figma-assets/home-pack-v2/wishlist-barrel.png") center/20px 20px no-repeat;border:1px solid rgba(226,176,112,.18);opacity:.82}
 
   /* detail */
   .back{display:inline-flex;align-items:center;gap:6px;color:var(--amber2);font-size:14px;font-weight:700;cursor:pointer;margin:6px 0 14px}
@@ -262,6 +313,7 @@
   .pill{flex:1 1 calc(50% - 8px);min-width:0;background:rgba(0,0,0,.24);border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}
   .pill .k{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:700}
   .pill .v{font-size:14px;font-weight:800;margin-top:3px;overflow:hidden}
+  .pill.rating-pill .v{min-height:38px;display:grid;place-items:center}
   .sec-t{font-size:12px;color:var(--amber2);font-weight:800;text-transform:uppercase;letter-spacing:.6px;margin:16px 0 6px}
   .desc{font-size:14px;line-height:1.65;margin:0 0 10px}
 
@@ -393,7 +445,7 @@
 
   <!-- HOME -->
   <section class="view active" id="view-home">
-    <div class="sec-head"><h3 data-i18n="featured">Polecane</h3></div>
+    <div class="sec-head"><h3 data-i18n="featured">Polecane</h3><a id="featuredAll" data-i18n="viewAll">Zobacz wszystkie</a></div>
     <div class="hscroll" id="featuredRow"></div>
     <div class="swipe-dots" id="featuredDots" aria-hidden="true"></div>
 
@@ -419,6 +471,13 @@
     <div class="chips" id="exploreChips"></div>
     <div id="exploreGrid"></div>
     <div id="exploreMore" style="display:flex;justify-content:center;padding:18px 0"></div>
+  </section>
+
+  <!-- RECOMMENDATIONS -->
+  <section class="view" id="view-recommendations">
+    <span class="back" data-open-view="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg> <span data-i18n="back">Wstecz</span></span>
+    <div class="sec-head" style="margin-top:8px"><h3 data-i18n="featuredAllTitle">Polecane przez łowców</h3></div>
+    <div id="recommendationsList"></div>
   </section>
 
   <!-- DETAIL -->
@@ -482,11 +541,41 @@
     <div class="profile-menu">
       <button class="profile-row" type="button" data-open-view="register" data-auth-guest><span class="profile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19c0-2.2-2.7-4-6-4s-6 1.8-6 4"/><circle cx="9" cy="8" r="4"/><path d="M19 8v6M16 11h6"/></svg></span><span data-i18n="registerTab">Register</span><span class="chev">&rsaquo;</span></button>
       <button class="profile-row" type="button" data-open-view="signin" data-auth-guest><span class="profile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><path d="M10 17l5-5-5-5M15 12H3"/></svg></span><span data-i18n="signInTab">Sign In</span><span class="chev">&rsaquo;</span></button>
+      <button class="profile-row" type="button" data-open-view="hunter-profile" data-auth-user><span class="profile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4.5 20c.8-3.6 4-5.5 7.5-5.5S18.7 16.4 19.5 20"/><path d="M17 3l1 2 2 .3-1.5 1.5.4 2.2L17 8l-1.9 1 .4-2.2L14 5.3l2-.3z"/></svg></span><span data-i18n="myProfileTab">Mój profil</span><span class="chev">&rsaquo;</span></button>
       <button class="profile-row" type="button" data-profile-action="articles"><span class="profile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span><span data-i18n="articlesTab">Articles</span><span class="chev">&rsaquo;</span></button>
       <button class="profile-row" type="button" data-profile-action="pro"><span class="profile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l2.7 5.5 6.1.9-4.4 4.3 1 6.1L12 16.9 6.6 19.8l1-6.1-4.4-4.3 6.1-.9L12 3z"/></svg></span><span data-i18n="proTab">Wersja Pro</span><span class="chev">&rsaquo;</span></button>
       <button class="profile-row" type="button" data-profile-action="settings" aria-disabled="true"><span class="profile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.9l.1.1a2 2 0 01-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.9-.3 1.7 1.7 0 00-1 1.6V21a2 2 0 01-4 0v-.1a1.7 1.7 0 00-1-1.6 1.7 1.7 0 00-1.9.3l-.1.1A2 2 0 014.2 17l.1-.1A1.7 1.7 0 004.6 15a1.7 1.7 0 00-1.6-1H3a2 2 0 010-4h.1a1.7 1.7 0 001.6-1 1.7 1.7 0 00-.3-1.9l-.1-.1A2 2 0 017 4.2l.1.1A1.7 1.7 0 009 4.6 1.7 1.7 0 0010 3V3a2 2 0 014 0v.1a1.7 1.7 0 001 1.6 1.7 1.7 0 001.9-.3l.1-.1A2 2 0 0119.8 7l-.1.1a1.7 1.7 0 00-.3 1.9 1.7 1.7 0 001.6 1h.1a2 2 0 010 4H21a1.7 1.7 0 00-1.6 1z"/></svg></span><span data-i18n="settingsTab">Ustawienia</span><span class="chev">&rsaquo;</span></button>
       <button class="profile-row" type="button" data-auth-user data-logout><span class="profile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg></span><span data-i18n="logoutTab">Logout</span><span class="chev">&rsaquo;</span></button>
     </div>
+  </section>
+
+  <!-- HUNTER PROFILE -->
+  <section class="view" id="view-hunter-profile">
+    <div class="badge-screen-head">
+      <span class="back" data-open-view="profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg> <span data-i18n="back">Wstecz</span></span>
+    </div>
+    <div class="badge-preview">
+      <span class="profile-badge" id="profileBadgePreview"></span>
+      <div><b id="hunterProfileName">Bourbon Hunter</b><span id="hunterProfileCopy" data-i18n="profileBadgeCopy">Ten znacznik będzie widoczny przy Twoich komentarzach i poleceniach.</span></div>
+    </div>
+    <div class="profile-menu">
+      <button class="profile-row" type="button" data-open-view="badge-picker"><span class="profile-ico"><span class="profile-badge" id="profileRowBadge"></span></span><span data-i18n="changeBadge">Zmień znacznik</span><span class="chev">&rsaquo;</span></button>
+    </div>
+  </section>
+
+  <!-- BADGE PICKER -->
+  <section class="view" id="view-badge-picker">
+    <div class="badge-screen-head">
+      <span class="back" data-open-view="hunter-profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg> <span data-i18n="back">Wstecz</span></span>
+      <h2 data-i18n="chooseBadgeTitle">Wybierz znacznik</h2>
+    </div>
+    <div class="badge-preview">
+      <span class="profile-badge" id="badgePickerPreview"></span>
+      <div><b id="badgePickerName">Szklanka</b><span data-i18n="badgePickerCopy">Znacznik pojawi się przy komentarzach i poleceniach.</span></div>
+    </div>
+    <div class="badge-grid" id="badgeGrid"></div>
+    <button class="badge-save" type="button" id="saveBadgeBtn" data-i18n="saveProfileBadge">Zapisz profil</button>
+    <button class="badge-save secondary" type="button" data-open-view="hunter-profile" data-i18n="skipForNow">Pomiń na razie</button>
   </section>
 
   <!-- REGISTER -->
@@ -605,6 +694,16 @@
   </div>
 </div>
 
+<div class="comment-modal" id="commentModal" aria-hidden="true">
+  <div class="comment-sheet" role="dialog" aria-modal="true" aria-labelledby="commentModalTitle">
+    <div class="comment-sheet-head">
+      <h3 id="commentModalTitle" data-i18n="commentsTitle">Komentarze łowców</h3>
+      <button type="button" id="commentModalClose" aria-label="Close">&times;</button>
+    </div>
+    <div id="commentModalBody"></div>
+  </div>
+</div>
+
 <nav class="nav" id="bottomNav">
   <button data-view="home" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></svg><span data-i18n="navHome">Start</span></button>
   <button data-view="explore"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg><span data-i18n="navExplore">Odkrywaj</span></button>
@@ -621,6 +720,7 @@ const DB_URL = "db/bourbons.json";
 const PROFILES_URL = "db/profiles-runtime.json";
 const AUTH_TOKEN_KEY = "bh_auth_token";
 const AUTH_USER_KEY = "bh_auth_user";
+const PROFILE_KEY = "bh_user_profile";
 const RUNTIME_BOTTLE_IDS = [
   "buffalo-trace-bourbon-1",
   "blantons-original-single-barrel-bourbon-whiskey-700ml",
@@ -793,7 +893,17 @@ Object.assign(I18N.pl,{
   resetConfirmTitle:"Nowe has\u0142o", resetConfirmIntro:"Ustaw nowe has\u0142o dla swojego konta Bourbon Hunters.",
   newPasswordLabel:"Nowe has\u0142o", repeatPasswordLabel:"Powt\u00f3rz has\u0142o", savePasswordBtn:"Zapisz has\u0142o",
   resetMailSent:"Je\u015bli konto istnieje, wys\u0142ali\u015bmy link resetuj\u0105cy.", resetMailPending:"Reset jest przygotowany, ale dostawca maili transakcyjnych nie jest jeszcze podpi\u0119ty.",
-  passwordUpdated:"Has\u0142o zmienione. Mo\u017cesz si\u0119 zalogowa\u0107."
+  passwordUpdated:"Has\u0142o zmienione. Mo\u017cesz si\u0119 zalogowa\u0107.",
+  noCommunityRatings:"Nikt jeszcze nie oceni\u0142", ratingOne:"1 ocena", ratingMany:"ocen",
+  myProfileTab:"M\u00f3j profil", profileBadgeCopy:"Ten znacznik b\u0119dzie widoczny przy Twoich komentarzach i poleceniach.",
+  changeBadge:"Zmie\u0144 znacznik", chooseBadgeTitle:"Wybierz znacznik", badgePickerCopy:"Znacznik pojawi si\u0119 przy komentarzach i poleceniach.",
+  saveProfileBadge:"Zapisz profil", skipForNow:"Pomi\u0144 na razie", profileSaved:"Profil zapisany.",
+  featuredAllTitle:"Polecane przez \u0142owc\u00f3w", recEmptyTitle:"Brak polece\u0144", recEmptyBody:"Dodaj komentarz i ocen\u0119 w szczeg\u00f3\u0142ach butelki, a trafi tutaj jako polecenie.",
+  addRecommendation:"Dodaj komentarz", recommendationPlaceholder:"Napisz kr\u00f3tko, dlaczego polecasz t\u0119 butelk\u0119...",
+  recommendationHint:"Do polecenia do\u0142\u0105czymy Twoj\u0105 ocen\u0119 z gwiazdek powy\u017cej.", saveRecommendation:"Pole\u0107",
+  recommendationNeedLogin:"Zaloguj si\u0119, aby doda\u0107 polecenie.", recommendationNeedRating:"Najpierw dodaj swoj\u0105 ocen\u0119 gwiazdkami.",
+  recommendationNeedText:"Dodaj kr\u00f3tki komentarz.", recommendationSaved:"Polecenie zapisane.", commentsTitle:"Komentarze \u0142owc\u00f3w",
+  showComments:"Poka\u017c komentarze", hideText:"Zwi\u0144", moreText:"Wi\u0119cej", recommendedBy:"Poleca"
 });
 Object.assign(I18N.en,{
   termsTitle:"Terms of Service", privacyTitle:"Privacy Policy", forgotPassword:"Forgot password?", resetTitle:"Reset password",
@@ -807,7 +917,17 @@ Object.assign(I18N.en,{
   resetConfirmTitle:"Set new password", resetConfirmIntro:"Create a new password for your Bourbon Hunters account.",
   newPasswordLabel:"New password", repeatPasswordLabel:"Repeat password", savePasswordBtn:"Save password",
   resetMailSent:"If the account exists, we sent a reset link.", resetMailPending:"Reset is prepared, but transactional email is not connected yet.",
-  passwordUpdated:"Password updated. You can sign in now."
+  passwordUpdated:"Password updated. You can sign in now.",
+  noCommunityRatings:"No ratings yet", ratingOne:"1 rating", ratingMany:"ratings",
+  myProfileTab:"My profile", profileBadgeCopy:"This marker will appear next to your comments and recommendations.",
+  changeBadge:"Change marker", chooseBadgeTitle:"Choose marker", badgePickerCopy:"The marker will appear next to comments and recommendations.",
+  saveProfileBadge:"Save profile", skipForNow:"Skip for now", profileSaved:"Profile saved.",
+  featuredAllTitle:"Recommended by hunters", recEmptyTitle:"No recommendations yet", recEmptyBody:"Add a comment and rating in bottle details, and it will appear here as a recommendation.",
+  addRecommendation:"Add comment", recommendationPlaceholder:"Write briefly why you recommend this bottle...",
+  recommendationHint:"Your star rating above will be attached to this recommendation.", saveRecommendation:"Recommend",
+  recommendationNeedLogin:"Sign in to add a recommendation.", recommendationNeedRating:"Add your star rating first.",
+  recommendationNeedText:"Add a short comment.", recommendationSaved:"Recommendation saved.", commentsTitle:"Hunter comments",
+  showComments:"Show comments", hideText:"Collapse", moreText:"More", recommendedBy:"Recommended by"
 });
 
 /* lista destylarni z licznikami, posortowana wg liczby butelek (do filtra) */
@@ -966,11 +1086,187 @@ let collectionTab="wishlist";
 const UR=(function(){ try{ return JSON.parse(localStorage.getItem("bh_user_ratings")||"{}"); }catch(e){ return {}; } })();
 function urSave(){ try{ localStorage.setItem("bh_user_ratings",JSON.stringify(UR)); }catch(e){} }
 function urStars(id){ const n=Number(UR[id]||0); let out='<div class="user-stars" data-userstars="'+esc(id)+'">'; for(let i=1;i<=5;i++){ out+='<span data-ur="'+esc(id)+'" data-v="'+i+'" class="'+(i<=n?'on':'')+'">★</span>'; } return out+'</div>'; }
-function rateHtml(b){ const q=(b.quality!=null?b.quality:b.value); return q!=null ? '<span class="rate">'+starStr(q)+'</span>' : '<span class="rate none">☆☆☆☆☆</span>'; }
+const PROFILE_BADGES=[
+  {id:"glass",label:"Szklanka",src:"assets/profile-badges/glass.png"},
+  {id:"bottle",label:"Butelka",src:"assets/profile-badges/bottle.png"},
+  {id:"barrel",label:"Beczka",src:"assets/profile-badges/barrel.png"},
+  {id:"seal",label:"Pieczęć",src:"assets/profile-badges/seal.png"},
+  {id:"hat",label:"Kapelusz",src:"assets/profile-badges/hat.png"},
+  {id:"star",label:"Gwiazda",src:"assets/profile-badges/star.png"},
+  {id:"distillery",label:"Destylarnia",src:"assets/profile-badges/distillery.png"},
+  {id:"notes",label:"Notatki",src:"assets/profile-badges/notes.png"},
+  {id:"opener",label:"Otwieracz",src:"assets/profile-badges/opener.png"},
+  {id:"horseshoe",label:"Podkowa",src:"assets/profile-badges/horseshoe.png"}
+];
+let USER_PROFILE=(function(){ try{ return JSON.parse(localStorage.getItem(PROFILE_KEY)||"{}"); }catch(e){ return {}; } })();
+let pendingBadge=USER_PROFILE.badge||"glass";
+function profileSaveLocal(){ try{ localStorage.setItem(PROFILE_KEY,JSON.stringify(USER_PROFILE||{})); }catch(e){} }
+function badgeMeta(id){ return PROFILE_BADGES.filter(function(b){ return b.id===id; })[0] || PROFILE_BADGES[0]; }
+function badgeStyle(id){ return 'background-image:url(&quot;'+esc(badgeMeta(id).src)+'&quot;)'; }
+function applyProfileData(profile){
+  if(!profile) return;
+  USER_PROFILE=Object.assign({},USER_PROFILE,profile);
+  if(!USER_PROFILE.badge) USER_PROFILE.badge="glass";
+  pendingBadge=USER_PROFILE.badge;
+  profileSaveLocal();
+  renderProfile();
+  renderHunterProfile();
+  renderBadgePicker();
+}
+let RECS=[];
+let COMMENTS={};
+function normalizeRecommendation(r){
+  r=r||{};
+  return {
+    id:String(r.id||""),
+    bottle_id:String(r.bottle_id||""),
+    bottle_name:String(r.bottle_name||""),
+    user_id:String(r.user_id||""),
+    username:String(r.username||"Hunter"),
+    badge:badgeMeta(r.badge||"glass").id,
+    rating:Number(r.rating)||0,
+    comment:String(r.comment||""),
+    created_at:String(r.created_at||""),
+    updated_at:String(r.updated_at||"")
+  };
+}
+function bottleForRec(rec){
+  return DB.find(function(b){ return b.id===rec.bottle_id; }) || null;
+}
+function recByHtml(rec){
+  return '<div class="rec-by"><span class="profile-badge" style="'+badgeStyle(rec.badge||"glass")+'"></span><span>'+esc(t("recommendedBy"))+' '+esc(rec.username||"Hunter")+'</span></div>';
+}
+function uniqueRecommendations(list){
+  const seen={};
+  return (list||[]).map(normalizeRecommendation).filter(function(r){
+    if(!r.bottle_id || seen[r.bottle_id]) return false;
+    seen[r.bottle_id]=1;
+    return !!bottleForRec(r);
+  });
+}
+function commentsFor(id){ return COMMENTS[id]||[]; }
+function dateLabel(value){
+  if(!value) return "";
+  const d=new Date(value);
+  if(!Number.isFinite(d.getTime())) return "";
+  return d.toLocaleDateString(lang==="pl"?"pl-PL":"en-US",{day:"2-digit",month:"short"});
+}
+function commentCardsHtml(list){
+  list=(list||[]).map(normalizeRecommendation);
+  if(!list.length) return '<div class="empty">'+esc(t("recEmptyBody"))+'</div>';
+  return list.map(function(c,i){
+    const needsMore=c.comment.length>180;
+    return '<div class="comment-card">'+
+      '<span class="profile-badge" style="'+badgeStyle(c.badge)+'"></span>'+
+      '<div><div class="comment-meta"><b>'+esc(c.username||"Hunter")+'</b>'+(c.rating?'<span class="comment-stars">'+starStr(c.rating)+'</span>':'')+(dateLabel(c.updated_at||c.created_at)?'<span>'+esc(dateLabel(c.updated_at||c.created_at))+'</span>':'')+'</div>'+
+      '<div class="comment-text'+(needsMore?' clamped':'')+'" data-comment-text="'+i+'">'+esc(c.comment)+'</div>'+
+      (needsMore?'<button class="comment-more" type="button" data-comment-toggle="'+i+'">'+esc(t("moreText"))+'</button>':'')+
+      '</div></div>';
+  }).join("");
+}
+function fetchRecommendations(bottleId){
+  if(!WORKER_URL) return Promise.resolve();
+  const qs=bottleId ? "?bottle_id="+encodeURIComponent(bottleId) : "?limit=80";
+  return fetch(WORKER_URL+"/recommendations"+qs,{cache:"no-store"})
+    .then(function(r){ return r.ok ? r.json() : {}; })
+    .then(function(data){
+      const list=(data.recommendations||[]).map(normalizeRecommendation);
+      if(bottleId) COMMENTS[bottleId]=list;
+      else RECS=list;
+      if(DB.length){ renderHome(); renderRecommendationsView(); }
+    }).catch(function(){});
+}
+function recommendationBlock(b){
+  const id=bottleActionId(b);
+  const list=commentsFor(id);
+  const userRating=Number(UR[id]||0);
+  return '<div class="recommend-box">'+
+    '<div class="sec-t" style="margin-top:0">'+esc(t("addRecommendation"))+'</div>'+
+    '<textarea id="recommendText" maxlength="700" placeholder="'+esc(t("recommendationPlaceholder"))+'"></textarea>'+
+    '<div class="recommend-actions"><span class="recommend-hint">'+esc(t("recommendationHint"))+(userRating?' '+starStr(userRating):'')+'</span><button class="recommend-submit" type="button" data-recommend-bottle="'+esc(id)+'">'+esc(t("saveRecommendation"))+'</button></div>'+
+    (list.length?'<button class="comments-open" type="button" data-open-comments="'+esc(id)+'">'+esc(t("showComments"))+' ('+list.length+')</button>':'')+
+  '</div>';
+}
+function openCommentsModal(id){
+  const b=DB.find(function(x){ return x.id===id; });
+  const modal=document.getElementById("commentModal");
+  const body=document.getElementById("commentModalBody");
+  const title=document.getElementById("commentModalTitle");
+  if(!modal||!body) return;
+  if(title) title.textContent=(b?compactBottleName(b):t("commentsTitle"));
+  body.innerHTML=commentCardsHtml(commentsFor(id));
+  modal.classList.add("show");
+  modal.setAttribute("aria-hidden","false");
+}
+function closeCommentsModal(){
+  const modal=document.getElementById("commentModal");
+  if(!modal) return;
+  modal.classList.remove("show");
+  modal.setAttribute("aria-hidden","true");
+}
+function submitRecommendation(id){
+  if(!AUTH_TOKEN){ toast(t("recommendationNeedLogin")); showView("signin"); return; }
+  const b=DB.find(function(x){ return x.id===id; });
+  if(!b) return;
+  const rating=Number(UR[id]||0);
+  if(!rating){ toast(t("recommendationNeedRating")); return; }
+  const textarea=document.getElementById("recommendText");
+  const comment=String(textarea&&textarea.value||"").trim();
+  if(comment.length<3){ toast(t("recommendationNeedText")); return; }
+  const btn=document.querySelector('[data-recommend-bottle="'+id+'"]');
+  if(btn) btn.disabled=true;
+  bhApi("/me/recommendation",{method:"POST",body:JSON.stringify({bottle_id:id,bottle_name:b.name,rating:rating,comment:comment,bottle_data:bottlePayload(id)})}).then(function(data){
+    if(textarea) textarea.value="";
+    if(data&&data.recommendation){
+      COMMENTS[id]=[normalizeRecommendation(data.recommendation)].concat((COMMENTS[id]||[]).filter(function(r){ return r.user_id!==data.recommendation.user_id; }));
+    }
+    if(data&&data.rating_aggregate){
+      mergeCommunityRatings((function(){ const o={}; o[id]=data.rating_aggregate; return o; })());
+    }
+    toast(t("recommendationSaved"));
+    fetchRecommendations();
+    fetchRecommendations(id).then(function(){ openDetail(id,true,true); });
+  }).catch(function(err){
+    toast(authErrorMessage(err));
+  }).finally(function(){
+    if(btn) btn.disabled=false;
+  });
+}
+let CR={};
+function mergeCommunityRatings(ratings){
+  ratings=ratings||{};
+  Object.keys(ratings).forEach(function(id){
+    const r=ratings[id]||{};
+    CR[id]={avg:r.avg==null?null:Number(r.avg),count:Number(r.count)||0};
+  });
+}
+function communityRating(id){
+  const r=CR[id]||{};
+  const count=Number(r.count)||0;
+  const avg=count ? Number(r.avg) : null;
+  return {avg:avg,count:count};
+}
+function ratingCountText(count){
+  count=Number(count)||0;
+  if(lang==="pl") return count===1 ? t("ratingOne") : count+" "+t("ratingMany");
+  return count===1 ? t("ratingOne") : count+" "+t("ratingMany");
+}
+function communityRatingHtml(o){
+  const id=bottleActionId(o);
+  const r=communityRating(id);
+  if(!r.count) return '<div class="rating-empty"><span>'+esc(t("noCommunityRatings"))+'</span></div>';
+  const avg=Math.round(r.avg*10)/10;
+  return '<div class="community-rating"><div class="stars" style="color:var(--gold)">'+starStr(avg)+'</div><div class="rating-meta">'+avg.toFixed(1)+'/5 · '+esc(ratingCountText(r.count))+'</div></div>';
+}
+function rateHtml(b){
+  const r=communityRating(b.id);
+  return r.count ? '<span class="rate" title="'+esc(ratingCountText(r.count))+'">★ '+(Math.round(r.avg*10)/10).toFixed(1)+'</span>' : '<span class="rate none">'+esc(t("noCommunityRatings"))+'</span>';
+}
 function authText(en,pl){ return lang==="pl" ? pl : en; }
 function saveAuth(data){
   AUTH_TOKEN=data&&data.token?data.token:"";
   AUTH_USER=data&&data.user?data.user:null;
+  if(data&&data.profile) applyProfileData(data.profile);
   try{
     if(AUTH_TOKEN) localStorage.setItem(AUTH_TOKEN_KEY,AUTH_TOKEN); else localStorage.removeItem(AUTH_TOKEN_KEY);
     if(AUTH_USER) localStorage.setItem(AUTH_USER_KEY,JSON.stringify(AUTH_USER)); else localStorage.removeItem(AUTH_USER_KEY);
@@ -996,7 +1292,10 @@ function renderProfile(){
   const box=document.getElementById("profileAccount");
   if(box){
     if(AUTH_USER){
+      const badge=badgeMeta(USER_PROFILE.badge||"glass");
+      box.classList.add("has-badge");
       box.innerHTML =
+        '<span class="pa-badge" style="'+badgeStyle(badge.id)+'"></span>'+
         '<div class="pa-kick">'+esc(t("profileAccountKick"))+'</div>'+
         '<div class="pa-name">'+esc(AUTH_USER.username||"Bourbon Hunter")+'</div>'+
         '<div class="pa-email">'+esc(AUTH_USER.email||"")+'</div>'+
@@ -1008,6 +1307,7 @@ function renderProfile(){
         '<p class="pa-copy">'+esc(t("profileSyncCopy"))+'</p>'+
         '<div class="badge db">'+esc(t("freePlan"))+'</div>';
     } else {
+      box.classList.remove("has-badge");
       box.innerHTML =
         '<div class="pa-kick">Bourbon Hunters</div>'+
         '<div class="pa-name">'+esc(t("profileGuestTitle"))+'</div>'+
@@ -1016,6 +1316,27 @@ function renderProfile(){
   }
   document.querySelectorAll("[data-auth-guest]").forEach(function(el){ el.style.display=AUTH_USER?"none":"grid"; });
   document.querySelectorAll("[data-auth-user]").forEach(function(el){ el.style.display=AUTH_USER?"grid":"none"; });
+}
+function renderHunterProfile(){
+  const name=document.getElementById("hunterProfileName");
+  const preview=document.getElementById("profileBadgePreview");
+  const rowBadge=document.getElementById("profileRowBadge");
+  const badge=badgeMeta(USER_PROFILE.badge||"glass");
+  if(name) name.textContent=(AUTH_USER&&AUTH_USER.username)||"Bourbon Hunter";
+  [preview,rowBadge].forEach(function(el){ if(el) el.setAttribute("style",badgeStyle(badge.id)); });
+}
+function renderBadgePicker(){
+  const grid=document.getElementById("badgeGrid");
+  const preview=document.getElementById("badgePickerPreview");
+  const label=document.getElementById("badgePickerName");
+  const badge=badgeMeta(pendingBadge||USER_PROFILE.badge||"glass");
+  if(preview) preview.setAttribute("style",badgeStyle(badge.id));
+  if(label) label.textContent=badge.label;
+  if(grid){
+    grid.innerHTML=PROFILE_BADGES.map(function(b){
+      return '<button class="badge-choice'+(b.id===badge.id?' on':'')+'" type="button" data-badge-choice="'+esc(b.id)+'"><span class="profile-badge" style="'+badgeStyle(b.id)+'"></span><span>'+esc(b.label)+'</span></button>';
+    }).join("");
+  }
 }
 function logout(){
   const token=AUTH_TOKEN;
@@ -1026,6 +1347,23 @@ function logout(){
   }
   toast(t("logoutDone"));
   renderProfile();
+}
+function syncProfile(){
+  if(!AUTH_TOKEN) return Promise.resolve();
+  return bhApi("/me/profile",{method:"GET"}).then(function(data){
+    applyProfileData(data.profile||{});
+  }).catch(function(){});
+}
+function saveProfileBadge(){
+  const badge=badgeMeta(pendingBadge||"glass").id;
+  applyProfileData({badge:badge});
+  if(AUTH_TOKEN){
+    bhApi("/me/profile",{method:"POST",body:JSON.stringify({badge:badge})}).then(function(data){
+      applyProfileData(data.profile||{badge:badge});
+    }).catch(function(){});
+  }
+  toast(t("profileSaved"));
+  showView("hunter-profile");
 }
 function uniqueList(list){
   const seen={};
@@ -1045,6 +1383,23 @@ function applyBootstrap(boot){
   if(document.getElementById("view-collection").classList.contains("active")) renderCollection(collectionTab);
   renderProfile();
 }
+function refreshBottleViews(id){
+  if(DB.length){ renderHome(); renderExplore(); renderHomeCollection(); }
+  if(document.getElementById("view-collection").classList.contains("active")) renderCollection(collectionTab);
+  if(document.getElementById("view-detail").classList.contains("active") && currentDetailId) openDetail(currentDetailId,true);
+}
+function fetchCommunityRatings(ids){
+  if(!WORKER_URL) return Promise.resolve();
+  ids=uniqueList(ids||[]).slice(0,150);
+  const chunks=[];
+  while(ids.length) chunks.push(ids.splice(0,35));
+  return Promise.all(chunks.map(function(chunk){
+    return fetch(WORKER_URL+"/ratings?ids="+encodeURIComponent(chunk.join(",")),{cache:"no-store"})
+      .then(function(r){ return r.ok ? r.json() : {}; })
+      .then(function(data){ mergeCommunityRatings(data.ratings||{}); })
+      .catch(function(){});
+  })).then(function(){ refreshBottleViews(); });
+}
 function syncBootstrap(pushLocal){
   if(!AUTH_TOKEN || !WORKER_URL) return Promise.resolve();
   const opts=pushLocal
@@ -1053,6 +1408,8 @@ function syncBootstrap(pushLocal){
   return bhApi("/me/bootstrap",opts).then(function(data){
     if(data.user) saveAuth({token:AUTH_TOKEN,user:data.user});
     applyBootstrap(data.bootstrap);
+    if(data.profile) applyProfileData(data.profile);
+    syncProfile();
   }).catch(function(err){
     if(err&&err.error==="unauthorized") saveAuth(null);
     if(err&&err.error==="d1_missing") toast(authText("Cloudflare D1 is not connected yet.","Cloudflare D1 nie jest jeszcze podpięte."));
@@ -1064,7 +1421,12 @@ function syncList(type,id,active){
 }
 function syncRating(id,rating){
   if(!AUTH_TOKEN) return;
-  bhApi("/me/rating",{method:"POST",body:JSON.stringify({bottle_id:id,rating:rating})}).catch(function(){});
+  bhApi("/me/rating",{method:"POST",body:JSON.stringify({bottle_id:id,rating:rating})}).then(function(data){
+    if(data&&data.rating_aggregate){
+      mergeCommunityRatings((function(){ const o={}; o[id]=data.rating_aggregate; return o; })());
+      refreshBottleViews(id);
+    }
+  }).catch(function(){});
 }
 function syncScanResult(res){
   if(!AUTH_TOKEN || !res) return;
@@ -1519,14 +1881,25 @@ function localizedMashbill(value){
   else if(s.includes("rye")) note = lang==="pl" ? "zytni" : "rye";
   return note ? label+" ("+note+")" : raw;
 }
+function alcoholValue(o){
+  const proof=firstVal(o,["proof"]);
+  const abv=firstVal(o,["abv"]);
+  const proofNum=numPrice(proof);
+  if(proof){
+    const abvFromProof=proofNum!=null ? Math.round((proofNum/2)*10)/10 : null;
+    return proof+(abvFromProof!=null ? " proof / "+abvFromProof+"% ABV" : " proof");
+  }
+  if(abv) return String(abv).indexOf("%")>=0 ? abv+" ABV" : abv+"% ABV";
+  return "-";
+}
 function ratingPanel(o){
   const id=o.id||o.handle||o.name||"scan";
   let pills='';
-  if(o.proof) pills+='<div class="pill"><div class="k">Proof</div><div class="v">'+esc(o.proof)+'</div></div>';
   const price=fmtPrice(o)||o.price||o.price_str||o.price_pln||"-";
+  pills+='<div class="pill"><div class="k">Proof</div><div class="v">'+esc(alcoholValue(o))+'</div></div>';
   pills+='<div class="pill"><div class="k">'+t("suggestedPrice")+'</div><div class="v" style="color:var(--gold)">'+esc(price)+'</div></div>';
-  if(o.quality!=null) pills+='<div class="pill"><div class="k">'+t("dbQuality")+'</div><div class="v" style="color:var(--amber2)">'+starStr(o.quality)+'</div></div>';
-  pills+='<div class="pill"><div class="k">'+t("userQuality")+'</div><div class="v">'+urStars(id)+'</div></div>';
+  pills+='<div class="pill rating-pill"><div class="k">'+t("dbQuality")+'</div><div class="v">'+communityRatingHtml(o)+'</div></div>';
+  pills+='<div class="pill rating-pill"><div class="k">'+t("userQuality")+'</div><div class="v">'+urStars(id)+'</div></div>';
   return '<div class="row">'+pills+'</div>';
 }
 function bottleActionId(o){
@@ -1540,13 +1913,14 @@ function bottleActionsHtml(o){
   return '<div class="d-actions">'+ownHtml(id)+heartHtml(id)+'</div>';
 }
 /* karta w stylu "Polecane" (używana też w "Ostatnio dodane") */
-function featCard(b, kick){
+function featCard(b, kick, rec){
   const price=fmtPrice(b);
   const tag=categoryLabel(b);
   const shownName = compactBottleName(b);
   const longName = shownName.length > 30 ? " long-name" : "";
   return '<div class="feat'+longName+'" data-id="'+esc(b.id)+'"><div class="info"><h4 title="'+esc(shownName)+'">'+esc(shownName)+'</h4>'+
     '<div class="feat-tags"><span class="feat-tag">'+esc(tag)+'</span></div>'+
+    (rec?recByHtml(rec):'')+
     '<span class="btn-sm" data-id="'+esc(b.id)+'">'+t("viewAll").split(" ")[0]+' →</span></div>'+
     '<div class="feat-visual"><div class="bottlepic">'+(b.image?'<img src="'+esc(b.image)+'" loading="lazy" decoding="async" alt="">':'🥃')+valueBadgeHtml(b)+'</div>'+
     (price?'<div class="feat-price-chip">'+esc(price)+'</div>':'')+'</div></div>';
@@ -1624,12 +1998,18 @@ function applyProfiles(list, profileData){
 }
 
 /* ---------- NAV ---------- */
+let currentView="home", detailReturnView="explore", legalReturnView="profile", currentDetailId="";
 function showView(name){
   document.getElementById("appRoot").className = "app is-" + name;
   document.querySelectorAll(".view").forEach(function(v){ v.classList.toggle("active", v.id==="view-"+name); });
   document.querySelectorAll(".nav button").forEach(function(b){ b.classList.toggle("on", b.getAttribute("data-view")===name); });
   if(name==="collection") renderCollection(collectionTab);
   if(name==="profile"){ const strip=document.getElementById("proStrip"); if(strip) strip.classList.remove("hidden"); renderProfile(); }
+  if(name==="hunter-profile") renderHunterProfile();
+  if(name==="badge-picker"){ pendingBadge=USER_PROFILE.badge||"glass"; renderBadgePicker(); }
+  if(name==="recommendations"){ renderRecommendationsView(); fetchRecommendations(); }
+  if((name==="home" || name==="explore" || name==="collection") && DB.length) fetchCommunityRatings(DB.map(function(b){ return b.id; }));
+  if(name!=="detail") currentView=name;
   window.scrollTo({top:0,behavior:"instant"});
 }
 function renderCollection(tab){
@@ -1668,12 +2048,25 @@ function setupSwipeDots(scrollerId, dotsId){
     });
     dotEls.forEach(function(dot,i){ dot.classList.toggle("on",i===active); });
   }
+  let dotTimer=null;
+  function scheduleUpdate(delay){
+    clearTimeout(dotTimer);
+    dotTimer=setTimeout(update,delay||0);
+  }
+  function settleUpdate(){
+    setTimeout(update,90);
+    setTimeout(update,240);
+  }
   scroller._bhDotUpdate = update;
   if(!scroller._bhDotBound){
-    scroller.addEventListener("scroll",function(){ requestAnimationFrame(update); },{passive:true});
+    scroller.addEventListener("scroll",function(){ requestAnimationFrame(update); scheduleUpdate(120); },{passive:true});
+    scroller.addEventListener("touchend",settleUpdate,{passive:true});
+    scroller.addEventListener("pointerup",settleUpdate,{passive:true});
+    if("onscrollend" in window) scroller.addEventListener("scrollend",update,{passive:true});
     scroller._bhDotBound=true;
   }
   requestAnimationFrame(update);
+  setTimeout(update,260);
 }
 function setupHomeSwipeDots(){
   setupSwipeDots("featuredRow","featuredDots");
@@ -1690,15 +2083,18 @@ Promise.all([
   DB=applyProfiles(prepareBottleDataset(res[0].bottles||[]), res[1]);
   renderHome();
   renderExplore();
+  fetchCommunityRatings(DB.map(function(b){ return b.id; }));
+  fetchRecommendations();
   syncBootstrap(false);
 }).catch(function(){ DB=[]; });
 
 
 function renderHome(){
-  // featured
-  let feats = FEATURED_IDS.map(function(id){ return DB.find(function(b){return b.id===id;}); }).filter(Boolean);
-  if(feats.length<3) feats = feats.concat(DB.slice(0,5)).filter(function(v,i,a){return a.indexOf(v)===i;}).slice(0,5);
-  document.getElementById("featuredRow").innerHTML = feats.map(function(b){ return featCard(b, t("featured")); }).join("");
+  // featured = polecenia userow
+  const recs=uniqueRecommendations(RECS).slice(0,10);
+  document.getElementById("featuredRow").innerHTML = recs.length
+    ? recs.map(function(rec){ return featCard(bottleForRec(rec), t("featured"), rec); }).join("")
+    : '<div class="rec-empty"><b>'+esc(t("recEmptyTitle"))+'</b><span>'+esc(t("recEmptyBody"))+'</span></div>';
   // kategorie = style bourbona, z licznikami
   document.getElementById("catGrid").innerHTML = STYLES.map(function(s){
     const n = DB.filter(function(b){ return styleMatch(b,s.key); }).length;
@@ -1709,6 +2105,23 @@ function renderHome(){
   document.getElementById("recentRow").innerHTML = recent.map(function(b){ return featCard(b, t("recent")); }).join("");
   renderHomeCollection();
   setupHomeSwipeDots();
+}
+
+function renderRecommendationsView(){
+  const el=document.getElementById("recommendationsList");
+  if(!el) return;
+  const recs=uniqueRecommendations(RECS);
+  if(!recs.length){
+    el.innerHTML='<div class="empty">'+esc(t("recEmptyBody"))+'</div>';
+    return;
+  }
+  el.innerHTML='<div class="rec-list">'+recs.map(function(rec){
+    const b=bottleForRec(rec);
+    return '<div class="rec-list-card" data-id="'+esc(b.id)+'">'+
+      (b.image?'<img src="'+esc(b.image)+'" alt="" loading="lazy" decoding="async">':'<div></div>')+
+      '<div><h4>'+esc(compactBottleName(b))+'</h4>'+recByHtml(rec)+
+      '<p>'+esc(rec.comment)+'</p></div></div>';
+  }).join("")+'</div>';
 }
 
 function renderHomeCollection(){
@@ -1789,7 +2202,14 @@ document.addEventListener("click",function(e){
   const collStyle=e.target.closest("[data-coll-style]");
   if(collStyle){ toggleValue(collectionStyles[collectionTab],collStyle.getAttribute("data-coll-style")); renderCollection(collectionTab); return; }
   const openView=e.target.closest("[data-open-view]");
-  if(openView){ e.preventDefault(); showView(openView.getAttribute("data-open-view")); return; }
+  if(openView){
+    e.preventDefault();
+    let target=openView.getAttribute("data-open-view");
+    if(target==="terms" || target==="privacy") legalReturnView=currentView;
+    if((currentView==="terms" || currentView==="privacy") && target==="register") target=legalReturnView||"profile";
+    showView(target);
+    return;
+  }
   const usernameSuggestion=e.target.closest("[data-username-suggestion]");
   if(usernameSuggestion){
     e.preventDefault();
@@ -1806,12 +2226,30 @@ document.addEventListener("click",function(e){
   if(authAction){ e.preventDefault(); toast(t("authPending")); return; }
   const aiPlusAction=e.target.closest("[data-ai-plus]");
   if(aiPlusAction){ e.preventDefault(); toast(t("inProgress")); return; }
+  const badgeChoice=e.target.closest("[data-badge-choice]");
+  if(badgeChoice){ e.preventDefault(); pendingBadge=badgeChoice.getAttribute("data-badge-choice")||"glass"; renderBadgePicker(); return; }
   const profileAction=e.target.closest("[data-profile-action]");
   if(profileAction){ toast(t("inProgress")); return; }
   const valueEl=e.target.closest("[data-value-score]");
   if(valueEl){ e.stopPropagation(); toast((lang==="pl"?"Stosunek ceny do jakosci":"Quality-to-price ratio")+": "+valueEl.getAttribute("data-value-score")+"/5"); return; }
   const ur=e.target.closest("[data-ur]");
-  if(ur){ e.stopPropagation(); const id=ur.getAttribute("data-ur"), v=Number(ur.getAttribute("data-v")); UR[id]=v; urSave(); syncRating(id,v); document.querySelectorAll('[data-userstars="'+id+'"] span').forEach(function(st){ st.classList.toggle("on", Number(st.getAttribute("data-v"))<=v); }); renderProfile(); return; }
+  if(ur){ e.stopPropagation(); const id=ur.getAttribute("data-ur"), v=Number(ur.getAttribute("data-v")); UR[id]=v; urSave(); syncRating(id,v); document.querySelectorAll('[data-userstars="'+id+'"] span').forEach(function(st){ st.classList.toggle("on", Number(st.getAttribute("data-v"))<=v); }); renderProfile(); refreshBottleViews(id); return; }
+  const recommendBtn=e.target.closest("[data-recommend-bottle]");
+  if(recommendBtn){ e.preventDefault(); e.stopPropagation(); submitRecommendation(recommendBtn.getAttribute("data-recommend-bottle")); return; }
+  const commentsBtn=e.target.closest("[data-open-comments]");
+  if(commentsBtn){ e.preventDefault(); e.stopPropagation(); openCommentsModal(commentsBtn.getAttribute("data-open-comments")); return; }
+  const commentToggle=e.target.closest("[data-comment-toggle]");
+  if(commentToggle){
+    e.preventDefault();
+    const i=commentToggle.getAttribute("data-comment-toggle");
+    const txt=document.querySelector('[data-comment-text="'+i+'"]');
+    if(txt){ const on=txt.classList.toggle("clamped"); commentToggle.textContent=on?t("moreText"):t("hideText"); }
+    return;
+  }
+  const modalClose=e.target.closest("#commentModalClose");
+  if(modalClose){ e.preventDefault(); closeCommentsModal(); return; }
+  const modal=e.target.closest("#commentModal");
+  if(modal && e.target.id==="commentModal"){ closeCommentsModal(); return; }
   const heartEl = e.target.closest("[data-heart]");
   if(heartEl){
     e.stopPropagation();
@@ -1849,10 +2287,11 @@ document.addEventListener("click",function(e){
   if(e.target.id==="goAnalyzeBtn"){ scan("analyze"); return; }
 });
 document.getElementById("catAll").addEventListener("click",function(){ curDist="all"; curCat="all"; exploreStyles=[]; renderN=RENDER_LIMIT; renderExplore(); showView("explore"); });
+document.getElementById("featuredAll").addEventListener("click",function(){ renderRecommendationsView(); showView("recommendations"); });
 document.getElementById("recentAll").addEventListener("click",function(){ curDist="all"; curCat="all"; exploreStyles=[]; renderN=RENDER_LIMIT; renderExplore(); showView("explore"); });
 document.getElementById("homeCollectionAll").addEventListener("click",function(){ collectionTab="owned"; renderCollection("owned"); showView("collection"); });
 document.getElementById("exploreSearchInput").addEventListener("input",function(){ renderN=RENDER_LIMIT; renderExplore(); });
-document.getElementById("detailBack").addEventListener("click",function(){ showView("explore"); });
+document.getElementById("detailBack").addEventListener("click",function(){ showView(detailReturnView||"explore"); });
 const registerForm=document.getElementById("registerForm");
 if(registerForm) registerForm.addEventListener("submit",function(e){ e.preventDefault(); submitAuth("register",registerForm); });
 const signinForm=document.getElementById("signinForm");
@@ -1861,6 +2300,8 @@ const resetForm=document.getElementById("resetForm");
 if(resetForm) resetForm.addEventListener("submit",function(e){ e.preventDefault(); submitPasswordReset(resetForm); });
 const resetConfirmForm=document.getElementById("resetConfirmForm");
 if(resetConfirmForm) resetConfirmForm.addEventListener("submit",function(e){ e.preventDefault(); submitPasswordUpdate(resetConfirmForm); });
+const saveBadgeBtn=document.getElementById("saveBadgeBtn");
+if(saveBadgeBtn) saveBadgeBtn.addEventListener("click",function(e){ e.preventDefault(); saveProfileBadge(); });
 const birthInput=document.querySelector('#registerForm input[name="birth_date"]');
 if(birthInput){
   const d=new Date(); d.setFullYear(d.getFullYear()-18);
@@ -1869,30 +2310,35 @@ if(birthInput){
 setupAgeGate();
 showAgeGateIfNeeded();
 renderProfile();
+renderHunterProfile();
+renderBadgePicker();
 openResetFromUrl();
 
-function openDetail(id){
+function openDetail(id, keepReturn, skipRecommendationFetch){
   const b = DB.find(function(x){return x.id===id;});
   if(!b) return;
-  const price = fmtPrice(b);
+  currentDetailId=id;
+  if(!keepReturn) detailReturnView=currentView && currentView!=="detail" ? currentView : "explore";
   const origin = [b.distillery,b.region].filter(Boolean).map(esc).join(" · ");
   const actions = bottleActionsHtml(b);
   const pic = b.image ? '<div class="dphoto">'+actions+'<img src="'+esc(b.image)+'" alt="'+esc(b.name)+'" loading="eager" decoding="async">'+valueBadgeHtml(b)+'</div>' : '<div class="dphoto">'+actions+'🥃'+valueBadgeHtml(b)+'</div>';
   const statusBadge = b.status==="sold_out" || b.available===false
     ? '<span class="badge net">'+t("statusSold")+'</span>'
     : '<span class="badge db">'+t("statusAvail")+'</span>';
-  const valueBlock = (b.value!=null)
-    ? '<div class="verdict"><div class="score">'+b.value+'<small>/5</small></div><div style="flex:1"><div class="lbl">'+t("valLbl")+'</div><div class="stars" style="color:var(--gold)">'+starStr(b.value)+'</div></div></div>'
-    : '';
   document.getElementById("detailBody").innerHTML =
     '<div style="display:flex;justify-content:flex-start;align-items:center;margin-bottom:8px">'+statusBadge+'</div>'+
     '<div class="dhead">'+esc(b.name)+'</div>'+
     '<div class="dtype">'+esc(categoryLabel(b))+'</div>'+
     (origin?'<div class="dorigin">'+origin+'</div>':'')+pic+
-    valueBlock+ratingPanel(b)+generalInfoBlock(b)+tastingBlock(b)+
+    ratingPanel(b)+generalInfoBlock(b)+tastingBlock(b)+
     (b.mashbill?'<div class="sec-t">'+t("mashbill")+'</div><p class="desc">'+esc(localizedMashbill(b.mashbill))+'</p>':'')+
-    (b.url?'<div class="links" style="margin-top:14px"><a href="'+esc(b.url)+'" target="_blank" rel="noopener">'+t("viewShop")+'</a></div>':'');
+    (b.url?'<div class="links" style="margin-top:14px"><a href="'+esc(b.url)+'" target="_blank" rel="noopener">'+t("viewShop")+'</a></div>':'')+
+    recommendationBlock(b);
   showView("detail");
+  if(!keepReturn) fetchCommunityRatings([id]);
+  if(!skipRecommendationFetch) fetchRecommendations(id).then(function(){
+    if(currentDetailId===id && document.getElementById("view-detail").classList.contains("active")) openDetail(id,true,true);
+  });
 }
 /* ================= SKANER ================= */
 let imgData=null, imgMime="image/jpeg", busy=false, loadTimer=null;

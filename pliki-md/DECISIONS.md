@@ -105,6 +105,34 @@ Ten plik trzyma stale ustalenia, zeby nie ginely w dlugich watkach.
 - Reset hasla ma endpoint tokenowy, tabele D1 `password_reset_tokens`, ekran ustawienia nowego hasla z linku `?reset=...` i wysylke przez Resend po konfiguracji sekretow Workera.
 - Rekomendacja na start dla maili transakcyjnych zostala przyjeta: Resend, bo jest prosty do podpiecia z Cloudflare Workerem. Przed produkcja trzeba dopracowac domene/subdomene i rekordy DNS.
 
+## 2026-07-08 - Model ocen butelek
+
+- W szczegolach butelki nie pokazujemy osobnego duzego panelu `Jakosc / Cena`, bo maly badge na zdjeciu juz pelni role szybkiego skrotu wartosci.
+- Szczegoly butelki maja cztery stale kafle: `Proof`, `Cena sugerowana`, `Ocena spolecznosci`, `Twoja ocena`.
+- `Twoja ocena` jest pojedynczym glosem usera dla butelki. Worker rozpoznaje usera po tokenie sesji i zapisuje ocene w `user_ratings`.
+- `user_ratings` ma klucz `user_id + bottle_id`, wiec zmiana oceny nadpisuje poprzednia ocene tego usera, a nie dodaje nowego glosu.
+- `Ocena spolecznosci` jest agregatem z D1 liczonym z ocen wszystkich userow dla `bottle_id`: srednia `AVG(rating)` oraz liczba ocen `COUNT(*)`.
+- Po zapisaniu `/me/rating` Worker zwraca swiezy agregat tej butelki, zeby UI po kliknieciu gwiazdki moglo od razu pokazac aktualna srednia.
+- Zmiany innych userow pojawiaja sie po kolejnym pobraniu agregatow, np. przy starcie aplikacji, wejsciu w widok/listy albo szczegoly. Nie robimy realtime w MVP.
+- Jesli butelka nie ma ocen spolecznosci, UI pokazuje empty state zamiast pustych gwiazdek.
+
+## 2026-07-08 - Profil i znacznik usera
+
+- Po zalogowaniu user ma osobny ekran `Moj profil` dostepny z zakladki Profil.
+- Wybrany znacznik profilu jest zapisywany local-first w `localStorage`, a po zalogowaniu synchronizowany z Workerem przez `/me/profile`.
+- Worker zapisuje znacznik w D1 w tabeli `user_profiles` pod kluczem `user_id`, wiec zmiana znacznika nadpisuje profil tego usera zamiast tworzyc kolejne wpisy.
+- W MVP znaczniki sa statycznym zestawem 10 ikon z `assets/profile-badges`; oryginalne mockupy zostaja jako material zrodlowy.
+- Ten sam znacznik bedzie uzywany pozniej przy komentarzach i rekomendacjach uzytkownikow, zeby komentarz mial czytelna tozsamosc autora bez publikowania wiekszej ilosci danych profilu.
+
+## 2026-07-08 - Polecenia i komentarze userow
+
+- Sekcja `Polecane` na Home nie jest juz statyczna; ma pokazywac butelki polecone przez userow.
+- Polecenie sklada sie z `bottle_id`, oceny 1-5, komentarza, usera i jego znacznika profilu.
+- Worker zapisuje polecenia w D1 w tabeli `bottle_recommendations` pod kluczem `user_id + bottle_id`, wiec user moze aktualizowac swoje polecenie tej samej butelki bez duplikatow.
+- Publiczne `GET /recommendations` zasila Home, liste `Zobacz wszystkie` oraz komentarze w szczegolach butelki.
+- Prywatne `POST /me/recommendation` wymaga tokenu sesji, zapisuje polecenie i jednoczesnie aktualizuje ocene usera w `user_ratings`.
+- W MVP feed nie jest realtime; odswieza sie przy pobraniu widoku, po wejsciu w szczegoly albo po zapisaniu polecenia.
+
 ## 2026-07-06 - Auth, email i age gate
 
 - Cloudflare D1 jest podpiete do Workera jako binding `DB`.

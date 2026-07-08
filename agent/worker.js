@@ -18,6 +18,7 @@ const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
 const AUTH_VERSION = "auth-pbkdf2-100000-v2";
 const PBKDF2_ITERATIONS = 100000;
+const PROFILE_BADGE_IDS = ["glass","bottle","barrel","seal","hat","star","distillery","notes","opener","horseshoe"];
 
 let _p = { t:null, at:0 }, _db = { d:null, at:0 };
 async function getText(url, ttl){ const r = await fetch(url, { cf:{ cacheTtl:ttl, cacheEverything:true } }); return r.ok ? await r.text() : null; }
@@ -52,6 +53,7 @@ async function hashPassword(password, saltHex){
 function publicUser(row){ return row ? {id:row.id,email:row.email,username:row.username,created_at:row.created_at} : null; }
 function cleanEmail(v){ return String(v||"").trim().toLowerCase(); }
 function cleanUsername(v){ return String(v||"").trim().replace(/\s+/g," ").slice(0,40); }
+function cleanProfileBadge(v){ v=String(v||"").trim(); return PROFILE_BADGE_IDS.indexOf(v)>=0 ? v : "glass"; }
 function mailConfigured(env){ return !!(env.RESEND_API_KEY && env.MAIL_FROM); }
 function appUrl(env){
   const raw=String(env.APP_URL||"https://backloghero-lang.github.io/bourbon-hunters/").trim()||"https://backloghero-lang.github.io/bourbon-hunters/";
@@ -155,6 +157,27 @@ async function tableExists(env, name){
   const row=await env.DB.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name=?").bind(String(name||"")).first();
   return !!row;
 }
+function defaultProfile(){ return {badge:"glass"}; }
+async function profileFor(env, userId){
+  if(!(await tableExists(env,"user_profiles"))) return defaultProfile();
+  const row=await env.DB.prepare("SELECT badge,display_name,created_at,updated_at FROM user_profiles WHERE user_id=?").bind(userId).first();
+  if(!row) return defaultProfile();
+  return {
+    badge: cleanProfileBadge(row.badge),
+    display_name: row.display_name || "",
+    created_at: row.created_at || "",
+    updated_at: row.updated_at || ""
+  };
+}
+async function upsertProfile(env, userId, body){
+  if(!(await tableExists(env,"user_profiles"))) return null;
+  const badge=cleanProfileBadge(body&&body.badge);
+  const displayName=String((body&&body.display_name)||"").trim().slice(0,60);
+  const now=new Date().toISOString();
+  await env.DB.prepare("INSERT INTO user_profiles (user_id,badge,display_name,created_at,updated_at) VALUES (?,?,?,?,?) ON CONFLICT(user_id) DO UPDATE SET badge=excluded.badge,display_name=excluded.display_name,updated_at=excluded.updated_at")
+    .bind(userId,badge,displayName,now,now).run();
+  return profileFor(env,userId);
+}
 async function suggestUsernames(env, desired, email){
   const base=usernameBase(desired,email);
   const pool=[
@@ -227,11 +250,77 @@ async function upsertRating(env, userId, bottleId, rating){
   await env.DB.prepare("INSERT INTO user_ratings (user_id,bottle_id,rating,created_at,updated_at) VALUES (?,?,?,?,?) ON CONFLICT(user_id,bottle_id) DO UPDATE SET rating=excluded.rating,updated_at=excluded.updated_at")
     .bind(userId,bottleId,n,now,now).run();
 }
+function cleanBottleIds(value){
+  const raw=Array.isArray(value) ? value : String(value||"").split(",");
+  const seen={};
+  return raw.map(function(id){ return String(id||"").trim().slice(0,180); })
+    .filter(function(id){ if(!id || seen[id]) return false; seen[id]=1; return true; })
+    .slice(0,150);
+}
+async function ratingAggregateFor(env, bottleId){
+  bottleId=String(bottleId||"").trim();
+  if(!bottleId) return {avg:null,count:0};
+  const row=await env.DB.prepare("SELECT COUNT(*) AS count, AVG(rating) AS avg FROM user_ratings WHERE bottle_id=?").bind(bottleId).first();
+  const count=Number(row&&row.count)||0;
+  const avg=count ? Math.round((Number(row.avg)||0)*10)/10 : null;
+  return {avg:avg,count:count};
+}
+async function ratingAggregatesFor(env, ids){
+  const out={};
+  for(const id of cleanBottleIds(ids)){
+    out[id]=await ratingAggregateFor(env,id);
+  }
+  return out;
+}
+function cleanRecommendationComment(v){
+  return String(v||"").replace(/\s+/g," ").trim().slice(0,700);
+}
+async function recommendationsFor(env, bottleId, limit){
+  if(!(await tableExists(env,"bottle_recommendations"))) return {ready:false,recommendations:[]};
+  const hasProfiles=await tableExists(env,"user_profiles");
+  limit=Math.max(1,Math.min(100,Number(limit)||40));
+  const selectProfile=hasProfiles ? "COALESCE(up.badge,'glass') AS badge" : "'glass' AS badge";
+  const joinProfile=hasProfiles ? " LEFT JOIN user_profiles up ON up.user_id=br.user_id" : "";
+  const base="SELECT br.id,br.user_id,br.bottle_id,br.bottle_name,br.rating,br.comment,br.created_at,br.updated_at,u.username,"+selectProfile+" FROM bottle_recommendations br JOIN users u ON u.id=br.user_id"+joinProfile+" WHERE br.active=1";
+  const sql=bottleId ? base+" AND br.bottle_id=? ORDER BY br.updated_at DESC LIMIT ?" : base+" ORDER BY br.updated_at DESC LIMIT ?";
+  const stmt=env.DB.prepare(sql);
+  const rows=bottleId ? await stmt.bind(String(bottleId||"").slice(0,180),limit).all() : await stmt.bind(limit).all();
+  return {ready:true,recommendations:(rows.results||[]).map(function(r){
+    return {
+      id:r.id,
+      user_id:r.user_id,
+      bottle_id:r.bottle_id,
+      bottle_name:r.bottle_name,
+      username:r.username,
+      badge:cleanProfileBadge(r.badge),
+      rating:Number(r.rating)||0,
+      comment:r.comment||"",
+      created_at:r.created_at,
+      updated_at:r.updated_at
+    };
+  })};
+}
+async function upsertRecommendation(env, user, body){
+  if(!(await tableExists(env,"bottle_recommendations"))) return null;
+  const bottleId=String((body&&body.bottle_id)||"").trim().slice(0,180);
+  const comment=cleanRecommendationComment(body&&body.comment);
+  const rating=Math.max(1,Math.min(5,Math.round(Number(body&&body.rating)||0)));
+  if(!bottleId || comment.length<3 || !rating) return {error:"bad_recommendation"};
+  const bottleName=String((body&&body.bottle_name)||"").trim().slice(0,180);
+  const now=new Date().toISOString();
+  const id=crypto.randomUUID();
+  await env.DB.prepare("INSERT INTO bottle_recommendations (id,user_id,bottle_id,bottle_name,rating,comment,active,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?) ON CONFLICT(user_id,bottle_id) DO UPDATE SET bottle_name=excluded.bottle_name,rating=excluded.rating,comment=excluded.comment,active=1,updated_at=excluded.updated_at")
+    .bind(id,user.id,bottleId,bottleName,rating,comment,1,now,now).run();
+  await upsertRating(env,user.id,bottleId,rating);
+  const recs=await recommendationsFor(env,bottleId,20);
+  const mine=(recs.recommendations||[]).filter(function(r){ return r.user_id===user.id; })[0] || null;
+  return mine;
+}
 async function handleApi(request, env, cors){
   const url=new URL(request.url);
   const path=url.pathname.replace(/\/+$/,"");
   if(path==="/auth/health" && request.method==="GET"){
-    let schema=false, reset_schema=false, detail="";
+    let schema=false, reset_schema=false, profile_schema=false, recommendations_schema=false, detail="";
     if(env.DB){
       try{
         await env.DB.prepare("SELECT id FROM users LIMIT 1").first();
@@ -240,12 +329,25 @@ async function handleApi(request, env, cors){
         if(!schema) detail="users table exists, but age-gate columns are missing";
         reset_schema=await tableExists(env,"password_reset_tokens");
         if(schema && !reset_schema) detail="password_reset_tokens table is missing";
+        profile_schema=await tableExists(env,"user_profiles");
+        if(schema && reset_schema && !profile_schema) detail="user_profiles table is missing";
+        recommendations_schema=await tableExists(env,"bottle_recommendations");
+        if(schema && reset_schema && profile_schema && !recommendations_schema) detail="bottle_recommendations table is missing";
       }
       catch(e){ detail=String(e&&e.message?e.message:e).slice(0,220); }
     }
-    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,email_ready:mailConfigured(env),detail:detail,time:new Date().toISOString()},200,cors);
+    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,email_ready:mailConfigured(env),detail:detail,time:new Date().toISOString()},200,cors);
   }
   const dbErr=needDB(env,cors); if(dbErr) return dbErr;
+  if(path==="/ratings" && request.method==="GET"){
+    const ids=cleanBottleIds(url.searchParams.get("ids")||"");
+    return J({ratings:await ratingAggregatesFor(env,ids)},200,cors);
+  }
+  if(path==="/recommendations" && request.method==="GET"){
+    const bottleId=String(url.searchParams.get("bottle_id")||"").trim();
+    const data=await recommendationsFor(env,bottleId,Number(url.searchParams.get("limit")||40));
+    return J({recommendations:data.recommendations,recommendations_ready:data.ready},200,cors);
+  }
   if(path==="/auth/register" && request.method==="POST"){
     const body=await readBody(request);
     const email=cleanEmail(body.email);
@@ -273,7 +375,7 @@ async function handleApi(request, env, cors){
       .bind(id,email,username,hash,salt,"pbkdf2-sha256-"+PBKDF2_ITERATIONS,birthDate,ageCountry,minAge,now,now,now).run();
     const token=await createSession(env,request,id);
     const mail=await sendWelcomeEmail(env,{email:email,username:username}).catch(function(e){ return {sent:false,detail:String(e&&e.message?e.message:e).slice(0,160)}; });
-    return J({token:token,user:{id:id,email:email,username:username,created_at:now},bootstrap:{wishlist:[],collection:[],ratings:{}},email_ready:!!mail.sent},200,cors);
+    return J({token:token,user:{id:id,email:email,username:username,created_at:now},bootstrap:{wishlist:[],collection:[],ratings:{}},profile:await profileFor(env,id),email_ready:!!mail.sent},200,cors);
   }
   if(path==="/auth/password-reset" && request.method==="POST"){
     const body=await readBody(request);
@@ -325,7 +427,7 @@ async function handleApi(request, env, cors){
     const hash=await hashPassword(password,row.password_salt);
     if(hash!==row.password_hash) return J({error:"bad_login"},401,cors);
     const token=await createSession(env,request,row.id);
-    return J({token:token,user:publicUser(row),bootstrap:await bootstrapFor(env,row.id)},200,cors);
+    return J({token:token,user:publicUser(row),bootstrap:await bootstrapFor(env,row.id),profile:await profileFor(env,row.id)},200,cors);
   }
   const user=await authUser(env,request);
   if(!user) return J({error:"unauthorized"},401,cors);
@@ -334,14 +436,20 @@ async function handleApi(request, env, cors){
     return J({ok:true},200,cors);
   }
   if(path==="/me" && request.method==="GET") return J({user:publicUser(user)},200,cors);
-  if(path==="/me/bootstrap" && request.method==="GET") return J({user:publicUser(user),bootstrap:await bootstrapFor(env,user.id)},200,cors);
+  if(path==="/me/profile" && request.method==="GET") return J({profile:await profileFor(env,user.id)},200,cors);
+  if(path==="/me/profile" && request.method==="POST"){
+    const profile=await upsertProfile(env,user.id,await readBody(request));
+    if(!profile) return J({error:"schema_profile_missing",message:"Run the latest D1 migration for user profiles."},501,cors);
+    return J({ok:true,profile:profile},200,cors);
+  }
+  if(path==="/me/bootstrap" && request.method==="GET") return J({user:publicUser(user),bootstrap:await bootstrapFor(env,user.id),profile:await profileFor(env,user.id)},200,cors);
   if(path==="/me/bootstrap" && request.method==="POST"){
     const body=await readBody(request);
     for(const id of (Array.isArray(body.wishlist)?body.wishlist:[])) await upsertBottleList(env,user.id,"wishlist",String(id),true,null);
     for(const id of (Array.isArray(body.collection)?body.collection:[])) await upsertBottleList(env,user.id,"collection",String(id),true,null);
     const ratings=body.ratings&&typeof body.ratings==="object"?body.ratings:{};
     for(const id of Object.keys(ratings)) await upsertRating(env,user.id,String(id),ratings[id]);
-    return J({user:publicUser(user),bootstrap:await bootstrapFor(env,user.id)},200,cors);
+    return J({user:publicUser(user),bootstrap:await bootstrapFor(env,user.id),profile:await profileFor(env,user.id)},200,cors);
   }
   if(path==="/me/wishlist" && request.method==="POST"){
     const body=await readBody(request);
@@ -355,8 +463,16 @@ async function handleApi(request, env, cors){
   }
   if(path==="/me/rating" && request.method==="POST"){
     const body=await readBody(request);
-    await upsertRating(env,user.id,String(body.bottle_id||""),body.rating);
-    return J({ok:true},200,cors);
+    const bottleId=String(body.bottle_id||"");
+    await upsertRating(env,user.id,bottleId,body.rating);
+    return J({ok:true,rating_aggregate:await ratingAggregateFor(env,bottleId)},200,cors);
+  }
+  if(path==="/me/recommendation" && request.method==="POST"){
+    const body=await readBody(request);
+    const rec=await upsertRecommendation(env,user,body);
+    if(!rec) return J({error:"schema_recommendations_missing",message:"Run the latest D1 migration for bottle recommendations."},501,cors);
+    if(rec.error) return J({error:rec.error},400,cors);
+    return J({ok:true,recommendation:rec,rating_aggregate:await ratingAggregateFor(env,body.bottle_id)},200,cors);
   }
   if(path==="/me/scan" && request.method==="POST"){
     const body=await readBody(request);
@@ -414,7 +530,7 @@ export default {
     const cors=apiCors(env, request);
     if(request.method==="OPTIONS") return new Response(null,{headers:cors});
     const path=new URL(request.url).pathname;
-    if(path.indexOf("/auth/")===0 || path.indexOf("/me")===0){
+    if(path.indexOf("/auth/")===0 || path.indexOf("/me")===0 || path.indexOf("/ratings")===0 || path.indexOf("/recommendations")===0){
       try{ return await handleApi(request, env, cors); }
       catch(e){ return J({error:"server_error",detail:String(e&&e.message?e.message:e).slice(0,240)},500,cors); }
     }

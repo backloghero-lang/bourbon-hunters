@@ -37,6 +37,7 @@ jobs:
           cp -R assets/detail _site/assets/
           cp -R assets/brand _site/assets/
           cp -R assets/intro _site/assets/
+          cp -R assets/profile-badges _site/assets/
           cp -R assets/bourbons/runtime-100 _site/assets/bourbons/
           cp -R assets/bourbons/list-thumbs _site/assets/bourbons/
           cp -R assets/bourbons/cutouts-test _site/assets/bourbons/

@@ -51,6 +51,32 @@ CREATE TABLE IF NOT EXISTS user_ratings (
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS user_profiles (
+  user_id TEXT PRIMARY KEY,
+  badge TEXT NOT NULL DEFAULT 'glass',
+  display_name TEXT,
+  created_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS bottle_recommendations (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL,
+  bottle_id TEXT NOT NULL,
+  bottle_name TEXT,
+  rating INTEGER NOT NULL CHECK (rating BETWEEN 1 AND 5),
+  comment TEXT NOT NULL,
+  active INTEGER NOT NULL DEFAULT 1,
+  created_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL,
+  UNIQUE (user_id, bottle_id),
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE INDEX IF NOT EXISTS idx_bottle_recommendations_bottle ON bottle_recommendations(bottle_id, updated_at);
+CREATE INDEX IF NOT EXISTS idx_bottle_recommendations_feed ON bottle_recommendations(active, updated_at);
+
 CREATE TABLE IF NOT EXISTS scan_history (
   id TEXT PRIMARY KEY,
   user_id TEXT,

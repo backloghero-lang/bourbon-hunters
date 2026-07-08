@@ -8,7 +8,6 @@ Ten plik jest prostym backlogiem problemow. Nowe rzeczy dopisujemy krotko, bez r
 
 - Widok szczegolow butelki pokazuje za duze i za bliskie zdjecie; widac biale wyciecia i niedoskonalosci tla.
 - W szczegolach trzeba oddalic butelke i poprawic jej stage do czasu prawdziwych PNG/WebP alpha.
-- Sprawdzic, czy kropki swipe na Home wygladaja dobrze na telefonie po deployu.
 - Zweryfikowac pozycje ikon kategorii ze sprite'a `category-cards.png`.
 - Dopracowac ekran Odkrywaj na podstawie `reference-pack-v1/explore-screen.png`.
 - Po deployu v64 potwierdzic na telefonie, czy hitbox age gate trafia dokladnie w przyciski z assetu.
@@ -42,6 +41,13 @@ Ten plik jest prostym backlogiem problemow. Nowe rzeczy dopisujemy krotko, bez r
 - Home: usuniety pomaranczowy tekst destylarni z kart `Featured`, `Recently added` i `My collection`.
 - Szczegoly: link sklepu zostaje, ale usunieto dodatkowy toast/przycisk `To moze byc Twoj sklep`.
 - Szczegoly: `General info` nie uzywa juz masowego szablonu `destylarnia + proof`; opis jest krotszy i roznicowany przez destylarnie, styl, wiek, finisz albo kontekst wydania.
+- Szczegoly: przycisk `Wstecz` wraca do poprzedniego ekranu, np. `Kolekcja`, a nie zawsze do `Odkrywaj`.
+- Szczegoly: usunieto duzy powielony panel `Jakosc / Cena`; zostaje badge na zdjeciu i cztery kafle danych.
+- Oceny: dodano model `Ocena spolecznosci` z agregatu D1 oraz `Twoja ocena` jako pojedynczy glos usera.
+- Home: kropki swipe sa aktualizowane takze po zakonczeniu gestu i po doscrollowaniu snap pointu.
+- Profil: dodano ekran `Moj profil`, wybor znacznika usera oraz synchronizacje znacznika przez D1.
+- Home: sekcja `Polecane` oparta o rekomendacje userow, z osobna lista `Zobacz wszystkie`.
+- Szczegoly: dodano dodawanie komentarza/polecenia oraz modal komentarzy userow z badge i ocena.
 
 ## Szablon wpisu
 

@@ -1,5 +1,5 @@
 /* Bourbon Hunters service worker - network-first dla aktualizacji aplikacji i bazy. */
-const CACHE = "bourbon-hunters-v66";
+const CACHE = "bourbon-hunters-v69";
 const ASSETS = [
   "./",
   "./index.html",
@@ -13,6 +13,16 @@ const ASSETS = [
   "./assets/detail/bottle-detail-bg.png",
   "./assets/brand/age-gate.png",
   "./assets/brand/email-premium-footer.png",
+  "./assets/profile-badges/glass.png",
+  "./assets/profile-badges/bottle.png",
+  "./assets/profile-badges/barrel.png",
+  "./assets/profile-badges/seal.png",
+  "./assets/profile-badges/hat.png",
+  "./assets/profile-badges/star.png",
+  "./assets/profile-badges/distillery.png",
+  "./assets/profile-badges/notes.png",
+  "./assets/profile-badges/opener.png",
+  "./assets/profile-badges/horseshoe.png",
   "./design/figma-assets/home-pack-v2/collection-add.png",
   "./design/figma-assets/home-pack-v2/wishlist-barrel.png",
   "./design/figma-assets/home-pack-v2/rolling-barrel.png",
