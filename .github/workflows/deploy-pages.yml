@@ -37,7 +37,11 @@ jobs:
           cp -R assets/detail _site/assets/
           cp -R assets/brand _site/assets/
           cp -R assets/intro _site/assets/
-          cp -R assets/profile-badges _site/assets/
+          if [ -d assets/profile-badges ]; then
+            cp -R assets/profile-badges _site/assets/
+          else
+            echo "::warning::assets/profile-badges is missing; profile badge images will not be included"
+          fi
           cp -R assets/bourbons/runtime-100 _site/assets/bourbons/
           cp -R assets/bourbons/list-thumbs _site/assets/bourbons/
           cp -R assets/bourbons/cutouts-test _site/assets/bourbons/

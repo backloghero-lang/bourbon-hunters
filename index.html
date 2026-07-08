@@ -1931,8 +1931,10 @@ function starStr(n){ n=Math.max(0,Math.min(5,Math.round(n||0))); return "★★�
 
 const AGE_GATE_KEY="bh_age_gate_ok_v2";
 const AGE_GATE_MIN=18;
+let AGE_GATE_RUNTIME_OK=false;
 function hasAgeGateOk(){
-  try{ return localStorage.getItem(AGE_GATE_KEY)==="1"; }catch(e){ return false; }
+  if(AUTH_TOKEN && AUTH_USER) return true;
+  return AGE_GATE_RUNTIME_OK;
 }
 function dateYearsAgo(years){
   const d=new Date();
@@ -1955,7 +1957,10 @@ function setupAgeGate(){
   const deny=document.getElementById("ageGateDeny");
   if(!gate||!btn) return;
   btn.addEventListener("click",function(){
-    try{ localStorage.setItem(AGE_GATE_KEY,"1"); }catch(e){}
+    try{
+      if(AUTH_TOKEN && AUTH_USER) localStorage.setItem(AGE_GATE_KEY,"1");
+      else AGE_GATE_RUNTIME_OK=true;
+    }catch(e){}
     gate.classList.remove("show");
     if(window.BH_START_INTRO) window.BH_START_INTRO();
   });
