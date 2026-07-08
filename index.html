@@ -73,26 +73,29 @@
   .swipe-dots{display:flex;justify-content:center;align-items:center;gap:6px;margin:8px 0 4px;min-height:8px}
   .swipe-dot{width:6px;height:6px;border-radius:999px;background:rgba(226,176,112,.28);transition:width .2s,background .2s,opacity .2s;opacity:.8}
   .swipe-dot.on{width:18px;background:#E2B070;opacity:1}
-  .feat{scroll-snap-align:start;flex:0 0 92%;height:210px;background:
+  .feat{scroll-snap-align:start;flex:0 0 92%;height:196px;background:
     linear-gradient(90deg,rgba(5,7,5,.86) 0%,rgba(6,7,5,.68) 48%,rgba(9,6,4,.16) 100%),
     url("design/figma-assets/home-pack-v2/card-background-v1.jpg") center/cover no-repeat,
     linear-gradient(135deg,rgba(16,42,32,.98),rgba(22,18,12,.98) 48%,rgba(9,8,6,.99));
-    border:1px solid rgba(184,99,51,.72);border-radius:20px;padding:20px;display:flex;gap:16px;box-shadow:0 18px 42px rgba(0,0,0,.42);position:relative;overflow:hidden}
+    border:1px solid rgba(184,99,51,.72);border-radius:20px;padding:18px 16px;display:flex;gap:12px;box-shadow:0 18px 42px rgba(0,0,0,.42);position:relative;overflow:hidden}
   .feat:before{content:"";position:absolute;inset:0;background:url("design/figma-assets/asset-pack-v1/noise-overlay.png") center/cover repeat;opacity:.08;pointer-events:none}
   .feat:after{content:"";position:absolute;left:14px;right:14px;bottom:0;height:1px;background:linear-gradient(90deg,transparent,rgba(232,156,66,.88),transparent);pointer-events:none}
-  .feat h4{font-family:var(--serif);font-size:21px;margin:0 0 10px;line-height:22px;color:#F6E1BC;text-shadow:0 2px 12px rgba(0,0,0,.65);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;height:66px;max-height:66px;min-height:66px;word-break:normal}
-  .feat.long-name h4{font-size:19px;line-height:21px;height:63px;max-height:63px;min-height:63px}
+  .feat h4{font-family:var(--serif);font-size:20px;margin:0 0 10px;padding-top:2px;line-height:21px;color:#F6E1BC;text-shadow:0 2px 12px rgba(0,0,0,.65);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;height:65px;max-height:65px;min-height:65px;word-break:normal}
+  .feat.long-name h4{font-size:17px;line-height:18.5px;height:58px;max-height:58px;min-height:58px}
   .feat.long-name .sub{display:none}
   .feat .sub{font-size:12px;color:#C68752;margin-bottom:8px;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .feat .price{font-size:20px;color:#E28A3D;font-weight:900;margin-bottom:8px;letter-spacing:.5px}
-  .feat .btn-sm{display:inline-flex;align-items:center;justify-content:center;width:min(228px,100%);min-height:34px;background:rgba(0,0,0,.22);border:1px solid #E2B070;color:#E2B070;font-size:11px;font-weight:900;letter-spacing:.7px;padding:8px 15px;border-radius:9px;text-transform:uppercase;cursor:pointer;box-sizing:border-box}
-  .feat .info{flex:1;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1;min-width:0;padding-right:4px;overflow:hidden}
-  .feat-tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px;width:min(228px,100%)}
-  .feat-tag{display:inline-flex;align-items:center;justify-content:center;width:100%;min-height:28px;font-size:10px;line-height:1.12;border:1px solid rgba(127,208,150,.5);color:#7FD096;background:rgba(23,73,49,.22);border-radius:6px;padding:5px 7px;text-transform:uppercase;font-weight:900;letter-spacing:.5px;box-sizing:border-box;text-align:center}
-  .bottlepic{flex:0 0 132px;width:132px;height:180px;align-self:center;border-radius:16px;display:grid;place-items:center;font-size:42px;overflow:visible;position:relative;z-index:1;
+  .feat .btn-sm{display:inline-flex;align-items:center;justify-content:center;width:min(176px,100%);min-height:30px;background:rgba(0,0,0,.22);border:1px solid #E2B070;color:#E2B070;font-size:10px;font-weight:900;letter-spacing:.55px;padding:6px 10px;border-radius:8px;text-transform:uppercase;cursor:pointer;box-sizing:border-box}
+  .feat .info{flex:1 1 auto;display:flex;flex-direction:column;justify-content:flex-start;position:relative;z-index:1;min-width:0;padding:2px 0 0;overflow:hidden}
+  .feat-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;width:min(176px,100%)}
+  .feat-tag{display:inline-flex;align-items:center;justify-content:center;width:100%;min-height:24px;font-size:8.5px;line-height:1.08;border:1px solid rgba(127,208,150,.5);color:#7FD096;background:rgba(23,73,49,.22);border-radius:6px;padding:4px 6px;text-transform:uppercase;font-weight:900;letter-spacing:.25px;box-sizing:border-box;text-align:center}
+  .feat-visual{flex:0 0 118px;width:118px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;z-index:1}
+  .bottlepic{flex:0 0 140px;width:118px;height:140px;align-self:center;border-radius:16px;display:grid;place-items:center;font-size:42px;overflow:visible;position:relative;z-index:1;
     background:radial-gradient(86% 74% at 52% 58%,rgba(232,156,66,.32),rgba(86,45,16,.18) 44%,transparent 74%)}
   .bottlepic:after{content:"";position:absolute;left:22px;right:22px;bottom:7px;height:12px;border-radius:50%;background:rgba(0,0,0,.45);filter:blur(7px);z-index:-1}
-  .bottlepic img{max-width:120px;max-height:176px;width:auto!important;height:auto!important;object-fit:contain!important;border-radius:0!important;filter:contrast(1.08) saturate(1.12) drop-shadow(0 18px 18px rgba(0,0,0,.58))}
+  .bottlepic img{max-width:108px;max-height:138px;width:auto!important;height:auto!important;object-fit:contain!important;border-radius:0!important;filter:contrast(1.08) saturate(1.12) drop-shadow(0 18px 18px rgba(0,0,0,.58))}
+  .bottlepic .value-badge{right:2px;bottom:7px;min-width:39px;padding:6px 7px;font-size:11px}
+  .feat-price-chip{position:absolute;left:3px;bottom:17px;z-index:5;max-width:70px;padding:2px 6px;border-radius:999px;background:rgba(8,4,2,.74);border:1px solid rgba(226,176,112,.18);color:#E28A3D;font-size:10px;line-height:1.15;font-weight:950;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:0 8px 16px rgba(0,0,0,.34)}
   .value-badge{position:absolute;right:9px;bottom:8px;z-index:4;min-width:44px;text-align:center;border:1px solid rgba(226,176,112,.72);border-radius:999px;background:linear-gradient(180deg,rgba(33,19,8,.92),rgba(7,4,2,.88));color:#F6D48A;font-size:12px;font-weight:950;line-height:1;padding:7px 8px;box-shadow:0 9px 20px rgba(0,0,0,.38),0 0 14px rgba(226,176,112,.18);cursor:pointer;user-select:none}
   .value-badge:active{transform:scale(.94)}
   .dphoto .value-badge{right:14px;bottom:14px;font-size:15px;min-width:54px;padding:9px 10px}
@@ -865,7 +868,35 @@ function categoryLabel(b){
   if(key==="proof") return "Barrel Proof";
   if(key==="limited") return "Limited";
   if(key==="rye") return "Rye Whiskey";
-  return b.type || "Bourbon";
+  const raw=searchText(((b&&b.type)||"")+" "+((b&&b.category)||""));
+  return raw.indexOf("straight")>=0 ? "Straight Bourbon" : "Bourbon";
+}
+function compactBottleName(b){
+  let name=textClean((b&&b.name)||"");
+  if(!name) return "";
+  const key=categoryKey(b);
+  const strip=[
+    /\bKentucky\s+Straight\s+Bourbon\s+Whisk(?:e)?y\b/ig,
+    /\bKentucky\s+Straight\s+Bourbon\b/ig,
+    /\bStraight\s+Bourbon\s+Whisk(?:e)?y\b/ig,
+    /\bStraight\s+Bourbon\b/ig,
+    /\bKentucky\s+Bourbon\s+Whisk(?:e)?y\b/ig,
+    /\bBourbon\s+Whisk(?:e)?y\b/ig,
+    /\bBourbon\b/ig
+  ];
+  if(key==="single") strip.push(/\bSingle\s+Barrel(?:\s+Select)?\b/ig);
+  if(key==="small") strip.push(/\bSmall\s+Batch\b/ig);
+  if(key==="bib") strip.push(/\bBottled[-\s]+in[-\s]+Bond\b/ig);
+  if(key==="proof") strip.push(/\b(?:Barrel|Cask)\s+(?:Proof|Strength)\b/ig, /\bFull\s+Proof\b/ig);
+  if(key==="rye") strip.push(/\bRye\s+Whisk(?:e)?y\b/ig, /\bStraight\s+Rye\b/ig);
+  if(key==="limited") strip.push(/\bLimited\s+(?:Edition|Release)\b/ig);
+  strip.forEach(function(re){ name=name.replace(re," "); });
+  name=textClean(name)
+    .replace(/\s+([,.)])/g,"$1")
+    .replace(/([(])\s+/g,"$1")
+    .replace(/[-–—:,]\s*$/,"")
+    .replace(/\s+[-–—]\s+/g," - ");
+  return name.length>=4 ? name : textClean((b&&b.name)||"");
 }
 
 function detectLang(){
@@ -892,9 +923,10 @@ function fmtPrice(b){
   const raw=String((b&&b.price_str)||"");
   const pln=String((b&&b.price_pln)||"");
   const val=b&&b.price;
+  function plnText(v){ return String(v||"").replace(/\bzl\b/ig,"zł"); }
   if(lang==="pl"){
-    if(pln) return pln;
-    if(raw.indexOf("zł")>=0 || raw.indexOf("zl")>=0) return raw;
+    if(pln) return plnText(pln);
+    if(raw.indexOf("zł")>=0 || raw.indexOf("zl")>=0) return plnText(raw);
     if(raw.indexOf("$")>=0) return money(numPrice(raw)*PLN_PER_USD,"PLN");
     return money(val,"PLN");
   }
@@ -1145,8 +1177,9 @@ function listRow(b){
   const img=b.thumb||b.image;
   const pic=img?'<div class="pic"><img src="'+esc(img)+'" alt="'+esc(b.name)+'" loading="lazy" decoding="async">'+valueBadgeHtml(b)+'</div>':'<div class="pic">🥃'+valueBadgeHtml(b)+'</div>';
   const proof=b.proof?(b.proof+' Proof'):(b.abv?(b.abv+'% ABV'):'');
+  const shownName=compactBottleName(b);
   return '<div class="brow" data-id="'+esc(b.id)+'">'+pic+
-    '<div class="info"><div class="bn">'+esc(b.name)+'</div><div class="bt">'+esc(b.type||b.distillery||"")+'</div>'+(proof?'<div class="bpf">'+esc(proof)+'</div>':'')+'</div>'+
+    '<div class="info"><div class="bn" title="'+esc(b.name)+'">'+esc(shownName)+'</div><div class="bt">'+esc(b.type||b.distillery||"")+'</div>'+(proof?'<div class="bpf">'+esc(proof)+'</div>':'')+'</div>'+
     '<div class="right">'+rateHtml(b)+'<div class="brow-actions">'+ownHtml(b.id)+heartHtml(b.id)+'</div></div></div>';
 }
 
@@ -1510,13 +1543,13 @@ function bottleActionsHtml(o){
 function featCard(b, kick){
   const price=fmtPrice(b);
   const tag=categoryLabel(b);
-  const longName = String(b.name||"").length > 34 ? " long-name" : "";
-  const shownName = String(b.name||"");
+  const shownName = compactBottleName(b);
+  const longName = shownName.length > 30 ? " long-name" : "";
   return '<div class="feat'+longName+'" data-id="'+esc(b.id)+'"><div class="info"><h4 title="'+esc(shownName)+'">'+esc(shownName)+'</h4>'+
-    (price?'<div class="price">'+esc(price)+'</div>':'')+
     '<div class="feat-tags"><span class="feat-tag">'+esc(tag)+'</span></div>'+
     '<span class="btn-sm" data-id="'+esc(b.id)+'">'+t("viewAll").split(" ")[0]+' →</span></div>'+
-    '<div class="bottlepic">'+(b.image?'<img src="'+esc(b.image)+'" loading="lazy" decoding="async" alt="">':'🥃')+valueBadgeHtml(b)+'</div></div>';
+    '<div class="feat-visual"><div class="bottlepic">'+(b.image?'<img src="'+esc(b.image)+'" loading="lazy" decoding="async" alt="">':'🥃')+valueBadgeHtml(b)+'</div>'+
+    (price?'<div class="feat-price-chip">'+esc(price)+'</div>':'')+'</div></div>';
 }
 function t(k){ return (I18N[lang]&&I18N[lang][k])||I18N.pl[k]||k; }
 function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
