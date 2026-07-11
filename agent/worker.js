@@ -20,6 +20,7 @@ const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
 const SCAN_ORCHESTRATOR_VERSION = "ocr-visual-fusion-catalog-10k-v2";
 const SCAN_CATALOG_VERSION = "ttb-olcc-10k-v1";
+const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v1";
 const AUTH_VERSION = "auth-pbkdf2-100000-google-v3";
 const PBKDF2_ITERATIONS = 100000;
 const PROFILE_BADGE_IDS = ["glass","bottle","barrel","seal","hat","star","distillery","notes","opener","horseshoe"];
@@ -216,6 +217,149 @@ async function userColumns(env){
 async function tableExists(env, name){
   const row=await env.DB.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name=?").bind(String(name||"")).first();
   return !!row;
+}
+function safeJson(value, fallback){
+  try{ return JSON.parse(String(value||"")); }catch(e){ return fallback; }
+}
+function decodeBase64(value){
+  const clean=String(value||"").replace(/^data:[^,]+,/,"").replace(/\s+/g,"");
+  const binary=atob(clean);
+  const bytes=new Uint8Array(binary.length);
+  for(let i=0;i<binary.length;i++) bytes[i]=binary.charCodeAt(i);
+  return bytes;
+}
+function encodeBase64(value){
+  const bytes=value instanceof Uint8Array ? value : new Uint8Array(value);
+  let out="";
+  for(let i=0;i<bytes.length;i+=0x8000){
+    out+=String.fromCharCode.apply(null,bytes.subarray(i,Math.min(i+0x8000,bytes.length)));
+  }
+  return btoa(out);
+}
+function cleanCatalogId(value){
+  return String(value||"").toLowerCase().trim().replace(/[^a-z0-9-]+/g,"-").replace(/^-+|-+$/g,"").slice(0,180);
+}
+function catalogPriceAllowed(data){
+  const raw=[data&&data.price_value,data&&data.price,data&&data.price_str,data&&data.price_pln].filter(function(v){ return v!=null && v!==""; }).join(" ");
+  const nums=String(raw).replace(/,/g,".").match(/\d+(?:\.\d+)?/g)||[];
+  if(!nums.length) return true;
+  const max=Math.max.apply(null,nums.map(Number).filter(Number.isFinite));
+  if(!Number.isFinite(max)) return true;
+  const currency=String((data&&data.price_currency)||"").toUpperCase();
+  if(currency==="USD" || /\$|USD/i.test(raw)) return max<=350;
+  if(currency==="PLN" || /PLN|ZL|ZŁ/i.test(raw)) return max<=1000;
+  return true;
+}
+function cleanCatalogBottle(value){
+  const src=value&&typeof value==="object" ? value : {};
+  const id=cleanCatalogId(src.id||src.handle||src.name);
+  const out={
+    id:id,
+    name:String(src.name||"").trim().slice(0,180),
+    type:String(src.type||"").trim().slice(0,100),
+    category:String(src.category||"").trim().slice(0,100),
+    distillery:String(src.distillery||"").trim().slice(0,140),
+    region:String(src.region||"").trim().slice(0,100),
+    mashbill:String(src.mashbill||"").trim().slice(0,240),
+    abv:src.abv==null?null:Number(src.abv),
+    proof:src.proof==null?null:Number(src.proof),
+    price:String(src.price||src.price_str||src.price_pln||"").trim().slice(0,80),
+    price_value:src.price_value==null?null:Number(src.price_value),
+    price_currency:String(src.price_currency||"").trim().toUpperCase().slice(0,8),
+    quality:Math.max(0,Math.min(5,Number(src.quality)||0)),
+    value:Math.max(0,Math.min(5,Number(src.value)||0)),
+    notes:String(src.notes||"").trim().slice(0,700),
+    desc:String(src.desc||src.verdict||"").trim().slice(0,1600),
+    source:"community_catalog",
+    isNew:true
+  };
+  if(!Number.isFinite(out.abv)) out.abv=null;
+  if(!Number.isFinite(out.proof)) out.proof=null;
+  if(!Number.isFinite(out.price_value)) out.price_value=null;
+  return out;
+}
+function publicCatalogBottle(row, request){
+  const data=safeJson(row&&row.bottle_data,{});
+  data.id=row.bottle_id;
+  data.name=data.name||row.bottle_name;
+  data.source="community_catalog";
+  data.isNew=true;
+  data.added_at=row.created_at;
+  data.image=row.image_submission_id ? new URL("/catalog/image/"+encodeURIComponent(row.bottle_id),request.url).toString() : "";
+  data.has_image=!!row.image_submission_id;
+  return data;
+}
+async function deleteSubmissionImages(env, row){
+  if(!env.BOTTLE_IMAGES || !row) return;
+  const keys=[row.original_key,row.processed_key].filter(Boolean);
+  if(keys.length) await env.BOTTLE_IMAGES.delete(keys);
+}
+async function createBottlePreview(env, request, user, body){
+  if(!(await tableExists(env,"bottle_submissions")) || !(await tableExists(env,"catalog_bottles"))) return {error:"schema_catalog_missing",status:501};
+  const bottle=cleanCatalogBottle(body&&body.bottle_data);
+  bottle.id=cleanCatalogId((body&&body.bottle_id)||bottle.id);
+  if(!bottle.id || !bottle.name) return {error:"bad_bottle",status:400};
+  if(!catalogPriceAllowed(bottle)) return {error:"price_limit",status:400};
+  const today=new Date(); today.setUTCHours(0,0,0,0);
+  const count=await env.DB.prepare("SELECT COUNT(*) AS count FROM bottle_submissions WHERE user_id=? AND created_at>=?").bind(user.id,today.toISOString()).first();
+  if(Number(count&&count.count)>=10) return {error:"submission_limit",status:429};
+  const image=String((body&&body.image)||"");
+  const mime=["image/jpeg","image/png","image/webp"].includes(body&&body.mime)?body.mime:"image/jpeg";
+  if(!image || image.length<100 || image.length>8000000) return {error:"bad_image",status:400};
+  const id=crypto.randomUUID();
+  const now=new Date().toISOString();
+  const originalKey="catalog/submissions/"+user.id+"/"+id+"/original";
+  const processedKey="catalog/submissions/"+user.id+"/"+id+"/bottle.webp";
+  await env.DB.prepare("INSERT INTO bottle_submissions (id,user_id,bottle_id,bottle_name,bottle_data,status,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?)")
+    .bind(id,user.id,bottle.id,bottle.name,JSON.stringify(bottle),"processing",now,now).run();
+  if(!env.BOTTLE_IMAGES || !env.IMAGES){
+    await env.DB.prepare("UPDATE bottle_submissions SET status='awaiting_confirmation',updated_at=? WHERE id=?").bind(now,id).run();
+    return {submission_id:id,preview_ready:false,image_pipeline_ready:false};
+  }
+  try{
+    const bytes=decodeBase64(image);
+    if(bytes.byteLength>6000000) throw new Error("image_too_large");
+    await env.BOTTLE_IMAGES.put(originalKey,bytes,{httpMetadata:{contentType:mime}});
+    const output=await env.IMAGES.input(new Blob([bytes],{type:mime}).stream())
+      .transform({segment:"foreground"})
+      .transform({width:720,height:960,fit:"contain"})
+      .output({format:"image/webp"});
+    const response=output.response();
+    if(!response.ok) throw new Error("image_transform_"+response.status);
+    const processed=new Uint8Array(await response.arrayBuffer());
+    await env.BOTTLE_IMAGES.put(processedKey,processed,{httpMetadata:{contentType:"image/webp",cacheControl:"public, max-age=31536000, immutable"}});
+    await env.DB.prepare("UPDATE bottle_submissions SET original_key=?,processed_key=?,status='awaiting_confirmation',updated_at=? WHERE id=?")
+      .bind(originalKey,processedKey,new Date().toISOString(),id).run();
+    return {submission_id:id,preview_ready:true,image_pipeline_ready:true,preview_data_url:"data:image/webp;base64,"+encodeBase64(processed)};
+  }catch(e){
+    if(env.BOTTLE_IMAGES) await env.BOTTLE_IMAGES.delete([originalKey,processedKey]).catch(function(){});
+    await env.DB.prepare("UPDATE bottle_submissions SET status='awaiting_confirmation',updated_at=? WHERE id=?").bind(new Date().toISOString(),id).run();
+    return {submission_id:id,preview_ready:false,image_pipeline_ready:true,preview_error:String(e&&e.message?e.message:e).slice(0,120)};
+  }
+}
+async function confirmBottleSubmission(env, request, user, body){
+  if(!(await tableExists(env,"bottle_submissions")) || !(await tableExists(env,"catalog_bottles"))) return {error:"schema_catalog_missing",status:501};
+  const id=String((body&&body.submission_id)||"").trim();
+  const decision=String((body&&body.decision)||"").trim();
+  const row=await env.DB.prepare("SELECT * FROM bottle_submissions WHERE id=? AND user_id=?").bind(id,user.id).first();
+  if(!row) return {error:"submission_not_found",status:404};
+  if(["cancel","retry"].indexOf(decision)>=0){
+    await deleteSubmissionImages(env,row);
+    await env.DB.prepare("UPDATE bottle_submissions SET status=?,image_choice=?,original_key=NULL,processed_key=NULL,updated_at=? WHERE id=?")
+      .bind(decision==="retry"?"retry":"cancelled",decision,new Date().toISOString(),id).run();
+    return {ok:true,status:decision};
+  }
+  if(["accept","without_image"].indexOf(decision)<0) return {error:"bad_decision",status:400};
+  if(decision==="accept" && !row.processed_key) return {error:"preview_missing",status:409};
+  if(decision==="without_image") await deleteSubmissionImages(env,row);
+  const now=new Date().toISOString();
+  const imageSubmission=decision==="accept" ? row.id : null;
+  await env.DB.prepare("INSERT INTO catalog_bottles (bottle_id,bottle_name,bottle_data,image_submission_id,source_user_id,status,created_at,updated_at) VALUES (?,?,?,?,?,'published',?,?) ON CONFLICT(bottle_id) DO UPDATE SET bottle_name=excluded.bottle_name,bottle_data=excluded.bottle_data,image_submission_id=COALESCE(excluded.image_submission_id,catalog_bottles.image_submission_id),status='published',updated_at=excluded.updated_at")
+    .bind(row.bottle_id,row.bottle_name,row.bottle_data,imageSubmission,user.id,now,now).run();
+  await env.DB.prepare("UPDATE bottle_submissions SET status='published',image_choice=?,original_key=?,processed_key=?,updated_at=? WHERE id=?")
+    .bind(decision,decision==="accept"?row.original_key:null,decision==="accept"?row.processed_key:null,now,id).run();
+  const published=await env.DB.prepare("SELECT * FROM catalog_bottles WHERE bottle_id=?").bind(row.bottle_id).first();
+  return {ok:true,status:"published",bottle:publicCatalogBottle(published,request)};
 }
 function defaultProfile(){ return {badge:"glass"}; }
 async function profileFor(env, userId){
@@ -446,7 +590,7 @@ async function handleApi(request, env, cors){
   const url=new URL(request.url);
   const path=url.pathname.replace(/\/+$/,"");
   if(path==="/auth/health" && request.method==="GET"){
-    let schema=false, reset_schema=false, profile_schema=false, recommendations_schema=false, identity_schema=false, detail="";
+    let schema=false, reset_schema=false, profile_schema=false, recommendations_schema=false, identity_schema=false, catalog_schema=false, detail="";
     if(env.DB){
       try{
         await env.DB.prepare("SELECT id FROM users LIMIT 1").first();
@@ -461,10 +605,12 @@ async function handleApi(request, env, cors){
         if(schema && reset_schema && profile_schema && !recommendations_schema) detail="bottle_recommendations table is missing";
         identity_schema=await tableExists(env,"auth_identities");
         if(schema && reset_schema && profile_schema && recommendations_schema && !identity_schema) detail="auth_identities table is missing";
+        catalog_schema=(await tableExists(env,"bottle_submissions")) && (await tableExists(env,"catalog_bottles"));
+        if(schema && reset_schema && profile_schema && recommendations_schema && identity_schema && !catalog_schema) detail="catalog submission tables are missing";
       }
       catch(e){ detail=String(e&&e.message?e.message:e).slice(0,220); }
     }
-    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_catalog_version:SCAN_CATALOG_VERSION,pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
+    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,catalog_schema:catalog_schema,image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
   }
   if(path==="/auth/google/start" && request.method==="GET"){
     const returnUrl=allowedReturnUrl(env,url.searchParams.get("return")||appUrl(env));
@@ -496,6 +642,26 @@ async function handleApi(request, env, cors){
     }
   }
   const dbErr=needDB(env,cors); if(dbErr) return dbErr;
+  if(path==="/catalog/recent" && request.method==="GET"){
+    if(!(await tableExists(env,"catalog_bottles"))) return J({bottles:[],catalog_ready:false},200,cors);
+    const limit=Math.max(1,Math.min(50,Number(url.searchParams.get("limit")||24)));
+    const rows=await env.DB.prepare("SELECT * FROM catalog_bottles WHERE status='published' ORDER BY created_at DESC LIMIT ?").bind(limit).all();
+    return J({bottles:(rows.results||[]).map(function(row){ return publicCatalogBottle(row,request); }),catalog_ready:true},200,cors);
+  }
+  if(path.indexOf("/catalog/image/")===0 && request.method==="GET"){
+    if(!(await tableExists(env,"catalog_bottles")) || !env.BOTTLE_IMAGES) return J({error:"image_not_found"},404,cors);
+    const bottleId=decodeURIComponent(path.slice("/catalog/image/".length));
+    const row=await env.DB.prepare("SELECT bs.processed_key FROM catalog_bottles cb JOIN bottle_submissions bs ON bs.id=cb.image_submission_id WHERE cb.bottle_id=? AND cb.status='published'").bind(bottleId).first();
+    if(!row || !row.processed_key) return J({error:"image_not_found"},404,cors);
+    const object=await env.BOTTLE_IMAGES.get(row.processed_key);
+    if(!object) return J({error:"image_not_found"},404,cors);
+    const headers=new Headers(cors);
+    object.writeHttpMetadata(headers);
+    headers.set("Content-Type",headers.get("Content-Type")||"image/webp");
+    headers.set("Cache-Control","public, max-age=86400");
+    if(object.httpEtag) headers.set("ETag",object.httpEtag);
+    return new Response(object.body,{headers:headers});
+  }
   if(path==="/ratings" && request.method==="GET"){
     const ids=cleanBottleIds(url.searchParams.get("ids")||"");
     return J({ratings:await ratingAggregatesFor(env,ids)},200,cors);
@@ -638,6 +804,14 @@ async function handleApi(request, env, cors){
     await env.DB.prepare("INSERT INTO scan_history (id,user_id,bottle_id,bottle_name,source,result_json,created_at) VALUES (?,?,?,?,?,?,?)")
       .bind(crypto.randomUUID(),user.id,String(body.bottle_id||""),String(result.name||body.bottle_name||"").slice(0,180),String(result.source||body.source||"").slice(0,40),JSON.stringify(result).slice(0,50000),now).run();
     return J({ok:true},200,cors);
+  }
+  if(path==="/me/catalog/submission/preview" && request.method==="POST"){
+    const result=await createBottlePreview(env,request,user,await readBody(request));
+    return J(result,result.status||200,cors);
+  }
+  if(path==="/me/catalog/submission/confirm" && request.method==="POST"){
+    const result=await confirmBottleSubmission(env,request,user,await readBody(request));
+    return J(result,result.status&&typeof result.status==="number"?result.status:200,cors);
   }
   return J({error:"not_found"},404,cors);
 }
@@ -860,7 +1034,7 @@ export default {
     const cors=apiCors(env, request);
     if(request.method==="OPTIONS") return new Response(null,{headers:cors});
     const path=new URL(request.url).pathname;
-    if(path.indexOf("/auth/")===0 || path.indexOf("/me")===0 || path.indexOf("/ratings")===0 || path.indexOf("/recommendations")===0){
+    if(path.indexOf("/auth/")===0 || path.indexOf("/me")===0 || path.indexOf("/ratings")===0 || path.indexOf("/recommendations")===0 || path.indexOf("/catalog/")===0){
       try{ return await handleApi(request, env, cors); }
       catch(e){ return J({error:"server_error",detail:String(e&&e.message?e.message:e).slice(0,240)},500,cors); }
     }
@@ -926,7 +1100,7 @@ export default {
       if(confidentHit){
         const result={ name:hit.name, type:hit.type, category:hit.category, distillery:hit.distillery, region:hit.region,
           mashbill:hit.mashbill, abv:hit.abv, proof:hit.proof, price:(hit.price_str||hit.price_pln), quality:hit.quality, value:hit.value,
-          verdict:hit.desc, notes:hit.notes, image:hit.image||"", source:"baza", isNew:false };
+          verdict:"", notes:hit.notes, image:hit.image||"", source:"baza", isNew:false };
         return J({result:result, mode:mode, remaining:consume(), owner:owner, matched:hit.id, confidence:overallConfidence, agents:agentTrace}, 200, cors);
       }
       return lowConfidenceResponse(mode);
