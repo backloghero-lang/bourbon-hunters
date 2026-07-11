@@ -141,6 +141,15 @@ Ten plik trzyma stale ustalenia, zeby nie ginely w dlugich watkach.
 - Jesli email z Google istnieje juz jako konto email/password, Worker linkuje Google do istniejacego konta zamiast tworzyc duplikat.
 - Health Workera powinien pokazywac `auth_version: auth-pbkdf2-100000-google-v3`, `identity_schema: true` i `google_ready: true` po konfiguracji sekretow Google.
 
+## 2026-07-11 - Scanner OCR + visual orchestrator
+
+- Scanner w Workerze ma dwa lekkie agenty bez web search: `visual agent` rozpoznaje butelke po obrazie, a `OCR agent` czyta tekst etykiety.
+- Orchestrator laczy dowody z obu agentow i bazy: nazwe/wariant, OCR raw text, proof, ABV, kategorie oraz zgodnosc visual+OCR.
+- Jeden wynik jest zwracany tylko wtedy, gdy laczna pewnosc przekracza prog `MIN_MATCH_CONFIDENCE`, domyslnie 80%.
+- OCR nie jest osobnym zrodlem prawdy. Dziala jako dowod podbijajacy albo obnizajacy pewnosc dopasowania.
+- Odpowiedz skanera zawiera dodatkowe pole `agents` z trace: `visual`, `ocr` i `orchestrator`, zeby mozna bylo debugowac, czemu butelka zostala dopasowana albo odrzucona.
+- `/auth/health` pokazuje `scan_orchestrator_version: ocr-visual-fusion-v1`, co pomaga sprawdzic, czy Cloudflare ma aktualnego Workera.
+
 ## 2026-07-06 - Auth, email i age gate
 
 - Cloudflare D1 jest podpiete do Workera jako binding `DB`.

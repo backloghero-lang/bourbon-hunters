@@ -23,6 +23,7 @@ Aktualny oczekiwany stan Workera:
 {
   "ok": true,
   "auth_version": "auth-pbkdf2-100000-google-v3",
+  "scan_orchestrator_version": "ocr-visual-fusion-v1",
   "pbkdf2_iterations": 100000,
   "d1": true,
   "schema": true,
