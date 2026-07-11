@@ -22,14 +22,31 @@ Aktualny oczekiwany stan Workera:
 ```json
 {
   "ok": true,
-  "auth_version": "auth-pbkdf2-100000-v2",
+  "auth_version": "auth-pbkdf2-100000-google-v3",
   "pbkdf2_iterations": 100000,
   "d1": true,
   "schema": true,
   "reset_schema": true,
-  "email_ready": true
+  "profile_schema": true,
+  "recommendations_schema": true,
+  "identity_schema": true,
+  "email_ready": true,
+  "google_ready": true
 }
 ```
+
+Google login wymaga w Cloudflare Worker:
+
+1. Uruchom migracje `agent/d1-migration-v63-google-auth.sql` w D1.
+2. W Google Cloud Console utworz OAuth Client typu Web.
+3. Authorized redirect URI ustaw na:
+   `https://bourbon-hunters.darekmaslyk.workers.dev/auth/google/callback`
+4. W Workerze dodaj sekrety:
+   - `GOOGLE_CLIENT_ID`
+   - `GOOGLE_CLIENT_SECRET`
+   - opcjonalnie `GOOGLE_STATE_SECRET`
+5. Opcjonalnie dodaj zmienna `GOOGLE_REDIRECT_URI`, jesli redirect URI ma byc inne niz domyslny callback Workera.
+6. Deploy `agent/worker.js`, potem sprawdz `/auth/health`.
 
 Ponizsze starsze sekcje zostaja jako pomoc historyczna, ale w razie sprzecznosci obowiazuje aktualna zasada powyzej.
 

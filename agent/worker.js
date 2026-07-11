@@ -7,7 +7,8 @@
 //   3b) tryb "analyze"-> rozbudowany opis + historia destylarni z linkami (Gemini + Google Search), fakty z bazy jako grunt.
 //
 // SEKRETY: GEMINI_API_KEY (wymagany), DEV_KEY (opcjonalny)
-// ZMIENNE: MODEL, IDENT_MODEL, TEMP_RATE, TEMP_ANALYZE, THINK_ANALYZE, MAX_RATE, MAX_ANALYZE, DAILY_LIMIT, ALLOW_ORIGIN, PROMPT_URL, DB_URL
+// ZMIENNE: MODEL, IDENT_MODEL, TEMP_RATE, TEMP_ANALYZE, THINK_ANALYZE, MAX_RATE, MAX_ANALYZE, DAILY_LIMIT, ALLOW_ORIGIN, PROMPT_URL, DB_URL, APP_URL, GOOGLE_REDIRECT_URI
+// SEKRETY OAuth: GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, opcjonalnie GOOGLE_STATE_SECRET
 // KV: DS_KV (limit + zapis nowosci). Klucze nowosci: "new:<id>".
 // D1: DB (konta, sesje, wishlist, kolekcja, oceny).
 
@@ -16,7 +17,7 @@ const DEFAULT_PROMPT_URL = "https://raw.githubusercontent.com/" + REPO + "/main/
 const DEFAULT_DB_URL = "https://raw.githubusercontent.com/" + REPO + "/main/db/bourbons.json";
 const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters. Krotko, z jajem, ale rzeczowo. quality=jakosc 1-5, value=jakosc/cena 1-5 (5 swietna i tania, 1 slaba i droga). Pisz {{LANG}}. Zwroc tylko JSON.";
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
-const AUTH_VERSION = "auth-pbkdf2-100000-v2";
+const AUTH_VERSION = "auth-pbkdf2-100000-google-v3";
 const PBKDF2_ITERATIONS = 100000;
 const PROFILE_BADGE_IDS = ["glass","bottle","barrel","seal","hat","star","distillery","notes","opener","horseshoe"];
 
@@ -44,6 +45,24 @@ function encText(s){ return new TextEncoder().encode(String(s||"")); }
 function hex(bytes){ return Array.from(new Uint8Array(bytes)).map(function(b){ return b.toString(16).padStart(2,"0"); }).join(""); }
 function randHex(bytes){ const a=new Uint8Array(bytes); crypto.getRandomValues(a); return hex(a); }
 async function sha256Hex(s){ return hex(await crypto.subtle.digest("SHA-256", encText(s))); }
+function b64urlEncode(s){
+  const bytes=typeof s==="string" ? encText(s) : new Uint8Array(s);
+  let bin="";
+  bytes.forEach(function(b){ bin+=String.fromCharCode(b); });
+  return btoa(bin).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+}
+function b64urlDecode(s){
+  s=String(s||"").replace(/-/g,"+").replace(/_/g,"/");
+  while(s.length%4) s+="=";
+  const bin=atob(s);
+  const bytes=new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
+  return new TextDecoder().decode(bytes);
+}
+async function hmacHex(secret, message){
+  const key=await crypto.subtle.importKey("raw", encText(secret), {name:"HMAC",hash:"SHA-256"}, false, ["sign"]);
+  return hex(await crypto.subtle.sign("HMAC", key, encText(message)));
+}
 async function hashPassword(password, saltHex){
   const salt=new Uint8Array((saltHex.match(/.{1,2}/g)||[]).map(function(x){ return parseInt(x,16); }));
   const key=await crypto.subtle.importKey("raw", encText(password), "PBKDF2", false, ["deriveBits"]);
@@ -58,6 +77,44 @@ function mailConfigured(env){ return !!(env.RESEND_API_KEY && env.MAIL_FROM); }
 function appUrl(env){
   const raw=String(env.APP_URL||"https://backloghero-lang.github.io/bourbon-hunters/").trim()||"https://backloghero-lang.github.io/bourbon-hunters/";
   return raw.replace(/\/?$/,"/");
+}
+function googleReady(env){ return !!(env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET); }
+function googleRedirectUri(env, request){
+  return String(env.GOOGLE_REDIRECT_URI||new URL("/auth/google/callback",request.url).toString()).trim();
+}
+function allowedReturnUrl(env, raw){
+  let fallback=appUrl(env);
+  try{
+    const candidate=new URL(String(raw||fallback), fallback);
+    const allowed=[new URL(appUrl(env)).origin,"https://backloghero-lang.github.io","http://localhost","http://127.0.0.1"];
+    if(allowed.indexOf(candidate.origin)>=0) return candidate.toString();
+  }catch(e){}
+  return fallback;
+}
+async function makeGoogleState(env, payload){
+  const body=b64urlEncode(JSON.stringify(payload||{}));
+  const sig=await hmacHex(String(env.GOOGLE_STATE_SECRET||env.GOOGLE_CLIENT_SECRET||""), body);
+  return body+"."+sig;
+}
+async function readGoogleState(env, state){
+  const parts=String(state||"").split(".");
+  if(parts.length!==2) return null;
+  const expected=await hmacHex(String(env.GOOGLE_STATE_SECRET||env.GOOGLE_CLIENT_SECRET||""), parts[0]);
+  if(expected!==parts[1]) return null;
+  try{
+    const data=JSON.parse(b64urlDecode(parts[0]));
+    if(!data || Date.now()-Number(data.iat||0)>1000*60*10) return null;
+    return data;
+  }catch(e){ return null; }
+}
+function redirectWithHash(returnUrl, params){
+  const u=new URL(returnUrl);
+  const hash=new URLSearchParams(String(u.hash||"").replace(/^#/,""));
+  Object.keys(params||{}).forEach(function(k){
+    if(params[k]!=null) hash.set(k,String(params[k]));
+  });
+  u.hash=hash.toString();
+  return Response.redirect(u.toString(),302);
 }
 function assetUrl(env, path){ return appUrl(env)+String(path||"").replace(/^\/+/,""); }
 function supportEmail(env){ return String(env.SUPPORT_EMAIL||"support@bourbonhunters.app").trim(); }
@@ -202,6 +259,14 @@ async function suggestUsernames(env, desired, email){
   }
   return out;
 }
+async function availableUsername(env, desired, email){
+  const base=usernameBase(desired,email);
+  const first=base.slice(0,40);
+  const firstTaken=first.length>=2 ? await env.DB.prepare("SELECT id FROM users WHERE username=?").bind(first).first() : true;
+  if(first.length>=2 && !firstTaken) return first;
+  const suggestions=await suggestUsernames(env,base,email);
+  return suggestions[0] || ("hunter_"+randHex(3));
+}
 async function createSession(env, request, userId){
   const token=randHex(32);
   const tokenHash=await sha256Hex(token);
@@ -320,11 +385,65 @@ async function upsertRecommendation(env, user, body){
   const mine=(recs.recommendations||[]).filter(function(r){ return r.user_id===user.id; })[0] || null;
   return mine;
 }
+async function googleExchange(request, env, code){
+  const body=new URLSearchParams();
+  body.set("code",code);
+  body.set("client_id",String(env.GOOGLE_CLIENT_ID));
+  body.set("client_secret",String(env.GOOGLE_CLIENT_SECRET));
+  body.set("redirect_uri",googleRedirectUri(env,request));
+  body.set("grant_type","authorization_code");
+  const tokenRes=await fetch("https://oauth2.googleapis.com/token",{
+    method:"POST",
+    headers:{"Content-Type":"application/x-www-form-urlencoded"},
+    body:body.toString()
+  });
+  const tokenData=await tokenRes.json().catch(function(){ return {}; });
+  if(!tokenRes.ok || !tokenData.access_token) throw {error:"google_token_failed",detail:String(tokenData.error_description||tokenData.error||tokenRes.status).slice(0,180)};
+  const userRes=await fetch("https://openidconnect.googleapis.com/v1/userinfo",{
+    headers:{"Authorization":"Bearer "+tokenData.access_token}
+  });
+  const userData=await userRes.json().catch(function(){ return {}; });
+  if(!userRes.ok || !userData.sub) throw {error:"google_user_failed",detail:String(userData.error_description||userData.error||userRes.status).slice(0,180)};
+  return userData;
+}
+async function googleUserLogin(env, request, googleUser){
+  if(!(await tableExists(env,"auth_identities"))) throw {error:"schema_google_missing"};
+  const provider="google";
+  const providerId=String(googleUser.sub||"").trim();
+  const email=cleanEmail(googleUser.email);
+  if(!providerId || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) throw {error:"bad_google_profile"};
+  if(googleUser.email_verified===false || googleUser.email_verified==="false") throw {error:"google_email_unverified"};
+  const now=new Date().toISOString();
+  let row=await env.DB.prepare("SELECT u.* FROM auth_identities ai JOIN users u ON u.id=ai.user_id WHERE ai.provider=? AND ai.provider_user_id=?")
+    .bind(provider,providerId).first();
+  let created=false;
+  if(!row){
+    row=await env.DB.prepare("SELECT * FROM users WHERE email=?").bind(email).first();
+    if(!row){
+      const id=crypto.randomUUID();
+      const salt=randHex(16);
+      const hash=await sha256Hex("google:"+providerId+":"+randHex(16));
+      const username=await availableUsername(env,googleUser.name||email,email);
+      await env.DB.prepare("INSERT INTO users (id,email,username,password_hash,password_salt,password_algo,birth_date,age_gate_country,age_gate_min,age_verified_at,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)")
+        .bind(id,email,username,hash,salt,"google-oauth2",null,"google",ageGateMin(env),now,now,now).run();
+      row=await env.DB.prepare("SELECT * FROM users WHERE id=?").bind(id).first();
+      created=true;
+    }
+    await env.DB.prepare("INSERT INTO auth_identities (provider,provider_user_id,user_id,email,created_at,updated_at) VALUES (?,?,?,?,?,?) ON CONFLICT(provider,provider_user_id) DO UPDATE SET user_id=excluded.user_id,email=excluded.email,updated_at=excluded.updated_at")
+      .bind(provider,providerId,row.id,email,now,now).run();
+  } else if(row.email!==email){
+    await env.DB.prepare("UPDATE auth_identities SET email=?,updated_at=? WHERE provider=? AND provider_user_id=?")
+      .bind(email,now,provider,providerId).run();
+  }
+  const token=await createSession(env,request,row.id);
+  if(created) sendWelcomeEmail(env,{email:row.email,username:row.username}).catch(function(){});
+  return {token:token,user:publicUser(row),bootstrap:await bootstrapFor(env,row.id),profile:await profileFor(env,row.id),created:created};
+}
 async function handleApi(request, env, cors){
   const url=new URL(request.url);
   const path=url.pathname.replace(/\/+$/,"");
   if(path==="/auth/health" && request.method==="GET"){
-    let schema=false, reset_schema=false, profile_schema=false, recommendations_schema=false, detail="";
+    let schema=false, reset_schema=false, profile_schema=false, recommendations_schema=false, identity_schema=false, detail="";
     if(env.DB){
       try{
         await env.DB.prepare("SELECT id FROM users LIMIT 1").first();
@@ -337,10 +456,41 @@ async function handleApi(request, env, cors){
         if(schema && reset_schema && !profile_schema) detail="user_profiles table is missing";
         recommendations_schema=await tableExists(env,"bottle_recommendations");
         if(schema && reset_schema && profile_schema && !recommendations_schema) detail="bottle_recommendations table is missing";
+        identity_schema=await tableExists(env,"auth_identities");
+        if(schema && reset_schema && profile_schema && recommendations_schema && !identity_schema) detail="auth_identities table is missing";
       }
       catch(e){ detail=String(e&&e.message?e.message:e).slice(0,220); }
     }
-    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,email_ready:mailConfigured(env),detail:detail,time:new Date().toISOString()},200,cors);
+    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
+  }
+  if(path==="/auth/google/start" && request.method==="GET"){
+    const returnUrl=allowedReturnUrl(env,url.searchParams.get("return")||appUrl(env));
+    if(!googleReady(env)) return redirectWithHash(returnUrl,{google_error:"google_not_configured"});
+    const state=await makeGoogleState(env,{return_url:returnUrl,iat:Date.now(),nonce:randHex(8)});
+    const googleUrl=new URL("https://accounts.google.com/o/oauth2/v2/auth");
+    googleUrl.searchParams.set("client_id",String(env.GOOGLE_CLIENT_ID));
+    googleUrl.searchParams.set("redirect_uri",googleRedirectUri(env,request));
+    googleUrl.searchParams.set("response_type","code");
+    googleUrl.searchParams.set("scope","openid email profile");
+    googleUrl.searchParams.set("state",state);
+    googleUrl.searchParams.set("prompt","select_account");
+    return Response.redirect(googleUrl.toString(),302);
+  }
+  if(path==="/auth/google/callback" && request.method==="GET"){
+    const fallback=appUrl(env);
+    const state=await readGoogleState(env,url.searchParams.get("state")||"");
+    const returnUrl=allowedReturnUrl(env,state&&state.return_url || fallback);
+    if(url.searchParams.get("error")) return redirectWithHash(returnUrl,{google_error:url.searchParams.get("error")});
+    if(!state) return redirectWithHash(returnUrl,{google_error:"bad_state"});
+    if(!googleReady(env)) return redirectWithHash(returnUrl,{google_error:"google_not_configured"});
+    if(!env.DB) return redirectWithHash(returnUrl,{google_error:"d1_missing"});
+    try{
+      const googleUser=await googleExchange(request,env,String(url.searchParams.get("code")||""));
+      const data=await googleUserLogin(env,request,googleUser);
+      return redirectWithHash(returnUrl,{google_token:data.token,google_login:"ok",google_new:data.created?1:0});
+    }catch(e){
+      return redirectWithHash(returnUrl,{google_error:String((e&&e.error)||"google_failed").slice(0,80)});
+    }
   }
   const dbErr=needDB(env,cors); if(dbErr) return dbErr;
   if(path==="/ratings" && request.method==="GET"){

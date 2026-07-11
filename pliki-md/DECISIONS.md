@@ -133,10 +133,18 @@ Ten plik trzyma stale ustalenia, zeby nie ginely w dlugich watkach.
 - Prywatne `POST /me/recommendation` wymaga tokenu sesji, zapisuje polecenie i jednoczesnie aktualizuje ocene usera w `user_ratings`.
 - W MVP feed nie jest realtime; odswieza sie przy pobraniu widoku, po wejsciu w szczegoly albo po zapisaniu polecenia.
 
+## 2026-07-11 - Google OAuth
+
+- Google login dziala przez Cloudflare Worker, nie bezposrednio z frontu.
+- Front kieruje na `/auth/google/start`, Worker wymienia `code` na token Google po stronie serwera i wraca do PWA z tokenem sesji Bourbon Hunters w URL hash.
+- D1 ma tabele `auth_identities`, ktora laczy `provider + provider_user_id` z `user_id`, zeby kolejne logowania Google aktualizowaly ta sama osobe.
+- Jesli email z Google istnieje juz jako konto email/password, Worker linkuje Google do istniejacego konta zamiast tworzyc duplikat.
+- Health Workera powinien pokazywac `auth_version: auth-pbkdf2-100000-google-v3`, `identity_schema: true` i `google_ready: true` po konfiguracji sekretow Google.
+
 ## 2026-07-06 - Auth, email i age gate
 
 - Cloudflare D1 jest podpiete do Workera jako binding `DB`.
-- Worker health powinien zwracac `auth_version: auth-pbkdf2-100000-v2`, `pbkdf2_iterations: 100000`, `schema: true`, `reset_schema: true` i `email_ready: true`.
+- Worker health powinien zwracac aktualne `auth_version`, `pbkdf2_iterations: 100000`, `schema: true`, `reset_schema: true` i `email_ready: true`.
 - Resend jest wybrany jako provider email na etap MVP/prototypu.
 - Maile transakcyjne maja uzywac subtelnych assetow Bourbon Hunters, bez ciezkiego marketingowego layoutu.
 - Entry age gate jest osobnym ekranem przed intro, a data urodzenia zostaje dodatkowo wymagana przy rejestracji konta.

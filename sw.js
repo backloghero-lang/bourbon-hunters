@@ -1,5 +1,5 @@
 /* Bourbon Hunters service worker - network-first dla aktualizacji aplikacji i bazy. */
-const CACHE = "bourbon-hunters-v75";
+const CACHE = "bourbon-hunters-v77";
 const ASSETS = [
   "./",
   "./index.html",
