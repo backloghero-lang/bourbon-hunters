@@ -222,10 +222,17 @@
   .rec-list-card h4{margin:0 0 6px;font-family:var(--serif);font-size:18px;line-height:1.12;color:#F6E1BC}
   .rec-list-card p{margin:8px 0 0;color:#C9B493;font-size:12px;line-height:1.42;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .recommend-box{margin:16px 0 0;border:1px solid rgba(226,176,112,.2);border-radius:18px;background:linear-gradient(180deg,rgba(29,24,18,.72),rgba(10,7,5,.9));padding:14px}
+  .recommend-box.has-error{border-color:rgba(224,100,74,.78);box-shadow:0 0 0 1px rgba(224,100,74,.18),0 0 22px rgba(224,100,74,.12)}
   .recommend-box textarea{width:100%;min-height:92px;resize:vertical;border:1px solid rgba(226,176,112,.24);border-radius:12px;background:rgba(0,0,0,.28);color:#F6E1BC;padding:11px 12px;font:inherit;font-size:13px;line-height:1.45;outline:none}
   .recommend-box textarea:focus{border-color:rgba(226,176,112,.58);box-shadow:0 0 0 2px rgba(226,176,112,.12)}
+  .recommend-box textarea.field-error{border-color:rgba(224,100,74,.82);box-shadow:0 0 0 2px rgba(224,100,74,.12)}
   .recommend-actions{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px}
   .recommend-hint{font-size:11px;line-height:1.35;color:#A99572}
+  .field-note{display:none;margin-top:7px;color:#F0A199;font-size:11px;line-height:1.35;font-weight:850}
+  .field-note.show{display:block}
+  .required-mark{color:#E0644A;font-weight:950;margin-left:3px}
+  .pill.need-attention{border-color:rgba(224,100,74,.82);box-shadow:0 0 0 1px rgba(224,100,74,.18),0 0 22px rgba(224,100,74,.13);position:relative}
+  .pill.need-attention:after{content:"!";position:absolute;right:8px;top:8px;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;background:rgba(224,100,74,.16);border:1px solid rgba(224,100,74,.72);color:#FFD0C6;font-size:12px;font-weight:950}
   .recommend-submit,.comments-open{border:1px solid rgba(226,176,112,.44);border-radius:12px;background:linear-gradient(180deg,#F1C875,#B86A33);color:#1B1008;padding:10px 13px;font-size:12px;font-weight:950;cursor:pointer;white-space:nowrap}
   .comments-open{width:100%;margin-top:12px;background:rgba(0,0,0,.24);color:#E2B070}
   .comment-modal{position:fixed;inset:0;z-index:80;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.62);padding:14px}
@@ -1243,6 +1250,7 @@ function recommendationBlock(b){
   return '<div class="recommend-box">'+
     '<div class="sec-t" style="margin-top:0">'+esc(t("addRecommendation"))+'</div>'+
     '<textarea id="recommendText" maxlength="700" data-recommend-draft="'+esc(id)+'" placeholder="'+esc(t("recommendationPlaceholder"))+'">'+esc(draft)+'</textarea>'+
+    '<div class="field-note" id="recommendTextError"></div>'+
     '<div class="recommend-actions"><span class="recommend-hint">'+esc(t("recommendationHint"))+(userRating?' '+starStr(userRating):'')+'</span><button class="recommend-submit" type="button" data-recommend-bottle="'+esc(id)+'">'+esc(t("saveRecommendation"))+'</button></div>'+
     (list.length?'<button class="comments-open" type="button" data-open-comments="'+esc(id)+'">'+esc(t("showComments"))+' ('+list.length+')</button>':'')+
   '</div>';
@@ -1264,6 +1272,31 @@ function closeCommentsModal(){
   modal.classList.remove("show");
   modal.setAttribute("aria-hidden","true");
 }
+function clearRecommendationValidation(){
+  const box=document.querySelector(".recommend-box");
+  if(box) box.classList.remove("has-error");
+  const textarea=document.getElementById("recommendText");
+  if(textarea) textarea.classList.remove("field-error");
+  document.querySelectorAll(".pill.need-attention").forEach(function(el){ el.classList.remove("need-attention"); });
+  document.querySelectorAll(".field-note.show").forEach(function(el){ el.classList.remove("show"); el.textContent=""; });
+}
+function showFieldRequirement(target,message){
+  if(!target) return;
+  target.classList.add("need-attention");
+  const note=target.querySelector(".field-note");
+  if(note){ note.textContent=message; note.classList.add("show"); }
+  target.scrollIntoView({behavior:"smooth",block:"center"});
+}
+function showRecommendationTextError(message){
+  const box=document.querySelector(".recommend-box");
+  const textarea=document.getElementById("recommendText");
+  const note=document.getElementById("recommendTextError");
+  if(box) box.classList.add("has-error");
+  if(textarea) textarea.classList.add("field-error");
+  if(note){ note.textContent=message; note.classList.add("show"); }
+  (textarea||box).scrollIntoView({behavior:"smooth",block:"center"});
+  if(textarea) setTimeout(function(){ textarea.focus(); },320);
+}
 function submitRecommendation(id){
   if(!AUTH_TOKEN){ toast(t("recommendationNeedLogin")); showView("signin"); return; }
   const b=DB.find(function(x){ return x.id===id; });
@@ -1272,8 +1305,16 @@ function submitRecommendation(id){
   const comment=String(textarea&&textarea.value||"").trim();
   DRAFT_COMMENTS[id]=comment;
   const rating=Number(UR[id]||0);
-  if(!rating){ toast(t("recommendationNeedRating")); return; }
-  if(comment.length<3){ toast(t("recommendationNeedText")); return; }
+  clearRecommendationValidation();
+  if(!rating){
+    const target=document.querySelector('[data-required-rating="'+id+'"]');
+    showFieldRequirement(target,t("recommendationNeedRating"));
+    return;
+  }
+  if(comment.length<3){
+    showRecommendationTextError(t("recommendationNeedText"));
+    return;
+  }
   const btn=document.querySelector('[data-recommend-bottle="'+id+'"]');
   if(btn) btn.disabled=true;
   bhApi("/me/recommendation",{method:"POST",body:JSON.stringify({bottle_id:id,bottle_name:b.name,rating:rating,comment:comment,bottle_data:bottlePayload(id)})}).then(function(data){
@@ -2008,7 +2049,7 @@ function ratingPanel(o){
   pills+='<div class="pill"><div class="k">Proof</div><div class="v">'+esc(alcoholValue(o))+'</div></div>';
   pills+='<div class="pill"><div class="k">'+t("suggestedPrice")+'</div><div class="v" style="color:var(--gold)">'+esc(price)+'</div></div>';
   pills+='<div class="pill rating-pill"><div class="k">'+t("dbQuality")+'</div><div class="v">'+communityRatingHtml(o)+'</div></div>';
-  pills+='<div class="pill rating-pill"><div class="k">'+t("userQuality")+'</div><div class="v">'+urStars(id)+'</div></div>';
+  pills+='<div class="pill rating-pill" data-required-rating="'+esc(id)+'"><div class="k">'+t("userQuality")+'<span class="required-mark" aria-hidden="true">*</span></div><div class="v">'+urStars(id)+'</div><div class="field-note" data-rating-error="'+esc(id)+'"></div></div>';
   return '<div class="row">'+pills+'</div>';
 }
 function bottleActionId(o){
@@ -2189,7 +2230,16 @@ document.addEventListener("touchend",function(){
 },{passive:true});
 document.addEventListener("input",function(e){
   const draft=e.target&&e.target.closest ? e.target.closest("[data-recommend-draft]") : null;
-  if(draft) DRAFT_COMMENTS[draft.getAttribute("data-recommend-draft")]=draft.value||"";
+  if(draft){
+    DRAFT_COMMENTS[draft.getAttribute("data-recommend-draft")]=draft.value||"";
+    if(String(draft.value||"").trim().length>=3){
+      draft.classList.remove("field-error");
+      const note=document.getElementById("recommendTextError");
+      if(note){ note.classList.remove("show"); note.textContent=""; }
+      const box=document.querySelector(".recommend-box");
+      if(box) box.classList.remove("has-error");
+    }
+  }
 });
 
 function setupSwipeDots(scrollerId, dotsId){
@@ -2249,11 +2299,27 @@ function snapCarouselTo(scroller,index,behavior){
   if(!items.length) return;
   const targetIndex=Math.max(0,Math.min(items.length-1,index));
   const left=Math.max(0,items[targetIndex].offsetLeft-items[0].offsetLeft);
-  scroller.scrollTo({left:left,behavior:behavior||"smooth"});
+  if(behavior==="smooth") animateCarouselScroll(scroller,left,240);
+  else scroller.scrollTo({left:left,behavior:behavior||"auto"});
   if(scroller._bhDotUpdate){
     setTimeout(scroller._bhDotUpdate,80);
     setTimeout(scroller._bhDotUpdate,260);
   }
+}
+function animateCarouselScroll(scroller,target,duration){
+  const start=scroller.scrollLeft;
+  const delta=target-start;
+  if(Math.abs(delta)<1){ scroller.scrollLeft=target; return; }
+  const startTime=performance.now();
+  function ease(t){ return 1-Math.pow(1-t,3); }
+  function step(now){
+    const t=Math.min(1,(now-startTime)/duration);
+    scroller.scrollLeft=start+(delta*ease(t));
+    if(scroller._bhDotUpdate) scroller._bhDotUpdate();
+    if(t<1) requestAnimationFrame(step);
+    else scroller.scrollLeft=target;
+  }
+  requestAnimationFrame(step);
 }
 function setupHomeSwipeDots(){
   setupSwipeDots("featuredRow","featuredDots");
@@ -2425,7 +2491,19 @@ document.addEventListener("click",function(e){
   const valueEl=e.target.closest("[data-value-score]");
   if(valueEl){ e.stopPropagation(); toast((lang==="pl"?"Stosunek ceny do jakosci":"Quality-to-price ratio")+": "+valueEl.getAttribute("data-value-score")+"/5"); return; }
   const ur=e.target.closest("[data-ur]");
-  if(ur){ e.stopPropagation(); const id=ur.getAttribute("data-ur"), v=Number(ur.getAttribute("data-v")); UR[id]=v; urSave(); syncRating(id,v); document.querySelectorAll('[data-userstars="'+id+'"] span').forEach(function(st){ st.classList.toggle("on", Number(st.getAttribute("data-v"))<=v); }); renderProfile(); refreshBottleViews(id); return; }
+  if(ur){
+    e.stopPropagation();
+    const id=ur.getAttribute("data-ur"), v=Number(ur.getAttribute("data-v"));
+    UR[id]=v; urSave(); syncRating(id,v);
+    document.querySelectorAll('[data-userstars="'+id+'"] span').forEach(function(st){ st.classList.toggle("on", Number(st.getAttribute("data-v"))<=v); });
+    const required=document.querySelector('[data-required-rating="'+id+'"]');
+    if(required){ required.classList.remove("need-attention"); const note=required.querySelector(".field-note"); if(note){ note.classList.remove("show"); note.textContent=""; } }
+    const hint=document.querySelector(".recommend-hint");
+    if(hint) hint.textContent=t("recommendationHint")+" "+starStr(v);
+    renderProfile();
+    if(!(document.getElementById("view-detail").classList.contains("active") && currentDetailId===id)) refreshBottleViews(id);
+    return;
+  }
   const recommendBtn=e.target.closest("[data-recommend-bottle]");
   if(recommendBtn){ e.preventDefault(); e.stopPropagation(); submitRecommendation(recommendBtn.getAttribute("data-recommend-bottle")); return; }
   const commentsBtn=e.target.closest("[data-open-comments]");
