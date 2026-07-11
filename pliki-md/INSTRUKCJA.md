@@ -17,13 +17,18 @@ Jesli zmieniasz `agent/worker.js`:
 3. Sprawdz `https://bourbon-hunters.darekmaslyk.workers.dev/auth/health`.
 4. Dopiero potem testuj konta, reset hasla, sync i skaner.
 
+Katalog 10k wymaga, aby repo bylo na GitHubie przed deployem Workera. Jesli w Cloudflare istnieje zmienna `DB_URL`, usun ja albo ustaw na:
+`https://raw.githubusercontent.com/backloghero-lang/bourbon-hunters/main/db/catalog/scan-index.json`.
+Pozostawiona stara wartosc `DB_URL` nadpisze nowy domyslny adres z kodu Workera.
+
 Aktualny oczekiwany stan Workera:
 
 ```json
 {
   "ok": true,
   "auth_version": "auth-pbkdf2-100000-google-v3",
-  "scan_orchestrator_version": "ocr-visual-fusion-v1",
+  "scan_orchestrator_version": "ocr-visual-fusion-catalog-10k-v2",
+  "scan_catalog_version": "ttb-olcc-10k-v1",
   "pbkdf2_iterations": 100000,
   "d1": true,
   "schema": true,
@@ -53,7 +58,7 @@ Ponizsze starsze sekcje zostaja jako pomoc historyczna, ale w razie sprzecznosci
 
 > ### ⚡ Wersja 2 (baza + 2 tryby) — kolejnosc ma znaczenie
 > 1. **Wgraj nowy `agent/worker.js`** do Cloudflare (Edit code → wklej → Deploy).
-> 2. **Wypchnij repo na GitHub** (`WYSLIJ-NA-GITHUB.bat`) — Worker czyta baze `db/bourbons.json` i `agent/prompt.txt` prosto z repo, wiec do dzialania bazy repo musi byc opublikowane.
+> 2. **Wypchnij repo na GitHub** (`WYSLIJ-NA-GITHUB.bat`) — frontend czyta `db/bourbons.json`, a Worker indeks `db/catalog/scan-index.json` i `agent/prompt.txt` prosto z repo, wiec do dzialania nowej bazy repo musi byc opublikowane.
 > 3. **Dodaj KV** (namespace + binding `DS_KV`) — wlacza zapis "nowosci" i dzienny limit (sekcja 2c nizej).
 > 4. Testuj na adresie GitHub Pages (https) — wtedy dziala tez aparat w telefonie.
 >

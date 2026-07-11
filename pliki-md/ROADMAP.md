@@ -114,7 +114,7 @@ Ten plik sluzy do planowania kolejnych prac. Szczegoly bugow trzymamy w `BUGS.md
 6. Produkcyjny scanner API
    - Upload zdjecia do backendu/R2, status skanu i wynik z bazy.
    - Najpierw dopasowanie do bazy; ponizej 80% pewnosci nie zgadujemy i kierujemy do Hunter AI Plus.
-   - Worker ma juz pierwszy orchestrator `ocr-visual-fusion-v1`: visual agent + OCR agent + scoring z bazy.
+   - Worker ma orchestrator `ocr-visual-fusion-catalog-10k-v2`: visual agent + OCR agent + scoring z indeksu 10k.
    - Zapisywac historie skanow oraz statusy: `uploaded`, `recognized`, `matched`, `needs_web_search`, `failed`.
    - Wynik: skaner staje sie produkcyjnym core, a nie tylko frontowym flow.
 
@@ -150,7 +150,7 @@ Ten plik sluzy do planowania kolejnych prac. Szczegoly bugow trzymamy w `BUGS.md
 | M3 | Spójny Home, Explore, Details, Collection | w toku |
 | M4 | Bezpieczny pack generowanych butelek AI | plan |
 | M5 | Mechanika zakrytych i odblokowanych butelek | plan |
-| M6 | Worker/agent do obrobki zdjec userow | zaczete: OCR + visual orchestrator |
+| M6 | Worker/agent do obrobki zdjec userow | indeks 10k + OCR + visual orchestrator, dalsza obrobka zdjec w toku |
 | M7 | Google Play + USA marketing + monetyzacja | pozniej |
 | M8 | Konta + backendowa synchronizacja kolekcji | plan |
 | M9 | Pro/reklamy + limity skanow | plan |

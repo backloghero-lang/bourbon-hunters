@@ -56,10 +56,15 @@ Ten plik trzyma stale ustalenia, zeby nie ginely w dlugich watkach.
 
 - Glowny plik bazy: `db/bourbons.json`.
 - Obecny stan bazy: 539 pozycji.
+- Skaner uzywa osobnego, lekkiego indeksu `db/catalog/scan-index.json` z 10 000 rekordow.
+- Pelne rekordy katalogowe sa w `db/catalog/bottles.json`, a raport jakosci w `db/catalog/quality-report.json`.
 - Priorytetem sa prawdziwe nazwy i zdjecia.
 - Nie dodajemy fake/mock data, jesli mozna uzyc realnych danych.
 - Bardzo drogie butelki byly odfiltrowane wedlug ustalen z poprzedniego etapu.
 - Docelowo baza opisow ma rosnac do tysiecy pozycji, nawet jesli warstwa wizualna bedzie stopniowo wymieniana na bezpieczniejsze assety.
+- Limit nowych rekordow z potwierdzona cena: maksymalnie 1000 PLN albo 350 USD.
+- Fakty identyfikacyjne katalogu 10k pochodza z TTB i OLCC. Profil `style_estimate` jest naszym przewidywanym profilem stylu, a nie potwierdzona nota producenta.
+- Rekord bez potwierdzonej ceny ma status `recognition_only`: moze pomagac OCR, ale nie trafia automatycznie do polecanych ani filtrow zakupowych.
 
 ## Worker i agenci
 
@@ -148,7 +153,16 @@ Ten plik trzyma stale ustalenia, zeby nie ginely w dlugich watkach.
 - Jeden wynik jest zwracany tylko wtedy, gdy laczna pewnosc przekracza prog `MIN_MATCH_CONFIDENCE`, domyslnie 80%.
 - OCR nie jest osobnym zrodlem prawdy. Dziala jako dowod podbijajacy albo obnizajacy pewnosc dopasowania.
 - Odpowiedz skanera zawiera dodatkowe pole `agents` z trace: `visual`, `ocr` i `orchestrator`, zeby mozna bylo debugowac, czemu butelka zostala dopasowana albo odrzucona.
-- `/auth/health` pokazuje `scan_orchestrator_version: ocr-visual-fusion-v1`, co pomaga sprawdzic, czy Cloudflare ma aktualnego Workera.
+- `/auth/health` pokazuje `scan_orchestrator_version: ocr-visual-fusion-catalog-10k-v2`, co pomaga sprawdzic, czy Cloudflare ma aktualnego Workera i indeks 10k.
+- `/auth/health` pokazuje tez `scan_catalog_version: ttb-olcc-10k-v1`.
+
+## 2026-07-11 - Katalog rozpoznawania 10k
+
+- Importer `scripts/build_catalog_10000.mjs` laczy dotychczasowa baze, publiczny rejestr etykiet TTB i oficjalny cennik OLCC.
+- Importer deduplikuje marki/edycje, odrzuca oczywiste zestawy i miniatury oraz wybiera ceny dla butelek 700/750 ml zamiast miniaturek.
+- `scripts/validate_catalog.mjs` blokuje publikacje przy zlej liczbie rekordow, duplikatach ID, brakujacych profilach, uszkodzonym kodowaniu albo cenie ponad limit.
+- Home nadal pobiera `db/bourbons.json`, aby nie sciagac na telefon pelnego katalogu. Worker pobiera kompaktowy `db/catalog/scan-index.json`.
+- Butelka kontrolna OCR: `BULLEIT BOTTLED IN BOND`, ID `bulleit-bottled-in-bond-111-22`, 100 proof, 50% ABV.
 
 ## 2026-07-06 - Auth, email i age gate
 

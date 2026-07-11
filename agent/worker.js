@@ -3,7 +3,7 @@
 // Tryb pracy:
 //   1) Visual agent rozpoznaje butelke ze zdjecia.
 //   2) OCR agent czyta tekst z etykiety: marka, wariant, proof/ABV, kategoria.
-//   3) Orchestrator laczy dowody z obu agentow i szuka najlepszego dopasowania w db/bourbons.json.
+//   3) Orchestrator laczy dowody z obu agentow i szuka najlepszego dopasowania w indeksie 10k.
 //   4a) tryb "rate"   -> jest w bazie: zwracamy od razu (zero netu).
 //   4b) tryb "analyze"-> rozbudowany opis + historia destylarni z linkami (Gemini + Google Search), fakty z bazy jako grunt.
 //
@@ -15,10 +15,11 @@
 
 const REPO = "backloghero-lang/bourbon-hunters";
 const DEFAULT_PROMPT_URL = "https://raw.githubusercontent.com/" + REPO + "/main/agent/prompt.txt";
-const DEFAULT_DB_URL = "https://raw.githubusercontent.com/" + REPO + "/main/db/bourbons.json";
+const DEFAULT_DB_URL = "https://raw.githubusercontent.com/" + REPO + "/main/db/catalog/scan-index.json";
 const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters. Krotko, z jajem, ale rzeczowo. quality=jakosc 1-5, value=jakosc/cena 1-5 (5 swietna i tania, 1 slaba i droga). Pisz {{LANG}}. Zwroc tylko JSON.";
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
-const SCAN_ORCHESTRATOR_VERSION = "ocr-visual-fusion-v1";
+const SCAN_ORCHESTRATOR_VERSION = "ocr-visual-fusion-catalog-10k-v2";
+const SCAN_CATALOG_VERSION = "ttb-olcc-10k-v1";
 const AUTH_VERSION = "auth-pbkdf2-100000-google-v3";
 const PBKDF2_ITERATIONS = 100000;
 const PROFILE_BADGE_IDS = ["glass","bottle","barrel","seal","hat","star","distillery","notes","opener","horseshoe"];
@@ -463,7 +464,7 @@ async function handleApi(request, env, cors){
       }
       catch(e){ detail=String(e&&e.message?e.message:e).slice(0,220); }
     }
-    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
+    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_catalog_version:SCAN_CATALOG_VERSION,pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
   }
   if(path==="/auth/google/start" && request.method==="GET"){
     const returnUrl=allowedReturnUrl(env,url.searchParams.get("return")||appUrl(env));
@@ -662,16 +663,26 @@ function matchBottle(db, name){
 
 function textBottleScore(text, bottle){
   const nt=toks(text);
-  const bt=toks((bottle&&bottle.name)||"");
-  if(!nt.length || !bt.length) return 0;
-  const nset={}; nt.forEach(function(w){ nset[w]=1; });
-  const textNorm=norm(text);
-  const bottleNorm=norm(bottle.name);
-  if(textNorm && bottleNorm && textNorm===bottleNorm) return 1;
-  if(textNorm && bottleNorm && (textNorm.indexOf(bottleNorm)>=0 || bottleNorm.indexOf(textNorm)>=0)) return 0.94;
-  let matched=0; bt.forEach(function(w){ if(nset[w]) matched++; });
-  const base=matched/bt.length;
-  return matched ? Math.min(0.9,base) : 0;
+  if(!nt.length) return 0;
+  const candidates=[(bottle&&bottle.name)||""].concat(Array.isArray(bottle&&bottle.aliases)?bottle.aliases:[]);
+  let best=0;
+  candidates.forEach(function(candidate){
+    const bt=toks(candidate);
+    if(!bt.length) return;
+    const nset={}; nt.forEach(function(w){ nset[w]=1; });
+    const textNorm=norm(text);
+    const bottleNorm=norm(candidate);
+    if(textNorm && bottleNorm && textNorm===bottleNorm){ best=Math.max(best,1); return; }
+    if(textNorm && bottleNorm && textNorm.indexOf(bottleNorm)>=0){
+      const coverage=bt.length/nt.length;
+      best=Math.max(best,coverage>=0.5 ? Math.min(0.98,0.9+coverage*0.08) : 0.55+coverage*0.35);
+      return;
+    }
+    if(textNorm && bottleNorm && bottleNorm.indexOf(textNorm)>=0){ best=Math.max(best,Math.min(0.88,(nt.length/bt.length)*0.88)); return; }
+    let matched=0; bt.forEach(function(w){ if(nset[w]) matched++; });
+    if(matched) best=Math.max(best,Math.min(0.9,matched/bt.length));
+  });
+  return best;
 }
 
 function numberFrom(v){
@@ -758,7 +769,16 @@ function matchBottleWithEvidence(db, vision, ocr){
   if(ocn) ocrNames.push({name:ocn,confidence:ocr.confidence||0.65,source:"ocr_fields"});
   if(ocr.raw_text) ocrNames.push({name:ocr.raw_text,confidence:Math.min(ocr.confidence||0.55,0.72),source:"ocr_raw"});
   const rows=[];
-  (db.bottles||[]).forEach(function(b){
+  const candidateIndexes={};
+  const tokenIndex=db.token_index||{};
+  visualNames.concat(ocrNames).forEach(function(candidate){
+    toks(candidate.name).forEach(function(token){
+      (tokenIndex[token]||[]).forEach(function(index){ candidateIndexes[index]=1; });
+    });
+  });
+  const indexed=Object.keys(candidateIndexes).map(function(index){ return (db.bottles||[])[Number(index)]; }).filter(Boolean);
+  const candidateBottles=indexed.length ? indexed : (db.bottles||[]);
+  candidateBottles.forEach(function(b){
     let bestVisual=0, bestOcr=0;
     visualNames.forEach(function(v){ bestVisual=Math.max(bestVisual,textBottleScore(v.name,b)*clamp01(v.confidence)); });
     ocrNames.forEach(function(v){ bestOcr=Math.max(bestOcr,textBottleScore(v.name,b)*clamp01(v.confidence)); });
