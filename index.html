@@ -393,10 +393,6 @@
   .btn[disabled]{opacity:.4;cursor:default}
   .note{font-size:11px;color:var(--muted);margin-top:12px;line-height:1.5}
   #loading{display:none;text-align:center;padding:18px 16px}
-  .spin{position:relative;width:108px;height:90px;margin:0 auto 12px;background:url("design/figma-assets/home-pack-v2/rolling-barrel.png") center/contain no-repeat;filter:drop-shadow(0 0 18px rgba(226,176,112,.32));animation:barrelRoll 2.35s ease-in-out infinite;will-change:transform}
-  .spin:after{content:"";position:absolute;left:18px;right:18px;bottom:0;height:9px;border-radius:50%;background:rgba(0,0,0,.5);filter:blur(5px);animation:barrelShadow 1.18s ease-in-out infinite}
-  @keyframes barrelRoll{0%{transform:translateX(calc(-50vw + 78px)) rotate(0deg)}46%{transform:translateX(calc(50vw - 174px)) rotate(720deg)}52%{transform:translateX(calc(50vw - 174px)) rotate(746deg)}100%{transform:translateX(calc(-50vw + 78px)) rotate(0deg)}}
-  @keyframes barrelShadow{0%,100%{transform:scaleX(.82);opacity:.36}50%{transform:scaleX(1.08);opacity:.62}}
   #loadtxt{font-size:13px;color:var(--muted)}
   .err{background:rgba(224,100,74,.12);border:1px solid var(--bad);border-radius:14px;padding:14px 14px 14px 74px;font-size:13px;color:#ffd0c6;margin:16px;display:none;line-height:1.5;min-height:70px;background-image:url("design/figma-assets/scanner-pack-v1/error-state-icon.png");background-size:54px;background-position:12px center;background-repeat:no-repeat}
   .badge{display:inline-block;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;padding:3px 8px;border-radius:20px;margin-bottom:8px}
@@ -543,7 +539,7 @@
       </div>
       <p class="note" data-i18n="priceNote">Ceny i oceny orientacyjne. Pij odpowiedzialnie. 18+</p>
     </div>
-    <div id="loading"><div class="spin"></div><div id="loadtxt">Rozpoznaję etykietę...</div></div>
+    <div id="loading"><div id="loadtxt">Rozpoznaję etykietę...</div></div>
     <div class="err" id="err"></div>
     <div id="scanResult"></div>
   </section>
@@ -901,7 +897,7 @@ const I18N = {
     catBourbon:"Bourbon", catRye:"Rye", catTenn:"Tennessee", catWheat:"Wheated", catScotch:"Scotch", catWorld:"Świat",
     byDist:"Przeglądaj wg destylarni", allDist:"Wszystkie", distLbl:"Destylarnia", loadMore:"Pokaż więcej", results:"poz.",
     priceK:"Cena", statusAvail:"Dostępny", statusSold:"Niedostępny", viewShop:"Zobacz w sklepie ↗", noResults:"Brak wyników dla tego filtra.",
-    allCat:"Wszystkie", stWheated:"Wheated", stSingle:"Single Barrel", stSmall:"Small Batch", stProof:"Barrel Proof", stBib:"Bottled-in-Bond", stLimited:"Edycja limitowana", aiBtn:"🔎 Analiza AI", aiPlusBtn:"Hunter AI Plus", lowConfTitle:"Nie mam pewnego trafienia", lowConfBody:"Nie podam losowego wyniku. Pewność dopasowania jest poniżej progu 80%. Hunter AI Plus będzie mógł sprawdzić zdjęcie głębiej, znaleźć dane i przygotować profil butelki.",
+    allCat:"Wszystkie", stWheated:"Wheated", stSingle:"Single Barrel", stSmall:"Small Batch", stProof:"Barrel Proof", stBib:"Bottled-in-Bond", stLimited:"Edycja limitowana", aiBtn:"🔎 Analiza AI", aiPlusBtn:"Hunter AI Plus", lowConfTitle:"Nie mam pewnego dopasowania", lowConfBody:"Marka lub wariant nie są wystarczająco czytelne. Zrób wyraźniejsze zdjęcie przedniej etykiety — nie pokażę przypadkowej butelki.", scanRetryPhoto:"Zrób zdjęcie ponownie",
     wlAdded:"Dodano do listy życzeń ♥", ownAdded:"Dodano do kolekcji", wlEmpty:"Twoja lista życzeń jest pusta. Dodawaj butelki serduszkiem ♡.", emptyHunted:"Nie masz jeszcze upolowanych butelek.", emptyCollection:"Twoja kolekcja jest pusta.", noseT:"Nos", tasteT:"Smak", finishT:"Finisz", suggestedPrice:"Cena sugerowana", dbQuality:"Ocena społeczności", userQuality:"Twoja ocena",
     wlT:"Lista życzeń", wlD:"Zapisuj bourbony, które chcesz upolować.", huT:"Upolowane", huD:"Oznaczaj butelki, które już zdobyłeś.",
     coT:"Moja kolekcja", coD:"Twoja półka — wszystkie posiadane butelki w jednym miejscu.", registerTab:"Register", signInTab:"Sign In", articlesTab:"Articles", proTab:"Wersja Pro", settingsTab:"Ustawienia", profileName:"Bourbon Hunters", profileCopy:"Zaloguj się, aby później synchronizować kolekcję, skany i notatki między urządzeniami.", proStrip:"Więcej funkcji. Bez reklam.", joinPro:"Join Pro", later:"Later", registerTitle:"Sign up", registerIntro:"Utwórz profil łowcy, aby synchronizować kolekcję.", signInTitle:"Sign in", signInIntro:"Wróć do swojej półki, skanów i notatek degustacyjnych.", signUpBtn:"Sign Up", signInBtn:"Sign In", googleSignUp:"Sign up with Google", googleSignIn:"Sign in with Google", alreadyAccount:"Already have an account?", noAccount:"No account yet?", authConsent:"By proceeding, you agree to our", andText:"and", authPending:"Google Sign-In podłączymy w kolejnym etapie.", googleAuthStarting:"Przekierowanie do Google...", googleAuthOk:"Zalogowano przez Google i zsynchronizowano.", googleAuthFail:"Nie udało się zalogować przez Google.", inProgress:"W budowie", soonTag:"Wkrótce" },
@@ -923,7 +919,7 @@ const I18N = {
     catBourbon:"Bourbon", catRye:"Rye", catTenn:"Tennessee", catWheat:"Wheated", catScotch:"Scotch", catWorld:"World",
     byDist:"Browse by distillery", allDist:"All", distLbl:"Distillery", loadMore:"Load more", results:"items",
     priceK:"Price", statusAvail:"In stock", statusSold:"Sold out", viewShop:"View in shop ↗", noResults:"No results for this filter.",
-    allCat:"All", stWheated:"Wheated", stSingle:"Single Barrel", stSmall:"Small Batch", stProof:"Barrel Proof", stBib:"Bottled-in-Bond", stLimited:"Limited Edition", aiBtn:"🔎 AI Analysis", aiPlusBtn:"Hunter AI Plus", lowConfTitle:"No confident match", lowConfBody:"I will not show a random bottle. Match confidence is below the 80% gate. Hunter AI Plus will inspect the photo deeper, find data and prepare the bottle profile.",
+    allCat:"All", stWheated:"Wheated", stSingle:"Single Barrel", stSmall:"Small Batch", stProof:"Barrel Proof", stBib:"Bottled-in-Bond", stLimited:"Limited Edition", aiBtn:"🔎 AI Analysis", aiPlusBtn:"Hunter AI Plus", lowConfTitle:"No confident match", lowConfBody:"The brand or expression is not clear enough. Take a sharper photo of the front label — I will not show a random bottle.", scanRetryPhoto:"Take another photo",
     wlAdded:"Added to wishlist ♥", ownAdded:"Added to collection", wlEmpty:"Your wishlist is empty. Add bottles with the ♡ heart.", emptyHunted:"No hunted bottles yet.", emptyCollection:"Your collection is empty.", noseT:"Nose", tasteT:"Taste", finishT:"Finish", suggestedPrice:"Suggested price", dbQuality:"Community rating", userQuality:"Your rating",
     wlT:"Wishlist", wlD:"Save the bourbons you want to hunt down.", huT:"Hunted", huD:"Mark the bottles you've already bagged.",
     coT:"My collection", coD:"Your shelf — every bottle you own in one place.", registerTab:"Register", signInTab:"Sign In", articlesTab:"Articles", proTab:"Pro version", settingsTab:"Settings", profileName:"Bourbon Hunters", profileCopy:"Sign in to sync your shelf, scans and tasting notes across devices.", proStrip:"More features. No ads.", joinPro:"Join Pro", later:"Later", registerTitle:"Sign up", registerIntro:"Create your hunter profile to sync your collection.", signInTitle:"Sign in", signInIntro:"Return to your shelf, scans and tasting notes.", signUpBtn:"Sign Up", signInBtn:"Sign In", googleSignUp:"Sign up with Google", googleSignIn:"Sign in with Google", alreadyAccount:"Already have an account?", noAccount:"No account yet?", authConsent:"By proceeding, you agree to our", andText:"and", authPending:"Google Sign-In will be connected in the next stage.", googleAuthStarting:"Redirecting to Google...", googleAuthOk:"Signed in with Google and synced.", googleAuthFail:"Google sign-in failed.", inProgress:"In progress", soonTag:"Soon" }
@@ -1050,7 +1046,13 @@ function categoryLabel(b){
   if(key==="limited") return "Limited";
   if(key==="rye") return "Rye Whiskey";
   const raw=searchText(((b&&b.type)||"")+" "+((b&&b.category)||""));
-  return raw.indexOf("straight")>=0 ? "Straight Bourbon" : "Bourbon";
+  if(raw.indexOf("american single malt")>=0) return "American Single Malt";
+  if(raw.indexOf("single malt")>=0) return "Single Malt Whisky";
+  if(raw.indexOf("scotch")>=0) return "Scotch Whisky";
+  if(raw.indexOf("tennessee")>=0) return "Tennessee Whiskey";
+  if(raw.indexOf("bourbon")>=0) return raw.indexOf("straight")>=0 ? "Straight Bourbon" : "Bourbon";
+  if(raw.indexOf("whiskey")>=0 || raw.indexOf("whisky")>=0) return "Whisky";
+  return lang==="pl" ? "Alkohol mocny" : "Spirit";
 }
 function compactBottleName(b){
   let name=textClean((b&&b.name)||"");
@@ -2549,6 +2551,8 @@ document.addEventListener("click",function(e){
   }
   const aiPlusAction=e.target.closest("[data-ai-plus]");
   if(aiPlusAction){ e.preventDefault(); toast(t("inProgress")); return; }
+  const scanRetryAction=e.target.closest("[data-scan-retry]");
+  if(scanRetryAction){ e.preventDefault(); resetShot(); fileInput.click(); return; }
   const badgeChoice=e.target.closest("[data-badge-choice]");
   if(badgeChoice){ e.preventDefault(); pendingBadge=badgeChoice.getAttribute("data-badge-choice")||"glass"; renderBadgePicker(); return; }
   const profileAction=e.target.closest("[data-profile-action]");
@@ -2871,17 +2875,14 @@ function stopLoading(){ busy=false; goRate.disabled=false; shot.classList.remove
 function showErr(m){ const e=document.getElementById("err"); e.textContent=m; e.style.display="block"; }
 function pct(v){ const n=Number(v); return Number.isFinite(n) ? Math.round(Math.max(0,Math.min(1,n))*100) : 0; }
 function renderLowConfidence(data){
-  const candidate=data&&data.candidate ? data.candidate : "";
   const confidence=pct(data&&data.confidence);
   const min=pct(data&&data.minConfidence) || 80;
   document.getElementById("scanResult").innerHTML =
     '<div class="card">'+
-      '<span class="badge net">'+t("soonTag")+'</span>'+
       '<div class="name">'+t("lowConfTitle")+'</div>'+
-      (candidate?'<div class="dorigin">'+esc(candidate)+'</div>':'')+
       '<p class="desc">'+t("lowConfBody")+'</p>'+
       '<div class="row"><div class="pill"><div class="k">'+(lang==="pl"?"Pewność":"Confidence")+'</div><div class="v">'+confidence+'%</div></div><div class="pill"><div class="k">'+(lang==="pl"?"Próg":"Required")+'</div><div class="v">'+min+'%</div></div></div>'+
-      '<button class="btn btn-alt" type="button" data-ai-plus="1" style="width:100%;margin-top:14px">'+t("aiPlusBtn")+'</button>'+
+      '<button class="btn btn-alt" type="button" data-scan-retry="1" style="width:100%;margin-top:14px">'+t("scanRetryPhoto")+'</button>'+
     '</div>';
   document.getElementById("scanResult").scrollIntoView({behavior:"smooth",block:"start"});
 }
@@ -2924,11 +2925,9 @@ function renderScan(res, mode){
   if(!Array.isArray(res.description)) normalizeTasting(res);
   currentScanResult=res;
   syncScanResult(res);
-  const isNew = res.source==="net" || res.isNew;
-  const badge = isNew?'<span class="badge net">'+t("fromNet")+'</span>':'<span class="badge db">'+t("fromDb")+'</span>';
   const origin=[res.distillery,res.region].filter(Boolean).map(esc).join(" · ");
   const img=res.image?'<div class="dphoto">'+bottleActionsHtml(res)+'<img src="'+esc(res.image)+'" alt="'+esc(res.name||"")+'" loading="eager" decoding="async">'+valueBadgeHtml(res)+'</div>':'';
-  let head='<div class="card">'+badge+'<div class="name">'+esc(res.name||"-")+'</div>'+
+  let head='<div class="card"><div class="name">'+esc(res.name||"-")+'</div>'+
     '<div class="dtype">'+esc(categoryLabel(res))+'</div>'+
     (origin?'<div class="dorigin">'+origin+'</div>':'')+img+
     '<div class="verdict"><div class="score">'+(res.value||"?")+'<small>/5</small></div>'+

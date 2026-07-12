@@ -18,7 +18,7 @@ const DEFAULT_PROMPT_URL = "https://raw.githubusercontent.com/" + REPO + "/main/
 const DEFAULT_DB_URL = "https://raw.githubusercontent.com/" + REPO + "/main/db/catalog/scan-index.json";
 const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters. Krotko, z jajem, ale rzeczowo. quality=jakosc 1-5, value=jakosc/cena 1-5 (5 swietna i tania, 1 slaba i droga). Pisz {{LANG}}. Zwroc tylko JSON.";
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
-const SCAN_ORCHESTRATOR_VERSION = "ocr-visual-fusion-catalog-10k-v2";
+const SCAN_ORCHESTRATOR_VERSION = "ocr-visual-fusion-catalog-10k-v3-strict-brand";
 const SCAN_CATALOG_VERSION = "ttb-olcc-10k-v1";
 const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v1";
 const AUTH_VERSION = "auth-pbkdf2-100000-google-v3";
@@ -859,6 +859,31 @@ function textBottleScore(text, bottle){
   return best;
 }
 
+const GENERIC_MATCH_TOKENS={
+  whiskey:1,whisky:1,bourbon:1,american:1,single:1,malt:1,straight:1,domestic:1,kentucky:1,
+  blended:1,blend:1,spirit:1,spirits:1,distillery:1,distilling:1,reserve:1,small:1,batch:1,
+  barrel:1,cask:1,aged:1,year:1,years:1,proof:1,bottled:1,bond:1,rye:1,grain:1,oak:1,
+  finish:1,finished:1,label:1,edition:1,limited:1,release:1,original:1
+};
+function distinctiveTokens(value){
+  const seen={};
+  return toks(value).filter(function(token){
+    if(GENERIC_MATCH_TOKENS[token] || seen[token]) return false;
+    seen[token]=1;
+    return true;
+  });
+}
+function bottleDistinctiveTokens(bottle){
+  return distinctiveTokens([(bottle&&bottle.name)||""].concat(Array.isArray(bottle&&bottle.aliases)?bottle.aliases:[]).join(" "));
+}
+function observedDistinctiveTokens(names){
+  return distinctiveTokens((names||[]).map(function(item){ return item&&item.name||""; }).join(" "));
+}
+function sharedTokens(left, right){
+  const set={}; (left||[]).forEach(function(token){ set[token]=1; });
+  return (right||[]).filter(function(token){ return !!set[token]; });
+}
+
 function numberFrom(v){
   const m=String(v||"").replace(",",".").match(/(\d+(?:\.\d+)?)/);
   return m ? Number(m[1]) : 0;
@@ -926,6 +951,9 @@ function scanAgentTrace(vision, ocr, matched){
     orchestrator:{
       matched:matched&&matched.bottle ? matched.bottle.id : null,
       confidence:matched ? clamp01(matched.dbConfidence) : 0,
+      brand_anchors:matched&&matched.brandAnchors ? matched.brandAnchors : [],
+      ambiguous:!!(matched&&matched.ambiguous),
+      candidate_margin:matched&&Number.isFinite(matched.margin) ? Math.round(matched.margin*1000)/1000 : null,
       matched_fields:matched&&matched.matchedFields ? matched.matchedFields : [],
       candidates:matched&&matched.candidates ? matched.candidates.slice(0,3) : []
     }
@@ -942,17 +970,26 @@ function matchBottleWithEvidence(db, vision, ocr){
   const ocrNames=[];
   if(ocn) ocrNames.push({name:ocn,confidence:ocr.confidence||0.65,source:"ocr_fields"});
   if(ocr.raw_text) ocrNames.push({name:ocr.raw_text,confidence:Math.min(ocr.confidence||0.55,0.72),source:"ocr_raw"});
+  const visualDistinctive=observedDistinctiveTokens(visualNames);
+  const ocrDistinctive=observedDistinctiveTokens(ocn?[{name:ocn}]:[]);
+  const observedDistinctive=distinctiveTokens(visualDistinctive.concat(ocrDistinctive).join(" "));
+  if(!observedDistinctive.length) return null;
   const rows=[];
   const candidateIndexes={};
   const tokenIndex=db.token_index||{};
   visualNames.concat(ocrNames).forEach(function(candidate){
-    toks(candidate.name).forEach(function(token){
+    distinctiveTokens(candidate.name).forEach(function(token){
       (tokenIndex[token]||[]).forEach(function(index){ candidateIndexes[index]=1; });
     });
   });
-  const indexed=Object.keys(candidateIndexes).map(function(index){ return (db.bottles||[])[Number(index)]; }).filter(Boolean);
-  const candidateBottles=indexed.length ? indexed : (db.bottles||[]);
+  const candidateBottles=Object.keys(candidateIndexes).map(function(index){ return (db.bottles||[])[Number(index)]; }).filter(Boolean);
+  if(!candidateBottles.length) return null;
   candidateBottles.forEach(function(b){
+    const bottleDistinctive=bottleDistinctiveTokens(b);
+    const brandAnchors=sharedTokens(observedDistinctive,bottleDistinctive);
+    if(!bottleDistinctive.length || !brandAnchors.length) return;
+    const visualAnchors=sharedTokens(visualDistinctive,bottleDistinctive);
+    const ocrAnchors=sharedTokens(ocrDistinctive,bottleDistinctive);
     let bestVisual=0, bestOcr=0;
     visualNames.forEach(function(v){ bestVisual=Math.max(bestVisual,textBottleScore(v.name,b)*clamp01(v.confidence)); });
     ocrNames.forEach(function(v){ bestOcr=Math.max(bestOcr,textBottleScore(v.name,b)*clamp01(v.confidence)); });
@@ -962,18 +999,25 @@ function matchBottleWithEvidence(db, vision, ocr){
     if(!weight) return;
     const fields=fieldEvidenceScore(b,ocr);
     const agreement=(bestVisual>=0.72 && bestOcr>=0.72) ? 0.08 : 0;
-    const confidence=clamp01((sum/weight)+fields.score+agreement);
+    const brandAgreement=(visualAnchors.length && ocrAnchors.length) ? 0.08 : 0;
+    let confidence=clamp01((sum/weight)+fields.score+agreement+0.08+brandAgreement);
+    if(visualDistinctive.length && ocrDistinctive.length && (!visualAnchors.length || !ocrAnchors.length)) confidence=Math.min(confidence,0.79);
     if(confidence<0.25) return;
     rows.push({
       bottle:b,
       dbConfidence:confidence,
-      matchedFields:fields.matched.concat(bestVisual>=0.55?["visual"]:[]).concat(bestOcr>=0.55?["ocr"]:[]),
-      evidence:{visual:bestVisual,ocr:bestOcr,fieldBoost:fields.score,agreementBoost:agreement}
+      brandAnchored:true,
+      brandAnchors:brandAnchors,
+      matchedFields:fields.matched.concat(bestVisual>=0.55?["visual"]:[]).concat(bestOcr>=0.55?["ocr"]:[]).concat(["brand_anchor"]),
+      evidence:{visual:bestVisual,ocr:bestOcr,fieldBoost:fields.score,agreementBoost:agreement,brandBoost:0.08+brandAgreement,brandAnchors:brandAnchors}
     });
   });
   rows.sort(function(a,b){ return b.dbConfidence-a.dbConfidence; });
   const best=rows[0]||null;
   if(!best) return null;
+  const second=rows[1]||null;
+  best.margin=second ? best.dbConfidence-second.dbConfidence : 1;
+  best.ambiguous=!!(second && second.dbConfidence>=0.72 && best.margin<0.08);
   best.candidates=rows.slice(0,5).map(function(r){
     return {id:r.bottle.id,name:r.bottle.name,confidence:clamp01(r.dbConfidence),evidence:r.evidence,matched_fields:r.matchedFields};
   });
@@ -1069,7 +1113,7 @@ export default {
     if(!bottleName && !ocrHasSignal(ocrj)) return J({error:"not_bottle",agents:scanAgentTrace(idj,ocrj,null)},200,cors);
 
     const db=await getDB(env);
-    const matched=matchBottleWithEvidence(db, idj, ocrj) || matchBottle(db, bottleName);
+    const matched=matchBottleWithEvidence(db, idj, ocrj);
     const hit=matched&&matched.bottle ? matched.bottle : null;
     const minConfidence=clamp01(env.MIN_MATCH_CONFIDENCE||DEFAULT_MATCH_CONFIDENCE) || DEFAULT_MATCH_CONFIDENCE;
     const visionConfidence=clamp01(idj.confidence);
@@ -1077,7 +1121,7 @@ export default {
     const dbConfidence=matched ? clamp01(matched.dbConfidence) : 0;
     const overallConfidence=hit ? dbConfidence : 0;
     const agentTrace=scanAgentTrace(idj,ocrj,matched);
-    const confidentHit=!!(hit && overallConfidence>=minConfidence);
+    const confidentHit=!!(hit && matched.brandAnchored && !matched.ambiguous && overallConfidence>=minConfidence);
     function lowConfidenceResponse(modeName){
       return J({
         error:"low_confidence",
@@ -1089,6 +1133,7 @@ export default {
         ocrConfidence:ocrConfidence,
         dbConfidence:dbConfidence,
         minConfidence:minConfidence,
+        reason:!matched?"brand_not_confirmed":matched.ambiguous?"ambiguous_candidates":"below_confidence_threshold",
         agents:agentTrace
       },200,cors);
     }

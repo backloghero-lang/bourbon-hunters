@@ -32,10 +32,10 @@ The scanner reads a bottle label photo and asks Hunter to match it against the b
 
 Current quality rule:
 
-1. Hunter recognizes the bottle name from the photo.
-2. The Worker checks `db/bourbons.json` first.
-3. A normal result is shown only when match confidence is at least 80%.
-4. Lower-confidence scans do not return a random bottle. They show the planned `Hunter AI Plus` state.
+1. The visual agent identifies the bottle while the OCR agent reads the front label independently.
+2. The orchestrator compares both outputs against the 10k scan index.
+3. A result requires a distinctive brand/name anchor; category-only phrases such as `American Single Malt Whiskey` cannot become a match.
+4. A normal result is shown only at 80% confidence with a clear lead over competing records. Otherwise the app asks for a sharper label photo.
 
 | Feature | Status |
 |---|---|
@@ -82,7 +82,7 @@ index.html     agent/worker.js      D1, R2, Images, KV, whisky catalog
 2. Create or select a private R2 bucket and bind it to the Worker as `BOTTLE_IMAGES`.
 3. Add a Cloudflare Images binding named `IMAGES`.
 4. Replace/deploy `agent/worker.js`.
-5. Publish the frontend through GitHub Pages and refresh the installed PWA so cache `bourbon-hunters-v81` is active.
+5. Publish the frontend through GitHub Pages and refresh the installed PWA so cache `bourbon-hunters-v82` is active.
 6. Verify `/auth/health`: `catalog_schema`, `image_pipeline_ready`, `d1` and the existing schema flags should all be `true`.
 
 ## Project Direction
