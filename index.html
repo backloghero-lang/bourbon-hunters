@@ -890,7 +890,7 @@ const I18N = {
     valLbl:"Jakość / Cena", quality:"Jakość", price:"Cena (orient.)", distillery:"Destylarnia", region:"Region", mashbill:"Mash bill", abv:"Moc",
     descT:"Opis", infoT:"Informacje ogólne", historyT:"Historia", linksT:"Linki", notesT:"Profil smaku", sourcesT:"Źródła", fromDb:"Z bazy", fromNet:"Nowość — z sieci", category:"Kategoria",
     notBottle:"Hunter nie widzi tu butelki whisky. Zrób wyraźne zdjęcie etykiety i spróbuj jeszcze raz.",
-    errGeneric:"Coś poszło nie tak. Spróbuj ponownie za chwilę.", errRetry:"Hunter jest chwilowo przeciążony. Daj mu sekundę i kliknij jeszcze raz.",
+    errGeneric:"Coś poszło nie tak. Spróbuj ponownie za chwilę.", errRetry:"Hunter jest chwilowo przeciążony. Daj mu sekundę i kliknij jeszcze raz.", errQuota:"Dzienny limit skanera AI został wykorzystany. Limit Gemini odnowi się następnego dnia rano.",
     vibe:"Vibe-coded z Claude · projekt weekendowy", explore_t:"Odkrywaj",
     navHome:"Start", navExplore:"Odkrywaj", navScan:"Skanuj", navColl:"Kolekcja", navProfile:"Profil", homeCollection:"Moja kolekcja",
     collTitle:"Twoja kolekcja", collSoon:"Wkrótce: zapis zeskanowanych butelek, ulubione i notatki. Budujemy to w kolejnym etapie.",
@@ -912,7 +912,7 @@ const I18N = {
     valLbl:"Quality / Price", quality:"Quality", price:"Price (approx.)", distillery:"Distillery", region:"Region", mashbill:"Mash bill", abv:"ABV",
     descT:"Description", infoT:"General info", historyT:"History", linksT:"Links", notesT:"Tasting notes", sourcesT:"Sources", fromDb:"From database", fromNet:"New — from the web", category:"Category",
     notBottle:"Hunter sees no whisky bottle here. Take a clear photo of the label and try again.",
-    errGeneric:"Something went wrong. Please try again shortly.", errRetry:"Hunter is briefly overloaded. Give it a second and tap again.",
+    errGeneric:"Something went wrong. Please try again shortly.", errRetry:"Hunter is briefly overloaded. Give it a second and tap again.", errQuota:"The daily AI scanner quota has been used. Gemini's quota will reset the following morning.",
     vibe:"Vibe-coded with Claude · a weekend project", explore_t:"Explore",
     navHome:"Home", navExplore:"Explore", navScan:"Scan", navColl:"Collection", navProfile:"Profile", homeCollection:"My collection",
     collTitle:"Your collection", collSoon:"Coming soon: save scanned bottles, favourites and notes. We build this in the next stage.",
@@ -2914,6 +2914,7 @@ function scan(mode){
   .then(function(r){return r.json();}).then(function(data){
     stopLoading();
     if(data.error==="not_bottle"){ showErr(t("notBottle")); return; }
+    if(data.error==="quota_exhausted"){ showErr(t("errQuota")); return; }
     if(data.needsPro || data.error==="low_confidence"){ renderLowConfidence(data); return; }
     if(data.retry){ showErr(t("errRetry")); return; }
     if(data.error||!data.result){ showErr(t("errGeneric")+(data.error?" ["+data.error+(data.status?" "+data.status:"")+(data.raw?": "+String(data.raw).slice(0,160):"")+"]":"")); return; }

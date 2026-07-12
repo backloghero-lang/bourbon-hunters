@@ -8,7 +8,7 @@
 //   4b) tryb "analyze"-> rozbudowany opis + historia destylarni z linkami (Gemini + Google Search), fakty z bazy jako grunt.
 //
 // SEKRETY: GEMINI_API_KEY (wymagany), DEV_KEY (opcjonalny)
-// ZMIENNE: MODEL, IDENT_MODEL, TEMP_RATE, TEMP_ANALYZE, THINK_ANALYZE, MAX_RATE, MAX_ANALYZE, DAILY_LIMIT, ALLOW_ORIGIN, PROMPT_URL, DB_URL, APP_URL, GOOGLE_REDIRECT_URI
+// ZMIENNE: MODEL, IDENT_MODEL, OCR_MODEL, TEMP_RATE, TEMP_ANALYZE, THINK_ANALYZE, MAX_RATE, MAX_ANALYZE, DAILY_LIMIT, ALLOW_ORIGIN, PROMPT_URL, DB_URL, APP_URL, GOOGLE_REDIRECT_URI
 // SEKRETY OAuth: GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, opcjonalnie GOOGLE_STATE_SECRET
 // KV: DS_KV (limit + zapis nowosci). Klucze nowosci: "new:<id>".
 // D1: DB (konta, sesje, wishlist, kolekcja, oceny).
@@ -18,7 +18,7 @@ const DEFAULT_PROMPT_URL = "https://raw.githubusercontent.com/" + REPO + "/main/
 const DEFAULT_DB_URL = "https://raw.githubusercontent.com/" + REPO + "/main/db/catalog/scan-index.json";
 const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters. Krotko, z jajem, ale rzeczowo. quality=jakosc 1-5, value=jakosc/cena 1-5 (5 swietna i tania, 1 slaba i droga). Pisz {{LANG}}. Zwroc tylko JSON.";
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
-const SCAN_ORCHESTRATOR_VERSION = "ocr-visual-fusion-catalog-10k-v3-strict-brand";
+const SCAN_ORCHESTRATOR_VERSION = "ocr-visual-fusion-catalog-10k-v4-split-models";
 const SCAN_CATALOG_VERSION = "ttb-olcc-10k-v1";
 const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v2-trim-centered";
 const AUTH_VERSION = "auth-pbkdf2-100000-google-v3";
@@ -1045,7 +1045,7 @@ async function callVisualAgent(env, mime, image){
 
 async function callOcrAgent(env, mime, image){
   const payload={
-    __model: env.OCR_MODEL||env.IDENT_MODEL||env.MODEL||"gemini-2.5-flash",
+    __model: env.OCR_MODEL||"gemini-2.5-flash-lite",
     contents:[{role:"user",parts:[
       {inlineData:{mimeType:mime,data:image}},
       {text:"Act as an OCR agent for whisky labels. Read visible label text and extract factual fields. Do not guess beyond the label. Return ONLY JSON: {\"raw_text\":\"all readable label text\",\"brand\":\"\",\"name\":\"\",\"expression\":\"\",\"age\":\"\",\"proof\":\"\",\"abv\":\"\",\"category\":\"\",\"confidence\":0.0-1.0}. If no useful label text is readable, raw_text=\"\" and confidence=0."}
@@ -1111,7 +1111,10 @@ export default {
     ]);
     const visualErr=agents[0]&&agents[0].err;
     const ocrErr=agents[1]&&agents[1].err;
-    if(visualErr && ocrErr) return J({error:"upstream",status:visualErr.status||ocrErr.status,detail:(visualErr.detail||ocrErr.detail||"agent_error"),retry:true}, (visualErr.status||ocrErr.status)===0?502:503, cors);
+    if(visualErr && ocrErr){
+      const quotaExhausted=visualErr.status===429 && ocrErr.status===429;
+      return J({error:quotaExhausted?"quota_exhausted":"upstream",status:visualErr.status||ocrErr.status,detail:(visualErr.detail||ocrErr.detail||"agent_error"),retry:!quotaExhausted}, quotaExhausted?429:((visualErr.status||ocrErr.status)===0?502:503), cors);
+    }
     const idj=compactVision((agents[0]&&agents[0].data)||{});
     const ocrj=compactOcr((agents[1]&&agents[1].data)||{});
     const bottleName=(idj.name||ocrCandidateName(ocrj)||"").toString().trim();
