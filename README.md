@@ -82,7 +82,7 @@ index.html     agent/worker.js      D1, R2, Images, KV, whisky catalog
 2. Create or select a private R2 bucket and bind it to the Worker as `BOTTLE_IMAGES`.
 3. Add a Cloudflare Images binding named `IMAGES`.
 4. Replace/deploy `agent/worker.js`.
-5. Publish the frontend through GitHub Pages and refresh the installed PWA so cache `bourbon-hunters-v83` is active.
+5. Publish the frontend through GitHub Pages and refresh the installed PWA so cache `bourbon-hunters-v84` is active.
 6. Verify `/auth/health`: `catalog_schema`, `image_pipeline_ready`, `d1` and the existing schema flags should all be `true`.
 
 ## Project Direction

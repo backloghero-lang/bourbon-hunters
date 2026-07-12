@@ -2878,13 +2878,29 @@ function stopLoading(){ busy=false; goRate.disabled=false; shot.classList.remove
 function showErr(m){ const e=document.getElementById("err"); e.textContent=m; e.style.display="block"; }
 function pct(v){ const n=Number(v); return Number.isFinite(n) ? Math.round(Math.max(0,Math.min(1,n))*100) : 0; }
 function renderLowConfidence(data){
-  const confidence=pct(data&&data.confidence);
-  const min=pct(data&&data.minConfidence) || 80;
+  data=data||{};
+  const reason=data.reason||"below_confidence_threshold";
+  const dbConfidence=pct(data.dbConfidence!=null?data.dbConfidence:data.confidence);
+  const readConfidence=pct(Math.max(Number(data.visionConfidence)||0,Number(data.ocrConfidence)||0));
+  const min=pct(data.minConfidence) || 80;
+  const margin=pct(data.agents&&data.agents.orchestrator&&data.agents.orchestrator.candidate_margin);
+  let title=t("lowConfTitle"), body=t("lowConfBody"), leftLabel=(lang==="pl"?"Dopasowanie do bazy":"Database match"), leftValue=dbConfidence+"%", rightLabel=(lang==="pl"?"Wymagane":"Required"), rightValue=min+"%";
+  if(reason==="brand_not_confirmed"){
+    title=lang==="pl"?"Etykieta odczytana, ale brak rekordu":"Label read, but no catalog match";
+    body=lang==="pl"?"Agent rozpoznał tekst, lecz nie potwierdził konkretnej butelki w bazie. Zrób wyraźniejsze zdjęcie nazwy i wariantu.":"The agent read the label, but could not confirm a specific catalog bottle. Retake the brand and expression clearly.";
+    leftLabel=lang==="pl"?"Odczyt etykiety":"Label reading"; leftValue=(readConfidence||pct(data.confidence))+"%";
+    rightLabel=lang==="pl"?"Dopasowanie do bazy":"Database match"; rightValue=dbConfidence+"%";
+  } else if(reason==="ambiguous_candidates"){
+    title=lang==="pl"?"Mam dwa podobne warianty":"Two similar variants found";
+    body=lang==="pl"?"Odczyt jest dobry, ale dwa rekordy pasują prawie tak samo. Pokaż dokładną nazwę wariantu na przedniej etykiecie.":"The label is readable, but two records match almost equally. Show the exact expression on the front label.";
+    leftLabel=lang==="pl"?"Najlepszy wynik":"Best match"; leftValue=dbConfidence+"%";
+    rightLabel=lang==="pl"?"Przewaga":"Lead"; rightValue=margin+"%";
+  }
   document.getElementById("scanResult").innerHTML =
     '<div class="card">'+
-      '<div class="name">'+t("lowConfTitle")+'</div>'+
-      '<p class="desc">'+t("lowConfBody")+'</p>'+
-      '<div class="row"><div class="pill"><div class="k">'+(lang==="pl"?"Pewność":"Confidence")+'</div><div class="v">'+confidence+'%</div></div><div class="pill"><div class="k">'+(lang==="pl"?"Próg":"Required")+'</div><div class="v">'+min+'%</div></div></div>'+
+      '<div class="name">'+title+'</div>'+
+      '<p class="desc">'+body+'</p>'+
+      '<div class="row"><div class="pill"><div class="k">'+leftLabel+'</div><div class="v">'+leftValue+'</div></div><div class="pill"><div class="k">'+rightLabel+'</div><div class="v">'+rightValue+'</div></div></div>'+
       '<button class="btn btn-alt" type="button" data-scan-retry="1" style="width:100%;margin-top:14px">'+t("scanRetryPhoto")+'</button>'+
     '</div>';
   document.getElementById("scanResult").scrollIntoView({behavior:"smooth",block:"start"});

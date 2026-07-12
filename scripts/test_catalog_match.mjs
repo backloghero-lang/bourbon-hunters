@@ -92,6 +92,7 @@ const results = [
   assertMatch("Bulleit Bourbon Bottled in Bond 100 proof", "bulleit-bottled-in-bond-111-22"),
   assertMatch("Glenmorangie Triple Cask Reserve single malt scotch", "olcc-13148b"),
   assertMatch("Bulleit American Single Malt Whiskey 90 proof", "olcc-11838b"),
+  assertMatch("Jefferson's Straight Bourbon Whiskey", "jeffersons-very-small-batch-bourbon-whiskey-copy"),
   assertNoMatch("American Single Malt Whiskey"),
   assertNoConfidentMatch("Booker's 2025-02 By The Pond Batch"),
   assertNoConfidentMatch("Little Book The Infinite Edition II"),
