@@ -17,7 +17,7 @@ const genericTokens = new Set([
   "whiskey","whisky","bourbon","american","single","malt","straight","domestic","kentucky",
   "blended","blend","spirit","spirits","distillery","distilling","reserve","small","batch",
   "barrel","cask","aged","year","years","proof","bottled","bond","rye","grain","oak",
-  "finish","finished","label","edition","limited","release","original"
+  "finish","finished","label","edition","limited","release","original","old"
 ]);
 function distinctiveTokens(value) {
   return [...new Set(toks(value).filter((word) => !genericTokens.has(word)))];
@@ -54,8 +54,16 @@ function rankedMatches(text) {
   for (const token of inputDistinctive) for (const index of db.token_index?.[token] || []) candidateIndexes.add(index);
   return [...candidateIndexes].map((index) => db.bottles[index]).filter((bottle) => {
     const anchors = distinctiveTokens([bottle.name, ...(bottle.aliases || [])].join(" "));
-    return anchors.some((token) => inputDistinctive.includes(token));
-  }).map((bottle) => ({ id: bottle.id, name: bottle.name, score: score(text, bottle) }))
+    const lexicalAnchors = anchors.filter((token) => !/^\d+$/.test(token));
+    return (lexicalAnchors.length ? lexicalAnchors : anchors).some((token) => inputDistinctive.includes(token));
+  }).map((bottle) => {
+    const bottleDistinctive=distinctiveTokens([bottle.name,...(bottle.aliases||[])].join(" "));
+    const unmatchedObserved=inputDistinctive.filter((token)=>!bottleDistinctive.includes(token));
+    const unmatchedBottle=bottleDistinctive.filter((token)=>!inputDistinctive.includes(token));
+    let matchScore=score(text,bottle);
+    if(unmatchedObserved.length && unmatchedBottle.length) matchScore=Math.min(matchScore,0.79);
+    return {id:bottle.id,name:bottle.name,score:matchScore};
+  })
     .sort((a, b) => b.score - a.score);
 }
 
@@ -74,12 +82,20 @@ function assertNoMatch(text) {
   if (matches.length) throw new Error(`Expected no match for ${text}, got ${JSON.stringify(matches.slice(0, 5))}`);
   return { text, expectedId: null, candidateCount: 0, score: 0 };
 }
+function assertNoConfidentMatch(text) {
+  const matches=rankedMatches(text);
+  if((matches[0]?.score||0)>=0.8) throw new Error(`Expected no confident match for ${text}, got ${JSON.stringify(matches.slice(0,5))}`);
+  return {text,expectedId:null,candidateCount:matches.length,score:matches[0]?.score||0};
+}
 
 const results = [
   assertMatch("Bulleit Bourbon Bottled in Bond 100 proof", "bulleit-bottled-in-bond-111-22"),
   assertMatch("Glenmorangie Triple Cask Reserve single malt scotch", "olcc-13148b"),
   assertMatch("Bulleit American Single Malt Whiskey 90 proof", "olcc-11838b"),
-  assertNoMatch("American Single Malt Whiskey")
+  assertNoMatch("American Single Malt Whiskey"),
+  assertNoConfidentMatch("Booker's 2025-02 By The Pond Batch"),
+  assertNoConfidentMatch("Little Book The Infinite Edition II"),
+  assertNoConfidentMatch("Knob Creek 21 Year Old Bourbon")
 ];
 
 console.log(JSON.stringify({ ok: true, count: db.bottles.length, results }, null, 2));
