@@ -95,6 +95,7 @@
     background:radial-gradient(86% 74% at 52% 58%,rgba(232,156,66,.32),rgba(86,45,16,.18) 44%,transparent 74%)}
   .bottlepic:after{content:"";position:absolute;left:22px;right:22px;bottom:7px;height:12px;border-radius:50%;background:rgba(0,0,0,.45);filter:blur(7px);z-index:-1}
   .bottlepic img{max-width:112px;max-height:138px;width:auto!important;height:auto!important;object-fit:contain!important;border-radius:0!important;filter:contrast(1.08) saturate(1.12) drop-shadow(0 18px 18px rgba(0,0,0,.58))}
+  .bottlepic.agent-cutout img{max-width:124px;max-height:154px;object-position:center!important;transform:scale(1.16);transform-origin:center}
   .bottlepic .value-badge{right:2px;bottom:7px;min-width:39px;padding:6px 7px;font-size:11px}
   .feat-price-chip{position:absolute;right:2px;bottom:0;z-index:5;max-width:84px;padding:3px 8px;border-radius:999px;background:rgba(8,4,2,.76);border:1px solid rgba(226,176,112,.24);color:#E28A3D;font-size:12px;line-height:1.15;font-weight:950;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:0 8px 16px rgba(0,0,0,.34)}
   .value-badge{position:absolute;right:9px;bottom:8px;z-index:4;min-width:44px;text-align:center;border:1px solid rgba(226,176,112,.72);border-radius:999px;background:linear-gradient(180deg,rgba(33,19,8,.92),rgba(7,4,2,.88));color:#F6D48A;font-size:12px;font-weight:950;line-height:1;padding:7px 8px;box-shadow:0 9px 20px rgba(0,0,0,.38),0 0 14px rgba(226,176,112,.18);cursor:pointer;user-select:none}
@@ -308,6 +309,7 @@
   .dphoto{position:relative;width:100%;height:430px;border-radius:18px;border:1px solid rgba(226,176,112,.22);display:grid;place-items:center;margin:16px 0;background:linear-gradient(180deg,rgba(4,3,2,.02),rgba(4,2,1,.12)),url("assets/detail/bottle-detail-bg.png") center bottom/cover no-repeat;overflow:hidden;box-shadow:inset 0 0 54px rgba(0,0,0,.36),0 18px 36px rgba(0,0,0,.24)}
   .dphoto:before{content:"";position:absolute;inset:0;background:url("design/figma-assets/asset-pack-v1/noise-overlay.png") center/cover repeat;opacity:.12;pointer-events:none}
   .dphoto img{position:relative;z-index:1;width:auto!important;height:auto!important;max-width:66%!important;max-height:68%!important;object-fit:contain!important;object-position:center!important;filter:contrast(1.04) saturate(1.04) drop-shadow(0 18px 22px rgba(0,0,0,.55))}
+  .dphoto.agent-cutout img{max-width:78%!important;max-height:78%!important;transform:scale(1.08);transform-origin:center}
   .d-actions{position:absolute;top:12px;right:12px;z-index:3;display:flex;gap:9px}
   .shot img{width:100%;height:100%;object-fit:cover}
 
@@ -2113,9 +2115,10 @@ function featCard(b, kick, rec){
     '<div class="info"><h4 title="'+esc(shownName)+'">'+esc(shownName)+'</h4>'+
     '<div class="feat-tags"><span class="feat-tag">'+esc(tag)+'</span></div>'+
     '<span class="btn-sm" data-id="'+esc(b.id)+'">'+t("viewAll").split(" ")[0]+' →</span></div>'+
-    '<div class="feat-visual"><div class="bottlepic">'+(b.image?'<img src="'+esc(b.image)+'" loading="lazy" decoding="async" alt="">':mysteryBottleHtml(true))+valueBadgeHtml(b)+'</div>'+
+    '<div class="feat-visual"><div class="bottlepic'+(isAgentCutout(b)?' agent-cutout':'')+'">'+(b.image?'<img src="'+esc(b.image)+'" loading="lazy" decoding="async" alt="">':mysteryBottleHtml(true))+valueBadgeHtml(b)+'</div>'+
     (price?'<div class="feat-price-chip">'+esc(price)+'</div>':'')+'</div></div>';
 }
+function isAgentCutout(b){ return !!(b && (b.source==="community_catalog" || b.has_image===true)); }
 function mysteryBottleHtml(small){ return '<div class="mystery-bottle'+(small?' small':'')+'" aria-label="Brak zdjecia"><span>?</span></div>'; }
 function t(k){ return (I18N[lang]&&I18N[lang][k])||I18N.pl[k]||k; }
 function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
@@ -2678,7 +2681,7 @@ function openDetail(id, keepReturn, skipRecommendationFetch){
   if(!keepReturn) detailReturnView=currentView && currentView!=="detail" ? currentView : "explore";
   const origin = [b.distillery,b.region].filter(Boolean).map(esc).join(" · ");
   const actions = bottleActionsHtml(b);
-  const pic = b.image ? '<div class="dphoto">'+actions+'<img src="'+esc(b.image)+'" alt="'+esc(b.name)+'" loading="eager" decoding="async">'+valueBadgeHtml(b)+'</div>' : '<div class="dphoto">'+actions+mysteryBottleHtml(false)+valueBadgeHtml(b)+'</div>';
+  const pic = b.image ? '<div class="dphoto'+(isAgentCutout(b)?' agent-cutout':'')+'">'+actions+'<img src="'+esc(b.image)+'" alt="'+esc(b.name)+'" loading="eager" decoding="async">'+valueBadgeHtml(b)+'</div>' : '<div class="dphoto">'+actions+mysteryBottleHtml(false)+valueBadgeHtml(b)+'</div>';
   const statusBadge = b.status==="sold_out" || b.available===false
     ? '<span class="badge net">'+t("statusSold")+'</span>'
     : '<span class="badge db">'+t("statusAvail")+'</span>';
@@ -2926,7 +2929,7 @@ function renderScan(res, mode){
   currentScanResult=res;
   syncScanResult(res);
   const origin=[res.distillery,res.region].filter(Boolean).map(esc).join(" · ");
-  const img=res.image?'<div class="dphoto">'+bottleActionsHtml(res)+'<img src="'+esc(res.image)+'" alt="'+esc(res.name||"")+'" loading="eager" decoding="async">'+valueBadgeHtml(res)+'</div>':'';
+  const img=res.image?'<div class="dphoto'+(isAgentCutout(res)?' agent-cutout':'')+'">'+bottleActionsHtml(res)+'<img src="'+esc(res.image)+'" alt="'+esc(res.name||"")+'" loading="eager" decoding="async">'+valueBadgeHtml(res)+'</div>':'';
   let head='<div class="card"><div class="name">'+esc(res.name||"-")+'</div>'+
     '<div class="dtype">'+esc(categoryLabel(res))+'</div>'+
     (origin?'<div class="dorigin">'+origin+'</div>':'')+img+

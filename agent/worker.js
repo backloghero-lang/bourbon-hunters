@@ -20,7 +20,7 @@ const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
 const SCAN_ORCHESTRATOR_VERSION = "ocr-visual-fusion-catalog-10k-v3-strict-brand";
 const SCAN_CATALOG_VERSION = "ttb-olcc-10k-v1";
-const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v1";
+const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v2-trim-centered";
 const AUTH_VERSION = "auth-pbkdf2-100000-google-v3";
 const PBKDF2_ITERATIONS = 100000;
 const PROFILE_BADGE_IDS = ["glass","bottle","barrel","seal","hat","star","distillery","notes","opener","horseshoe"];
@@ -285,7 +285,7 @@ function publicCatalogBottle(row, request){
   data.source="community_catalog";
   data.isNew=true;
   data.added_at=row.created_at;
-  data.image=row.image_submission_id ? new URL("/catalog/image/"+encodeURIComponent(row.bottle_id),request.url).toString() : "";
+  data.image=row.image_submission_id ? new URL("/catalog/image/"+encodeURIComponent(row.bottle_id)+"?v="+encodeURIComponent(row.updated_at||row.created_at||"1"),request.url).toString() : "";
   data.has_image=!!row.image_submission_id;
   return data;
 }
@@ -322,7 +322,8 @@ async function createBottlePreview(env, request, user, body){
     await env.BOTTLE_IMAGES.put(originalKey,bytes,{httpMetadata:{contentType:mime}});
     const output=await env.IMAGES.input(new Blob([bytes],{type:mime}).stream())
       .transform({segment:"foreground"})
-      .transform({width:720,height:960,fit:"contain"})
+      .transform({trim:"border"})
+      .transform({width:820,height:1080,fit:"contain",background:"transparent",sharpen:1})
       .output({format:"image/webp"});
     const response=output.response();
     if(!response.ok) throw new Error("image_transform_"+response.status);
