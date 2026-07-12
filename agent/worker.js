@@ -18,7 +18,8 @@ const DEFAULT_PROMPT_URL = "https://raw.githubusercontent.com/" + REPO + "/main/
 const DEFAULT_DB_URL = "https://raw.githubusercontent.com/" + REPO + "/main/db/catalog/scan-index.json";
 const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters. Krotko, z jajem, ale rzeczowo. quality=jakosc 1-5, value=jakosc/cena 1-5 (5 swietna i tania, 1 slaba i droga). Pisz {{LANG}}. Zwroc tylko JSON.";
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
-const SCAN_ORCHESTRATOR_VERSION = "ocr-visual-fusion-catalog-10k-v5-spirit-guard";
+const CANDIDATE_MIN_CONFIDENCE = 0.55;
+const SCAN_ORCHESTRATOR_VERSION = "ocr-visual-fusion-catalog-10k-v6-user-confirmation";
 const SCAN_CATALOG_VERSION = "ttb-olcc-10k-v1";
 const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v2-trim-centered";
 const AUTH_VERSION = "auth-pbkdf2-100000-google-v3";
@@ -134,6 +135,11 @@ function redirectWithHash(returnUrl, params){
 }
 function assetUrl(env, path){ return appUrl(env)+String(path||"").replace(/^\/+/,""); }
 function supportEmail(env){ return String(env.SUPPORT_EMAIL||"support@bourbonhunters.app").trim(); }
+function isAdminUser(env, user){
+  if(!user || !user.email) return false;
+  const configured=String(env.ADMIN_EMAILS||"").split(",").concat([supportEmail(env)]).map(cleanEmail).filter(Boolean);
+  return configured.indexOf(cleanEmail(user.email))>=0;
+}
 function htmlEscape(s){
   return String(s||"").replace(/[&<>"']/g,function(c){
     return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];
@@ -961,6 +967,17 @@ function fieldEvidenceScore(bottle, ocr){
   return {score:score,matched:matched,conflict:conflict,observedSpirit:observedSpirit,bottleSpirit:bottleSpirit};
 }
 
+function scanBottleResult(bottle){
+  bottle=bottle||{};
+  return {
+    id:bottle.id||"",name:bottle.name||"",type:bottle.type||"",category:bottle.category||"",
+    distillery:bottle.distillery||"",region:bottle.region||"",mashbill:bottle.mashbill||"",
+    abv:bottle.abv,proof:bottle.proof,price:(bottle.price_str||bottle.price_pln||bottle.price||null),
+    quality:bottle.quality,value:bottle.value,verdict:"",notes:bottle.notes||"",image:bottle.image||"",
+    source:"baza",isNew:false
+  };
+}
+
 function scanAgentTrace(vision, ocr, matched){
   return {
     version:SCAN_ORCHESTRATOR_VERSION,
@@ -1042,7 +1059,7 @@ function matchBottleWithEvidence(db, vision, ocr){
   best.margin=second ? best.dbConfidence-second.dbConfidence : 1;
   best.ambiguous=!!(second && second.dbConfidence>=0.72 && best.margin<0.08);
   best.candidates=rows.slice(0,5).map(function(r){
-    return {id:r.bottle.id,name:r.bottle.name,confidence:clamp01(r.dbConfidence),evidence:r.evidence,matched_fields:r.matchedFields};
+    return {id:r.bottle.id,name:r.bottle.name,confidence:clamp01(r.dbConfidence),result:scanBottleResult(r.bottle),evidence:r.evidence,matched_fields:r.matchedFields};
   });
   return best;
 }
@@ -1112,42 +1129,52 @@ export default {
     const mime=["image/jpeg","image/png","image/webp"].includes(body.mime)?body.mime:"image/jpeg";
     const lang=["pl","en","es"].includes(body.lang)?body.lang:"pl";
     const mode=body.mode==="analyze"?"analyze":"rate";
+    const confirmedId=String(body.confirmed_id||"").trim().slice(0,180);
     if(!image||image.length<100) return J({error:"no image"},400,cors);
     if(image.length>8000000) return J({error:"image too large"},413,cors);
 
-    const owner=!!(env.DEV_KEY && body.dev && body.dev.toString()===env.DEV_KEY);
+    const scanUser=await authUser(env,request);
+    const owner=!!((env.DEV_KEY && body.dev && body.dev.toString()===env.DEV_KEY) || isAdminUser(env,scanUser));
     const LIMIT=parseInt(env.DAILY_LIMIT||"30",10);
     const ip=request.headers.get("CF-Connecting-IP")||"anon";
     const key="q:"+ip+":"+new Date().toISOString().slice(0,10);
     let used=0;
     if(!owner && env.DS_KV && LIMIT>0){ used=parseInt((await env.DS_KV.get(key))||"0",10); if(used>=LIMIT) return J({limited:true,remaining:0,limit:LIMIT},200,cors); }
 
-    // ---- KROK 1: visual agent + OCR agent (bez netu, rownolegle) ----
-    const agents=await Promise.all([
-      callVisualAgent(env,mime,image),
-      callOcrAgent(env,mime,image)
-    ]);
-    const visualErr=agents[0]&&agents[0].err;
-    const ocrErr=agents[1]&&agents[1].err;
-    if(visualErr && ocrErr){
-      const quotaExhausted=visualErr.status===429 || ocrErr.status===429;
-      return J({error:quotaExhausted?"quota_exhausted":"upstream",status:visualErr.status||ocrErr.status,detail:(visualErr.detail||ocrErr.detail||"agent_error"),retry:!quotaExhausted}, quotaExhausted?429:((visualErr.status||ocrErr.status)===0?502:503), cors);
-    }
-    const idj=compactVision((agents[0]&&agents[0].data)||{});
-    const ocrj=compactOcr((agents[1]&&agents[1].data)||{});
-    const bottleName=(idj.name||ocrCandidateName(ocrj)||"").toString().trim();
-    if(!bottleName && !ocrHasSignal(ocrj)) return J({error:"not_bottle",agents:scanAgentTrace(idj,ocrj,null)},200,cors);
-
     const db=await getDB(env);
-    const matched=matchBottleWithEvidence(db, idj, ocrj);
-    const hit=matched&&matched.bottle ? matched.bottle : null;
     const minConfidence=clamp01(env.MIN_MATCH_CONFIDENCE||DEFAULT_MATCH_CONFIDENCE) || DEFAULT_MATCH_CONFIDENCE;
-    const visionConfidence=clamp01(idj.confidence);
-    const ocrConfidence=clamp01(ocrj.confidence);
-    const dbConfidence=matched ? clamp01(matched.dbConfidence) : 0;
-    const overallConfidence=hit ? dbConfidence : 0;
-    const agentTrace=scanAgentTrace(idj,ocrj,matched);
-    const confidentHit=!!(hit && matched.brandAnchored && !matched.ambiguous && overallConfidence>=minConfidence);
+    let matched=null, hit=null, bottleName="", visionConfidence=0, ocrConfidence=0, dbConfidence=0, overallConfidence=0, agentTrace=null, confidentHit=false;
+    if(mode==="analyze" && confirmedId){
+      hit=(db.bottles||[]).find(function(bottle){ return bottle&&bottle.id===confirmedId; })||null;
+      if(!hit) return J({error:"confirmed_bottle_not_found"},404,cors);
+      bottleName=hit.name||confirmedId;
+      dbConfidence=1; overallConfidence=1; confidentHit=true;
+      agentTrace={version:SCAN_ORCHESTRATOR_VERSION,confirmed_by_user:true,confirmed_id:confirmedId};
+    } else {
+      // Visual i OCR buduja ranking. Ostateczny wybor zawsze nalezy do usera.
+      const agents=await Promise.all([
+        callVisualAgent(env,mime,image),
+        callOcrAgent(env,mime,image)
+      ]);
+      const visualErr=agents[0]&&agents[0].err;
+      const ocrErr=agents[1]&&agents[1].err;
+      if(visualErr && ocrErr){
+        const quotaExhausted=visualErr.status===429 || ocrErr.status===429;
+        return J({error:quotaExhausted?"quota_exhausted":"upstream",status:visualErr.status||ocrErr.status,detail:(visualErr.detail||ocrErr.detail||"agent_error"),retry:!quotaExhausted}, quotaExhausted?429:((visualErr.status||ocrErr.status)===0?502:503), cors);
+      }
+      const idj=compactVision((agents[0]&&agents[0].data)||{});
+      const ocrj=compactOcr((agents[1]&&agents[1].data)||{});
+      bottleName=(idj.name||ocrCandidateName(ocrj)||"").toString().trim();
+      if(!bottleName && !ocrHasSignal(ocrj)) return J({error:"not_bottle",agents:scanAgentTrace(idj,ocrj,null)},200,cors);
+      matched=matchBottleWithEvidence(db,idj,ocrj);
+      hit=matched&&matched.bottle ? matched.bottle : null;
+      visionConfidence=clamp01(idj.confidence);
+      ocrConfidence=clamp01(ocrj.confidence);
+      dbConfidence=matched ? clamp01(matched.dbConfidence) : 0;
+      overallConfidence=hit ? dbConfidence : 0;
+      agentTrace=scanAgentTrace(idj,ocrj,matched);
+      confidentHit=!!(hit && matched.brandAnchored && !matched.ambiguous && overallConfidence>=minConfidence);
+    }
     function lowConfidenceResponse(modeName){
       return J({
         error:"low_confidence",
@@ -1168,11 +1195,12 @@ export default {
 
     // =================== TRYB RATE ===================
     if(mode==="rate"){
-      if(confidentHit){
-        const result={ name:hit.name, type:hit.type, category:hit.category, distillery:hit.distillery, region:hit.region,
-          mashbill:hit.mashbill, abv:hit.abv, proof:hit.proof, price:(hit.price_str||hit.price_pln), quality:hit.quality, value:hit.value,
-          verdict:"", notes:hit.notes, image:hit.image||"", source:"baza", isNew:false };
-        return J({result:result, mode:mode, remaining:consume(), owner:owner, matched:hit.id, confidence:overallConfidence, agents:agentTrace}, 200, cors);
+      const rankedCandidates=(matched&&matched.candidates||[]);
+      const bestCandidate=rankedCandidates[0]||null;
+      if(bestCandidate && bestCandidate.confidence>=minConfidence){
+        const candidateFloor=Math.max(CANDIDATE_MIN_CONFIDENCE,bestCandidate.confidence-0.25);
+        const candidates=rankedCandidates.filter(function(candidate){ return candidate.confidence>=candidateFloor; }).slice(0,3);
+        return J({needs_confirmation:true,candidates:candidates,suggested:candidates[0].id,mode:mode,remaining:consume(),owner:owner,agents:agentTrace},200,cors);
       }
       return lowConfidenceResponse(mode);
     }
@@ -1190,7 +1218,9 @@ export default {
       generationConfig:{ temperature:parseFloat(env.TEMP_ANALYZE||"0.7"), maxOutputTokens:parseInt(env.MAX_ANALYZE||"3500",10), thinkingConfig:{thinkingBudget:parseInt(env.THINK_ANALYZE||"0",10)} }
     };
     const ga=await callGemini(env, analyzePayload);
-    if(ga.err) return J({error:"upstream",status:ga.err.status,detail:ga.err.detail,retry:true},503,cors);
+    if(ga.err) return ga.err.status===429
+      ? J({error:"quota_exhausted",status:429,detail:ga.err.detail,retry:false},429,cors)
+      : J({error:"upstream",status:ga.err.status,detail:ga.err.detail,retry:true},503,cors);
     const ra=parseJson(ga.txt);
     if(!ra) return J({error:"parse",raw:(ga.txt||"").slice(0,200)},502,cors);
     if((!ra.links||!ra.links.length) && ga.sources.length) ra.links=ga.sources;

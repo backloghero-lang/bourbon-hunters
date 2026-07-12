@@ -7,6 +7,16 @@ Aktualizacja: 2026-07-05.
 Najnowszy kontekst dla kolejnego etapu jest w `pliki-md/HANDOFF-BH-1.1.md`.
 Uzyj go jako pierwszego dokumentu przy starcie watku `Przekaz Bourbon Hunter 1.1`.
 
+## Aktualizacja 2026-07-12 - potwierdzanie wyniku skanera
+
+- Po kazdym pewnym skanie frontend pokazuje 1-3 kandydatow obok siebie. Szczegoly sa widoczne dopiero po wyborze i potwierdzeniu usera.
+- Najlepszy kandydat musi osiagnac skonfigurowany prog (domyslnie 80%). Slabszy wynik nadal prosi o wyrazniejsze zdjecie.
+- Do wyboru trafiaja maksymalnie trzy bliskie warianty; brak zdjecia jest prezentowany jako ciemna butelka ze znakiem zapytania.
+- Potwierdzony identyfikator jest przekazywany do analizy AI, wiec Worker nie wykonuje ponownego zgadywania wariantu.
+- Zalogowany admin jest zwolniony z limitu aplikacji/KV. Nie omija to zewnetrznego limitu projektu Gemini.
+- Cache PWA: `bourbon-hunters-v87`.
+- Punkty powrotu Git: `backup-pre-ocr-636617a` (stan sprzed OCR) oraz `backup-before-scan-confirmation-d0f60ed` (stan przed tym flow).
+
 
 ## Aktualizacja 2026-07-05
 

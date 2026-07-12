@@ -108,11 +108,34 @@ function assertExcluded(text, excludedId) {
   return {text,excludedId,excluded:true};
 }
 
+function confirmationCandidates(text, minConfidence = 0.8) {
+  const matches=rankedMatches(text);
+  if(!matches[0] || matches[0].score<minConfidence) return [];
+  const floor=Math.max(0.55,matches[0].score-0.25);
+  return matches.filter((match)=>match.score>=floor).slice(0,3);
+}
+
+function assertConfirmationSet(text, expectedIds) {
+  const candidates=confirmationCandidates(text);
+  const ids=candidates.map((candidate)=>candidate.id);
+  if(JSON.stringify(ids)!==JSON.stringify(expectedIds)) {
+    throw new Error(`Expected confirmation candidates ${JSON.stringify(expectedIds)}, got ${JSON.stringify(ids)}`);
+  }
+  return {text,confirmationCandidates:ids};
+}
+
 const results = [
   assertMatch("Bulleit Bourbon Bottled in Bond 100 proof", "bulleit-bottled-in-bond-111-22"),
   assertMatch("Glenmorangie Triple Cask Reserve single malt scotch", "olcc-13148b"),
   assertMatch("Bulleit American Single Malt Whiskey 90 proof", "olcc-11838b"),
   assertMatch("Jefferson's Bourbon Blend of Straight Bourbon Whiskey 82.3 proof", "jeffersons-very-small-batch-bourbon-whiskey-copy"),
+  assertConfirmationSet("Jefferson's Bourbon Blend of Straight Bourbon Whiskey 82.3 proof", [
+    "jeffersons-very-small-batch-bourbon-whiskey-copy",
+    "jefferson-s-blend-of-straight-bourbon-whiskeys",
+    "olcc-8123b"
+  ]),
+  assertConfirmationSet("Bulleit Bourbon Bottled in Bond 100 proof", ["bulleit-bottled-in-bond-111-22"]),
+  assertConfirmationSet("Booker's 2025-02 By The Pond Batch", []),
   assertExcluded("Jefferson's Bourbon Blend of Straight Bourbon Whiskey", "olcc-13413b"),
   assertNoMatch("American Single Malt Whiskey"),
   assertNoConfidentMatch("Booker's 2025-02 By The Pond Batch"),
