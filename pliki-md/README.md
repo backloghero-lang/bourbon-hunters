@@ -14,6 +14,7 @@ Ten folder trzyma dokumenty robocze, decyzje, roadmapy i pomocnicze skrypty.
 - `HANDOFF-BH-1.1.md` - aktualny handoff do kolejnego etapu projektu.
 - `INSTRUKCJA.md` - wdrozenie, Worker, D1 i testowanie.
 - `DESIGN.md` - zasady wizualne.
+- `MONETYZACJA-I-LIMITY.md` - plan Free/Pro, limity skanow, cena startowa, reklamy i kolejnosc wdrozenia.
 
 ## Figma
 

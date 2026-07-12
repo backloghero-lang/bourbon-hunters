@@ -1,6 +1,6 @@
 # Bourbon Hunters 1.1 - handoff do kolejnego etapu
 
-Aktualizacja: 2026-07-06.
+Aktualizacja: 2026-07-12.
 
 Ten plik ma byc pierwszym kontekstem dla nowego watku Codexa, np. `Przekaz Bourbon Hunter 1.1`.
 
@@ -35,13 +35,19 @@ pliki-md/BUGS.md
 
 ## Aktualny stan po sesji
 
-- Front/PWA jest na cache `bourbon-hunters-v65`.
-- Worker auth zwraca `auth-pbkdf2-100000-v2` i `pbkdf2_iterations: 100000`.
+- GitHub ma ostatni commit `b178510`; lokalny branch jest jeden commit do przodu.
+- Lokalny, jeszcze niewypchniety commit: `23b69fb Split scanner models and report quota limits`.
+- Front/PWA po wypchnieciu bedzie na cache `bourbon-hunters-v85`.
+- Worker auth zwraca `auth-pbkdf2-100000-google-v3` i `pbkdf2_iterations: 100000`.
+- Lokalny Worker oczekujacy na deploy ma scanner `ocr-visual-fusion-catalog-10k-v4-split-models`.
 - D1 jest podpiete jako binding `DB`.
 - Tabela resetu hasla `password_reset_tokens` jest obecna.
 - `email_ready` w `/auth/health` jest `true`, czyli Resend/MAIL_FROM sa skonfigurowane.
 - Rejestracja email/password dziala po stronie Workera i zapisuje konto w Cloudflare D1.
-- Google Sign-In jest tylko przyciskiem UI, jeszcze nie jest podpiety.
+- Google Sign-In jest podpiety do Workera i D1.
+- Katalog rozpoznawania ma 10000 rekordow TTB/OLCC i lokalnych.
+- R2 `BOTTLE_IMAGES` i Images `IMAGES` sa podpiete; pipeline zdjec jest gotowy.
+- Zgloszenie nowej butelki moze zapisac dane oraz zaakceptowany wycinek zdjecia usera.
 - Age gate pokazuje sie przed intro i uzywa assetu `assets/brand/age-gate.png`.
 - Maile transakcyjne uzywaja logo/headera aplikacji i subtelnej stopki premium.
 
@@ -107,9 +113,31 @@ Aktualne decyzje:
 
 - Podstawowy skaner nie moze zgadywac.
 - Wynik z bazy pokazujemy tylko przy pewnosci minimum 80%.
-- Ponizej 80% pokazujemy stan Hunter AI Plus.
-- Hunter AI Plus bedzie funkcja Pro/paywall: glebsze dopasowanie, web search, profil smaku, zapis nowego znaleziska i obrobka zdjecia.
-- Zdjecie usera powinno docelowo trafic na wspolne tlo Bourbon Hunters po pipeline R2/AI/obrobka.
+- Visual agent, OCR agent i orchestrator porownuja etykiete z indeksem 10k.
+- Dopasowanie wymaga kotwicy marki; sama kategoria typu `American Single Malt` nie moze stworzyc trafienia.
+- UI rozroznia niski wynik bazy, niepotwierdzona marke i dwa podobne warianty.
+- Jefferson's Straight Bourbon Whiskey jest testem regresji i ma poprawne dopasowanie 100%.
+- Wycinane butelki userow sa powiekszone i centrowane; nowe wycinki maja trim pustych marginesow.
+- Visual agent zostaje na Gemini 2.5 Flash, a OCR przechodzi na Gemini 2.5 Flash-Lite, zeby rozdzielic obciazenie.
+- Darmowy limit Gemini jest wspolny dla projektu. Docelowe limity per user opisuje `MONETYZACJA-I-LIMITY.md`.
+
+## Ostatnio wykonana praca
+
+1. Dodano flow: skan -> brak rekordu -> uzupelnienie -> wyciecie butelki -> akceptacja -> R2/D1 -> Ostatnio dodane.
+2. Usunieto halucynacje kategorii jako nazw butelek i zaostrzono dopasowanie marki/wariantu.
+3. Powiekszono i wycentrowano obrazy butelek przygotowane przez agenta.
+4. Poprawiono mylacy ekran `95% / prog 80%`: osobno pokazuje odczyt etykiety i wynik bazy.
+5. Zdiagnozowano `429 quota exceeded`: darmowy Flash mial 20 wywolan dziennie dla calego projektu.
+6. Przygotowano commit `23b69fb`, ktory rozdziela visual i OCR na dwa modele oraz pokazuje prawdziwy komunikat o limicie.
+
+## Najblizszy krok
+
+1. Uzyc `WYSLIJ-NA-GITHUB.bat`; nowe zmiany dokumentacji sa niezatwierdzone, wiec skrypt powinien zobaczyc paczke i wypchnac tez commit `23b69fb`.
+2. Poczekac na zielony GitHub Action dla nowego commita.
+3. Wkleic aktualny `agent/worker.js` do Cloudflare i kliknac Deploy.
+4. Sprawdzic `/auth/health`: oczekiwana wersja `ocr-visual-fusion-catalog-10k-v4-split-models`.
+5. Odswiezyc PWA/cache `v85` i ponownie zeskanowac Jefferson's.
+6. Migracji D1 dla tej paczki nie ma.
 
 ## Co robic w etapie BH 1.1
 

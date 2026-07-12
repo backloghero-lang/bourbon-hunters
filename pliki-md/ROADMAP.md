@@ -4,6 +4,9 @@ Ten plik sluzy do planowania kolejnych prac. Szczegoly bugow trzymamy w `BUGS.md
 
 ## Teraz
 
+- Wypchnac oczekujacy commit `23b69fb` i wdrozyc Worker `ocr-visual-fusion-catalog-10k-v4-split-models`.
+- Zweryfikowac skan Jefferson's po rozdzieleniu visual Flash i OCR Flash-Lite.
+- Utrzymac prog dopasowania 80% oraz osobne komunikaty: odczyt etykiety, dopasowanie do bazy i remis wariantow.
 - Etap `BH 1.1`: przygotowac projekt pod TWA/Google Play jako nastepny naturalny krok po PWA.
 - Dopracowac stan zalogowany/niezalogowany w profilu.
 - Przetestowac end-to-end konto: register, login, logout, reset hasla, welcome email.
@@ -39,7 +42,7 @@ Ten plik sluzy do planowania kolejnych prac. Szczegoly bugow trzymamy w `BUGS.md
 - Rozwinac historie destylarni, linki i glebsza analize w Hunter AI.
 - Rozwazyc mape destylarni, odznaki i notatki.
 - Przygotowac produkt pod Google Play i kampanie marketingowa w USA.
-- Zaprojektowac monetyzacje: pierwsze 20 skanow free, potem reklamy lub inny model.
+- Wdrozyc uzgodniony model z `MONETYZACJA-I-LIMITY.md`: anonim 1/dzien, Free 5/dzien i 30/miesiac, Pro 30/dzien i 300/miesiac, rozszerzone AI 20/miesiac.
 - Dodac telemetrie dopiero po ustabilizowaniu core aplikacji; bazowy plan jest w `TELEMETRY.md`.
 - Rozwijac konto uzytkownika etapami: email/password juz istnieje, Google/Apple pozniej.
 
@@ -119,8 +122,9 @@ Ten plik sluzy do planowania kolejnych prac. Szczegoly bugow trzymamy w `BUGS.md
    - Wynik: skaner staje sie produkcyjnym core, a nie tylko frontowym flow.
 
 7. Pro, limity, reklamy i telemetria
-   - Wprowadzic backendowy licznik darmowych skanow.
-   - Doprecyzowac `Wersja Pro`: brak reklam, wiecej skanow, historia, zaawansowane AI albo pakiet.
+   - Wprowadzic backendowy licznik skanow w D1 per `user_id`; IP zostaje tylko ochrona dodatkowa.
+   - Wersja Pro: cena startowa 8,99 zl, brak reklam, 300 skanow/miesiac i 20 analiz rozszerzonych/miesiac.
+   - Free: 5 skanow/dzien, maksymalnie 30/miesiac.
    - Dodac minimalna telemetrie: skan start, skan sukces, brak trafienia, dodanie do kolekcji, dodanie do wishlisty.
    - Wynik: zaczynamy mierzyc i monetyzowac produkt bez rozwalania core UX.
 
