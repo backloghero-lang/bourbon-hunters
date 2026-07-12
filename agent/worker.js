@@ -18,7 +18,7 @@ const DEFAULT_PROMPT_URL = "https://raw.githubusercontent.com/" + REPO + "/main/
 const DEFAULT_DB_URL = "https://raw.githubusercontent.com/" + REPO + "/main/db/catalog/scan-index.json";
 const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters. Krotko, z jajem, ale rzeczowo. quality=jakosc 1-5, value=jakosc/cena 1-5 (5 swietna i tania, 1 slaba i droga). Pisz {{LANG}}. Zwroc tylko JSON.";
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
-const SCAN_ORCHESTRATOR_VERSION = "ocr-visual-fusion-catalog-10k-v4-split-models";
+const SCAN_ORCHESTRATOR_VERSION = "ocr-visual-fusion-catalog-10k-v5-spirit-guard";
 const SCAN_CATALOG_VERSION = "ttb-olcc-10k-v1";
 const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v2-trim-centered";
 const AUTH_VERSION = "auth-pbkdf2-100000-google-v3";
@@ -26,6 +26,18 @@ const PBKDF2_ITERATIONS = 100000;
 const PROFILE_BADGE_IDS = ["glass","bottle","barrel","seal","hat","star","distillery","notes","opener","horseshoe"];
 
 let _p = { t:null, at:0 }, _db = { d:null, at:0 };
+const SCAN_RECORD_OVERRIDES={
+  "jeffersons-very-small-batch-bourbon-whiskey-copy":{aliases:["Jefferson's Bourbon","Jefferson's Blend of Straight Bourbon Whiskey"],abv:41.15}
+};
+function applyScanCatalogOverrides(db){
+  (db&&db.bottles||[]).forEach(function(bottle){
+    const override=SCAN_RECORD_OVERRIDES[bottle&&bottle.id];
+    if(!override) return;
+    if(override.aliases) bottle.aliases=Array.from(new Set((Array.isArray(bottle.aliases)?bottle.aliases:[]).concat(override.aliases)));
+    if(Number.isFinite(override.abv)) bottle.abv=override.abv;
+  });
+  return db;
+}
 async function getText(url, ttl){ const r = await fetch(url, { cf:{ cacheTtl:ttl, cacheEverything:true } }); return r.ok ? await r.text() : null; }
 async function getPrompt(env){
   const now=Date.now(); if(_p.t && now-_p.at<60000) return _p.t;
@@ -34,7 +46,7 @@ async function getPrompt(env){
 }
 async function getDB(env){
   const now=Date.now(); if(_db.d && now-_db.at<300000) return _db.d;
-  try{ const t=await getText(env.DB_URL||DEFAULT_DB_URL,300); if(t){ const j=JSON.parse(t); _db={d:j,at:now}; return j; } }catch(e){}
+  try{ const t=await getText(env.DB_URL||DEFAULT_DB_URL,300); if(t){ const j=applyScanCatalogOverrides(JSON.parse(t)); _db={d:j,at:now}; return j; } }catch(e){}
   return _db.d||{bottles:[]};
 }
 
@@ -940,8 +952,13 @@ function fieldEvidenceScore(bottle, ocr){
   if(oa && ba && Math.abs(oa-ba)<=0.7){ score+=0.06; matched.push("abv"); }
   const oc=norm((ocr&&ocr.category)||"");
   const bc=norm(((bottle&&bottle.category)||"")+" "+((bottle&&bottle.type)||""));
+  const ocrDeclaration=norm([ocr&&ocr.category,ocr&&ocr.name,ocr&&ocr.expression,ocr&&ocr.raw_text].filter(Boolean).join(" "));
+  const bottleDeclaration=norm([bottle&&bottle.category,bottle&&bottle.type,bottle&&bottle.name].filter(Boolean).join(" "));
+  const observedSpirit=ocrDeclaration.indexOf("bourbon")>=0 ? "bourbon" : (/\brye\b/.test(ocrDeclaration)?"rye":"");
+  const bottleSpirit=bottleDeclaration.indexOf("bourbon")>=0 ? "bourbon" : (/\brye\b/.test(bottleDeclaration)?"rye":"");
+  const conflict=!!(observedSpirit && bottleSpirit && observedSpirit!==bottleSpirit);
   if(oc && bc && (bc.indexOf(oc)>=0 || oc.indexOf(bc)>=0)){ score+=0.04; matched.push("category"); }
-  return {score:score,matched:matched};
+  return {score:score,matched:matched,conflict:conflict,observedSpirit:observedSpirit,bottleSpirit:bottleSpirit};
 }
 
 function scanAgentTrace(vision, ocr, matched){
@@ -1002,6 +1019,7 @@ function matchBottleWithEvidence(db, vision, ocr){
     if(ocrNames.length){ sum+=bestOcr*0.52; weight+=0.52; }
     if(!weight) return;
     const fields=fieldEvidenceScore(b,ocr);
+    if(fields.conflict) return;
     const agreement=(bestVisual>=0.72 && bestOcr>=0.72) ? 0.08 : 0;
     const brandAgreement=(visualAnchors.length && ocrAnchors.length) ? 0.08 : 0;
     let confidence=clamp01((sum/weight)+fields.score+agreement+0.08+brandAgreement);
@@ -1112,7 +1130,7 @@ export default {
     const visualErr=agents[0]&&agents[0].err;
     const ocrErr=agents[1]&&agents[1].err;
     if(visualErr && ocrErr){
-      const quotaExhausted=visualErr.status===429 && ocrErr.status===429;
+      const quotaExhausted=visualErr.status===429 || ocrErr.status===429;
       return J({error:quotaExhausted?"quota_exhausted":"upstream",status:visualErr.status||ocrErr.status,detail:(visualErr.detail||ocrErr.detail||"agent_error"),retry:!quotaExhausted}, quotaExhausted?429:((visualErr.status||ocrErr.status)===0?502:503), cors);
     }
     const idj=compactVision((agents[0]&&agents[0].data)||{});

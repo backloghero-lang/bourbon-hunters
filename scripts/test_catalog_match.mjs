@@ -4,6 +4,11 @@ import { performance } from "node:perf_hooks";
 
 const root = path.resolve(import.meta.dirname, "..");
 const db = JSON.parse(fs.readFileSync(path.join(root, "db", "catalog", "scan-index.json"), "utf8"));
+const jeffersonBase=db.bottles.find((bottle)=>bottle.id==="jeffersons-very-small-batch-bourbon-whiskey-copy");
+if(jeffersonBase){
+  jeffersonBase.aliases=[...(jeffersonBase.aliases||[]),"Jefferson's Bourbon","Jefferson's Blend of Straight Bourbon Whiskey"];
+  jeffersonBase.abv=41.15;
+}
 
 function norm(value) {
   return String(value || "").toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g, " ").replace(/\s+/g, " ").trim();
@@ -21,6 +26,13 @@ const genericTokens = new Set([
 ]);
 function distinctiveTokens(value) {
   return [...new Set(toks(value).filter((word) => !genericTokens.has(word)))];
+}
+
+function spiritClass(value) {
+  const text=norm(value);
+  if(text.includes("bourbon")) return "bourbon";
+  if(/\brye\b/.test(text)) return "rye";
+  return "";
 }
 
 function score(text, bottle) {
@@ -53,6 +65,9 @@ function rankedMatches(text) {
   const candidateIndexes = new Set();
   for (const token of inputDistinctive) for (const index of db.token_index?.[token] || []) candidateIndexes.add(index);
   return [...candidateIndexes].map((index) => db.bottles[index]).filter((bottle) => {
+    const observedSpirit=spiritClass(text);
+    const bottleSpirit=spiritClass(`${bottle.category||""} ${bottle.type||""} ${bottle.name||""}`);
+    if(observedSpirit && bottleSpirit && observedSpirit!==bottleSpirit) return false;
     const anchors = distinctiveTokens([bottle.name, ...(bottle.aliases || [])].join(" "));
     const lexicalAnchors = anchors.filter((token) => !/^\d+$/.test(token));
     return (lexicalAnchors.length ? lexicalAnchors : anchors).some((token) => inputDistinctive.includes(token));
@@ -87,12 +102,18 @@ function assertNoConfidentMatch(text) {
   if((matches[0]?.score||0)>=0.8) throw new Error(`Expected no confident match for ${text}, got ${JSON.stringify(matches.slice(0,5))}`);
   return {text,expectedId:null,candidateCount:matches.length,score:matches[0]?.score||0};
 }
+function assertExcluded(text, excludedId) {
+  const matches=rankedMatches(text);
+  if(matches.some((match)=>match.id===excludedId)) throw new Error(`Expected ${excludedId} to be excluded for ${text}`);
+  return {text,excludedId,excluded:true};
+}
 
 const results = [
   assertMatch("Bulleit Bourbon Bottled in Bond 100 proof", "bulleit-bottled-in-bond-111-22"),
   assertMatch("Glenmorangie Triple Cask Reserve single malt scotch", "olcc-13148b"),
   assertMatch("Bulleit American Single Malt Whiskey 90 proof", "olcc-11838b"),
-  assertMatch("Jefferson's Straight Bourbon Whiskey", "jeffersons-very-small-batch-bourbon-whiskey-copy"),
+  assertMatch("Jefferson's Bourbon Blend of Straight Bourbon Whiskey 82.3 proof", "jeffersons-very-small-batch-bourbon-whiskey-copy"),
+  assertExcluded("Jefferson's Bourbon Blend of Straight Bourbon Whiskey", "olcc-13413b"),
   assertNoMatch("American Single Malt Whiskey"),
   assertNoConfidentMatch("Booker's 2025-02 By The Pond Batch"),
   assertNoConfidentMatch("Little Book The Infinite Edition II"),

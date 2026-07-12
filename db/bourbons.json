@@ -5124,7 +5124,11 @@
          "value" : null
       },
       {
-         "abv" : 15,
+         "abv" : 41.15,
+         "aliases" : [
+            "Jefferson's Bourbon",
+            "Jefferson's Blend of Straight Bourbon Whiskey"
+         ],
          "category" : "Standard",
          "desc" : "Uncorking Jefferson’s Straight Bourbon Whiskey: A Masterclass in Flavor Jefferson’s Straight Bourbon Whiskey is an American whiskey that brings classic bourbon character to your bar with an easy, crowd-pleasing style. Known for small-batch, thoughtfully crafted releases, Jefferson’s has become a go-to name for bourbon lovers who want quality you can pour with confidence. This 750ml bottle shows off a warm amber color and a clean, modern label, finished with a bold wooden-topped cork that looks right at home on a cart or countertop. It’s the kind of bottle you’ll be proud to set out whenâ¦",
          "distillery" : "Jefferson's (Castle Brands)",
