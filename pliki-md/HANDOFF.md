@@ -7,6 +7,16 @@ Aktualizacja: 2026-07-05.
 Najnowszy kontekst dla kolejnego etapu jest w `pliki-md/HANDOFF-BH-1.1.md`.
 Uzyj go jako pierwszego dokumentu przy starcie watku `Przekaz Bourbon Hunter 1.1`.
 
+## Aktualizacja 2026-07-18 - cykl zycia zdjec katalogowych
+
+- Migracja `agent/d1-migration-v65-catalog-data-lifecycle.sql` rozdziela zrodlo, podglad roboczy i finalny asset katalogowy.
+- Oryginal trafia do R2 tylko na czas wyciecia butelki i jest usuwany po utworzeniu podgladu. Anulowanie lub ponowienie usuwa pozostale pliki robocze.
+- Akceptacja kopiuje podglad do niezaleznego klucza `catalog/published/<bottle_id>/<sha256>.webp`, zapisuje wersje licencji i minimalny dowod zgody.
+- Usuniecie konta kasuje dane osobowe oraz lokalny cache, ale odczepia zaakceptowane assety od profilu i zostawia je w katalogu.
+- Porzucone podglady sa czyszczone po 24 godzinach przez scheduled handler; w Cloudflare trzeba dodac dzienny Cron Trigger, np. `0 3 * * *`.
+- Worker health ma zwracac `catalog_data_schema: true`, `catalog_submission_version: community-catalog-images-v3-data-lifecycle` i `catalog_license_version: catalog-license-2026-07-18-v1`.
+- Cache PWA: `bourbon-hunters-v89`.
+
 ## Aktualizacja 2026-07-12 - potwierdzanie wyniku skanera
 
 - Po kazdym pewnym skanie frontend pokazuje 1-2 kandydatow obok siebie. Szczegoly sa widoczne dopiero po wyborze i potwierdzeniu usera.

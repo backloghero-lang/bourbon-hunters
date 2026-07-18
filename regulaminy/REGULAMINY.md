@@ -5,6 +5,8 @@ Przy kazdej zmianie regulaminu albo polityki prywatnosci w `index.html` trzeba z
 
 Status: draft do walidacji produktu. Przed publikacja w Google Play tekst powinien zostac sprawdzony prawnie i dopasowany do realnego backendu, formularza Google Play Data Safety oraz publicznego adresu polityki prywatnosci.
 
+Wersja zasad katalogowych: `catalog-license-2026-07-18-v1`.
+
 ## Terms of Service
 
 ### Eligibility
@@ -21,7 +23,11 @@ Bottle information, prices, ratings and availability are provided for discovery 
 
 ### User photos and database contributions
 
-If you upload bottle photos, comments, ratings or bottle details, you confirm that you have the right to share them and you grant Bourbon Hunters a non-exclusive, worldwide, royalty-free permission to host, store, analyze, edit, transform, display and use them to provide the app, improve scanner results and expand the bottle database. This includes OCR, AI-assisted matching, creating app-style reference images from uploaded photos and showing bottle photos or generated reference images inside Bourbon Hunters features. You keep ownership of your own photos and comments.
+If you upload bottle photos, comments, ratings or bottle details, you confirm that you have the right to share them. You grant Bourbon Hunters a non-exclusive, worldwide, royalty-free, sublicensable and continuing license to host, analyze, edit, transform, reproduce, display and use accepted catalog contributions to provide and promote the app, improve scanner results and expand the shared bottle database. This includes OCR, AI-assisted matching and creating app-style bottle assets. The license for an accepted catalog asset survives account deletion. You keep ownership of rights you lawfully hold in your original contribution.
+
+### Catalog image acceptance
+
+Before an app-style bottle asset is published, you can accept it, retake the photo or save bottle data without an image. Acceptance records the current catalog license version. Original photos and temporary working files are deleted after processing or cancellation. Only the accepted catalog asset is retained for shared use.
 
 ### Product information
 
@@ -47,11 +53,11 @@ We use data to provide account access, sync your collection, recognize bottles, 
 
 ### Photos, camera and AI processing
 
-Camera or gallery access is used only when you choose to scan or upload a bottle image. Uploaded photos may be stored, analyzed with OCR or AI tools, matched against known bottles and used to create reference bottle images that fit the Bourbon Hunters visual style. Generated reference images may be marked as AI-generated or app-generated where appropriate.
+Camera or gallery access is used only when you choose to scan or upload a bottle image. A source photo may be transmitted to hosting, image-processing, OCR or AI providers to recognize the label and prepare a bottle cutout. When a catalog preview is created, the source file and its embedded metadata are deleted from Bourbon Hunters storage. A temporary preview remains until you accept, retry or cancel the submission, for no longer than 24 hours under the configured cleanup process.
 
 ### Database contributions
 
-Product facts and normalized bottle metadata extracted from scans, photos, comments or public sources may be retained as part of the shared Bourbon Hunters database. If you delete your account, we will remove or anonymize personal data as required, but non-personal product facts and aggregated statistics may remain in the database.
+Accepted catalog assets, product facts and normalized bottle metadata may be retained as part of the shared Bourbon Hunters database. If you delete your account, we remove the account link and personal data, while accepted catalog assets and non-personal product information remain. We retain a minimal non-public receipt of the catalog acceptance, including the document version, timestamp, file hash and a pseudonymous contributor hash, for rights and dispute records.
 
 ### Sharing
 
@@ -59,11 +65,11 @@ We do not sell personal data. We may use service providers such as hosting, stor
 
 ### Security and retention
 
-Data should be transmitted over HTTPS and stored with appropriate protections. Account and scan data should be retained only as long as needed for the product or legal requirements.
+Data is transmitted over HTTPS and should be stored with appropriate protections. Source catalog photos are temporary, working previews remain until a decision is made, and accepted catalog assets are retained while they remain useful to the shared catalog. Account and scan data is retained only as long as needed for the product or legal requirements.
 
 ### Deletion
 
-When accounts are enabled, users must be able to request deletion of their account and associated personal data from inside the app and from a public support channel.
+You can delete your account from My profile. Account credentials, sessions, profile, collection, wishlist, ratings, recommendations and other linked personal data are deleted or anonymized. Accepted shared catalog assets, non-personal bottle information and minimal legal acceptance receipts are not removed with the account.
 
 ### Contact
 

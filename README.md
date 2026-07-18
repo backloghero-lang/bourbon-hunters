@@ -62,7 +62,7 @@ index.html     agent/worker.js      D1, R2, Images, KV, whisky catalog
 - Frontend: `index.html`, `manifest.json`, `sw.js`.
 - Backend: `agent/worker.js` on Cloudflare Workers.
 - User data: Cloudflare D1 for accounts, sessions, wishlist, collection, ratings and scan history.
-- D1 migrations: run `agent/d1-schema.sql` for a fresh database. Existing databases use the numbered migrations through `agent/d1-migration-v64-catalog-submissions.sql`.
+- D1 migrations: run `agent/d1-schema.sql` for a fresh database. Existing databases use the numbered migrations through `agent/d1-migration-v65-catalog-data-lifecycle.sql`.
 - Static hosting: GitHub Pages.
 - Project docs and planning files: `pliki-md/`.
 - Figma asset importer code: `design/figma-import-plugin/`.
@@ -75,15 +75,17 @@ index.html     agent/worker.js      D1, R2, Images, KV, whisky catalog
 - Transactional emails use Resend when `RESEND_API_KEY` and `MAIL_FROM` are configured. Welcome, password reset and data deletion templates live in `pliki-md/email-templates/`.
 - Current Worker health reports auth, scanner/catalog versions, individual D1 schema flags, Google/email readiness and image-pipeline readiness.
 - User-approved bottle cutouts use an Images binding named `IMAGES` and a private R2 bucket binding named `BOTTLE_IMAGES`.
+- Source catalog photos are temporary. After processing, only the user-approved catalog asset is retained under `catalog/published/`; account deletion does not remove that shared asset.
 
 ## Community Catalog Deployment
 
-1. Run `agent/d1-migration-v64-catalog-submissions.sql` against the existing D1 database.
+1. Run `agent/d1-migration-v64-catalog-submissions.sql` if it has not been applied, then run `agent/d1-migration-v65-catalog-data-lifecycle.sql` against the existing D1 database.
 2. Create or select a private R2 bucket and bind it to the Worker as `BOTTLE_IMAGES`.
 3. Add a Cloudflare Images binding named `IMAGES`.
 4. Replace/deploy `agent/worker.js`.
-5. Publish the frontend through GitHub Pages and refresh the installed PWA so cache `bourbon-hunters-v88` is active.
-6. Verify `/auth/health`: `catalog_schema`, `image_pipeline_ready`, `d1` and the existing schema flags should all be `true`.
+5. Add a daily Worker Cron Trigger, for example `0 3 * * *`, so abandoned previews are removed after 24 hours. New submissions also run opportunistic cleanup.
+6. Publish the frontend through GitHub Pages and refresh the installed PWA so cache `bourbon-hunters-v89` is active.
+7. Verify `/auth/health`: `catalog_schema`, `catalog_data_schema`, `image_pipeline_ready`, `d1` and the existing schema flags should all be `true`.
 
 ## Project Direction
 

@@ -27,8 +27,10 @@ Aktualny oczekiwany stan Workera:
 {
   "ok": true,
   "auth_version": "auth-pbkdf2-100000-google-v3",
-  "scan_orchestrator_version": "ocr-visual-fusion-catalog-10k-v2",
+  "scan_orchestrator_version": "ocr-visual-fusion-catalog-10k-v7-two-choice-confirmation",
   "scan_catalog_version": "ttb-olcc-10k-v1",
+  "catalog_submission_version": "community-catalog-images-v3-data-lifecycle",
+  "catalog_license_version": "catalog-license-2026-07-18-v1",
   "pbkdf2_iterations": 100000,
   "d1": true,
   "schema": true,
@@ -36,6 +38,9 @@ Aktualny oczekiwany stan Workera:
   "profile_schema": true,
   "recommendations_schema": true,
   "identity_schema": true,
+  "catalog_schema": true,
+  "catalog_data_schema": true,
+  "image_pipeline_ready": true,
   "email_ready": true,
   "google_ready": true
 }
@@ -53,6 +58,16 @@ Google login wymaga w Cloudflare Worker:
    - opcjonalnie `GOOGLE_STATE_SECRET`
 5. Opcjonalnie dodaj zmienna `GOOGLE_REDIRECT_URI`, jesli redirect URI ma byc inne niz domyslny callback Workera.
 6. Deploy `agent/worker.js`, potem sprawdz `/auth/health`.
+
+Cykl zycia zdjec katalogowych wymaga:
+
+1. W D1 uruchom `agent/d1-migration-v65-catalog-data-lifecycle.sql`.
+2. Dopiero potem wklej i zdeployuj aktualny `agent/worker.js`.
+3. W Workerze dodaj dzienny Cron Trigger, np. `0 3 * * *`, do usuwania porzuconych podgladow po 24 godzinach.
+4. Wyslij frontend na GitHub i odswiez PWA do cache `bourbon-hunters-v89`.
+5. Sprawdz pelny health: `https://bourbon-hunters.darekmaslyk.workers.dev/auth/health`.
+
+Kolejnosc jest wazna: migracja D1 -> Worker -> GitHub/PWA. Bez migracji v65 dodawanie assetow i usuwanie konta zwroci `schema_catalog_lifecycle_missing` zamiast wykonac czesciowa operacje.
 
 Ponizsze starsze sekcje zostaja jako pomoc historyczna, ale w razie sprzecznosci obowiazuje aktualna zasada powyzej.
 

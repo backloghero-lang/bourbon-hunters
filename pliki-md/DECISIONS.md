@@ -74,6 +74,15 @@ Ten plik trzyma stale ustalenia, zeby nie ginely w dlugich watkach.
 - Scanner API ma byc traktowany jako core produktu: baza lokalna/online najpierw, a siec/AI jako funkcja Hunter AI Plus albo analiza dla pewnych trafien.
 - Po wdrozeniu kont limit skanow powinien byc liczony po stronie backendu, nie tylko per urzadzenie.
 
+## 2026-07-18 - Zdjecia katalogowe i usuwanie konta
+
+- Oryginalne zdjecie usera jest plikiem tymczasowym. Po przygotowaniu podgladu wyciecia Worker usuwa je z R2 razem z metadanymi zapisanymi w pliku.
+- Podglad roboczy istnieje tylko do decyzji `akceptuj`, `ponow` albo `anuluj`.
+- Po akceptacji finalny asset trafia do niezaleznej sciezki `catalog/published/` i nie jest juz technicznie zalezny od konta ani rekordu zgloszenia.
+- Uzytkownik udziela szerokiej, niewylacznej i bezterminowej licencji na zaakceptowany asset. Nie opisujemy zwyklego klikniecia jako przeniesienia autorskich praw majatkowych.
+- Usuniecie konta usuwa dane osobowe i relacje uzytkownika, ale zachowuje zaakceptowane assety, nieosobowe dane butelki i minimalny niepubliczny dowod zgody.
+- Dowod zgody zawiera wersje zasad, czas akceptacji, hash assetu i pseudonimowy hash autora. Nie zawiera oryginalnego zdjecia, emaila ani profilu.
+
 ## Guardrails dla zespolu
 
 - Jesli pojawi sie pomysl sprzeczny z powyzszymi decyzjami, Codex ma zatrzymac prace i przypomniec ustalenie przed implementacja.

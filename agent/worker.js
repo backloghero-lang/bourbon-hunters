@@ -21,7 +21,9 @@ const DEFAULT_MATCH_CONFIDENCE = 0.8;
 const MULTI_CANDIDATE_CONFIDENCE = 0.9;
 const SCAN_ORCHESTRATOR_VERSION = "ocr-visual-fusion-catalog-10k-v7-two-choice-confirmation";
 const SCAN_CATALOG_VERSION = "ttb-olcc-10k-v1";
-const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v2-trim-centered";
+const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v3-data-lifecycle";
+const CATALOG_LICENSE_VERSION = "catalog-license-2026-07-18-v1";
+const CATALOG_SYSTEM_USER_ID = "catalog-system";
 const AUTH_VERSION = "auth-pbkdf2-100000-google-v3";
 const PBKDF2_ITERATIONS = 100000;
 const PROFILE_BADGE_IDS = ["glass","bottle","barrel","seal","hat","star","distillery","notes","opener","horseshoe"];
@@ -62,6 +64,10 @@ function encText(s){ return new TextEncoder().encode(String(s||"")); }
 function hex(bytes){ return Array.from(new Uint8Array(bytes)).map(function(b){ return b.toString(16).padStart(2,"0"); }).join(""); }
 function randHex(bytes){ const a=new Uint8Array(bytes); crypto.getRandomValues(a); return hex(a); }
 async function sha256Hex(s){ return hex(await crypto.subtle.digest("SHA-256", encText(s))); }
+async function sha256Bytes(value){
+  const bytes=value instanceof Uint8Array ? value : new Uint8Array(value);
+  return hex(await crypto.subtle.digest("SHA-256",bytes));
+}
 function b64urlEncode(s){
   const bytes=typeof s==="string" ? encText(s) : new Uint8Array(s);
   let bin="";
@@ -236,6 +242,19 @@ async function tableExists(env, name){
   const row=await env.DB.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name=?").bind(String(name||"")).first();
   return !!row;
 }
+async function tableColumns(env, name){
+  if(!/^[a-z0-9_]+$/i.test(String(name||""))) return {};
+  const rows=await env.DB.prepare("PRAGMA table_info("+name+")").all();
+  const out={};
+  (rows.results||[]).forEach(function(row){ if(row.name) out[String(row.name)]=true; });
+  return out;
+}
+async function catalogDataSchemaReady(env){
+  if(!(await tableExists(env,"catalog_asset_receipts"))) return false;
+  const submissions=await tableColumns(env,"bottle_submissions");
+  const catalog=await tableColumns(env,"catalog_bottles");
+  return !!(submissions.consent_version && submissions.original_deleted_at && submissions.published_key && submissions.asset_sha256 && catalog.image_key && catalog.license_version && catalog.provenance_submission_id);
+}
 function safeJson(value, fallback){
   try{ return JSON.parse(String(value||"")); }catch(e){ return fallback; }
 }
@@ -303,17 +322,38 @@ function publicCatalogBottle(row, request){
   data.source="community_catalog";
   data.isNew=true;
   data.added_at=row.created_at;
-  data.image=row.image_submission_id ? new URL("/catalog/image/"+encodeURIComponent(row.bottle_id)+"?v="+encodeURIComponent(row.updated_at||row.created_at||"1"),request.url).toString() : "";
-  data.has_image=!!row.image_submission_id;
+  data.image=(row.image_key || row.image_submission_id) ? new URL("/catalog/image/"+encodeURIComponent(row.bottle_id)+"?v="+encodeURIComponent(row.updated_at||row.created_at||"1"),request.url).toString() : "";
+  data.has_image=!!(row.image_key || row.image_submission_id);
   return data;
 }
 async function deleteSubmissionImages(env, row){
   if(!env.BOTTLE_IMAGES || !row) return;
   const keys=[row.original_key,row.processed_key].filter(Boolean);
-  if(keys.length) await env.BOTTLE_IMAGES.delete(keys);
+  if(keys.length) await deleteR2Keys(env,keys);
+}
+async function deleteR2Keys(env, keys){
+  if(!env.BOTTLE_IMAGES) return;
+  const unique=Array.from(new Set((keys||[]).filter(Boolean)));
+  for(let i=0;i<unique.length;i+=1000) await env.BOTTLE_IMAGES.delete(unique.slice(i,i+1000));
+}
+async function cleanupStaleCatalogSubmissions(env, limit){
+  if(!env.DB || !env.BOTTLE_IMAGES || !(await tableExists(env,"bottle_submissions"))) return {cleaned:0};
+  const cutoff=new Date(Date.now()-24*60*60*1000).toISOString();
+  const rows=await env.DB.prepare("SELECT id,original_key,processed_key FROM bottle_submissions WHERE status IN ('processing','awaiting_confirmation') AND updated_at<? ORDER BY updated_at LIMIT ?")
+    .bind(cutoff,Math.max(1,Math.min(200,Number(limit)||50))).all();
+  let cleaned=0;
+  for(const row of (rows.results||[])){
+    await deleteSubmissionImages(env,row);
+    const now=new Date().toISOString();
+    await env.DB.prepare("UPDATE bottle_submissions SET status='cancelled',image_choice='expired',original_key=NULL,processed_key=NULL,original_deleted_at=COALESCE(original_deleted_at,?),updated_at=? WHERE id=?")
+      .bind(now,now,row.id).run();
+    cleaned++;
+  }
+  return {cleaned:cleaned};
 }
 async function createBottlePreview(env, request, user, body){
-  if(!(await tableExists(env,"bottle_submissions")) || !(await tableExists(env,"catalog_bottles"))) return {error:"schema_catalog_missing",status:501};
+  if(!(await catalogDataSchemaReady(env))) return {error:"schema_catalog_lifecycle_missing",status:501};
+  await cleanupStaleCatalogSubmissions(env,20);
   const bottle=cleanCatalogBottle(body&&body.bottle_data);
   bottle.id=cleanCatalogId((body&&body.bottle_id)||bottle.id);
   if(!bottle.id || !bottle.name) return {error:"bad_bottle",status:400};
@@ -326,8 +366,8 @@ async function createBottlePreview(env, request, user, body){
   if(!image || image.length<100 || image.length>8000000) return {error:"bad_image",status:400};
   const id=crypto.randomUUID();
   const now=new Date().toISOString();
-  const originalKey="catalog/submissions/"+user.id+"/"+id+"/original";
-  const processedKey="catalog/submissions/"+user.id+"/"+id+"/bottle.webp";
+  const originalKey="catalog/tmp/"+id+"/source";
+  const processedKey="catalog/tmp/"+id+"/preview.webp";
   await env.DB.prepare("INSERT INTO bottle_submissions (id,user_id,bottle_id,bottle_name,bottle_data,status,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?)")
     .bind(id,user.id,bottle.id,bottle.name,JSON.stringify(bottle),"processing",now,now).run();
   if(!env.BOTTLE_IMAGES || !env.IMAGES){
@@ -346,18 +386,38 @@ async function createBottlePreview(env, request, user, body){
     const response=output.response();
     if(!response.ok) throw new Error("image_transform_"+response.status);
     const processed=new Uint8Array(await response.arrayBuffer());
+    const assetSha=await sha256Bytes(processed);
     await env.BOTTLE_IMAGES.put(processedKey,processed,{httpMetadata:{contentType:"image/webp",cacheControl:"public, max-age=31536000, immutable"}});
-    await env.DB.prepare("UPDATE bottle_submissions SET original_key=?,processed_key=?,status='awaiting_confirmation',updated_at=? WHERE id=?")
-      .bind(originalKey,processedKey,new Date().toISOString(),id).run();
+    await env.BOTTLE_IMAGES.delete(originalKey);
+    const processedAt=new Date().toISOString();
+    await env.DB.prepare("UPDATE bottle_submissions SET original_key=NULL,processed_key=?,asset_sha256=?,original_deleted_at=?,status='awaiting_confirmation',updated_at=? WHERE id=?")
+      .bind(processedKey,assetSha,processedAt,processedAt,id).run();
     return {submission_id:id,preview_ready:true,image_pipeline_ready:true,preview_data_url:"data:image/webp;base64,"+encodeBase64(processed)};
   }catch(e){
     if(env.BOTTLE_IMAGES) await env.BOTTLE_IMAGES.delete([originalKey,processedKey]).catch(function(){});
-    await env.DB.prepare("UPDATE bottle_submissions SET status='awaiting_confirmation',updated_at=? WHERE id=?").bind(new Date().toISOString(),id).run();
+    const failedAt=new Date().toISOString();
+    await env.DB.prepare("UPDATE bottle_submissions SET original_key=NULL,processed_key=NULL,original_deleted_at=?,status='awaiting_confirmation',updated_at=? WHERE id=?").bind(failedAt,failedAt,id).run();
     return {submission_id:id,preview_ready:false,image_pipeline_ready:true,preview_error:String(e&&e.message?e.message:e).slice(0,120)};
   }
 }
+async function publishCatalogAsset(env, row){
+  if(!row || !row.processed_key || !env.BOTTLE_IMAGES) return {image_key:null,asset_sha256:null};
+  const object=await env.BOTTLE_IMAGES.get(row.processed_key);
+  if(!object) throw new Error("preview_missing");
+  const bytes=new Uint8Array(await object.arrayBuffer());
+  const assetSha=row.asset_sha256 || await sha256Bytes(bytes);
+  const imageKey="catalog/published/"+cleanCatalogId(row.bottle_id)+"/"+assetSha+".webp";
+  await env.BOTTLE_IMAGES.put(imageKey,bytes,{httpMetadata:{contentType:"image/webp",cacheControl:"public, max-age=31536000, immutable"}});
+  return {image_key:imageKey,asset_sha256:assetSha};
+}
+async function recordCatalogReceipt(env, user, row, published, acceptedAt){
+  const contributorHash=await sha256Hex("catalog-contributor:"+user.id);
+  const originalDeletedAt=row.original_deleted_at || acceptedAt;
+  await env.DB.prepare("INSERT INTO catalog_asset_receipts (id,submission_id,bottle_id,contributor_hash,license_version,accepted_at,asset_sha256,image_key,original_deleted_at,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(submission_id) DO UPDATE SET license_version=excluded.license_version,accepted_at=excluded.accepted_at,asset_sha256=excluded.asset_sha256,image_key=excluded.image_key,original_deleted_at=excluded.original_deleted_at,updated_at=excluded.updated_at")
+    .bind(crypto.randomUUID(),row.id,row.bottle_id,contributorHash,CATALOG_LICENSE_VERSION,acceptedAt,published.asset_sha256,published.image_key,originalDeletedAt,acceptedAt,acceptedAt).run();
+}
 async function confirmBottleSubmission(env, request, user, body){
-  if(!(await tableExists(env,"bottle_submissions")) || !(await tableExists(env,"catalog_bottles"))) return {error:"schema_catalog_missing",status:501};
+  if(!(await catalogDataSchemaReady(env))) return {error:"schema_catalog_lifecycle_missing",status:501};
   const id=String((body&&body.submission_id)||"").trim();
   const decision=String((body&&body.decision)||"").trim();
   const row=await env.DB.prepare("SELECT * FROM bottle_submissions WHERE id=? AND user_id=?").bind(id,user.id).first();
@@ -370,15 +430,67 @@ async function confirmBottleSubmission(env, request, user, body){
   }
   if(["accept","without_image"].indexOf(decision)<0) return {error:"bad_decision",status:400};
   if(decision==="accept" && !row.processed_key) return {error:"preview_missing",status:409};
-  if(decision==="without_image") await deleteSubmissionImages(env,row);
   const now=new Date().toISOString();
+  const oldCatalog=await env.DB.prepare("SELECT image_key FROM catalog_bottles WHERE bottle_id=?").bind(row.bottle_id).first();
+  const publishedAsset=decision==="accept" ? await publishCatalogAsset(env,row) : {image_key:null,asset_sha256:null};
+  if(decision==="without_image") await deleteSubmissionImages(env,row);
   const imageSubmission=decision==="accept" ? row.id : null;
-  await env.DB.prepare("INSERT INTO catalog_bottles (bottle_id,bottle_name,bottle_data,image_submission_id,source_user_id,status,created_at,updated_at) VALUES (?,?,?,?,?,'published',?,?) ON CONFLICT(bottle_id) DO UPDATE SET bottle_name=excluded.bottle_name,bottle_data=excluded.bottle_data,image_submission_id=COALESCE(excluded.image_submission_id,catalog_bottles.image_submission_id),status='published',updated_at=excluded.updated_at")
-    .bind(row.bottle_id,row.bottle_name,row.bottle_data,imageSubmission,user.id,now,now).run();
-  await env.DB.prepare("UPDATE bottle_submissions SET status='published',image_choice=?,original_key=?,processed_key=?,updated_at=? WHERE id=?")
-    .bind(decision,decision==="accept"?row.original_key:null,decision==="accept"?row.processed_key:null,now,id).run();
-  const published=await env.DB.prepare("SELECT * FROM catalog_bottles WHERE bottle_id=?").bind(row.bottle_id).first();
-  return {ok:true,status:"published",bottle:publicCatalogBottle(published,request)};
+  await env.DB.prepare("INSERT INTO catalog_bottles (bottle_id,bottle_name,bottle_data,image_submission_id,image_key,asset_sha256,license_version,licensed_at,provenance_submission_id,source_user_id,status,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,'published',?,?) ON CONFLICT(bottle_id) DO UPDATE SET bottle_name=excluded.bottle_name,bottle_data=excluded.bottle_data,image_submission_id=COALESCE(excluded.image_submission_id,catalog_bottles.image_submission_id),image_key=COALESCE(excluded.image_key,catalog_bottles.image_key),asset_sha256=COALESCE(excluded.asset_sha256,catalog_bottles.asset_sha256),license_version=excluded.license_version,licensed_at=excluded.licensed_at,provenance_submission_id=excluded.provenance_submission_id,source_user_id=excluded.source_user_id,status='published',updated_at=excluded.updated_at")
+    .bind(row.bottle_id,row.bottle_name,row.bottle_data,imageSubmission,publishedAsset.image_key,publishedAsset.asset_sha256,CATALOG_LICENSE_VERSION,now,row.id,user.id,now,now).run();
+  await recordCatalogReceipt(env,user,row,publishedAsset,now);
+  await deleteSubmissionImages(env,row);
+  await env.DB.prepare("UPDATE bottle_submissions SET status='published',image_choice=?,consent_version=?,consented_at=?,original_key=NULL,processed_key=NULL,published_key=?,asset_sha256=?,original_deleted_at=COALESCE(original_deleted_at,?),updated_at=? WHERE id=?")
+    .bind(decision,CATALOG_LICENSE_VERSION,now,publishedAsset.image_key,publishedAsset.asset_sha256,now,now,id).run();
+  if(oldCatalog && oldCatalog.image_key && publishedAsset.image_key && oldCatalog.image_key!==publishedAsset.image_key && env.BOTTLE_IMAGES){
+    await env.BOTTLE_IMAGES.delete(oldCatalog.image_key).catch(function(){});
+  }
+  const catalogRow=await env.DB.prepare("SELECT * FROM catalog_bottles WHERE bottle_id=?").bind(row.bottle_id).first();
+  return {ok:true,status:"published",license_version:CATALOG_LICENSE_VERSION,source_deleted:true,bottle:publicCatalogBottle(catalogRow,request)};
+}
+async function ensureCatalogSystemUser(env){
+  const now=new Date().toISOString();
+  await env.DB.prepare("INSERT OR IGNORE INTO users (id,email,username,password_hash,password_salt,password_algo,birth_date,age_gate_country,age_gate_min,age_verified_at,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)")
+    .bind(CATALOG_SYSTEM_USER_ID,"catalog-system@bourbon-hunters.invalid","catalog_system","disabled","disabled","disabled",null,"system",18,now,now,now).run();
+}
+async function permanentCatalogImage(env, row){
+  const sourceKey=String(row.image_key||row.processed_key||"");
+  if(!sourceKey || !env.BOTTLE_IMAGES) return {image_key:sourceKey||null,asset_sha256:row.asset_sha256||row.submission_asset_sha256||null,legacy_key:null};
+  if(sourceKey.indexOf("catalog/published/")===0) return {image_key:sourceKey,asset_sha256:row.asset_sha256||row.submission_asset_sha256||null,legacy_key:null};
+  const object=await env.BOTTLE_IMAGES.get(sourceKey);
+  if(!object) return {image_key:null,asset_sha256:null,legacy_key:sourceKey};
+  const bytes=new Uint8Array(await object.arrayBuffer());
+  const assetSha=row.asset_sha256||row.submission_asset_sha256||await sha256Bytes(bytes);
+  const imageKey="catalog/published/"+cleanCatalogId(row.bottle_id)+"/"+assetSha+".webp";
+  await env.BOTTLE_IMAGES.put(imageKey,bytes,{httpMetadata:{contentType:"image/webp",cacheControl:"public, max-age=31536000, immutable"}});
+  return {image_key:imageKey,asset_sha256:assetSha,legacy_key:sourceKey};
+}
+async function deleteAccountAndData(env, user){
+  if(!(await catalogDataSchemaReady(env))) return {error:"schema_catalog_lifecycle_missing",status:501};
+  await ensureCatalogSystemUser(env);
+  const now=new Date().toISOString();
+  const contributorHash=await sha256Hex("catalog-contributor:"+user.id);
+  const rows=await env.DB.prepare("SELECT cb.bottle_id,cb.image_key,cb.asset_sha256,cb.image_submission_id,bs.original_key,bs.processed_key,bs.asset_sha256 AS submission_asset_sha256 FROM catalog_bottles cb LEFT JOIN bottle_submissions bs ON bs.id=cb.image_submission_id WHERE cb.source_user_id=? OR bs.user_id=?")
+    .bind(user.id,user.id).all();
+  const keepKeys={};
+  let retainedAssets=0;
+  for(const row of (rows.results||[])){
+    const asset=await permanentCatalogImage(env,row);
+    if(asset.image_key){ keepKeys[asset.image_key]=true; retainedAssets++; }
+    await env.DB.prepare("UPDATE catalog_bottles SET image_key=?,asset_sha256=COALESCE(?,asset_sha256),image_submission_id=NULL,source_user_id=?,updated_at=? WHERE bottle_id=?")
+      .bind(asset.image_key,asset.asset_sha256,CATALOG_SYSTEM_USER_ID,now,row.bottle_id).run();
+    if(asset.legacy_key && asset.legacy_key!==asset.image_key && env.BOTTLE_IMAGES) await env.BOTTLE_IMAGES.delete(asset.legacy_key).catch(function(){});
+  }
+  const submissions=await env.DB.prepare("SELECT original_key,processed_key,published_key FROM bottle_submissions WHERE user_id=?").bind(user.id).all();
+  if(env.BOTTLE_IMAGES){
+    const deleteKeys=[];
+    (submissions.results||[]).forEach(function(row){
+      [row.original_key,row.processed_key].filter(Boolean).forEach(function(key){ if(!keepKeys[key] && deleteKeys.indexOf(key)<0) deleteKeys.push(key); });
+    });
+    if(deleteKeys.length) await deleteR2Keys(env,deleteKeys);
+  }
+  await env.DB.prepare("UPDATE catalog_asset_receipts SET account_deleted_at=?,updated_at=? WHERE contributor_hash=?").bind(now,now,contributorHash).run();
+  await env.DB.prepare("DELETE FROM users WHERE id=?").bind(user.id).run();
+  return {ok:true,account_deleted:true,retained_catalog_assets:retainedAssets,deleted_at:now};
 }
 function defaultProfile(){ return {badge:"glass"}; }
 async function profileFor(env, userId){
@@ -609,7 +721,7 @@ async function handleApi(request, env, cors){
   const url=new URL(request.url);
   const path=url.pathname.replace(/\/+$/,"");
   if(path==="/auth/health" && request.method==="GET"){
-    let schema=false, reset_schema=false, profile_schema=false, recommendations_schema=false, identity_schema=false, catalog_schema=false, detail="";
+    let schema=false, reset_schema=false, profile_schema=false, recommendations_schema=false, identity_schema=false, catalog_schema=false, catalog_data_schema=false, detail="";
     if(env.DB){
       try{
         await env.DB.prepare("SELECT id FROM users LIMIT 1").first();
@@ -626,10 +738,12 @@ async function handleApi(request, env, cors){
         if(schema && reset_schema && profile_schema && recommendations_schema && !identity_schema) detail="auth_identities table is missing";
         catalog_schema=(await tableExists(env,"bottle_submissions")) && (await tableExists(env,"catalog_bottles"));
         if(schema && reset_schema && profile_schema && recommendations_schema && identity_schema && !catalog_schema) detail="catalog submission tables are missing";
+        catalog_data_schema=catalog_schema && await catalogDataSchemaReady(env);
+        if(schema && reset_schema && profile_schema && recommendations_schema && identity_schema && catalog_schema && !catalog_data_schema) detail="catalog data lifecycle migration v65 is missing";
       }
       catch(e){ detail=String(e&&e.message?e.message:e).slice(0,220); }
     }
-    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,catalog_schema:catalog_schema,image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
+    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,catalog_draft_retention_hours:24,pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
   }
   if(path==="/auth/google/start" && request.method==="GET"){
     const returnUrl=allowedReturnUrl(env,url.searchParams.get("return")||appUrl(env));
@@ -670,9 +784,10 @@ async function handleApi(request, env, cors){
   if(path.indexOf("/catalog/image/")===0 && request.method==="GET"){
     if(!(await tableExists(env,"catalog_bottles")) || !env.BOTTLE_IMAGES) return J({error:"image_not_found"},404,cors);
     const bottleId=decodeURIComponent(path.slice("/catalog/image/".length));
-    const row=await env.DB.prepare("SELECT bs.processed_key FROM catalog_bottles cb JOIN bottle_submissions bs ON bs.id=cb.image_submission_id WHERE cb.bottle_id=? AND cb.status='published'").bind(bottleId).first();
-    if(!row || !row.processed_key) return J({error:"image_not_found"},404,cors);
-    const object=await env.BOTTLE_IMAGES.get(row.processed_key);
+    const row=await env.DB.prepare("SELECT cb.image_key,bs.processed_key FROM catalog_bottles cb LEFT JOIN bottle_submissions bs ON bs.id=cb.image_submission_id WHERE cb.bottle_id=? AND cb.status='published'").bind(bottleId).first();
+    const imageKey=row && (row.image_key||row.processed_key);
+    if(!imageKey) return J({error:"image_not_found"},404,cors);
+    const object=await env.BOTTLE_IMAGES.get(imageKey);
     if(!object) return J({error:"image_not_found"},404,cors);
     const headers=new Headers(cors);
     object.writeHttpMetadata(headers);
@@ -776,6 +891,12 @@ async function handleApi(request, env, cors){
   if(path==="/auth/logout" && request.method==="POST"){
     await env.DB.prepare("DELETE FROM sessions WHERE id=?").bind(user.session_id).run();
     return J({ok:true},200,cors);
+  }
+  if(path==="/me/account" && request.method==="DELETE"){
+    const body=await readBody(request);
+    if(String(body.confirm||"")!=="DELETE") return J({error:"delete_confirmation_required"},400,cors);
+    const result=await deleteAccountAndData(env,user);
+    return J(result,result.status||200,cors);
   }
   if(path==="/me" && request.method==="GET") return J({user:publicUser(user)},200,cors);
   if(path==="/me/profile" && request.method==="GET") return J({profile:await profileFor(env,user.id)},200,cors);
@@ -1229,5 +1350,8 @@ export default {
     if(hit){ ra.source="baza"; ra.image=hit.image||""; if(ra.price==null) ra.price=(hit.price_str||hit.price_pln); if(ra.quality==null) ra.quality=hit.quality; if(ra.value==null) ra.value=hit.value; }
     else { ra.source="net"; ra.isNew=true; ra.image=""; }
     return J({result:ra, mode:mode, remaining:consume(), owner:owner, matched:hit?hit.id:null, confidence:overallConfidence, agents:agentTrace}, 200, cors);
+  },
+  async scheduled(controller, env, ctx){
+    ctx.waitUntil(cleanupStaleCatalogSubmissions(env,200));
   }
 }

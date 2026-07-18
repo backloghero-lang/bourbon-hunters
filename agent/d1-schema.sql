@@ -127,6 +127,11 @@ CREATE TABLE IF NOT EXISTS bottle_submissions (
   processed_key TEXT,
   status TEXT NOT NULL CHECK (status IN ('processing','awaiting_confirmation','published','retry','cancelled','failed')),
   image_choice TEXT,
+  consent_version TEXT,
+  consented_at TEXT,
+  original_deleted_at TEXT,
+  published_key TEXT,
+  asset_sha256 TEXT,
   created_at TEXT NOT NULL,
   updated_at TEXT NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
@@ -140,6 +145,11 @@ CREATE TABLE IF NOT EXISTS catalog_bottles (
   bottle_name TEXT NOT NULL,
   bottle_data TEXT NOT NULL,
   image_submission_id TEXT,
+  image_key TEXT,
+  asset_sha256 TEXT,
+  license_version TEXT,
+  licensed_at TEXT,
+  provenance_submission_id TEXT,
   source_user_id TEXT NOT NULL,
   status TEXT NOT NULL DEFAULT 'published',
   created_at TEXT NOT NULL,
@@ -149,3 +159,21 @@ CREATE TABLE IF NOT EXISTS catalog_bottles (
 );
 
 CREATE INDEX IF NOT EXISTS idx_catalog_bottles_recent ON catalog_bottles(status, created_at);
+
+CREATE TABLE IF NOT EXISTS catalog_asset_receipts (
+  id TEXT PRIMARY KEY,
+  submission_id TEXT NOT NULL UNIQUE,
+  bottle_id TEXT NOT NULL,
+  contributor_hash TEXT NOT NULL,
+  license_version TEXT NOT NULL,
+  accepted_at TEXT NOT NULL,
+  asset_sha256 TEXT,
+  image_key TEXT,
+  original_deleted_at TEXT,
+  account_deleted_at TEXT,
+  created_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_catalog_asset_receipts_bottle ON catalog_asset_receipts(bottle_id, accepted_at);
+CREATE INDEX IF NOT EXISTS idx_catalog_asset_receipts_contributor ON catalog_asset_receipts(contributor_hash, accepted_at);

@@ -265,6 +265,7 @@
   .catalog-preview-actions{display:grid;gap:9px;padding:0 16px 18px}
   .catalog-preview-actions .btn{width:100%;min-height:46px;margin:0}
   .catalog-preview-actions .quiet{background:transparent;color:#C9B493;border-color:rgba(226,176,112,.24)}
+  .catalog-license-note{margin:2px 2px 4px;color:#A99572;font-size:11px;line-height:1.45;text-align:center}
   .mystery-bottle{width:88px;height:190px;display:grid;place-items:center;position:relative;margin:auto;border-radius:20px 20px 14px 14px;background:linear-gradient(90deg,#080706,#25211D 48%,#090807);border:1px solid rgba(226,176,112,.2);box-shadow:0 18px 22px rgba(0,0,0,.58)}
   .mystery-bottle:before{content:"";position:absolute;top:-36px;width:34px;height:42px;border-radius:7px 7px 2px 2px;background:#151310;border:1px solid rgba(226,176,112,.2)}
   .mystery-bottle span{color:#E2B070;font-family:var(--serif);font-size:46px;font-weight:900;text-shadow:0 0 18px rgba(226,176,112,.26)}
@@ -709,7 +710,8 @@
       <h3>Eligibility</h3><p>Bourbon Hunters is intended for adults of legal drinking age in their location. You must be at least 18 years old, and at least 21 years old where required by local law.</p>
       <h3>Account</h3><p>When accounts are enabled, you are responsible for keeping your login credentials secure and for activity under your account.</p>
       <h3>App content</h3><p>Bottle information, prices, ratings and availability are provided for discovery and collection tracking. They may be incomplete or inaccurate and are not purchase, investment or health advice.</p>
-      <h3>User photos and database contributions</h3><p>If you upload bottle photos, comments, ratings or bottle details, you confirm that you have the right to share them and you grant Bourbon Hunters a non-exclusive, worldwide, royalty-free permission to host, store, analyze, edit, transform, display and use them to provide the app, improve scanner results and expand the bottle database. This includes OCR, AI-assisted matching, creating app-style reference images from uploaded photos and showing bottle photos or generated reference images inside Bourbon Hunters features. You keep ownership of your own photos and comments.</p>
+      <h3>User photos and database contributions</h3><p>If you upload bottle photos, comments, ratings or bottle details, you confirm that you have the right to share them. You grant Bourbon Hunters a non-exclusive, worldwide, royalty-free, sublicensable and continuing license to host, analyze, edit, transform, reproduce, display and use accepted catalog contributions to provide and promote the app, improve scanner results and expand the shared bottle database. This includes OCR, AI-assisted matching and creating app-style bottle assets. The license for an accepted catalog asset survives account deletion. You keep ownership of rights you lawfully hold in your original contribution.</p>
+      <h3>Catalog image acceptance</h3><p>Before an app-style bottle asset is published, you can accept it, retake the photo or save bottle data without an image. Acceptance records the current catalog license version. Original photos and temporary working files are deleted after processing or cancellation. Only the accepted catalog asset is retained for shared use.</p>
       <h3>Product information</h3><p>Bottle facts, categories, proof, ABV, price ranges, tasting metadata and descriptions may come from user submissions, scans, public sources, our own curation and automated agents. Do not submit content that infringes third-party rights. We may normalize, merge, remove or moderate submissions to keep the database useful and compliant.</p>
       <h3>Responsible use</h3><p>The app does not sell alcohol. Drink responsibly and follow all laws in your location.</p>
       <h3>Changes</h3><p>We may update these terms as the product evolves. Continued use after updates means you accept the updated terms.</p>
@@ -726,11 +728,11 @@
       <p class="legal-note">Draft placeholder based on standard mobile app disclosure categories. Final policy must match the real backend and Google Play Data Safety form.</p>
       <h3>Data we collect</h3><p>When accounts are enabled, we may collect email, username, authentication data, profile marker, collection items, wishlist items, ratings, comments, recommendations, scan history, bottle photos and bottle details you choose to upload.</p>
       <h3>How we use data</h3><p>We use data to provide account access, sync your collection, recognize bottles, improve scanner results, expand the bottle database, generate app-style reference assets, prevent abuse and support Pro or advertising features when introduced.</p>
-      <h3>Photos, camera and AI processing</h3><p>Camera or gallery access is used only when you choose to scan or upload a bottle image. Uploaded photos may be stored, analyzed with OCR or AI tools, matched against known bottles and used to create reference bottle images that fit the Bourbon Hunters visual style. Generated reference images may be marked as AI-generated or app-generated where appropriate.</p>
-      <h3>Database contributions</h3><p>Product facts and normalized bottle metadata extracted from scans, photos, comments or public sources may be retained as part of the shared Bourbon Hunters database. If you delete your account, we will remove or anonymize personal data as required, but non-personal product facts and aggregated statistics may remain in the database.</p>
+      <h3>Photos, camera and AI processing</h3><p>Camera or gallery access is used only when you choose to scan or upload a bottle image. A source photo may be transmitted to hosting, image-processing, OCR or AI providers to recognize the label and prepare a bottle cutout. When a catalog preview is created, the source file and its embedded metadata are deleted from Bourbon Hunters storage. A temporary preview remains until you accept, retry or cancel the submission, for no longer than 24 hours under the configured cleanup process.</p>
+      <h3>Database contributions</h3><p>Accepted catalog assets, product facts and normalized bottle metadata may be retained as part of the shared Bourbon Hunters database. If you delete your account, we remove the account link and personal data, while accepted catalog assets and non-personal product information remain. We retain a minimal non-public receipt of the catalog acceptance, including the document version, timestamp, file hash and a pseudonymous contributor hash, for rights and dispute records.</p>
       <h3>Sharing</h3><p>We do not sell personal data. We may use service providers such as hosting, storage, analytics, authentication or payment providers to operate the app.</p>
-      <h3>Security and retention</h3><p>Data should be transmitted over HTTPS and stored with appropriate protections. Account and scan data should be retained only as long as needed for the product or legal requirements.</p>
-      <h3>Deletion</h3><p>When accounts are enabled, users must be able to request deletion of their account and associated personal data from inside the app and from a public support channel.</p>
+      <h3>Security and retention</h3><p>Data is transmitted over HTTPS and should be stored with appropriate protections. Source catalog photos are temporary, working previews remain until a decision is made, and accepted catalog assets are retained while they remain useful to the shared catalog. Account and scan data is retained only as long as needed for the product or legal requirements.</p>
+      <h3>Deletion</h3><p>You can delete your account from My profile. Account credentials, sessions, profile, collection, wishlist, ratings, recommendations and other linked personal data are deleted or anonymized. Accepted shared catalog assets, non-personal bottle information and minimal legal acceptance receipts are not removed with the account.</p>
       <h3>Contact</h3><p>Before public launch, add the developer/company name, privacy contact email and public policy URL required by app stores.</p>
     </div>
   </section>
@@ -964,7 +966,8 @@ Object.assign(I18N.pl,{
   myProfileTab:"M\u00f3j profil", profileBadgeCopy:"Ten znacznik b\u0119dzie widoczny przy Twoich komentarzach i poleceniach.",
   changeBadge:"Zmie\u0144 znacznik", chooseBadgeTitle:"Wybierz znacznik", badgePickerCopy:"Znacznik pojawi si\u0119 przy komentarzach i poleceniach.",
   saveProfileBadge:"Zapisz profil", skipForNow:"Pomi\u0144 na razie", profileSaved:"Profil zapisany.", premiumBadgeNote:"Wi\u0119cej znacznik\u00f3w odblokujesz w planie Pro.",
-  profileSettings:"Ustawienia profilu", tasteProfile:"Preferencje smaku", dataExport:"Eksport danych", deleteProfile:"Usu\u0144 profil",
+  profileSettings:"Ustawienia profilu", tasteProfile:"Preferencje smaku", dataExport:"Eksport danych", deleteProfile:"Usu\u0144 konto",
+  deleteAccountConfirm:"Usun\u0105\u0107 konto i wszystkie dane osobowe? Zaakceptowane materia\u0142y katalogowe pozostan\u0105 w bazie bez powi\u0105zania z profilem.", deleteAccountDone:"Konto i dane osobowe zosta\u0142y usuni\u0119te.", deleteAccountError:"Nie uda\u0142o si\u0119 usun\u0105\u0107 konta.",
   featuredAllTitle:"Polecane przez \u0142owc\u00f3w", recEmptyTitle:"Brak polece\u0144", recEmptyBody:"Dodaj komentarz i ocen\u0119 w szczeg\u00f3\u0142ach butelki, a trafi tutaj jako polecenie.",
   addRecommendation:"Dodaj komentarz", recommendationPlaceholder:"Napisz kr\u00f3tko, dlaczego polecasz t\u0119 butelk\u0119...",
   recommendationHint:"Do polecenia do\u0142\u0105czymy Twoj\u0105 ocen\u0119 z gwiazdek powy\u017cej.", saveRecommendation:"Pole\u0107",
@@ -972,7 +975,7 @@ Object.assign(I18N.pl,{
   recommendationNeedText:"Dodaj kr\u00f3tki komentarz.", recommendationSaved:"Polecenie zapisane.", commentsTitle:"Komentarze \u0142owc\u00f3w",
   showComments:"Poka\u017c komentarze", hideText:"Zwi\u0144", moreText:"Wi\u0119cej", recommendedBy:"Poleca",
   catalogPreviewTitle:"Podgl\u0105d butelki", catalogProcessing:"Wycinam butelk\u0119 ze zdj\u0119cia...", catalogProcessingCopy:"Agent obrazu przygotowuje czysty podgl\u0105d pasuj\u0105cy do aplikacji.",
-  acceptImage:"Akceptuj\u0119", retakeImage:"Zr\u00f3b zdj\u0119cie ponownie", saveWithoutImage:"Zapisz bez zdj\u0119cia", addToCatalog:"Uzupe\u0142nij i dodaj do katalogu", addToCollection:"Dodaj do kolekcji",
+  acceptImage:"Akceptuj\u0119 i dodaj\u0119", retakeImage:"Zr\u00f3b zdj\u0119cie ponownie", saveWithoutImage:"Zapisz bez zdj\u0119cia", addToCatalog:"Uzupe\u0142nij i dodaj do katalogu", addToCollection:"Dodaj do kolekcji", catalogLicenseNote:"Akceptuj\u0105c, pozwalasz Bourbon Hunters bezterminowo u\u017cywa\u0107 gotowego assetu katalogowego. Oryginalne zdj\u0119cie i pliki robocze zostan\u0105 usuni\u0119te.",
   catalogNoPreview:"Nie uda\u0142o si\u0119 przygotowa\u0107 wyci\u0119cia.", catalogNoPreviewCopy:"Mo\u017cesz zrobi\u0107 nowe zdj\u0119cie albo zapisa\u0107 same dane.", catalogSaved:"Butelka zapisana i dodana do Ostatnio dodanych.", catalogLogin:"Zaloguj si\u0119, aby doda\u0107 butelk\u0119 do katalogu.", catalogError:"Nie uda\u0142o si\u0119 zapisa\u0107 butelki.", catalogHit:"Mam trafienie"
 });
 Object.assign(I18N.en,{
@@ -993,7 +996,8 @@ Object.assign(I18N.en,{
   myProfileTab:"My profile", profileBadgeCopy:"This marker will appear next to your comments and recommendations.",
   changeBadge:"Change marker", chooseBadgeTitle:"Choose marker", badgePickerCopy:"The marker will appear next to comments and recommendations.",
   saveProfileBadge:"Save profile", skipForNow:"Skip for now", profileSaved:"Profile saved.", premiumBadgeNote:"Unlock more markers with Pro.",
-  profileSettings:"Profile settings", tasteProfile:"Taste preferences", dataExport:"Data export", deleteProfile:"Delete profile",
+  profileSettings:"Profile settings", tasteProfile:"Taste preferences", dataExport:"Data export", deleteProfile:"Delete account",
+  deleteAccountConfirm:"Delete your account and all personal data? Accepted catalog assets will remain in the shared catalog without a profile link.", deleteAccountDone:"Your account and personal data were deleted.", deleteAccountError:"The account could not be deleted.",
   featuredAllTitle:"Recommended by hunters", recEmptyTitle:"No recommendations yet", recEmptyBody:"Add a comment and rating in bottle details, and it will appear here as a recommendation.",
   addRecommendation:"Add comment", recommendationPlaceholder:"Write briefly why you recommend this bottle...",
   recommendationHint:"Your star rating above will be attached to this recommendation.", saveRecommendation:"Recommend",
@@ -1001,7 +1005,7 @@ Object.assign(I18N.en,{
   recommendationNeedText:"Add a short comment.", recommendationSaved:"Recommendation saved.", commentsTitle:"Hunter comments",
   showComments:"Show comments", hideText:"Collapse", moreText:"More", recommendedBy:"Recommended by",
   catalogPreviewTitle:"Bottle preview", catalogProcessing:"Cutting the bottle from the photo...", catalogProcessingCopy:"The image agent is preparing a clean preview for the app.",
-  acceptImage:"Accept", retakeImage:"Take another photo", saveWithoutImage:"Save without photo", addToCatalog:"Complete and add to catalog", addToCollection:"Add to collection",
+  acceptImage:"Accept and add", retakeImage:"Take another photo", saveWithoutImage:"Save without photo", addToCatalog:"Complete and add to catalog", addToCollection:"Add to collection", catalogLicenseNote:"By accepting, you allow Bourbon Hunters to keep and use the finished catalog asset. The original photo and working files will be deleted.",
   catalogNoPreview:"The bottle cutout could not be prepared.", catalogNoPreviewCopy:"Take another photo or save the bottle data without an image.", catalogSaved:"Bottle saved and added to Recently added.", catalogLogin:"Sign in to add a bottle to the catalog.", catalogError:"The bottle could not be saved.", catalogHit:"Found a match"
 });
 
@@ -1513,6 +1517,31 @@ function logout(){
   toast(t("logoutDone"));
   renderProfile();
   showAgeGateIfNeeded();
+}
+function clearDeletedAccountLocalData(){
+  WL=[];
+  OWNED=[];
+  Object.keys(UR).forEach(function(key){ delete UR[key]; });
+  USER_PROFILE={badge:"glass"};
+  USER_STATS={};
+  RECS=[];
+  Object.keys(DRAFT_COMMENTS).forEach(function(key){ delete DRAFT_COMMENTS[key]; });
+  try{
+    ["bh_wishlist","bh_collection","bh_user_ratings","bh_user_stats",PROFILE_KEY,AUTH_TOKEN_KEY,AUTH_USER_KEY,AGE_GATE_KEY].forEach(function(key){ localStorage.removeItem(key); });
+  }catch(e){}
+}
+function deleteProfileAccount(){
+  if(!AUTH_TOKEN || !AUTH_USER){ showView("signin"); return; }
+  if(!window.confirm(t("deleteAccountConfirm"))) return;
+  bhApi("/me/account",{method:"DELETE",body:JSON.stringify({confirm:"DELETE"})}).then(function(){
+    clearDeletedAccountLocalData();
+    saveAuth(null);
+    AGE_GATE_RUNTIME_OK=false;
+    toast(t("deleteAccountDone"));
+    renderHome(); renderCollection("wishlist"); renderProfile();
+    showView("profile");
+    showAgeGateIfNeeded();
+  }).catch(function(){ toast(t("deleteAccountError")); });
 }
 function syncProfile(){
   if(!AUTH_TOKEN) return Promise.resolve();
@@ -2588,7 +2617,10 @@ document.addEventListener("click",function(e){
   const badgeChoice=e.target.closest("[data-badge-choice]");
   if(badgeChoice){ e.preventDefault(); pendingBadge=badgeChoice.getAttribute("data-badge-choice")||"glass"; renderBadgePicker(); return; }
   const profileAction=e.target.closest("[data-profile-action]");
-  if(profileAction){ toast(t("inProgress")); return; }
+  if(profileAction){
+    if(profileAction.getAttribute("data-profile-action")==="delete-profile"){ e.preventDefault(); deleteProfileAccount(); return; }
+    toast(t("inProgress")); return;
+  }
   const valueEl=e.target.closest("[data-value-score]");
   if(valueEl){ e.stopPropagation(); toast((lang==="pl"?"Stosunek ceny do jakosci":"Quality-to-price ratio")+": "+valueEl.getAttribute("data-value-score")+"/5"); return; }
   const ur=e.target.closest("[data-ur]");
@@ -2781,7 +2813,8 @@ function renderCatalogPreview(data){
   const actions=document.getElementById("catalogPreviewActions");
   if(data.preview_ready && data.preview_data_url){
     preview.innerHTML='<img src="'+esc(data.preview_data_url)+'" alt="'+esc((currentScanResult&&currentScanResult.name)||"")+'">';
-    actions.innerHTML='<button class="btn" type="button" data-catalog-decision="accept">'+esc(t("acceptImage"))+'</button>'+
+    actions.innerHTML='<p class="catalog-license-note">'+esc(t("catalogLicenseNote"))+'</p>'+
+      '<button class="btn" type="button" data-catalog-decision="accept">'+esc(t("acceptImage"))+'</button>'+
       '<button class="btn btn-alt" type="button" data-catalog-decision="retry">'+esc(t("retakeImage"))+'</button>'+
       '<button class="btn btn-alt quiet" type="button" data-catalog-decision="without_image">'+esc(t("saveWithoutImage"))+'</button>';
   } else {
