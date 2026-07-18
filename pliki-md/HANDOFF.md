@@ -15,7 +15,14 @@ Uzyj go jako pierwszego dokumentu przy starcie watku `Przekaz Bourbon Hunter 1.1
 - Administrator ma w profilu widok `Raporty`; endpointy `/admin/reports/*` sa chronione przez `ADMIN_EMAILS` lub `SUPPORT_EMAIL`.
 - Surowa telemetria operacyjna ma domyslnie 90 dni retencji i jest czyszczona przez ten sam dzienny Cron.
 - Ogolna analityka produktowa pozostaje wylaczona. Szczegoly: `pliki-md/TELEMETRY.md`.
-- Cache PWA: `bourbon-hunters-v90`.
+- Cache PWA: `bourbon-hunters-v91`.
+
+## Aktualizacja 2026-07-18 - asset po potwierdzeniu skanu
+
+- Kandydat skanera pobiera opublikowany asset ze wspolnego `catalog_bottles`, nawet gdy dodal go inny user i nie miesci sie juz w liscie ostatnich 24 pozycji.
+- Mystery po potwierdzeniu przez zalogowanego usera automatycznie uruchamia Cloudflare Images i tworzy podglad wycietej butelki dopasowany do wybranego `bottle_id`.
+- Ekran szczegolow pokazuje ten podglad od razu. Publikacja do wspolnej bazy nadal wymaga osobnego przycisku akceptacji licencji assetu.
+- Po publikacji szczegoly przechodza na finalny URL R2, a kolejne skany wszystkich userow widza gotowy obraz.
 
 ## Aktualizacja 2026-07-18 - cykl zycia zdjec katalogowych
 
@@ -24,7 +31,7 @@ Uzyj go jako pierwszego dokumentu przy starcie watku `Przekaz Bourbon Hunter 1.1
 - Akceptacja kopiuje podglad do niezaleznego klucza `catalog/published/<bottle_id>/<sha256>.webp`, zapisuje wersje licencji i minimalny dowod zgody.
 - Usuniecie konta kasuje dane osobowe oraz lokalny cache, ale odczepia zaakceptowane assety od profilu i zostawia je w katalogu.
 - Porzucone podglady sa czyszczone po 24 godzinach przez scheduled handler; w Cloudflare trzeba dodac dzienny Cron Trigger, np. `0 3 * * *`.
-- Worker health ma zwracac `catalog_data_schema: true`, `catalog_submission_version: community-catalog-images-v3-data-lifecycle` i `catalog_license_version: catalog-license-2026-07-18-v1`.
+- Worker health ma zwracac `catalog_data_schema: true`, `catalog_submission_version: community-catalog-images-v4-confirmed-cutout` i `catalog_license_version: catalog-license-2026-07-18-v1`.
 - Cache PWA: `bourbon-hunters-v89`.
 
 ## Aktualizacja 2026-07-12 - potwierdzanie wyniku skanera

@@ -84,7 +84,7 @@ index.html     agent/worker.js      D1, R2, Images, KV, whisky catalog
 3. Add a Cloudflare Images binding named `IMAGES`.
 4. Replace/deploy `agent/worker.js`.
 5. Add a daily Worker Cron Trigger, for example `0 3 * * *`, so abandoned previews are removed after 24 hours. New submissions also run opportunistic cleanup.
-6. Publish the frontend through GitHub Pages and refresh the installed PWA so cache `bourbon-hunters-v90` is active.
+6. Publish the frontend through GitHub Pages and refresh the installed PWA so cache `bourbon-hunters-v91` is active.
 7. Verify `/auth/health`: `catalog_schema`, `catalog_data_schema`, `telemetry_schema`, `operational_telemetry_ready`, `image_pipeline_ready`, `d1` and the existing schema flags should all be `true`.
 
 ## Project Direction

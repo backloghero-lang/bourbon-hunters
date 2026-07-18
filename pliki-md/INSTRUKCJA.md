@@ -27,9 +27,9 @@ Aktualny oczekiwany stan Workera:
 {
   "ok": true,
   "auth_version": "auth-pbkdf2-100000-google-v3",
-  "scan_orchestrator_version": "ocr-visual-fusion-catalog-10k-v7-two-choice-confirmation",
+  "scan_orchestrator_version": "ocr-visual-fusion-catalog-10k-v8-catalog-assets",
   "scan_catalog_version": "ttb-olcc-10k-v1",
-  "catalog_submission_version": "community-catalog-images-v3-data-lifecycle",
+  "catalog_submission_version": "community-catalog-images-v4-confirmed-cutout",
   "catalog_license_version": "catalog-license-2026-07-18-v1",
   "pbkdf2_iterations": 100000,
   "d1": true,
@@ -65,7 +65,7 @@ Cykl zycia zdjec katalogowych wymaga:
 2. W D1 uruchom `agent/d1-migration-v66-telemetry-reports.sql`.
 3. Dopiero potem wklej i zdeployuj aktualny `agent/worker.js`.
 4. W Workerze dodaj dzienny Cron Trigger, np. `0 3 * * *`, do usuwania porzuconych podgladow i telemetrii starszej niz 90 dni.
-5. Wyslij frontend na GitHub i odswiez PWA do cache `bourbon-hunters-v90`.
+5. Wyslij frontend na GitHub i odswiez PWA do cache `bourbon-hunters-v91`.
 6. Sprawdz pelny health: `https://bourbon-hunters.darekmaslyk.workers.dev/auth/health`.
 
 Kolejnosc jest wazna: migracje D1 -> Worker -> GitHub/PWA. Bez v65 cykl zycia assetow nie ruszy, a bez v66 skany beda dzialac bez raportow i health pokaze `telemetry_schema=false`.

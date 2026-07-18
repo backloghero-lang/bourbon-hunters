@@ -2927,12 +2927,27 @@ function confirmCatalogDecision(decision){
   if(!catalogSubmissionId) return;
   const actions=document.getElementById("catalogPreviewActions");
   if(actions) actions.querySelectorAll("button").forEach(function(btn){ btn.disabled=true; });
+  document.querySelectorAll("[data-catalog-decision]").forEach(function(btn){ btn.disabled=true; });
   bhApi("/me/catalog/submission/confirm",{method:"POST",body:JSON.stringify({submission_id:catalogSubmissionId,decision:decision})}).then(function(data){
     if(decision==="retry"){ finishCatalogRetake(); return; }
     if(data.bottle) mergeDynamicCatalog([data.bottle].concat(DYNAMIC_RECENT.filter(function(b){ return b.id!==data.bottle.id; })));
+    if(currentScanResult && currentScanResult.catalog_preview_pending){
+      currentScanResult=Object.assign({},currentScanResult,data.bottle||{}, {
+        id:(data.bottle&&data.bottle.id)||currentScanResult.id,
+        scan_match_id:(data.bottle&&data.bottle.id)||currentScanResult.scan_match_id||currentScanResult.id,
+        in_app_catalog:true,
+        catalog_preview_pending:false,
+        has_image:!!(data.bottle&&data.bottle.image)
+      });
+    }
     setCatalogModal(false); catalogSubmissionId=""; toast(t("catalogSaved"));
     fetchRecentCatalog(); renderHome(); renderExplore();
-  }).catch(function(){ toast(t("catalogError")); if(actions) actions.querySelectorAll("button").forEach(function(btn){ btn.disabled=false; }); });
+    if(currentScanResult) renderScan(currentScanResult,pendingScanMode||"rate");
+  }).catch(function(){
+    toast(t("catalogError"));
+    if(actions) actions.querySelectorAll("button").forEach(function(btn){ btn.disabled=false; });
+    document.querySelectorAll("[data-catalog-decision]").forEach(function(btn){ btn.disabled=false; });
+  });
 }
 function cancelCatalogFlow(reset){
   const id=catalogSubmissionId;
@@ -3060,10 +3075,12 @@ function hydrateScanCandidate(candidate){
     result.profile=local.profile||result.profile;
     result.profile_meta=local.profile_meta||result.profile_meta;
   }
+  if(candidate.image_failed) result.image="";
   result.id=candidate.id||result.id||bottleActionId(result);
   result.scan_match_id=result.id;
   result.scan_confidence=Number(candidate.confidence)||0;
   result.in_app_catalog=true;
+  result.has_catalog_image=!!result.image;
   return result;
 }
 function renderScanConfirmation(data){
@@ -3097,6 +3114,10 @@ function renderScanConfirmation(data){
   document.querySelectorAll("[data-scan-candidate-image]").forEach(function(img){
     img.addEventListener("error",function(){
       const media=img.closest(".scan-candidate-media");
+      const card=img.closest("[data-scan-candidate]");
+      const id=card&&card.getAttribute("data-scan-candidate");
+      const candidate=pendingScanCandidates.find(function(item){ return item.id===id; });
+      if(candidate) candidate.image_failed=true;
       if(media) media.innerHTML=mysteryBottleHtml(true);
     },{once:true});
   });
@@ -3119,7 +3140,44 @@ function confirmScanCandidate(){
   const result=hydrateScanCandidate(candidate);
   reportScanChoice("confirmed",candidate.id);
   pendingScanCandidates=[];
-  renderScan(result,pendingScanMode);
+  if(result.image){ renderScan(result,pendingScanMode); return; }
+  prepareConfirmedCandidateAsset(result,pendingScanMode);
+}
+function renderCandidateAssetProcessing(result){
+  currentScanResult=result;
+  document.getElementById("scanResult").innerHTML='<div class="card"><div class="name">'+esc(result.name||"-")+'</div><div class="catalog-preview-state">'+mysteryBottleHtml(true)+'<b>'+esc(t("catalogProcessing"))+'</b>'+esc(t("catalogProcessingCopy"))+'</div></div>';
+  document.getElementById("scanResult").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function prepareConfirmedCandidateAsset(result, mode){
+  if(!AUTH_TOKEN || !AUTH_USER){
+    result.catalog_asset_missing=true;
+    renderScan(result,mode);
+    return;
+  }
+  renderCandidateAssetProcessing(result);
+  bhApi("/me/catalog/submission/preview",{method:"POST",body:JSON.stringify({
+    image:imgData,mime:imgMime,bottle_id:result.scan_match_id||result.id,bottle_data:catalogBottlePayload(result)
+  })}).then(function(data){
+    catalogSubmissionId=data.submission_id||"";
+    if(data.preview_ready && data.preview_data_url){
+      result.image=data.preview_data_url;
+      result.has_image=true;
+      result.has_catalog_image=false;
+      result.source="catalog_preview";
+      result.catalog_preview_pending=true;
+      result.catalog_asset_missing=false;
+    } else {
+      result.catalog_preview_failed=true;
+      result.catalog_asset_missing=true;
+    }
+    renderScan(result,mode);
+  }).catch(function(){
+    catalogSubmissionId="";
+    result.catalog_preview_failed=true;
+    result.catalog_asset_missing=true;
+    renderScan(result,mode);
+    toast(t("catalogError"));
+  });
 }
 function reportScanChoice(choice, selectedId){
   if(!pendingScanId) return Promise.resolve();
@@ -3171,7 +3229,7 @@ function renderScan(res, mode){
   document.getElementById("view-scan").classList.add("is-confirming");
   if(!Array.isArray(res.description)) normalizeTasting(res);
   currentScanResult=res;
-  syncScanResult(res);
+  if(!res.catalog_preview_pending) syncScanResult(res);
   const origin=[res.distillery,res.region].filter(Boolean).map(esc).join(" · ");
   const img=res.image?'<div class="dphoto'+(isAgentCutout(res)?' agent-cutout':'')+'">'+bottleActionsHtml(res)+'<img src="'+esc(res.image)+'" alt="'+esc(res.name||"")+'" loading="eager" decoding="async">'+valueBadgeHtml(res)+'</div>':'';
   let head='<div class="card"><div class="name">'+esc(res.name||"-")+'</div>'+
@@ -3193,9 +3251,11 @@ function renderScan(res, mode){
     const links=res.sources||[];
     if(links.length) body+='<div class="sec-t">'+t("sourcesT")+'</div><div class="links">'+links.slice(0,5).map(function(s){const u=esc(s.url||s);const tt=esc(s.title||s.url||s);return u?'<a href="'+u+'" target="_blank">'+tt+'</a>':tt;}).join("<br>")+'</div>';
   }
-  const catalogAction=res.in_app_catalog
-    ? '<button class="btn" type="button" data-add-scan-collection="'+esc(res.scan_match_id||res.id)+'" style="width:100%;margin-top:14px">'+esc(ownHas(res.scan_match_id||res.id)?t("ownAdded"):t("addToCollection"))+'</button>'
-    : '<button class="btn" type="button" data-add-catalog="1" style="width:100%;margin-top:14px">'+esc(t("addToCatalog"))+'</button>';
+  const catalogAction=res.catalog_preview_pending
+    ? '<p class="catalog-license-note" style="margin-top:14px">'+esc(t("catalogLicenseNote"))+'</p><button class="btn" type="button" data-catalog-decision="accept" style="width:100%;margin-top:10px">'+esc(t("acceptImage"))+'</button><button class="btn btn-alt" type="button" data-catalog-decision="retry" style="width:100%;margin-top:10px">'+esc(t("retakeImage"))+'</button>'
+    : ((!res.image || res.catalog_asset_missing)
+      ? '<button class="btn" type="button" data-add-catalog="1" style="width:100%;margin-top:14px">'+esc(t("addToCatalog"))+'</button>'
+      : '<button class="btn" type="button" data-add-scan-collection="'+esc(res.scan_match_id||res.id)+'" style="width:100%;margin-top:14px">'+esc(ownHas(res.scan_match_id||res.id)?t("ownAdded"):t("addToCollection"))+'</button>');
   const extra = (mode!=="analyze") ? '<button class="btn btn-alt" id="goAnalyzeBtn" style="width:100%;margin-top:10px">'+t("aiBtn")+'</button>' : '';
   const scanAgain='<button class="btn btn-alt" type="button" data-scan-new="1" style="width:100%;margin-top:10px">'+esc(t("scanAgain"))+'</button>';
   document.getElementById("scanResult").innerHTML=head+body+catalogAction+'</div>'+extra+scanAgain;

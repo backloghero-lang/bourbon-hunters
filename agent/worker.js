@@ -19,9 +19,9 @@ const DEFAULT_DB_URL = "https://raw.githubusercontent.com/" + REPO + "/main/db/c
 const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters. Krotko, z jajem, ale rzeczowo. quality=jakosc 1-5, value=jakosc/cena 1-5 (5 swietna i tania, 1 slaba i droga). Pisz {{LANG}}. Zwroc tylko JSON.";
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
 const MULTI_CANDIDATE_CONFIDENCE = 0.9;
-const SCAN_ORCHESTRATOR_VERSION = "ocr-visual-fusion-catalog-10k-v7-two-choice-confirmation";
+const SCAN_ORCHESTRATOR_VERSION = "ocr-visual-fusion-catalog-10k-v8-catalog-assets";
 const SCAN_CATALOG_VERSION = "ttb-olcc-10k-v1";
-const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v3-data-lifecycle";
+const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v4-confirmed-cutout";
 const CATALOG_LICENSE_VERSION = "catalog-license-2026-07-18-v1";
 const TELEMETRY_VERSION = "scanner-telemetry-v1";
 const CATALOG_SYSTEM_USER_ID = "catalog-system";
@@ -366,6 +366,24 @@ function publicCatalogBottle(row, request){
   data.image=(row.image_key || row.image_submission_id) ? new URL("/catalog/image/"+encodeURIComponent(row.bottle_id)+"?v="+encodeURIComponent(row.updated_at||row.created_at||"1"),request.url).toString() : "";
   data.has_image=!!(row.image_key || row.image_submission_id);
   return data;
+}
+async function enrichScanCandidatesWithCatalogAssets(env, request, candidates){
+  if(!env.DB || !(await tableExists(env,"catalog_bottles"))) return candidates;
+  for(const candidate of (candidates||[])){
+    if(!candidate || !candidate.id || (candidate.result&&candidate.result.image)) continue;
+    const row=await env.DB.prepare("SELECT * FROM catalog_bottles WHERE bottle_id=? AND status='published' LIMIT 1").bind(candidate.id).first();
+    if(!row) continue;
+    const community=publicCatalogBottle(row,request);
+    candidate.result=Object.assign({},candidate.result||{}, {
+      id:candidate.id,
+      name:(candidate.result&&candidate.result.name)||candidate.name||community.name||"",
+      image:community.image||"",
+      has_image:!!community.image,
+      source:community.image?"community_catalog":((candidate.result&&candidate.result.source)||"baza")
+    });
+    candidate.name=candidate.result.name;
+  }
+  return candidates;
 }
 async function deleteSubmissionImages(env, row){
   if(!env.BOTTLE_IMAGES || !row) return;
@@ -1458,6 +1476,7 @@ export default {
           return candidate.confidence>=MULTI_CANDIDATE_CONFIDENCE;
         }).slice(0,2);
         const candidates=highConfidenceCandidates.length>=2 ? highConfidenceCandidates : [bestCandidate];
+        await enrichScanCandidatesWithCatalogAssets(env,request,candidates);
         return scanResponse({needs_confirmation:true,candidates:candidates,suggested:candidates[0].id,mode:mode,remaining:consume(),owner:owner,agents:agentTrace},200,"candidates_presented",{candidates:candidates,suggested_bottle_id:candidates[0].id});
       }
       return lowConfidenceResponse(mode);
