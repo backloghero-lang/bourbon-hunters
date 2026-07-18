@@ -55,6 +55,10 @@ We use data to provide account access, sync your collection, recognize bottles, 
 
 Camera or gallery access is used only when you choose to scan or upload a bottle image. A source photo may be transmitted to hosting, image-processing, OCR or AI providers to recognize the label and prepare a bottle cutout. When a catalog preview is created, the source file and its embedded metadata are deleted from Bourbon Hunters storage. A temporary preview remains until you accept, retry or cancel the submission, for no longer than 24 hours under the configured cleanup process.
 
+### Scanner diagnostics
+
+To operate, secure and improve the scanner, we record pseudonymous technical diagnostics such as a random scan identifier, hashed device identifier, account identifier when signed in, candidate bottle identifiers, confidence scores, the choice confirmed by the user, processing time, model name, status and token counts reported by the AI provider. Scanner diagnostics do not contain the photo, raw OCR text, label text, comments, email or IP address. Raw diagnostic records are retained for up to 90 days by default and then deleted by an automated cleanup process. General product analytics remains disabled until separately configured and, where required, consented to.
+
 ### Database contributions
 
 Accepted catalog assets, product facts and normalized bottle metadata may be retained as part of the shared Bourbon Hunters database. If you delete your account, we remove the account link and personal data, while accepted catalog assets and non-personal product information remain. We retain a minimal non-public receipt of the catalog acceptance, including the document version, timestamp, file hash and a pseudonymous contributor hash, for rights and dispute records.
@@ -65,7 +69,7 @@ We do not sell personal data. We may use service providers such as hosting, stor
 
 ### Security and retention
 
-Data is transmitted over HTTPS and should be stored with appropriate protections. Source catalog photos are temporary, working previews remain until a decision is made, and accepted catalog assets are retained while they remain useful to the shared catalog. Account and scan data is retained only as long as needed for the product or legal requirements.
+Data is transmitted over HTTPS and should be stored with appropriate protections. Source catalog photos are temporary, working previews remain until a decision is made, accepted catalog assets are retained while they remain useful to the shared catalog, and raw scanner diagnostics are retained for up to 90 days by default. Account and other scan data is retained only as long as needed for the product or legal requirements.
 
 ### Deletion
 

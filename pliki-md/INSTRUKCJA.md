@@ -62,12 +62,13 @@ Google login wymaga w Cloudflare Worker:
 Cykl zycia zdjec katalogowych wymaga:
 
 1. W D1 uruchom `agent/d1-migration-v65-catalog-data-lifecycle.sql`.
-2. Dopiero potem wklej i zdeployuj aktualny `agent/worker.js`.
-3. W Workerze dodaj dzienny Cron Trigger, np. `0 3 * * *`, do usuwania porzuconych podgladow po 24 godzinach.
-4. Wyslij frontend na GitHub i odswiez PWA do cache `bourbon-hunters-v89`.
-5. Sprawdz pelny health: `https://bourbon-hunters.darekmaslyk.workers.dev/auth/health`.
+2. W D1 uruchom `agent/d1-migration-v66-telemetry-reports.sql`.
+3. Dopiero potem wklej i zdeployuj aktualny `agent/worker.js`.
+4. W Workerze dodaj dzienny Cron Trigger, np. `0 3 * * *`, do usuwania porzuconych podgladow i telemetrii starszej niz 90 dni.
+5. Wyslij frontend na GitHub i odswiez PWA do cache `bourbon-hunters-v90`.
+6. Sprawdz pelny health: `https://bourbon-hunters.darekmaslyk.workers.dev/auth/health`.
 
-Kolejnosc jest wazna: migracja D1 -> Worker -> GitHub/PWA. Bez migracji v65 dodawanie assetow i usuwanie konta zwroci `schema_catalog_lifecycle_missing` zamiast wykonac czesciowa operacje.
+Kolejnosc jest wazna: migracje D1 -> Worker -> GitHub/PWA. Bez v65 cykl zycia assetow nie ruszy, a bez v66 skany beda dzialac bez raportow i health pokaze `telemetry_schema=false`.
 
 Ponizsze starsze sekcje zostaja jako pomoc historyczna, ale w razie sprzecznosci obowiazuje aktualna zasada powyzej.
 

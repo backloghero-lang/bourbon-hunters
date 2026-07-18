@@ -197,6 +197,18 @@
   .profile-ico{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;background:rgba(246,225,188,.08);border:1px solid rgba(226,176,112,.14);color:#E2B070}
   .profile-ico svg{width:24px;height:24px}
   .profile-row .chev{font-size:25px;color:#E2B070;line-height:1}
+  .admin-report{padding:0 14px 110px}
+  .admin-periods{display:flex;gap:8px;margin:12px 0 16px}
+  .admin-periods button{flex:1;border:1px solid rgba(226,176,112,.35);background:#0d0b08;color:#e9c88d;padding:10px 8px;cursor:pointer}
+  .admin-periods button.on{background:#17351f;border-color:#4b9c62;color:#d9f0dc}
+  .admin-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .admin-metric{min-height:86px;border:1px solid rgba(226,176,112,.22);background:rgba(12,10,8,.86);padding:12px}
+  .admin-metric span{display:block;color:#a99675;font-size:10px;text-transform:uppercase;margin-bottom:7px}
+  .admin-metric strong{font:700 24px Georgia,serif;color:#f4d399}
+  .admin-table{width:100%;border-collapse:collapse;margin-top:18px;font-size:12px}
+  .admin-table th,.admin-table td{padding:9px 6px;border-bottom:1px solid rgba(226,176,112,.15);text-align:left;vertical-align:top}
+  .admin-table th{color:#bda77e;font-size:10px;text-transform:uppercase}
+  .admin-note{color:#9e927d;font-size:12px;line-height:1.5;margin-top:12px}
   .badge-screen-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:2px 0 18px}
   .badge-screen-head h2{font-family:var(--serif);font-size:26px;line-height:1.05;margin:0;color:#F6E1BC}
   .badge-preview{display:flex;align-items:center;gap:14px;margin:0 0 18px;padding:14px;border:1px solid rgba(226,176,112,.22);border-radius:18px;background:linear-gradient(180deg,rgba(29,24,18,.74),rgba(10,7,5,.9))}
@@ -590,9 +602,22 @@
       <button class="profile-row" type="button" data-open-view="signin" data-auth-guest><span class="profile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><path d="M10 17l5-5-5-5M15 12H3"/></svg></span><span data-i18n="signInTab">Sign In</span><span class="chev">&rsaquo;</span></button>
       <button class="profile-row" type="button" data-open-view="hunter-profile" data-auth-user><span class="profile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4.5 20c.8-3.6 4-5.5 7.5-5.5S18.7 16.4 19.5 20"/><path d="M17 3l1 2 2 .3-1.5 1.5.4 2.2L17 8l-1.9 1 .4-2.2L14 5.3l2-.3z"/></svg></span><span data-i18n="myProfileTab">Mój profil</span><span class="chev">&rsaquo;</span></button>
       <button class="profile-row" type="button" data-profile-action="articles"><span class="profile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span><span data-i18n="articlesTab">Articles</span><span class="chev">&rsaquo;</span></button>
+      <button class="profile-row" type="button" data-open-view="admin-reports" data-auth-admin style="display:none"><span class="profile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V9M10 19V5M16 19v-7M22 19V3"/></svg></span><span>Raporty</span><span class="chev">&rsaquo;</span></button>
       <button class="profile-row" type="button" data-profile-action="pro"><span class="profile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l2.7 5.5 6.1.9-4.4 4.3 1 6.1L12 16.9 6.6 19.8l1-6.1-4.4-4.3 6.1-.9L12 3z"/></svg></span><span data-i18n="proTab">Wersja Pro</span><span class="chev">&rsaquo;</span></button>
       <button class="profile-row" type="button" data-profile-action="settings" aria-disabled="true"><span class="profile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.9l.1.1a2 2 0 01-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.9-.3 1.7 1.7 0 00-1 1.6V21a2 2 0 01-4 0v-.1a1.7 1.7 0 00-1-1.6 1.7 1.7 0 00-1.9.3l-.1.1A2 2 0 014.2 17l.1-.1A1.7 1.7 0 004.6 15a1.7 1.7 0 00-1.6-1H3a2 2 0 010-4h.1a1.7 1.7 0 001.6-1 1.7 1.7 0 00-.3-1.9l-.1-.1A2 2 0 017 4.2l.1.1A1.7 1.7 0 009 4.6 1.7 1.7 0 0010 3V3a2 2 0 014 0v.1a1.7 1.7 0 001 1.6 1.7 1.7 0 001.9-.3l.1-.1A2 2 0 0119.8 7l-.1.1a1.7 1.7 0 00-.3 1.9 1.7 1.7 0 001.6 1h.1a2 2 0 010 4H21a1.7 1.7 0 00-1.6 1z"/></svg></span><span data-i18n="settingsTab">Ustawienia</span><span class="chev">&rsaquo;</span></button>
       <button class="profile-row" type="button" data-auth-user data-logout><span class="profile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg></span><span data-i18n="logoutTab">Logout</span><span class="chev">&rsaquo;</span></button>
+    </div>
+  </section>
+
+  <!-- ADMIN REPORTS -->
+  <section class="view" id="view-admin-reports">
+    <div class="badge-screen-head">
+      <span class="back" data-open-view="profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg> <span data-i18n="back">Wstecz</span></span>
+      <h2>Raporty</h2>
+    </div>
+    <div class="admin-report">
+      <div class="admin-periods"><button type="button" data-report-days="7">7 dni</button><button class="on" type="button" data-report-days="30">30 dni</button><button type="button" data-report-days="90">90 dni</button></div>
+      <div id="adminReportBody" aria-live="polite"><div class="empty">Ładowanie raportu...</div></div>
     </div>
   </section>
 
@@ -729,9 +754,10 @@
       <h3>Data we collect</h3><p>When accounts are enabled, we may collect email, username, authentication data, profile marker, collection items, wishlist items, ratings, comments, recommendations, scan history, bottle photos and bottle details you choose to upload.</p>
       <h3>How we use data</h3><p>We use data to provide account access, sync your collection, recognize bottles, improve scanner results, expand the bottle database, generate app-style reference assets, prevent abuse and support Pro or advertising features when introduced.</p>
       <h3>Photos, camera and AI processing</h3><p>Camera or gallery access is used only when you choose to scan or upload a bottle image. A source photo may be transmitted to hosting, image-processing, OCR or AI providers to recognize the label and prepare a bottle cutout. When a catalog preview is created, the source file and its embedded metadata are deleted from Bourbon Hunters storage. A temporary preview remains until you accept, retry or cancel the submission, for no longer than 24 hours under the configured cleanup process.</p>
+      <h3>Scanner diagnostics</h3><p>To operate, secure and improve the scanner, we record pseudonymous technical diagnostics such as a random scan identifier, hashed device identifier, account identifier when signed in, candidate bottle identifiers, confidence scores, the choice confirmed by the user, processing time, model name, status and token counts reported by the AI provider. Diagnostics do not contain the photo, raw OCR text, label text, comments, email or IP address. Raw diagnostic records are retained for up to 90 days by default. General product analytics remains disabled until separately configured and, where required, consented to.</p>
       <h3>Database contributions</h3><p>Accepted catalog assets, product facts and normalized bottle metadata may be retained as part of the shared Bourbon Hunters database. If you delete your account, we remove the account link and personal data, while accepted catalog assets and non-personal product information remain. We retain a minimal non-public receipt of the catalog acceptance, including the document version, timestamp, file hash and a pseudonymous contributor hash, for rights and dispute records.</p>
       <h3>Sharing</h3><p>We do not sell personal data. We may use service providers such as hosting, storage, analytics, authentication or payment providers to operate the app.</p>
-      <h3>Security and retention</h3><p>Data is transmitted over HTTPS and should be stored with appropriate protections. Source catalog photos are temporary, working previews remain until a decision is made, and accepted catalog assets are retained while they remain useful to the shared catalog. Account and scan data is retained only as long as needed for the product or legal requirements.</p>
+      <h3>Security and retention</h3><p>Data is transmitted over HTTPS and should be stored with appropriate protections. Source catalog photos are temporary, working previews remain until a decision is made, accepted catalog assets are retained while they remain useful to the shared catalog, and raw scanner diagnostics are retained for up to 90 days by default. Account and other scan data is retained only as long as needed for the product or legal requirements.</p>
       <h3>Deletion</h3><p>You can delete your account from My profile. Account credentials, sessions, profile, collection, wishlist, ratings, recommendations and other linked personal data are deleted or anonymized. Accepted shared catalog assets, non-personal bottle information and minimal legal acceptance receipts are not removed with the account.</p>
       <h3>Contact</h3><p>Before public launch, add the developer/company name, privacy contact email and public policy URL required by app stores.</p>
     </div>
@@ -786,6 +812,8 @@ const DB_URL = "db/bourbons.json";
 const PROFILES_URL = "db/profiles-runtime.json";
 const AUTH_TOKEN_KEY = "bh_auth_token";
 const AUTH_USER_KEY = "bh_auth_user";
+const AUTH_ADMIN_KEY = "bh_auth_admin";
+const DEVICE_ID_KEY = "bh_device_id";
 const PROFILE_KEY = "bh_user_profile";
 const RUNTIME_BOTTLE_IDS = [
   "buffalo-trace-bourbon-1",
@@ -897,6 +925,14 @@ const RENDER_LIMIT = 60; /* ile kart renderujemy na raz (wydajnosc przy tysiacac
 /* ================================ */
 let AUTH_TOKEN=(function(){ try{ return localStorage.getItem(AUTH_TOKEN_KEY)||""; }catch(e){ return ""; } })();
 let AUTH_USER=(function(){ try{ return JSON.parse(localStorage.getItem(AUTH_USER_KEY)||"null"); }catch(e){ return null; } })();
+let AUTH_IS_ADMIN=(function(){ try{ return localStorage.getItem(AUTH_ADMIN_KEY)==="1"; }catch(e){ return false; } })();
+const DEVICE_ID=(function(){
+  try{
+    let value=localStorage.getItem(DEVICE_ID_KEY)||"";
+    if(!value){ value=(crypto&&crypto.randomUUID)?crypto.randomUUID():(Date.now().toString(36)+Math.random().toString(36).slice(2)); localStorage.setItem(DEVICE_ID_KEY,value); }
+    return value;
+  }catch(e){ return "device-"+Math.random().toString(36).slice(2); }
+})();
 
 const I18N = {
   pl:{ searchPh:"Szukaj bourbona lub destylarni...", featured:"Polecane", byCat:"Kategorie", viewAll:"Zobacz wszystkie", recent:"Ostatnio dodane",
@@ -1433,10 +1469,12 @@ function authText(en,pl){ return lang==="pl" ? pl : en; }
 function saveAuth(data){
   AUTH_TOKEN=data&&data.token?data.token:"";
   AUTH_USER=data&&data.user?data.user:null;
+  AUTH_IS_ADMIN=!!(data&&data.admin);
   if(data&&data.profile) applyProfileData(data.profile);
   try{
     if(AUTH_TOKEN) localStorage.setItem(AUTH_TOKEN_KEY,AUTH_TOKEN); else localStorage.removeItem(AUTH_TOKEN_KEY);
     if(AUTH_USER) localStorage.setItem(AUTH_USER_KEY,JSON.stringify(AUTH_USER)); else localStorage.removeItem(AUTH_USER_KEY);
+    if(AUTH_IS_ADMIN) localStorage.setItem(AUTH_ADMIN_KEY,"1"); else localStorage.removeItem(AUTH_ADMIN_KEY);
   }catch(e){}
   renderProfile();
 }
@@ -1484,6 +1522,45 @@ function renderProfile(){
   }
   document.querySelectorAll("[data-auth-guest]").forEach(function(el){ el.style.display=AUTH_USER?"none":"grid"; });
   document.querySelectorAll("[data-auth-user]").forEach(function(el){ el.style.display=AUTH_USER?"grid":"none"; });
+  document.querySelectorAll("[data-auth-admin]").forEach(function(el){ el.style.display=(AUTH_USER&&AUTH_IS_ADMIN)?"grid":"none"; });
+}
+let adminReportDays=30;
+function reportNumber(value, suffix){
+  if(value==null || value==="") return "-";
+  if(typeof value==="string" && value.trim() && !Number.isFinite(Number(value))) return value;
+  const number=Number(value);
+  return Number.isFinite(number) ? number.toLocaleString(lang==="pl"?"pl-PL":"en-US")+(suffix||"") : "-";
+}
+function renderAdminReport(data){
+  const box=document.getElementById("adminReportBody");
+  if(!box) return;
+  const scanner=(data&&data.scanner)||{};
+  const activity=(data&&data.activity)||{};
+  const usage=(data&&data.service_usage)||[];
+  const outcomes=(data&&data.outcomes)||[];
+  const metrics=[
+    [authText("Scans","Skany"),scanner.scans],[authText("Unique users","Unikalni userzy"),scanner.users],
+    [authText("Top choice accepted","Akceptacja 1. wyboru"),scanner.top_choice_acceptance_proxy==null?"-":scanner.top_choice_acceptance_proxy+"%"],
+    [authText("Alternate selected","Wybrano alternatywę"),scanner.alternate_choice_correction_proxy==null?"-":scanner.alternate_choice_correction_proxy+"%"],
+    [authText("Average response","Średni czas"),reportNumber(scanner.avg_duration_ms," ms")],[authText("AI tokens","Tokeny AI"),usage.reduce(function(sum,row){ return sum+(Number(row.total_tokens)||0); },0)],
+    [authText("All accounts","Wszystkie konta"),activity.users_total],[authText("New catalog items","Nowe w katalogu"),activity.catalog_additions]
+  ];
+  const outcomeRows=outcomes.map(function(row){ return '<tr><td>'+esc(row.outcome||"-")+'</td><td>'+reportNumber(row.count)+'</td></tr>'; }).join("");
+  const usageRows=usage.map(function(row){ return '<tr><td>'+esc((row.stage||"-")+" / "+(row.model||"-"))+'</td><td>'+reportNumber(row.calls)+'</td><td>'+reportNumber(row.total_tokens)+'</td><td>'+reportNumber(row.avg_duration_ms," ms")+'</td></tr>'; }).join("");
+  box.innerHTML='<div class="admin-metrics">'+metrics.map(function(metric){ return '<div class="admin-metric"><span>'+esc(metric[0])+'</span><strong>'+esc(reportNumber(metric[1]))+'</strong></div>'; }).join("")+'</div>'+
+    '<table class="admin-table"><thead><tr><th>'+esc(authText("Scanner outcome","Wynik skanera"))+'</th><th>'+esc(authText("Count","Liczba"))+'</th></tr></thead><tbody>'+(outcomeRows||'<tr><td colspan="2">-</td></tr>')+'</tbody></table>'+
+    '<table class="admin-table"><thead><tr><th>'+esc(authText("Service / model","Usługa / model"))+'</th><th>'+esc(authText("Calls","Wywołania"))+'</th><th>'+esc(authText("Tokens","Tokeny"))+'</th><th>'+esc(authText("Time","Czas"))+'</th></tr></thead><tbody>'+(usageRows||'<tr><td colspan="4">-</td></tr>')+'</tbody></table>'+
+    '<p class="admin-note">'+esc(authText("Top-choice acceptance is a user-confirmation proxy, not laboratory accuracy.","Akceptacja pierwszego wyboru jest wskaźnikiem opartym na decyzji użytkownika, a nie laboratoryjnym pomiarem trafności."))+'</p>';
+}
+function loadAdminReport(days){
+  if(!AUTH_IS_ADMIN){ showView("profile"); return; }
+  adminReportDays=Number(days)||30;
+  document.querySelectorAll("[data-report-days]").forEach(function(button){ button.classList.toggle("on",Number(button.getAttribute("data-report-days"))===adminReportDays); });
+  const box=document.getElementById("adminReportBody");
+  if(box) box.innerHTML='<div class="empty">'+esc(authText("Loading report...","Ładowanie raportu..."))+'</div>';
+  bhApi("/admin/reports/summary?days="+adminReportDays,{method:"GET"}).then(renderAdminReport).catch(function(err){
+    if(box) box.innerHTML='<div class="empty">'+esc(authText("Report unavailable: ","Raport niedostępny: ")+String(err&&err.error||"error"))+'</div>';
+  });
 }
 function renderHunterProfile(){
   const name=document.getElementById("hunterProfileName");
@@ -1527,7 +1604,7 @@ function clearDeletedAccountLocalData(){
   RECS=[];
   Object.keys(DRAFT_COMMENTS).forEach(function(key){ delete DRAFT_COMMENTS[key]; });
   try{
-    ["bh_wishlist","bh_collection","bh_user_ratings","bh_user_stats",PROFILE_KEY,AUTH_TOKEN_KEY,AUTH_USER_KEY,AGE_GATE_KEY].forEach(function(key){ localStorage.removeItem(key); });
+    ["bh_wishlist","bh_collection","bh_user_ratings","bh_user_stats",PROFILE_KEY,AUTH_TOKEN_KEY,AUTH_USER_KEY,AUTH_ADMIN_KEY,AGE_GATE_KEY].forEach(function(key){ localStorage.removeItem(key); });
   }catch(e){}
 }
 function deleteProfileAccount(){
@@ -1602,7 +1679,7 @@ function syncBootstrap(pushLocal){
     ? {method:"POST",body:JSON.stringify({wishlist:WL,collection:OWNED,ratings:UR})}
     : {method:"GET"};
   return bhApi("/me/bootstrap",opts).then(function(data){
-    if(data.user) saveAuth({token:AUTH_TOKEN,user:data.user});
+    if(data.user) saveAuth({token:AUTH_TOKEN,user:data.user,admin:!!data.admin});
     applyBootstrap(data.bootstrap);
     if(data.profile) applyProfileData(data.profile);
     syncProfile();
@@ -2246,6 +2323,7 @@ function applyProfiles(list, profileData){
 let currentView="home", detailReturnView="explore", legalReturnView="profile", currentDetailId="";
 let swipeStartX=0, swipeStartY=0, swipeLastX=0, swipeScrollLeft=0, swipeStartIndex=0, swipeMoved=false, swipeScroller=null;
 function showView(name){
+  if(name==="admin-reports" && !AUTH_IS_ADMIN) name="profile";
   document.getElementById("appRoot").className = "app is-" + name;
   document.querySelectorAll(".view").forEach(function(v){ v.classList.toggle("active", v.id==="view-"+name); });
   document.querySelectorAll(".nav button").forEach(function(b){ b.classList.toggle("on", b.getAttribute("data-view")===name); });
@@ -2253,6 +2331,7 @@ function showView(name){
   if(name==="profile"){ const strip=document.getElementById("proStrip"); if(strip) strip.classList.remove("hidden"); renderProfile(); }
   if(name==="hunter-profile") renderHunterProfile();
   if(name==="badge-picker"){ pendingBadge=USER_PROFILE.badge||"glass"; renderBadgePicker(); }
+  if(name==="admin-reports") loadAdminReport(adminReportDays);
   if(name==="recommendations"){ renderRecommendationsView(); fetchRecommendations(); }
   if((name==="home" || name==="explore" || name==="collection") && DB.length) fetchCommunityRatings(DB.map(function(b){ return b.id; }));
   if(name!=="detail") currentView=name;
@@ -2606,7 +2685,7 @@ document.addEventListener("click",function(e){
   const scanConfirm=e.target.closest("[data-scan-confirm]");
   if(scanConfirm){ e.preventDefault(); confirmScanCandidate(); return; }
   const scanCancel=e.target.closest("[data-scan-cancel]");
-  if(scanCancel){ e.preventDefault(); resetShot(); return; }
+  if(scanCancel){ e.preventDefault(); reportScanChoice("cancelled",""); resetShot(); return; }
   const scanNew=e.target.closest("[data-scan-new]");
   if(scanNew){
     e.preventDefault(); resetShot();
@@ -2621,6 +2700,8 @@ document.addEventListener("click",function(e){
     if(profileAction.getAttribute("data-profile-action")==="delete-profile"){ e.preventDefault(); deleteProfileAccount(); return; }
     toast(t("inProgress")); return;
   }
+  const reportDays=e.target.closest("[data-report-days]");
+  if(reportDays){ e.preventDefault(); loadAdminReport(reportDays.getAttribute("data-report-days")); return; }
   const valueEl=e.target.closest("[data-value-score]");
   if(valueEl){ e.stopPropagation(); toast((lang==="pl"?"Stosunek ceny do jakosci":"Quality-to-price ratio")+": "+valueEl.getAttribute("data-value-score")+"/5"); return; }
   const ur=e.target.closest("[data-ur]");
@@ -2764,7 +2845,7 @@ function openDetail(id, keepReturn, skipRecommendationFetch){
 /* ================= SKANER ================= */
 let imgData=null, imgMime="image/jpeg", busy=false, loadTimer=null;
 let currentScanResult=null, catalogSubmissionId="", catalogRetakePending=false;
-let pendingScanCandidates=[], selectedScanCandidateId="", pendingScanMode="rate";
+let pendingScanCandidates=[], selectedScanCandidateId="", pendingScanMode="rate", pendingScanId="";
 const shot=document.getElementById("shot"), fileInput=document.getElementById("file"), galleryInput=document.getElementById("galleryFile");
 const scanPreview=document.getElementById("scanPreview");
 const goRate=document.getElementById("goRate");
@@ -2775,7 +2856,7 @@ if(retakeQuick) retakeQuick.addEventListener("click",function(){ if(busy) return
 fileInput.addEventListener("change",handlePickedFile);
 galleryInput.addEventListener("change",handlePickedFile);
 function resetShot(){
-  imgData=null; imgMime="image/jpeg"; currentScanResult=null; pendingScanCandidates=[]; selectedScanCandidateId=""; pendingScanMode="rate"; goRate.disabled=true;
+  imgData=null; imgMime="image/jpeg"; currentScanResult=null; pendingScanCandidates=[]; selectedScanCandidateId=""; pendingScanMode="rate"; pendingScanId=""; goRate.disabled=true;
   document.getElementById("view-scan").classList.remove("is-confirming");
   if(scanPreview) scanPreview.removeAttribute("src");
   shot.classList.remove("has-shot","is-loading");
@@ -2986,8 +3067,9 @@ function hydrateScanCandidate(candidate){
   return result;
 }
 function renderScanConfirmation(data){
-  pendingScanCandidates=(data&&Array.isArray(data.candidates)?data.candidates:[]).slice(0,3);
+  pendingScanCandidates=(data&&Array.isArray(data.candidates)?data.candidates:[]).slice(0,2);
   pendingScanMode=(data&&data.mode)||"rate";
+  pendingScanId=String(data&&data.scan_id||"");
   selectedScanCandidateId=pendingScanCandidates.length===1?pendingScanCandidates[0].id:"";
   if(!pendingScanCandidates.length){ renderLowConfidence(data||{}); return; }
   document.getElementById("view-scan").classList.add("is-confirming");
@@ -3035,8 +3117,15 @@ function confirmScanCandidate(){
   const candidate=pendingScanCandidates.find(function(item){ return item.id===selectedScanCandidateId; });
   if(!candidate) return;
   const result=hydrateScanCandidate(candidate);
+  reportScanChoice("confirmed",candidate.id);
   pendingScanCandidates=[];
   renderScan(result,pendingScanMode);
+}
+function reportScanChoice(choice, selectedId){
+  if(!pendingScanId) return Promise.resolve();
+  const scanId=pendingScanId;
+  pendingScanId="";
+  return bhApi("/telemetry/scan-choice",{method:"POST",body:JSON.stringify({scan_id:scanId,choice:choice,selected_bottle_id:selectedId||"",device_id:DEVICE_ID})}).catch(function(){});
 }
 function scan(mode,confirmedId){
   if(!imgData||busy) return; if(!WORKER_URL){ showErr("WORKER_URL?"); return; }
@@ -3045,7 +3134,7 @@ function scan(mode,confirmedId){
   const dev=localStorage.getItem("bh_dev")||"";
   const headers={"Content-Type":"application/json"};
   if(AUTH_TOKEN) headers.Authorization="Bearer "+AUTH_TOKEN;
-  fetch(WORKER_URL,{method:"POST",headers:headers,body:JSON.stringify({image:imgData,mime:imgMime,lang:lang,mode:mode,dev:dev,confirmed_id:confirmedId||""})})
+  fetch(WORKER_URL,{method:"POST",headers:headers,body:JSON.stringify({image:imgData,mime:imgMime,lang:lang,mode:mode,dev:dev,confirmed_id:confirmedId||"",device_id:DEVICE_ID})})
   .then(function(r){return r.json();}).then(function(data){
     stopLoading();
     if(data.error==="not_bottle"){ showErr(t("notBottle")); return; }

@@ -7,6 +7,16 @@ Aktualizacja: 2026-07-05.
 Najnowszy kontekst dla kolejnego etapu jest w `pliki-md/HANDOFF-BH-1.1.md`.
 Uzyj go jako pierwszego dokumentu przy starcie watku `Przekaz Bourbon Hunter 1.1`.
 
+## Aktualizacja 2026-07-18 - telemetria skanera i raporty
+
+- Migracja `agent/d1-migration-v66-telemetry-reports.sql` dodaje `scanner_runs`, `service_usage_events` i rezerwowa tabele `telemetry_events`.
+- Skaner nadaje kazdej probie `scan_id`, zapisuje wynik, czasy, pewnosc i tokeny Gemini bez zdjecia, surowego OCR, tekstu etykiety, emaila i IP.
+- Potwierdzenie pierwszej lub drugiej propozycji oraz anulowanie wraca do Workera przez `/telemetry/scan-choice`.
+- Administrator ma w profilu widok `Raporty`; endpointy `/admin/reports/*` sa chronione przez `ADMIN_EMAILS` lub `SUPPORT_EMAIL`.
+- Surowa telemetria operacyjna ma domyslnie 90 dni retencji i jest czyszczona przez ten sam dzienny Cron.
+- Ogolna analityka produktowa pozostaje wylaczona. Szczegoly: `pliki-md/TELEMETRY.md`.
+- Cache PWA: `bourbon-hunters-v90`.
+
 ## Aktualizacja 2026-07-18 - cykl zycia zdjec katalogowych
 
 - Migracja `agent/d1-migration-v65-catalog-data-lifecycle.sql` rozdziela zrodlo, podglad roboczy i finalny asset katalogowy.

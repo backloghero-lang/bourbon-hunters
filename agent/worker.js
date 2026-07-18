@@ -23,6 +23,7 @@ const SCAN_ORCHESTRATOR_VERSION = "ocr-visual-fusion-catalog-10k-v7-two-choice-c
 const SCAN_CATALOG_VERSION = "ttb-olcc-10k-v1";
 const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v3-data-lifecycle";
 const CATALOG_LICENSE_VERSION = "catalog-license-2026-07-18-v1";
+const TELEMETRY_VERSION = "scanner-telemetry-v1";
 const CATALOG_SYSTEM_USER_ID = "catalog-system";
 const AUTH_VERSION = "auth-pbkdf2-100000-google-v3";
 const PBKDF2_ITERATIONS = 100000;
@@ -255,6 +256,46 @@ async function catalogDataSchemaReady(env){
   const catalog=await tableColumns(env,"catalog_bottles");
   return !!(submissions.consent_version && submissions.original_deleted_at && submissions.published_key && submissions.asset_sha256 && catalog.image_key && catalog.license_version && catalog.provenance_submission_id);
 }
+async function telemetrySchemaReady(env){
+  return !!(env.DB && await tableExists(env,"telemetry_events") && await tableExists(env,"scanner_runs") && await tableExists(env,"service_usage_events"));
+}
+function operationalTelemetryEnabled(env){ return String(env.OPERATIONAL_TELEMETRY_ENABLED||"1")!=="0"; }
+function telemetryRetentionDays(env){ return Math.max(7,Math.min(365,Number(env.TELEMETRY_RETENTION_DAYS)||90)); }
+async function telemetryDeviceHash(deviceId){
+  const value=String(deviceId||"").trim().slice(0,180);
+  return value ? (await sha256Hex("telemetry-device:"+value)).slice(0,32) : null;
+}
+function geminiUsage(data, meta){
+  const usage=(data&&data.usageMetadata)||{};
+  return {
+    id:crypto.randomUUID(),provider:"google",stage:String(meta&&meta.stage||"unknown"),model:String(meta&&meta.model||"unknown"),
+    status:Number(meta&&meta.status)||0,attempts:Number(meta&&meta.attempts)||0,
+    prompt_tokens:Number(usage.promptTokenCount)||0,output_tokens:Number(usage.candidatesTokenCount)||0,
+    total_tokens:Number(usage.totalTokenCount)||0,cached_tokens:Number(usage.cachedContentTokenCount)||0,
+    thought_tokens:Number(usage.thoughtsTokenCount)||0,duration_ms:Number(meta&&meta.duration_ms)||0
+  };
+}
+async function recordServiceUsage(env, scanId, userId, usage){
+  if(!usage || !operationalTelemetryEnabled(env) || !(await telemetrySchemaReady(env))) return;
+  const now=new Date().toISOString();
+  await env.DB.prepare("INSERT INTO service_usage_events (id,scan_id,user_id,provider,stage,model,status,attempts,prompt_tokens,output_tokens,total_tokens,cached_tokens,thought_tokens,duration_ms,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)")
+    .bind(usage.id||crypto.randomUUID(),scanId||null,userId||null,usage.provider||"unknown",usage.stage||"unknown",usage.model||"unknown",Number(usage.status)||0,Number(usage.attempts)||0,Number(usage.prompt_tokens)||0,Number(usage.output_tokens)||0,Number(usage.total_tokens)||0,Number(usage.cached_tokens)||0,Number(usage.thought_tokens)||0,Number(usage.duration_ms)||0,now).run();
+}
+async function recordScannerRun(env, data){
+  if(!operationalTelemetryEnabled(env) || !(await telemetrySchemaReady(env))) return;
+  const now=new Date().toISOString();
+  await env.DB.prepare("INSERT OR REPLACE INTO scanner_runs (id,user_id,device_hash,actor_type,mode,outcome,error_code,matched_bottle_id,suggested_bottle_id,confirmed_bottle_id,candidate_ids_json,candidate_count,confidence,visual_confidence,ocr_confidence,db_confidence,min_confidence,input_bytes,duration_ms,started_at,completed_at,confirmed_at,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)")
+    .bind(data.id,data.user_id||null,data.device_hash||null,data.actor_type||"guest",data.mode||"rate",data.outcome||"error",data.error_code||null,data.matched_bottle_id||null,data.suggested_bottle_id||null,data.confirmed_bottle_id||null,JSON.stringify(data.candidates||[]).slice(0,4000),Number(data.candidate_count)||0,Number(data.confidence)||0,Number(data.visual_confidence)||0,Number(data.ocr_confidence)||0,Number(data.db_confidence)||0,Number(data.min_confidence)||0,Number(data.input_bytes)||0,Number(data.duration_ms)||0,data.started_at||now,data.completed_at||now,data.confirmed_at||null,data.created_at||now).run();
+  for(const usage of (data.usage||[])) await recordServiceUsage(env,data.id,data.user_id,usage);
+}
+async function cleanupTelemetry(env){
+  if(!(await telemetrySchemaReady(env))) return {deleted:0};
+  const cutoff=new Date(Date.now()-telemetryRetentionDays(env)*86400000).toISOString();
+  const a=await env.DB.prepare("DELETE FROM service_usage_events WHERE created_at<?").bind(cutoff).run();
+  const b=await env.DB.prepare("DELETE FROM telemetry_events WHERE created_at<?").bind(cutoff).run();
+  const c=await env.DB.prepare("DELETE FROM scanner_runs WHERE created_at<?").bind(cutoff).run();
+  return {deleted:Number(a.meta&&a.meta.changes||0)+Number(b.meta&&b.meta.changes||0)+Number(c.meta&&c.meta.changes||0)};
+}
 function safeJson(value, fallback){
   try{ return JSON.parse(String(value||"")); }catch(e){ return fallback; }
 }
@@ -368,6 +409,7 @@ async function createBottlePreview(env, request, user, body){
   const now=new Date().toISOString();
   const originalKey="catalog/tmp/"+id+"/source";
   const processedKey="catalog/tmp/"+id+"/preview.webp";
+  const imageStarted=Date.now();
   await env.DB.prepare("INSERT INTO bottle_submissions (id,user_id,bottle_id,bottle_name,bottle_data,status,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?)")
     .bind(id,user.id,bottle.id,bottle.name,JSON.stringify(bottle),"processing",now,now).run();
   if(!env.BOTTLE_IMAGES || !env.IMAGES){
@@ -392,11 +434,13 @@ async function createBottlePreview(env, request, user, body){
     const processedAt=new Date().toISOString();
     await env.DB.prepare("UPDATE bottle_submissions SET original_key=NULL,processed_key=?,asset_sha256=?,original_deleted_at=?,status='awaiting_confirmation',updated_at=? WHERE id=?")
       .bind(processedKey,assetSha,processedAt,processedAt,id).run();
+    await recordServiceUsage(env,null,user.id,{provider:"cloudflare",stage:"image_cutout",model:"cloudflare-images",status:200,attempts:1,duration_ms:Date.now()-imageStarted}).catch(function(){});
     return {submission_id:id,preview_ready:true,image_pipeline_ready:true,preview_data_url:"data:image/webp;base64,"+encodeBase64(processed)};
   }catch(e){
     if(env.BOTTLE_IMAGES) await env.BOTTLE_IMAGES.delete([originalKey,processedKey]).catch(function(){});
     const failedAt=new Date().toISOString();
     await env.DB.prepare("UPDATE bottle_submissions SET original_key=NULL,processed_key=NULL,original_deleted_at=?,status='awaiting_confirmation',updated_at=? WHERE id=?").bind(failedAt,failedAt,id).run();
+    await recordServiceUsage(env,null,user.id,{provider:"cloudflare",stage:"image_cutout",model:"cloudflare-images",status:500,attempts:1,duration_ms:Date.now()-imageStarted}).catch(function(){});
     return {submission_id:id,preview_ready:false,image_pipeline_ready:true,preview_error:String(e&&e.message?e.message:e).slice(0,120)};
   }
 }
@@ -489,6 +533,11 @@ async function deleteAccountAndData(env, user){
     if(deleteKeys.length) await deleteR2Keys(env,deleteKeys);
   }
   await env.DB.prepare("UPDATE catalog_asset_receipts SET account_deleted_at=?,updated_at=? WHERE contributor_hash=?").bind(now,now,contributorHash).run();
+  if(await telemetrySchemaReady(env)){
+    await env.DB.prepare("UPDATE scanner_runs SET user_id=NULL,actor_type='deleted' WHERE user_id=?").bind(user.id).run();
+    await env.DB.prepare("UPDATE service_usage_events SET user_id=NULL WHERE user_id=?").bind(user.id).run();
+    await env.DB.prepare("UPDATE telemetry_events SET user_id=NULL WHERE user_id=?").bind(user.id).run();
+  }
   await env.DB.prepare("DELETE FROM users WHERE id=?").bind(user.id).run();
   return {ok:true,account_deleted:true,retained_catalog_assets:retainedAssets,deleted_at:now};
 }
@@ -715,13 +764,34 @@ async function googleUserLogin(env, request, googleUser){
   }
   const token=await createSession(env,request,row.id);
   if(created) sendWelcomeEmail(env,{email:row.email,username:row.username}).catch(function(){});
-  return {token:token,user:publicUser(row),bootstrap:await bootstrapFor(env,row.id),profile:await profileFor(env,row.id),created:created};
+  return {token:token,user:publicUser(row),bootstrap:await bootstrapFor(env,row.id),profile:await profileFor(env,row.id),admin:isAdminUser(env,row),created:created};
+}
+function reportDays(url){ return [7,30,90].indexOf(Number(url.searchParams.get("days")))>=0 ? Number(url.searchParams.get("days")) : 30; }
+async function adminReportSummary(env, days){
+  const since=new Date(Date.now()-days*86400000).toISOString();
+  const scanner=await env.DB.prepare("SELECT COUNT(*) AS scans,COUNT(DISTINCT user_id) AS users,COUNT(DISTINCT device_hash) AS devices,ROUND(AVG(duration_ms),0) AS avg_duration_ms,ROUND(AVG(confidence),3) AS avg_confidence,SUM(CASE WHEN confirmed_at IS NOT NULL THEN 1 ELSE 0 END) AS confirmations,SUM(CASE WHEN outcome='confirmed_top' THEN 1 ELSE 0 END) AS confirmed_top,SUM(CASE WHEN outcome='confirmed_alternate' THEN 1 ELSE 0 END) AS confirmed_alternate,SUM(CASE WHEN outcome='cancelled' THEN 1 ELSE 0 END) AS cancelled,SUM(CASE WHEN outcome='candidates_presented' AND confirmed_at IS NULL THEN 1 ELSE 0 END) AS unconfirmed FROM scanner_runs WHERE created_at>=?").bind(since).first();
+  const outcomes=await env.DB.prepare("SELECT outcome,COUNT(*) AS count FROM scanner_runs WHERE created_at>=? GROUP BY outcome ORDER BY count DESC").bind(since).all();
+  const usage=await env.DB.prepare("SELECT provider,stage,model,status,COUNT(*) AS calls,SUM(attempts) AS attempts,SUM(prompt_tokens) AS prompt_tokens,SUM(output_tokens) AS output_tokens,SUM(total_tokens) AS total_tokens,SUM(cached_tokens) AS cached_tokens,SUM(thought_tokens) AS thought_tokens,ROUND(AVG(duration_ms),0) AS avg_duration_ms FROM service_usage_events WHERE created_at>=? GROUP BY provider,stage,model,status ORDER BY calls DESC").bind(since).all();
+  const activity=await env.DB.prepare("SELECT (SELECT COUNT(*) FROM users) AS users_total,(SELECT COUNT(*) FROM user_ratings WHERE created_at>=?) AS ratings,(SELECT COUNT(*) FROM bottle_recommendations WHERE created_at>=?) AS recommendations,(SELECT COUNT(*) FROM catalog_bottles WHERE created_at>=? AND status='published') AS catalog_additions").bind(since,since,since).first();
+  const confirmations=Number(scanner&&scanner.confirmations)||0;
+  const top=Number(scanner&&scanner.confirmed_top)||0;
+  const alternate=Number(scanner&&scanner.confirmed_alternate)||0;
+  return {days:days,since:since,generated_at:new Date().toISOString(),scanner:Object.assign({},scanner||{}, {
+    top_choice_acceptance_proxy:confirmations ? Math.round(top/confirmations*1000)/10 : null,
+    alternate_choice_correction_proxy:confirmations ? Math.round(alternate/confirmations*1000)/10 : null
+  }),outcomes:outcomes.results||[],service_usage:usage.results||[],activity:activity||{},metric_note:"Acceptance is a user-confirmation proxy, not laboratory ground-truth accuracy."};
+}
+async function adminConfusions(env, days, limit){
+  const since=new Date(Date.now()-days*86400000).toISOString();
+  const rows=await env.DB.prepare("SELECT suggested_bottle_id,confirmed_bottle_id,COUNT(*) AS count,ROUND(AVG(confidence),3) AS avg_confidence FROM scanner_runs WHERE created_at>=? AND outcome='confirmed_alternate' AND suggested_bottle_id IS NOT NULL AND confirmed_bottle_id IS NOT NULL GROUP BY suggested_bottle_id,confirmed_bottle_id ORDER BY count DESC LIMIT ?")
+    .bind(since,Math.max(1,Math.min(100,Number(limit)||20))).all();
+  return {days:days,since:since,confusions:rows.results||[]};
 }
 async function handleApi(request, env, cors){
   const url=new URL(request.url);
   const path=url.pathname.replace(/\/+$/,"");
   if(path==="/auth/health" && request.method==="GET"){
-    let schema=false, reset_schema=false, profile_schema=false, recommendations_schema=false, identity_schema=false, catalog_schema=false, catalog_data_schema=false, detail="";
+    let schema=false, reset_schema=false, profile_schema=false, recommendations_schema=false, identity_schema=false, catalog_schema=false, catalog_data_schema=false, telemetry_schema=false, detail="";
     if(env.DB){
       try{
         await env.DB.prepare("SELECT id FROM users LIMIT 1").first();
@@ -740,10 +810,12 @@ async function handleApi(request, env, cors){
         if(schema && reset_schema && profile_schema && recommendations_schema && identity_schema && !catalog_schema) detail="catalog submission tables are missing";
         catalog_data_schema=catalog_schema && await catalogDataSchemaReady(env);
         if(schema && reset_schema && profile_schema && recommendations_schema && identity_schema && catalog_schema && !catalog_data_schema) detail="catalog data lifecycle migration v65 is missing";
+        telemetry_schema=await telemetrySchemaReady(env);
+        if(schema && catalog_data_schema && !telemetry_schema) detail="telemetry migration v66 is missing";
       }
       catch(e){ detail=String(e&&e.message?e.message:e).slice(0,220); }
     }
-    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,catalog_draft_retention_hours:24,pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
+    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,telemetry_schema:telemetry_schema,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
   }
   if(path==="/auth/google/start" && request.method==="GET"){
     const returnUrl=allowedReturnUrl(env,url.searchParams.get("return")||appUrl(env));
@@ -805,6 +877,31 @@ async function handleApi(request, env, cors){
     const data=await recommendationsFor(env,bottleId,Number(url.searchParams.get("limit")||40));
     return J({recommendations:data.recommendations,recommendations_ready:data.ready},200,cors);
   }
+  if(path==="/telemetry/scan-choice" && request.method==="POST"){
+    if(!(await telemetrySchemaReady(env))) return J({error:"telemetry_schema_missing"},501,cors);
+    const body=await readBody(request);
+    const scanId=String(body.scan_id||"").trim();
+    const choice=String(body.choice||"");
+    const selectedId=String(body.selected_bottle_id||"").trim().slice(0,180);
+    if(!/^[a-f0-9-]{20,40}$/i.test(scanId) || ["confirmed","cancelled"].indexOf(choice)<0) return J({error:"bad_choice"},400,cors);
+    const row=await env.DB.prepare("SELECT * FROM scanner_runs WHERE id=?").bind(scanId).first();
+    if(!row) return J({error:"scan_not_found"},404,cors);
+    const choiceUser=await authUser(env,request);
+    const deviceHash=await telemetryDeviceHash(body.device_id);
+    if(row.user_id ? (!choiceUser || choiceUser.id!==row.user_id) : (!row.device_hash || row.device_hash!==deviceHash)) return J({error:"forbidden"},403,cors);
+    if(row.outcome!=="candidates_presented" || row.confirmed_at) return J({ok:true,already_recorded:true},200,cors);
+    if(choice==="cancelled"){
+      await env.DB.prepare("UPDATE scanner_runs SET outcome='cancelled' WHERE id=?").bind(scanId).run();
+      return J({ok:true,outcome:"cancelled"},200,cors);
+    }
+    const candidates=safeJson(row.candidate_ids_json,[]);
+    if(!selectedId || !candidates.some(function(item){ return item&&item.id===selectedId; })) return J({error:"candidate_not_offered"},400,cors);
+    const outcome=selectedId===row.suggested_bottle_id ? "confirmed_top" : "confirmed_alternate";
+    const now=new Date().toISOString();
+    await env.DB.prepare("UPDATE scanner_runs SET outcome=?,confirmed_bottle_id=?,matched_bottle_id=?,confirmed_at=? WHERE id=?")
+      .bind(outcome,selectedId,selectedId,now,scanId).run();
+    return J({ok:true,outcome:outcome},200,cors);
+  }
   if(path==="/auth/register" && request.method==="POST"){
     const body=await readBody(request);
     const email=cleanEmail(body.email);
@@ -832,7 +929,7 @@ async function handleApi(request, env, cors){
       .bind(id,email,username,hash,salt,"pbkdf2-sha256-"+PBKDF2_ITERATIONS,birthDate,ageCountry,minAge,now,now,now).run();
     const token=await createSession(env,request,id);
     const mail=await sendWelcomeEmail(env,{email:email,username:username}).catch(function(e){ return {sent:false,detail:String(e&&e.message?e.message:e).slice(0,160)}; });
-    return J({token:token,user:{id:id,email:email,username:username,created_at:now},bootstrap:{wishlist:[],collection:[],ratings:{}},profile:await profileFor(env,id),email_ready:!!mail.sent},200,cors);
+    return J({token:token,user:{id:id,email:email,username:username,created_at:now},bootstrap:{wishlist:[],collection:[],ratings:{}},profile:await profileFor(env,id),admin:false,email_ready:!!mail.sent},200,cors);
   }
   if(path==="/auth/password-reset" && request.method==="POST"){
     const body=await readBody(request);
@@ -884,7 +981,7 @@ async function handleApi(request, env, cors){
     const hash=await hashPassword(password,row.password_salt);
     if(hash!==row.password_hash) return J({error:"bad_login"},401,cors);
     const token=await createSession(env,request,row.id);
-    return J({token:token,user:publicUser(row),bootstrap:await bootstrapFor(env,row.id),profile:await profileFor(env,row.id)},200,cors);
+    return J({token:token,user:publicUser(row),bootstrap:await bootstrapFor(env,row.id),profile:await profileFor(env,row.id),admin:isAdminUser(env,row)},200,cors);
   }
   const user=await authUser(env,request);
   if(!user) return J({error:"unauthorized"},401,cors);
@@ -898,21 +995,31 @@ async function handleApi(request, env, cors){
     const result=await deleteAccountAndData(env,user);
     return J(result,result.status||200,cors);
   }
-  if(path==="/me" && request.method==="GET") return J({user:publicUser(user)},200,cors);
+  if(path==="/me" && request.method==="GET") return J({user:publicUser(user),admin:isAdminUser(env,user)},200,cors);
   if(path==="/me/profile" && request.method==="GET") return J({profile:await profileFor(env,user.id)},200,cors);
   if(path==="/me/profile" && request.method==="POST"){
     const profile=await upsertProfile(env,user.id,await readBody(request));
     if(!profile) return J({error:"schema_profile_missing",message:"Run the latest D1 migration for user profiles."},501,cors);
     return J({ok:true,profile:profile},200,cors);
   }
-  if(path==="/me/bootstrap" && request.method==="GET") return J({user:publicUser(user),bootstrap:await bootstrapFor(env,user.id),profile:await profileFor(env,user.id)},200,cors);
+  if(path==="/me/bootstrap" && request.method==="GET") return J({user:publicUser(user),bootstrap:await bootstrapFor(env,user.id),profile:await profileFor(env,user.id),admin:isAdminUser(env,user)},200,cors);
   if(path==="/me/bootstrap" && request.method==="POST"){
     const body=await readBody(request);
     for(const id of (Array.isArray(body.wishlist)?body.wishlist:[])) await upsertBottleList(env,user.id,"wishlist",String(id),true,null);
     for(const id of (Array.isArray(body.collection)?body.collection:[])) await upsertBottleList(env,user.id,"collection",String(id),true,null);
     const ratings=body.ratings&&typeof body.ratings==="object"?body.ratings:{};
     for(const id of Object.keys(ratings)) await upsertRating(env,user.id,String(id),ratings[id]);
-    return J({user:publicUser(user),bootstrap:await bootstrapFor(env,user.id),profile:await profileFor(env,user.id)},200,cors);
+    return J({user:publicUser(user),bootstrap:await bootstrapFor(env,user.id),profile:await profileFor(env,user.id),admin:isAdminUser(env,user)},200,cors);
+  }
+  if(path==="/admin/reports/summary" && request.method==="GET"){
+    if(!isAdminUser(env,user)) return J({error:"forbidden"},403,cors);
+    if(!(await telemetrySchemaReady(env))) return J({error:"telemetry_schema_missing"},501,cors);
+    return J(await adminReportSummary(env,reportDays(url)),200,cors);
+  }
+  if(path==="/admin/reports/confusions" && request.method==="GET"){
+    if(!isAdminUser(env,user)) return J({error:"forbidden"},403,cors);
+    if(!(await telemetrySchemaReady(env))) return J({error:"telemetry_schema_missing"},501,cors);
+    return J(await adminConfusions(env,reportDays(url),url.searchParams.get("limit")),200,cors);
   }
   if(path==="/me/wishlist" && request.method==="POST"){
     const body=await readBody(request);
@@ -1194,9 +1301,9 @@ async function callVisualAgent(env, mime, image){
     ]}],
     generationConfig:{ temperature:0, maxOutputTokens:260, thinkingConfig:{thinkingBudget:0} }
   };
-  const r=await callGemini(env,payload);
-  if(r.err) return {err:r.err,data:{}};
-  return {data:parseJson(r.txt)||{}};
+  const r=await callGemini(env,payload,"visual_identification");
+  if(r.err) return {err:r.err,data:{},usage:r.usage};
+  return {data:parseJson(r.txt)||{},usage:r.usage};
 }
 
 async function callOcrAgent(env, mime, image){
@@ -1208,17 +1315,19 @@ async function callOcrAgent(env, mime, image){
     ]}],
     generationConfig:{ temperature:0, maxOutputTokens:420, thinkingConfig:{thinkingBudget:0} }
   };
-  const r=await callGemini(env,payload);
-  if(r.err) return {err:r.err,data:{}};
-  return {data:parseJson(r.txt)||{}};
+  const r=await callGemini(env,payload,"label_ocr");
+  if(r.err) return {err:r.err,data:{},usage:r.usage};
+  return {data:parseJson(r.txt)||{},usage:r.usage};
 }
 
-async function callGemini(env, payload){
+async function callGemini(env, payload, stage){
   const model = payload.__model || env.MODEL || "gemini-2.5-flash";
   delete payload.__model;
   const url = "https://generativelanguage.googleapis.com/v1beta/models/"+model+":generateContent?key="+env.GEMINI_API_KEY;
-  let r=null, st=0, dt="brak odpowiedzi";
+  const started=Date.now();
+  let r=null, st=0, dt="brak odpowiedzi", attempts=0;
   for(let a=0;a<3;a++){
+    attempts=a+1;
     let rr; try{ rr=await fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)}); }
     catch(e){ st=0; dt="network"; await sleep(700*(a+1)); continue; }
     if(rr.ok){ r=rr; break; }
@@ -1226,20 +1335,20 @@ async function callGemini(env, payload){
     if(st===503||st===429||st===500){ await sleep(900*(a+1)); continue; }
     break;
   }
-  if(!r) return { err:{status:st,detail:dt} };
+  if(!r) return { err:{status:st,detail:dt},usage:geminiUsage(null,{stage:stage,model:model,status:st,attempts:attempts,duration_ms:Date.now()-started}) };
   const data=await r.json();
   let txt=""; try{ txt=data.candidates[0].content.parts.map(function(p){return p.text||"";}).join("").trim(); }catch(e){}
   let sources=[];
   try{ sources=(data.candidates[0].groundingMetadata.groundingChunks||[]).filter(function(c){return c.web;}).slice(0,6).map(function(c){return {title:c.web.title||c.web.uri,url:c.web.uri};}); }catch(e){}
-  return { txt:txt, sources:sources };
+  return { txt:txt, sources:sources,usage:geminiUsage(data,{stage:stage,model:model,status:200,attempts:attempts,duration_ms:Date.now()-started}) };
 }
 
 export default {
-  async fetch(request, env){
+  async fetch(request, env, executionCtx){
     const cors=apiCors(env, request);
     if(request.method==="OPTIONS") return new Response(null,{headers:cors});
     const path=new URL(request.url).pathname;
-    if(path.indexOf("/auth/")===0 || path.indexOf("/me")===0 || path.indexOf("/ratings")===0 || path.indexOf("/recommendations")===0 || path.indexOf("/catalog/")===0){
+    if(path.indexOf("/auth/")===0 || path.indexOf("/me")===0 || path.indexOf("/ratings")===0 || path.indexOf("/recommendations")===0 || path.indexOf("/catalog/")===0 || path.indexOf("/telemetry/")===0 || path.indexOf("/admin/")===0){
       try{ return await handleApi(request, env, cors); }
       catch(e){ return J({error:"server_error",detail:String(e&&e.message?e.message:e).slice(0,240)},500,cors); }
     }
@@ -1256,18 +1365,43 @@ export default {
 
     const scanUser=await authUser(env,request);
     const owner=!!((env.DEV_KEY && body.dev && body.dev.toString()===env.DEV_KEY) || isAdminUser(env,scanUser));
+    const scanId=crypto.randomUUID();
+    const scanStartedAt=new Date().toISOString();
+    const scanStartedMs=Date.now();
+    const deviceHash=await telemetryDeviceHash(body.device_id);
+    let matched=null, hit=null, bottleName="", visionConfidence=0, ocrConfidence=0, dbConfidence=0, overallConfidence=0, agentTrace=null, confidentHit=false;
+    let minConfidence=DEFAULT_MATCH_CONFIDENCE, telemetryUsage=[];
+    function trackScan(outcome, extra){
+      extra=extra||{};
+      const candidates=extra.candidates||[];
+      const task=recordScannerRun(env,{
+        id:scanId,user_id:scanUser&&scanUser.id,device_hash:deviceHash,actor_type:owner?"admin":(scanUser?"user":"guest"),mode:mode,
+        outcome:outcome,error_code:extra.error_code||null,matched_bottle_id:extra.matched_bottle_id||(hit&&hit.id)||null,
+        suggested_bottle_id:extra.suggested_bottle_id||(candidates[0]&&candidates[0].id)||null,
+        candidates:candidates.map(function(candidate){ return {id:candidate.id,confidence:Number(candidate.confidence)||0}; }),candidate_count:candidates.length,
+        confidence:overallConfidence,visual_confidence:visionConfidence,ocr_confidence:ocrConfidence,db_confidence:dbConfidence,min_confidence:minConfidence,
+        input_bytes:Math.floor(image.length*0.75),duration_ms:Date.now()-scanStartedMs,started_at:scanStartedAt,completed_at:new Date().toISOString(),usage:telemetryUsage
+      }).catch(function(){});
+      if(outcome!=="candidates_presented" && executionCtx&&executionCtx.waitUntil) executionCtx.waitUntil(task);
+      return task;
+    }
+    async function scanResponse(payload, status, outcome, extra){
+      payload=Object.assign({scan_id:scanId},payload||{});
+      if(outcome==="candidates_presented") await trackScan(outcome,extra);
+      else trackScan(outcome,extra);
+      return J(payload,status,cors);
+    }
     const LIMIT=parseInt(env.DAILY_LIMIT||"30",10);
     const ip=request.headers.get("CF-Connecting-IP")||"anon";
     const key="q:"+ip+":"+new Date().toISOString().slice(0,10);
     let used=0;
-    if(!owner && env.DS_KV && LIMIT>0){ used=parseInt((await env.DS_KV.get(key))||"0",10); if(used>=LIMIT) return J({limited:true,remaining:0,limit:LIMIT},200,cors); }
+    if(!owner && env.DS_KV && LIMIT>0){ used=parseInt((await env.DS_KV.get(key))||"0",10); if(used>=LIMIT) return scanResponse({limited:true,remaining:0,limit:LIMIT},200,"limited",{error_code:"daily_limit"}); }
 
     const db=await getDB(env);
-    const minConfidence=clamp01(env.MIN_MATCH_CONFIDENCE||DEFAULT_MATCH_CONFIDENCE) || DEFAULT_MATCH_CONFIDENCE;
-    let matched=null, hit=null, bottleName="", visionConfidence=0, ocrConfidence=0, dbConfidence=0, overallConfidence=0, agentTrace=null, confidentHit=false;
+    minConfidence=clamp01(env.MIN_MATCH_CONFIDENCE||DEFAULT_MATCH_CONFIDENCE) || DEFAULT_MATCH_CONFIDENCE;
     if(mode==="analyze" && confirmedId){
       hit=(db.bottles||[]).find(function(bottle){ return bottle&&bottle.id===confirmedId; })||null;
-      if(!hit) return J({error:"confirmed_bottle_not_found"},404,cors);
+      if(!hit) return scanResponse({error:"confirmed_bottle_not_found"},404,"error",{error_code:"confirmed_bottle_not_found"});
       bottleName=hit.name||confirmedId;
       dbConfidence=1; overallConfidence=1; confidentHit=true;
       agentTrace={version:SCAN_ORCHESTRATOR_VERSION,confirmed_by_user:true,confirmed_id:confirmedId};
@@ -1279,14 +1413,15 @@ export default {
       ]);
       const visualErr=agents[0]&&agents[0].err;
       const ocrErr=agents[1]&&agents[1].err;
+      telemetryUsage=[agents[0]&&agents[0].usage,agents[1]&&agents[1].usage].filter(Boolean);
       if(visualErr && ocrErr){
         const quotaExhausted=visualErr.status===429 || ocrErr.status===429;
-        return J({error:quotaExhausted?"quota_exhausted":"upstream",status:visualErr.status||ocrErr.status,detail:(visualErr.detail||ocrErr.detail||"agent_error"),retry:!quotaExhausted}, quotaExhausted?429:((visualErr.status||ocrErr.status)===0?502:503), cors);
+        return scanResponse({error:quotaExhausted?"quota_exhausted":"upstream",status:visualErr.status||ocrErr.status,detail:(visualErr.detail||ocrErr.detail||"agent_error"),retry:!quotaExhausted},quotaExhausted?429:((visualErr.status||ocrErr.status)===0?502:503),quotaExhausted?"quota_exhausted":"upstream_error",{error_code:quotaExhausted?"gemini_quota":"both_agents_failed"});
       }
       const idj=compactVision((agents[0]&&agents[0].data)||{});
       const ocrj=compactOcr((agents[1]&&agents[1].data)||{});
       bottleName=(idj.name||ocrCandidateName(ocrj)||"").toString().trim();
-      if(!bottleName && !ocrHasSignal(ocrj)) return J({error:"not_bottle",agents:scanAgentTrace(idj,ocrj,null)},200,cors);
+      if(!bottleName && !ocrHasSignal(ocrj)) return scanResponse({error:"not_bottle",agents:scanAgentTrace(idj,ocrj,null)},200,"not_bottle",{error_code:"no_label_signal"});
       matched=matchBottleWithEvidence(db,idj,ocrj);
       hit=matched&&matched.bottle ? matched.bottle : null;
       visionConfidence=clamp01(idj.confidence);
@@ -1297,7 +1432,7 @@ export default {
       confidentHit=!!(hit && matched.brandAnchored && !matched.ambiguous && overallConfidence>=minConfidence);
     }
     function lowConfidenceResponse(modeName){
-      return J({
+      return scanResponse({
         error:"low_confidence",
         needsPro:true,
         mode:modeName,
@@ -1309,7 +1444,7 @@ export default {
         minConfidence:minConfidence,
         reason:!matched?"brand_not_confirmed":matched.ambiguous?"ambiguous_candidates":"below_confidence_threshold",
         agents:agentTrace
-      },200,cors);
+      },200,"low_confidence",{error_code:!matched?"brand_not_confirmed":matched.ambiguous?"ambiguous_candidates":"below_confidence_threshold"});
     }
 
     function consume(){ if(!owner && env.DS_KV){ env.DS_KV.put(key,String(used+1),{expirationTtl:90000}); return Math.max(0,LIMIT-(used+1)); } return null; }
@@ -1323,7 +1458,7 @@ export default {
           return candidate.confidence>=MULTI_CANDIDATE_CONFIDENCE;
         }).slice(0,2);
         const candidates=highConfidenceCandidates.length>=2 ? highConfidenceCandidates : [bestCandidate];
-        return J({needs_confirmation:true,candidates:candidates,suggested:candidates[0].id,mode:mode,remaining:consume(),owner:owner,agents:agentTrace},200,cors);
+        return scanResponse({needs_confirmation:true,candidates:candidates,suggested:candidates[0].id,mode:mode,remaining:consume(),owner:owner,agents:agentTrace},200,"candidates_presented",{candidates:candidates,suggested_bottle_id:candidates[0].id});
       }
       return lowConfidenceResponse(mode);
     }
@@ -1340,18 +1475,19 @@ export default {
       tools:[{google_search:{}}],
       generationConfig:{ temperature:parseFloat(env.TEMP_ANALYZE||"0.7"), maxOutputTokens:parseInt(env.MAX_ANALYZE||"3500",10), thinkingConfig:{thinkingBudget:parseInt(env.THINK_ANALYZE||"0",10)} }
     };
-    const ga=await callGemini(env, analyzePayload);
+    const ga=await callGemini(env, analyzePayload,"expanded_analysis");
+    if(ga.usage) telemetryUsage.push(ga.usage);
     if(ga.err) return ga.err.status===429
-      ? J({error:"quota_exhausted",status:429,detail:ga.err.detail,retry:false},429,cors)
-      : J({error:"upstream",status:ga.err.status,detail:ga.err.detail,retry:true},503,cors);
+      ? scanResponse({error:"quota_exhausted",status:429,detail:ga.err.detail,retry:false},429,"quota_exhausted",{error_code:"gemini_quota"})
+      : scanResponse({error:"upstream",status:ga.err.status,detail:ga.err.detail,retry:true},503,"upstream_error",{error_code:"analysis_failed"});
     const ra=parseJson(ga.txt);
-    if(!ra) return J({error:"parse",raw:(ga.txt||"").slice(0,200)},502,cors);
+    if(!ra) return scanResponse({error:"parse",raw:(ga.txt||"").slice(0,200)},502,"error",{error_code:"analysis_parse"});
     if((!ra.links||!ra.links.length) && ga.sources.length) ra.links=ga.sources;
     if(hit){ ra.source="baza"; ra.image=hit.image||""; if(ra.price==null) ra.price=(hit.price_str||hit.price_pln); if(ra.quality==null) ra.quality=hit.quality; if(ra.value==null) ra.value=hit.value; }
     else { ra.source="net"; ra.isNew=true; ra.image=""; }
-    return J({result:ra, mode:mode, remaining:consume(), owner:owner, matched:hit?hit.id:null, confidence:overallConfidence, agents:agentTrace}, 200, cors);
+    return scanResponse({result:ra, mode:mode, remaining:consume(), owner:owner, matched:hit?hit.id:null, confidence:overallConfidence, agents:agentTrace},200,"analyzed",{matched_bottle_id:hit&&hit.id});
   },
   async scheduled(controller, env, ctx){
-    ctx.waitUntil(cleanupStaleCatalogSubmissions(env,200));
+    ctx.waitUntil(Promise.all([cleanupStaleCatalogSubmissions(env,200),cleanupTelemetry(env)]));
   }
 }
