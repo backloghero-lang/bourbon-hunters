@@ -18,8 +18,8 @@ const DEFAULT_PROMPT_URL = "https://raw.githubusercontent.com/" + REPO + "/main/
 const DEFAULT_DB_URL = "https://raw.githubusercontent.com/" + REPO + "/main/db/catalog/scan-index.json";
 const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters. Krotko, z jajem, ale rzeczowo. quality=jakosc 1-5, value=jakosc/cena 1-5 (5 swietna i tania, 1 slaba i droga). Pisz {{LANG}}. Zwroc tylko JSON.";
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
-const CANDIDATE_MIN_CONFIDENCE = 0.55;
-const SCAN_ORCHESTRATOR_VERSION = "ocr-visual-fusion-catalog-10k-v6-user-confirmation";
+const MULTI_CANDIDATE_CONFIDENCE = 0.9;
+const SCAN_ORCHESTRATOR_VERSION = "ocr-visual-fusion-catalog-10k-v7-two-choice-confirmation";
 const SCAN_CATALOG_VERSION = "ttb-olcc-10k-v1";
 const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v2-trim-centered";
 const AUTH_VERSION = "auth-pbkdf2-100000-google-v3";
@@ -1198,8 +1198,10 @@ export default {
       const rankedCandidates=(matched&&matched.candidates||[]);
       const bestCandidate=rankedCandidates[0]||null;
       if(bestCandidate && bestCandidate.confidence>=minConfidence){
-        const candidateFloor=Math.max(CANDIDATE_MIN_CONFIDENCE,bestCandidate.confidence-0.25);
-        const candidates=rankedCandidates.filter(function(candidate){ return candidate.confidence>=candidateFloor; }).slice(0,3);
+        const highConfidenceCandidates=rankedCandidates.filter(function(candidate){
+          return candidate.confidence>=MULTI_CANDIDATE_CONFIDENCE;
+        }).slice(0,2);
+        const candidates=highConfidenceCandidates.length>=2 ? highConfidenceCandidates : [bestCandidate];
         return J({needs_confirmation:true,candidates:candidates,suggested:candidates[0].id,mode:mode,remaining:consume(),owner:owner,agents:agentTrace},200,cors);
       }
       return lowConfidenceResponse(mode);

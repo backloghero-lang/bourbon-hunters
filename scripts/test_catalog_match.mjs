@@ -108,11 +108,14 @@ function assertExcluded(text, excludedId) {
   return {text,excludedId,excluded:true};
 }
 
-function confirmationCandidates(text, minConfidence = 0.8) {
-  const matches=rankedMatches(text);
+function selectConfirmationCandidates(matches, minConfidence = 0.8, multiCandidateConfidence = 0.9) {
   if(!matches[0] || matches[0].score<minConfidence) return [];
-  const floor=Math.max(0.55,matches[0].score-0.25);
-  return matches.filter((match)=>match.score>=floor).slice(0,3);
+  const highConfidence=matches.filter((match)=>match.score>=multiCandidateConfidence).slice(0,2);
+  return highConfidence.length>=2 ? highConfidence : [matches[0]];
+}
+
+function confirmationCandidates(text) {
+  return selectConfirmationCandidates(rankedMatches(text));
 }
 
 function assertConfirmationSet(text, expectedIds) {
@@ -124,18 +127,29 @@ function assertConfirmationSet(text, expectedIds) {
   return {text,confirmationCandidates:ids};
 }
 
+function assertSelectionPolicy(label, scores, expectedIds) {
+  const candidates=selectConfirmationCandidates(scores.map((score,index)=>({id:`candidate-${index+1}`,score})));
+  const ids=candidates.map((candidate)=>candidate.id);
+  if(JSON.stringify(ids)!==JSON.stringify(expectedIds)) {
+    throw new Error(`Expected ${label} to select ${JSON.stringify(expectedIds)}, got ${JSON.stringify(ids)}`);
+  }
+  return {text:label,confirmationCandidates:ids};
+}
+
 const results = [
   assertMatch("Bulleit Bourbon Bottled in Bond 100 proof", "bulleit-bottled-in-bond-111-22"),
   assertMatch("Glenmorangie Triple Cask Reserve single malt scotch", "olcc-13148b"),
   assertMatch("Bulleit American Single Malt Whiskey 90 proof", "olcc-11838b"),
   assertMatch("Jefferson's Bourbon Blend of Straight Bourbon Whiskey 82.3 proof", "jeffersons-very-small-batch-bourbon-whiskey-copy"),
   assertConfirmationSet("Jefferson's Bourbon Blend of Straight Bourbon Whiskey 82.3 proof", [
-    "jeffersons-very-small-batch-bourbon-whiskey-copy",
-    "jefferson-s-blend-of-straight-bourbon-whiskeys",
-    "olcc-8123b"
+    "jeffersons-very-small-batch-bourbon-whiskey-copy"
   ]),
   assertConfirmationSet("Bulleit Bourbon Bottled in Bond 100 proof", ["bulleit-bottled-in-bond-111-22"]),
   assertConfirmationSet("Booker's 2025-02 By The Pond Batch", []),
+  assertSelectionPolicy("Maximum two results at or above 90%",[0.96,0.92,0.91],["candidate-1","candidate-2"]),
+  assertSelectionPolicy("Exactly 90% qualifies for the second choice",[0.94,0.90,0.89],["candidate-1","candidate-2"]),
+  assertSelectionPolicy("Only one result between 80% and 90%",[0.89,0.88],["candidate-1"]),
+  assertSelectionPolicy("No result below 80%",[0.79,0.78],[]),
   assertExcluded("Jefferson's Bourbon Blend of Straight Bourbon Whiskey", "olcc-13413b"),
   assertNoMatch("American Single Malt Whiskey"),
   assertNoConfidentMatch("Booker's 2025-02 By The Pond Batch"),
