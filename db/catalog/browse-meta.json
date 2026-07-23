@@ -1,0 +1,33 @@
+{
+  "version": "browse-whisky-v1",
+  "taxonomy_version": "spirit-taxonomy-v1",
+  "source_version": 3,
+  "updated": "2026-07-23T22:05:57.716Z",
+  "count": 9406,
+  "families": {
+    "bourbon": 3569,
+    "whisky": 5837
+  },
+  "bourbon": {
+    "standard": 3041,
+    "small": 88,
+    "wheated": 78,
+    "bib": 105,
+    "proof": 111,
+    "single": 161,
+    "limited": 34
+  },
+  "whisky": {
+    "american_other": 1966,
+    "scotch": 1495,
+    "corn_wheat": 138,
+    "rye": 1097,
+    "other_whisky": 106,
+    "tennessee": 119,
+    "japanese": 184,
+    "american_malt": 163,
+    "irish": 238,
+    "world": 244,
+    "canadian": 87
+  }
+}

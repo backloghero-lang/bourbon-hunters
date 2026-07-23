@@ -1,0 +1,4246 @@
+{
+  "version": 1,
+  "updated": "2026-07-23T21:40:19.700Z",
+  "policy": "retail-relevance-2026-v1",
+  "max_usd": 1000,
+  "before": 9934,
+  "after": 9406,
+  "removed": 528,
+  "reasons": {
+    "high-age-collector-release": 70,
+    "old-batch-release": 5,
+    "historic-dated-release": 48,
+    "private-or-event-release": 28,
+    "stale-limited-release": 4,
+    "unverified-limited-label": 230,
+    "ultra-allocated": 20,
+    "numbered-barrel-or-cask": 99,
+    "luxury-collector-release": 24
+  },
+  "records": [
+    {
+      "id": "eagle-rare-30-year-old-bourbon-101-proof",
+      "name": "Eagle Rare 30 Year Old Bourbon 101 Proof",
+      "reason": "high-age-collector-release",
+      "source": "woodencork",
+      "completed_date": null,
+      "price_usd": 99.99
+    },
+    {
+      "id": "stagg-kentucky-straight-bourbon-batch-22a-132-2-proof",
+      "name": "Stagg Kentucky Straight Bourbon Batch 22A 132.2 Proof",
+      "reason": "old-batch-release",
+      "source": "woodencork",
+      "completed_date": null,
+      "price_usd": 299.99
+    },
+    {
+      "id": "stagg-kentucky-straight-bourbon-batch-23a-130-2-proof",
+      "name": "Stagg Kentucky Straight Bourbon Batch 23A 130.2 Proof",
+      "reason": "old-batch-release",
+      "source": "woodencork",
+      "completed_date": null,
+      "price_usd": 299.99
+    },
+    {
+      "id": "stagg-kentucky-straight-bourbon-batch-23b-127-8-proof",
+      "name": "Stagg Kentucky Straight Bourbon Batch 23B 127.8 Proof",
+      "reason": "old-batch-release",
+      "source": "woodencork",
+      "completed_date": null,
+      "price_usd": 219.99
+    },
+    {
+      "id": "stagg-kentucky-straight-bourbon-batch-23c-125-9-proof",
+      "name": "Stagg Kentucky Straight Bourbon Batch 23C 125.9 Proof",
+      "reason": "old-batch-release",
+      "source": "woodencork",
+      "completed_date": null,
+      "price_usd": 219.99
+    },
+    {
+      "id": "early-times-kentucky-whiskey-the-hunter-s-edition-2013",
+      "name": "Early Times Kentucky Whiskey The Hunter's Edition 2013",
+      "reason": "historic-dated-release",
+      "source": "domwhisky",
+      "completed_date": null,
+      "price_usd": 59.75
+    },
+    {
+      "id": "evan-williams-single-barrel-2014-vintage",
+      "name": "Evan Williams Single Barrel 2014 Vintage",
+      "reason": "historic-dated-release",
+      "source": "domwhisky",
+      "completed_date": null,
+      "price_usd": 54.75
+    },
+    {
+      "id": "knob-creek-18-year-old-bourbon",
+      "name": "Knob Creek 100 Proof 18 Year Old Kentucky Straight Bourbon Whiskey",
+      "reason": "high-age-collector-release",
+      "source": "woodencork",
+      "completed_date": null,
+      "price_usd": 249.99
+    },
+    {
+      "id": "knob-creek-single-barrel-select-bourbon-selected-by-fred-noe-iv-for-sdbb-3",
+      "name": "Knob Creek Single Barrel Select Bourbon Selected By Fred Noe IV For SDBB",
+      "reason": "private-or-event-release",
+      "source": "woodencork",
+      "completed_date": null,
+      "price_usd": 59.99
+    },
+    {
+      "id": "maker-s-mark-champion-selection-hand-picked-by-la-dodgers-bourbon",
+      "name": "Maker’s Mark Champion Selection by LA Dodgers Bourbon 2024 Limited Release",
+      "reason": "stale-limited-release",
+      "source": "woodencork+curated",
+      "completed_date": null,
+      "price_usd": 99.99
+    },
+    {
+      "id": "maker-s-mark-2019-holiday-edition",
+      "name": "Maker's Mark 2019 Holiday Edition",
+      "reason": "historic-dated-release",
+      "source": "domwhisky",
+      "completed_date": null,
+      "price_usd": 38.5
+    },
+    {
+      "id": "maker-s-mark-dan-issel-2013-bourbon",
+      "name": "Maker's Mark Dan Issel 2013 Bourbon",
+      "reason": "historic-dated-release",
+      "source": "domwhisky",
+      "completed_date": null,
+      "price_usd": 189.75
+    },
+    {
+      "id": "maker-s-mark-double-dip-red-sox-2018-world-series-championship",
+      "name": "Maker's Mark Double Dip Red Sox 2018 World Series Championship",
+      "reason": "historic-dated-release",
+      "source": "domwhisky",
+      "completed_date": null,
+      "price_usd": 143.75
+    },
+    {
+      "id": "maker-s-mark-rick-pitino-2013-release",
+      "name": "Maker's Mark Rick Pitino (2013 Release)",
+      "reason": "historic-dated-release",
+      "source": "domwhisky",
+      "completed_date": null,
+      "price_usd": 238.75
+    },
+    {
+      "id": "maker-s-mark-tom-jurich-2014-release",
+      "name": "Maker's Mark Tom Jurich (2014 Release)",
+      "reason": "historic-dated-release",
+      "source": "domwhisky",
+      "completed_date": null,
+      "price_usd": 223.75
+    },
+    {
+      "id": "maker-s-mark-wood-finishing-series-2020-limited-release",
+      "name": "Maker's Mark Wood Finishing Series 2020 Limited Release",
+      "reason": "historic-dated-release",
+      "source": "domwhisky",
+      "completed_date": null,
+      "price_usd": 192.5
+    },
+    {
+      "id": "bombergers-declaration-2021-bourbon",
+      "name": "Bomberger's Declaration 2021 Bourbon",
+      "reason": "historic-dated-release",
+      "source": "woodencork",
+      "completed_date": null,
+      "price_usd": 299.99
+    },
+    {
+      "id": "bomberger-s-declaration-bourbon-2022",
+      "name": "Bomberger’s Declaration Bourbon 2022",
+      "reason": "historic-dated-release",
+      "source": "woodencork",
+      "completed_date": null,
+      "price_usd": 249.99
+    },
+    {
+      "id": "woodford-reserve-kentucky-straight-bourbon-whiskey-holiday-edition",
+      "name": "Woodford Reserve 2020 Holiday Edition Kentucky Straight Bourbon Whiskey",
+      "reason": "historic-dated-release",
+      "source": "woodencork+curated",
+      "completed_date": null,
+      "price_usd": 79.99
+    },
+    {
+      "id": "woodford-reserve-2021-holiday-edition-kentucky-straight-bourbon-whiskey",
+      "name": "Woodford Reserve 2021 Holiday Edition Kentucky Straight Bourbon Whiskey",
+      "reason": "historic-dated-release",
+      "source": "woodencork+curated",
+      "completed_date": null,
+      "price_usd": 89.99
+    },
+    {
+      "id": "woodford-reserve-2022-holiday-edition-kentucky-straight-bourbon-whiskey-1l",
+      "name": "Woodford Reserve 2022 Holiday Edition Kentucky Straight Bourbon Whiskey",
+      "reason": "historic-dated-release",
+      "source": "woodencork+curated",
+      "completed_date": null,
+      "price_usd": 54.99
+    },
+    {
+      "id": "woodford-reserve-bourbon-holiday-limited-edition-2023",
+      "name": "Woodford Reserve Bourbon Holiday Limited Edition 2023",
+      "reason": "stale-limited-release",
+      "source": "woodencork+curated",
+      "completed_date": null,
+      "price_usd": 39.99
+    },
+    {
+      "id": "woodford-reserve-distillers-select-kentucky-straight-bourbon-whiskey-holiday-edition-2019",
+      "name": "Woodford Reserve Distiller's Select Kentucky Straight Bourbon Whiskey Holiday Edition 2019",
+      "reason": "historic-dated-release",
+      "source": "woodencork+curated",
+      "completed_date": null,
+      "price_usd": 79.99
+    },
+    {
+      "id": "woodford-reserve-distiller-u2019s-select-holiday-edition-2022",
+      "name": "Woodford Reserve Distiller\\u2019s Select Holiday Edition 2022",
+      "reason": "historic-dated-release",
+      "source": "domwhisky",
+      "completed_date": null,
+      "price_usd": 64.75
+    },
+    {
+      "id": "woodford-reserve-holiday-edition-2024",
+      "name": "Woodford Reserve Holiday Edition Bourbon 2024",
+      "reason": "stale-limited-release",
+      "source": "woodencork+curated",
+      "completed_date": null,
+      "price_usd": 39.97
+    },
+    {
+      "id": "woodford-reserve-master-u2019s-collection-2021-batch-proof-128-3",
+      "name": "Woodford Reserve Master\\u2019s Collection 2021 Batch Proof 128.3",
+      "reason": "historic-dated-release",
+      "source": "domwhisky",
+      "completed_date": null,
+      "price_usd": 182.25
+    },
+    {
+      "id": "olcc-13405b",
+      "name": "WILD TURKEY RYE PRIVATE BARREL",
+      "reason": "private-or-event-release",
+      "source": "olcc",
+      "completed_date": null,
+      "price_usd": 79.95
+    },
+    {
+      "id": "olcc-13623b",
+      "name": "RUSSELL'S RESERVE PRIVATE BARREL",
+      "reason": "private-or-event-release",
+      "source": "olcc",
+      "completed_date": null,
+      "price_usd": 69.95
+    },
+    {
+      "id": "olcc-9087b",
+      "name": "WESTWARD SINGLE MALT WHISKEY - WOMEN'S CHARITY BARREL",
+      "reason": "private-or-event-release",
+      "source": "olcc",
+      "completed_date": null,
+      "price_usd": 99.95
+    },
+    {
+      "id": "evan-williams-kentucky-straight-bourbon-whiskey-23-years-old-107-proof-101-00",
+      "name": "EVAN WILLIAMS KENTUCKY STRAIGHT BOURBON WHISKEY 23 YEARS OLD 107 PROOF",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "01/08/2024",
+      "price_usd": null
+    },
+    {
+      "id": "thirteenth-colony-distilleries-15th-year-cask-strength-anniversary-bourbon-whiskey-141-08",
+      "name": "THIRTEENTH COLONY DISTILLERIES 15TH YEAR CASK STRENGTH ANNIVERSARY BOURBON WHISKEY",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "01/08/2024",
+      "price_usd": null
+    },
+    {
+      "id": "society-batch-23-171-6w",
+      "name": "SOCIETY BATCH 23",
+      "reason": "old-batch-release",
+      "source": "ttb-cola",
+      "completed_date": "01/08/2024",
+      "price_usd": null
+    },
+    {
+      "id": "egan-s-vintage-grain-171-5e",
+      "name": "EGAN'S VINTAGE GRAIN",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "01/12/2024",
+      "price_usd": null
+    },
+    {
+      "id": "black-market-private-barrel-142-01",
+      "name": "BLACK MARKET PRIVATE BARREL",
+      "reason": "private-or-event-release",
+      "source": "ttb-cola",
+      "completed_date": "01/11/2024",
+      "price_usd": null
+    },
+    {
+      "id": "black-market-private-cask-142-01",
+      "name": "BLACK MARKET PRIVATE CASK",
+      "reason": "private-or-event-release",
+      "source": "ttb-cola",
+      "completed_date": "01/22/2024",
+      "price_usd": null
+    },
+    {
+      "id": "stiubhart-single-cask-selection-153-5k",
+      "name": "STIÙBHART SINGLE CASK SELECTION",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "01/22/2024",
+      "price_usd": null
+    },
+    {
+      "id": "westland-single-cask-140-07",
+      "name": "WESTLAND SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "01/24/2024",
+      "price_usd": null
+    },
+    {
+      "id": "wd-o-connell-whiskey-merchants-gordon-s-private-barrel-171-5e",
+      "name": "WD O'CONNELL WHISKEY MERCHANTS GORDON'S PRIVATE BARREL",
+      "reason": "private-or-event-release",
+      "source": "ttb-cola",
+      "completed_date": "01/26/2024",
+      "price_usd": null
+    },
+    {
+      "id": "old-forester-birthday-bourbon-2024-101-22",
+      "name": "OLD FORESTER BIRTHDAY BOURBON 2024",
+      "reason": "ultra-allocated",
+      "source": "ttb-cola",
+      "completed_date": "01/31/2024",
+      "price_usd": null
+    },
+    {
+      "id": "lindores-cask-no-190600-153-5k",
+      "name": "LINDORES CASK NO: 190600",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "02/16/2024",
+      "price_usd": null
+    },
+    {
+      "id": "st-augustine-distillery-anniversary-blend-florida-straight-bourbon-whiskey-101-16",
+      "name": "ST. AUGUSTINE DISTILLERY ANNIVERSARY BLEND FLORIDA STRAIGHT BOURBON WHISKEY",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "02/01/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-18600105-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO.18600105",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "02/01/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-1882-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO.1882",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "02/01/2024",
+      "price_usd": null
+    },
+    {
+      "id": "douglas-laing-port-ellen-153-5k",
+      "name": "DOUGLAS LAING PORT ELLEN",
+      "reason": "luxury-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "02/16/2024",
+      "price_usd": null
+    },
+    {
+      "id": "the-macallan-time-space-153-5k",
+      "name": "THE MACALLAN TIME SPACE",
+      "reason": "luxury-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "02/29/2024",
+      "price_usd": null
+    },
+    {
+      "id": "jack-daniel-s-single-barrel-special-release-140-43",
+      "name": "JACK DANIEL'S SINGLE BARREL SPECIAL RELEASE",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "02/27/2024",
+      "price_usd": null
+    },
+    {
+      "id": "four-roses-limited-edition-small-batch-101-22",
+      "name": "FOUR ROSES LIMITED EDITION SMALL BATCH",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "02/28/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-306452-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 306452",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "02/28/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-10684-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 10684",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "02/28/2024",
+      "price_usd": null
+    },
+    {
+      "id": "the-glenallachie-2009-single-cask-153-5k",
+      "name": "THE GLENALLACHIE 2009 SINGLE CASK",
+      "reason": "historic-dated-release",
+      "source": "ttb-cola",
+      "completed_date": "02/28/2024",
+      "price_usd": null
+    },
+    {
+      "id": "the-glenallachie-2011-single-cask-153-5k",
+      "name": "THE GLENALLACHIE 2011 SINGLE CASK",
+      "reason": "historic-dated-release",
+      "source": "ttb-cola",
+      "completed_date": "02/28/2024",
+      "price_usd": null
+    },
+    {
+      "id": "wolfburn-single-cask-153-5k",
+      "name": "WOLFBURN SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "02/28/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-140-01",
+      "name": "SINGLE CASK NATION",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "03/07/2024",
+      "price_usd": null
+    },
+    {
+      "id": "rites-of-passage-cask-selection-secret-speyside-cask-number-900181-153-5k",
+      "name": "RITES OF PASSAGE CASK SELECTION SECRET SPEYSIDE CASK NUMBER #900181",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "03/12/2024",
+      "price_usd": null
+    },
+    {
+      "id": "rites-of-passage-cask-selection-ardmore-cask-number-705208-153-5k",
+      "name": "RITES OF PASSAGE CASK SELECTION ARDMORE CASK NUMBER #705208",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "03/12/2024",
+      "price_usd": null
+    },
+    {
+      "id": "rites-of-passage-cask-selection-ledaig-cask-number-700021-153-5k",
+      "name": "RITES OF PASSAGE CASK SELECTION LEDAIG CASK NUMBER #700021",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "03/12/2024",
+      "price_usd": null
+    },
+    {
+      "id": "rites-of-passage-cask-selection-whitlaw-cask-number-742-153-5k",
+      "name": "RITES OF PASSAGE CASK SELECTION WHITLAW CASK NUMBER #742",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "03/12/2024",
+      "price_usd": null
+    },
+    {
+      "id": "pine-bluffs-distilling-chad-s-2024-barrel-pick-102-49",
+      "name": "PINE BLUFFS DISTILLING CHAD'S 2024 BARREL PICK",
+      "reason": "private-or-event-release",
+      "source": "ttb-cola",
+      "completed_date": "03/08/2024",
+      "price_usd": null
+    },
+    {
+      "id": "pine-bluffs-distilling-town-country-barrel-pick-102-49",
+      "name": "PINE BLUFFS DISTILLING TOWN & COUNTRY BARREL PICK",
+      "reason": "private-or-event-release",
+      "source": "ttb-cola",
+      "completed_date": "03/08/2024",
+      "price_usd": null
+    },
+    {
+      "id": "pine-bluffs-distilling-town-country-barrel-pick-101-49",
+      "name": "PINE BLUFFS DISTILLING TOWN & COUNTRY BARREL PICK",
+      "reason": "private-or-event-release",
+      "source": "ttb-cola",
+      "completed_date": "03/08/2024",
+      "price_usd": null
+    },
+    {
+      "id": "pine-bluffs-distilling-dt-s-barrel-pick-101-49",
+      "name": "PINE BLUFFS DISTILLING DT'S BARREL PICK",
+      "reason": "private-or-event-release",
+      "source": "ttb-cola",
+      "completed_date": "03/08/2024",
+      "price_usd": null
+    },
+    {
+      "id": "glenglassaugh-51-years-old-the-serpentine-coastal-cask-collection-153-5k",
+      "name": "GLENGLASSAUGH 51 YEARS OLD THE SERPENTINE COASTAL CASK COLLECTION",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "03/28/2024",
+      "price_usd": null
+    },
+    {
+      "id": "glenglassaugh-49-years-old-the-serpentine-coastal-cask-collection-153-5k",
+      "name": "GLENGLASSAUGH 49 YEARS OLD THE SERPENTINE COASTAL CASK COLLECTION",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "03/28/2024",
+      "price_usd": null
+    },
+    {
+      "id": "glenglassaugh-48-years-old-the-serpentine-coastal-cask-collection-153-5k",
+      "name": "GLENGLASSAUGH 48 YEARS OLD THE SERPENTINE COASTAL CASK COLLECTION",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "03/28/2024",
+      "price_usd": null
+    },
+    {
+      "id": "ingelred-from-ben-nevis-distillery-cask-number-4-153-5k",
+      "name": "INGELRED FROM BEN NEVIS DISTILLERY CASK NUMBER 4",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "03/12/2024",
+      "price_usd": null
+    },
+    {
+      "id": "ingelred-from-ben-nevis-distillery-cask-number-398-153-5k",
+      "name": "INGELRED FROM BEN NEVIS DISTILLERY CASK NUMBER 398",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "03/12/2024",
+      "price_usd": null
+    },
+    {
+      "id": "ingelred-from-ben-nevis-distillery-cask-number-609-153-5k",
+      "name": "INGELRED FROM BEN NEVIS DISTILLERY CASK NUMBER 609",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "03/12/2024",
+      "price_usd": null
+    },
+    {
+      "id": "ingelred-fromm-ben-nevis-distillery-cask-number-1300-153-5k",
+      "name": "INGELRED FROMM BEN NEVIS DISTILLERY CASK NUMBER 1300",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "03/12/2024",
+      "price_usd": null
+    },
+    {
+      "id": "amfine-anniversary-1994-2024-101-22",
+      "name": "AMFINE ANNIVERSARY 1994-2024",
+      "reason": "stale-limited-release",
+      "source": "ttb-cola",
+      "completed_date": "03/14/2024",
+      "price_usd": null
+    },
+    {
+      "id": "then-and-now-125th-anniversary-dram-140-14",
+      "name": "THEN AND NOW 125TH ANNIVERSARY DRAM",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "03/22/2024",
+      "price_usd": null
+    },
+    {
+      "id": "sagamore-7th-anniversary-single-barrel-102-25",
+      "name": "SAGAMORE 7TH ANNIVERSARY SINGLE BARREL",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "03/22/2024",
+      "price_usd": null
+    },
+    {
+      "id": "world-whiskey-society-limited-edition-leo-101-08",
+      "name": "WORLD WHISKEY SOCIETY LIMITED EDITION LEO",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "03/25/2024",
+      "price_usd": null
+    },
+    {
+      "id": "the-glenallachie-30-years-old-153-5k",
+      "name": "THE GLENALLACHIE 30 YEARS OLD",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "03/28/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-9470-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 9470",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "03/29/2024",
+      "price_usd": null
+    },
+    {
+      "id": "benriach-aged-50-years-153-5k",
+      "name": "BENRIACH AGED 50 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "04/08/2024",
+      "price_usd": null
+    },
+    {
+      "id": "tobacco-barn-distillery-commemorative-reserve-101-25",
+      "name": "TOBACCO BARN DISTILLERY COMMEMORATIVE RESERVE",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "04/10/2024",
+      "price_usd": null
+    },
+    {
+      "id": "teeling-single-cask-aged-15-years-px-sherry-cask-171-5e",
+      "name": "TEELING SINGLE CASK AGED 15 YEARS PX SHERRY CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "04/15/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-18603402-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 18603402",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "04/12/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-68089-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 68089",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "04/12/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-4270-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 4270",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "04/12/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-16601403-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 16601403",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "04/12/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-12879-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 12879",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "04/12/2024",
+      "price_usd": null
+    },
+    {
+      "id": "bastille-single-cask-191-51",
+      "name": "BASTILLE SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "04/16/2024",
+      "price_usd": null
+    },
+    {
+      "id": "kilchoman-12-year-old-single-cask-153-5k",
+      "name": "KILCHOMAN 12 YEAR OLD SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "04/17/2024",
+      "price_usd": null
+    },
+    {
+      "id": "kilchoman-7-year-old-port-single-cask-finish-153-5k",
+      "name": "KILCHOMAN 7 YEAR OLD PORT SINGLE CASK FINISH",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "04/17/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-linkwood-153-5k",
+      "name": "SINGLE CASK NATION LINKWOOD",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "04/17/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-girvan-151-5k",
+      "name": "SINGLE CASK NATION GIRVAN",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "04/24/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-balmenach-151-5k",
+      "name": "SINGLE CASK NATION BALMENACH",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "04/16/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-strathclyde-151-5k",
+      "name": "SINGLE CASK NATION STRATHCLYDE",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "04/16/2024",
+      "price_usd": null
+    },
+    {
+      "id": "the-glengarry-cask-no-21-555-5-151-5k",
+      "name": "THE GLENGARRY CASK NO: 21/555-5",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "04/17/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-6184-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 6184",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "04/30/2024",
+      "price_usd": null
+    },
+    {
+      "id": "ragged-branch-10th-anniversary-101-05",
+      "name": "RAGGED BRANCH 10TH ANNIVERSARY",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "04/30/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-aberfeldy-153-5k",
+      "name": "SINGLE CASK NATION ABERFELDY",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "05/07/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-auchroisk-153-5k",
+      "name": "SINGLE CASK NATION AUCHROISK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "05/07/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-ben-nevis-153-5k",
+      "name": "SINGLE CASK NATION BEN NEVIS",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "05/07/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-glen-moray-153-5k",
+      "name": "SINGLE CASK NATION GLEN MORAY",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "05/07/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-williamson-153-5k",
+      "name": "SINGLE CASK NATION WILLIAMSON",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "05/07/2024",
+      "price_usd": null
+    },
+    {
+      "id": "oakley-20-yrs-101-22",
+      "name": "OAKLEY 20 YRS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "05/13/2024",
+      "price_usd": null
+    },
+    {
+      "id": "balblair-single-cask-153-5k",
+      "name": "BALBLAIR SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "05/01/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-706-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 706",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "05/01/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-6812-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 6812",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "05/01/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-6965-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 6965",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "05/01/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-7938-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 7938",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "05/02/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-1963-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 1963",
+      "reason": "historic-dated-release",
+      "source": "ttb-cola",
+      "completed_date": "05/02/2024",
+      "price_usd": null
+    },
+    {
+      "id": "vintage-spirits-vs-reserve-bourbon-whiskey-141-45",
+      "name": "VINTAGE SPIRITS VS RESERVE BOURBON WHISKEY",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "05/03/2024",
+      "price_usd": null
+    },
+    {
+      "id": "vintage-spirits-relevance-rye-whiskey-142-45",
+      "name": "VINTAGE SPIRITS RELEVANCE RYE WHISKEY",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "05/03/2024",
+      "price_usd": null
+    },
+    {
+      "id": "rare-character-limited-release-102-22",
+      "name": "RARE CHARACTER LIMITED RELEASE",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "05/06/2024",
+      "price_usd": null
+    },
+    {
+      "id": "ben-holladay-one-barrel-selected-by-1856-original-101-29",
+      "name": "BEN HOLLADAY ONE BARREL SELECTED BY 1856 ORIGINAL",
+      "reason": "private-or-event-release",
+      "source": "ttb-cola",
+      "completed_date": "05/09/2024",
+      "price_usd": null
+    },
+    {
+      "id": "holladay-one-barrel-selected-by-soft-red-wheat-101-29",
+      "name": "HOLLADAY ONE BARREL SELECTED BY SOFT RED WHEAT",
+      "reason": "private-or-event-release",
+      "source": "ttb-cola",
+      "completed_date": "05/09/2024",
+      "price_usd": null
+    },
+    {
+      "id": "parker-s-heritage-barrel-finished-109-22",
+      "name": "PARKER'S HERITAGE BARREL FINISHED",
+      "reason": "ultra-allocated",
+      "source": "ttb-cola",
+      "completed_date": "05/09/2024",
+      "price_usd": null
+    },
+    {
+      "id": "holladay-18-barrels-selected-by-soft-red-wheat-101-29",
+      "name": "HOLLADAY 18 BARRELS SELECTED BY SOFT RED WHEAT",
+      "reason": "private-or-event-release",
+      "source": "ttb-cola",
+      "completed_date": "05/09/2024",
+      "price_usd": null
+    },
+    {
+      "id": "holladay-56-barrels-hand-selected-by-soft-red-wheat-101-29",
+      "name": "HOLLADAY 56 BARRELS HAND SELECTED BY SOFT RED WHEAT",
+      "reason": "private-or-event-release",
+      "source": "ttb-cola",
+      "completed_date": "05/09/2024",
+      "price_usd": null
+    },
+    {
+      "id": "kilchoman-100-islay-single-cask-153-5k",
+      "name": "KILCHOMAN 100% ISLAY SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "05/13/2024",
+      "price_usd": null
+    },
+    {
+      "id": "kilchoman-13-year-old-single-cask-153-5k",
+      "name": "KILCHOMAN 13 YEAR OLD SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "05/13/2024",
+      "price_usd": null
+    },
+    {
+      "id": "the-macallan-2000-cask-no-27-153-5k",
+      "name": "THE MACALLAN 2000 CASK NO.27",
+      "reason": "historic-dated-release",
+      "source": "ttb-cola",
+      "completed_date": "05/14/2024",
+      "price_usd": null
+    },
+    {
+      "id": "highland-park-aged-56-years-153-5k",
+      "name": "HIGHLAND PARK AGED 56 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "05/14/2024",
+      "price_usd": null
+    },
+    {
+      "id": "rare-character-limited-release-101-22",
+      "name": "RARE CHARACTER LIMITED RELEASE",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "05/19/2024",
+      "price_usd": null
+    },
+    {
+      "id": "limited-edition-101-19",
+      "name": "LIMITED EDITION",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "05/22/2024",
+      "price_usd": null
+    },
+    {
+      "id": "anniversary-101-06",
+      "name": "ANNIVERSARY",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "05/26/2024",
+      "price_usd": null
+    },
+    {
+      "id": "anniversary-reserve-101-06",
+      "name": "ANNIVERSARY RESERVE",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "05/26/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-glenlivet-cask-901022-151-5k",
+      "name": "SIGNATORY VINTAGE GLENLIVET CASK: 901022",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "05/28/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-glenlossie-cask-86308-151-5k",
+      "name": "SIGNATORY VINTAGE GLENLOSSIE CASK: 86308",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "05/28/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-linkwood-cask-17-151-5k",
+      "name": "SIGNATORY VINTAGE LINKWOOD CASK: 17",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "05/28/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-mortlach-cask-9-151-5k",
+      "name": "SIGNATORY VINTAGE MORTLACH CASK: 9",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "05/28/2024",
+      "price_usd": null
+    },
+    {
+      "id": "the-glengarry-cask-no-21-618-2-153-5k",
+      "name": "THE GLENGARRY CASK NO: 21/618-2",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "05/31/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-8573-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 8573",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "05/30/2024",
+      "price_usd": null
+    },
+    {
+      "id": "lost-distillery-vintage-selection-151-5k",
+      "name": "LOST DISTILLERY VINTAGE SELECTION",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "05/31/2024",
+      "price_usd": null
+    },
+    {
+      "id": "lost-disillery-vintage-selection-151-5k",
+      "name": "LOST DISILLERY VINTAGE SELECTION",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "05/31/2024",
+      "price_usd": null
+    },
+    {
+      "id": "kilchoman-9-year-old-100-islay-single-cask-153-5k",
+      "name": "KILCHOMAN 9 YEAR OLD 100% ISLAY SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "06/05/2024",
+      "price_usd": null
+    },
+    {
+      "id": "the-glenallachie-2008-single-cask-153-5k",
+      "name": "THE GLENALLACHIE 2008 SINGLE CASK",
+      "reason": "historic-dated-release",
+      "source": "ttb-cola",
+      "completed_date": "06/05/2024",
+      "price_usd": null
+    },
+    {
+      "id": "the-glenallachie-2012-single-cask-153-5k",
+      "name": "THE GLENALLACHIE 2012 SINGLE CASK",
+      "reason": "historic-dated-release",
+      "source": "ttb-cola",
+      "completed_date": "06/05/2024",
+      "price_usd": null
+    },
+    {
+      "id": "the-glenallachie-2013-single-cask-153-5k",
+      "name": "THE GLENALLACHIE 2013 SINGLE CASK",
+      "reason": "historic-dated-release",
+      "source": "ttb-cola",
+      "completed_date": "06/05/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-caol-ila-153-5k",
+      "name": "SINGLE CASK NATION CAOL ILA",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "06/05/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-glen-garioch-153-5k",
+      "name": "SINGLE CASK NATION GLEN GARIOCH",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "06/05/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-rosarie-burn-153-5k",
+      "name": "SINGLE CASK NATION ROSARIE BURN",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "06/05/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-staoisha-153-5k",
+      "name": "SINGLE CASK NATION STAOISHA",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "06/05/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-tullibardine-153-5k",
+      "name": "SINGLE CASK NATION TULLIBARDINE",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "06/05/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-blacksboat-bridge-153-5k",
+      "name": "SINGLE CASK NATION BLACKSBOAT BRIDGE",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "06/05/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-bowmore-153-5k",
+      "name": "SINGLE CASK NATION BOWMORE",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "06/05/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-knockdhu-153-5k",
+      "name": "SINGLE CASK NATION KNOCKDHU",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "06/05/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-pluscarden-abbey-153-5k",
+      "name": "SINGLE CASK NATION PLUSCARDEN ABBEY",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "06/05/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-royal-brackla-153-5k",
+      "name": "SINGLE CASK NATION ROYAL BRACKLA",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "06/05/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-glen-scotia-153-5k",
+      "name": "SINGLE CASK NATION GLEN SCOTIA",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "06/06/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-loch-lomond-153-5k",
+      "name": "SINGLE CASK NATION LOCH LOMOND",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "06/06/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-bunnahabhain-153-5k",
+      "name": "SINGLE CASK NATION BUNNAHABHAIN",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "06/06/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-macduff-153-5k",
+      "name": "SINGLE CASK NATION MACDUFF",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "06/06/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-glenturret-153-5k",
+      "name": "SINGLE CASK NATION GLENTURRET",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "06/06/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-craigellachie-153-5k",
+      "name": "SINGLE CASK NATION CRAIGELLACHIE",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "06/06/2024",
+      "price_usd": null
+    },
+    {
+      "id": "ptr-anniversary-single-barrel-140-19",
+      "name": "PTR ANNIVERSARY SINGLE BARREL",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "06/08/2024",
+      "price_usd": null
+    },
+    {
+      "id": "the-quintessential-special-release-140-20",
+      "name": "THE QUINTESSENTIAL SPECIAL RELEASE",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "06/08/2024",
+      "price_usd": null
+    },
+    {
+      "id": "ichiro-s-malt-chichibu-cask-5882-190-59",
+      "name": "ICHIRO'S MALT CHICHIBU CASK #5882",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "06/12/2024",
+      "price_usd": null
+    },
+    {
+      "id": "ichiro-s-malt-chichibu-cask-7634-190-59",
+      "name": "ICHIRO'S MALT CHICHIBU CASK #7634",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "06/12/2024",
+      "price_usd": null
+    },
+    {
+      "id": "ichiro-s-malt-chichibu-cask-12507-190-59",
+      "name": "ICHIRO'S MALT CHICHIBU CASK #12507",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "06/12/2024",
+      "price_usd": null
+    },
+    {
+      "id": "ichiro-s-malt-chichibu-cask-7084-191-59",
+      "name": "ICHIRO'S MALT CHICHIBU CASK #7084",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "06/13/2024",
+      "price_usd": null
+    },
+    {
+      "id": "the-macallan-2018-vintage-153-5k",
+      "name": "THE MACALLAN 2018 VINTAGE",
+      "reason": "historic-dated-release",
+      "source": "ttb-cola",
+      "completed_date": "06/25/2024",
+      "price_usd": null
+    },
+    {
+      "id": "glenglassaugh-age-50-years-the-serpentine-coastal-cask-collection-153-5k",
+      "name": "GLENGLASSAUGH AGE 50 YEARS THE SERPENTINE COASTAL CASK COLLECTION",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "06/27/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-orkney-19-153-5k",
+      "name": "SIGNATORY VINTAGE ORKNEY 19",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "06/26/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-speyside-18-153-5k",
+      "name": "SIGNATORY VINTAGE SPEYSIDE 18",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "06/27/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-allt-a-bhainne-153-5k",
+      "name": "SINGLE CASK NATION ALLT-A-BHAINNE",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "06/26/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-auchentoshen-153-5k",
+      "name": "SINGLE CASK NATION AUCHENTOSHEN",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "06/26/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-dalmore-153-5k",
+      "name": "SINGLE CASK NATION DALMORE",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "06/27/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-fettercairn-153-5k",
+      "name": "SINGLE CASK NATION FETTERCAIRN",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "06/26/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-glenburgie-153-5k",
+      "name": "SINGLE CASK NATION GLENBURGIE",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "06/27/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-isle-of-arran-153-5k",
+      "name": "SINGLE CASK NATION ISLE OF ARRAN",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "06/27/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-tamdhu-153-5k",
+      "name": "SINGLE CASK NATION TAMDHU",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "06/26/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-tormore-153-5k",
+      "name": "SINGLE CASK NATION TORMORE",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "06/27/2024",
+      "price_usd": null
+    },
+    {
+      "id": "the-macallan-time-space-aged-84-years-153-5k",
+      "name": "THE MACALLAN TIME SPACE AGED 84 YEARS",
+      "reason": "luxury-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "07/03/2024",
+      "price_usd": null
+    },
+    {
+      "id": "9-11-commemorative-colored-flavored-with-toasted-charred-oak-staves-140-29",
+      "name": "9/11 COMMEMORATIVE COLORED & FLAVORED WITH TOASTED & CHARRED OAK STAVES",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "07/09/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-11897-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 11897",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "07/01/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-21603509-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 21603509",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "07/01/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-17602102-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 17602102",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "07/01/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-15604107-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 15604107",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "07/01/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-116-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 116",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "07/02/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-1961-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 1961",
+      "reason": "historic-dated-release",
+      "source": "ttb-cola",
+      "completed_date": "07/02/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-10194-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 10194",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "07/02/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-cask-no-706719-153-5k",
+      "name": "SIGNATORY VINTAGE Cask No: 706719",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "07/02/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-cask-no-800201-153-5k",
+      "name": "SIGNATORY VINTAGE Cask No: 800201",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "07/01/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-cask-no-5209-153-5k",
+      "name": "SIGNATORY VINTAGE Cask No: 5209",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "07/02/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-cask-no-13-153-5k",
+      "name": "SIGNATORY VINTAGE Cask No: 13",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "07/02/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-cask-no-64-153-5k",
+      "name": "SIGNATORY VINTAGE Cask No: 64",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "07/02/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-cask-no-268269-153-5k",
+      "name": "SIGNATORY VINTAGE Cask No: 268269",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "07/02/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-cask-no-900077-153-5k",
+      "name": "SIGNATORY VINTAGE Cask No: 900077",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "07/01/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-cask-no-129-153-5k",
+      "name": "SIGNATORY VINTAGE Cask No: 129",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "07/01/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-cask-no-114-153-5k",
+      "name": "SIGNATORY VINTAGE Cask No: 114",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "07/01/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-cask-no-585849-151-5k",
+      "name": "SIGNATORY VINTAGE Cask No: 585849",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "07/01/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-cask-no-dru-17-a197-5-153-5k",
+      "name": "SIGNATORY VINTAGE Cask No: DRU 17/A197 #5",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "07/02/2024",
+      "price_usd": null
+    },
+    {
+      "id": "glenglassaugh-50-years-old-153-5k",
+      "name": "GLENGLASSAUGH 50 YEARS OLD",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "07/03/2024",
+      "price_usd": null
+    },
+    {
+      "id": "dewar-s-double-double-aged-38-years-151-5k",
+      "name": "DEWAR'S DOUBLE DOUBLE AGED 38 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "07/10/2024",
+      "price_usd": null
+    },
+    {
+      "id": "the-impex-collection-indri-single-cask-191-5i",
+      "name": "THE IMPEX COLLECTION INDRI SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "07/09/2024",
+      "price_usd": null
+    },
+    {
+      "id": "wenzel-whiskey-bengal-jim-friends-charity-tailgate-121-22",
+      "name": "WENZEL WHISKEY BENGAL JIM & FRIENDS CHARITY TAILGATE",
+      "reason": "private-or-event-release",
+      "source": "ttb-cola",
+      "completed_date": "07/10/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-153-5k",
+      "name": "SIGNATORY VINTAGE",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "07/11/2024",
+      "price_usd": null
+    },
+    {
+      "id": "the-balvenie-50-years-153-5k",
+      "name": "THE BALVENIE 50 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "07/11/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-17603501-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 17603501",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "07/11/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-22605902-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 22605902",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "07/11/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-lochranza-153-5k",
+      "name": "SINGLE CASK NATION LOCHRANZA",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "07/15/2024",
+      "price_usd": null
+    },
+    {
+      "id": "nc-nean-aon-17-518-single-cask-153-5k",
+      "name": "NC'NEAN AON 17-518 SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "07/15/2024",
+      "price_usd": null
+    },
+    {
+      "id": "bushmills-aged-26-years-171-5e",
+      "name": "BUSHMILLS AGED 26 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "07/19/2024",
+      "price_usd": null
+    },
+    {
+      "id": "kavalan-15th-anniversary-ex-bourbon-cask-191-8a",
+      "name": "KAVALAN 15TH ANNIVERSARY EX-BOURBON CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "07/19/2024",
+      "price_usd": null
+    },
+    {
+      "id": "billy-kathy-jeffries-50th-wedding-anniversary-101-22",
+      "name": "BILLY & KATHY JEFFRIES 50TH WEDDING ANNIVERSARY",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "07/23/2024",
+      "price_usd": null
+    },
+    {
+      "id": "glen-grant-aged-30-years-153-5k",
+      "name": "GLEN GRANT AGED 30 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "08/08/2024",
+      "price_usd": null
+    },
+    {
+      "id": "komagatake-cask-2279-191-59",
+      "name": "KOMAGATAKE CASK #2279",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "08/01/2024",
+      "price_usd": null
+    },
+    {
+      "id": "aberfeldy-25-years-153-5k",
+      "name": "ABERFELDY 25 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "08/07/2024",
+      "price_usd": null
+    },
+    {
+      "id": "indri-single-cask-191-5i",
+      "name": "INDRI SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "08/12/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-ruadh-mhor-153-5k",
+      "name": "SINGLE CASK NATION RUADH MHOR",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "08/12/2024",
+      "price_usd": null
+    },
+    {
+      "id": "kanosuke-cask-18014-191-59",
+      "name": "KANOSUKE CASK # 18014",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "08/14/2024",
+      "price_usd": null
+    },
+    {
+      "id": "benriach-cask-edition-1998-cask-no-1994-153-5k",
+      "name": "BENRIACH CASK EDITION 1998 CASK NO. 1994",
+      "reason": "historic-dated-release",
+      "source": "ttb-cola",
+      "completed_date": "08/14/2024",
+      "price_usd": null
+    },
+    {
+      "id": "benriach-cask-edition-1994-cask-no-2067-153-5k",
+      "name": "BENRIACH CASK EDITION 1994 CASK NO. 2067",
+      "reason": "historic-dated-release",
+      "source": "ttb-cola",
+      "completed_date": "08/14/2024",
+      "price_usd": null
+    },
+    {
+      "id": "benriach-cask-edition-1994-cask-no-2221-153-5k",
+      "name": "BENRIACH CASK EDITION 1994 CASK NO. 2221",
+      "reason": "historic-dated-release",
+      "source": "ttb-cola",
+      "completed_date": "08/14/2024",
+      "price_usd": null
+    },
+    {
+      "id": "benriach-cask-edition-1994-cask-no-7036-153-5k",
+      "name": "BENRIACH CASK EDITION 1994 CASK NO. 7036",
+      "reason": "historic-dated-release",
+      "source": "ttb-cola",
+      "completed_date": "08/14/2024",
+      "price_usd": null
+    },
+    {
+      "id": "thomas-h-handy-102-02",
+      "name": "THOMAS H. HANDY",
+      "reason": "ultra-allocated",
+      "source": "ttb-cola",
+      "completed_date": "08/16/2024",
+      "price_usd": null
+    },
+    {
+      "id": "van-winkle-family-reserve-rye-102-02",
+      "name": "VAN WINKLE FAMILY RESERVE RYE",
+      "reason": "ultra-allocated",
+      "source": "ttb-cola",
+      "completed_date": "08/16/2024",
+      "price_usd": null
+    },
+    {
+      "id": "hollow-creek-distillery-family-reserve-limited-release-149-41",
+      "name": "HOLLOW CREEK DISTILLERY FAMILY RESERVE LIMITED RELEASE",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "08/19/2024",
+      "price_usd": null
+    },
+    {
+      "id": "rare-cask-hand-selected-by-dr-bill-lumsden-151-5k",
+      "name": "RARE CASK HAND SELECTED BY DR BILL LUMSDEN",
+      "reason": "private-or-event-release",
+      "source": "ttb-cola",
+      "completed_date": "08/26/2024",
+      "price_usd": null
+    },
+    {
+      "id": "kanosuke-cask-19276-191-59",
+      "name": "KANOSUKE CASK # 19276",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "08/20/2024",
+      "price_usd": null
+    },
+    {
+      "id": "kanosuke-cask-18120-191-59",
+      "name": "KANOSUKE CASK # 18120",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "08/21/2024",
+      "price_usd": null
+    },
+    {
+      "id": "frey-ranch-farmers-distillers-harvester-series-10th-anniversary-american-whiskey-140-32",
+      "name": "FREY RANCH FARMERS + DISTILLERS HARVESTER SERIES 10TH ANNIVERSARY AMERICAN WHISKEY",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "08/23/2024",
+      "price_usd": null
+    },
+    {
+      "id": "george-t-stagg-191-00",
+      "name": "GEORGE T. STAGG",
+      "reason": "ultra-allocated",
+      "source": "ttb-cola",
+      "completed_date": "08/22/2024",
+      "price_usd": null
+    },
+    {
+      "id": "old-rip-van-winkle-191-00",
+      "name": "OLD RIP VAN WINKLE",
+      "reason": "ultra-allocated",
+      "source": "ttb-cola",
+      "completed_date": "08/23/2024",
+      "price_usd": null
+    },
+    {
+      "id": "hudson-whiskey-accutron-64th-anniversary-101-02",
+      "name": "HUDSON WHISKEY ACCUTRON 64TH ANNIVERSARY",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "08/30/2024",
+      "price_usd": null
+    },
+    {
+      "id": "isle-of-raasay-chinkapin-oak-single-cask-153-5k",
+      "name": "ISLE OF RAASAY CHINKAPIN OAK SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "09/09/2024",
+      "price_usd": null
+    },
+    {
+      "id": "isle-of-raasay-bordeaux-red-wine-single-cask-153-5k",
+      "name": "ISLE OF RAASAY BORDEAUX RED WINE SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "09/09/2024",
+      "price_usd": null
+    },
+    {
+      "id": "isle-of-raasay-rye-single-cask-153-5k",
+      "name": "ISLE OF RAASAY RYE SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "09/10/2024",
+      "price_usd": null
+    },
+    {
+      "id": "the-macallan-distil-your-world-mexico-153-5k",
+      "name": "THE MACALLAN DISTIL YOUR WORLD MEXICO",
+      "reason": "luxury-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "09/10/2024",
+      "price_usd": null
+    },
+    {
+      "id": "benriach-cask-edition-1997-cask-no-7429-153-5k",
+      "name": "BENRIACH CASK EDITION 1997 CASK NO. 7429",
+      "reason": "historic-dated-release",
+      "source": "ttb-cola",
+      "completed_date": "09/11/2024",
+      "price_usd": null
+    },
+    {
+      "id": "the-glenallachie-2014-single-cask-153-5k",
+      "name": "THE GLENALLACHIE 2014 SINGLE CASK",
+      "reason": "historic-dated-release",
+      "source": "ttb-cola",
+      "completed_date": "09/11/2024",
+      "price_usd": null
+    },
+    {
+      "id": "wolfcraig-30-years-old-premium-blended-scotch-whiskey-151-5k",
+      "name": "WOLFCRAIG 30 YEARS OLD PREMIUM BLENDED SCOTCH WHISKEY",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "09/13/2024",
+      "price_usd": null
+    },
+    {
+      "id": "wolfcraig-35-years-old-premium-blended-grain-scotch-whiskey-151-5k",
+      "name": "WOLFCRAIG 35 YEARS OLD PREMIUM BLENDED GRAIN SCOTCH WHISKEY",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "09/13/2024",
+      "price_usd": null
+    },
+    {
+      "id": "holyrood-distillery-single-cask-series-cask-89-153-5k",
+      "name": "HOLYROOD DISTILLERY SINGLE CASK SERIES CASK # 89",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "09/16/2024",
+      "price_usd": null
+    },
+    {
+      "id": "stillaguamish-distilling-20th-anniversary-edition-101-07",
+      "name": "STILLAGUAMISH DISTILLING 20TH ANNIVERSARY EDITION",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "09/19/2024",
+      "price_usd": null
+    },
+    {
+      "id": "komoro-1st-anniversary-newborn-191-59",
+      "name": "KOMORO 1ST ANNIVERSARY NEWBORN",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "09/24/2024",
+      "price_usd": null
+    },
+    {
+      "id": "catcher-s-rye-limited-edition-catcher-s-rye-single-barrel-limited-edition-102-06",
+      "name": "CATCHER'S RYE LIMITED EDITION CATCHER'S RYE SINGLE BARREL LIMITED EDITION",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "09/26/2024",
+      "price_usd": null
+    },
+    {
+      "id": "the-macallan-distil-your-world-hong-kong-153-5k",
+      "name": "THE MACALLAN DISTIL YOUR WORLD HONG KONG",
+      "reason": "luxury-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "09/26/2024",
+      "price_usd": null
+    },
+    {
+      "id": "octomore-single-cask-153-5k",
+      "name": "OCTOMORE SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "09/30/2024",
+      "price_usd": null
+    },
+    {
+      "id": "barantuil-peated-single-cask-171-5e",
+      "name": "BARANTUIL PEATED SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "10/25/2024",
+      "price_usd": null
+    },
+    {
+      "id": "ardbeg-vintage-y2k-153-5k",
+      "name": "ARDBEG VINTAGE Y2K",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "10/09/2024",
+      "price_usd": null
+    },
+    {
+      "id": "stitzel-reserve-limited-edition-101-22",
+      "name": "STITZEL RESERVE LIMITED EDITION",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "10/10/2024",
+      "price_usd": null
+    },
+    {
+      "id": "red-line-celebrating-25-years-129-22",
+      "name": "RED LINE CELEBRATING 25 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "10/09/2024",
+      "price_usd": null
+    },
+    {
+      "id": "isle-of-raasay-bespoke-single-cask-153-5k",
+      "name": "ISLE OF RAASAY BESPOKE SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "10/29/2024",
+      "price_usd": null
+    },
+    {
+      "id": "the-glenallachie-chinquapin-barrel-single-cask-153-5k",
+      "name": "THE GLENALLACHIE CHINQUAPIN BARREL SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "10/07/2024",
+      "price_usd": null
+    },
+    {
+      "id": "wolfburn-ex-sherry-single-cask-153-5k",
+      "name": "WOLFBURN EX-SHERRY SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "10/07/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-benrinnes-153-5k",
+      "name": "SINGLE CASK NATION BENRINNES",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "10/07/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-mannochmore-153-5k",
+      "name": "SINGLE CASK NATION MANNOCHMORE",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "10/07/2024",
+      "price_usd": null
+    },
+    {
+      "id": "echo-spirits-five-year-master-s-anniversary-blend-straight-bourbon-whiskey-101-09",
+      "name": "ECHO SPIRITS FIVE YEAR MASTER'S ANNIVERSARY BLEND STRAIGHT BOURBON WHISKEY",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "10/16/2024",
+      "price_usd": null
+    },
+    {
+      "id": "takamine-aged-26-years-191-59",
+      "name": "TAKAMINE AGED 26 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "10/10/2024",
+      "price_usd": null
+    },
+    {
+      "id": "takamine-aged-20-years-191-59",
+      "name": "TAKAMINE AGED 20 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "10/10/2024",
+      "price_usd": null
+    },
+    {
+      "id": "takamine-single-cask-21-years-old-191-59",
+      "name": "TAKAMINE SINGLE CASK 21 YEARS OLD",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "10/10/2024",
+      "price_usd": null
+    },
+    {
+      "id": "takamine-single-cask-23-years-old-191-59",
+      "name": "TAKAMINE SINGLE CASK 23 YEARS OLD",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "10/10/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-aberlour-cask-2-153-5k",
+      "name": "SIGNATORY VINTAGE ABERLOUR CASK: 2",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "10/17/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-ardlair-cask-900033-153-5k",
+      "name": "SIGNATORY VINTAGE ARDLAIR CASK: 900033",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "10/17/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-auchroisk-cask-816422-153-5k",
+      "name": "SIGNATORY VINTAGE AUCHROISK CASK: 816422",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "10/17/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-benrinnes-cask-307216-153-5k",
+      "name": "SIGNATORY VINTAGE BENRINNES CASK: 307216",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "10/17/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-blair-athol-cask-70089273-153-5k",
+      "name": "SIGNATORY VINTAGE BLAIR ATHOL CASK: 70089273",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "10/17/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-bunnahabhain-cask-900020-153-5k",
+      "name": "SIGNATORY VINTAGE BUNNAHABHAIN CASK: 900020",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "10/17/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-caol-ila-cask-302488-153-5k",
+      "name": "SIGNATORY VINTAGE CAOL ILA CASK: 302488",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "10/17/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-glenburgie-cask-900183-153-5k",
+      "name": "SIGNATORY VINTAGE GLENBURGIE CASK: 900183",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "10/17/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-knockando-cask-306406-153-5k",
+      "name": "SIGNATORY VINTAGE KNOCKANDO CASK: 306406",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "10/17/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-teaninich-cask-704329-153-5k",
+      "name": "SIGNATORY VINTAGE TEANINICH CASK: 704329",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "10/17/2024",
+      "price_usd": null
+    },
+    {
+      "id": "browne-family-spirits-barrel-269-101-07",
+      "name": "BROWNE FAMILY SPIRITS BARREL #269",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "10/21/2024",
+      "price_usd": null
+    },
+    {
+      "id": "browne-family-spirits-barrel-120-101-07",
+      "name": "BROWNE FAMILY SPIRITS BARREL #120",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "10/21/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-ardnamurchan-153-5k",
+      "name": "SINGLE CASK NATION ARDNAMURCHAN",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "10/29/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-glencadam-153-5k",
+      "name": "SINGLE CASK NATION GLENCADAM",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "10/29/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-port-ellen-153-5k",
+      "name": "GORDON & MACPHAIL PORT ELLEN",
+      "reason": "luxury-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "11/05/2024",
+      "price_usd": null
+    },
+    {
+      "id": "west-cork-mrs-murphy-s-single-cask-171-5e",
+      "name": "WEST CORK MRS. MURPHY'S SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "11/01/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-ben-nevis-cask-433-153-5k",
+      "name": "SIGNATORY VINTAGE BEN NEVIS CASK: 433",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "11/04/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-mortlach-cask-313989-153-5k",
+      "name": "SIGNATORY VINTAGE MORTLACH CASK: 313989",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "11/04/2024",
+      "price_usd": null
+    },
+    {
+      "id": "van-winkle-special-reserve-192-22",
+      "name": "VAN WINKLE SPECIAL RESERVE",
+      "reason": "ultra-allocated",
+      "source": "ttb-cola",
+      "completed_date": "11/18/2024",
+      "price_usd": null
+    },
+    {
+      "id": "bushmills-aged-46-years-171-5e",
+      "name": "BUSHMILLS AGED 46 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "11/05/2024",
+      "price_usd": null
+    },
+    {
+      "id": "the-glenallachie-35-years-old-153-5k",
+      "name": "THE GLENALLACHIE 35 YEARS OLD",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "11/05/2024",
+      "price_usd": null
+    },
+    {
+      "id": "ballmer-peak-distillery-anniversary-5-140-13",
+      "name": "BALLMER PEAK DISTILLERY ANNIVERSARY #5",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "11/05/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-speyside-100-proof-edition-153-5k",
+      "name": "SIGNATORY VINTAGE SPEYSIDE 100 PROOF EDITION",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "11/18/2024",
+      "price_usd": null
+    },
+    {
+      "id": "sullivan-s-cove-american-oak-single-cask-old-rare-191-63",
+      "name": "SULLIVAN'S COVE AMERICAN OAK SINGLE CASK OLD & RARE",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "11/06/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-309458-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 309458",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "11/07/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-5301-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 5301",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "11/07/2024",
+      "price_usd": null
+    },
+    {
+      "id": "glendronach-aged-30-years-153-5k",
+      "name": "GLENDRONACH AGED 30 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "11/07/2024",
+      "price_usd": null
+    },
+    {
+      "id": "sullivans-cove-american-oak-single-cask-191-63",
+      "name": "SULLIVANS COVE AMERICAN OAK SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "11/15/2024",
+      "price_usd": null
+    },
+    {
+      "id": "glen-scotia-campbeltown-malts-festival-2025-limited-edition-153-5k",
+      "name": "GLEN SCOTIA CAMPBELTOWN MALTS FESTIVAL 2025-LIMITED EDITION",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "11/25/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-caol-ila-2015-100-u-s-proof-edition-2-153-5k",
+      "name": "SIGNATORY VINTAGE CAOL ILA 2015 100 U.S PROOF EDITION #2",
+      "reason": "historic-dated-release",
+      "source": "ttb-cola",
+      "completed_date": "11/13/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-20014001-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 20014001",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "11/13/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-804816-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 804816",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "11/13/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-17602204-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 17602204",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "11/13/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-800124-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 800124",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "11/13/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-312782-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 312782",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "11/13/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-u-cask-no-312057-153-5k",
+      "name": "GORDON & MACPHAIL U CASK NO. 312057",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "11/13/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-408-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 408",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "11/13/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-900667-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 900667",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "11/13/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-22606313-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 22606313",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "11/13/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-6845-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 6845",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "11/13/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-22606317-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 22606317",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "11/13/2024",
+      "price_usd": null
+    },
+    {
+      "id": "gordon-macphail-cask-no-22606611-153-5k",
+      "name": "GORDON & MACPHAIL CASK NO. 22606611",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "11/13/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-craigellachie-153-5k",
+      "name": "SIGNATORY VINTAGE CRAIGELLACHIE",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "11/19/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-dailuaine-cask-7240-153-5k",
+      "name": "SIGNATORY VINTAGE DAILUAINE CASK: 7240",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "11/19/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-glentauchers-153-5k",
+      "name": "SIGNATORY VINTAGE GLENTAUCHERS",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "11/19/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-linkwood-153-5k",
+      "name": "SIGNATORY VINTAGE LINKWOOD",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "11/19/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-miltonduff-153-5k",
+      "name": "SIGNATORY VINTAGE MILTONDUFF",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "11/19/2024",
+      "price_usd": null
+    },
+    {
+      "id": "bunnahabhain-25-years-old-153-5k",
+      "name": "BUNNAHABHAIN 25 YEARS OLD",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "11/21/2024",
+      "price_usd": null
+    },
+    {
+      "id": "miyabi-aged-36-years-191-59",
+      "name": "MIYABI AGED 36 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "11/21/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-ardmore-cask-706665-706673-153-5k",
+      "name": "SIGNATORY VINTAGE ARDMORE CASK: 706665 + 706673",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "11/27/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-edradour-cask-256-153-5k",
+      "name": "SIGNATORY VINTAGE EDRADOUR CASK: 256",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "11/27/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-port-dundas-cask-585875-153-5k",
+      "name": "SIGNATORY VINTAGE PORT DUNDAS CASK: 585875",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "11/27/2024",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-secret-orkney-cask-dru17-a67-91-98-153-5k",
+      "name": "SIGNATORY VINTAGE SECRET ORKNEY CASK: DRU17 A67 #91+#98",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "11/27/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-presents-inception-137-01",
+      "name": "SINGLE CASK NATION PRESENTS INCEPTION",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "12/18/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-hot-spot-137-01",
+      "name": "SINGLE CASK NATION HOT SPOT",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "12/06/2024",
+      "price_usd": null
+    },
+    {
+      "id": "mvmf-50th-anniversary-bourbon-whiskey-141-29",
+      "name": "MVMF 50TH ANNIVERSARY BOURBON WHISKEY",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "12/13/2024",
+      "price_usd": null
+    },
+    {
+      "id": "the-macallan-40-153-5k",
+      "name": "THE MACALLAN 40",
+      "reason": "luxury-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "12/12/2024",
+      "price_usd": null
+    },
+    {
+      "id": "glendronach-cask-of-character-cask-no-1112-153-5k",
+      "name": "GLENDRONACH CASK OF CHARACTER CASK NO. 1112",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "12/19/2024",
+      "price_usd": null
+    },
+    {
+      "id": "glendronach-cask-of-character-cask-no-2391-153-5k",
+      "name": "GLENDRONACH CASK OF CHARACTER CASK NO. 2391",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "12/20/2024",
+      "price_usd": null
+    },
+    {
+      "id": "glendronach-cask-of-character-cask-no-6058-153-5k",
+      "name": "GLENDRONACH CASK OF CHARACTER CASK NO. 6058",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "12/20/2024",
+      "price_usd": null
+    },
+    {
+      "id": "glendronach-cask-of-character-cask-no-8004-153-5k",
+      "name": "GLENDRONACH CASK OF CHARACTER CASK NO. 8004",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "12/20/2024",
+      "price_usd": null
+    },
+    {
+      "id": "the-macallan-of-fifties-153-92",
+      "name": "THE MACALLAN OF FIFTIES",
+      "reason": "luxury-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "12/20/2024",
+      "price_usd": null
+    },
+    {
+      "id": "auchroisk-29-years-cask-strength-collection-153-92",
+      "name": "AUCHROISK 29 YEARS CASK STRENGTH COLLECTION",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "12/20/2024",
+      "price_usd": null
+    },
+    {
+      "id": "service-to-america-salute-battle-of-iwo-jima-80th-anniversary-101-38",
+      "name": "SERVICE TO AMERICA SALUTE BATTLE OF IWO JIMA 80TH ANNIVERSARY",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "12/26/2024",
+      "price_usd": null
+    },
+    {
+      "id": "ardnamurchan-single-cask-153-5k",
+      "name": "ARDNAMURCHAN SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "12/26/2024",
+      "price_usd": null
+    },
+    {
+      "id": "brora-191-92",
+      "name": "BRORA",
+      "reason": "luxury-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "12/30/2024",
+      "price_usd": null
+    },
+    {
+      "id": "glenrothes-25-years-of-191-92",
+      "name": "GLENROTHES 25 YEARS OF",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "12/30/2024",
+      "price_usd": null
+    },
+    {
+      "id": "onyx-amber-very-very-special-release-101-13",
+      "name": "ONYX & AMBER VERY VERY SPECIAL RELEASE",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "12/30/2024",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-101-22",
+      "name": "SINGLE CASK NATION",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "01/22/2025",
+      "price_usd": null
+    },
+    {
+      "id": "cassius-clay-private-barrel-selection-101-22",
+      "name": "CASSIUS CLAY PRIVATE BARREL SELECTION",
+      "reason": "private-or-event-release",
+      "source": "ttb-cola",
+      "completed_date": "01/22/2025",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-wild-turkey-101-22",
+      "name": "SINGLE CASK NATION WILD TURKEY",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "01/29/2025",
+      "price_usd": null
+    },
+    {
+      "id": "whisky-jewbilee-cask-3-144-22",
+      "name": "WHISKY JEWBILEE CASK #3",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "01/28/2025",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-12-years-old-101-22",
+      "name": "SINGLE CASK NATION 12 YEARS OLD",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "01/29/2025",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-batch-2-144-22",
+      "name": "SINGLE CASK NATION BATCH 2",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "01/29/2025",
+      "price_usd": null
+    },
+    {
+      "id": "lucky-seven-the-proprietor-barrel-7-101-22",
+      "name": "LUCKY SEVEN THE PROPRIETOR - BARREL #7",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "01/29/2025",
+      "price_usd": null
+    },
+    {
+      "id": "lucky-seven-the-proprietor-barrel-5-101-22",
+      "name": "LUCKY SEVEN THE PROPRIETOR - BARREL #5",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "01/29/2025",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-westland-140-22",
+      "name": "SINGLE CASK NATION WESTLAND",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "01/29/2025",
+      "price_usd": null
+    },
+    {
+      "id": "catador-itinerante-slyrs-2017-7years-sauternes-edition-03-192-53",
+      "name": "CATADOR ITINERANTE SLYRS 2017 7YEARS SAUTERNES EDITION 03",
+      "reason": "historic-dated-release",
+      "source": "ttb-cola",
+      "completed_date": "01/02/2025",
+      "price_usd": null
+    },
+    {
+      "id": "catador-itinerante-slyrs-2015-9years-pineau-des-charentes-edition-04-191-53",
+      "name": "CATADOR ITINERANTE SLYRS 2015 9YEARS PINEAU DES CHARENTES EDITION 04",
+      "reason": "historic-dated-release",
+      "source": "ttb-cola",
+      "completed_date": "01/02/2025",
+      "price_usd": null
+    },
+    {
+      "id": "william-larue-weller-140-00",
+      "name": "WILLIAM LARUE WELLER",
+      "reason": "ultra-allocated",
+      "source": "ttb-cola",
+      "completed_date": "01/03/2025",
+      "price_usd": null
+    },
+    {
+      "id": "rare-character-limited-release-109-22",
+      "name": "RARE CHARACTER LIMITED RELEASE",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "01/14/2025",
+      "price_usd": null
+    },
+    {
+      "id": "glenwyvis-single-cask-release-153-5k",
+      "name": "GLENWYVIS SINGLE CASK RELEASE",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "01/14/2025",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-presents-standard-deviations-141-01",
+      "name": "SINGLE CASK NATION PRESENTS STANDARD DEVIATIONS",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "01/28/2025",
+      "price_usd": null
+    },
+    {
+      "id": "old-forester-birthday-bourbon-2025-101-22",
+      "name": "OLD FORESTER BIRTHDAY BOURBON 2025",
+      "reason": "ultra-allocated",
+      "source": "ttb-cola",
+      "completed_date": "01/14/2025",
+      "price_usd": null
+    },
+    {
+      "id": "glendronach-aged-40-years-153-5k",
+      "name": "GLENDRONACH AGED 40 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "01/14/2025",
+      "price_usd": null
+    },
+    {
+      "id": "tamara-s-downtown-private-barrel-101-10",
+      "name": "TAMARA'S DOWNTOWN PRIVATE BARREL",
+      "reason": "private-or-event-release",
+      "source": "ttb-cola",
+      "completed_date": "01/21/2025",
+      "price_usd": null
+    },
+    {
+      "id": "horse-soldier-250th-anniversary-select-101-22",
+      "name": "HORSE SOLDIER 250TH ANNIVERSARY SELECT",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "01/22/2025",
+      "price_usd": null
+    },
+    {
+      "id": "dingle-single-cask-single-pot-still-171-5e",
+      "name": "DINGLE SINGLE CASK SINGLE POT STILL",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "01/23/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-macallan-60-153-5k",
+      "name": "THE MACALLAN 60",
+      "reason": "luxury-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "01/28/2025",
+      "price_usd": null
+    },
+    {
+      "id": "olde-raleigh-whiskey-society-member-exclusive-162-69",
+      "name": "OLDE RALEIGH WHISKEY SOCIETY MEMBER EXCLUSIVE",
+      "reason": "private-or-event-release",
+      "source": "ttb-cola",
+      "completed_date": "01/29/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-macallan-79-153-5k",
+      "name": "THE MACALLAN 79",
+      "reason": "luxury-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "02/11/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-cardrona-american-barrel-single-cask-191-84",
+      "name": "THE CARDRONA AMERICAN BARREL SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "02/04/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-yamazaki-limited-edition-191-59",
+      "name": "THE YAMAZAKI LIMITED EDITION",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "02/03/2025",
+      "price_usd": null
+    },
+    {
+      "id": "hakuschu-25-years-of-191-59",
+      "name": "HAKUSCHU 25 YEARS OF",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "02/04/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-yamazaki-25-years-of-191-59",
+      "name": "THE YAMAZAKI 25 YEARS OF",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "02/04/2025",
+      "price_usd": null
+    },
+    {
+      "id": "karuizawa-191-59",
+      "name": "KARUIZAWA",
+      "reason": "luxury-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "02/04/2025",
+      "price_usd": null
+    },
+    {
+      "id": "jews-booze-limited-release-single-barrel-142-14",
+      "name": "JEWS & BOOZE LIMITED RELEASE SINGLE BARREL",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "02/05/2025",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-balblair-153-5k",
+      "name": "SINGLE CASK NATION BALBLAIR",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "02/06/2025",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-blair-athol-153-5k",
+      "name": "SINGLE CASK NATION BLAIR ATHOL",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "02/06/2025",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-teaninich-153-5k",
+      "name": "SINGLE CASK NATION TEANINICH",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "02/06/2025",
+      "price_usd": null
+    },
+    {
+      "id": "hollow-creek-distillery-family-reserve-limited-release-wildcard-149-41",
+      "name": "HOLLOW CREEK DISTILLERY FAMILY RESERVE LIMITED RELEASE WILDCARD",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "02/10/2025",
+      "price_usd": null
+    },
+    {
+      "id": "haliimaile-distilling-company-special-release-140-17",
+      "name": "HALIIMAILE DISTILLING COMPANY SPECIAL RELEASE",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "02/10/2025",
+      "price_usd": null
+    },
+    {
+      "id": "copperworks-distilling-co-cask-no-440-166-07",
+      "name": "COPPERWORKS DISTILLING CO. CASK NO. 440",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "02/12/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-heritage-collection-single-cask-bourbon-whiskey-141-16",
+      "name": "THE HERITAGE COLLECTION SINGLE CASK BOURBON WHISKEY",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "02/11/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-heritage-collection-single-cask-american-whiskey-140-16",
+      "name": "THE HERITAGE COLLECTION SINGLE CASK AMERICAN WHISKEY",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "02/11/2025",
+      "price_usd": null
+    },
+    {
+      "id": "longrow-limited-edition-191-92",
+      "name": "LONGROW LIMITED EDITION",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "02/11/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-private-cask-153-5k",
+      "name": "THE PRIVATE CASK",
+      "reason": "private-or-event-release",
+      "source": "ttb-cola",
+      "completed_date": "02/18/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-macallan-25-years-old-153-5k",
+      "name": "THE MACALLAN 25 YEARS OLD",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "02/21/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-macallan-30-years-old-153-5k",
+      "name": "THE MACALLAN 30 YEARS OLD",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "02/21/2025",
+      "price_usd": null
+    },
+    {
+      "id": "bedford-park-ledaig-2010-153-5k",
+      "name": "BEDFORD PARK LEDAIG 2010",
+      "reason": "historic-dated-release",
+      "source": "ttb-cola",
+      "completed_date": "02/19/2025",
+      "price_usd": null
+    },
+    {
+      "id": "bedford-park-staoisha-2013-tawny-port-153-5k",
+      "name": "BEDFORD PARK STAOISHA 2013 (TAWNY PORT)",
+      "reason": "historic-dated-release",
+      "source": "ttb-cola",
+      "completed_date": "02/21/2025",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-auchentoshan-153-5k",
+      "name": "SINGLE CASK NATION AUCHENTOSHAN",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "02/24/2025",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-benriach-153-5k",
+      "name": "SINGLE CASK NATION BENRIACH",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "02/24/2025",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-cawdor-springs-153-5k",
+      "name": "SINGLE CASK NATION CAWDOR SPRINGS",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "02/24/2025",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-clynelish-153-5k",
+      "name": "SINGLE CASK NATION CLYNELISH",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "02/24/2025",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-glenallachie-153-5k",
+      "name": "SINGLE CASK NATION GLENALLACHIE",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "02/24/2025",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-inchmurrin-153-5k",
+      "name": "SINGLE CASK NATION INCHMURRIN",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "02/24/2025",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-laphroaig-153-5k",
+      "name": "SINGLE CASK NATION LAPHROAIG",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "02/24/2025",
+      "price_usd": null
+    },
+    {
+      "id": "kaijin-limited-release-191-59",
+      "name": "KAIJIN LIMITED RELEASE",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "03/10/2025",
+      "price_usd": null
+    },
+    {
+      "id": "port-ellen-151-5k",
+      "name": "PORT ELLEN",
+      "reason": "luxury-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "03/05/2025",
+      "price_usd": null
+    },
+    {
+      "id": "antiquary-aged-30-years-151-5k",
+      "name": "ANTIQUARY AGED 30 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "03/04/2025",
+      "price_usd": null
+    },
+    {
+      "id": "parker-s-heritage-collection-cask-strength-109-22",
+      "name": "PARKER'S HERITAGE COLLECTION CASK STRENGTH",
+      "reason": "ultra-allocated",
+      "source": "ttb-cola",
+      "completed_date": "03/20/2025",
+      "price_usd": null
+    },
+    {
+      "id": "j-mattingly-1845-the-battle-of-iwo-jima-80th-anniversary-141-22",
+      "name": "J. MATTINGLY 1845 THE BATTLE OF IWO JIMA 80TH ANNIVERSARY",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "03/20/2025",
+      "price_usd": null
+    },
+    {
+      "id": "kilchoman-14-year-old-single-cask-153-5k",
+      "name": "KILCHOMAN 14 YEAR OLD SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "03/20/2025",
+      "price_usd": null
+    },
+    {
+      "id": "kilchoman-9-year-old-single-cask-153-5k",
+      "name": "KILCHOMAN 9 YEAR OLD SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "03/20/2025",
+      "price_usd": null
+    },
+    {
+      "id": "kilchoman-5-year-old-single-cask-153-5k",
+      "name": "KILCHOMAN 5 YEAR OLD SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "03/20/2025",
+      "price_usd": null
+    },
+    {
+      "id": "knockando-25-years-old-191-92",
+      "name": "KNOCKANDO 25 YEARS OLD",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "03/21/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-glendronach-27-years-old-151-5k",
+      "name": "THE GLENDRONACH 27 YEARS OLD",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "03/21/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-hakushu-18-years-191-59",
+      "name": "THE HAKUSHU 18 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "03/20/2025",
+      "price_usd": null
+    },
+    {
+      "id": "glenrothes-signatory-vintage-cask-n9252-191-92",
+      "name": "GLENROTHES SIGNATORY VINTAGE CASK N9252",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "03/21/2025",
+      "price_usd": null
+    },
+    {
+      "id": "nikka-whisky-yoichi-20-years-old-191-59",
+      "name": "NIKKA WHISKY YOICHI 20 YEARS OLD",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "03/20/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-yamazaki-mizunara-japanese-oak-cask-191-59",
+      "name": "THE YAMAZAKI MIZUNARA JAPANESE OAK CASK",
+      "reason": "luxury-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "03/25/2025",
+      "price_usd": null
+    },
+    {
+      "id": "johnnie-walker-52-years-151-5k",
+      "name": "JOHNNIE WALKER 52 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "03/25/2025",
+      "price_usd": null
+    },
+    {
+      "id": "springbank-distilled-1998-153-5k",
+      "name": "SPRINGBANK DISTILLED 1998",
+      "reason": "historic-dated-release",
+      "source": "ttb-cola",
+      "completed_date": "03/28/2025",
+      "price_usd": null
+    },
+    {
+      "id": "arthur-wheeler-spirits-company-1932-bourbon-whiskey-commanders-cask-101-25",
+      "name": "ARTHUR WHEELER SPIRITS COMPANY 1932 BOURBON WHISKEY COMMANDERS CASK",
+      "reason": "historic-dated-release",
+      "source": "ttb-cola",
+      "completed_date": "04/03/2025",
+      "price_usd": null
+    },
+    {
+      "id": "bowmore-1973-153-5k",
+      "name": "BOWMORE 1973",
+      "reason": "historic-dated-release",
+      "source": "ttb-cola",
+      "completed_date": "04/07/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-macallan-1992-cask-no-12965-153-5k",
+      "name": "THE MACALLAN 1992 CASK NO. 12965",
+      "reason": "historic-dated-release",
+      "source": "ttb-cola",
+      "completed_date": "04/16/2025",
+      "price_usd": null
+    },
+    {
+      "id": "king-of-kentucky-single-barrel-101-22",
+      "name": "KING OF KENTUCKY SINGLE BARREL",
+      "reason": "ultra-allocated",
+      "source": "ttb-cola",
+      "completed_date": "04/16/2025",
+      "price_usd": null
+    },
+    {
+      "id": "glen-scotia-aged-50-years-153-5k",
+      "name": "GLEN SCOTIA AGED 50 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "04/16/2025",
+      "price_usd": null
+    },
+    {
+      "id": "rebellion-limited-release-kentucky-straight-bourbon-whiskey-101-35",
+      "name": "REBELLION LIMITED RELEASE KENTUCKY STRAIGHT BOURBON WHISKEY",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "04/29/2025",
+      "price_usd": null
+    },
+    {
+      "id": "littlemill-aged-27-years-single-malt-scotch-whisky-bottle-number-xx-of-500-750-ml-51-3-vol-153-5k",
+      "name": "LITTLEMILL AGED 27 YEARS SINGLE MALT SCOTCH WHISKY BOTTLE NUMBER XX OF 500 750 ML 51.3% VOL.",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "05/19/2025",
+      "price_usd": null
+    },
+    {
+      "id": "eagle-rare-17-years-old-101-22",
+      "name": "EAGLE RARE 17 YEARS OLD",
+      "reason": "ultra-allocated",
+      "source": "ttb-cola",
+      "completed_date": "05/02/2025",
+      "price_usd": null
+    },
+    {
+      "id": "kirin-18-years-190-59",
+      "name": "KIRIN 18 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "05/05/2025",
+      "price_usd": null
+    },
+    {
+      "id": "glendronach-cask-bottling-1993-cask-no-6758-153-5k",
+      "name": "GLENDRONACH CASK BOTTLING 1993 CASK NO. 6758",
+      "reason": "historic-dated-release",
+      "source": "ttb-cola",
+      "completed_date": "05/05/2025",
+      "price_usd": null
+    },
+    {
+      "id": "rock-town-15th-anniversary-121-12",
+      "name": "ROCK TOWN 15TH ANNIVERSARY",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "05/13/2025",
+      "price_usd": null
+    },
+    {
+      "id": "sentinel-of-the-desert-private-barrel-102-11",
+      "name": "SENTINEL OF THE DESERT PRIVATE BARREL",
+      "reason": "private-or-event-release",
+      "source": "ttb-cola",
+      "completed_date": "05/06/2025",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-balcones-166-01",
+      "name": "SINGLE CASK NATION BALCONES",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "05/19/2025",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-cedar-ridge-166-01",
+      "name": "SINGLE CASK NATION CEDAR RIDGE",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "05/19/2025",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-smooth-ambler-101-01",
+      "name": "SINGLE CASK NATION SMOOTH AMBLER",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "05/14/2025",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-ny-distilling-co-102-01",
+      "name": "SINGLE CASK NATION NY DISTILLING CO",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "05/12/2025",
+      "price_usd": null
+    },
+    {
+      "id": "kentucky-vintage-101-22",
+      "name": "KENTUCKY VINTAGE",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "05/12/2025",
+      "price_usd": null
+    },
+    {
+      "id": "browne-family-spirits-barrel-085-141-07",
+      "name": "BROWNE FAMILY SPIRITS BARREL #085",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "05/14/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-macallan-distil-your-world-paris-153-5k",
+      "name": "THE MACALLAN DISTIL YOUR WORLD PARIS",
+      "reason": "luxury-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "05/14/2025",
+      "price_usd": null
+    },
+    {
+      "id": "highland-park-aged-25-years-153-5k",
+      "name": "HIGHLAND PARK AGED 25 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "05/19/2025",
+      "price_usd": null
+    },
+    {
+      "id": "highland-park-aged-30-years-153-5k",
+      "name": "HIGHLAND PARK AGED 30 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "05/19/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-macallan-time-space-mastery-153-5k",
+      "name": "THE MACALLAN TIME:SPACE MASTERY",
+      "reason": "luxury-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "05/19/2025",
+      "price_usd": null
+    },
+    {
+      "id": "dewar-s-25-years-151-5k",
+      "name": "DEWAR'S 25 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "05/19/2025",
+      "price_usd": null
+    },
+    {
+      "id": "sideshow-spirits-anniversary-edition-141-31",
+      "name": "SIDESHOW SPIRITS ANNIVERSARY EDITION",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "05/28/2025",
+      "price_usd": null
+    },
+    {
+      "id": "fuji-single-grain-japanese-whisky-50th-anniversary-edition-191-59",
+      "name": "FUJI SINGLE GRAIN JAPANESE WHISKY 50TH ANNIVERSARY EDITION",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "06/11/2025",
+      "price_usd": null
+    },
+    {
+      "id": "ichiro-s-malt-chichibu-cask-14162-191-59",
+      "name": "ICHIRO'S MALT CHICHIBU CASK #14162",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "06/05/2025",
+      "price_usd": null
+    },
+    {
+      "id": "ichiro-s-malt-chichibu-cask-13348-191-59",
+      "name": "ICHIRO'S MALT CHICHIBU CASK #13348",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "06/05/2025",
+      "price_usd": null
+    },
+    {
+      "id": "chattermark-distillers-five-year-cask-strength-straight-bourbon-whiskey-limited-release-101-26",
+      "name": "CHATTERMARK DISTILLERS FIVE YEAR CASK STRENGTH STRAIGHT BOURBON WHISKEY - LIMITED RELEASE",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "06/09/2025",
+      "price_usd": null
+    },
+    {
+      "id": "isle-of-raasay-single-cask-153-5k",
+      "name": "ISLE OF RAASAY SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "06/12/2025",
+      "price_usd": null
+    },
+    {
+      "id": "olde-raleigh-whiskey-society-member-exclusive-140-35",
+      "name": "OLDE RALEIGH WHISKEY SOCIETY MEMBER EXCLUSIVE",
+      "reason": "private-or-event-release",
+      "source": "ttb-cola",
+      "completed_date": "06/16/2025",
+      "price_usd": null
+    },
+    {
+      "id": "browne-family-spirits-barrel-042-141-07",
+      "name": "BROWNE FAMILY SPIRITS BARREL #042",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "06/17/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-macallan-folio-8-153-5k",
+      "name": "THE MACALLAN FOLIO 8",
+      "reason": "luxury-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "06/23/2025",
+      "price_usd": null
+    },
+    {
+      "id": "limited-edition-moonlight-basin-141-30",
+      "name": "LIMITED EDITION MOONLIGHT BASIN",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "07/09/2025",
+      "price_usd": null
+    },
+    {
+      "id": "art-of-the-spirits-american-whiskey-250th-anniversary-101-13",
+      "name": "ART OF THE SPIRITS AMERICAN WHISKEY 250TH ANNIVERSARY",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "07/02/2025",
+      "price_usd": null
+    },
+    {
+      "id": "benromach-cask-no-259-153-5k",
+      "name": "BENROMACH CASK NO: 259",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "07/30/2025",
+      "price_usd": null
+    },
+    {
+      "id": "larrikin-bourbon-co-u-s-marine-corps-250th-anniversary-101-22",
+      "name": "LARRIKIN BOURBON CO. U.S. MARINE CORPS 250TH ANNIVERSARY",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "07/04/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-hearach-binny-s-beverage-depot-2004-153-5k",
+      "name": "THE HEARACH BINNY'S BEVERAGE DEPOT 2004",
+      "reason": "historic-dated-release",
+      "source": "ttb-cola",
+      "completed_date": "07/25/2025",
+      "price_usd": null
+    },
+    {
+      "id": "old-soul-anniversary-series-1-straight-rye-whiskey-102-28",
+      "name": "OLD SOUL ANNIVERSARY SERIES 1 STRAIGHT RYE WHISKEY",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "07/02/2025",
+      "price_usd": null
+    },
+    {
+      "id": "society-cask-no-8-50-153-5k",
+      "name": "SOCIETY CASK NO: 8.50",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "07/14/2025",
+      "price_usd": null
+    },
+    {
+      "id": "society-cask-no-10-289-153-5k",
+      "name": "SOCIETY CASK NO: 10.289",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "07/14/2025",
+      "price_usd": null
+    },
+    {
+      "id": "society-cask-no-28-102-153-5k",
+      "name": "SOCIETY CASK NO: 28.102",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "07/14/2025",
+      "price_usd": null
+    },
+    {
+      "id": "society-cask-no-53-510-153-5k",
+      "name": "SOCIETY CASK NO: 53.510",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "07/14/2025",
+      "price_usd": null
+    },
+    {
+      "id": "society-cask-no-53-511-153-5k",
+      "name": "SOCIETY CASK NO: 53.511",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "07/14/2025",
+      "price_usd": null
+    },
+    {
+      "id": "society-cask-no-95-103-153-5k",
+      "name": "SOCIETY CASK NO: 95.103",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "07/14/2025",
+      "price_usd": null
+    },
+    {
+      "id": "heaven-hill-90th-anniversary-101-22",
+      "name": "HEAVEN HILL 90TH ANNIVERSARY",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "07/15/2025",
+      "price_usd": null
+    },
+    {
+      "id": "olde-raleigh-whiskey-society-member-exclusive-101-35",
+      "name": "OLDE RALEIGH WHISKEY SOCIETY MEMBER EXCLUSIVE",
+      "reason": "private-or-event-release",
+      "source": "ttb-cola",
+      "completed_date": "07/15/2025",
+      "price_usd": null
+    },
+    {
+      "id": "olde-raleigh-whiskey-society-member-exclusive-102-35",
+      "name": "OLDE RALEIGH WHISKEY SOCIETY MEMBER EXCLUSIVE",
+      "reason": "private-or-event-release",
+      "source": "ttb-cola",
+      "completed_date": "07/15/2025",
+      "price_usd": null
+    },
+    {
+      "id": "crn57-aged-40-years-in-oak-casks-151-5k",
+      "name": "CRN57 AGED 40 YEARS IN OAK CASKS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "07/16/2025",
+      "price_usd": null
+    },
+    {
+      "id": "catador-itinerante-zuidam-2017",
+      "name": "CATADOR ITINERANTE ZUIDAM 2017",
+      "reason": "historic-dated-release",
+      "source": "ttb-cola",
+      "completed_date": "07/17/2025",
+      "price_usd": null
+    },
+    {
+      "id": "catador-itinerante-zuidam-2016",
+      "name": "CATADOR ITINERANTE ZUIDAM 2016",
+      "reason": "historic-dated-release",
+      "source": "ttb-cola",
+      "completed_date": "07/28/2025",
+      "price_usd": null
+    },
+    {
+      "id": "torabhaig-signature-reserve-single-cask-153-5k",
+      "name": "TORABHAIG SIGNATURE RESERVE SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "07/21/2025",
+      "price_usd": null
+    },
+    {
+      "id": "torabhaig-signature-series-single-cask-153-5k",
+      "name": "TORABHAIG SIGNATURE SERIES SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "07/21/2025",
+      "price_usd": null
+    },
+    {
+      "id": "mars-single-cask-t326-191-59",
+      "name": "MARS SINGLE CASK #T326",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "07/23/2025",
+      "price_usd": null
+    },
+    {
+      "id": "mars-single-cask-3740-191-59",
+      "name": "MARS SINGLE CASK #3740",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "07/22/2025",
+      "price_usd": null
+    },
+    {
+      "id": "delilah-s-32nd-anniversary-142-20",
+      "name": "DELILAH'S 32ND ANNIVERSARY",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "07/28/2025",
+      "price_usd": null
+    },
+    {
+      "id": "american-single-cask-166-32",
+      "name": "AMERICAN SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "07/30/2025",
+      "price_usd": null
+    },
+    {
+      "id": "chichibu-whisky-live-tokyo-cask-n123-191-59",
+      "name": "CHICHIBU WHISKY LIVE TOKYO CASK N123",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "07/31/2025",
+      "price_usd": null
+    },
+    {
+      "id": "van-winkle-special-reserve-lot-b-101-00",
+      "name": "VAN WINKLE SPECIAL RESERVE LOT B",
+      "reason": "ultra-allocated",
+      "source": "ttb-cola",
+      "completed_date": "07/31/2025",
+      "price_usd": null
+    },
+    {
+      "id": "pappy-van-winkle-s-family-reserve-20-years-old-101-00",
+      "name": "PAPPY VAN WINKLE'S FAMILY RESERVE 20 YEARS OLD",
+      "reason": "ultra-allocated",
+      "source": "ttb-cola",
+      "completed_date": "07/31/2025",
+      "price_usd": null
+    },
+    {
+      "id": "winglore-spirits-american-single-malt-whiskey-single-cask-edition-166-05",
+      "name": "WINGLORE SPIRITS AMERICAN SINGLE MALT WHISKEY SINGLE CASK EDITION",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "08/12/2025",
+      "price_usd": null
+    },
+    {
+      "id": "fuji-japanese-whisky-50th-anniversary-edition-191-59",
+      "name": "FUJI JAPANESE WHISKY 50TH ANNIVERSARY EDITION",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "08/08/2025",
+      "price_usd": null
+    },
+    {
+      "id": "glenmorangie-rare-cask-scotch-whisky-hand-selected-by-dr-bill-lumsden-151-5k",
+      "name": "GLENMORANGIE RARE CASK SCOTCH WHISKY HAND SELECTED BY DR BILL LUMSDEN",
+      "reason": "private-or-event-release",
+      "source": "ttb-cola",
+      "completed_date": "08/06/2025",
+      "price_usd": null
+    },
+    {
+      "id": "american-single-cask-141-32",
+      "name": "AMERICAN SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "08/05/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-macallan-diamonds-are-forever-153-5k",
+      "name": "THE MACALLAN DIAMONDS ARE FOREVER",
+      "reason": "luxury-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "08/19/2025",
+      "price_usd": null
+    },
+    {
+      "id": "glenisla-signatory-vintage-cask-19606-153-5k",
+      "name": "GLENISLA SIGNATORY VINTAGE CASK 19606",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "08/04/2025",
+      "price_usd": null
+    },
+    {
+      "id": "weller-millennium-129-22",
+      "name": "WELLER MILLENNIUM",
+      "reason": "ultra-allocated",
+      "source": "ttb-cola",
+      "completed_date": "08/06/2025",
+      "price_usd": null
+    },
+    {
+      "id": "ferg-harris-springbank-distillery-aged-30-years-153-5k",
+      "name": "FERG & HARRIS SPRINGBANK DISTILLERY AGED 30 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "08/07/2025",
+      "price_usd": null
+    },
+    {
+      "id": "ardbeg-single-cask-scotch-whisky-the-ardbegians-pick-1-151-5k",
+      "name": "ARDBEG SINGLE CASK SCOTCH WHISKY THE ARDBEGIANS PICK #1",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "08/07/2025",
+      "price_usd": null
+    },
+    {
+      "id": "ardbeg-single-cask-scotch-whisky-drammers-club-pick-109-153-5k",
+      "name": "ARDBEG SINGLE CASK SCOTCH WHISKY DRAMMERS CLUB PICK #109",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "08/06/2025",
+      "price_usd": null
+    },
+    {
+      "id": "meikle-toir-single-cask-153-5k",
+      "name": "MEIKLE TOIR SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "08/07/2025",
+      "price_usd": null
+    },
+    {
+      "id": "browne-family-spirits-barrel-079-141-07",
+      "name": "BROWNE FAMILY SPIRITS BARREL #079",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "08/13/2025",
+      "price_usd": null
+    },
+    {
+      "id": "william-larue-weller-101-22",
+      "name": "WILLIAM LARUE WELLER",
+      "reason": "ultra-allocated",
+      "source": "ttb-cola",
+      "completed_date": "08/12/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-balvenie-1972-aged-52-years-153-5k",
+      "name": "THE BALVENIE 1972 AGED 52 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "08/19/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-balvenie-1974-aged-46-years-153-5k",
+      "name": "THE BALVENIE 1974 AGED 46 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "08/20/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-balvenie-1980-aged-43-years-153-5k",
+      "name": "THE BALVENIE 1980 AGED 43 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "08/19/2025",
+      "price_usd": null
+    },
+    {
+      "id": "bernheim-20th-anniversary-109-22",
+      "name": "BERNHEIM 20TH ANNIVERSARY",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "08/15/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-macallan-master-of-photography-magnum-153-5k",
+      "name": "THE MACALLAN MASTER OF PHOTOGRAPHY MAGNUM",
+      "reason": "luxury-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "08/18/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-macallan-horizon-151-5k",
+      "name": "THE MACALLAN HORIZON",
+      "reason": "luxury-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "08/21/2025",
+      "price_usd": null
+    },
+    {
+      "id": "benriach-aged-54-years-153-5k",
+      "name": "BENRIACH AGED 54 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "08/26/2025",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-highland-park-153-5k",
+      "name": "SINGLE CASK NATION HIGHLAND PARK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "08/25/2025",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-glenrothes-153-5k",
+      "name": "SINGLE CASK NATION GLENROTHES",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "08/25/2025",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-glen-spey-153-5k",
+      "name": "SINGLE CASK NATION GLEN SPEY",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "08/25/2025",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-bladnoch-153-5k",
+      "name": "SINGLE CASK NATION BLADNOCH",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "08/25/2025",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-dailuaine-153-5k",
+      "name": "SINGLE CASK NATION DAILUAINE",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "08/25/2025",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-secret-well-153-5k",
+      "name": "SINGLE CASK NATION SECRET WELL",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "08/25/2025",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-glen-spay-153-5k",
+      "name": "SINGLE CASK NATION GLEN SPAY",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "08/25/2025",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-cambus-151-5k",
+      "name": "SINGLE CASK NATION CAMBUS",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "08/25/2025",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-glen-grant-153-5k",
+      "name": "SINGLE CASK NATION GLEN GRANT",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "08/25/2025",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-glendronach-153-5k",
+      "name": "SINGLE CASK NATION GLENDRONACH",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "08/25/2025",
+      "price_usd": null
+    },
+    {
+      "id": "daniel-weller-spelt-wheat-101-22",
+      "name": "DANIEL WELLER SPELT WHEAT",
+      "reason": "ultra-allocated",
+      "source": "ttb-cola",
+      "completed_date": "09/10/2025",
+      "price_usd": null
+    },
+    {
+      "id": "glenmorangie-rare-cask-scotch-whisky-hand-selected-by-dr-bill-lumsden-exclusively-for-the-loya-family-151-5k",
+      "name": "GLENMORANGIE RARE CASK SCOTCH WHISKY - HAND SELECTED BY DR BILL LUMSDEN EXCLUSIVELY FOR THE LOYA FAMILY",
+      "reason": "private-or-event-release",
+      "source": "ttb-cola",
+      "completed_date": "09/11/2025",
+      "price_usd": null
+    },
+    {
+      "id": "kanosuke-double-distillery-2025-limited-edition-191-59",
+      "name": "KANOSUKE DOUBLE DISTILLERY 2025 LIMITED EDITION",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "09/11/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-heart-distillery-special-release-bourbon-whiskey-141-13",
+      "name": "THE HEART DISTILLERY SPECIAL RELEASE BOURBON WHISKEY",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "09/18/2025",
+      "price_usd": null
+    },
+    {
+      "id": "murray-mcdavid-mortlach-aged-34-years-153-5k",
+      "name": "MURRAY MCDAVID MORTLACH AGED 34 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "09/22/2025",
+      "price_usd": null
+    },
+    {
+      "id": "murray-mcdavid-imperial-aged-35-years-153-5k",
+      "name": "MURRAY MCDAVID IMPERIAL AGED 35 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "09/22/2025",
+      "price_usd": null
+    },
+    {
+      "id": "murray-mcdavid-bowmore-aged-34-years-153-5k",
+      "name": "MURRAY MCDAVID BOWMORE AGED 34 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "09/22/2025",
+      "price_usd": null
+    },
+    {
+      "id": "ofc-2004-101-22",
+      "name": "OFC 2004",
+      "reason": "historic-dated-release",
+      "source": "ttb-cola",
+      "completed_date": "09/26/2025",
+      "price_usd": null
+    },
+    {
+      "id": "whiskey-del-bac-vantage-point-private-barrel-166-11",
+      "name": "WHISKEY DEL BAC VANTAGE POINT PRIVATE BARREL",
+      "reason": "private-or-event-release",
+      "source": "ttb-cola",
+      "completed_date": "09/24/2025",
+      "price_usd": null
+    },
+    {
+      "id": "quazar-straight-rye-whiskey-35th-anniversary-102-27",
+      "name": "QUAZAR STRAIGHT RYE WHISKEY 35TH ANNIVERSARY",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "09/24/2025",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-ben-nevis-cask-3-153-5k",
+      "name": "SIGNATORY VINTAGE BEN NEVIS CASK: 3",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "11/13/2025",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-bunnahabhain-cask-900292-153-5k",
+      "name": "SIGNATORY VINTAGE BUNNAHABHAIN CASK: 900292",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "11/13/2025",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-bunnahabhain-cask-900777-153-5k",
+      "name": "SIGNATORY VINTAGE BUNNAHABHAIN CASK: 900777",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "11/13/2025",
+      "price_usd": null
+    },
+    {
+      "id": "signatory-vintage-caol-ila-cask-326090-153-5k",
+      "name": "SIGNATORY VINTAGE CAOL ILA CASK: 326090",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "11/13/2025",
+      "price_usd": null
+    },
+    {
+      "id": "kilchoman-10-year-old-single-cask-153-5k",
+      "name": "KILCHOMAN 10 YEAR OLD SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "11/14/2025",
+      "price_usd": null
+    },
+    {
+      "id": "limited-edition-house-series-maple-cask-rye-142-48",
+      "name": "LIMITED EDITION HOUSE SERIES MAPLE CASK RYE",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "11/17/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-balvenie-aged-25-years-153-5k",
+      "name": "THE BALVENIE AGED 25 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "11/17/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-macallan-aged-81-years-153-5k",
+      "name": "THE MACALLAN AGED 81 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "11/17/2025",
+      "price_usd": null
+    },
+    {
+      "id": "king-of-kentucky-small-batch-101-22",
+      "name": "KING OF KENTUCKY SMALL BATCH",
+      "reason": "ultra-allocated",
+      "source": "ttb-cola",
+      "completed_date": "11/17/2025",
+      "price_usd": null
+    },
+    {
+      "id": "bruichladdich-micro-provenance-single-cask-4182-153-5k",
+      "name": "BRUICHLADDICH MICRO-PROVENANCE SINGLE CASK #4182",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "11/18/2025",
+      "price_usd": null
+    },
+    {
+      "id": "bruichladdich-micro-provenance-single-cask-0314-153-5k",
+      "name": "BRUICHLADDICH MICRO-PROVENANCE SINGLE CASK #0314",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "11/18/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-last-drop-60-years-old-151-5k",
+      "name": "THE LAST DROP 60 YEARS OLD",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "11/18/2025",
+      "price_usd": null
+    },
+    {
+      "id": "glenfiddich-48-years-old-1976-153-5k",
+      "name": "GLENFIDDICH 48 YEARS OLD 1976",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "11/18/2025",
+      "price_usd": null
+    },
+    {
+      "id": "browne-family-spirits-barrel-209-141-07",
+      "name": "BROWNE FAMILY SPIRITS BARREL #209",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "11/18/2025",
+      "price_usd": null
+    },
+    {
+      "id": "browne-family-spirits-barrel-062-141-07",
+      "name": "BROWNE FAMILY SPIRITS BARREL #062",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "11/18/2025",
+      "price_usd": null
+    },
+    {
+      "id": "good-trouble-limited-edition-101-22",
+      "name": "GOOD TROUBLE LIMITED EDITION",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "11/19/2025",
+      "price_usd": null
+    },
+    {
+      "id": "lochlea-single-cask-153-5k",
+      "name": "LOCHLEA SINGLE CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "11/19/2025",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-glentauchers-153-5k",
+      "name": "SINGLE CASK NATION GLENTAUCHERS",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "11/20/2025",
+      "price_usd": null
+    },
+    {
+      "id": "single-cask-nation-miltonduff-153-5k",
+      "name": "SINGLE CASK NATION MILTONDUFF",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "11/20/2025",
+      "price_usd": null
+    },
+    {
+      "id": "brora-prima-ultima-153-5k",
+      "name": "BRORA PRIMA & ULTIMA",
+      "reason": "luxury-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "11/19/2025",
+      "price_usd": null
+    },
+    {
+      "id": "bowmore-arc-52-153-5k",
+      "name": "BOWMORE ARC-52",
+      "reason": "luxury-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "11/20/2025",
+      "price_usd": null
+    },
+    {
+      "id": "bowmore-aged-51-years-151-5k",
+      "name": "BOWMORE AGED 51 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "11/21/2025",
+      "price_usd": null
+    },
+    {
+      "id": "dalmore-aged-40-years-153-5k",
+      "name": "DALMORE AGED 40 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "11/20/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-dalmore-aged-27-years-153-5k",
+      "name": "THE DALMORE AGED 27 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "11/20/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-dalmore-aged-30-years-153-5k",
+      "name": "THE DALMORE AGED 30 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "11/20/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-dalmore-aged-43-years-153-5k",
+      "name": "THE DALMORE AGED 43 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "11/20/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-glenrothes-36-years-old-153-5k",
+      "name": "THE GLENROTHES 36 YEARS OLD",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "11/20/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-glenturret-2020-maiden-release-153-5k",
+      "name": "THE GLENTURRET 2020 MAIDEN RELEASE",
+      "reason": "historic-dated-release",
+      "source": "ttb-cola",
+      "completed_date": "11/20/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-yamazaki-aged-25-years-191-59",
+      "name": "THE YAMAZAKI AGED 25 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "11/20/2025",
+      "price_usd": null
+    },
+    {
+      "id": "the-macallan-edition-no-2-153-5k",
+      "name": "THE MACALLAN EDITION NO.2",
+      "reason": "luxury-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "11/20/2025",
+      "price_usd": null
+    },
+    {
+      "id": "king-of-kentucky-small-batch-2-101-22",
+      "name": "KING OF KENTUCKY SMALL BATCH 2",
+      "reason": "ultra-allocated",
+      "source": "ttb-cola",
+      "completed_date": "11/21/2025",
+      "price_usd": null
+    },
+    {
+      "id": "king-of-kentucky-small-batch-3-101-22",
+      "name": "KING OF KENTUCKY SMALL BATCH 3",
+      "reason": "ultra-allocated",
+      "source": "ttb-cola",
+      "completed_date": "11/21/2025",
+      "price_usd": null
+    },
+    {
+      "id": "edradour-200th-anniversary-amarone-casks-153-5k",
+      "name": "EDRADOUR 200TH ANNIVERSARY AMARONE CASKS",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "11/24/2025",
+      "price_usd": null
+    },
+    {
+      "id": "edradour-200th-anniversary-bordeaux-cask-153-5k",
+      "name": "EDRADOUR 200TH ANNIVERSARY BORDEAUX CASK",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "11/24/2025",
+      "price_usd": null
+    },
+    {
+      "id": "edradour-200th-anniversary-cndp-hogshead-153-5k",
+      "name": "EDRADOUR 200TH ANNIVERSARY CNDP HOGSHEAD",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "11/22/2025",
+      "price_usd": null
+    },
+    {
+      "id": "glenfarclas-aged-25-years-153-5k",
+      "name": "GLENFARCLAS AGED 25 YEARS",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "11/25/2025",
+      "price_usd": null
+    },
+    {
+      "id": "karuizawa-once-in-a-lifetime-191-59",
+      "name": "KARUIZAWA ONCE IN A LIFETIME",
+      "reason": "luxury-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "11/23/2025",
+      "price_usd": null
+    },
+    {
+      "id": "ichiro-s-malt-chichibu-single-cask-13348-191-59",
+      "name": "ICHIRO'S MALT CHICHIBU SINGLE CASK#13348",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "11/29/2025",
+      "price_usd": null
+    },
+    {
+      "id": "benromach-cask-no-580-153-5k",
+      "name": "BENROMACH CASK NO.580",
+      "reason": "numbered-barrel-or-cask",
+      "source": "ttb-cola",
+      "completed_date": "11/28/2025",
+      "price_usd": null
+    },
+    {
+      "id": "jack-daniel-s-special-release-rye-142-43",
+      "name": "JACK DANIEL'S SPECIAL RELEASE RYE",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "12/09/2025",
+      "price_usd": null
+    },
+    {
+      "id": "edradour-200th-anniversary-bordeaux-cask-finished-153-5k",
+      "name": "EDRADOUR 200TH ANNIVERSARY BORDEAUX CASK FINISHED",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "12/05/2025",
+      "price_usd": null
+    },
+    {
+      "id": "edradour-200th-anniversary-madeira-cask-finished-153-5k",
+      "name": "EDRADOUR 200TH ANNIVERSARY MADEIRA CASK FINISHED",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "12/05/2025",
+      "price_usd": null
+    },
+    {
+      "id": "edradour-200th-anniversary-sherry-casks-batch-no-1-153-5k",
+      "name": "EDRADOUR 200TH ANNIVERSARY SHERRY CASKS BATCH NO. 1",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "12/08/2025",
+      "price_usd": null
+    },
+    {
+      "id": "edradour-200th-anniversary-sherry-butt-matured-enigma-1-153-5k",
+      "name": "EDRADOUR 200TH ANNIVERSARY SHERRY BUTT MATURED ENIGMA 1",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "12/05/2025",
+      "price_usd": null
+    },
+    {
+      "id": "edradour-200th-anniversary-sherry-butt-matured-enigma-2-153-5k",
+      "name": "EDRADOUR 200TH ANNIVERSARY SHERRY BUTT MATURED ENIGMA 2",
+      "reason": "unverified-limited-label",
+      "source": "ttb-cola",
+      "completed_date": "12/05/2025",
+      "price_usd": null
+    },
+    {
+      "id": "bunnahabhain-28-years-old-153-5k",
+      "name": "BUNNAHABHAIN 28 YEARS OLD",
+      "reason": "high-age-collector-release",
+      "source": "ttb-cola",
+      "completed_date": "12/29/2025",
+      "price_usd": null
+    },
+    {
+      "id": "hinds1ght-2020-141-02",
+      "name": "HINDS1GHT 2020",
+      "reason": "historic-dated-release",
+      "source": "ttb-cola",
+      "completed_date": "12/02/2025",
+      "price_usd": null
+    },
+    {
+      "id": "hinds1ght-2020-small-batch-rye-whiskey-142-02",
+      "name": "HINDS1GHT 2020 SMALL BATCH RYE WHISKEY",
+      "reason": "historic-dated-release",
+      "source": "ttb-cola",
+      "completed_date": "12/02/2025",
+      "price_usd": null
+    }
+  ]
+}

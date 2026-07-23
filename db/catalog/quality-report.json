@@ -1,7 +1,7 @@
 {
-  "version": 1,
-  "updated": "2026-07-11T20:45:58.741Z",
-  "count": 10000,
+  "version": 3,
+  "updated": "2026-07-23T21:40:19.700Z",
+  "count": 9406,
   "target": 10000,
   "price_limits": {
     "PLN": 1000,
@@ -20,12 +20,30 @@
     "olcc_eligible": 805
   },
   "deduplicated": 12880,
-  "selected_verified_price": 1259,
-  "selected_recognition_only": 8741,
+  "selected_verified_price": 1183,
+  "selected_recognition_only": 8223,
   "missing": {
-    "proof": 8943,
-    "abv": 8928,
-    "distillery": 9367,
-    "price": 8741
+    "proof": 8408,
+    "abv": 8394,
+    "distillery": 8819,
+    "price": 8223
+  },
+  "original_count": 10000,
+  "dedupe_version": "catalog-identity-safe-v1",
+  "duplicate_records_removed": 66,
+  "duplicate_groups_merged": 64,
+  "retail_filter_version": "retail-relevance-2026-v1",
+  "retail_max_usd": 1000,
+  "retail_records_removed": 528,
+  "retail_removal_reasons": {
+    "high-age-collector-release": 70,
+    "old-batch-release": 5,
+    "historic-dated-release": 48,
+    "private-or-event-release": 28,
+    "stale-limited-release": 4,
+    "unverified-limited-label": 230,
+    "ultra-allocated": 20,
+    "numbered-barrel-or-cask": 99,
+    "luxury-collector-release": 24
   }
 }

@@ -2,6 +2,8 @@ import fs from "node:fs";
 import path from "node:path";
 import os from "node:os";
 import { execFileSync } from "node:child_process";
+import { buildCatalogTokenIndex, dedupeCatalogRecords } from "./catalog_identity.mjs";
+import { MAX_RETAIL_USD, RETAIL_FILTER_VERSION, retailPriceUsd, retailRemovalReason } from "./catalog_retail_policy.mjs";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
 const OUT_DIR = path.join(ROOT, "db", "catalog");
@@ -384,53 +386,8 @@ function fromOlcc(row) {
   return record;
 }
 
-function spiritFamily(record) {
-  const text = ascii(`${record.type} ${record.category}`);
-  if (text.includes("bourbon")) return "bourbon";
-  if (text.includes("scotch")) return "scotch";
-  if (text.includes("irish")) return "irish";
-  if (text.includes("canadian")) return "canadian";
-  if (text.includes("rye")) return "rye";
-  if (text.includes("wheat")) return "wheat";
-  if (text.includes("corn")) return "corn";
-  return "whisky";
-}
-
-function mergeRecord(current, incoming) {
-  const merged = { ...current };
-  const fill = ["distillery", "producer_permit", "region", "proof", "abv", "mashbill", "image", "source_url", "source_id"];
-  for (const field of fill) if ((merged[field] === null || merged[field] === undefined || merged[field] === "") && incoming[field]) merged[field] = incoming[field];
-  if (incoming.catalog_status === "verified" && current.catalog_status !== "verified") {
-    for (const field of ["price", "price_currency", "price_range", "price_status"]) merged[field] = incoming[field];
-    merged.catalog_status = "verified";
-  }
-  merged.aliases = [...new Set([...(current.aliases || []), ...(incoming.aliases || []), current.name, incoming.name].map(clean).filter(Boolean))];
-  merged.source_refs = [...new Set([...(current.source_refs || []), current.source, ...(incoming.source_refs || []), incoming.source].filter(Boolean))];
-  return merged;
-}
-
 function dedupe(records) {
-  const seen = new Map();
-  const ids = new Set();
-  const result = [];
-  for (const record of records) {
-    if (!record?.name) continue;
-    const key = `${matchKey(record.name)}|${spiritFamily(record)}`;
-    if (!matchKey(record.name)) continue;
-    if (seen.has(key)) {
-      const index = seen.get(key);
-      result[index] = mergeRecord(result[index], record);
-      continue;
-    }
-    let id = record.id || slug(record.name);
-    const base = id;
-    let suffix = 2;
-    while (ids.has(id)) id = `${base}-${suffix++}`;
-    ids.add(id);
-    seen.set(key, result.length);
-    result.push({ ...record, id, source_refs: [record.source].filter(Boolean) });
-  }
-  return result;
+  return dedupeCatalogRecords(records.filter((record)=>record?.name&&matchKey(record.name)));
 }
 
 function buildDistilleryIndex(existing, ttbRows) {
@@ -481,19 +438,6 @@ function scanRecord(record) {
   };
 }
 
-function buildTokenIndex(bottles) {
-  const stop = new Set(["bourbon", "whisky", "whiskey", "straight", "bottled", "bond", "single", "barrel", "cask", "proof", "rye", "scotch", "malt", "blend", "blended", "reserve", "batch", "finish", "finished", "kentucky", "distillery", "company", "with", "the", "and", "for"]);
-  const index = {};
-  bottles.forEach((bottle, bottleIndex) => {
-    const words = new Set([bottle.name, ...(bottle.aliases || [])].flatMap((value) => ascii(value).split(" ")));
-    for (const word of words) {
-      if ((word.length < 3 && !/^[0-9]+$/.test(word)) || stop.has(word)) continue;
-      (index[word] ||= []).push(bottleIndex);
-    }
-  });
-  return index;
-}
-
 async function main() {
   const existingRaw = JSON.parse(fs.readFileSync(EXISTING_DB, "utf8")).bottles;
   const existing = existingRaw.map(fromExisting).filter(Boolean);
@@ -503,28 +447,54 @@ async function main() {
   const ttbRows = await downloadTtb();
   const distilleries = buildDistilleryIndex(existingRaw, ttbRows);
   const ttb = ttbRows.map((row) => fromTtb(row, prices, distilleries)).filter(Boolean);
-  const merged = dedupe([...existing, ...olccRecords, ...ttb]);
-  if (merged.length < TARGET) throw new Error(`Only ${merged.length} unique records passed validation; need ${TARGET}. Increase TTB_FROM range.`);
-  const verified = merged.filter((record) => record.catalog_status === "verified");
-  const recognition = merged.filter((record) => record.catalog_status !== "verified");
+  const dedupeResult = dedupe([...existing, ...olccRecords, ...ttb]);
+  const merged = dedupeResult.records;
+  const retailRemoved=merged.map((record)=>({record,reason:retailRemovalReason(record)})).filter((item)=>item.reason);
+  const retailEligible=merged.filter((record)=>!retailRemovalReason(record));
+  if (retailEligible.length < 9000) throw new Error(`Only ${retailEligible.length} retail-relevant records passed validation; need at least 9000.`);
+  const verified = retailEligible.filter((record) => record.catalog_status === "verified");
+  const recognition = retailEligible.filter((record) => record.catalog_status !== "verified");
   const selected = [...verified, ...recognition].slice(0, TARGET);
   fs.mkdirSync(OUT_DIR, { recursive: true });
+  const selectedIds=new Set(selected.map((record)=>record.id));
+  const redirects=Object.fromEntries(Object.entries(dedupeResult.redirects).filter(([,canonicalId])=>selectedIds.has(canonicalId)));
   const meta = {
-    version: 1,
+    version: 3,
     updated: new Date().toISOString(),
     count: selected.length,
     target: TARGET,
     price_limits: { PLN: PRICE_LIMIT_PLN, USD: PRICE_LIMIT_USD },
     profile_policy: "Tasting text marked style_estimate is an original expected style profile, not a verified producer tasting note.",
-    sources: ["Existing Bourbon Hunters catalog", "TTB Public COLA Registry", "Oregon OLCC Monthly Pricing"]
+    sources: ["Existing Bourbon Hunters catalog", "TTB Public COLA Registry", "Oregon OLCC Monthly Pricing"],
+    dedupe_version:"catalog-identity-safe-v1",
+    duplicate_records_removed:dedupeResult.removed,
+    retail_filter_version:RETAIL_FILTER_VERSION,
+    retail_max_usd:MAX_RETAIL_USD,
+    retail_records_removed:retailRemoved.length,
+    id_redirects:redirects
   };
   fs.writeFileSync(path.join(OUT_DIR, "bottles.json"), `${JSON.stringify({ ...meta, bottles: selected }, null, 2)}\n`);
   const scanBottles = selected.map(scanRecord);
-  fs.writeFileSync(path.join(OUT_DIR, "scan-index.json"), `${JSON.stringify({ ...meta, bottles: scanBottles, token_index: buildTokenIndex(scanBottles) })}\n`);
+  fs.writeFileSync(path.join(OUT_DIR, "scan-index.json"), `${JSON.stringify({ ...meta, bottles: scanBottles, token_index: buildCatalogTokenIndex(scanBottles) })}\n`);
+  fs.writeFileSync(path.join(OUT_DIR, "dedupe-redirects.json"), `${JSON.stringify({version:1,updated:meta.updated,count:Object.keys(redirects).length,redirects,groups:dedupeResult.groups},null,2)}\n`);
+  const retailReasons=retailRemoved.reduce((counts,item)=>{
+    counts[item.reason]=(counts[item.reason]||0)+1;
+    return counts;
+  },{});
+  fs.writeFileSync(path.join(OUT_DIR, "retail-filter-report.json"), `${JSON.stringify({
+    version:1,updated:meta.updated,policy:RETAIL_FILTER_VERSION,max_usd:MAX_RETAIL_USD,
+    before:merged.length,after:selected.length,removed:retailRemoved.length,reasons:retailReasons,
+    records:retailRemoved.map((item)=>({
+      id:item.record.id,name:item.record.name,reason:item.reason,source:item.record.source,
+      completed_date:item.record.completed_date||null,price_usd:retailPriceUsd(item.record)||null
+    }))
+  },null,2)}\n`);
   const report = {
     ...meta,
     source_rows: { existing: existing.length, ttb: ttbRows.length, olcc_current_whisky: olcc.length, olcc_eligible: olccRecords.length },
     deduplicated: merged.length,
+    retail_eligible: retailEligible.length,
+    retail_removal_reasons: retailReasons,
     selected_verified_price: selected.filter((record) => record.catalog_status === "verified").length,
     selected_recognition_only: selected.filter((record) => record.catalog_status !== "verified").length,
     missing: {
