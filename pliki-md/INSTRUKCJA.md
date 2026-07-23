@@ -27,9 +27,10 @@ Aktualny oczekiwany stan Workera:
 {
   "ok": true,
   "auth_version": "auth-pbkdf2-100000-google-v3",
-  "scan_orchestrator_version": "ocr-visual-fusion-catalog-10k-v9-canonical-labels",
-  "scan_catalog_version": "ttb-olcc-10k-v1",
-  "catalog_submission_version": "community-catalog-images-v4-confirmed-cutout",
+  "scan_orchestrator_version": "ocr-visual-fusion-catalog-10k-v10-calibrated-moderated",
+  "scan_catalog_version": "ttb-olcc-retail-filtered-v3",
+  "catalog_submission_version": "community-catalog-images-v5-admin-moderation",
+  "catalog_moderation_version": "catalog-moderation-orchestrator-admin-v1",
   "catalog_license_version": "catalog-license-2026-07-18-v1",
   "pbkdf2_iterations": 100000,
   "d1": true,
@@ -40,6 +41,8 @@ Aktualny oczekiwany stan Workera:
   "identity_schema": true,
   "catalog_schema": true,
   "catalog_data_schema": true,
+  "catalog_moderation_schema": true,
+  "telemetry_schema": true,
   "image_pipeline_ready": true,
   "email_ready": true,
   "google_ready": true
@@ -63,12 +66,13 @@ Cykl zycia zdjec katalogowych wymaga:
 
 1. W D1 uruchom `agent/d1-migration-v65-catalog-data-lifecycle.sql`.
 2. W D1 uruchom `agent/d1-migration-v66-telemetry-reports.sql`.
-3. Dopiero potem wklej i zdeployuj aktualny `agent/worker.js`.
-4. W Workerze dodaj dzienny Cron Trigger, np. `0 3 * * *`, do usuwania porzuconych podgladow i telemetrii starszej niz 90 dni.
-5. Wyslij frontend na GitHub i odswiez PWA do cache `bourbon-hunters-v91`.
-6. Sprawdz pelny health: `https://bourbon-hunters.darekmaslyk.workers.dev/auth/health`.
+3. W D1 uruchom `agent/d1-migration-v67-catalog-moderation.sql`.
+4. Dopiero potem wklej i zdeployuj aktualny `agent/worker.js`.
+5. W Workerze pozostaw dzienny Cron Trigger, np. `0 3 * * *`, do usuwania porzuconych podgladow i telemetrii starszej niz 90 dni.
+6. Wyslij frontend na GitHub i odswiez PWA do cache `bourbon-hunters-v92`.
+7. Sprawdz pelny health: `https://bourbon-hunters.darekmaslyk.workers.dev/auth/health`.
 
-Kolejnosc jest wazna: migracje D1 -> Worker -> GitHub/PWA. Bez v65 cykl zycia assetow nie ruszy, a bez v66 skany beda dzialac bez raportow i health pokaze `telemetry_schema=false`.
+Kolejnosc jest wazna: migracje D1 -> Worker -> GitHub/PWA. Bez v67 user nie moze zatwierdzic assetu, bo Worker celowo nie publikuje juz niczego z pominieciem moderacji.
 
 Ponizsze starsze sekcje zostaja jako pomoc historyczna, ale w razie sprzecznosci obowiazuje aktualna zasada powyzej.
 
@@ -197,3 +201,16 @@ Co zapisuje sie w D1:
 - historia skanow z wynikiem rozpoznania.
 
 Hasla nie sa zapisywane jawnie. Worker zapisuje hash PBKDF2 i token sesji jako hash.
+
+## Wdrożenie kategorii Whisky
+
+Ta zmiana dotyczy GitHub Pages. Nie wymaga podmiany Workera, migracji D1 ani zmian w Cloudflare.
+
+1. Uruchom `WYSLIJ-NA-GITHUB.bat`.
+2. Poczekaj na zielony wynik GitHub Actions.
+3. Na telefonie otwórz `test-index.html`.
+4. Kliknij `Odśwież build`; jeśli stary układ nadal jest widoczny, użyj `Wyczyść cache/PWA`.
+5. Sprawdź na Home kafel Whisky z liczbą pozycji.
+6. Wejdź w Whisky i sprawdź filtry Scotch, Irish, Japanese, Rye i pozostałe.
+
+Aktualny cache: `bourbon-hunters-v93`.

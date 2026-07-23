@@ -1,8 +1,22 @@
 # Bourbon Hunters 1.1 - handoff do kolejnego etapu
 
-Aktualizacja: 2026-07-12.
+Aktualizacja: 2026-07-23.
 
 Ten plik ma byc pierwszym kontekstem dla nowego watku Codexa, np. `Przekaz Bourbon Hunter 1.1`.
+
+## Stan nadrzedny 2026-07-23
+
+- Punkt powrotu przed przebudowa skanera: `backup-before-scanner-v10-6f3605e`.
+- Aktualny skaner: `ocr-visual-fusion-catalog-10k-v10-calibrated-moderated`.
+- Aktualny katalog obrazow: `community-catalog-images-v5-admin-moderation`.
+- Przed deployem Workera trzeba uruchomic `agent/d1-migration-v67-catalog-moderation.sql`.
+- Health ma pokazac `catalog_moderation_schema: true` i `catalog_moderation_version: catalog-moderation-orchestrator-admin-v1`.
+- User nie publikuje bezposrednio do wspolnego katalogu. Orkiestrator ocenia szkic, admin akceptuje go w `Profil -> Raporty`, a opublikowany wpis jest zablokowany przed nadpisaniem przez userow.
+- Agent wizualny dostaje pelne zdjecie, OCR wycinek etykiety, a porownanie z obrazami referencyjnymi uruchamia sie tylko przy bliskich wynikach.
+- Test regresji: `scripts/scanner-regression.mjs`; test mobilnego UI: `scripts/ui-smoke.mjs`.
+- Cache PWA: `bourbon-hunters-v92`.
+
+Starsze informacje ponizej sa historia sesji. W razie sprzecznosci obowiazuje ten blok i `pliki-md/HANDOFF.md`.
 
 ## Jak zaczac nowy watek w Codex
 
@@ -45,7 +59,8 @@ pliki-md/BUGS.md
 - `email_ready` w `/auth/health` jest `true`, czyli Resend/MAIL_FROM sa skonfigurowane.
 - Rejestracja email/password dziala po stronie Workera i zapisuje konto w Cloudflare D1.
 - Google Sign-In jest podpiety do Workera i D1.
-- Katalog rozpoznawania ma 10000 rekordow TTB/OLCC i lokalnych.
+- Katalog zbudowany ze zrodla 10k ma po deduplikacji i filtrze dostepnosci 9406 rekordow TTB/OLCC i lokalnych.
+- Filtr `retail-relevance-2026-v1` usuwa historyczne roczniki, jednorazowe caski/private picks, niepotwierdzone edycje limitowane, ultra-alokowane serie i pozycje mogace przekroczyc 1000 USD.
 - R2 `BOTTLE_IMAGES` i Images `IMAGES` sa podpiete; pipeline zdjec jest gotowy.
 - Zgloszenie nowej butelki moze zapisac dane oraz zaakceptowany wycinek zdjecia usera.
 - Age gate pokazuje sie przed intro i uzywa assetu `assets/brand/age-gate.png`.
@@ -199,3 +214,14 @@ Priorytet 5: dokumentacja i biznes
 ```
 
 4. Test konta robic dopiero po odswiezeniu Pages i cache PWA.
+
+## Kategoria Whisky i filtry
+
+- `spirit-taxonomy.js` jest wspólnym źródłem klasyfikacji rodziny i podtypów.
+- Bourbon oraz Whisky są rozdzielone przed zastosowaniem filtrów.
+- Kafel Whisky na Home otwiera widok z samymi podfiltrami Whisky.
+- `db/catalog/browse-whisky.json` generuje `scripts/build_browse_catalog.mjs`.
+- Plik jest ładowany leniwie, więc nie spowalnia pierwszego ekranu.
+- Po przebudowie katalogu uruchomić generator browse i test taksonomii.
+- Frontend wdraża się przez GitHub Pages; Worker i D1 bez zmian.
+- Cache PWA: `bourbon-hunters-v93`.

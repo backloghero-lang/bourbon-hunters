@@ -7,6 +7,40 @@ Aktualizacja: 2026-07-05.
 Najnowszy kontekst dla kolejnego etapu jest w `pliki-md/HANDOFF-BH-1.1.md`.
 Uzyj go jako pierwszego dokumentu przy starcie watku `Przekaz Bourbon Hunter 1.1`.
 
+## Aktualizacja 2026-07-23 - skaner v10 i moderacja katalogu
+
+- Skaner laczy pelne zdjecie dla agenta wizualnego z osobnym, ostrzejszym wycinkiem etykiety dla OCR.
+- Ranking jest kalibrowany: jeden agent nie moze sam dac pewnego trafienia, konflikty OCR/Visual obnizaja wynik zamiast laczyc nazwy w nieistniejacy wariant.
+- Obslugiwane sa dodatkowe znaczniki wariantow: malt, wheat/wheated, finished, double oaked, recipe code, wiek, proof i ABV.
+- Zatwierdzone rekordy `catalog_bottles` sa dolaczane do indeksu skanera, a bliskie wyniki moga byc warunkowo porownane z istniejacymi obrazami referencyjnymi.
+- Nowa migracja `agent/d1-migration-v67-catalog-moderation.sql` dodaje kolejke moderacji. User wysyla szkic, orkiestrator go ocenia, a admin zatwierdza albo odrzuca w widoku `Raporty`.
+- Opublikowany rekord katalogowy jest zablokowany przed nadpisaniem przez zwyklego usera.
+- Test `scripts/scanner-regression.mjs` uruchamia prawdziwy kod Workera: 99,3% top-1 i 99,4% top-2 na kontrolnej probce 1000 nazw.
+- Oczekiwana wersja Workera: `ocr-visual-fusion-catalog-10k-v10-calibrated-moderated`.
+- Oczekiwana wersja moderacji: `catalog-moderation-orchestrator-admin-v1`.
+- Cache PWA: `bourbon-hunters-v92`.
+- Punkt powrotu: `backup-before-scanner-v10-6f3605e`.
+
+## Aktualizacja 2026-07-23 - bezpieczna deduplikacja katalogu
+
+- Katalog zrodlowy 10000 rekordow zostal oczyszczony do 9934 rekordow kanonicznych.
+- Polaczono 66 pewnych duplikatow w 64 grupach. Rozne typy, wiek, proof i warianty pozostaja osobnymi rekordami.
+- Stare identyfikatory maja przekierowania w `db/catalog/dedupe-redirects.json`; Worker obsluguje je przy potwierdzaniu wyniku.
+- Generator i walidator uzywaja wspolnej logiki `scripts/catalog_identity.mjs`, a audyt po czyszczeniu zwraca 0 bezpiecznych duplikatow.
+- Regresja po przebudowie indeksu: 99,3% top-1 i 99,4% top-2 na probce 1000 rekordow.
+- Oczekiwana wersja katalogu Workera: `ttb-olcc-10k-deduped-v2`.
+
+## Aktualizacja 2026-07-23 - filtr dostepnosci sklepowej
+
+- Po deduplikacji zastosowano polityke `retail-relevance-2026-v1`; katalog ma teraz 9406 rekordow.
+- Usunieto 528 pozycji: 499 niepotwierdzonych etykiet lub wydan kolekcjonerskich oraz 29 starych/ultra-rzadkich listingow.
+- Filtr obejmuje historyczne roczniki, stare batche, private/store picks, numerowane caski, niepotwierdzone edycje limitowane, wysokie roczniki kolekcjonerskie i serie ultra-alokowane.
+- Jawny limit polityki wynosi 1000 USD. Wczesniejszy, bardziej restrykcyjny limit importu zweryfikowanych cen nadal pozostaje aktywny.
+- Raport usunietych rekordow: `db/catalog/retail-filter-report.json`.
+- Generator, filtr i walidator korzystaja ze wspolnej polityki `scripts/catalog_retail_policy.mjs`.
+- Regresja po filtrze: 99,4% top-1 i 99,4% top-2 na probce 1000 rekordow.
+- Oczekiwana wersja katalogu Workera: `ttb-olcc-retail-filtered-v3`.
+
 ## Aktualizacja 2026-07-23 - kanoniczne warianty skanera
 
 - Jack Daniel's Bonded, Jack Daniel's Single Barrel Select i Knob Creek 9 Year maja rozszerzone aliasy zgodne z tekstem etykiet.
@@ -141,5 +175,26 @@ Uwaga: wczeĹ›niejsze prĂłby MCP Figma wpadaĹ‚y w limit planu Starter, wi
 2. Na telefonie wejĹ›Ä‡ przez `test-index.html`, kliknÄ…Ä‡ `Odswiez build` i w razie potrzeby `Wyczysc cache/PWA`.
 3. SprawdziÄ‡: intro od 5 sekundy, przycisk `PomiĹ„`, kadr 9:16 na PC, waluty PL/EN, szczegĂłĹ‚y butelek i listy.
 4. Po deployu uruchomiÄ‡ plugin Figma Asset Importer.
+
+## Aktualizacja 2026-07-23 - osobna kategoria Whisky
+
+- Home ma osobny kafel `Whisky`; obejmuje rekordy, które nie są bourbonem.
+- `Rye Whiskey` jest teraz podfiltrem Whisky, a nie metodą produkcji bourbona.
+- Filtry mają dwie warstwy: rodzina `Bourbon / Whisky` i podtypy zależne od rodziny.
+- Bourbon: Classic, Small Batch, Single Barrel, Bottled in Bond, Barrel Proof, Wheated, Limited.
+- Whisky: Scotch, Irish, Japanese, Rye, American Single Malt, Tennessee, Canadian, Corn & Wheat, American Whiskey, World Whisky, Pozostałe.
+- Ten sam podział działa w Odkrywaj, Kolekcji, Wishlist i Polecanych.
+- `db/catalog/browse-whisky.json` zawiera 5837 rekordów i ładuje się dopiero po wejściu w Whisky.
+- Klasyfikator: `spirit-taxonomy.js`.
+- Generator: `scripts/build_browse_catalog.mjs`.
+- Asset kafla: `design/figma-assets/home-pack-v2/whisky-world.png`.
+- Cache PWA: `bourbon-hunters-v93`.
+
+Po każdej przebudowie głównego katalogu uruchom:
+
+```powershell
+node scripts/build_browse_catalog.mjs
+node scripts/test_spirit_taxonomy.mjs
+```
 
 

@@ -1,8 +1,9 @@
 /* Bourbon Hunters service worker - network-first dla aktualizacji aplikacji i bazy. */
-const CACHE = "bourbon-hunters-v91";
+const CACHE = "bourbon-hunters-v93";
 const ASSETS = [
   "./",
   "./index.html",
+  "./spirit-taxonomy.js",
   "./test-index.html",
   "./manifest.json",
   "./assets/intro/nowe intro.mp4",
@@ -32,6 +33,7 @@ const ASSETS = [
   "./design/figma-assets/home-pack-v2/barrel-proof.png",
   "./design/figma-assets/home-pack-v2/rye-whiskey.png",
   "./design/figma-assets/home-pack-v2/limited-edition.png",
+  "./design/figma-assets/home-pack-v2/whisky-world.png",
   "./assets/bourbons/cutouts-test/buffalo-trace-bourbon-1.png",
   "./assets/bourbons/cutouts-test/blantons-original-single-barrel-bourbon-whiskey-700ml.png",
   "./assets/bourbons/cutouts-test/eagle-rare-10-year-kentucky-straight-bourbon-whiskey-700ml.png",
@@ -54,6 +56,7 @@ const ASSETS = [
   "./assets/bourbons/cutouts-test/michters-bourbon.png",
   "./db/bourbons.json",
   "./db/profiles-runtime.json",
+  "./db/catalog/browse-meta.json",
   "./icons/icon-192.png",
   "./icons/icon-512.png"
 ];
@@ -72,7 +75,7 @@ self.addEventListener("activate", function(e){
 });
 
 function shouldNetworkFirst(url){
-  return url.endsWith("/") || url.indexOf("/index.html")!==-1 || url.indexOf("/test-index.html")!==-1 || url.indexOf("/db/bourbons.json")!==-1 || url.indexOf("/db/profiles-runtime.json")!==-1 || url.indexOf("/sw.js")!==-1;
+  return url.endsWith("/") || url.indexOf("/index.html")!==-1 || url.indexOf("/test-index.html")!==-1 || url.indexOf("/spirit-taxonomy.js")!==-1 || url.indexOf("/db/bourbons.json")!==-1 || url.indexOf("/db/profiles-runtime.json")!==-1 || url.indexOf("/db/catalog/browse-")!==-1 || url.indexOf("/sw.js")!==-1;
 }
 
 self.addEventListener("fetch", function(e){

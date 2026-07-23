@@ -51,7 +51,7 @@ Dostep ma tylko email z `ADMIN_EMAILS` albo `SUPPORT_EMAIL`. Raport pokazuje wol
 1. Uruchom migracje v66 w D1.
 2. Zdeployuj `agent/worker.js`.
 3. Sprawdz `/auth/health`: `telemetry_schema=true` i `operational_telemetry_ready=true`.
-4. Wyslij frontend i odswiez PWA do cache `bourbon-hunters-v91`.
+4. Wyslij frontend i odswiez PWA do cache `bourbon-hunters-v92`.
 5. Zaloguj sie jako administrator, wykonaj skan, potwierdz wynik i otworz `Profil -> Raporty`.
 
 ## Analityka produktowa na pozniej

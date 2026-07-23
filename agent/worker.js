@@ -19,9 +19,10 @@ const DEFAULT_DB_URL = "https://raw.githubusercontent.com/" + REPO + "/main/db/c
 const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters. Krotko, z jajem, ale rzeczowo. quality=jakosc 1-5, value=jakosc/cena 1-5 (5 swietna i tania, 1 slaba i droga). Pisz {{LANG}}. Zwroc tylko JSON.";
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
 const MULTI_CANDIDATE_CONFIDENCE = 0.9;
-const SCAN_ORCHESTRATOR_VERSION = "ocr-visual-fusion-catalog-10k-v9-canonical-labels";
-const SCAN_CATALOG_VERSION = "ttb-olcc-10k-v1";
-const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v4-confirmed-cutout";
+const SCAN_ORCHESTRATOR_VERSION = "ocr-visual-fusion-catalog-10k-v10-calibrated-moderated";
+const SCAN_CATALOG_VERSION = "ttb-olcc-retail-filtered-v3";
+const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v5-admin-moderation";
+const CATALOG_MODERATION_VERSION = "catalog-moderation-orchestrator-admin-v1";
 const CATALOG_LICENSE_VERSION = "catalog-license-2026-07-18-v1";
 const TELEMETRY_VERSION = "scanner-telemetry-v1";
 const CATALOG_SYSTEM_USER_ID = "catalog-system";
@@ -29,7 +30,7 @@ const AUTH_VERSION = "auth-pbkdf2-100000-google-v3";
 const PBKDF2_ITERATIONS = 100000;
 const PROFILE_BADGE_IDS = ["glass","bottle","barrel","seal","hat","star","distillery","notes","opener","horseshoe"];
 
-let _p = { t:null, at:0 }, _db = { d:null, at:0 };
+let _p = { t:null, at:0 }, _db = { d:null, at:0 }, _communityDb = { d:null, at:0 };
 const SCAN_RECORD_OVERRIDES={
   "jeffersons-very-small-batch-bourbon-whiskey-copy":{aliases:["Jefferson's Bourbon","Jefferson's Blend of Straight Bourbon Whiskey"],abv:41.15},
   "jack-daniel-s-bonded-119-43":{
@@ -64,17 +65,35 @@ const SCAN_RECORD_OVERRIDES={
   "olcc-2163b":{scanDisabled:true}
 };
 function applyScanCatalogOverrides(db){
-  (db&&db.bottles||[]).forEach(function(bottle){
-    const override=SCAN_RECORD_OVERRIDES[bottle&&bottle.id];
-    if(!override) return;
+  const bottles=db&&db.bottles||[];
+  const byId={};
+  bottles.forEach(function(bottle){ if(bottle&&bottle.id) byId[bottle.id]=bottle; });
+  Object.keys(SCAN_RECORD_OVERRIDES).forEach(function(overrideId){
+    const canonicalId=db&&db.id_redirects&&db.id_redirects[overrideId]||overrideId;
+    const bottle=byId[canonicalId];
+    const override=SCAN_RECORD_OVERRIDES[overrideId];
+    if(!bottle || !override) return;
     if(override.aliases) bottle.aliases=Array.from(new Set((Array.isArray(bottle.aliases)?bottle.aliases:[]).concat(override.aliases)));
     if(Number.isFinite(override.proof)) bottle.proof=override.proof;
     if(Number.isFinite(override.abv)) bottle.abv=override.abv;
     ["distillery","type","category"].forEach(function(field){
       if(typeof override[field]==="string" && override[field]) bottle[field]=override[field];
     });
-    if(override.scanDisabled) bottle.scan_disabled=true;
+    if(override.scanDisabled && overrideId===canonicalId) bottle.scan_disabled=true;
   });
+  return rebuildScanTokenIndex(db);
+}
+function rebuildScanTokenIndex(db){
+  const index={};
+  (db&&db.bottles||[]).forEach(function(bottle,bottleIndex){
+    if(!bottle || bottle.scan_disabled) return;
+    const values=[bottle.name,bottle.distillery].concat(Array.isArray(bottle.aliases)?bottle.aliases:[]);
+    distinctiveTokens(values.join(" ")).forEach(function(token){
+      if(!index[token]) index[token]=[];
+      if(index[token].indexOf(bottleIndex)<0) index[token].push(bottleIndex);
+    });
+  });
+  db.token_index=index;
   return db;
 }
 async function getText(url, ttl){ const r = await fetch(url, { cf:{ cacheTtl:ttl, cacheEverything:true } }); return r.ok ? await r.text() : null; }
@@ -83,10 +102,45 @@ async function getPrompt(env){
   try{ const t=await getText(env.PROMPT_URL||DEFAULT_PROMPT_URL,60); if(t&&t.trim()){_p={t:t,at:now};return t;} }catch(e){}
   return _p.t||FALLBACK_PROMPT;
 }
-async function getDB(env){
+async function getStaticDB(env){
   const now=Date.now(); if(_db.d && now-_db.at<300000) return _db.d;
   try{ const t=await getText(env.DB_URL||DEFAULT_DB_URL,300); if(t){ const j=applyScanCatalogOverrides(JSON.parse(t)); _db={d:j,at:now}; return j; } }catch(e){}
   return _db.d||{bottles:[]};
+}
+async function getDB(env, request){
+  const base=await getStaticDB(env);
+  if(!env.DB || !(await tableExists(env,"catalog_bottles"))) return base;
+  const now=Date.now();
+  if(_communityDb.d && now-_communityDb.at<60000) return _communityDb.d;
+  try{
+    const result=await env.DB.prepare("SELECT * FROM catalog_bottles WHERE status='published' ORDER BY updated_at DESC LIMIT 2000").all();
+    const rows=result.results||[];
+    if(!rows.length){ _communityDb={d:base,at:now}; return base; }
+    const merged=Object.assign({},base,{bottles:(base.bottles||[]).map(function(bottle){ return Object.assign({},bottle); })});
+    const byId={};
+    merged.bottles.forEach(function(bottle,index){ if(bottle&&bottle.id) byId[bottle.id]=index; });
+    rows.forEach(function(row){
+      const bottle=publicCatalogBottle(row,request);
+      bottle.aliases=Array.isArray(bottle.aliases)?bottle.aliases:[];
+      bottle.catalog_status="published";
+      bottle.community_catalog=true;
+      if(byId[bottle.id]!=null){
+        const current=merged.bottles[byId[bottle.id]];
+        merged.bottles[byId[bottle.id]]=Object.assign({},current,bottle,{
+          aliases:Array.from(new Set((current.aliases||[]).concat(bottle.aliases||[]))),
+          image:bottle.image||current.image||""
+        });
+      }else{
+        byId[bottle.id]=merged.bottles.length;
+        merged.bottles.push(bottle);
+      }
+    });
+    rebuildScanTokenIndex(merged);
+    _communityDb={d:merged,at:now};
+    return merged;
+  }catch(e){
+    return base;
+  }
 }
 
 function langName(l){ return l==="en"?"in English":l==="es"?"en espanol":"po polsku"; }
@@ -291,6 +345,9 @@ async function catalogDataSchemaReady(env){
   const catalog=await tableColumns(env,"catalog_bottles");
   return !!(submissions.consent_version && submissions.original_deleted_at && submissions.published_key && submissions.asset_sha256 && catalog.image_key && catalog.license_version && catalog.provenance_submission_id);
 }
+async function catalogModerationSchemaReady(env){
+  return !!(env.DB && await tableExists(env,"catalog_moderation_queue"));
+}
 async function telemetrySchemaReady(env){
   return !!(env.DB && await tableExists(env,"telemetry_events") && await tableExists(env,"scanner_runs") && await tableExists(env,"service_usage_events"));
 }
@@ -433,7 +490,8 @@ async function deleteR2Keys(env, keys){
 async function cleanupStaleCatalogSubmissions(env, limit){
   if(!env.DB || !env.BOTTLE_IMAGES || !(await tableExists(env,"bottle_submissions"))) return {cleaned:0};
   const cutoff=new Date(Date.now()-24*60*60*1000).toISOString();
-  const rows=await env.DB.prepare("SELECT id,original_key,processed_key FROM bottle_submissions WHERE status IN ('processing','awaiting_confirmation') AND updated_at<? ORDER BY updated_at LIMIT ?")
+  const moderationFilter=await catalogModerationSchemaReady(env) ? " AND id NOT IN (SELECT submission_id FROM catalog_moderation_queue WHERE admin_status='pending')" : "";
+  const rows=await env.DB.prepare("SELECT id,original_key,processed_key FROM bottle_submissions WHERE status IN ('processing','awaiting_confirmation') AND updated_at<?"+moderationFilter+" ORDER BY updated_at LIMIT ?")
     .bind(cutoff,Math.max(1,Math.min(200,Number(limit)||50))).all();
   let cleaned=0;
   for(const row of (rows.results||[])){
@@ -497,10 +555,20 @@ async function createBottlePreview(env, request, user, body){
     return {submission_id:id,preview_ready:false,image_pipeline_ready:true,preview_error:String(e&&e.message?e.message:e).slice(0,120)};
   }
 }
-async function publishCatalogAsset(env, row){
+async function stageCatalogReviewAsset(env, row){
   if(!row || !row.processed_key || !env.BOTTLE_IMAGES) return {image_key:null,asset_sha256:null};
   const object=await env.BOTTLE_IMAGES.get(row.processed_key);
   if(!object) throw new Error("preview_missing");
+  const bytes=new Uint8Array(await object.arrayBuffer());
+  const assetSha=row.asset_sha256 || await sha256Bytes(bytes);
+  const imageKey="catalog/review/"+row.id+"/"+assetSha+".webp";
+  await env.BOTTLE_IMAGES.put(imageKey,bytes,{httpMetadata:{contentType:"image/webp",cacheControl:"private, no-store"}});
+  return {image_key:imageKey,asset_sha256:assetSha};
+}
+async function publishModeratedAsset(env, row){
+  if(!row || !row.review_image_key || !env.BOTTLE_IMAGES) return {image_key:null,asset_sha256:null};
+  const object=await env.BOTTLE_IMAGES.get(row.review_image_key);
+  if(!object) throw new Error("review_image_missing");
   const bytes=new Uint8Array(await object.arrayBuffer());
   const assetSha=row.asset_sha256 || await sha256Bytes(bytes);
   const imageKey="catalog/published/"+cleanCatalogId(row.bottle_id)+"/"+assetSha+".webp";
@@ -513,8 +581,28 @@ async function recordCatalogReceipt(env, user, row, published, acceptedAt){
   await env.DB.prepare("INSERT INTO catalog_asset_receipts (id,submission_id,bottle_id,contributor_hash,license_version,accepted_at,asset_sha256,image_key,original_deleted_at,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(submission_id) DO UPDATE SET license_version=excluded.license_version,accepted_at=excluded.accepted_at,asset_sha256=excluded.asset_sha256,image_key=excluded.image_key,original_deleted_at=excluded.original_deleted_at,updated_at=excluded.updated_at")
     .bind(crypto.randomUUID(),row.id,row.bottle_id,contributorHash,CATALOG_LICENSE_VERSION,acceptedAt,published.asset_sha256,published.image_key,originalDeletedAt,acceptedAt,acceptedAt).run();
 }
+async function catalogModerationAssessment(env, row){
+  const bottle=safeJson(row&&row.bottle_data,{});
+  const staticDb=await getStaticDB(env);
+  const exact=(staticDb.bottles||[]).find(function(candidate){ return candidate&&candidate.id===row.bottle_id&&!candidate.scan_disabled; })||null;
+  if(exact){
+    return {status:"passed",confidence:0.99,reason:"known_catalog_id",matched_id:exact.id,matched_name:exact.name};
+  }
+  const name=String(row&&row.bottle_name||bottle.name||"").trim();
+  const matched=name ? matchBottleWithEvidence(staticDb,{name:name,confidence:0.75},{name:name,confidence:0.75,raw_text:name}) : null;
+  const same=!!(matched&&matched.bottle&&cleanCatalogId(matched.bottle.name)===cleanCatalogId(name));
+  return {
+    status:same&&matched.dbConfidence>=0.8?"passed":"needs_review",
+    confidence:matched?clamp01(matched.dbConfidence):0,
+    reason:matched?(same?"name_confirmed":"similar_catalog_record"):"new_catalog_record",
+    matched_id:matched&&matched.bottle&&matched.bottle.id||null,
+    matched_name:matched&&matched.bottle&&matched.bottle.name||null,
+    candidates:matched&&matched.candidates?matched.candidates.slice(0,3).map(function(candidate){ return {id:candidate.id,name:candidate.name,confidence:candidate.confidence}; }):[]
+  };
+}
 async function confirmBottleSubmission(env, request, user, body){
   if(!(await catalogDataSchemaReady(env))) return {error:"schema_catalog_lifecycle_missing",status:501};
+  if(!(await catalogModerationSchemaReady(env))) return {error:"schema_catalog_moderation_missing",status:501};
   const id=String((body&&body.submission_id)||"").trim();
   const decision=String((body&&body.decision)||"").trim();
   const row=await env.DB.prepare("SELECT * FROM bottle_submissions WHERE id=? AND user_id=?").bind(id,user.id).first();
@@ -528,21 +616,65 @@ async function confirmBottleSubmission(env, request, user, body){
   if(["accept","without_image"].indexOf(decision)<0) return {error:"bad_decision",status:400};
   if(decision==="accept" && !row.processed_key) return {error:"preview_missing",status:409};
   const now=new Date().toISOString();
-  const oldCatalog=await env.DB.prepare("SELECT image_key FROM catalog_bottles WHERE bottle_id=?").bind(row.bottle_id).first();
-  const publishedAsset=decision==="accept" ? await publishCatalogAsset(env,row) : {image_key:null,asset_sha256:null};
+  const oldCatalog=await env.DB.prepare("SELECT bottle_id FROM catalog_bottles WHERE bottle_id=? AND status='published'").bind(row.bottle_id).first();
+  if(oldCatalog) return {error:"catalog_entry_locked",status:409,message:"This published catalog entry cannot be replaced by a user submission."};
+  const pending=await env.DB.prepare("SELECT id FROM catalog_moderation_queue WHERE bottle_id=? AND admin_status='pending'").bind(row.bottle_id).first();
+  if(pending) return {error:"catalog_review_pending",status:409};
+  const reviewAsset=decision==="accept" ? await stageCatalogReviewAsset(env,row) : {image_key:null,asset_sha256:null};
   if(decision==="without_image") await deleteSubmissionImages(env,row);
-  const imageSubmission=decision==="accept" ? row.id : null;
-  await env.DB.prepare("INSERT INTO catalog_bottles (bottle_id,bottle_name,bottle_data,image_submission_id,image_key,asset_sha256,license_version,licensed_at,provenance_submission_id,source_user_id,status,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,'published',?,?) ON CONFLICT(bottle_id) DO UPDATE SET bottle_name=excluded.bottle_name,bottle_data=excluded.bottle_data,image_submission_id=COALESCE(excluded.image_submission_id,catalog_bottles.image_submission_id),image_key=COALESCE(excluded.image_key,catalog_bottles.image_key),asset_sha256=COALESCE(excluded.asset_sha256,catalog_bottles.asset_sha256),license_version=excluded.license_version,licensed_at=excluded.licensed_at,provenance_submission_id=excluded.provenance_submission_id,source_user_id=excluded.source_user_id,status='published',updated_at=excluded.updated_at")
-    .bind(row.bottle_id,row.bottle_name,row.bottle_data,imageSubmission,publishedAsset.image_key,publishedAsset.asset_sha256,CATALOG_LICENSE_VERSION,now,row.id,user.id,now,now).run();
-  await recordCatalogReceipt(env,user,row,publishedAsset,now);
   await deleteSubmissionImages(env,row);
-  await env.DB.prepare("UPDATE bottle_submissions SET status='published',image_choice=?,consent_version=?,consented_at=?,original_key=NULL,processed_key=NULL,published_key=?,asset_sha256=?,original_deleted_at=COALESCE(original_deleted_at,?),updated_at=? WHERE id=?")
-    .bind(decision,CATALOG_LICENSE_VERSION,now,publishedAsset.image_key,publishedAsset.asset_sha256,now,now,id).run();
-  if(oldCatalog && oldCatalog.image_key && publishedAsset.image_key && oldCatalog.image_key!==publishedAsset.image_key && env.BOTTLE_IMAGES){
-    await env.BOTTLE_IMAGES.delete(oldCatalog.image_key).catch(function(){});
+  const assessment=await catalogModerationAssessment(env,row);
+  const moderationId=crypto.randomUUID();
+  await env.DB.prepare("INSERT INTO catalog_moderation_queue (id,submission_id,bottle_id,bottle_name,bottle_data,review_image_key,asset_sha256,orchestrator_status,orchestrator_confidence,orchestrator_json,admin_status,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,'pending',?,?)")
+    .bind(moderationId,row.id,row.bottle_id,row.bottle_name,row.bottle_data,reviewAsset.image_key,reviewAsset.asset_sha256,assessment.status,assessment.confidence,JSON.stringify(assessment),now,now).run();
+  await env.DB.prepare("UPDATE bottle_submissions SET image_choice=?,consent_version=?,consented_at=?,original_key=NULL,processed_key=NULL,published_key=NULL,asset_sha256=?,original_deleted_at=COALESCE(original_deleted_at,?),updated_at=? WHERE id=?")
+    .bind(decision,CATALOG_LICENSE_VERSION,now,reviewAsset.asset_sha256,now,now,id).run();
+  return {ok:true,status:"pending_review",moderation_id:moderationId,orchestrator:{status:assessment.status,confidence:assessment.confidence},license_version:CATALOG_LICENSE_VERSION,source_deleted:true};
+}
+
+async function adminCatalogModerationList(env, request){
+  const rows=await env.DB.prepare("SELECT mq.*,bs.user_id FROM catalog_moderation_queue mq JOIN bottle_submissions bs ON bs.id=mq.submission_id WHERE mq.admin_status='pending' ORDER BY mq.created_at ASC LIMIT 50").all();
+  return {moderation_version:CATALOG_MODERATION_VERSION,items:(rows.results||[]).map(function(row){
+    return {
+      id:row.id,submission_id:row.submission_id,bottle_id:row.bottle_id,bottle_name:row.bottle_name,
+      bottle_data:safeJson(row.bottle_data,{}),has_image:!!row.review_image_key,
+      image_url:row.review_image_key?new URL("/admin/catalog/moderation/"+encodeURIComponent(row.id)+"/image",request.url).toString():"",
+      orchestrator_status:row.orchestrator_status,orchestrator_confidence:Number(row.orchestrator_confidence)||0,
+      orchestrator:safeJson(row.orchestrator_json,{}),created_at:row.created_at
+    };
+  })};
+}
+
+async function adminCatalogModerationDecision(env, request, admin, moderationId, body){
+  const decision=String(body&&body.decision||"").trim();
+  if(["approve","reject"].indexOf(decision)<0) return {error:"bad_decision",status:400};
+  const row=await env.DB.prepare("SELECT mq.*,bs.user_id,bs.original_deleted_at FROM catalog_moderation_queue mq JOIN bottle_submissions bs ON bs.id=mq.submission_id WHERE mq.id=?").bind(moderationId).first();
+  if(!row) return {error:"moderation_not_found",status:404};
+  if(row.admin_status!=="pending") return {error:"moderation_already_decided",status:409};
+  const now=new Date().toISOString();
+  const note=String(body&&body.note||"").trim().slice(0,500);
+  if(decision==="reject"){
+    if(row.review_image_key&&env.BOTTLE_IMAGES) await env.BOTTLE_IMAGES.delete(row.review_image_key).catch(function(){});
+    await env.DB.prepare("UPDATE catalog_moderation_queue SET admin_status='rejected',admin_user_id=?,admin_note=?,reviewed_at=?,updated_at=? WHERE id=?")
+      .bind(admin.id,note,now,now,row.id).run();
+    await env.DB.prepare("UPDATE bottle_submissions SET status='cancelled',image_choice='admin_rejected',published_key=NULL,updated_at=? WHERE id=?")
+      .bind(now,row.submission_id).run();
+    return {ok:true,status:"rejected"};
   }
+  const existing=await env.DB.prepare("SELECT bottle_id FROM catalog_bottles WHERE bottle_id=? AND status='published'").bind(row.bottle_id).first();
+  if(existing) return {error:"catalog_entry_locked",status:409,message:"Published records are immutable to community submissions."};
+  const published=await publishModeratedAsset(env,row);
+  await env.DB.prepare("INSERT INTO catalog_bottles (bottle_id,bottle_name,bottle_data,image_submission_id,image_key,asset_sha256,license_version,licensed_at,provenance_submission_id,source_user_id,status,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,'published',?,?)")
+    .bind(row.bottle_id,row.bottle_name,row.bottle_data,row.submission_id,published.image_key,published.asset_sha256,CATALOG_LICENSE_VERSION,now,row.submission_id,row.user_id,now,now).run();
+  await recordCatalogReceipt(env,{id:row.user_id},{id:row.submission_id,bottle_id:row.bottle_id,original_deleted_at:row.original_deleted_at},published,now);
+  await env.DB.prepare("UPDATE catalog_moderation_queue SET admin_status='approved',admin_user_id=?,admin_note=?,reviewed_at=?,updated_at=? WHERE id=?")
+    .bind(admin.id,note,now,now,row.id).run();
+  await env.DB.prepare("UPDATE bottle_submissions SET status='published',image_choice='admin_approved',published_key=?,asset_sha256=?,updated_at=? WHERE id=?")
+    .bind(published.image_key,published.asset_sha256,now,row.submission_id).run();
+  if(row.review_image_key&&env.BOTTLE_IMAGES) await env.BOTTLE_IMAGES.delete(row.review_image_key).catch(function(){});
+  _communityDb={d:null,at:0};
   const catalogRow=await env.DB.prepare("SELECT * FROM catalog_bottles WHERE bottle_id=?").bind(row.bottle_id).first();
-  return {ok:true,status:"published",license_version:CATALOG_LICENSE_VERSION,source_deleted:true,bottle:publicCatalogBottle(catalogRow,request)};
+  return {ok:true,status:"approved",bottle:publicCatalogBottle(catalogRow,request)};
 }
 async function ensureCatalogSystemUser(env){
   const now=new Date().toISOString();
@@ -583,6 +715,10 @@ async function deleteAccountAndData(env, user){
     (submissions.results||[]).forEach(function(row){
       [row.original_key,row.processed_key].filter(Boolean).forEach(function(key){ if(!keepKeys[key] && deleteKeys.indexOf(key)<0) deleteKeys.push(key); });
     });
+    if(await catalogModerationSchemaReady(env)){
+      const reviews=await env.DB.prepare("SELECT mq.review_image_key FROM catalog_moderation_queue mq JOIN bottle_submissions bs ON bs.id=mq.submission_id WHERE bs.user_id=? AND mq.admin_status='pending'").bind(user.id).all();
+      (reviews.results||[]).forEach(function(row){ if(row.review_image_key&&!keepKeys[row.review_image_key]&&deleteKeys.indexOf(row.review_image_key)<0) deleteKeys.push(row.review_image_key); });
+    }
     if(deleteKeys.length) await deleteR2Keys(env,deleteKeys);
   }
   await env.DB.prepare("UPDATE catalog_asset_receipts SET account_deleted_at=?,updated_at=? WHERE contributor_hash=?").bind(now,now,contributorHash).run();
@@ -844,7 +980,7 @@ async function handleApi(request, env, cors){
   const url=new URL(request.url);
   const path=url.pathname.replace(/\/+$/,"");
   if(path==="/auth/health" && request.method==="GET"){
-    let schema=false, reset_schema=false, profile_schema=false, recommendations_schema=false, identity_schema=false, catalog_schema=false, catalog_data_schema=false, telemetry_schema=false, detail="";
+    let schema=false, reset_schema=false, profile_schema=false, recommendations_schema=false, identity_schema=false, catalog_schema=false, catalog_data_schema=false, catalog_moderation_schema=false, telemetry_schema=false, detail="";
     if(env.DB){
       try{
         await env.DB.prepare("SELECT id FROM users LIMIT 1").first();
@@ -863,12 +999,14 @@ async function handleApi(request, env, cors){
         if(schema && reset_schema && profile_schema && recommendations_schema && identity_schema && !catalog_schema) detail="catalog submission tables are missing";
         catalog_data_schema=catalog_schema && await catalogDataSchemaReady(env);
         if(schema && reset_schema && profile_schema && recommendations_schema && identity_schema && catalog_schema && !catalog_data_schema) detail="catalog data lifecycle migration v65 is missing";
+        catalog_moderation_schema=catalog_data_schema && await catalogModerationSchemaReady(env);
+        if(schema && catalog_data_schema && !catalog_moderation_schema) detail="catalog moderation migration v67 is missing";
         telemetry_schema=await telemetrySchemaReady(env);
-        if(schema && catalog_data_schema && !telemetry_schema) detail="telemetry migration v66 is missing";
+        if(schema && catalog_data_schema && catalog_moderation_schema && !telemetry_schema) detail="telemetry migration v66 is missing";
       }
       catch(e){ detail=String(e&&e.message?e.message:e).slice(0,220); }
     }
-    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,telemetry_schema:telemetry_schema,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
+    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_moderation_version:CATALOG_MODERATION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,catalog_moderation_schema:catalog_moderation_schema,telemetry_schema:telemetry_schema,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
   }
   if(path==="/auth/google/start" && request.method==="GET"){
     const returnUrl=allowedReturnUrl(env,url.searchParams.get("return")||appUrl(env));
@@ -1064,6 +1202,27 @@ async function handleApi(request, env, cors){
     for(const id of Object.keys(ratings)) await upsertRating(env,user.id,String(id),ratings[id]);
     return J({user:publicUser(user),bootstrap:await bootstrapFor(env,user.id),profile:await profileFor(env,user.id),admin:isAdminUser(env,user)},200,cors);
   }
+  if(path==="/admin/catalog/moderation" && request.method==="GET"){
+    if(!isAdminUser(env,user)) return J({error:"forbidden"},403,cors);
+    if(!(await catalogModerationSchemaReady(env))) return J({error:"schema_catalog_moderation_missing"},501,cors);
+    return J(await adminCatalogModerationList(env,request),200,cors);
+  }
+  const moderationImageMatch=path.match(/^\/admin\/catalog\/moderation\/([^/]+)\/image$/);
+  if(moderationImageMatch && request.method==="GET"){
+    if(!isAdminUser(env,user)) return J({error:"forbidden"},403,cors);
+    const row=await env.DB.prepare("SELECT review_image_key FROM catalog_moderation_queue WHERE id=? AND admin_status='pending'").bind(decodeURIComponent(moderationImageMatch[1])).first();
+    if(!row || !row.review_image_key || !env.BOTTLE_IMAGES) return J({error:"image_not_found"},404,cors);
+    const object=await env.BOTTLE_IMAGES.get(row.review_image_key);
+    if(!object) return J({error:"image_not_found"},404,cors);
+    return new Response(object.body,{headers:Object.assign({},cors,{"Content-Type":object.httpMetadata&&object.httpMetadata.contentType||"image/webp","Cache-Control":"private, no-store"})});
+  }
+  const moderationDecisionMatch=path.match(/^\/admin\/catalog\/moderation\/([^/]+)$/);
+  if(moderationDecisionMatch && request.method==="POST"){
+    if(!isAdminUser(env,user)) return J({error:"forbidden"},403,cors);
+    if(!(await catalogModerationSchemaReady(env))) return J({error:"schema_catalog_moderation_missing"},501,cors);
+    const result=await adminCatalogModerationDecision(env,request,user,decodeURIComponent(moderationDecisionMatch[1]),await readBody(request));
+    return J(result,result.status&&typeof result.status==="number"?result.status:200,cors);
+  }
   if(path==="/admin/reports/summary" && request.method==="GET"){
     if(!isAdminUser(env,user)) return J({error:"forbidden"},403,cors);
     if(!(await telemetrySchemaReady(env))) return J({error:"telemetry_schema_missing"},501,cors);
@@ -1249,7 +1408,25 @@ function fieldEvidenceScore(bottle, ocr){
   return {score:score,matched:matched,conflict:conflict,observedSpirit:observedSpirit,bottleSpirit:bottleSpirit};
 }
 
-function labelVariantEvidence(bottle, observedText){
+function variantMarkers(text){
+  text=norm(text);
+  const recipe=(text.match(/\b(?:ob|oe)[skqofv]\b/)||[])[0]||"";
+  return {
+    bonded:/\bbonded\b|\bbottled in bond\b|\bbib\b/.test(text),
+    single_barrel:/\bsingle barrel\b|\bsingle cask\b/.test(text),
+    barrel_proof:/\bbarrel proof\b|\bcask strength\b|\bfull proof\b/.test(text),
+    rye:/\brye\b/.test(text),
+    bourbon:/\bbourbon\b/.test(text),
+    select:/\bselect\b/.test(text),
+    malt:/\bmalt\b/.test(text),
+    wheat:/\bwheat\b|\bwheated\b/.test(text),
+    finished:/\bfinish(?:ed)?\b|\bsherry cask\b|\bport cask\b|\bfrench oak\b/.test(text),
+    double_oaked:/\bdouble oak(?:ed)?\b|\bdouble barrel(?:ed)?\b/.test(text),
+    small_batch:/\bsmall batch\b/.test(text),
+    recipe:recipe
+  };
+}
+function labelVariantEvidence(bottle, observedText, sourceConfidence){
   const observed=norm(observedText);
   const declared=norm([
     bottle&&bottle.name,
@@ -1257,45 +1434,88 @@ function labelVariantEvidence(bottle, observedText){
     bottle&&bottle.type,
     bottle&&bottle.category
   ].filter(Boolean).join(" "));
-  function markers(text){
-    return {
-      bonded:/\bbonded\b|\bbottled in bond\b|\bbib\b/.test(text),
-      single_barrel:/\bsingle barrel\b|\bs b\b/.test(text),
-      barrel_proof:/\bbarrel proof\b|\bcask strength\b/.test(text),
-      rye:/\brye\b/.test(text),
-      select:/\bselect\b/.test(text)
-    };
-  }
   function age(text){
-    const match=String(text||"").match(/\b(\d{1,2})\s*(?:year|years|yr|yrs)\b/);
+    const match=String(text||"").match(/\b(\d{1,2})\s*(?:year|years|yr|yrs|yo)\b/);
     return match ? Number(match[1]) : 0;
   }
-  const seen=markers(observed);
-  const bottleMarkers=markers(declared);
-  const weights={bonded:0.18,single_barrel:0.12,barrel_proof:0.16,rye:0.16,select:0.1};
-  const hasObservedMarker=Object.keys(seen).some(function(key){ return seen[key]; });
+  const seen=variantMarkers(observed);
+  const bottleMarkers=variantMarkers(declared);
+  const weights={bonded:0.13,single_barrel:0.1,barrel_proof:0.12,rye:0.13,bourbon:0.08,select:0.07,malt:0.11,wheat:0.09,finished:0.08,double_oaked:0.1,small_batch:0.06};
+  const reliability=Math.max(0.45,clamp01(sourceConfidence||0.65));
   const matched=[];
-  let score=0, penalty=0, conflict=false;
+  let score=0, penalty=0;
   Object.keys(weights).forEach(function(marker){
     if(seen[marker]){
       if(bottleMarkers[marker]){ score+=weights[marker]; matched.push(marker); }
-      else conflict=true;
-    }else if(bottleMarkers[marker] && hasObservedMarker){
-      penalty+=weights[marker];
+      else penalty+=weights[marker];
     }
   });
+  if(seen.recipe){
+    if(seen.recipe===bottleMarkers.recipe){ score+=0.16; matched.push("recipe"); }
+    else if(bottleMarkers.recipe) penalty+=0.22;
+  }
   const observedAge=age(observed);
   const bottleAge=age(declared);
   if(observedAge && bottleAge){
     if(observedAge===bottleAge){ score+=0.14; matched.push("age"); }
-    else conflict=true;
+    else penalty+=0.22;
   }
-  if(observedAge && !hasObservedMarker){
-    Object.keys(weights).forEach(function(marker){
-      if(bottleMarkers[marker]) penalty+=weights[marker];
-    });
-  }
-  return {score:score,penalty:penalty,matched:matched,conflict:conflict,observedAge:observedAge,bottleAge:bottleAge};
+  const spiritConflict=!!(
+    (seen.rye && bottleMarkers.bourbon && !bottleMarkers.rye) ||
+    (seen.bourbon && bottleMarkers.rye && !bottleMarkers.bourbon) ||
+    (seen.malt && bottleMarkers.bourbon && !bottleMarkers.malt)
+  );
+  return {
+    score:Math.min(0.18,score*reliability),
+    penalty:Math.min(0.32,penalty*reliability),
+    matched:matched,
+    conflict:spiritConflict,
+    observedAge:observedAge,
+    bottleAge:bottleAge,
+    markers:seen
+  };
+}
+
+function exactBottleNameEvidence(names, bottle){
+  const declared=[bottle&&bottle.name].concat(Array.isArray(bottle&&bottle.aliases)?bottle.aliases:[]).map(norm).filter(Boolean);
+  let best=0;
+  (names||[]).forEach(function(item){
+    const value=norm(item&&item.name);
+    if(value && declared.indexOf(value)>=0) best=Math.max(best,clamp01(item.confidence||0.65));
+  });
+  return best;
+}
+
+function primaryBottleNameEvidence(names, bottle){
+  const declared=norm(bottle&&bottle.name);
+  let best=0;
+  (names||[]).forEach(function(item){
+    const value=norm(item&&item.name);
+    if(value && value===declared) best=Math.max(best,clamp01(item.confidence||0.65));
+  });
+  return best;
+}
+
+function canonicalRecordScore(bottle){
+  let score=0;
+  if(bottle&&bottle.image) score+=6;
+  if(bottle&&bottle.community_catalog) score+=5;
+  if(bottle&&bottle.distillery) score+=2;
+  if(Number.isFinite(Number(bottle&&bottle.proof))) score+=1;
+  const source=norm(bottle&&bottle.source);
+  if(/manual|domwhisky|community/.test(source)) score+=3;
+  else if(source==="olcc") score+=2;
+  else if(source.indexOf("ttb")>=0) score+=1;
+  return score;
+}
+
+function candidateIdentity(bottle){
+  const declared=norm([bottle&&bottle.name,bottle&&bottle.type,bottle&&bottle.category].filter(Boolean).join(" "));
+  const markers=variantMarkers(declared);
+  const markerKey=Object.keys(markers).filter(function(key){ return key!=="recipe" && markers[key]; }).sort().join(",");
+  const age=(declared.match(/\b(\d{1,2})\s*(?:year|years|yr|yrs|yo)\b/)||[])[1]||"";
+  const brand=distinctiveTokens(bottle&&bottle.name||"").slice(0,3).sort().join("-");
+  return [brand,markerKey,markers.recipe||"",age].join("|");
 }
 
 function scanBottleResult(bottle){
@@ -1373,46 +1593,155 @@ function matchBottleWithEvidence(db, vision, ocr){
     if(ocrNames.length){ sum+=bestOcr*0.52; weight+=0.52; }
     if(!weight) return;
     const fields=fieldEvidenceScore(b,ocr);
-    if(fields.conflict) return;
-    const variants=labelVariantEvidence(b,visualNames.concat(ocrNames).map(function(item){ return item.name; }).join(" "));
-    if(variants.conflict) return;
-    const agreement=(bestVisual>=0.72 && bestOcr>=0.72) ? 0.08 : 0;
-    const brandAgreement=(visualAnchors.length && ocrAnchors.length) ? 0.08 : 0;
-    let confidence=Math.max(0,Math.min(1,(sum/weight)+fields.score+variants.score-variants.penalty+agreement+0.08+brandAgreement));
+    if(fields.conflict && ocr.confidence>=0.78) return;
+    const visualVariants=labelVariantEvidence(b,visualNames.map(function(item){ return item.name; }).join(" "),vision.confidence);
+    const ocrVariants=labelVariantEvidence(b,ocrNames.map(function(item){ return item.name; }).join(" "),ocr.confidence);
+    if(ocrVariants.conflict && ocr.confidence>=0.78) return;
+    const bothSources=!!(visualNames.length && ocrNames.length);
+    const lexical=bothSources ? bestVisual*0.42+bestOcr*0.58 : (visualNames.length?bestVisual:bestOcr);
+    const agreement=(bestVisual>=0.7 && bestOcr>=0.7) ? 0.06 : 0;
+    const brandAgreement=(visualAnchors.length && ocrAnchors.length) ? 0.04 : 0;
+    const exactVisual=exactBottleNameEvidence(visualNames,b);
+    const exactOcr=exactBottleNameEvidence(ocrNames,b);
+    const exactPrimaryVisual=primaryBottleNameEvidence(visualNames,b);
+    const exactPrimaryOcr=primaryBottleNameEvidence(ocrNames,b);
+    const exactBoost=(exactVisual?0.02:0)+(exactOcr?0.04:0)+(exactPrimaryVisual?0.02:0)+(exactPrimaryOcr?0.03:0);
+    const variantBoost=Math.min(0.16,visualVariants.score*0.35+ocrVariants.score*0.75);
+    const variantPenalty=Math.min(0.35,visualVariants.penalty*0.4+ocrVariants.penalty*0.9+(visualVariants.conflict?0.08:0));
+    let confidence=Math.max(0,Math.min(0.99,
+      lexical*0.72+
+      Math.min(0.1,fields.score)+
+      variantBoost+
+      agreement+
+      0.04+
+      brandAgreement+
+      exactBoost-
+      variantPenalty-
+      (fields.conflict?0.1:0)
+    ));
+    if(!bothSources) confidence=Math.min(confidence,0.84);
     if(visualDistinctive.length && ocrDistinctive.length && (!visualAnchors.length || !ocrAnchors.length)) confidence=Math.min(confidence,0.79);
-    if(unmatchedObserved.length) confidence=Math.min(confidence,Math.max(0.72,0.92-unmatchedObserved.length*0.07));
-    if(unmatchedBottle.length>=2) confidence=Math.min(confidence,0.89);
-    if(variants.penalty>0) confidence=Math.min(confidence,0.89);
+    if(unmatchedObserved.length) confidence=Math.min(confidence,Math.max(0.7,0.93-unmatchedObserved.length*0.06));
+    if(unmatchedBottle.length>=2 && !exactVisual && !exactOcr) confidence=Math.min(confidence,0.88);
+    if(variantPenalty>0.08) confidence=Math.min(confidence,0.88);
     if(confidence<0.25) return;
     rows.push({
       bottle:b,
       dbConfidence:confidence,
       brandAnchored:true,
       brandAnchors:brandAnchors,
-      matchedFields:fields.matched.concat(variants.matched).concat(bestVisual>=0.55?["visual"]:[]).concat(bestOcr>=0.55?["ocr"]:[]).concat(["brand_anchor"]),
-      evidence:{visual:bestVisual,ocr:bestOcr,fieldBoost:fields.score,variantBoost:variants.score,variantPenalty:variants.penalty,agreementBoost:agreement,brandBoost:0.08+brandAgreement,brandAnchors:brandAnchors,unmatchedObserved:unmatchedObserved,unmatchedBottle:unmatchedBottle}
+      matchedFields:fields.matched.concat(visualVariants.matched).concat(ocrVariants.matched).concat(bestVisual>=0.55?["visual"]:[]).concat(bestOcr>=0.55?["ocr"]:[]).concat(["brand_anchor"]),
+      evidence:{visual:bestVisual,ocr:bestOcr,fieldBoost:fields.score,variantBoost:variantBoost,variantPenalty:variantPenalty,agreementBoost:agreement,brandBoost:0.04+brandAgreement,exactVisual:exactVisual,exactOcr:exactOcr,brandAnchors:brandAnchors,unmatchedObserved:unmatchedObserved,unmatchedBottle:unmatchedBottle}
     });
   });
-  rows.sort(function(a,b){ return b.dbConfidence-a.dbConfidence; });
-  const best=rows[0]||null;
+  rows.sort(function(a,b){
+    return b.dbConfidence-a.dbConfidence ||
+      Number(b.evidence.exactOcr>0)-Number(a.evidence.exactOcr>0) ||
+      Number(b.evidence.exactVisual>0)-Number(a.evidence.exactVisual>0) ||
+      canonicalRecordScore(b.bottle)-canonicalRecordScore(a.bottle);
+  });
+  const canonicalRows=[];
+  const identities={};
+  rows.forEach(function(row){
+    const identity=candidateIdentity(row.bottle);
+    if(identities[identity]) return;
+    identities[identity]=true;
+    canonicalRows.push(row);
+  });
+  const best=canonicalRows[0]||null;
   if(!best) return null;
-  const second=rows[1]||null;
+  const second=canonicalRows[1]||null;
   best.margin=second ? best.dbConfidence-second.dbConfidence : 1;
-  best.ambiguous=!!(second && second.dbConfidence>=0.72 && best.margin<0.08);
-  best.candidates=rows.slice(0,5).map(function(r){
+  best.ambiguous=!!(second && second.dbConfidence>=0.8 && best.margin<0.06);
+  best.candidates=canonicalRows.slice(0,5).map(function(r){
     return {id:r.bottle.id,name:r.bottle.name,confidence:clamp01(r.dbConfidence),result:scanBottleResult(r.bottle),evidence:r.evidence,matched_fields:r.matchedFields};
   });
   return best;
+}
+
+async function candidateReferencePart(env, candidate){
+  const image=candidate&&candidate.result&&candidate.result.image;
+  if(!image) return null;
+  let url=String(image);
+  if(!/^https?:\/\//i.test(url)) url=assetUrl(env,url);
+  try{
+    const response=await fetch(url,{cf:{cacheTtl:3600,cacheEverything:true}});
+    if(!response.ok) return null;
+    const type=String(response.headers.get("Content-Type")||"image/jpeg").split(";")[0];
+    if(["image/jpeg","image/png","image/webp"].indexOf(type)<0) return null;
+    const bytes=new Uint8Array(await response.arrayBuffer());
+    if(!bytes.byteLength || bytes.byteLength>2500000) return null;
+    return {id:candidate.id,name:candidate.name,mime:type,data:encodeBase64(bytes)};
+  }catch(e){ return null; }
+}
+
+async function rerankWithReferenceImages(env, mime, image, db, matched){
+  const candidates=matched&&matched.candidates||[];
+  if(candidates.length<2 || candidates[0].confidence-candidates[1].confidence>=0.1) return {matched:matched,usage:null};
+  const references=(await Promise.all(candidates.slice(0,3).map(function(candidate){ return candidateReferencePart(env,candidate); }))).filter(Boolean);
+  if(references.length<2) return {matched:matched,usage:null};
+  const allowed=references.map(function(reference){ return reference.id; });
+  const parts=[
+    {text:"Compare the photographed bottle with the reference bottle images. Choose only the same brand AND exact expression/variant. Bottle shape alone is insufficient. Return one allowed candidate id, or an empty best_id when no reference is reliable. Allowed ids: "+allowed.join(", ")},
+    {text:"USER PHOTO"},
+    {inlineData:{mimeType:mime,data:image}}
+  ];
+  references.forEach(function(reference){
+    parts.push({text:"REFERENCE "+reference.id+" - "+reference.name});
+    parts.push({inlineData:{mimeType:reference.mime,data:reference.data}});
+  });
+  const response=await callGemini(env,{
+    __model:env.IDENT_MODEL||env.MODEL||"gemini-2.5-flash",
+    contents:[{role:"user",parts:parts}],
+    generationConfig:{
+      temperature:0,maxOutputTokens:120,thinkingConfig:{thinkingBudget:0},
+      responseMimeType:"application/json",
+      responseSchema:{
+        type:"OBJECT",
+        properties:{best_id:{type:"STRING",enum:[""].concat(allowed)},confidence:{type:"NUMBER",minimum:0,maximum:1},reason:{type:"STRING"}},
+        required:["best_id","confidence","reason"]
+      }
+    }
+  },"reference_rerank");
+  if(response.err) return {matched:matched,usage:response.usage};
+  const result=parseJson(response.txt)||{};
+  const confidence=clamp01(result.confidence);
+  if(allowed.indexOf(result.best_id)<0 || confidence<0.65) return {matched:matched,usage:response.usage};
+  const index=candidates.findIndex(function(candidate){ return candidate.id===result.best_id; });
+  if(index<0) return {matched:matched,usage:response.usage};
+  const selected=candidates[index];
+  const reordered=[selected].concat(candidates.filter(function(candidate){ return candidate.id!==selected.id; }));
+  selected.confidence=Math.min(0.99,Math.max(selected.confidence,candidates[0].confidence)+Math.min(0.04,(confidence-0.65)*0.1));
+  selected.evidence=Object.assign({},selected.evidence||{},{referenceConfidence:confidence,referenceReason:String(result.reason||"").slice(0,160)});
+  matched.bottle=(db.bottles||[]).find(function(bottle){ return bottle&&bottle.id===selected.id; })||matched.bottle;
+  matched.dbConfidence=selected.confidence;
+  matched.candidates=reordered;
+  matched.margin=reordered[1]?reordered[0].confidence-reordered[1].confidence:1;
+  matched.ambiguous=!!(reordered[1]&&reordered[1].confidence>=0.8&&matched.margin<0.06&&confidence<0.8);
+  return {matched:matched,usage:response.usage};
 }
 
 async function callVisualAgent(env, mime, image){
   const payload={
     __model: env.IDENT_MODEL||env.MODEL||"gemini-2.5-flash",
     contents:[{role:"user",parts:[
-      {inlineData:{mimeType:mime,data:image}},
-      {text:"Act as the Bourbon Hunters visual recognition agent. Identify the whisky/bourbon bottle from the image using label layout, bottle shape, logo and visible text. Return ONLY JSON: {\"name\":\"brand + expression if known\",\"confidence\":0.0-1.0,\"evidence\":[\"short visual clues\"],\"candidates\":[{\"name\":\"candidate\",\"confidence\":0.0-1.0}]}. If this is not a whisky bottle, use name=\"\" and confidence=0."}
+      {text:"Act as the Bourbon Hunters visual recognition agent. Identify the whisky/bourbon bottle from the image using label layout, bottle shape, logo and visible text. Never invent a brand or expression. If this is not a whisky bottle or the identity is unreadable, use name=\"\" and confidence=0."},
+      {inlineData:{mimeType:mime,data:image}}
     ]}],
-    generationConfig:{ temperature:0, maxOutputTokens:260, thinkingConfig:{thinkingBudget:0} }
+    generationConfig:{
+      temperature:0,maxOutputTokens:260,thinkingConfig:{thinkingBudget:0},
+      responseMimeType:"application/json",
+      responseSchema:{
+        type:"OBJECT",
+        properties:{
+          name:{type:"STRING"},
+          confidence:{type:"NUMBER",minimum:0,maximum:1},
+          evidence:{type:"ARRAY",items:{type:"STRING"},maxItems:5},
+          candidates:{type:"ARRAY",items:{type:"OBJECT",properties:{name:{type:"STRING"},confidence:{type:"NUMBER",minimum:0,maximum:1}},required:["name","confidence"]},maxItems:5}
+        },
+        required:["name","confidence","evidence","candidates"]
+      }
+    }
   };
   const r=await callGemini(env,payload,"visual_identification");
   if(r.err) return {err:r.err,data:{},usage:r.usage};
@@ -1423,10 +1752,22 @@ async function callOcrAgent(env, mime, image){
   const payload={
     __model: env.OCR_MODEL||"gemini-2.5-flash-lite",
     contents:[{role:"user",parts:[
-      {inlineData:{mimeType:mime,data:image}},
-      {text:"Act as an OCR agent for whisky labels. Read visible label text and extract factual fields. Do not guess beyond the label. Return ONLY JSON: {\"raw_text\":\"all readable label text\",\"brand\":\"\",\"name\":\"\",\"expression\":\"\",\"age\":\"\",\"proof\":\"\",\"abv\":\"\",\"category\":\"\",\"confidence\":0.0-1.0}. If no useful label text is readable, raw_text=\"\" and confidence=0."}
+      {text:"Act as an OCR agent for whisky labels. Transcribe visible label text and extract only factual fields printed on the label. Do not complete missing words from memory and do not guess a product. If no useful label text is readable, set raw_text=\"\" and confidence=0."},
+      {inlineData:{mimeType:mime,data:image}}
     ]}],
-    generationConfig:{ temperature:0, maxOutputTokens:420, thinkingConfig:{thinkingBudget:0} }
+    generationConfig:{
+      temperature:0,maxOutputTokens:420,thinkingConfig:{thinkingBudget:0},
+      responseMimeType:"application/json",
+      responseSchema:{
+        type:"OBJECT",
+        properties:{
+          raw_text:{type:"STRING"},brand:{type:"STRING"},name:{type:"STRING"},expression:{type:"STRING"},
+          age:{type:"STRING"},proof:{type:"STRING"},abv:{type:"STRING"},category:{type:"STRING"},
+          confidence:{type:"NUMBER",minimum:0,maximum:1}
+        },
+        required:["raw_text","brand","name","expression","age","proof","abv","category","confidence"]
+      }
+    }
   };
   const r=await callGemini(env,payload,"label_ocr");
   if(r.err) return {err:r.err,data:{},usage:r.usage};
@@ -1469,12 +1810,24 @@ export default {
 
     let body; try{ body=await request.json(); }catch(e){ return J({error:"bad json"},400,cors); }
     const image=(body.image||"").toString();
+    const labelImage=(body.label_image||"").toString();
     const mime=["image/jpeg","image/png","image/webp"].includes(body.mime)?body.mime:"image/jpeg";
     const lang=["pl","en","es"].includes(body.lang)?body.lang:"pl";
     const mode=body.mode==="analyze"?"analyze":"rate";
     const confirmedId=String(body.confirmed_id||"").trim().slice(0,180);
     if(!image||image.length<100) return J({error:"no image"},400,cors);
     if(image.length>8000000) return J({error:"image too large"},413,cors);
+    if(labelImage.length>5000000) return J({error:"label image too large"},413,cors);
+    const imageQuality=body.image_quality&&typeof body.image_quality==="object" ? body.image_quality : null;
+    if(imageQuality && imageQuality.acceptable===false){
+      const brightness=Number(imageQuality.brightness);
+      const contrast=Number(imageQuality.contrast);
+      const sharpness=Number(imageQuality.sharpness);
+      const unusable=(Number.isFinite(brightness)&&(brightness<20||brightness>245)) ||
+        (Number.isFinite(contrast)&&contrast<8) ||
+        (Number.isFinite(sharpness)&&sharpness<1.2);
+      if(unusable) return J({error:"low_image_quality",retry:true,quality:{brightness:brightness,contrast:contrast,sharpness:sharpness}},200,cors);
+    }
 
     const scanUser=await authUser(env,request);
     const owner=!!((env.DEV_KEY && body.dev && body.dev.toString()===env.DEV_KEY) || isAdminUser(env,scanUser));
@@ -1493,7 +1846,7 @@ export default {
         suggested_bottle_id:extra.suggested_bottle_id||(candidates[0]&&candidates[0].id)||null,
         candidates:candidates.map(function(candidate){ return {id:candidate.id,confidence:Number(candidate.confidence)||0}; }),candidate_count:candidates.length,
         confidence:overallConfidence,visual_confidence:visionConfidence,ocr_confidence:ocrConfidence,db_confidence:dbConfidence,min_confidence:minConfidence,
-        input_bytes:Math.floor(image.length*0.75),duration_ms:Date.now()-scanStartedMs,started_at:scanStartedAt,completed_at:new Date().toISOString(),usage:telemetryUsage
+        input_bytes:Math.floor((image.length+labelImage.length)*0.75),duration_ms:Date.now()-scanStartedMs,started_at:scanStartedAt,completed_at:new Date().toISOString(),usage:telemetryUsage
       }).catch(function(){});
       if(outcome!=="candidates_presented" && executionCtx&&executionCtx.waitUntil) executionCtx.waitUntil(task);
       return task;
@@ -1506,23 +1859,31 @@ export default {
     }
     const LIMIT=parseInt(env.DAILY_LIMIT||"30",10);
     const ip=request.headers.get("CF-Connecting-IP")||"anon";
-    const key="q:"+ip+":"+new Date().toISOString().slice(0,10);
+    const quotaActor=scanUser&&scanUser.id ? "user:"+scanUser.id : (deviceHash ? "device:"+deviceHash : "ip:"+ip);
+    const key="q:"+quotaActor+":"+new Date().toISOString().slice(0,10);
     let used=0;
-    if(!owner && env.DS_KV && LIMIT>0){ used=parseInt((await env.DS_KV.get(key))||"0",10); if(used>=LIMIT) return scanResponse({limited:true,remaining:0,limit:LIMIT},200,"limited",{error_code:"daily_limit"}); }
+    let remainingQuota=null;
+    if(!owner && env.DS_KV && LIMIT>0){
+      used=parseInt((await env.DS_KV.get(key))||"0",10);
+      if(used>=LIMIT) return scanResponse({limited:true,remaining:0,limit:LIMIT},200,"limited",{error_code:"daily_limit"});
+      await env.DS_KV.put(key,String(used+1),{expirationTtl:90000});
+      remainingQuota=Math.max(0,LIMIT-(used+1));
+    }
 
-    const db=await getDB(env);
+    const db=await getDB(env,request);
     minConfidence=clamp01(env.MIN_MATCH_CONFIDENCE||DEFAULT_MATCH_CONFIDENCE) || DEFAULT_MATCH_CONFIDENCE;
     if(mode==="analyze" && confirmedId){
-      hit=(db.bottles||[]).find(function(bottle){ return bottle&&bottle.id===confirmedId; })||null;
+      const resolvedConfirmedId=db&&db.id_redirects&&db.id_redirects[confirmedId]||confirmedId;
+      hit=(db.bottles||[]).find(function(bottle){ return bottle&&bottle.id===resolvedConfirmedId; })||null;
       if(!hit) return scanResponse({error:"confirmed_bottle_not_found"},404,"error",{error_code:"confirmed_bottle_not_found"});
-      bottleName=hit.name||confirmedId;
+      bottleName=hit.name||resolvedConfirmedId;
       dbConfidence=1; overallConfidence=1; confidentHit=true;
-      agentTrace={version:SCAN_ORCHESTRATOR_VERSION,confirmed_by_user:true,confirmed_id:confirmedId};
+      agentTrace={version:SCAN_ORCHESTRATOR_VERSION,confirmed_by_user:true,confirmed_id:resolvedConfirmedId,requested_id:confirmedId};
     } else {
       // Visual i OCR buduja ranking. Ostateczny wybor zawsze nalezy do usera.
       const agents=await Promise.all([
         callVisualAgent(env,mime,image),
-        callOcrAgent(env,mime,image)
+        callOcrAgent(env,mime,labelImage||image)
       ]);
       const visualErr=agents[0]&&agents[0].err;
       const ocrErr=agents[1]&&agents[1].err;
@@ -1536,6 +1897,11 @@ export default {
       bottleName=(idj.name||ocrCandidateName(ocrj)||"").toString().trim();
       if(!bottleName && !ocrHasSignal(ocrj)) return scanResponse({error:"not_bottle",agents:scanAgentTrace(idj,ocrj,null)},200,"not_bottle",{error_code:"no_label_signal"});
       matched=matchBottleWithEvidence(db,idj,ocrj);
+      if(matched){
+        const reranked=await rerankWithReferenceImages(env,mime,image,db,matched);
+        matched=reranked.matched;
+        if(reranked.usage) telemetryUsage.push(reranked.usage);
+      }
       hit=matched&&matched.bottle ? matched.bottle : null;
       visionConfidence=clamp01(idj.confidence);
       ocrConfidence=clamp01(ocrj.confidence);
@@ -1560,8 +1926,6 @@ export default {
       },200,"low_confidence",{error_code:!matched?"brand_not_confirmed":matched.ambiguous?"ambiguous_candidates":"below_confidence_threshold"});
     }
 
-    function consume(){ if(!owner && env.DS_KV){ env.DS_KV.put(key,String(used+1),{expirationTtl:90000}); return Math.max(0,LIMIT-(used+1)); } return null; }
-
     // =================== TRYB RATE ===================
     if(mode==="rate"){
       const rankedCandidates=(matched&&matched.candidates||[]);
@@ -1572,7 +1936,7 @@ export default {
         }).slice(0,2);
         const candidates=highConfidenceCandidates.length>=2 ? highConfidenceCandidates : [bestCandidate];
         await enrichScanCandidatesWithCatalogAssets(env,request,candidates);
-        return scanResponse({needs_confirmation:true,candidates:candidates,suggested:candidates[0].id,mode:mode,remaining:consume(),owner:owner,agents:agentTrace},200,"candidates_presented",{candidates:candidates,suggested_bottle_id:candidates[0].id});
+        return scanResponse({needs_confirmation:true,candidates:candidates,suggested:candidates[0].id,mode:mode,remaining:remainingQuota,owner:owner,agents:agentTrace},200,"candidates_presented",{candidates:candidates,suggested_bottle_id:candidates[0].id});
       }
       return lowConfidenceResponse(mode);
     }
@@ -1599,7 +1963,7 @@ export default {
     if((!ra.links||!ra.links.length) && ga.sources.length) ra.links=ga.sources;
     if(hit){ ra.source="baza"; ra.image=hit.image||""; if(ra.price==null) ra.price=(hit.price_str||hit.price_pln); if(ra.quality==null) ra.quality=hit.quality; if(ra.value==null) ra.value=hit.value; }
     else { ra.source="net"; ra.isNew=true; ra.image=""; }
-    return scanResponse({result:ra, mode:mode, remaining:consume(), owner:owner, matched:hit?hit.id:null, confidence:overallConfidence, agents:agentTrace},200,"analyzed",{matched_bottle_id:hit&&hit.id});
+    return scanResponse({result:ra, mode:mode, remaining:remainingQuota, owner:owner, matched:hit?hit.id:null, confidence:overallConfidence, agents:agentTrace},200,"analyzed",{matched_bottle_id:hit&&hit.id});
   },
   async scheduled(controller, env, ctx){
     ctx.waitUntil(Promise.all([cleanupStaleCatalogSubmissions(env,200),cleanupTelemetry(env)]));
