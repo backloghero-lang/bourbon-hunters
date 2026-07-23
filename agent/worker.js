@@ -19,7 +19,7 @@ const DEFAULT_DB_URL = "https://raw.githubusercontent.com/" + REPO + "/main/db/c
 const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters. Krotko, z jajem, ale rzeczowo. quality=jakosc 1-5, value=jakosc/cena 1-5 (5 swietna i tania, 1 slaba i droga). Pisz {{LANG}}. Zwroc tylko JSON.";
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
 const MULTI_CANDIDATE_CONFIDENCE = 0.9;
-const SCAN_ORCHESTRATOR_VERSION = "ocr-visual-fusion-catalog-10k-v8-catalog-assets";
+const SCAN_ORCHESTRATOR_VERSION = "ocr-visual-fusion-catalog-10k-v9-canonical-labels";
 const SCAN_CATALOG_VERSION = "ttb-olcc-10k-v1";
 const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v4-confirmed-cutout";
 const CATALOG_LICENSE_VERSION = "catalog-license-2026-07-18-v1";
@@ -31,14 +31,49 @@ const PROFILE_BADGE_IDS = ["glass","bottle","barrel","seal","hat","star","distil
 
 let _p = { t:null, at:0 }, _db = { d:null, at:0 };
 const SCAN_RECORD_OVERRIDES={
-  "jeffersons-very-small-batch-bourbon-whiskey-copy":{aliases:["Jefferson's Bourbon","Jefferson's Blend of Straight Bourbon Whiskey"],abv:41.15}
+  "jeffersons-very-small-batch-bourbon-whiskey-copy":{aliases:["Jefferson's Bourbon","Jefferson's Blend of Straight Bourbon Whiskey"],abv:41.15},
+  "jack-daniel-s-bonded-119-43":{
+    aliases:[
+      "Jack Daniel's Bonded","Jack Daniels Bonded",
+      "Jack Daniel's Bonded Tennessee Whiskey","Jack Daniels Bonded Tennessee Whiskey",
+      "Jack Daniel's Bottled in Bond","Jack Daniels Bottled in Bond"
+    ],
+    proof:100,abv:50,distillery:"Jack Daniel Distillery",type:"Bottled in Bond Tennessee Whiskey",category:"Bottled-in-Bond"
+  },
+  "olcc-10541i":{scanDisabled:true},
+  "jack-daniel-s-single-barrel-select-140-43":{
+    aliases:[
+      "Jack Daniel's Single Barrel","Jack Daniels Single Barrel",
+      "Jack Daniel's Single Barrel Select","Jack Daniels Single Barrel Select",
+      "Jack Daniel's Single Barrel Select Tennessee Whiskey","Jack Daniels Single Barrel Select Tennessee Whiskey"
+    ],
+    proof:94,abv:47,distillery:"Jack Daniel Distillery",type:"Tennessee Whiskey",category:"Single Barrel"
+  },
+  "olcc-2169b":{scanDisabled:true},
+  "knob-creek-9-year-old-100-proof-bourbon":{
+    aliases:[
+      "Knob Creek 9 Year","Knob Creek 9 Years","Knob Creek 9 Year Old",
+      "Knob Creek 9 Year Old Bourbon","Knob Creek Aged 9 Years",
+      "Knob Creek Kentucky Straight Bourbon Whiskey Aged 9 Years",
+      "Knob Creek 100 Proof 9 Year"
+    ],
+    proof:100,abv:50,distillery:"Jim Beam Distillery",type:"Kentucky Straight Bourbon Whiskey",category:"Straight Bourbon"
+  },
+  "knob-creek-kentucky-straight-bourbon":{scanDisabled:true},
+  "knob-creek-101-22":{scanDisabled:true},
+  "olcc-2163b":{scanDisabled:true}
 };
 function applyScanCatalogOverrides(db){
   (db&&db.bottles||[]).forEach(function(bottle){
     const override=SCAN_RECORD_OVERRIDES[bottle&&bottle.id];
     if(!override) return;
     if(override.aliases) bottle.aliases=Array.from(new Set((Array.isArray(bottle.aliases)?bottle.aliases:[]).concat(override.aliases)));
+    if(Number.isFinite(override.proof)) bottle.proof=override.proof;
     if(Number.isFinite(override.abv)) bottle.abv=override.abv;
+    ["distillery","type","category"].forEach(function(field){
+      if(typeof override[field]==="string" && override[field]) bottle[field]=override[field];
+    });
+    if(override.scanDisabled) bottle.scan_disabled=true;
   });
   return db;
 }
@@ -1088,6 +1123,7 @@ function matchBottle(db, name){
   const nameNorm=norm(name);
   let best=null, bestScore=0, bestMatched=0;
   (db.bottles||[]).forEach(function(b){
+    if(!b || b.scan_disabled) return;
     const bottleNorm=norm(b.name);
     const bt = toks(b.name); if(!bt.length) return;
     let matched=0; bt.forEach(function(w){ if(nset[w]) matched++; });
@@ -1213,6 +1249,55 @@ function fieldEvidenceScore(bottle, ocr){
   return {score:score,matched:matched,conflict:conflict,observedSpirit:observedSpirit,bottleSpirit:bottleSpirit};
 }
 
+function labelVariantEvidence(bottle, observedText){
+  const observed=norm(observedText);
+  const declared=norm([
+    bottle&&bottle.name,
+    Array.isArray(bottle&&bottle.aliases)?bottle.aliases.join(" "):"",
+    bottle&&bottle.type,
+    bottle&&bottle.category
+  ].filter(Boolean).join(" "));
+  function markers(text){
+    return {
+      bonded:/\bbonded\b|\bbottled in bond\b|\bbib\b/.test(text),
+      single_barrel:/\bsingle barrel\b|\bs b\b/.test(text),
+      barrel_proof:/\bbarrel proof\b|\bcask strength\b/.test(text),
+      rye:/\brye\b/.test(text),
+      select:/\bselect\b/.test(text)
+    };
+  }
+  function age(text){
+    const match=String(text||"").match(/\b(\d{1,2})\s*(?:year|years|yr|yrs)\b/);
+    return match ? Number(match[1]) : 0;
+  }
+  const seen=markers(observed);
+  const bottleMarkers=markers(declared);
+  const weights={bonded:0.18,single_barrel:0.12,barrel_proof:0.16,rye:0.16,select:0.1};
+  const hasObservedMarker=Object.keys(seen).some(function(key){ return seen[key]; });
+  const matched=[];
+  let score=0, penalty=0, conflict=false;
+  Object.keys(weights).forEach(function(marker){
+    if(seen[marker]){
+      if(bottleMarkers[marker]){ score+=weights[marker]; matched.push(marker); }
+      else conflict=true;
+    }else if(bottleMarkers[marker] && hasObservedMarker){
+      penalty+=weights[marker];
+    }
+  });
+  const observedAge=age(observed);
+  const bottleAge=age(declared);
+  if(observedAge && bottleAge){
+    if(observedAge===bottleAge){ score+=0.14; matched.push("age"); }
+    else conflict=true;
+  }
+  if(observedAge && !hasObservedMarker){
+    Object.keys(weights).forEach(function(marker){
+      if(bottleMarkers[marker]) penalty+=weights[marker];
+    });
+  }
+  return {score:score,penalty:penalty,matched:matched,conflict:conflict,observedAge:observedAge,bottleAge:bottleAge};
+}
+
 function scanBottleResult(bottle){
   bottle=bottle||{};
   return {
@@ -1263,14 +1348,20 @@ function matchBottleWithEvidence(db, vision, ocr){
       (tokenIndex[token]||[]).forEach(function(index){ candidateIndexes[index]=1; });
     });
   });
-  const candidateBottles=Object.keys(candidateIndexes).map(function(index){ return (db.bottles||[])[Number(index)]; }).filter(Boolean);
+  const candidateBottles=Object.keys(candidateIndexes).map(function(index){ return (db.bottles||[])[Number(index)]; }).filter(function(bottle){ return bottle && !bottle.scan_disabled; });
   if(!candidateBottles.length) return null;
   candidateBottles.forEach(function(b){
     const bottleDistinctive=bottleDistinctiveTokens(b);
+    const bottleContextDistinctive=distinctiveTokens([
+      (b&&b.name)||"",
+      Array.isArray(b&&b.aliases)?b.aliases.join(" "):"",
+      (b&&b.distillery)||"",
+      (b&&b.region)||""
+    ].join(" "));
     const lexicalBottleDistinctive=bottleDistinctive.filter(function(token){ return !/^\d+$/.test(token); });
     const brandAnchors=sharedTokens(observedDistinctive,lexicalBottleDistinctive.length?lexicalBottleDistinctive:bottleDistinctive);
     if(!bottleDistinctive.length || !brandAnchors.length) return;
-    const unmatchedObserved=observedDistinctive.filter(function(token){ return bottleDistinctive.indexOf(token)<0; });
+    const unmatchedObserved=observedDistinctive.filter(function(token){ return bottleContextDistinctive.indexOf(token)<0; });
     const unmatchedBottle=bottleDistinctive.filter(function(token){ return observedDistinctive.indexOf(token)<0; });
     const visualAnchors=sharedTokens(visualDistinctive,bottleDistinctive);
     const ocrAnchors=sharedTokens(ocrDistinctive,bottleDistinctive);
@@ -1283,19 +1374,23 @@ function matchBottleWithEvidence(db, vision, ocr){
     if(!weight) return;
     const fields=fieldEvidenceScore(b,ocr);
     if(fields.conflict) return;
+    const variants=labelVariantEvidence(b,visualNames.concat(ocrNames).map(function(item){ return item.name; }).join(" "));
+    if(variants.conflict) return;
     const agreement=(bestVisual>=0.72 && bestOcr>=0.72) ? 0.08 : 0;
     const brandAgreement=(visualAnchors.length && ocrAnchors.length) ? 0.08 : 0;
-    let confidence=clamp01((sum/weight)+fields.score+agreement+0.08+brandAgreement);
+    let confidence=Math.max(0,Math.min(1,(sum/weight)+fields.score+variants.score-variants.penalty+agreement+0.08+brandAgreement));
     if(visualDistinctive.length && ocrDistinctive.length && (!visualAnchors.length || !ocrAnchors.length)) confidence=Math.min(confidence,0.79);
-    if(unmatchedObserved.length && unmatchedBottle.length) confidence=Math.min(confidence,0.79);
+    if(unmatchedObserved.length) confidence=Math.min(confidence,Math.max(0.72,0.92-unmatchedObserved.length*0.07));
+    if(unmatchedBottle.length>=2) confidence=Math.min(confidence,0.89);
+    if(variants.penalty>0) confidence=Math.min(confidence,0.89);
     if(confidence<0.25) return;
     rows.push({
       bottle:b,
       dbConfidence:confidence,
       brandAnchored:true,
       brandAnchors:brandAnchors,
-      matchedFields:fields.matched.concat(bestVisual>=0.55?["visual"]:[]).concat(bestOcr>=0.55?["ocr"]:[]).concat(["brand_anchor"]),
-      evidence:{visual:bestVisual,ocr:bestOcr,fieldBoost:fields.score,agreementBoost:agreement,brandBoost:0.08+brandAgreement,brandAnchors:brandAnchors,unmatchedObserved:unmatchedObserved,unmatchedBottle:unmatchedBottle}
+      matchedFields:fields.matched.concat(variants.matched).concat(bestVisual>=0.55?["visual"]:[]).concat(bestOcr>=0.55?["ocr"]:[]).concat(["brand_anchor"]),
+      evidence:{visual:bestVisual,ocr:bestOcr,fieldBoost:fields.score,variantBoost:variants.score,variantPenalty:variants.penalty,agreementBoost:agreement,brandBoost:0.08+brandAgreement,brandAnchors:brandAnchors,unmatchedObserved:unmatchedObserved,unmatchedBottle:unmatchedBottle}
     });
   });
   rows.sort(function(a,b){ return b.dbConfidence-a.dbConfidence; });

@@ -7,6 +7,13 @@ Aktualizacja: 2026-07-05.
 Najnowszy kontekst dla kolejnego etapu jest w `pliki-md/HANDOFF-BH-1.1.md`.
 Uzyj go jako pierwszego dokumentu przy starcie watku `Przekaz Bourbon Hunter 1.1`.
 
+## Aktualizacja 2026-07-23 - kanoniczne warianty skanera
+
+- Jack Daniel's Bonded, Jack Daniel's Single Barrel Select i Knob Creek 9 Year maja rozszerzone aliasy zgodne z tekstem etykiet.
+- Powielone ogolne rekordy OLCC/TTB sa pomijane tylko podczas rozpoznawania, aby nie powodowaly falszywej niejednoznacznosci.
+- Prawdziwe osobne warianty, m.in. Jack Daniel's Rye i Barrel Proof oraz Knob Creek Single Barrel, pozostaja aktywne.
+- Oczekiwana wersja Workera: `ocr-visual-fusion-catalog-10k-v9-canonical-labels`.
+
 ## Aktualizacja 2026-07-18 - telemetria skanera i raporty
 
 - Migracja `agent/d1-migration-v66-telemetry-reports.sql` dodaje `scanner_runs`, `service_usage_events` i rezerwowa tabele `telemetry_events`.

@@ -27,7 +27,7 @@ Aktualny oczekiwany stan Workera:
 {
   "ok": true,
   "auth_version": "auth-pbkdf2-100000-google-v3",
-  "scan_orchestrator_version": "ocr-visual-fusion-catalog-10k-v8-catalog-assets",
+  "scan_orchestrator_version": "ocr-visual-fusion-catalog-10k-v9-canonical-labels",
   "scan_catalog_version": "ttb-olcc-10k-v1",
   "catalog_submission_version": "community-catalog-images-v4-confirmed-cutout",
   "catalog_license_version": "catalog-license-2026-07-18-v1",
