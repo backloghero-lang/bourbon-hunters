@@ -29,7 +29,7 @@ jobs:
           rm -rf _site
           mkdir -p _site
 
-          cp index.html test-index.html sw.js manifest.json _site/
+          cp index.html test-index.html sw.js manifest.json spirit-taxonomy.js _site/
           cp -R db icons _site/
 
           mkdir -p _site/assets
