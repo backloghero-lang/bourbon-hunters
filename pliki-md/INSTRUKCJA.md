@@ -214,3 +214,17 @@ Ta zmiana dotyczy GitHub Pages. Nie wymaga podmiany Workera, migracji D1 ani zmi
 6. Wejdź w Whisky i sprawdź filtry Scotch, Irish, Japanese, Rye i pozostałe.
 
 Aktualny cache: `bourbon-hunters-v93`.
+
+## Wdrozenie skanera v11
+
+Ta zmiana wymaga aktualizacji Workera. Nie wymaga migracji D1 ani czyszczenia danych.
+
+1. Wyslij zmiany na GitHub i poczekaj na zielone GitHub Actions.
+2. W Cloudflare otworz Worker `bourbon-hunters` -> `Edit code`.
+3. Zastap caly kod zawartoscia pliku `agent/worker.js`.
+4. Kliknij `Deploy`.
+5. Otworz `/auth/health`.
+6. Sprawdz, czy `scan_orchestrator_version` ma wartosc:
+   `ocr-visual-fusion-catalog-10k-v11-split-label-evidence`.
+7. Na telefonie otworz `test-index.html`, kliknij `Wyczysc cache/PWA`, a potem `Odswiez build`.
+8. Zeskanuj ponownie `Jack Daniel's Bonded` i `Knob Creek 9`.

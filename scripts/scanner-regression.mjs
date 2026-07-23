@@ -48,6 +48,18 @@ const fixtures=[
     ocr:{brand:"Knob Creek",name:"9 Year Old",expression:"Kentucky Straight Bourbon Whiskey",age:"9 Years",proof:"100",abv:"50%",confidence:.97,raw_text:"KNOB CREEK KENTUCKY STRAIGHT BOURBON WHISKEY AGED 9 YEARS 100 PROOF"}
   },
   {
+    label:"Jack Daniel's Bonded split across agents",
+    expected:"jack-daniel-s-bonded-119-43",
+    vision:{name:"Jack Daniel's Tennessee Whiskey",confidence:.94},
+    ocr:{brand:"",name:"Bonded",expression:"Bottled in Bond",proof:"100",abv:"50%",confidence:.9,raw_text:"BONDED BOTTLED IN BOND 100 PROOF"}
+  },
+  {
+    label:"Knob Creek 9 split across agents",
+    expected:"knob-creek-9-year-old-100-proof-bourbon",
+    vision:{name:"Knob Creek",confidence:.94},
+    ocr:{brand:"",name:"",expression:"Kentucky Straight Bourbon Whiskey",age:"9 Years",proof:"100",abv:"50%",confidence:.9,raw_text:"KENTUCKY STRAIGHT BOURBON WHISKEY AGED 9 YEARS 100 PROOF"}
+  },
+  {
     label:"Woodford Reserve Malt",
     expected:"olcc-5211b",
     vision:{name:"Woodford Reserve Malt",confidence:.97},

@@ -19,7 +19,7 @@ const DEFAULT_DB_URL = "https://raw.githubusercontent.com/" + REPO + "/main/db/c
 const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters. Krotko, z jajem, ale rzeczowo. quality=jakosc 1-5, value=jakosc/cena 1-5 (5 swietna i tania, 1 slaba i droga). Pisz {{LANG}}. Zwroc tylko JSON.";
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
 const MULTI_CANDIDATE_CONFIDENCE = 0.9;
-const SCAN_ORCHESTRATOR_VERSION = "ocr-visual-fusion-catalog-10k-v10-calibrated-moderated";
+const SCAN_ORCHESTRATOR_VERSION = "ocr-visual-fusion-catalog-10k-v11-split-label-evidence";
 const SCAN_CATALOG_VERSION = "ttb-olcc-retail-filtered-v3";
 const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v5-admin-moderation";
 const CATALOG_MODERATION_VERSION = "catalog-moderation-orchestrator-admin-v1";
@@ -1556,6 +1556,17 @@ function matchBottleWithEvidence(db, vision, ocr){
   const ocrNames=[];
   if(ocn) ocrNames.push({name:ocn,confidence:ocr.confidence||0.65,source:"ocr_fields"});
   if(ocr.raw_text) ocrNames.push({name:ocr.raw_text,confidence:Math.min(ocr.confidence||0.55,0.72),source:"ocr_raw"});
+  const fusionNames=[];
+  const ocrFusionText=[ocn,ocr.raw_text].filter(Boolean).join(" ");
+  if(ocrFusionText){
+    visualNames.forEach(function(v){
+      fusionNames.push({
+        name:(v.name+" "+ocrFusionText).replace(/\s+/g," ").trim(),
+        confidence:Math.max(0.55,(clamp01(v.confidence)+clamp01(ocr.confidence||0.65))/2),
+        source:"visual_ocr_fusion"
+      });
+    });
+  }
   const visualDistinctive=observedDistinctiveTokens(visualNames);
   const ocrDistinctive=observedDistinctiveTokens(ocn?[{name:ocn}]:[]);
   const observedDistinctive=distinctiveTokens(visualDistinctive.concat(ocrDistinctive).join(" "));
@@ -1563,7 +1574,7 @@ function matchBottleWithEvidence(db, vision, ocr){
   const rows=[];
   const candidateIndexes={};
   const tokenIndex=db.token_index||{};
-  visualNames.concat(ocrNames).forEach(function(candidate){
+  visualNames.concat(ocrNames,fusionNames).forEach(function(candidate){
     distinctiveTokens(candidate.name).forEach(function(token){
       (tokenIndex[token]||[]).forEach(function(index){ candidateIndexes[index]=1; });
     });
@@ -1585,9 +1596,10 @@ function matchBottleWithEvidence(db, vision, ocr){
     const unmatchedBottle=bottleDistinctive.filter(function(token){ return observedDistinctive.indexOf(token)<0; });
     const visualAnchors=sharedTokens(visualDistinctive,bottleDistinctive);
     const ocrAnchors=sharedTokens(ocrDistinctive,bottleDistinctive);
-    let bestVisual=0, bestOcr=0;
+    let bestVisual=0, bestOcr=0, bestFusion=0;
     visualNames.forEach(function(v){ bestVisual=Math.max(bestVisual,textBottleScore(v.name,b)*clamp01(v.confidence)); });
     ocrNames.forEach(function(v){ bestOcr=Math.max(bestOcr,textBottleScore(v.name,b)*clamp01(v.confidence)); });
+    fusionNames.forEach(function(v){ bestFusion=Math.max(bestFusion,textBottleScore(v.name,b)*clamp01(v.confidence)); });
     let sum=0, weight=0;
     if(visualNames.length){ sum+=bestVisual*0.56; weight+=0.56; }
     if(ocrNames.length){ sum+=bestOcr*0.52; weight+=0.52; }
@@ -1598,7 +1610,10 @@ function matchBottleWithEvidence(db, vision, ocr){
     const ocrVariants=labelVariantEvidence(b,ocrNames.map(function(item){ return item.name; }).join(" "),ocr.confidence);
     if(ocrVariants.conflict && ocr.confidence>=0.78) return;
     const bothSources=!!(visualNames.length && ocrNames.length);
-    const lexical=bothSources ? bestVisual*0.42+bestOcr*0.58 : (visualNames.length?bestVisual:bestOcr);
+    const lexical=Math.max(
+      bothSources ? bestVisual*0.42+bestOcr*0.58 : (visualNames.length?bestVisual:bestOcr),
+      bestFusion
+    );
     const agreement=(bestVisual>=0.7 && bestOcr>=0.7) ? 0.06 : 0;
     const brandAgreement=(visualAnchors.length && ocrAnchors.length) ? 0.04 : 0;
     const exactVisual=exactBottleNameEvidence(visualNames,b);
@@ -1620,7 +1635,7 @@ function matchBottleWithEvidence(db, vision, ocr){
       (fields.conflict?0.1:0)
     ));
     if(!bothSources) confidence=Math.min(confidence,0.84);
-    if(visualDistinctive.length && ocrDistinctive.length && (!visualAnchors.length || !ocrAnchors.length)) confidence=Math.min(confidence,0.79);
+    if(visualDistinctive.length && ocrDistinctive.length && (!visualAnchors.length || !ocrAnchors.length) && bestFusion<0.7) confidence=Math.min(confidence,0.79);
     if(unmatchedObserved.length) confidence=Math.min(confidence,Math.max(0.7,0.93-unmatchedObserved.length*0.06));
     if(unmatchedBottle.length>=2 && !exactVisual && !exactOcr) confidence=Math.min(confidence,0.88);
     if(variantPenalty>0.08) confidence=Math.min(confidence,0.88);
@@ -1630,8 +1645,8 @@ function matchBottleWithEvidence(db, vision, ocr){
       dbConfidence:confidence,
       brandAnchored:true,
       brandAnchors:brandAnchors,
-      matchedFields:fields.matched.concat(visualVariants.matched).concat(ocrVariants.matched).concat(bestVisual>=0.55?["visual"]:[]).concat(bestOcr>=0.55?["ocr"]:[]).concat(["brand_anchor"]),
-      evidence:{visual:bestVisual,ocr:bestOcr,fieldBoost:fields.score,variantBoost:variantBoost,variantPenalty:variantPenalty,agreementBoost:agreement,brandBoost:0.04+brandAgreement,exactVisual:exactVisual,exactOcr:exactOcr,brandAnchors:brandAnchors,unmatchedObserved:unmatchedObserved,unmatchedBottle:unmatchedBottle}
+      matchedFields:fields.matched.concat(visualVariants.matched).concat(ocrVariants.matched).concat(bestVisual>=0.55?["visual"]:[]).concat(bestOcr>=0.55?["ocr"]:[]).concat(bestFusion>=0.7?["visual_ocr_fusion"]:[]).concat(["brand_anchor"]),
+      evidence:{visual:bestVisual,ocr:bestOcr,fusion:bestFusion,fieldBoost:fields.score,variantBoost:variantBoost,variantPenalty:variantPenalty,agreementBoost:agreement,brandBoost:0.04+brandAgreement,exactVisual:exactVisual,exactOcr:exactOcr,brandAnchors:brandAnchors,unmatchedObserved:unmatchedObserved,unmatchedBottle:unmatchedBottle}
     });
   });
   rows.sort(function(a,b){
@@ -1750,7 +1765,7 @@ async function callVisualAgent(env, mime, image){
 
 async function callOcrAgent(env, mime, image){
   const payload={
-    __model: env.OCR_MODEL||"gemini-2.5-flash-lite",
+    __model: env.OCR_MODEL||env.IDENT_MODEL||env.MODEL||"gemini-2.5-flash",
     contents:[{role:"user",parts:[
       {text:"Act as an OCR agent for whisky labels. Transcribe visible label text and extract only factual fields printed on the label. Do not complete missing words from memory and do not guess a product. If no useful label text is readable, set raw_text=\"\" and confidence=0."},
       {inlineData:{mimeType:mime,data:image}}

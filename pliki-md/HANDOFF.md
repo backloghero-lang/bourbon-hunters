@@ -197,4 +197,12 @@ node scripts/build_browse_catalog.mjs
 node scripts/test_spirit_taxonomy.mjs
 ```
 
+## Aktualizacja 2026-07-24 - skaner v11
+
+- Worker laczy teraz marke rozpoznana wizualnie z wariantem, wiekiem, proof i ABV odczytanymi przez OCR.
+- Slaby, czesciowy OCR nie obniza juz automatycznie poprawnego trafienia wizualnego do 79%.
+- OCR domyslnie dziedziczy `OCR_MODEL`, potem `IDENT_MODEL`, a nastepnie `MODEL`. Przy obecnej konfiguracji uzywa `gemini-2.5-flash`.
+- Testy regresyjne obejmuja rozdzielone dowody dla `Jack Daniel's Bonded` i `Knob Creek 9`.
+- Wersja Workera po wdrozeniu: `ocr-visual-fusion-catalog-10k-v11-split-label-evidence`.
+
 
