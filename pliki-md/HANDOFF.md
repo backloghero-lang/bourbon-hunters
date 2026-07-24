@@ -7,19 +7,22 @@ Aktualizacja: 2026-07-05.
 Najnowszy kontekst dla kolejnego etapu jest w `pliki-md/HANDOFF-BH-1.1.md`.
 Uzyj go jako pierwszego dokumentu przy starcie watku `Przekaz Bourbon Hunter 1.1`.
 
-## Aktualizacja 2026-07-23 - skaner v10 i moderacja katalogu
+## Aktualizacja 2026-07-24 - rollback skanera do jednego agenta wizualnego
 
-- Skaner laczy pelne zdjecie dla agenta wizualnego z osobnym, ostrzejszym wycinkiem etykiety dla OCR.
-- Ranking jest kalibrowany: jeden agent nie moze sam dac pewnego trafienia, konflikty OCR/Visual obnizaja wynik zamiast laczyc nazwy w nieistniejacy wariant.
-- Obslugiwane sa dodatkowe znaczniki wariantow: malt, wheat/wheated, finished, double oaked, recipe code, wiek, proof i ABV.
-- Zatwierdzone rekordy `catalog_bottles` sa dolaczane do indeksu skanera, a bliskie wyniki moga byc warunkowo porownane z istniejacymi obrazami referencyjnymi.
+- Skaner wykonuje jedno wywolanie Gemini na pelnym zdjeciu.
+- Agent wizualny zwraca dokladna nazwe oraz maksymalnie dwie propozycje.
+- Nie ma agenta OCR, wycinka etykiety, fuzji wynikow ani dodatkowego porownania obrazow przez Gemini.
+- Nazwa jest deterministycznie dopasowywana do aktualnego indeksu 9406 rekordow z uwzglednieniem aliasow.
+- Wynik nadal wymaga potwierdzenia usera. Dwie propozycje pojawiaja sie tylko powyzej 90%.
+- Zatwierdzone rekordy `catalog_bottles` nadal sa dolaczane do indeksu skanera.
 - Nowa migracja `agent/d1-migration-v67-catalog-moderation.sql` dodaje kolejke moderacji. User wysyla szkic, orkiestrator go ocenia, a admin zatwierdza albo odrzuca w widoku `Raporty`.
 - Opublikowany rekord katalogowy jest zablokowany przed nadpisaniem przez zwyklego usera.
-- Test `scripts/scanner-regression.mjs` uruchamia prawdziwy kod Workera: 99,3% top-1 i 99,4% top-2 na kontrolnej probce 1000 nazw.
-- Oczekiwana wersja Workera: `ocr-visual-fusion-catalog-10k-v10-calibrated-moderated`.
+- Test `scripts/scanner-regression.mjs` uruchamia prawdziwy kod Workera: 99,6% top-1 i top-2 na kontrolnej probce 1000 nazw.
+- Oczekiwana wersja Workera: `visual-only-catalog-v1-pre-ocr-restored`.
 - Oczekiwana wersja moderacji: `catalog-moderation-orchestrator-admin-v1`.
-- Cache PWA: `bourbon-hunters-v92`.
-- Punkt powrotu: `backup-before-scanner-v10-6f3605e`.
+- Cache PWA: `bourbon-hunters-v94`.
+- Punkt powrotu do wersji OCR: `backup-before-visual-only-e1e13a5`.
+- Historyczny punkt sprzed pierwszego OCR: `backup-pre-ocr-636617a`.
 
 ## Aktualizacja 2026-07-23 - bezpieczna deduplikacja katalogu
 

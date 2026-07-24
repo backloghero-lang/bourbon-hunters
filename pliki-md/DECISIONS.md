@@ -181,3 +181,12 @@ Ten plik trzyma stale ustalenia, zeby nie ginely w dlugich watkach.
 - Maile transakcyjne maja uzywac subtelnych assetow Bourbon Hunters, bez ciezkiego marketingowego layoutu.
 - Entry age gate jest osobnym ekranem przed intro, a data urodzenia zostaje dodatkowo wymagana przy rejestracji konta.
 - Po zmianie samego frontu nie deployujemy Workera; Worker deployujemy tylko po zmianach w `agent/worker.js`.
+
+## 2026-07-24 - Rollback OCR w skanerze
+
+- Produkcyjny skaner wraca do jednego agenta wizualnego, zgodnie z zachowaniem sprzed commita `38a8582`.
+- Nie cofamy calego Workera do starego commita. Zachowujemy aktualne auth, D1, katalog spolecznosci, moderacje, telemetrie i potwierdzanie wyniku.
+- Frontend nie tworzy i nie wysyla osobnego wycinka etykiety.
+- Worker wykonuje jedno wywolanie `visual_identification`; pola OCR w historycznym schemacie telemetrii pozostaja i otrzymuja wartosc 0.
+- Punkt bezpieczenstwa wersji OCR: `backup-before-visual-only-e1e13a5`.
+- Wersja health: `visual-only-catalog-v1-pre-ocr-restored`.

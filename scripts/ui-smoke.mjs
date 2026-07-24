@@ -22,7 +22,7 @@ await page.evaluate(()=>{
     scanner:{scans:12,users:3,top_choice_acceptance_proxy:80,alternate_choice_correction_proxy:20,avg_duration_ms:1400},
     activity:{users_total:5,catalog_additions:2},
     outcomes:[{outcome:"candidates_presented",count:12}],
-    service_usage:[{stage:"label_ocr",model:"gemini",calls:12,total_tokens:300,avg_duration_ms:500}]
+    service_usage:[{stage:"visual_identification",model:"gemini",calls:12,total_tokens:300,avg_duration_ms:500}]
   });
   document.querySelectorAll(".view").forEach((view)=>view.classList.remove("active"));
   document.getElementById("view-admin-reports").classList.add("active");

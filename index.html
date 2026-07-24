@@ -3105,7 +3105,7 @@ function openDetail(id, keepReturn, skipRecommendationFetch){
   });
 }
 /* ================= SKANER ================= */
-let imgData=null, labelImgData=null, scanImageQuality=null, imgMime="image/jpeg", busy=false, loadTimer=null;
+let imgData=null, scanImageQuality=null, imgMime="image/jpeg", busy=false, loadTimer=null;
 let currentScanResult=null, catalogSubmissionId="", catalogRetakePending=false;
 let pendingScanCandidates=[], selectedScanCandidateId="", pendingScanMode="rate", pendingScanId="";
 const shot=document.getElementById("shot"), fileInput=document.getElementById("file"), galleryInput=document.getElementById("galleryFile");
@@ -3118,7 +3118,7 @@ if(retakeQuick) retakeQuick.addEventListener("click",function(){ if(busy) return
 fileInput.addEventListener("change",handlePickedFile);
 galleryInput.addEventListener("change",handlePickedFile);
 function resetShot(){
-  imgData=null; labelImgData=null; scanImageQuality=null; imgMime="image/jpeg"; currentScanResult=null; pendingScanCandidates=[]; selectedScanCandidateId=""; pendingScanMode="rate"; pendingScanId=""; goRate.disabled=true;
+  imgData=null; scanImageQuality=null; imgMime="image/jpeg"; currentScanResult=null; pendingScanCandidates=[]; selectedScanCandidateId=""; pendingScanMode="rate"; pendingScanId=""; goRate.disabled=true;
   document.getElementById("view-scan").classList.remove("is-confirming");
   if(scanPreview) scanPreview.removeAttribute("src");
   shot.classList.remove("has-shot","is-loading");
@@ -3254,7 +3254,7 @@ function handlePickedFile(e){
   document.getElementById("scanResult").innerHTML="";
   readLocalPreview(f).then(function(src){ if(src) setShotPreview(src); }).catch(function(){});
   compress(f).then(function(res){
-    imgData=res.b64; labelImgData=res.labelB64||null; scanImageQuality=res.quality||null; imgMime=res.mime;
+    imgData=res.b64; scanImageQuality=res.quality||null; imgMime=res.mime;
     shot.classList.add("has-shot");
     shot.classList.remove("is-loading");
     if(retakeQuick) retakeQuick.classList.add("has-shot");
@@ -3263,7 +3263,7 @@ function handlePickedFile(e){
     document.getElementById("scanResult").innerHTML=""; document.getElementById("err").style.display="none";
     shouldAutoRate=true;
   }).catch(function(){
-    imgData=null; labelImgData=null; scanImageQuality=null; imgMime="image/jpeg"; goRate.disabled=true;
+    imgData=null; scanImageQuality=null; imgMime="image/jpeg"; goRate.disabled=true;
     if(scanPreview) scanPreview.removeAttribute("src");
     shot.classList.remove("has-shot");
     if(retakeQuick) retakeQuick.classList.remove("has-shot");
@@ -3312,15 +3312,8 @@ function compress(file){ return new Promise(function(resolve,reject){
       const ctx=c.getContext("2d"); if(!ctx){ throw new Error("no-canvas"); }
       ctx.drawImage(source,0,0,w,h);
       const d=c.toDataURL("image/jpeg",0.84);
-      const cropX=Math.round(w*0.1),cropY=Math.round(h*0.18),cropW=Math.round(w*0.8),cropH=Math.round(h*0.7);
-      const label=document.createElement("canvas");
-      label.width=cropW; label.height=cropH;
-      const labelCtx=label.getContext("2d");
-      if(!labelCtx) throw new Error("no-label-canvas");
-      labelCtx.drawImage(c,cropX,cropY,cropW,cropH,0,0,cropW,cropH);
-      const labelData=label.toDataURL("image/jpeg",0.88);
       if(cleanup) cleanup();
-      resolve({b64:d.split(",")[1],labelB64:labelData.split(",")[1],mime:"image/jpeg",quality:imageQuality(c)});
+      resolve({b64:d.split(",")[1],mime:"image/jpeg",quality:imageQuality(c)});
     }catch(err){ if(cleanup) cleanup(); reject(err); }
   }
   function fallbackImage(){
@@ -3499,7 +3492,7 @@ function scan(mode,confirmedId){
   const dev=localStorage.getItem("bh_dev")||"";
   const headers={"Content-Type":"application/json"};
   if(AUTH_TOKEN) headers.Authorization="Bearer "+AUTH_TOKEN;
-  fetch(WORKER_URL,{method:"POST",headers:headers,body:JSON.stringify({image:imgData,label_image:labelImgData||"",image_quality:scanImageQuality,mime:imgMime,lang:lang,mode:mode,dev:dev,confirmed_id:confirmedId||"",device_id:DEVICE_ID})})
+  fetch(WORKER_URL,{method:"POST",headers:headers,body:JSON.stringify({image:imgData,image_quality:scanImageQuality,mime:imgMime,lang:lang,mode:mode,dev:dev,confirmed_id:confirmedId||"",device_id:DEVICE_ID})})
   .then(function(r){return r.json();}).then(function(data){
     stopLoading();
     if(data.error==="not_bottle"){ showErr(t("notBottle")); return; }

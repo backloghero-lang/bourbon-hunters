@@ -8,7 +8,7 @@ const workerPath=path.join(root,"agent","worker.js");
 const catalogPath=path.join(root,"db","catalog","scan-index.json");
 
 let source=fs.readFileSync(workerPath,"utf8").replace("export default {","globalThis.__worker={");
-source+="\nglobalThis.__scannerTest={applyScanCatalogOverrides,matchBottleWithEvidence};";
+source+="\nglobalThis.__scannerTest={applyScanCatalogOverrides,matchBottleWithVisual};";
 const context={
   console,fetch,Response,Request,Headers,URL,TextEncoder,TextDecoder,
   crypto:webcrypto,atob,btoa,setTimeout,clearTimeout
@@ -20,8 +20,8 @@ const db=scanner.applyScanCatalogOverrides(JSON.parse(fs.readFileSync(catalogPat
 const norm=(value)=>String(value||"").toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g," ").replace(/\s+/g," ").trim();
 const resolveExpected=(id)=>db.id_redirects?.[id]||id;
 
-function match(vision,ocr){
-  return scanner.matchBottleWithEvidence(db,vision||{},ocr||{});
+function match(vision){
+  return scanner.matchBottleWithVisual(db,vision||{});
 }
 
 function assert(condition,message){
@@ -32,64 +32,41 @@ const fixtures=[
   {
     label:"Jack Daniel's Bonded",
     expected:"jack-daniel-s-bonded-119-43",
-    vision:{name:"Jack Daniel's Bonded",confidence:.97},
-    ocr:{brand:"Jack Daniel's",name:"Bonded",expression:"Tennessee Whiskey",proof:"100",abv:"50%",confidence:.97,raw_text:"JACK DANIEL'S BONDED TENNESSEE WHISKEY 100 PROOF"}
+    vision:{name:"Jack Daniel's Bonded",confidence:.97,candidates:[]}
   },
   {
     label:"Jack Daniel's Single Barrel Select",
     expected:"jack-daniel-s-single-barrel-select-140-43",
-    vision:{name:"Jack Daniel's Single Barrel Select",confidence:.97},
-    ocr:{brand:"Jack Daniel's",name:"Single Barrel Select",expression:"Tennessee Whiskey",proof:"94",abv:"47%",confidence:.97,raw_text:"JACK DANIEL'S SINGLE BARREL SELECT TENNESSEE WHISKEY 94 PROOF"}
+    vision:{name:"Jack Daniel's Single Barrel Select",confidence:.97,candidates:[]}
   },
   {
     label:"Knob Creek 9",
     expected:"knob-creek-9-year-old-100-proof-bourbon",
-    vision:{name:"Knob Creek 9 Year Old Bourbon",confidence:.97},
-    ocr:{brand:"Knob Creek",name:"9 Year Old",expression:"Kentucky Straight Bourbon Whiskey",age:"9 Years",proof:"100",abv:"50%",confidence:.97,raw_text:"KNOB CREEK KENTUCKY STRAIGHT BOURBON WHISKEY AGED 9 YEARS 100 PROOF"}
-  },
-  {
-    label:"Jack Daniel's Bonded split across agents",
-    expected:"jack-daniel-s-bonded-119-43",
-    vision:{name:"Jack Daniel's Tennessee Whiskey",confidence:.94},
-    ocr:{brand:"",name:"Bonded",expression:"Bottled in Bond",proof:"100",abv:"50%",confidence:.9,raw_text:"BONDED BOTTLED IN BOND 100 PROOF"}
-  },
-  {
-    label:"Knob Creek 9 split across agents",
-    expected:"knob-creek-9-year-old-100-proof-bourbon",
-    vision:{name:"Knob Creek",confidence:.94},
-    ocr:{brand:"",name:"",expression:"Kentucky Straight Bourbon Whiskey",age:"9 Years",proof:"100",abv:"50%",confidence:.9,raw_text:"KENTUCKY STRAIGHT BOURBON WHISKEY AGED 9 YEARS 100 PROOF"}
+    vision:{name:"Knob Creek 9 Year Old Bourbon",confidence:.97,candidates:[]}
   },
   {
     label:"Woodford Reserve Malt",
     expected:"olcc-5211b",
-    vision:{name:"Woodford Reserve Malt",confidence:.97},
-    ocr:{brand:"Woodford Reserve",name:"Malt",expression:"Kentucky Straight Malt Whiskey",confidence:.97,raw_text:"WOODFORD RESERVE MALT KENTUCKY STRAIGHT MALT WHISKEY"}
+    vision:{name:"Woodford Reserve Malt",confidence:.97,candidates:[]}
   },
   {
     label:"Jack Daniel's Single Barrel Rye",
     expected:"jack-daniel-s-single-barrel-rye-142-43",
-    vision:{name:"Jack Daniel's Single Barrel Rye",confidence:.97},
-    ocr:{brand:"Jack Daniel's",name:"Single Barrel Rye",expression:"Tennessee Rye Whiskey",proof:"94",abv:"47%",confidence:.97,raw_text:"JACK DANIEL'S SINGLE BARREL RYE TENNESSEE RYE WHISKEY"}
-  },
-  {
-    label:"OCR wins a Visual variant conflict",
-    expected:"jack-daniel-s-single-barrel-select-140-43",
-    vision:{name:"Jack Daniel's Single Barrel Rye",confidence:.88},
-    ocr:{brand:"Jack Daniel's",name:"Single Barrel Select",expression:"Tennessee Whiskey",proof:"94",abv:"47%",confidence:.98,raw_text:"JACK DANIEL'S SINGLE BARREL SELECT TENNESSEE WHISKEY 94 PROOF"}
+    vision:{name:"Jack Daniel's Single Barrel Rye",confidence:.97,candidates:[]}
   }
 ];
 
 const fixtureResults=fixtures.map((fixture)=>{
-  const result=match(fixture.vision,fixture.ocr);
+  const result=match(fixture.vision);
   const actual=result&&result.bottle&&result.bottle.id;
   const expected=resolveExpected(fixture.expected);
   assert(actual===expected,`${fixture.label}: expected ${expected}, got ${actual||"none"}`);
-  assert(!result.ambiguous,`${fixture.label}: result is ambiguous`);
+  assert(!result.ambiguous,`${fixture.label}: result is ambiguous; candidates=${JSON.stringify((result.candidates||[]).slice(0,3))}`);
   return {label:fixture.label,id:actual,confidence:Number(result.dbConfidence.toFixed(3))};
 });
 
-const singleSource=match({name:"Maker's Mark 46 Kentucky Straight Bourbon Whisky",confidence:.95},{});
-assert(singleSource&&singleSource.dbConfidence<=.85,`Single-source confidence must be capped, got ${singleSource&&singleSource.dbConfidence}`);
+const singleSource=match({name:"Maker's Mark 46 Kentucky Straight Bourbon Whisky",confidence:.95,candidates:[]});
+assert(singleSource&&singleSource.dbConfidence>=.8,`Visual-only exact match must pass, got ${singleSource&&singleSource.dbConfidence}`);
 
 const counts={};
 for(const bottle of db.bottles) counts[norm(bottle.name)]=(counts[norm(bottle.name)]||0)+1;
@@ -99,10 +76,7 @@ const sample=Array.from({length:sampleSize},(_,index)=>eligible[Math.floor(index
 let top1=0,top2=0,noMatch=0,ambiguous=0;
 const misses=[];
 for(const bottle of sample){
-  const result=match(
-    {name:bottle.name,confidence:.95},
-    {name:bottle.name,proof:bottle.proof==null?"":String(bottle.proof),abv:bottle.abv==null?"":String(bottle.abv),category:bottle.category||bottle.type||"",confidence:.95,raw_text:bottle.name}
-  );
+  const result=match({name:bottle.name,confidence:.95,candidates:[]});
   if(!result){ noMatch++; continue; }
   const ids=(result.candidates||[]).map((candidate)=>candidate.id);
   if(ids[0]===bottle.id) top1++;
@@ -113,7 +87,7 @@ for(const bottle of sample){
 
 const top1Rate=top1/sampleSize;
 const top2Rate=top2/sampleSize;
-assert(top1Rate>=.98,`Synthetic top-1 regression: ${(top1Rate*100).toFixed(1)}%`);
+assert(top1Rate>=.98,`Synthetic top-1 regression: ${(top1Rate*100).toFixed(1)}%; misses=${JSON.stringify(misses)}`);
 assert(top2Rate>=.99,`Synthetic top-2 regression: ${(top2Rate*100).toFixed(1)}%; misses=${JSON.stringify(misses)}`);
 
 console.log(JSON.stringify({

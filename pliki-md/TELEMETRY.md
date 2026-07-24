@@ -10,7 +10,7 @@ Status: operacyjna telemetria skanera jest zaimplementowana w migracji D1 v66 i 
 - dla Gemini zapisujemy model, etap, status, liczbe prob, czas i `usageMetadata` z tokenami,
 - dla Cloudflare Images zapisujemy jedno wywolanie wyciecia butelki wraz ze statusem i czasem.
 
-Nie zapisujemy w telemetrii zdjecia, surowego OCR, tekstu etykiety, komentarza, emaila ani adresu IP. Losowy identyfikator urzadzenia goscia jest hashowany w Workerze przed zapisem.
+Nie zapisujemy w telemetrii zdjecia, tekstu etykiety, komentarza, emaila ani adresu IP. Skaner visual-only nie wykonuje OCR; historyczna kolumna `ocr_confidence` pozostaje dla zgodnosci schematu i zapisuje 0. Losowy identyfikator urzadzenia goscia jest hashowany w Workerze przed zapisem.
 
 ## Tabele D1
 

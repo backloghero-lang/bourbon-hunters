@@ -27,7 +27,9 @@ Aktualny oczekiwany stan Workera:
 {
   "ok": true,
   "auth_version": "auth-pbkdf2-100000-google-v3",
-  "scan_orchestrator_version": "ocr-visual-fusion-catalog-10k-v10-calibrated-moderated",
+  "scan_orchestrator_version": "visual-only-catalog-v1-pre-ocr-restored",
+  "scan_mode": "visual_only",
+  "scan_ocr_enabled": false,
   "scan_catalog_version": "ttb-olcc-retail-filtered-v3",
   "catalog_submission_version": "community-catalog-images-v5-admin-moderation",
   "catalog_moderation_version": "catalog-moderation-orchestrator-admin-v1",
@@ -213,9 +215,9 @@ Ta zmiana dotyczy GitHub Pages. Nie wymaga podmiany Workera, migracji D1 ani zmi
 5. Sprawdź na Home kafel Whisky z liczbą pozycji.
 6. Wejdź w Whisky i sprawdź filtry Scotch, Irish, Japanese, Rye i pozostałe.
 
-Aktualny cache: `bourbon-hunters-v93`.
+Aktualny cache: `bourbon-hunters-v94`.
 
-## Wdrozenie skanera v11
+## Wdrozenie skanera visual-only
 
 Ta zmiana wymaga aktualizacji Workera. Nie wymaga migracji D1 ani czyszczenia danych.
 
@@ -225,6 +227,8 @@ Ta zmiana wymaga aktualizacji Workera. Nie wymaga migracji D1 ani czyszczenia da
 4. Kliknij `Deploy`.
 5. Otworz `/auth/health`.
 6. Sprawdz, czy `scan_orchestrator_version` ma wartosc:
-   `ocr-visual-fusion-catalog-10k-v11-split-label-evidence`.
+   `visual-only-catalog-v1-pre-ocr-restored`.
+   Dodatkowo `scan_mode` ma byc `visual_only`, a `scan_ocr_enabled` ma byc `false`.
 7. Na telefonie otworz `test-index.html`, kliknij `Wyczysc cache/PWA`, a potem `Odswiez build`.
-8. Zeskanuj ponownie `Jack Daniel's Bonded` i `Knob Creek 9`.
+8. Zeskanuj `Jack Daniel's Bonded`, `Knob Creek 9` i jeden wariant `Single Barrel`.
+9. Nie dodawaj zmiennej `OCR_MODEL`; skaner jej nie uzywa.

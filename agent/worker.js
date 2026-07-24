@@ -1,14 +1,13 @@
 // Bourbon Hunters - Cloudflare Worker v2 (baza-first + 2 tryby)
 //
 // Tryb pracy:
-//   1) Visual agent rozpoznaje butelke ze zdjecia.
-//   2) OCR agent czyta tekst z etykiety: marka, wariant, proof/ABV, kategoria.
-//   3) Orchestrator laczy dowody z obu agentow i szuka najlepszego dopasowania w indeksie 10k.
-//   4a) tryb "rate"   -> jest w bazie: zwracamy od razu (zero netu).
-//   4b) tryb "analyze"-> rozbudowany opis + historia destylarni z linkami (Gemini + Google Search), fakty z bazy jako grunt.
+//   1) Jeden agent wizualny rozpoznaje dokladna nazwe butelki ze zdjecia.
+//   2) Nazwa i wariant sa dopasowywane do aktualnego katalogu.
+//   3a) tryb "rate"   -> user potwierdza najlepszy wynik z katalogu.
+//   3b) tryb "analyze"-> rozbudowany opis + historia destylarni z linkami (Gemini + Google Search), fakty z bazy jako grunt.
 //
 // SEKRETY: GEMINI_API_KEY (wymagany), DEV_KEY (opcjonalny)
-// ZMIENNE: MODEL, IDENT_MODEL, OCR_MODEL, TEMP_RATE, TEMP_ANALYZE, THINK_ANALYZE, MAX_RATE, MAX_ANALYZE, DAILY_LIMIT, ALLOW_ORIGIN, PROMPT_URL, DB_URL, APP_URL, GOOGLE_REDIRECT_URI
+// ZMIENNE: MODEL, IDENT_MODEL, TEMP_RATE, TEMP_ANALYZE, THINK_ANALYZE, MAX_RATE, MAX_ANALYZE, DAILY_LIMIT, ALLOW_ORIGIN, PROMPT_URL, DB_URL, APP_URL, GOOGLE_REDIRECT_URI
 // SEKRETY OAuth: GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, opcjonalnie GOOGLE_STATE_SECRET
 // KV: DS_KV (limit + zapis nowosci). Klucze nowosci: "new:<id>".
 // D1: DB (konta, sesje, wishlist, kolekcja, oceny).
@@ -19,7 +18,7 @@ const DEFAULT_DB_URL = "https://raw.githubusercontent.com/" + REPO + "/main/db/c
 const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters. Krotko, z jajem, ale rzeczowo. quality=jakosc 1-5, value=jakosc/cena 1-5 (5 swietna i tania, 1 slaba i droga). Pisz {{LANG}}. Zwroc tylko JSON.";
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
 const MULTI_CANDIDATE_CONFIDENCE = 0.9;
-const SCAN_ORCHESTRATOR_VERSION = "ocr-visual-fusion-catalog-10k-v11-split-label-evidence";
+const SCAN_ORCHESTRATOR_VERSION = "visual-only-catalog-v1-pre-ocr-restored";
 const SCAN_CATALOG_VERSION = "ttb-olcc-retail-filtered-v3";
 const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v5-admin-moderation";
 const CATALOG_MODERATION_VERSION = "catalog-moderation-orchestrator-admin-v1";
@@ -589,7 +588,7 @@ async function catalogModerationAssessment(env, row){
     return {status:"passed",confidence:0.99,reason:"known_catalog_id",matched_id:exact.id,matched_name:exact.name};
   }
   const name=String(row&&row.bottle_name||bottle.name||"").trim();
-  const matched=name ? matchBottleWithEvidence(staticDb,{name:name,confidence:0.75},{name:name,confidence:0.75,raw_text:name}) : null;
+  const matched=name ? matchBottleWithVisual(staticDb,{name:name,confidence:0.95,candidates:[]}) : null;
   const same=!!(matched&&matched.bottle&&cleanCatalogId(matched.bottle.name)===cleanCatalogId(name));
   return {
     status:same&&matched.dbConfidence>=0.8?"passed":"needs_review",
@@ -1006,7 +1005,7 @@ async function handleApi(request, env, cors){
       }
       catch(e){ detail=String(e&&e.message?e.message:e).slice(0,220); }
     }
-    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_moderation_version:CATALOG_MODERATION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,catalog_moderation_schema:catalog_moderation_schema,telemetry_schema:telemetry_schema,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
+    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_mode:"visual_only",scan_ocr_enabled:false,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_moderation_version:CATALOG_MODERATION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,catalog_moderation_schema:catalog_moderation_schema,telemetry_schema:telemetry_schema,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
   }
   if(path==="/auth/google/start" && request.method==="GET"){
     const returnUrl=allowedReturnUrl(env,url.searchParams.get("return")||appUrl(env));
@@ -1344,37 +1343,6 @@ function sharedTokens(left, right){
   return (right||[]).filter(function(token){ return !!set[token]; });
 }
 
-function numberFrom(v){
-  const m=String(v||"").replace(",",".").match(/(\d+(?:\.\d+)?)/);
-  return m ? Number(m[1]) : 0;
-}
-
-function ocrCandidateName(ocr){
-  ocr=ocr||{};
-  const parts=[ocr.brand,ocr.name,ocr.expression,ocr.age].map(function(v){ return String(v||"").trim(); }).filter(Boolean);
-  return parts.join(" ").replace(/\s+/g," ").trim();
-}
-
-function ocrHasSignal(ocr){
-  if(!ocr) return false;
-  return !!(ocr.raw_text||ocr.text||ocr.brand||ocr.name||ocr.expression||ocr.proof||ocr.abv||ocr.category);
-}
-
-function compactOcr(ocr){
-  ocr=ocr||{};
-  return {
-    raw_text:String(ocr.raw_text||ocr.text||"").slice(0,700),
-    brand:String(ocr.brand||"").slice(0,90),
-    name:String(ocr.name||"").slice(0,140),
-    expression:String(ocr.expression||"").slice(0,120),
-    age:String(ocr.age||"").slice(0,50),
-    proof:String(ocr.proof||"").slice(0,40),
-    abv:String(ocr.abv||"").slice(0,40),
-    category:String(ocr.category||ocr.type||"").slice(0,80),
-    confidence:clamp01(ocr.confidence)
-  };
-}
-
 function compactVision(vision){
   vision=vision||{};
   const candidates=Array.isArray(vision.candidates)?vision.candidates.slice(0,5).map(function(c){
@@ -1386,26 +1354,6 @@ function compactVision(vision){
     evidence:Array.isArray(vision.evidence)?vision.evidence.slice(0,5).map(function(v){ return String(v||"").slice(0,120); }) : [],
     candidates:candidates
   };
-}
-
-function fieldEvidenceScore(bottle, ocr){
-  const matched=[];
-  let score=0;
-  const op=numberFrom(ocr&&ocr.proof);
-  const bp=numberFrom(bottle&&bottle.proof);
-  if(op && bp && Math.abs(op-bp)<=1){ score+=0.08; matched.push("proof"); }
-  const oa=numberFrom(ocr&&ocr.abv);
-  const ba=numberFrom(bottle&&bottle.abv);
-  if(oa && ba && Math.abs(oa-ba)<=0.7){ score+=0.06; matched.push("abv"); }
-  const oc=norm((ocr&&ocr.category)||"");
-  const bc=norm(((bottle&&bottle.category)||"")+" "+((bottle&&bottle.type)||""));
-  const ocrDeclaration=norm([ocr&&ocr.category,ocr&&ocr.name,ocr&&ocr.expression,ocr&&ocr.raw_text].filter(Boolean).join(" "));
-  const bottleDeclaration=norm([bottle&&bottle.category,bottle&&bottle.type,bottle&&bottle.name].filter(Boolean).join(" "));
-  const observedSpirit=ocrDeclaration.indexOf("bourbon")>=0 ? "bourbon" : (/\brye\b/.test(ocrDeclaration)?"rye":"");
-  const bottleSpirit=bottleDeclaration.indexOf("bourbon")>=0 ? "bourbon" : (/\brye\b/.test(bottleDeclaration)?"rye":"");
-  const conflict=!!(observedSpirit && bottleSpirit && observedSpirit!==bottleSpirit);
-  if(oc && bc && (bc.indexOf(oc)>=0 || oc.indexOf(bc)>=0)){ score+=0.04; matched.push("category"); }
-  return {score:score,matched:matched,conflict:conflict,observedSpirit:observedSpirit,bottleSpirit:bottleSpirit};
 }
 
 function variantMarkers(text){
@@ -1425,75 +1373,6 @@ function variantMarkers(text){
     small_batch:/\bsmall batch\b/.test(text),
     recipe:recipe
   };
-}
-function labelVariantEvidence(bottle, observedText, sourceConfidence){
-  const observed=norm(observedText);
-  const declared=norm([
-    bottle&&bottle.name,
-    Array.isArray(bottle&&bottle.aliases)?bottle.aliases.join(" "):"",
-    bottle&&bottle.type,
-    bottle&&bottle.category
-  ].filter(Boolean).join(" "));
-  function age(text){
-    const match=String(text||"").match(/\b(\d{1,2})\s*(?:year|years|yr|yrs|yo)\b/);
-    return match ? Number(match[1]) : 0;
-  }
-  const seen=variantMarkers(observed);
-  const bottleMarkers=variantMarkers(declared);
-  const weights={bonded:0.13,single_barrel:0.1,barrel_proof:0.12,rye:0.13,bourbon:0.08,select:0.07,malt:0.11,wheat:0.09,finished:0.08,double_oaked:0.1,small_batch:0.06};
-  const reliability=Math.max(0.45,clamp01(sourceConfidence||0.65));
-  const matched=[];
-  let score=0, penalty=0;
-  Object.keys(weights).forEach(function(marker){
-    if(seen[marker]){
-      if(bottleMarkers[marker]){ score+=weights[marker]; matched.push(marker); }
-      else penalty+=weights[marker];
-    }
-  });
-  if(seen.recipe){
-    if(seen.recipe===bottleMarkers.recipe){ score+=0.16; matched.push("recipe"); }
-    else if(bottleMarkers.recipe) penalty+=0.22;
-  }
-  const observedAge=age(observed);
-  const bottleAge=age(declared);
-  if(observedAge && bottleAge){
-    if(observedAge===bottleAge){ score+=0.14; matched.push("age"); }
-    else penalty+=0.22;
-  }
-  const spiritConflict=!!(
-    (seen.rye && bottleMarkers.bourbon && !bottleMarkers.rye) ||
-    (seen.bourbon && bottleMarkers.rye && !bottleMarkers.bourbon) ||
-    (seen.malt && bottleMarkers.bourbon && !bottleMarkers.malt)
-  );
-  return {
-    score:Math.min(0.18,score*reliability),
-    penalty:Math.min(0.32,penalty*reliability),
-    matched:matched,
-    conflict:spiritConflict,
-    observedAge:observedAge,
-    bottleAge:bottleAge,
-    markers:seen
-  };
-}
-
-function exactBottleNameEvidence(names, bottle){
-  const declared=[bottle&&bottle.name].concat(Array.isArray(bottle&&bottle.aliases)?bottle.aliases:[]).map(norm).filter(Boolean);
-  let best=0;
-  (names||[]).forEach(function(item){
-    const value=norm(item&&item.name);
-    if(value && declared.indexOf(value)>=0) best=Math.max(best,clamp01(item.confidence||0.65));
-  });
-  return best;
-}
-
-function primaryBottleNameEvidence(names, bottle){
-  const declared=norm(bottle&&bottle.name);
-  let best=0;
-  (names||[]).forEach(function(item){
-    const value=norm(item&&item.name);
-    if(value && value===declared) best=Math.max(best,clamp01(item.confidence||0.65));
-  });
-  return best;
 }
 
 function canonicalRecordScore(bottle){
@@ -1529,52 +1408,36 @@ function scanBottleResult(bottle){
   };
 }
 
-function scanAgentTrace(vision, ocr, matched){
+function visualAgentTrace(vision, matched){
+  const matcher={
+    matched:matched&&matched.bottle ? matched.bottle.id : null,
+    confidence:matched ? clamp01(matched.dbConfidence) : 0,
+    brand_anchors:matched&&matched.brandAnchors ? matched.brandAnchors : [],
+    ambiguous:!!(matched&&matched.ambiguous),
+    candidate_margin:matched&&Number.isFinite(matched.margin) ? Math.round(matched.margin*1000)/1000 : null,
+    matched_fields:matched&&matched.matchedFields ? matched.matchedFields : [],
+    candidates:matched&&matched.candidates ? matched.candidates.slice(0,3) : []
+  };
   return {
     version:SCAN_ORCHESTRATOR_VERSION,
     visual:compactVision(vision),
-    ocr:compactOcr(ocr),
-    orchestrator:{
-      matched:matched&&matched.bottle ? matched.bottle.id : null,
-      confidence:matched ? clamp01(matched.dbConfidence) : 0,
-      brand_anchors:matched&&matched.brandAnchors ? matched.brandAnchors : [],
-      ambiguous:!!(matched&&matched.ambiguous),
-      candidate_margin:matched&&Number.isFinite(matched.margin) ? Math.round(matched.margin*1000)/1000 : null,
-      matched_fields:matched&&matched.matchedFields ? matched.matchedFields : [],
-      candidates:matched&&matched.candidates ? matched.candidates.slice(0,3) : []
-    }
+    mode:"visual_only",
+    matcher:matcher,
+    orchestrator:matcher
   };
 }
 
-function matchBottleWithEvidence(db, vision, ocr){
+function matchBottleWithVisual(db, vision){
   vision=compactVision(vision);
-  ocr=compactOcr(ocr);
   const visualNames=[];
   if(vision.name) visualNames.push({name:vision.name,confidence:vision.confidence||0.65,source:"visual"});
   (vision.candidates||[]).forEach(function(c){ if(c.name) visualNames.push({name:c.name,confidence:c.confidence||0.55,source:"visual_candidate"}); });
-  const ocn=ocrCandidateName(ocr);
-  const ocrNames=[];
-  if(ocn) ocrNames.push({name:ocn,confidence:ocr.confidence||0.65,source:"ocr_fields"});
-  if(ocr.raw_text) ocrNames.push({name:ocr.raw_text,confidence:Math.min(ocr.confidence||0.55,0.72),source:"ocr_raw"});
-  const fusionNames=[];
-  const ocrFusionText=[ocn,ocr.raw_text].filter(Boolean).join(" ");
-  if(ocrFusionText){
-    visualNames.forEach(function(v){
-      fusionNames.push({
-        name:(v.name+" "+ocrFusionText).replace(/\s+/g," ").trim(),
-        confidence:Math.max(0.55,(clamp01(v.confidence)+clamp01(ocr.confidence||0.65))/2),
-        source:"visual_ocr_fusion"
-      });
-    });
-  }
   const visualDistinctive=observedDistinctiveTokens(visualNames);
-  const ocrDistinctive=observedDistinctiveTokens(ocn?[{name:ocn}]:[]);
-  const observedDistinctive=distinctiveTokens(visualDistinctive.concat(ocrDistinctive).join(" "));
-  if(!observedDistinctive.length) return null;
+  if(!visualDistinctive.length) return null;
   const rows=[];
   const candidateIndexes={};
   const tokenIndex=db.token_index||{};
-  visualNames.concat(ocrNames,fusionNames).forEach(function(candidate){
+  visualNames.forEach(function(candidate){
     distinctiveTokens(candidate.name).forEach(function(token){
       (tokenIndex[token]||[]).forEach(function(index){ candidateIndexes[index]=1; });
     });
@@ -1583,76 +1446,44 @@ function matchBottleWithEvidence(db, vision, ocr){
   if(!candidateBottles.length) return null;
   candidateBottles.forEach(function(b){
     const bottleDistinctive=bottleDistinctiveTokens(b);
-    const bottleContextDistinctive=distinctiveTokens([
-      (b&&b.name)||"",
-      Array.isArray(b&&b.aliases)?b.aliases.join(" "):"",
-      (b&&b.distillery)||"",
-      (b&&b.region)||""
-    ].join(" "));
     const lexicalBottleDistinctive=bottleDistinctive.filter(function(token){ return !/^\d+$/.test(token); });
-    const brandAnchors=sharedTokens(observedDistinctive,lexicalBottleDistinctive.length?lexicalBottleDistinctive:bottleDistinctive);
+    let bestVisual=null;
+    visualNames.forEach(function(item){
+      const lexical=textBottleScore(item.name,b);
+      const primaryLexical=textBottleScore(item.name,Object.assign({},b,{aliases:[]}));
+      const itemNorm=norm(item.name);
+      const declared=[b&&b.name].concat(Array.isArray(b&&b.aliases)?b.aliases:[]).map(norm).filter(Boolean);
+      const exact=!!(itemNorm && declared.indexOf(itemNorm)>=0);
+      const primaryExact=!!(itemNorm && itemNorm===norm(b&&b.name));
+      const observedMoreSpecific=toks(item.name).length>toks(b&&b.name).length;
+      const databaseScore=!exact && (lexical>primaryLexical || observedMoreSpecific) ? Math.min(lexical,0.89) : lexical;
+      const confidence=Math.min(clamp01(item.confidence||0.65),databaseScore);
+      if(!bestVisual || confidence>bestVisual.confidence || (confidence===bestVisual.confidence && lexical>bestVisual.lexical)){
+        bestVisual={name:item.name,source:item.source,lexical:databaseScore,primaryLexical:primaryLexical,exact:exact,primaryExact:primaryExact,confidence:confidence};
+      }
+    });
+    if(!bestVisual || bestVisual.confidence<0.25) return;
+    const observed=distinctiveTokens(bestVisual.name);
+    const brandAnchors=sharedTokens(observed,lexicalBottleDistinctive.length?lexicalBottleDistinctive:bottleDistinctive);
     if(!bottleDistinctive.length || !brandAnchors.length) return;
-    const unmatchedObserved=observedDistinctive.filter(function(token){ return bottleContextDistinctive.indexOf(token)<0; });
-    const unmatchedBottle=bottleDistinctive.filter(function(token){ return observedDistinctive.indexOf(token)<0; });
-    const visualAnchors=sharedTokens(visualDistinctive,bottleDistinctive);
-    const ocrAnchors=sharedTokens(ocrDistinctive,bottleDistinctive);
-    let bestVisual=0, bestOcr=0, bestFusion=0;
-    visualNames.forEach(function(v){ bestVisual=Math.max(bestVisual,textBottleScore(v.name,b)*clamp01(v.confidence)); });
-    ocrNames.forEach(function(v){ bestOcr=Math.max(bestOcr,textBottleScore(v.name,b)*clamp01(v.confidence)); });
-    fusionNames.forEach(function(v){ bestFusion=Math.max(bestFusion,textBottleScore(v.name,b)*clamp01(v.confidence)); });
-    let sum=0, weight=0;
-    if(visualNames.length){ sum+=bestVisual*0.56; weight+=0.56; }
-    if(ocrNames.length){ sum+=bestOcr*0.52; weight+=0.52; }
-    if(!weight) return;
-    const fields=fieldEvidenceScore(b,ocr);
-    if(fields.conflict && ocr.confidence>=0.78) return;
-    const visualVariants=labelVariantEvidence(b,visualNames.map(function(item){ return item.name; }).join(" "),vision.confidence);
-    const ocrVariants=labelVariantEvidence(b,ocrNames.map(function(item){ return item.name; }).join(" "),ocr.confidence);
-    if(ocrVariants.conflict && ocr.confidence>=0.78) return;
-    const bothSources=!!(visualNames.length && ocrNames.length);
-    const lexical=Math.max(
-      bothSources ? bestVisual*0.42+bestOcr*0.58 : (visualNames.length?bestVisual:bestOcr),
-      bestFusion
-    );
-    const agreement=(bestVisual>=0.7 && bestOcr>=0.7) ? 0.06 : 0;
-    const brandAgreement=(visualAnchors.length && ocrAnchors.length) ? 0.04 : 0;
-    const exactVisual=exactBottleNameEvidence(visualNames,b);
-    const exactOcr=exactBottleNameEvidence(ocrNames,b);
-    const exactPrimaryVisual=primaryBottleNameEvidence(visualNames,b);
-    const exactPrimaryOcr=primaryBottleNameEvidence(ocrNames,b);
-    const exactBoost=(exactVisual?0.02:0)+(exactOcr?0.04:0)+(exactPrimaryVisual?0.02:0)+(exactPrimaryOcr?0.03:0);
-    const variantBoost=Math.min(0.16,visualVariants.score*0.35+ocrVariants.score*0.75);
-    const variantPenalty=Math.min(0.35,visualVariants.penalty*0.4+ocrVariants.penalty*0.9+(visualVariants.conflict?0.08:0));
-    let confidence=Math.max(0,Math.min(0.99,
-      lexical*0.72+
-      Math.min(0.1,fields.score)+
-      variantBoost+
-      agreement+
-      0.04+
-      brandAgreement+
-      exactBoost-
-      variantPenalty-
-      (fields.conflict?0.1:0)
-    ));
-    if(!bothSources) confidence=Math.min(confidence,0.84);
-    if(visualDistinctive.length && ocrDistinctive.length && (!visualAnchors.length || !ocrAnchors.length) && bestFusion<0.7) confidence=Math.min(confidence,0.79);
-    if(unmatchedObserved.length) confidence=Math.min(confidence,Math.max(0.7,0.93-unmatchedObserved.length*0.06));
-    if(unmatchedBottle.length>=2 && !exactVisual && !exactOcr) confidence=Math.min(confidence,0.88);
-    if(variantPenalty>0.08) confidence=Math.min(confidence,0.88);
-    if(confidence<0.25) return;
+    const bottleContext=distinctiveTokens([(b&&b.name)||"",Array.isArray(b&&b.aliases)?b.aliases.join(" "):"",(b&&b.distillery)||"",(b&&b.region)||""].join(" "));
+    const unmatchedObserved=observed.filter(function(token){ return bottleContext.indexOf(token)<0; });
+    let confidence=bestVisual.confidence;
+    if(unmatchedObserved.length) confidence=Math.min(confidence,Math.max(0.7,0.94-unmatchedObserved.length*0.06));
     rows.push({
       bottle:b,
       dbConfidence:confidence,
       brandAnchored:true,
       brandAnchors:brandAnchors,
-      matchedFields:fields.matched.concat(visualVariants.matched).concat(ocrVariants.matched).concat(bestVisual>=0.55?["visual"]:[]).concat(bestOcr>=0.55?["ocr"]:[]).concat(bestFusion>=0.7?["visual_ocr_fusion"]:[]).concat(["brand_anchor"]),
-      evidence:{visual:bestVisual,ocr:bestOcr,fusion:bestFusion,fieldBoost:fields.score,variantBoost:variantBoost,variantPenalty:variantPenalty,agreementBoost:agreement,brandBoost:0.04+brandAgreement,exactVisual:exactVisual,exactOcr:exactOcr,brandAnchors:brandAnchors,unmatchedObserved:unmatchedObserved,unmatchedBottle:unmatchedBottle}
+      matchedFields:["visual","brand_anchor"],
+      evidence:{visual:bestVisual.confidence,database:bestVisual.lexical,primary:bestVisual.primaryLexical,exact:bestVisual.exact,primaryExact:bestVisual.primaryExact,source:bestVisual.source,brandAnchors:brandAnchors,unmatchedObserved:unmatchedObserved}
     });
   });
   rows.sort(function(a,b){
     return b.dbConfidence-a.dbConfidence ||
-      Number(b.evidence.exactOcr>0)-Number(a.evidence.exactOcr>0) ||
-      Number(b.evidence.exactVisual>0)-Number(a.evidence.exactVisual>0) ||
+      Number(b.evidence.primaryExact)-Number(a.evidence.primaryExact) ||
+      Number(b.evidence.exact)-Number(a.evidence.exact) ||
+      b.evidence.database-a.evidence.database ||
       canonicalRecordScore(b.bottle)-canonicalRecordScore(a.bottle);
   });
   const canonicalRows=[];
@@ -1674,73 +1505,11 @@ function matchBottleWithEvidence(db, vision, ocr){
   return best;
 }
 
-async function candidateReferencePart(env, candidate){
-  const image=candidate&&candidate.result&&candidate.result.image;
-  if(!image) return null;
-  let url=String(image);
-  if(!/^https?:\/\//i.test(url)) url=assetUrl(env,url);
-  try{
-    const response=await fetch(url,{cf:{cacheTtl:3600,cacheEverything:true}});
-    if(!response.ok) return null;
-    const type=String(response.headers.get("Content-Type")||"image/jpeg").split(";")[0];
-    if(["image/jpeg","image/png","image/webp"].indexOf(type)<0) return null;
-    const bytes=new Uint8Array(await response.arrayBuffer());
-    if(!bytes.byteLength || bytes.byteLength>2500000) return null;
-    return {id:candidate.id,name:candidate.name,mime:type,data:encodeBase64(bytes)};
-  }catch(e){ return null; }
-}
-
-async function rerankWithReferenceImages(env, mime, image, db, matched){
-  const candidates=matched&&matched.candidates||[];
-  if(candidates.length<2 || candidates[0].confidence-candidates[1].confidence>=0.1) return {matched:matched,usage:null};
-  const references=(await Promise.all(candidates.slice(0,3).map(function(candidate){ return candidateReferencePart(env,candidate); }))).filter(Boolean);
-  if(references.length<2) return {matched:matched,usage:null};
-  const allowed=references.map(function(reference){ return reference.id; });
-  const parts=[
-    {text:"Compare the photographed bottle with the reference bottle images. Choose only the same brand AND exact expression/variant. Bottle shape alone is insufficient. Return one allowed candidate id, or an empty best_id when no reference is reliable. Allowed ids: "+allowed.join(", ")},
-    {text:"USER PHOTO"},
-    {inlineData:{mimeType:mime,data:image}}
-  ];
-  references.forEach(function(reference){
-    parts.push({text:"REFERENCE "+reference.id+" - "+reference.name});
-    parts.push({inlineData:{mimeType:reference.mime,data:reference.data}});
-  });
-  const response=await callGemini(env,{
-    __model:env.IDENT_MODEL||env.MODEL||"gemini-2.5-flash",
-    contents:[{role:"user",parts:parts}],
-    generationConfig:{
-      temperature:0,maxOutputTokens:120,thinkingConfig:{thinkingBudget:0},
-      responseMimeType:"application/json",
-      responseSchema:{
-        type:"OBJECT",
-        properties:{best_id:{type:"STRING",enum:[""].concat(allowed)},confidence:{type:"NUMBER",minimum:0,maximum:1},reason:{type:"STRING"}},
-        required:["best_id","confidence","reason"]
-      }
-    }
-  },"reference_rerank");
-  if(response.err) return {matched:matched,usage:response.usage};
-  const result=parseJson(response.txt)||{};
-  const confidence=clamp01(result.confidence);
-  if(allowed.indexOf(result.best_id)<0 || confidence<0.65) return {matched:matched,usage:response.usage};
-  const index=candidates.findIndex(function(candidate){ return candidate.id===result.best_id; });
-  if(index<0) return {matched:matched,usage:response.usage};
-  const selected=candidates[index];
-  const reordered=[selected].concat(candidates.filter(function(candidate){ return candidate.id!==selected.id; }));
-  selected.confidence=Math.min(0.99,Math.max(selected.confidence,candidates[0].confidence)+Math.min(0.04,(confidence-0.65)*0.1));
-  selected.evidence=Object.assign({},selected.evidence||{},{referenceConfidence:confidence,referenceReason:String(result.reason||"").slice(0,160)});
-  matched.bottle=(db.bottles||[]).find(function(bottle){ return bottle&&bottle.id===selected.id; })||matched.bottle;
-  matched.dbConfidence=selected.confidence;
-  matched.candidates=reordered;
-  matched.margin=reordered[1]?reordered[0].confidence-reordered[1].confidence:1;
-  matched.ambiguous=!!(reordered[1]&&reordered[1].confidence>=0.8&&matched.margin<0.06&&confidence<0.8);
-  return {matched:matched,usage:response.usage};
-}
-
 async function callVisualAgent(env, mime, image){
   const payload={
     __model: env.IDENT_MODEL||env.MODEL||"gemini-2.5-flash",
     contents:[{role:"user",parts:[
-      {text:"Act as the Bourbon Hunters visual recognition agent. Identify the whisky/bourbon bottle from the image using label layout, bottle shape, logo and visible text. Never invent a brand or expression. If this is not a whisky bottle or the identity is unreadable, use name=\"\" and confidence=0."},
+      {text:"Rozpoznaj dokladna nazwe butelki whisky lub bourbona na zdjeciu: marka, wariant oraz widoczny wiek lub edycja. Korzystaj z calego wygladu butelki, etykiety, logo i widocznych napisow. Nie wymyslaj brakujacego wariantu. Zwroc najwyzej dwie mozliwe nazwy. Jesli to nie jest butelka whisky albo nie da sie rozpoznac marki, ustaw name=\"\" i confidence=0."},
       {inlineData:{mimeType:mime,data:image}}
     ]}],
     generationConfig:{
@@ -1752,39 +1521,13 @@ async function callVisualAgent(env, mime, image){
           name:{type:"STRING"},
           confidence:{type:"NUMBER",minimum:0,maximum:1},
           evidence:{type:"ARRAY",items:{type:"STRING"},maxItems:5},
-          candidates:{type:"ARRAY",items:{type:"OBJECT",properties:{name:{type:"STRING"},confidence:{type:"NUMBER",minimum:0,maximum:1}},required:["name","confidence"]},maxItems:5}
+          candidates:{type:"ARRAY",items:{type:"OBJECT",properties:{name:{type:"STRING"},confidence:{type:"NUMBER",minimum:0,maximum:1}},required:["name","confidence"]},maxItems:2}
         },
         required:["name","confidence","evidence","candidates"]
       }
     }
   };
   const r=await callGemini(env,payload,"visual_identification");
-  if(r.err) return {err:r.err,data:{},usage:r.usage};
-  return {data:parseJson(r.txt)||{},usage:r.usage};
-}
-
-async function callOcrAgent(env, mime, image){
-  const payload={
-    __model: env.OCR_MODEL||env.IDENT_MODEL||env.MODEL||"gemini-2.5-flash",
-    contents:[{role:"user",parts:[
-      {text:"Act as an OCR agent for whisky labels. Transcribe visible label text and extract only factual fields printed on the label. Do not complete missing words from memory and do not guess a product. If no useful label text is readable, set raw_text=\"\" and confidence=0."},
-      {inlineData:{mimeType:mime,data:image}}
-    ]}],
-    generationConfig:{
-      temperature:0,maxOutputTokens:420,thinkingConfig:{thinkingBudget:0},
-      responseMimeType:"application/json",
-      responseSchema:{
-        type:"OBJECT",
-        properties:{
-          raw_text:{type:"STRING"},brand:{type:"STRING"},name:{type:"STRING"},expression:{type:"STRING"},
-          age:{type:"STRING"},proof:{type:"STRING"},abv:{type:"STRING"},category:{type:"STRING"},
-          confidence:{type:"NUMBER",minimum:0,maximum:1}
-        },
-        required:["raw_text","brand","name","expression","age","proof","abv","category","confidence"]
-      }
-    }
-  };
-  const r=await callGemini(env,payload,"label_ocr");
   if(r.err) return {err:r.err,data:{},usage:r.usage};
   return {data:parseJson(r.txt)||{},usage:r.usage};
 }
@@ -1825,14 +1568,12 @@ export default {
 
     let body; try{ body=await request.json(); }catch(e){ return J({error:"bad json"},400,cors); }
     const image=(body.image||"").toString();
-    const labelImage=(body.label_image||"").toString();
     const mime=["image/jpeg","image/png","image/webp"].includes(body.mime)?body.mime:"image/jpeg";
     const lang=["pl","en","es"].includes(body.lang)?body.lang:"pl";
     const mode=body.mode==="analyze"?"analyze":"rate";
     const confirmedId=String(body.confirmed_id||"").trim().slice(0,180);
     if(!image||image.length<100) return J({error:"no image"},400,cors);
     if(image.length>8000000) return J({error:"image too large"},413,cors);
-    if(labelImage.length>5000000) return J({error:"label image too large"},413,cors);
     const imageQuality=body.image_quality&&typeof body.image_quality==="object" ? body.image_quality : null;
     if(imageQuality && imageQuality.acceptable===false){
       const brightness=Number(imageQuality.brightness);
@@ -1861,7 +1602,7 @@ export default {
         suggested_bottle_id:extra.suggested_bottle_id||(candidates[0]&&candidates[0].id)||null,
         candidates:candidates.map(function(candidate){ return {id:candidate.id,confidence:Number(candidate.confidence)||0}; }),candidate_count:candidates.length,
         confidence:overallConfidence,visual_confidence:visionConfidence,ocr_confidence:ocrConfidence,db_confidence:dbConfidence,min_confidence:minConfidence,
-        input_bytes:Math.floor((image.length+labelImage.length)*0.75),duration_ms:Date.now()-scanStartedMs,started_at:scanStartedAt,completed_at:new Date().toISOString(),usage:telemetryUsage
+        input_bytes:Math.floor(image.length*0.75),duration_ms:Date.now()-scanStartedMs,started_at:scanStartedAt,completed_at:new Date().toISOString(),usage:telemetryUsage
       }).catch(function(){});
       if(outcome!=="candidates_presented" && executionCtx&&executionCtx.waitUntil) executionCtx.waitUntil(task);
       return task;
@@ -1895,34 +1636,23 @@ export default {
       dbConfidence=1; overallConfidence=1; confidentHit=true;
       agentTrace={version:SCAN_ORCHESTRATOR_VERSION,confirmed_by_user:true,confirmed_id:resolvedConfirmedId,requested_id:confirmedId};
     } else {
-      // Visual i OCR buduja ranking. Ostateczny wybor zawsze nalezy do usera.
-      const agents=await Promise.all([
-        callVisualAgent(env,mime,image),
-        callOcrAgent(env,mime,labelImage||image)
-      ]);
-      const visualErr=agents[0]&&agents[0].err;
-      const ocrErr=agents[1]&&agents[1].err;
-      telemetryUsage=[agents[0]&&agents[0].usage,agents[1]&&agents[1].usage].filter(Boolean);
-      if(visualErr && ocrErr){
-        const quotaExhausted=visualErr.status===429 || ocrErr.status===429;
-        return scanResponse({error:quotaExhausted?"quota_exhausted":"upstream",status:visualErr.status||ocrErr.status,detail:(visualErr.detail||ocrErr.detail||"agent_error"),retry:!quotaExhausted},quotaExhausted?429:((visualErr.status||ocrErr.status)===0?502:503),quotaExhausted?"quota_exhausted":"upstream_error",{error_code:quotaExhausted?"gemini_quota":"both_agents_failed"});
+      // Jeden agent wizualny rozpoznaje nazwe. Dopasowanie do katalogu jest deterministyczne.
+      const visual=await callVisualAgent(env,mime,image);
+      telemetryUsage=[visual&&visual.usage].filter(Boolean);
+      if(visual&&visual.err){
+        const quotaExhausted=visual.err.status===429;
+        return scanResponse({error:quotaExhausted?"quota_exhausted":"upstream",status:visual.err.status,detail:visual.err.detail||"agent_error",retry:!quotaExhausted},quotaExhausted?429:(visual.err.status===0?502:503),quotaExhausted?"quota_exhausted":"upstream_error",{error_code:quotaExhausted?"gemini_quota":"visual_agent_failed"});
       }
-      const idj=compactVision((agents[0]&&agents[0].data)||{});
-      const ocrj=compactOcr((agents[1]&&agents[1].data)||{});
-      bottleName=(idj.name||ocrCandidateName(ocrj)||"").toString().trim();
-      if(!bottleName && !ocrHasSignal(ocrj)) return scanResponse({error:"not_bottle",agents:scanAgentTrace(idj,ocrj,null)},200,"not_bottle",{error_code:"no_label_signal"});
-      matched=matchBottleWithEvidence(db,idj,ocrj);
-      if(matched){
-        const reranked=await rerankWithReferenceImages(env,mime,image,db,matched);
-        matched=reranked.matched;
-        if(reranked.usage) telemetryUsage.push(reranked.usage);
-      }
+      const idj=compactVision((visual&&visual.data)||{});
+      bottleName=String(idj.name||"").trim();
+      if(!bottleName) return scanResponse({error:"not_bottle",agents:visualAgentTrace(idj,null)},200,"not_bottle",{error_code:"no_visual_identity"});
+      matched=matchBottleWithVisual(db,idj);
       hit=matched&&matched.bottle ? matched.bottle : null;
       visionConfidence=clamp01(idj.confidence);
-      ocrConfidence=clamp01(ocrj.confidence);
+      ocrConfidence=0;
       dbConfidence=matched ? clamp01(matched.dbConfidence) : 0;
       overallConfidence=hit ? dbConfidence : 0;
-      agentTrace=scanAgentTrace(idj,ocrj,matched);
+      agentTrace=visualAgentTrace(idj,matched);
       confidentHit=!!(hit && matched.brandAnchored && !matched.ambiguous && overallConfidence>=minConfidence);
     }
     function lowConfidenceResponse(modeName){
