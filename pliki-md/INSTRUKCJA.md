@@ -27,11 +27,11 @@ Aktualny oczekiwany stan Workera:
 {
   "ok": true,
   "auth_version": "auth-pbkdf2-100000-google-v3",
-  "scan_orchestrator_version": "visual-only-catalog-v1-pre-ocr-restored",
+  "scan_orchestrator_version": "visual-only-catalog-v3-quality-assets",
   "scan_mode": "visual_only",
   "scan_ocr_enabled": false,
-  "scan_catalog_version": "ttb-olcc-retail-filtered-v3",
-  "catalog_submission_version": "community-catalog-images-v5-admin-moderation",
+  "scan_catalog_version": "ttb-olcc-quality-catalog-v8-categories",
+  "catalog_submission_version": "community-catalog-images-v6-highres-cutout",
   "catalog_moderation_version": "catalog-moderation-orchestrator-admin-v1",
   "catalog_license_version": "catalog-license-2026-07-18-v1",
   "pbkdf2_iterations": 100000,
@@ -215,20 +215,28 @@ Ta zmiana dotyczy GitHub Pages. Nie wymaga podmiany Workera, migracji D1 ani zmi
 5. Sprawdź na Home kafel Whisky z liczbą pozycji.
 6. Wejdź w Whisky i sprawdź filtry Scotch, Irish, Japanese, Rye i pozostałe.
 
-Aktualny cache: `bourbon-hunters-v94`.
+Aktualny cache: `bourbon-hunters-v99`.
 
-## Wdrozenie skanera visual-only
+## Wdrozenie skanera visual-only i skonsolidowanego katalogu
 
-Ta zmiana wymaga aktualizacji Workera. Nie wymaga migracji D1 ani czyszczenia danych.
+Ta zmiana wymaga aktualizacji GitHub Pages i Workera. Nie wymaga migracji D1 ani recznego czyszczenia danych userow.
 
-1. Wyslij zmiany na GitHub i poczekaj na zielone GitHub Actions.
+1. Uruchom `WYSLIJ-NA-GITHUB.bat` i poczekaj na zielone GitHub Actions.
+   Git musi byc pierwszy, bo Worker pobiera z repo aktualny `db/catalog/scan-index.json`.
 2. W Cloudflare otworz Worker `bourbon-hunters` -> `Edit code`.
 3. Zastap caly kod zawartoscia pliku `agent/worker.js`.
 4. Kliknij `Deploy`.
-5. Otworz `/auth/health`.
+5. Otworz `https://bourbon-hunters.darekmaslyk.workers.dev/auth/health`.
 6. Sprawdz, czy `scan_orchestrator_version` ma wartosc:
-   `visual-only-catalog-v1-pre-ocr-restored`.
+   `visual-only-catalog-v3-quality-assets`.
+   `scan_catalog_version` ma byc `ttb-olcc-quality-catalog-v8-categories`.
+   `catalog_submission_version` ma byc `community-catalog-images-v6-highres-cutout`.
    Dodatkowo `scan_mode` ma byc `visual_only`, a `scan_ocr_enabled` ma byc `false`.
 7. Na telefonie otworz `test-index.html`, kliknij `Wyczysc cache/PWA`, a potem `Odswiez build`.
 8. Zeskanuj `Jack Daniel's Bonded`, `Knob Creek 9` i jeden wariant `Single Barrel`.
 9. Nie dodawaj zmiennej `OCR_MODEL`; skaner jej nie uzywa.
+10. Sprawdz pojedynczy wynik bez assetu: ekran ma pytac `Czy to ta butelka?`, a po potwierdzeniu szczegoly maja pokazac wycieta butelke.
+
+Potwierdzenie kandydata nie uruchamia drugiego skanu Gemini i nie pobiera drugiej sztuki z dziennego limitu. Dla rekordu bez gotowego assetu zuzywa jedna transformacje Cloudflare Images, aby przygotowac tymczasowy podglad. Publikacja tego podgladu we wspolnej bazie nadal przechodzi przez zgode usera i moderacje.
+
+Stare identyfikatory z kolekcji, wishlist i ocen sa automatycznie przenoszone na produkty kanoniczne. Nie wykonuj recznych aktualizacji D1.

@@ -190,3 +190,38 @@ Ten plik trzyma stale ustalenia, zeby nie ginely w dlugich watkach.
 - Worker wykonuje jedno wywolanie `visual_identification`; pola OCR w historycznym schemacie telemetrii pozostaja i otrzymuja wartosc 0.
 - Punkt bezpieczenstwa wersji OCR: `backup-before-visual-only-e1e13a5`.
 - Wersja health: `visual-only-catalog-v1-pre-ocr-restored`.
+
+## 2026-07-27 - Kanoniczny produkt zamiast etykiety lub rocznika
+
+- Katalog rozroznia produkt od etykiety, rocznika, private pick i nazwy pojedynczej beczki.
+- Rocznik lub batch nie tworzy osobnego produktu, jesli nie zmienia faktycznego wariantu, wieku, proofu, kategorii albo sposobu produkcji.
+- Michter's 10 Year z kolejnych lat jest jednym produktem. Knob Creek SDBB i nazwy private picks sa jednym produktem Knob Creek 9 Year Single Barrel Reserve.
+- Prawdziwe rozne ekspresje, np. bourbon i rye, 9 i 12 lat albo standard i barrel proof, pozostaja osobnymi produktami.
+- Stare ID sa przechowywane jako przekierowania i aliasy, aby zachowac kolekcje, wishlisty, oceny oraz historie userow.
+- Zasada obowiazuje jednoczesnie lekka baze aplikacji i pelny katalog skanera.
+
+## 2026-07-27 - Potwierdzenie i asset wyniku skanera
+
+- Jedna propozycja ma pytanie `Czy to ta butelka?`; dwie propozycje zachowuja pytanie mnogie.
+- User zawsze potwierdza wynik przed otwarciem szczegolow.
+- Potwierdzenie przekazuje wybrane `bottle_id` do Workera. Worker nie zgaduje drugi raz i nie wykonuje drugiego wywolania Gemini.
+- Gotowy asset katalogowy ma pierwszenstwo. Jesli go nie ma, Worker tworzy tymczasowy wyciety podglad ze zdjecia skanu przez Cloudflare Images.
+- Szczegoly pokazuja ten podglad od razu, ale nie oznacza to automatycznej publikacji we wspolnym katalogu.
+- Wspolny asset nadal wymaga zaakceptowanej licencji usera i moderacji admina.
+- Gift sety, VAP, twin packi i warianty z dolaczonymi szklankami, podkladkami lub innymi akcesoriami nie sa produktami katalogowymi i sa usuwane z rekordow oraz aliasow.
+- Konsolidacja nie jest lista wyjatkow dla wybranych marek. Wspolny klucz produktu obejmuje wszystkie rekordy obu baz.
+- Rocznik, batch, numer beczki i private pick sa aliasem produktu; `Edition` i `Series` pozostaja osobnym wariantem, gdy oznaczaja inna ekspresje.
+- Z nazwy wyswietlanej usuwamy kategorie powtarzana przez badge, ale zachowujemy `Rye`, `Wheat`, `Corn`, wiek, Bonded, Single Barrel i Cask Strength.
+- Historyczna wersja health: `visual-only-catalog-v2-confirmed-cutout`, katalog `ttb-olcc-retail-products-v6`, OCR wylaczony.
+
+## 2026-07-27 - Jakosc katalogu i assetow ponad liczbe rekordow
+
+- Katalog publikowany i indeks skanera zawieraja tylko rekordy `verified`; wpisy `recognition_only` bez ceny i parametrow zostaly usuniete.
+- Limit katalogu wynosi 500 USD lub 1500 PLN. Rekord przekraczajacy jeden z limitow nie trafia do lekkiej bazy ani katalogu.
+- Aktywny obraz musi byc przezroczystym WebP z `assets/bourbons/clean/` i przedstawiać jedna butelke.
+- Nie usuwamy watermarkow ze zdjec zewnetrznych. Obraz z watermarkiem, pudelkiem, zestawem, sama etykieta lub dodatkiem dostaje placeholder do czasu legalnej podmiany.
+- Oryginalne pliki pozostaja nietkniete, a decyzje pipeline sa zapisane w raporcie i pliku overrides.
+- Aktualna wersja health: `visual-only-catalog-v3-quality-assets`, katalog `ttb-olcc-quality-catalog-v8-categories`, OCR wylaczony.
+- `spirit-taxonomy-v2` jest jedynym zrodlem klasyfikacji dla Home, filtrow list, Kolekcji, Polecanych i szczegolow.
+- Silna deklaracja produktu (`Rye`, `Wheat Whiskey`, `Malt`, `Tennessee`, kraj pochodzenia lub smak) ma pierwszenstwo przed historycznym polem `type`.
+- Licznik kategorii na Home musi byc rowny liczbie rekordow zwracanych przez ten sam filtr po otwarciu kategorii; kontroluje to `scripts/ui-taxonomy-smoke.mjs`.

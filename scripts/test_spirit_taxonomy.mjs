@@ -15,7 +15,21 @@ const cases = [
   [{ name: "Redbreast 12", type: "IRISH WHISKY", region: "IRELAND" }, "whisky", "irish"],
   [{ name: "Hibiki Harmony", type: "WHISKY", region: "JAPAN" }, "whisky", "japanese"],
   [{ name: "Kavalan Classic", type: "WHISKY", region: "TAIWAN" }, "whisky", "world"],
-  [{ name: "Westland Single Malt", type: "AMERICAN SINGLE MALT WHISKEY", region: "WASHINGTON" }, "whisky", "american_malt"]
+  [{ name: "Westland Single Malt", type: "AMERICAN SINGLE MALT WHISKEY", region: "WASHINGTON" }, "whisky", "american_malt"],
+  [{ name: "Basil Hayden's Two by Two Rye", type: "Bourbon" }, "whisky", "rye"],
+  [{ name: "Woodford Reserve Kentucky Straight Wheat Whiskey", type: "Bourbon" }, "whisky", "corn_wheat"],
+  [{ name: "Jim Beam Apple", type: "Bourbon" }, "whisky", "flavored"],
+  [{ name: "1792 Small Batch Single Barrel Select", type: "DOMESTIC WHISKEY", category: "Whiskey" }, "bourbon", "single"],
+  [{ name: "Bardstown Origin Bottled in Bond", type: "DOMESTIC WHISKEY", category: "Whiskey" }, "bourbon", "bib"],
+  [{ name: "Bulleit Bottled in Bond", type: "DOMESTIC WHISKEY", category: "Whiskey" }, "bourbon", "bib"],
+  [{ name: "BOOKERS", type: "DOMESTIC WHISKEY", category: "Whiskey" }, "bourbon", "standard"],
+  [{ name: "Bull Run Barrel Strength BRBN", type: "DOMESTIC WHISKEY", category: "Whiskey" }, "bourbon", "proof"],
+  [{ name: "Knob Creek Rye 7 Year", type: "DOMESTIC WHISKEY", category: "Whiskey" }, "whisky", "rye"],
+  [{ name: "Jack Daniels Black Label", type: "DOMESTIC WHISKEY", category: "Whiskey" }, "whisky", "tennessee"],
+  [{ name: "Jefferson's Reserve Bourbon Cask", type: "SCOTCH", category: "Scotch", region: "SCOTLAND" }, "whisky", "scotch"],
+  [{ name: "Nikka Coffey Grain", type: "OTHER IMPORTED WHISKY" }, "whisky", "japanese"],
+  [{ name: "Woodford Reserve Five-Malt Stouted Mash", type: "Bourbon", region: "USA" }, "whisky", "american_malt"],
+  [{ name: "Four Roses Single Barrel Bottled in Bond", type: "Bourbon" }, "bourbon", "bib"]
 ];
 
 for (const [bottle, expectedFamily, expectedStyle] of cases) {

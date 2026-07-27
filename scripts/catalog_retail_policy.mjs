@@ -1,7 +1,8 @@
 import { identityAscii } from "./catalog_identity.mjs";
 
-export const RETAIL_FILTER_VERSION="retail-relevance-2026-v1";
-export const MAX_RETAIL_USD=1000;
+export const RETAIL_FILTER_VERSION="retail-relevance-2026-v3-quality-first";
+export const MAX_RETAIL_USD=500;
+export const MAX_RETAIL_PLN=1500;
 
 function numericPrice(value){
   const number=Number(value);
@@ -18,6 +19,22 @@ export function retailPriceUsd(record){
   return 0;
 }
 
+export function retailPricePln(record){
+  const price=numericPrice(record&&record.price);
+  if(!price) return 0;
+  const currency=String(record&&record.price_currency||"").toUpperCase();
+  const source=identityAscii(record&&record.source);
+  if(currency==="PLN" || source==="domwhisky") return price;
+  return 0;
+}
+
+export function catalogQualityRemovalReason(record){
+  if(!record) return "missing-record";
+  if(record.catalog_status==="recognition_only") return "recognition-only-incomplete";
+  if(record.catalog_status==="verified"&&!numericPrice(record.price)) return "verified-without-price";
+  return "";
+}
+
 function releaseYears(text){
   return [...text.matchAll(/\b(20\d{2})\b/g)].map((match)=>Number(match[1]));
 }
@@ -27,6 +44,24 @@ function statedAge(text){
   return match?Number(match[1]):0;
 }
 
+export function retailPackagingBundleReason(record){
+  const text=identityAscii(record&&record.name);
+  if(!text) return "";
+  const bundle=
+    /\bgift\b|\bvap\b|\btwin pack\b|\bseasonal rotating bag\b|\b(?:sampler|miniature|variety|value)\s+(?:pack|set)\b|\b(?:glassware|barware)\s+(?:pack|set|kit)\b|\b(?:cocktail|old fashioned)\s+kit\b|\b(?:with|w)\s+(?:\d+\s+)?(?:(?:rocks?|shot)\s+)?(?:glass(?:es)?|gls|coasters?|tumblers?|mugs?|flasks?|ice mold|whisk(?:e)?y stones?|water bottle)\b|\b(?:glass(?:es)?|coasters?|tumblers?|mugs?|flasks?)\s+(?:pack|set|kit)\b/;
+  return bundle.test(text)?"gift-or-accessory-bundle":"";
+}
+
+export function nonWhiskeySpiritReason(record){
+  const name=identityAscii(record&&record.name);
+  if(!name) return "";
+  if(/\brtd\b|\btwisted tea\b/.test(name)) return "ready-to-drink-not-whiskey";
+  if(/\b(?:gin|vodka|tequila|mezcal|moonshine)\b/.test(name) && !/\b(?:whisk(?:e)?y|bourbon)\b/.test(name)){
+    return "non-whiskey-spirit";
+  }
+  return "";
+}
+
 export function retailRemovalReason(record){
   const sourceText=[
     record&&record.name,record&&record.type,record&&record.category,record&&record.region
@@ -34,7 +69,15 @@ export function retailRemovalReason(record){
   const text=identityAscii(sourceText);
   const raw=String(sourceText).toLowerCase();
   const priceUsd=retailPriceUsd(record);
-  if(priceUsd>MAX_RETAIL_USD) return "price-over-1000-usd";
+  const pricePln=retailPricePln(record);
+  if(priceUsd>MAX_RETAIL_USD) return "price-over-500-usd";
+  if(pricePln>MAX_RETAIL_PLN) return "price-over-1500-pln";
+  const nonWhiskeyReason=nonWhiskeySpiritReason(record);
+  if(nonWhiskeyReason) return nonWhiskeyReason;
+  const packagingReason=retailPackagingBundleReason(record);
+  if(packagingReason) return packagingReason;
+  const genericLabel=/^(?:bourbon|whisky|whiskey|rye|straight bourbon|straight rye|single barrel(?: bourbon)?|private selection|small batch(?: bourbon)?|barrel proof|cask strength|bottled in bond|kentucky bourbon|american whiskey|blended whiskey|malt whiskey|corn whiskey|wheat whiskey)$/;
+  if(genericLabel.test(identityAscii(record&&record.name))) return "generic-label-without-brand";
 
   const ultraAllocated=/\b(?:pappy van winkles?|van winkle|old rip van winkle|william larue weller|thomas h handy|george t stagg|eagle rare 17|double eagle very rare|king of kentucky|old forester birthday bourbon|michters (?:20|25)(?: year)?|ofc vintage|parker(?:s| s) heritage|weller millennium|daniel weller)\b/;
   if(ultraAllocated.test(text)) return "ultra-allocated";

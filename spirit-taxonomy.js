@@ -22,6 +22,7 @@
     { key: "tennessee", label: "Tennessee" },
     { key: "canadian", label: "Canadian" },
     { key: "corn_wheat", label: "Corn & Wheat" },
+    { key: "flavored", label: "Flavored Whiskey" },
     { key: "american_other", label: "American Whiskey" },
     { key: "world", label: "World Whisky" },
     { key: "other_whisky", label: "Other Whisky" }
@@ -61,31 +62,58 @@
     const b = bottle || {};
     return {
       name: normalize(b.name),
+      aliases: normalize((b.aliases || []).join(" ")),
       type: normalize(b.type),
       category: normalize(b.category),
       region: normalize(b.region),
-      distillery: normalize(b.distillery)
+      distillery: normalize(b.distillery),
+      family: normalize(b.spirit_family),
+      style: normalize(b.browse_style)
     };
   }
 
   function isBourbon(bottle) {
     const f = fields(bottle);
-    return /\bbourbon\b/.test(`${f.name} ${f.type} ${f.category}`);
+    if (f.family === "bourbon") return true;
+    if (f.family === "whisky") return false;
+
+    const name = `${f.name} ${f.aliases}`;
+    const declaration = `${name} ${f.type} ${f.category}`;
+    const explicitOther =
+      /\b(scotch|irish|japanese|canadian|tennessee|single malt|malt whisk(?:e)?y|wheat whisk(?:e)?y|corn whisk(?:e)?y)\b/.test(declaration) ||
+      (/\bmalt\b/.test(name) && !/\bbourbon\b/.test(name)) ||
+      (/\brye\b/.test(name) && !/\bhigh rye\b/.test(name) && !/\bbourbon\b/.test(name)) ||
+      (/\b(?:gin|vodka|rum|tequila|mezcal|moonshine)\b/.test(name) &&
+        !/\bbourbon\b/.test(name) &&
+        !/\b(?:finished|finish|cask|barrel)\b/.test(name));
+    const flavored =
+      /\b(?:apple|honey|peach|pineapple|orange|blackberry|black cherry|peanut butter|salted caramel|vanilla|chocolate|s ?mores|cinnamon)\b/.test(name) &&
+      !/\b(?:finished|finish|cask|barrel)\b/.test(name);
+    if (explicitOther || flavored || (/\bblend(?:ed)?\b/.test(name) && /\bbourbon\b/.test(name) && /\brye\b/.test(name))) return false;
+    if (/\bbourbon|bourbn|brbn\b/.test(declaration)) return true;
+
+    // OLCC often labels a bourbon only as "DOMESTIC WHISKEY". These stable
+    // product families are bourbon unless the stronger rules above identify
+    // rye, malt, Tennessee whiskey or a flavored expression.
+    return /^(?:1792|ancient (?:ancient )?age|angel(?:s| s) envy|bardstown origin|bakers?|basil hayden(?:s| s)?|benchmark|bib (?:and )?tucker|blade (?:and )?bow|blantons?|blood oath|booker(?:s| s)?|buffalo trace|bulleit|bull run|calumet|eagle rare|e h taylor|elijah craig|evan williams|ezra brooks|fighting cock|four roses|frey ranch|george remus|heaven(?:s| s) door|heaven hill|henry mckenna|i w harper|isaac bowman|j t s brown|jefferson(?:s| s)?|jim beam|johnny drum|kentucky owl|kentucky tavern|knob creek|larceny|lux row|maker(?:s| s) mark|old bardstown|old charter|old crow|old ezra|old forester|old grand dad|old tub|penelope|rabbit hole|rebel|remus|stagg|thomas s moore|very old barton|w l weller|weller|wild turkey|woodford (?:reserve|res)|yellowstone)\b/.test(name);
   }
 
   function whiskyStyle(bottle) {
     const f = fields(bottle);
-    const text = `${f.name} ${f.type} ${f.category}`;
+    if (WHISKY_STYLES.some(function(item) { return item.key === f.style; })) return f.style;
+    const text = `${f.name} ${f.aliases} ${f.type} ${f.category}`;
     const all = `${text} ${f.region} ${f.distillery}`;
 
     if (/\b(scotch|scotland|islay|speyside|highland|lowland|campbeltown)\b/.test(all)) return "scotch";
     if (/\b(irish|ireland)\b/.test(all)) return "irish";
-    if (/\b(japanese|japan)\b/.test(all)) return "japanese";
+    if (/\b(japanese|japan|nikka|suntory|hibiki|hatozaki|tenjaku|yamazaki|hakushu|yoichi|miyagikyo)\b/.test(all)) return "japanese";
     if (/\b(canadian|canada)\b/.test(all)) return "canadian";
-    if (/\bamerican single malt\b|\bstraight american single malt\b/.test(text)) return "american_malt";
-    if (/\b(straight rye|rye whisk(?:e)?y|rye bib|blended rye)\b/.test(text)) return "rye";
-    if (/\b(corn whisk(?:e)?y|straight corn|wheat whisk(?:e)?y|straight wheat)\b/.test(text)) return "corn_wheat";
-    if (/\btennessee\b/.test(all)) return "tennessee";
+    if (/\bamerican single malt\b|\bstraight american single malt\b|\bsingle malt\b|\bmalt\b/.test(text) && (US_REGIONS.has(f.region) || /\bamerican\b|\bdomestic\b|\boregon\b|\bwashington\b|\btexas\b|\bcolorado\b|\bwestland\b|\bmccarthy s\b/.test(all))) return "american_malt";
+    if (/\b(corn whisk(?:e)?y|straight corn|wheat whisk(?:e)?y|straight wheat|mellow corn|soft red wheat|wheat bib)\b/.test(text)) return "corn_wheat";
+    if (/\b(straight rye|rye whisk(?:e)?y|rye bib|blended rye|rye|old overholt|rittenhouse|sagamore|sazerac|pikesville|whistlepig|templeton)\b/.test(text)) return "rye";
+    if (/\btennessee\b|\bjack daniel(?:s| s)?\b|\bgeorge dickel\b|\bnearest green\b|\buncle nearest\b/.test(all)) return "tennessee";
+    if (/\b(?:paul john)\b/.test(all)) return "world";
+    if (/\b(?:apple|honey|peach|pineapple|orange|blackberry|black cherry|blueberry|strawberry|watermelon|banana|huckleberry|peanut butter|salted caramel|brown sugar|vanilla|chocolate|s ?mores|cinnamon|cream|fireball|sinfire|skrewball|southern comfort|howler head|ballotin)\b/.test(text) && !/\b(?:finished|finish|cask|barrel)\b/.test(text)) return "flavored";
     if (US_REGIONS.has(f.region) || /\b(american|domestic whiskey)\b/.test(`${f.type} ${f.region}`)) return "american_other";
     if (WORLD_REGIONS.has(f.region)) return "world";
     return "other_whisky";
@@ -97,12 +125,12 @@
 
   function bourbonStyleKeys(bottle) {
     const f = fields(bottle);
-    const text = `${f.name} ${f.type} ${f.category}`;
+    const text = `${f.name} ${f.aliases} ${f.type} ${f.category}`;
     const keys = [];
     if (/\b(single barrel|single cask|pojedyncza beczka)\b/.test(text)) keys.push("single");
     if (/\b(small batch|mala partia)\b/.test(text)) keys.push("small");
     if (/\b(bottled in bond|bottled in bond bib|bonded|bib)\b/.test(text)) keys.push("bib");
-    if (/\b(barrel proof|cask strength|full proof|pelna moc beczki)\b/.test(text)) keys.push("proof");
+    if (/\b(barrel proof|barrel strength|cask strength|full proof|pelna moc beczki)\b/.test(text)) keys.push("proof");
     if (/\b(wheated|wheat recipe|wheat bourbon|bourbon pszeniczny)\b/.test(text)) keys.push("wheated");
     if (/\b(limited|special release|annual release|edycja limitowana)\b/.test(text)) keys.push("limited");
     if (!keys.length) keys.push("standard");
@@ -116,7 +144,7 @@
   function primaryStyle(bottle) {
     const keys = styleKeys(bottle);
     const priority = family(bottle) === "bourbon"
-      ? ["single", "small", "bib", "proof", "wheated", "limited", "standard"]
+      ? ["bib", "proof", "single", "small", "wheated", "limited", "standard"]
       : WHISKY_STYLES.map(function(item) { return item.key; });
     return priority.find(function(key) { return keys.indexOf(key) >= 0; }) || keys[0] || "other_whisky";
   }
@@ -145,7 +173,7 @@
   }
 
   return {
-    version: "spirit-taxonomy-v1",
+    version: "spirit-taxonomy-v2",
     BOURBON_STYLES,
     WHISKY_STYLES,
     normalize,

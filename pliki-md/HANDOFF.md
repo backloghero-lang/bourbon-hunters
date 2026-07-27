@@ -7,6 +7,43 @@ Aktualizacja: 2026-07-05.
 Najnowszy kontekst dla kolejnego etapu jest w `pliki-md/HANDOFF-BH-1.1.md`.
 Uzyj go jako pierwszego dokumentu przy starcie watku `Przekaz Bourbon Hunter 1.1`.
 
+## Aktualizacja 2026-07-27 - katalog quality-first i czyste assety
+
+- Katalog skanera ma 1042 zweryfikowane produkty. Po bazowym odrzuceniu 7976 rekordow `recognition_only` usunieto tez pozostale zestawy, RTD i produkty spoza whisky.
+- Lekka baza startowa ma 292 produkty. Po klasyfikacji do przegladania aplikacja pokazuje 748 kanonicznych pozycji: 274 Bourbon i 474 Whisky.
+- Obowiazuja limity `MAX_RETAIL_USD=500` i `MAX_RETAIL_PLN=1500`.
+- `scripts/clean_bottle_assets.mjs` tworzy przezroczyste WebP w `assets/bourbons/clean/`, bez nadpisywania zrodel.
+- Aktywne sa tylko obrazy jednej butelki bez pudelek, zestawow, dodatkowych przedmiotow i watermarkow. Pozostale rekordy uzywaja kontrolowanego placeholdera.
+- Raport obrazow: `db/catalog/image-quality-report.json`; jawne decyzje: `db/catalog/image-asset-overrides.json`.
+- Lekka baza ma 115 aktywnych czystych assetow i 177 placeholderow.
+- Nowe skany wysylaja obraz do 1800 px przy JPEG 0.91, a Worker tworzy podglad 960x1280.
+- Taksonomia `spirit-taxonomy-v2` jest wspolna dla Home, Odkrywaj, Kolekcji, Polecanych i szczegolow. Licznik kafla jest liczony z tej samej listy, ktora otwiera kafel.
+- Worker: `visual-only-catalog-v3-quality-assets`; katalog: `ttb-olcc-quality-catalog-v8-categories`; submission: `community-catalog-images-v6-highres-cutout`.
+- Cache PWA: `bourbon-hunters-v99`.
+- Nie ma migracji D1. Najpierw GitHub i zielone Actions, potem Worker, health i odswiezenie PWA.
+
+## Aktualizacja 2026-07-27 - produkty kanoniczne i potwierdzony asset skanera
+
+- Lekka baza aplikacji zostala oczyszczona z rocznikow, private picks, nazw beczek i innych nazw handlowych, ktore nie tworza osobnego produktu.
+- `db/bourbons.json` ma 333 kanoniczne produkty zamiast 539 wejsciowych rekordow.
+- Pelny katalog skanera ma 9036 produktow zamiast 9406 rekordow wejsciowych.
+- Stare identyfikatory nie znikaja z kolekcji userow: 437 przekierowan w pelnym katalogu prowadzi do kanonicznych produktow.
+- Te same ogolne reguly obowiazuja wszystkie marki w obu bazach: roczniki, batche, techniczne nazwy OLCC/TTB, private picks, numery beczek i opakowania nie tworza osobnego produktu.
+- Nazwa wyswietlana jest czyszczona z koncowych kategorii `Bourbon/Whiskey`; pelna historyczna nazwa zostaje aliasem skanera.
+- Prawdziwe ekspresje zachowuja odrebnosc: bourbon/rye, wiek, proof, Bonded, Single Barrel, Cask Strength oraz numery `Edition` i `Series`.
+- Gift sety, VAP, twin packi oraz warianty ze szklankami, podkladkami, kubkami, flaskami i cocktail kitami sa usuwane calkowicie, takze z aliasow.
+- Przyklad: roczniki Michter's 10 Year sa jednym produktem `Michter's 10 Year Single Barrel Bourbon`.
+- Przyklad: Knob Creek SDBB, private picks i nazwy beczek sa jednym produktem `Knob Creek 9 Year Single Barrel Reserve`; prawdziwe inne ekspresje nadal sa osobne.
+- Jedna propozycja skanera ma osobny ekran `Czy to ta butelka?`; ekran mnogi pozostaje tylko dla dwoch propozycji.
+- Po potwierdzeniu Worker nie uruchamia ponownie Gemini i nie pobiera drugiego limitu skanu. Dla butelki bez assetu wykonuje wyciecie Cloudflare Images i zwraca tymczasowy podglad do szczegolow.
+- Tymczasowy podglad nie jest automatycznie publikowany we wspolnym katalogu. Publikacja nadal wymaga licencji usera i moderacji admina.
+- Raport konsolidacji: `db/catalog/product-consolidation-report.json`.
+- Skrypt przebudowy: `scripts/consolidate_product_catalog.mjs`.
+- Historyczna wersja Workera tego etapu: `visual-only-catalog-v2-confirmed-cutout`.
+- Historyczna wersja katalogu tego etapu: `ttb-olcc-retail-products-v6`.
+- Historyczny cache PWA tego etapu: `bourbon-hunters-v97`.
+- Wdrozenie wymaga GitHub Pages i Workera, ale nie wymaga migracji D1.
+
 ## Aktualizacja 2026-07-24 - rollback skanera do jednego agenta wizualnego
 
 - Skaner wykonuje jedno wywolanie Gemini na pelnym zdjeciu.
@@ -18,9 +55,9 @@ Uzyj go jako pierwszego dokumentu przy starcie watku `Przekaz Bourbon Hunter 1.1
 - Nowa migracja `agent/d1-migration-v67-catalog-moderation.sql` dodaje kolejke moderacji. User wysyla szkic, orkiestrator go ocenia, a admin zatwierdza albo odrzuca w widoku `Raporty`.
 - Opublikowany rekord katalogowy jest zablokowany przed nadpisaniem przez zwyklego usera.
 - Test `scripts/scanner-regression.mjs` uruchamia prawdziwy kod Workera: 99,6% top-1 i top-2 na kontrolnej probce 1000 nazw.
-- Oczekiwana wersja Workera: `visual-only-catalog-v1-pre-ocr-restored`.
+- Bazowa wersja po rollbacku: `visual-only-catalog-v1-pre-ocr-restored`.
 - Oczekiwana wersja moderacji: `catalog-moderation-orchestrator-admin-v1`.
-- Cache PWA: `bourbon-hunters-v94`.
+- Bazowy cache PWA po rollbacku: `bourbon-hunters-v94`.
 - Punkt powrotu do wersji OCR: `backup-before-visual-only-e1e13a5`.
 - Historyczny punkt sprzed pierwszego OCR: `backup-pre-ocr-636617a`.
 
@@ -42,7 +79,7 @@ Uzyj go jako pierwszego dokumentu przy starcie watku `Przekaz Bourbon Hunter 1.1
 - Raport usunietych rekordow: `db/catalog/retail-filter-report.json`.
 - Generator, filtr i walidator korzystaja ze wspolnej polityki `scripts/catalog_retail_policy.mjs`.
 - Regresja po filtrze: 99,4% top-1 i 99,4% top-2 na probce 1000 rekordow.
-- Oczekiwana wersja katalogu Workera: `ttb-olcc-retail-filtered-v3`.
+- Bazowa wersja katalogu po filtrze: `ttb-olcc-retail-filtered-v3`.
 
 ## Aktualizacja 2026-07-23 - kanoniczne warianty skanera
 

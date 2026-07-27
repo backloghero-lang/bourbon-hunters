@@ -60,39 +60,16 @@
         ]
       }
     },
-    "bardstown-bourbon-company-copper-kings-10-year-muscat-finish-94-proof-first-release": {
-      "profile": {
-        "en": {
-          "general": "Bardstown Bourbon Company Copper & Kings 10 Year Muscat Finish 94 Proof First Release is a classic limited release bourbon from Bardstown Bourbon Company at 94 proof, built around the producer's house style and the bottle's strength.",
-          "nose": "Vanilla-led aromas bring honeyed grain, caramel, orchard fruit and polished oak, plus a drier spice thread and dry baking spice in its 94 proof frame.",
-          "taste": "The palate feels drying as the oak takes over, carrying caramel, polished oak and rounded vanilla sweetness; spice arrives without turning sharp in its 94 proof frame.",
-          "finish": "Balanced medium finish with brown sugar, oak grip and a measured sweet fade, honeyed grain and orchard fruit at 94 proof, with a short spice echo."
-        },
-        "pl": {
-          "general": "Bardstown Bourbon Company Copper & Kings 10 Year Muscat Finish 94 Proof First Release to klasyczny edycja limitowana bourbona od Bardstown Bourbon Company przy 94 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
-          "nose": "Aromat prowadzi zestaw: miodowe zboże, karmel, owoce sadu i wygładzony dąb, do tego bardziej wytrawna nić przypraw oraz sucha przyprawa korzenna w ramie 94 proof.",
-          "taste": "Na podniebieniu profil jest bardziej wytrawny, gdy przejmuje go dąb; w tle są karmel, wygładzony dąb i zaokrąglona waniliowa słodycz; przyprawy nie robią się ostre w ramie 94 proof.",
-          "finish": "Zbalansowany, średni finisz z brązowym cukrem, dębowym chwytem i miarowym słodkim zejściem, miodowe zboże i owoce sadu przy 94 proof, z krótkim echem przypraw."
-        }
-      },
-      "meta": {
-        "status": "seeded_runtime_profile",
-        "method": "style_and_bottle_data_synthesis",
-        "sources": [
-          "https://woodencork.com/products/bardstown-bourbon-company-copper-kings-10-year-muscat-finish-94-proof-first-release"
-        ]
-      }
-    },
     "bardstown-fusion-series-no-5-kentucky-straight-bourbon": {
       "profile": {
         "en": {
-          "general": "Bardstown Fusion Series No.5 Kentucky Straight Bourbon is a classic bourbon from Bardstown Bourbon Company, built around the producer's house style and the bottle's strength.",
+          "general": "Bardstown Fusion Series No.5 Kentucky Straight is a classic bourbon from Bardstown Bourbon Company, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring honeyed grain, caramel, orchard fruit and polished oak, plus a drier spice thread and a mellow honey tone.",
           "taste": "The palate feels drying as the oak takes over, carrying caramel, polished oak and rounded vanilla sweetness; warm spice fills the middle.",
           "finish": "Balanced medium finish with maple-like sweetness, dry wood and soft char, honeyed grain and orchard fruit in a bourbon frame, with a calm vanilla return."
         },
         "pl": {
-          "general": "Bardstown Fusion Series No.5 Kentucky Straight Bourbon to klasyczny bourbon od Bardstown Bourbon Company, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Bardstown Fusion Series No.5 Kentucky Straight to klasyczny bourbon od Bardstown Bourbon Company, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: miodowe zboże, karmel, owoce sadu i wygładzony dąb, do tego bardziej wytrawna nić przypraw oraz miękki ton miodu.",
           "taste": "Na podniebieniu profil jest bardziej wytrawny, gdy przejmuje go dąb; w tle są karmel, wygładzony dąb i zaokrąglona waniliowa słodycz; ciepłe przyprawy wypełniają środek.",
           "finish": "Zbalansowany, średni finisz z klonową słodyczą, suchym drewnem i łagodnym opaleniem, miodowe zboże i owoce sadu w ramie stylu bourbon, ze spokojnym powrotem wanilii."
@@ -132,13 +109,13 @@
     "1792-bottled-in-bond-kentucky-straight-bourbon": {
       "profile": {
         "en": {
-          "general": "1792 Bottled in Bond Kentucky Straight Bourbon is a classic bourbon from Barton 1792 Distillery, built around the producer's house style and the bottle's strength.",
+          "general": "1792 Bottled in Bond Kentucky Straight is a classic bourbon from Barton 1792 Distillery, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring vanilla, caramel, sweet oak and baking spice, plus a softer honeyed middle and a richer char note.",
           "taste": "The palate feels richer through the middle, carrying caramel, baking spice and rounded vanilla sweetness; the texture stays compact.",
           "finish": "Balanced medium finish with toffee, warm spice and a smooth drying close, vanilla and sweet oak in a bourbon frame, with a measured oak fade."
         },
         "pl": {
-          "general": "1792 Bottled in Bond Kentucky Straight Bourbon to klasyczny bourbon od Barton 1792 Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "1792 Bottled in Bond Kentucky Straight to klasyczny bourbon od Barton 1792 Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: wanilia, karmel, słodki dąb i przyprawy korzenne, do tego łagodniejszy, miodowy środek oraz bogatsza nuta opalenia.",
           "taste": "Na podniebieniu profil jest bogatszy w środkowej części; w tle są karmel, przyprawy korzenne i zaokrąglona waniliowa słodycz; tekstura pozostaje zwarta.",
           "finish": "Zbalansowany, średni finisz z toffi, ciepłymi przyprawami i gładkim wytrawnym domknięciem, wanilia i słodki dąb w ramie stylu bourbon, z miarowym wygasaniem dębu."
@@ -155,13 +132,13 @@
     "1792-full-proof-kentucky-straight-bourbon": {
       "profile": {
         "en": {
-          "general": "1792 Full Proof Kentucky Straight Bourbon is a classic bourbon from Barton 1792 Distillery, built around the producer's house style and the bottle's strength.",
+          "general": "1792 Full Proof Kentucky Straight is a classic bourbon from Barton 1792 Distillery, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring vanilla, caramel, sweet oak and baking spice, plus a touch of citrus brightness and soft brown sugar.",
           "taste": "The palate feels sweet first, then spice-led, carrying caramel, baking spice and rounded vanilla sweetness; the grain note keeps it clear.",
           "finish": "Balanced medium finish with honeyed sweetness, oak tannin and a short spice echo, vanilla and sweet oak in a bourbon frame, with a tidy barrel grip."
         },
         "pl": {
-          "general": "1792 Full Proof Kentucky Straight Bourbon to klasyczny bourbon od Barton 1792 Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "1792 Full Proof Kentucky Straight to klasyczny bourbon od Barton 1792 Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: wanilia, karmel, słodki dąb i przyprawy korzenne, do tego odrobina cytrusowej jasności oraz łagodny brązowy cukier.",
           "taste": "Na podniebieniu profil jest najpierw słodki, potem przyprawowy; w tle są karmel, przyprawy korzenne i zaokrąglona waniliowa słodycz; zboże utrzymuje czysty profil.",
           "finish": "Zbalansowany, średni finisz z miodową słodyczą, taniną dębu i krótkim echem przypraw, wanilia i słodki dąb w ramie stylu bourbon, ze zwartym chwytem beczki."
@@ -178,13 +155,13 @@
     "1792-single-barrel-kentucky-straight-bourbon": {
       "profile": {
         "en": {
-          "general": "1792 Single Barrel Kentucky Straight Bourbon is a classic bourbon from Barton 1792 Distillery, built around the producer's house style and the bottle's strength.",
+          "general": "1792 Single Barrel Kentucky Straight is a classic bourbon from Barton 1792 Distillery, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring vanilla, caramel, sweet oak and baking spice, plus a darker barrel-char edge and a polished vanilla core.",
           "taste": "The palate feels compact, clean and classic, carrying caramel, baking spice and rounded vanilla sweetness; the sweetness stays controlled.",
           "finish": "Balanced medium finish with vanilla, leathered oak and a quiet toasted note, vanilla and sweet oak in a bourbon frame, with a dry final edge."
         },
         "pl": {
-          "general": "1792 Single Barrel Kentucky Straight Bourbon to klasyczny bourbon od Barton 1792 Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "1792 Single Barrel Kentucky Straight to klasyczny bourbon od Barton 1792 Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: wanilia, karmel, słodki dąb i przyprawy korzenne, do tego ciemniejszy ton opalonej beczki oraz wygładzony rdzeń wanilii.",
           "taste": "Na podniebieniu profil jest zwarty, czysty i klasyczny; w tle są karmel, przyprawy korzenne i zaokrąglona waniliowa słodycz; słodycz pozostaje pod kontrolą.",
           "finish": "Zbalansowany, średni finisz z wanilią, dojrzalszym dębem i cichą nutą tostową, wanilia i słodki dąb w ramie stylu bourbon, z wytrawną końcówką."
@@ -201,13 +178,13 @@
     "blantons-130-proof-straight-from-the-barrel-bourbon": {
       "profile": {
         "en": {
-          "general": "Blanton's 130+ Proof Straight From The Barrel Bourbon is a high-strength bourbon from Buffalo Trace Distillery at 130 proof, built around the producer's house style and the bottle's strength.",
+          "general": "Blanton's 130+ Proof Straight From The Barrel is a high-strength bourbon from Buffalo Trace Distillery at 130 proof, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring vanilla, caramel, orange peel and polished oak, plus a rounded dessert-spice note and a light floral lift in its 130 proof frame.",
           "taste": "The palate feels polished and approachable, carrying caramel, polished oak and rounded vanilla sweetness; the middle stays rounded in its 130 proof frame.",
           "finish": "Long, warming finish with sweet grain, clove warmth and a rounded oak finish, vanilla and orange peel and lingering barrel heat at 130 proof, with a polished oak return."
         },
         "pl": {
-          "general": "Blanton's 130+ Proof Straight From The Barrel Bourbon to mocniejszy bourbon od Buffalo Trace Distillery przy 130 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Blanton's 130+ Proof Straight From The Barrel to mocniejszy bourbon od Buffalo Trace Distillery przy 130 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: wanilia, karmel, skórka pomarańczy i wygładzony dąb, do tego zaokrąglona nuta deserowych przypraw oraz lekka kwiatowa nuta w ramie 130 proof.",
           "taste": "Na podniebieniu profil jest wygładzony i przystępny; w tle są karmel, wygładzony dąb i zaokrąglona waniliowa słodycz; środek pozostaje zaokrąglony w ramie 130 proof.",
           "finish": "Długi, rozgrzewający finisz z słodkim ziarnem, ciepłem goździka i zaokrąglonym dębem, wanilia i skórka pomarańczy i ciepłem beczki przy 130 proof, z powrotem wygładzonego dębu."
@@ -224,13 +201,13 @@
     "blantons-original-single-barrel-bourbon-whiskey-700ml": {
       "profile": {
         "en": {
-          "general": "Blanton's Single Barrel Bourbon is a classic single barrel bourbon from Buffalo Trace Distillery at 93 proof, built around the producer's house style and the bottle's strength.",
+          "general": "Blanton's Single Barrel is a classic single barrel bourbon from Buffalo Trace Distillery at 93 proof, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring vanilla, caramel, orange peel and polished oak, plus a drier spice thread and dry baking spice in its 93 proof frame.",
           "taste": "The palate feels drying as the oak takes over, carrying caramel, polished oak and rounded vanilla sweetness; spice arrives without turning sharp in its 93 proof frame.",
           "finish": "Balanced medium finish with brown sugar, oak grip and a measured sweet fade, vanilla and orange peel at 93 proof, with a short spice echo."
         },
         "pl": {
-          "general": "Blanton's Single Barrel Bourbon to klasyczny single barrel bourbon od Buffalo Trace Distillery przy 93 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Blanton's Single Barrel to klasyczny single barrel bourbon od Buffalo Trace Distillery przy 93 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: wanilia, karmel, skórka pomarańczy i wygładzony dąb, do tego bardziej wytrawna nić przypraw oraz sucha przyprawa korzenna w ramie 93 proof.",
           "taste": "Na podniebieniu profil jest bardziej wytrawny, gdy przejmuje go dąb; w tle są karmel, wygładzony dąb i zaokrąglona waniliowa słodycz; przyprawy nie robią się ostre w ramie 93 proof.",
           "finish": "Zbalansowany, średni finisz z brązowym cukrem, dębowym chwytem i miarowym słodkim zejściem, wanilia i skórka pomarańczy przy 93 proof, z krótkim echem przypraw."
@@ -247,13 +224,13 @@
     "blanton-s-gold-edition-single-barrel-select": {
       "profile": {
         "en": {
-          "general": "Blanton’s Gold Edition Single Barrel is a classic single barrel bourbon from Buffalo Trace Distillery, built around the producer's house style and the bottle's strength.",
+          "general": "Blanton's Gold Edition Single Barrel is a classic single barrel bourbon from Buffalo Trace Distillery, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring vanilla, caramel, orange peel and polished oak, plus a drier spice thread and dry baking spice.",
           "taste": "The palate feels drying as the oak takes over, carrying caramel, polished oak and rounded vanilla sweetness; spice arrives without turning sharp.",
           "finish": "Balanced medium finish with brown sugar, oak grip and a measured sweet fade, vanilla and orange peel in a single barrel bourbon frame, with a short spice echo."
         },
         "pl": {
-          "general": "Blanton’s Gold Edition Single Barrel to klasyczny single barrel bourbon od Buffalo Trace Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Blanton's Gold Edition Single Barrel to klasyczny single barrel bourbon od Buffalo Trace Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: wanilia, karmel, skórka pomarańczy i wygładzony dąb, do tego bardziej wytrawna nić przypraw oraz sucha przyprawa korzenna.",
           "taste": "Na podniebieniu profil jest bardziej wytrawny, gdy przejmuje go dąb; w tle są karmel, wygładzony dąb i zaokrąglona waniliowa słodycz; przyprawy nie robią się ostre.",
           "finish": "Zbalansowany, średni finisz z brązowym cukrem, dębowym chwytem i miarowym słodkim zejściem, wanilia i skórka pomarańczy w ramie stylu single barrel bourbon, z krótkim echem przypraw."
@@ -263,20 +240,20 @@
         "status": "seeded_runtime_profile",
         "method": "style_and_bottle_data_synthesis",
         "sources": [
-          "https://woodencork.com/products/blanton-s-gold-edition-single-barrel-select"
+          "https://woodencork.com/products/blanton-s-gold-edition-single-barrel-select-barrel-124-by-wooden-cork"
         ]
       }
     },
     "buffalo-trace-bourbon-1": {
       "profile": {
         "en": {
-          "general": "Buffalo Trace Bourbon is a classic bourbon from Buffalo Trace Distillery at 90 proof, built around the producer's house style and the bottle's strength.",
+          "general": "Buffalo Trace is a classic bourbon from Buffalo Trace Distillery at 90 proof, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring vanilla, caramel, orange peel and polished oak, plus a light toasted-sugar lift and a warm pastry note in its 90 proof frame.",
           "taste": "The palate feels fuller and more oak-forward, carrying caramel, polished oak and rounded vanilla sweetness; a dry edge tightens the sip in its 90 proof frame.",
           "finish": "Balanced medium finish with baked sugar, oak polish and a gentle pepper snap, vanilla and orange peel at 90 proof, with a lingering spice trace."
         },
         "pl": {
-          "general": "Buffalo Trace Bourbon to klasyczny bourbon od Buffalo Trace Distillery przy 90 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Buffalo Trace to klasyczny bourbon od Buffalo Trace Distillery przy 90 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: wanilia, karmel, skórka pomarańczy i wygładzony dąb, do tego lekki akcent prażonego cukru oraz ciepła nuta wypieku w ramie 90 proof.",
           "taste": "Na podniebieniu profil jest pełniejszy i mocniej dębowy; w tle są karmel, wygładzony dąb i zaokrąglona waniliowa słodycz; wytrawna krawędź porządkuje łyk w ramie 90 proof.",
           "finish": "Zbalansowany, średni finisz z pieczonym cukrem, wygładzonym dębem i delikatnym pieprzem, wanilia i skórka pomarańczy przy 90 proof, z dłuższym śladem przypraw."
@@ -293,13 +270,13 @@
     "buffalo-trace-kosher-wheat-recipe-bourbon": {
       "profile": {
         "en": {
-          "general": "Buffalo Trace Kosher Wheat Recipe Bourbon is a classic bourbon from Buffalo Trace Distillery at 94 proof, built around the producer's house style and the bottle's strength.",
+          "general": "Buffalo Trace Kosher Wheat Recipe is a classic bourbon from Buffalo Trace Distillery at 94 proof, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring vanilla, caramel, orange peel and polished oak, plus a darker barrel-char edge and a compact citrus snap in its 94 proof frame.",
           "taste": "The palate feels compact, clean and classic, carrying caramel, polished oak and rounded vanilla sweetness; sweetness and oak stay in balance in its 94 proof frame.",
           "finish": "Balanced medium finish with brown sugar, oak grip and a measured sweet fade, vanilla and orange peel at 94 proof, with a warm final pulse."
         },
         "pl": {
-          "general": "Buffalo Trace Kosher Wheat Recipe Bourbon to klasyczny bourbon od Buffalo Trace Distillery przy 94 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Buffalo Trace Kosher Wheat Recipe to klasyczny bourbon od Buffalo Trace Distillery przy 94 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: wanilia, karmel, skórka pomarańczy i wygładzony dąb, do tego ciemniejszy ton opalonej beczki oraz krótki cytrusowy błysk w ramie 94 proof.",
           "taste": "Na podniebieniu profil jest zwarty, czysty i klasyczny; w tle są karmel, wygładzony dąb i zaokrąglona waniliowa słodycz; słodycz i dąb zostają w równowadze w ramie 94 proof.",
           "finish": "Zbalansowany, średni finisz z brązowym cukrem, dębowym chwytem i miarowym słodkim zejściem, wanilia i skórka pomarańczy przy 94 proof, z ciepłym końcowym pulsem."
@@ -313,62 +290,16 @@
         ]
       }
     },
-    "colonel-e-h-taylor-four-grain-bourbon-whiskey": {
-      "profile": {
-        "en": {
-          "general": "Colonel E.H. Taylor Four Grain Bourbon Whiskey is a fuller-proof bourbon from Buffalo Trace Distillery at 104 proof, built around the producer's house style and the bottle's strength.",
-          "nose": "Vanilla-led aromas bring vanilla, caramel, orange peel and polished oak, plus a drier spice thread and dry baking spice in its 104 proof frame.",
-          "taste": "The palate feels drying as the oak takes over, carrying caramel, polished oak and rounded vanilla sweetness; spice arrives without turning sharp in its 104 proof frame.",
-          "finish": "Steady, warm finish with dark caramel, vanilla and a tidy oak close, vanilla and orange peel after the sweetness fades at 104 proof, with a short spice echo."
-        },
-        "pl": {
-          "general": "Colonel E.H. Taylor Four Grain Bourbon Whiskey to pełniejszy bourbon od Buffalo Trace Distillery przy 104 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
-          "nose": "Aromat prowadzi zestaw: wanilia, karmel, skórka pomarańczy i wygładzony dąb, do tego bardziej wytrawna nić przypraw oraz sucha przyprawa korzenna w ramie 104 proof.",
-          "taste": "Na podniebieniu profil jest bardziej wytrawny, gdy przejmuje go dąb; w tle są karmel, wygładzony dąb i zaokrąglona waniliowa słodycz; przyprawy nie robią się ostre w ramie 104 proof.",
-          "finish": "Stabilny, ciepły finisz zostawia ciemnym karmelem, wanilią i uporządkowanym dębowym zamknięciem, wanilia i skórka pomarańczy po wygaśnięciu słodyczy przy 104 proof, z krótkim echem przypraw."
-        }
-      },
-      "meta": {
-        "status": "seeded_runtime_profile",
-        "method": "style_and_bottle_data_synthesis",
-        "sources": [
-          "https://woodencork.com/products/colonel-e-h-taylor-four-grain-bourbon-whiskey"
-        ]
-      }
-    },
-    "colonel-e-h-taylor-jr-warehouse-c-bourbon-whiskey": {
-      "profile": {
-        "en": {
-          "general": "Colonel E.H. Taylor, Jr. Warehouse C Bourbon Whiskey is a fuller-proof bourbon from Buffalo Trace Distillery at 100 proof, built around the producer's house style and the bottle's strength.",
-          "nose": "Vanilla-led aromas bring vanilla, caramel, orange peel and polished oak, plus a drier spice thread and a mellow honey tone in its 100 proof frame.",
-          "taste": "The palate feels drying as the oak takes over, carrying caramel, polished oak and rounded vanilla sweetness; warm spice fills the middle in its 100 proof frame.",
-          "finish": "Steady, warm finish with vanilla, leathered oak and a quiet toasted note, vanilla and orange peel after the sweetness fades at 100 proof, with a calm vanilla return."
-        },
-        "pl": {
-          "general": "Colonel E.H. Taylor, Jr. Warehouse C Bourbon Whiskey to pełniejszy bourbon od Buffalo Trace Distillery przy 100 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
-          "nose": "Aromat prowadzi zestaw: wanilia, karmel, skórka pomarańczy i wygładzony dąb, do tego bardziej wytrawna nić przypraw oraz miękki ton miodu w ramie 100 proof.",
-          "taste": "Na podniebieniu profil jest bardziej wytrawny, gdy przejmuje go dąb; w tle są karmel, wygładzony dąb i zaokrąglona waniliowa słodycz; ciepłe przyprawy wypełniają środek w ramie 100 proof.",
-          "finish": "Stabilny, ciepły finisz zostawia wanilią, dojrzalszym dębem i cichą nutą tostową, wanilia i skórka pomarańczy po wygaśnięciu słodyczy przy 100 proof, ze spokojnym powrotem wanilii."
-        }
-      },
-      "meta": {
-        "status": "seeded_runtime_profile",
-        "method": "style_and_bottle_data_synthesis",
-        "sources": [
-          "https://woodencork.com/products/colonel-e-h-taylor-jr-warehouse-c-bourbon-whiskey"
-        ]
-      }
-    },
     "eagle-rare-10-year-kentucky-straight-bourbon-whiskey-700ml": {
       "profile": {
         "en": {
-          "general": "Eagle Rare 10 Year Kentucky Straight Bourbon Whiskey is a classic bourbon from Buffalo Trace Distillery at 90 proof, built around the producer's house style and the bottle's strength.",
+          "general": "Eagle Rare 10 Year is a classic bourbon from Buffalo Trace Distillery at 90 proof, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring vanilla, caramel, orange peel and polished oak, plus a light toasted-sugar lift and a warm pastry note in its 90 proof frame.",
           "taste": "The palate feels fuller and more oak-forward, carrying caramel, polished oak and rounded vanilla sweetness; a dry edge tightens the sip in its 90 proof frame.",
           "finish": "Balanced medium finish with brown sugar, oak grip and a measured sweet fade, vanilla and orange peel at 90 proof, with a lingering spice trace."
         },
         "pl": {
-          "general": "Eagle Rare 10 Year Kentucky Straight Bourbon Whiskey to klasyczny bourbon od Buffalo Trace Distillery przy 90 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Eagle Rare 10 Year to klasyczny bourbon od Buffalo Trace Distillery przy 90 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: wanilia, karmel, skórka pomarańczy i wygładzony dąb, do tego lekki akcent prażonego cukru oraz ciepła nuta wypieku w ramie 90 proof.",
           "taste": "Na podniebieniu profil jest pełniejszy i mocniej dębowy; w tle są karmel, wygładzony dąb i zaokrąglona waniliowa słodycz; wytrawna krawędź porządkuje łyk w ramie 90 proof.",
           "finish": "Zbalansowany, średni finisz z brązowym cukrem, dębowym chwytem i miarowym słodkim zejściem, wanilia i skórka pomarańczy przy 90 proof, z dłuższym śladem przypraw."
@@ -385,13 +316,13 @@
     "eagle-rare-12-year-old-bourbon": {
       "profile": {
         "en": {
-          "general": "Eagle Rare 12 Year Old Bourbon is a classic bourbon from Buffalo Trace Distillery, built around the producer's house style and the bottle's strength.",
+          "general": "Eagle Rare 12 Year Old is a classic bourbon from Buffalo Trace Distillery, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring vanilla, caramel, orange peel and polished oak, plus a darker barrel-char edge and a compact citrus snap.",
           "taste": "The palate feels compact, clean and classic, carrying caramel, polished oak and rounded vanilla sweetness; sweetness and oak stay in balance.",
           "finish": "Balanced medium finish with dark caramel, vanilla and a tidy oak close, vanilla and orange peel in a bourbon frame, with a warm final pulse."
         },
         "pl": {
-          "general": "Eagle Rare 12 Year Old Bourbon to klasyczny bourbon od Buffalo Trace Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Eagle Rare 12 Year Old to klasyczny bourbon od Buffalo Trace Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: wanilia, karmel, skórka pomarańczy i wygładzony dąb, do tego ciemniejszy ton opalonej beczki oraz krótki cytrusowy błysk.",
           "taste": "Na podniebieniu profil jest zwarty, czysty i klasyczny; w tle są karmel, wygładzony dąb i zaokrąglona waniliowa słodycz; słodycz i dąb zostają w równowadze.",
           "finish": "Zbalansowany, średni finisz z ciemnym karmelem, wanilią i uporządkowanym dębowym zamknięciem, wanilia i skórka pomarańczy w ramie stylu bourbon, z ciepłym końcowym pulsem."
@@ -408,13 +339,13 @@
     "stagg-jr": {
       "profile": {
         "en": {
-          "general": "Stagg Jr Kentucky Straight Bourbon is a high-strength bourbon from Buffalo Trace Distillery at 134.4 proof, built around the producer's house style and the bottle's strength.",
+          "general": "Stagg Kentucky Straight is a high-strength bourbon from Buffalo Trace Distillery at 134.4 proof, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring vanilla, caramel, orange peel and polished oak, plus a light toasted-sugar lift and a warm pastry note in its 134.4 proof frame.",
           "taste": "The palate feels fuller and more oak-forward, carrying caramel, polished oak and rounded vanilla sweetness; a dry edge tightens the sip in its 134.4 proof frame.",
           "finish": "Long, warming finish with dark caramel, vanilla and a tidy oak close, vanilla and orange peel and lingering barrel heat at 134.4 proof, with a lingering spice trace."
         },
         "pl": {
-          "general": "Stagg Jr Kentucky Straight Bourbon to mocniejszy bourbon od Buffalo Trace Distillery przy 134.4 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Stagg Kentucky Straight to mocniejszy bourbon od Buffalo Trace Distillery przy 134.4 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: wanilia, karmel, skórka pomarańczy i wygładzony dąb, do tego lekki akcent prażonego cukru oraz ciepła nuta wypieku w ramie 134.4 proof.",
           "taste": "Na podniebieniu profil jest pełniejszy i mocniej dębowy; w tle są karmel, wygładzony dąb i zaokrąglona waniliowa słodycz; wytrawna krawędź porządkuje łyk w ramie 134.4 proof.",
           "finish": "Długi, rozgrzewający finisz z ciemnym karmelem, wanilią i uporządkowanym dębowym zamknięciem, wanilia i skórka pomarańczy i ciepłem beczki przy 134.4 proof, z dłuższym śladem przypraw."
@@ -451,39 +382,16 @@
         ]
       }
     },
-    "w-l-weller-bourbon-12-year-1-75l": {
-      "profile": {
-        "en": {
-          "general": "W.L. Weller Bourbon 12 Year is a classic bourbon from Buffalo Trace Distillery at 90 proof, built around the producer's house style and the bottle's strength.",
-          "nose": "Vanilla-led aromas bring vanilla, caramel, orange peel and polished oak, plus a drier spice thread and dry baking spice in its 90 proof frame.",
-          "taste": "The palate feels drying as the oak takes over, carrying caramel, polished oak and rounded vanilla sweetness; spice arrives without turning sharp in its 90 proof frame.",
-          "finish": "Balanced medium finish with soft barrel spice and a clean vanilla trail, vanilla and orange peel at 90 proof, with a short spice echo."
-        },
-        "pl": {
-          "general": "W.L. Weller Bourbon 12 Year to klasyczny bourbon od Buffalo Trace Distillery przy 90 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
-          "nose": "Aromat prowadzi zestaw: wanilia, karmel, skórka pomarańczy i wygładzony dąb, do tego bardziej wytrawna nić przypraw oraz sucha przyprawa korzenna w ramie 90 proof.",
-          "taste": "Na podniebieniu profil jest bardziej wytrawny, gdy przejmuje go dąb; w tle są karmel, wygładzony dąb i zaokrąglona waniliowa słodycz; przyprawy nie robią się ostre w ramie 90 proof.",
-          "finish": "Zbalansowany, średni finisz z łagodną przyprawą beczki i czystym śladem wanilii, wanilia i skórka pomarańczy przy 90 proof, z krótkim echem przypraw."
-        }
-      },
-      "meta": {
-        "status": "seeded_runtime_profile",
-        "method": "style_and_bottle_data_synthesis",
-        "sources": [
-          "https://woodencork.com/products/w-l-weller-bourbon-12-year-1-75l"
-        ]
-      }
-    },
     "w-l-weller-single-barrel": {
       "profile": {
         "en": {
-          "general": "W.L. Weller Single Barrel Kentucky Straight Bourbon Whiskey is a classic single barrel bourbon from Buffalo Trace Distillery, built around the producer's house style and the bottle's strength.",
+          "general": "W.L. Weller Single Barrel is a classic single barrel bourbon from Buffalo Trace Distillery, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring vanilla, caramel, orange peel and polished oak, plus a softer honeyed middle and clean grain sweetness.",
           "taste": "The palate feels richer through the middle, carrying caramel, polished oak and rounded vanilla sweetness; the oak keeps the sip structured.",
           "finish": "Balanced medium finish with vanilla cream, polished wood and a light pepper touch, vanilla and orange peel in a single barrel bourbon frame, with a rounded last impression."
         },
         "pl": {
-          "general": "W.L. Weller Single Barrel Kentucky Straight Bourbon Whiskey to klasyczny single barrel bourbon od Buffalo Trace Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "W.L. Weller Single Barrel to klasyczny single barrel bourbon od Buffalo Trace Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: wanilia, karmel, skórka pomarańczy i wygładzony dąb, do tego łagodniejszy, miodowy środek oraz czysta słodycz zboża.",
           "taste": "Na podniebieniu profil jest bogatszy w środkowej części; w tle są karmel, wygładzony dąb i zaokrąglona waniliowa słodycz; dąb trzyma strukturę łyku.",
           "finish": "Zbalansowany, średni finisz z kremem waniliowym, wygładzonym drewnem i lekkim pieprzem, wanilia i skórka pomarańczy w ramie stylu single barrel bourbon, z zaokrąglonym ostatnim wrażeniem."
@@ -523,13 +431,13 @@
     "four-roses": {
       "profile": {
         "en": {
-          "general": "Four Roses Bourbon is a softer bourbon from Four Roses Distillery at 80 proof, built around the producer's house style and the bottle's strength.",
+          "general": "Four Roses is a softer bourbon from Four Roses Distillery at 80 proof, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring red fruit, honey, floral spice and soft oak, plus a darker barrel-char edge and a polished vanilla core in its 80 proof frame.",
           "taste": "The palate feels compact, clean and classic, carrying honey, soft oak and rounded vanilla sweetness; the sweetness stays controlled in its 80 proof frame.",
           "finish": "Balanced medium finish with orange peel, toasted oak and a clean drying edge, red fruit and floral spice at 80 proof, with a dry final edge."
         },
         "pl": {
-          "general": "Four Roses Bourbon to łagodniejszy bourbon od Four Roses Distillery przy 80 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Four Roses to łagodniejszy bourbon od Four Roses Distillery przy 80 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: czerwone owoce, miód, kwiatowa przyprawa i łagodny dąb, do tego ciemniejszy ton opalonej beczki oraz wygładzony rdzeń wanilii w ramie 80 proof.",
           "taste": "Na podniebieniu profil jest zwarty, czysty i klasyczny; w tle są miód, łagodny dąb i zaokrąglona waniliowa słodycz; słodycz pozostaje pod kontrolą w ramie 80 proof.",
           "finish": "Zbalansowany, średni finisz z skórką pomarańczy, prażonym dębem i czystą wytrawnością, czerwone owoce i kwiatowa przyprawa przy 80 proof, z wytrawną końcówką."
@@ -546,13 +454,13 @@
     "four-roses-obsf-single-barrel-bourbon": {
       "profile": {
         "en": {
-          "general": "Four Roses OBSF Single Barrel Bourbon is a classic single barrel bourbon from Four Roses Distillery, built around the producer's house style and the bottle's strength.",
+          "general": "Four Roses OBSF Single Barrel is a classic single barrel bourbon from Four Roses Distillery, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring red fruit, honey, floral spice and soft oak, plus a touch of citrus brightness and a gentle herbal touch.",
           "taste": "The palate feels sweet first, then spice-led, carrying honey, soft oak and rounded vanilla sweetness; vanilla softens the oak.",
           "finish": "Balanced medium finish with caramelized grain, baking spice and mellow barrel heat, red fruit and floral spice in a single barrel bourbon frame, with a clean fade."
         },
         "pl": {
-          "general": "Four Roses OBSF Single Barrel Bourbon to klasyczny single barrel bourbon od Four Roses Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Four Roses OBSF Single Barrel to klasyczny single barrel bourbon od Four Roses Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: czerwone owoce, miód, kwiatowa przyprawa i łagodny dąb, do tego odrobina cytrusowej jasności oraz łagodny ziołowy dotyk.",
           "taste": "Na podniebieniu profil jest najpierw słodki, potem przyprawowy; w tle są miód, łagodny dąb i zaokrąglona waniliowa słodycz; wanilia łagodzi dąb.",
           "finish": "Zbalansowany, średni finisz z karmelizowanym ziarnem, przyprawami korzennymi i ciepłem beczki, czerwone owoce i kwiatowa przyprawa w ramie stylu single barrel bourbon, z czystym wygasaniem."
@@ -569,13 +477,13 @@
     "four-roses-obsk-single-barrel-bourbon": {
       "profile": {
         "en": {
-          "general": "Four Roses OBSK Single Barrel Bourbon is a fuller-proof single barrel bourbon from Four Roses Distillery at 100 proof, built around the producer's house style and the bottle's strength.",
+          "general": "Four Roses OBSK Single Barrel is a fuller-proof single barrel bourbon from Four Roses Distillery at 100 proof, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring red fruit, honey, floral spice and soft oak, plus a drier spice thread and a mellow honey tone in its 100 proof frame.",
           "taste": "The palate feels drying as the oak takes over, carrying honey, soft oak and rounded vanilla sweetness; warm spice fills the middle in its 100 proof frame.",
           "finish": "Steady, warm finish with orange peel, toasted oak and a clean drying edge, red fruit and floral spice after the sweetness fades at 100 proof, with a calm vanilla return."
         },
         "pl": {
-          "general": "Four Roses OBSK Single Barrel Bourbon to pełniejszy single barrel bourbon od Four Roses Distillery przy 100 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Four Roses OBSK Single Barrel to pełniejszy single barrel bourbon od Four Roses Distillery przy 100 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: czerwone owoce, miód, kwiatowa przyprawa i łagodny dąb, do tego bardziej wytrawna nić przypraw oraz miękki ton miodu w ramie 100 proof.",
           "taste": "Na podniebieniu profil jest bardziej wytrawny, gdy przejmuje go dąb; w tle są miód, łagodny dąb i zaokrąglona waniliowa słodycz; ciepłe przyprawy wypełniają środek w ramie 100 proof.",
           "finish": "Stabilny, ciepły finisz zostawia skórką pomarańczy, prażonym dębem i czystą wytrawnością, czerwone owoce i kwiatowa przyprawa po wygaśnięciu słodyczy przy 100 proof, ze spokojnym powrotem wanilii."
@@ -592,13 +500,13 @@
     "four-roses-oesk-single-barrel-bourbon": {
       "profile": {
         "en": {
-          "general": "Four Roses OESK Single Barrel Bourbon is a classic single barrel bourbon from Four Roses Distillery, built around the producer's house style and the bottle's strength.",
+          "general": "Four Roses OESK Single Barrel is a classic single barrel bourbon from Four Roses Distillery, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring red fruit, honey, floral spice and soft oak, plus a softer honeyed middle and a richer char note.",
           "taste": "The palate feels richer through the middle, carrying honey, soft oak and rounded vanilla sweetness; the texture stays compact.",
           "finish": "Balanced medium finish with toffee, warm spice and a smooth drying close, red fruit and floral spice in a single barrel bourbon frame, with a measured oak fade."
         },
         "pl": {
-          "general": "Four Roses OESK Single Barrel Bourbon to klasyczny single barrel bourbon od Four Roses Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Four Roses OESK Single Barrel to klasyczny single barrel bourbon od Four Roses Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: czerwone owoce, miód, kwiatowa przyprawa i łagodny dąb, do tego łagodniejszy, miodowy środek oraz bogatsza nuta opalenia.",
           "taste": "Na podniebieniu profil jest bogatszy w środkowej części; w tle są miód, łagodny dąb i zaokrąglona waniliowa słodycz; tekstura pozostaje zwarta.",
           "finish": "Zbalansowany, średni finisz z toffi, ciepłymi przyprawami i gładkim wytrawnym domknięciem, czerwone owoce i kwiatowa przyprawa w ramie stylu single barrel bourbon, z miarowym wygasaniem dębu."
@@ -615,13 +523,13 @@
     "four-roses-oeso-single-barrel-bourbon": {
       "profile": {
         "en": {
-          "general": "Four Roses OESO Single Barrel Bourbon is a classic single barrel bourbon from Four Roses Distillery, built around the producer's house style and the bottle's strength.",
+          "general": "Four Roses OESO Single Barrel is a classic single barrel bourbon from Four Roses Distillery, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring red fruit, honey, floral spice and soft oak, plus a rounded dessert-spice note and a light floral lift.",
           "taste": "The palate feels polished and approachable, carrying honey, soft oak and rounded vanilla sweetness; the middle stays rounded.",
           "finish": "Balanced medium finish with sweet grain, clove warmth and a rounded oak finish, red fruit and floral spice in a single barrel bourbon frame, with a polished oak return."
         },
         "pl": {
-          "general": "Four Roses OESO Single Barrel Bourbon to klasyczny single barrel bourbon od Four Roses Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Four Roses OESO Single Barrel to klasyczny single barrel bourbon od Four Roses Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: czerwone owoce, miód, kwiatowa przyprawa i łagodny dąb, do tego zaokrąglona nuta deserowych przypraw oraz lekka kwiatowa nuta.",
           "taste": "Na podniebieniu profil jest wygładzony i przystępny; w tle są miód, łagodny dąb i zaokrąglona waniliowa słodycz; środek pozostaje zaokrąglony.",
           "finish": "Zbalansowany, średni finisz z słodkim ziarnem, ciepłem goździka i zaokrąglonym dębem, czerwone owoce i kwiatowa przyprawa w ramie stylu single barrel bourbon, z powrotem wygładzonego dębu."
@@ -658,62 +566,16 @@
         ]
       }
     },
-    "elijah-craig-21-year-barrel-27-10-30-90": {
-      "profile": {
-        "en": {
-          "general": "Elijah Craig 21 Year 10/30/90 is a classic bourbon from Heaven Hill Distillery, built around the producer's house style and the bottle's strength.",
-          "nose": "Vanilla-led aromas bring peanut brittle, caramel, oak spice and vanilla, plus a light toasted-sugar lift and a warm pastry note.",
-          "taste": "The palate feels fuller and more oak-forward, carrying caramel, vanilla and rounded vanilla sweetness; a dry edge tightens the sip.",
-          "finish": "Balanced medium finish with baked sugar, oak polish and a gentle pepper snap, peanut brittle and oak spice in a bourbon frame, with a lingering spice trace."
-        },
-        "pl": {
-          "general": "Elijah Craig 21 Year 10/30/90 to klasyczny bourbon od Heaven Hill Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
-          "nose": "Aromat prowadzi zestaw: orzechowy karmel, karmel, dębowa przyprawa i wanilia, do tego lekki akcent prażonego cukru oraz ciepła nuta wypieku.",
-          "taste": "Na podniebieniu profil jest pełniejszy i mocniej dębowy; w tle są karmel, wanilia i zaokrąglona waniliowa słodycz; wytrawna krawędź porządkuje łyk.",
-          "finish": "Zbalansowany, średni finisz z pieczonym cukrem, wygładzonym dębem i delikatnym pieprzem, orzechowy karmel i dębowa przyprawa w ramie stylu bourbon, z dłuższym śladem przypraw."
-        }
-      },
-      "meta": {
-        "status": "seeded_runtime_profile",
-        "method": "style_and_bottle_data_synthesis",
-        "sources": [
-          "https://woodencork.com/products/elijah-craig-21-year-barrel-27-10-30-90"
-        ]
-      }
-    },
-    "elijah-craig-21-year-single-barrel-bourbon": {
-      "profile": {
-        "en": {
-          "general": "Elijah Craig 21 Year Single Barrel Kentucky Straight Bourbon is a classic single barrel bourbon from Heaven Hill Distillery, built around the producer's house style and the bottle's strength.",
-          "nose": "Vanilla-led aromas bring peanut brittle, caramel, oak spice and vanilla, plus a touch of citrus brightness and soft brown sugar.",
-          "taste": "The palate feels sweet first, then spice-led, carrying caramel, vanilla and rounded vanilla sweetness; the grain note keeps it clear.",
-          "finish": "Balanced medium finish with light cocoa, barrel spice and a balanced vanilla return, peanut brittle and oak spice in a single barrel bourbon frame, with a tidy barrel grip."
-        },
-        "pl": {
-          "general": "Elijah Craig 21 Year Single Barrel Kentucky Straight Bourbon to klasyczny single barrel bourbon od Heaven Hill Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
-          "nose": "Aromat prowadzi zestaw: orzechowy karmel, karmel, dębowa przyprawa i wanilia, do tego odrobina cytrusowej jasności oraz łagodny brązowy cukier.",
-          "taste": "Na podniebieniu profil jest najpierw słodki, potem przyprawowy; w tle są karmel, wanilia i zaokrąglona waniliowa słodycz; zboże utrzymuje czysty profil.",
-          "finish": "Zbalansowany, średni finisz z lekkim kakao, przyprawą beczki i powrotem wanilii, orzechowy karmel i dębowa przyprawa w ramie stylu single barrel bourbon, ze zwartym chwytem beczki."
-        }
-      },
-      "meta": {
-        "status": "seeded_runtime_profile",
-        "method": "style_and_bottle_data_synthesis",
-        "sources": [
-          "https://woodencork.com/products/elijah-craig-21-year-single-barrel-bourbon"
-        ]
-      }
-    },
     "elijah-craig-small-batch-bourbon": {
       "profile": {
         "en": {
-          "general": "Elijah Craig Small Batch Bourbon is a classic small batch bourbon from Heaven Hill Distillery at 94 proof, built around the producer's house style and the bottle's strength.",
+          "general": "Elijah Craig Small Batch is a classic small batch bourbon from Heaven Hill Distillery at 94 proof, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring peanut brittle, caramel, oak spice and vanilla, plus a drier spice thread and a mellow honey tone in its 94 proof frame.",
           "taste": "The palate feels drying as the oak takes over, carrying caramel, vanilla and rounded vanilla sweetness; warm spice fills the middle in its 94 proof frame.",
           "finish": "Balanced medium finish with orange peel, toasted oak and a clean drying edge, peanut brittle and oak spice at 94 proof, with a calm vanilla return."
         },
         "pl": {
-          "general": "Elijah Craig Small Batch Bourbon to klasyczny small batch bourbon od Heaven Hill Distillery przy 94 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Elijah Craig Small Batch to klasyczny small batch bourbon od Heaven Hill Distillery przy 94 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: orzechowy karmel, karmel, dębowa przyprawa i wanilia, do tego bardziej wytrawna nić przypraw oraz miękki ton miodu w ramie 94 proof.",
           "taste": "Na podniebieniu profil jest bardziej wytrawny, gdy przejmuje go dąb; w tle są karmel, wanilia i zaokrąglona waniliowa słodycz; ciepłe przyprawy wypełniają środek w ramie 94 proof.",
           "finish": "Zbalansowany, średni finisz z skórką pomarańczy, prażonym dębem i czystą wytrawnością, orzechowy karmel i dębowa przyprawa przy 94 proof, ze spokojnym powrotem wanilii."
@@ -753,13 +615,13 @@
     "evan-williams-kentucky-straight-bourbon": {
       "profile": {
         "en": {
-          "general": "Evan Williams Kentucky Straight Bourbon is a classic bourbon from Heaven Hill Distillery, built around the producer's house style and the bottle's strength.",
+          "general": "Evan Williams Kentucky Straight is a classic bourbon from Heaven Hill Distillery, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring peanut brittle, caramel, oak spice and vanilla, plus a drier spice thread and a mellow honey tone.",
           "taste": "The palate feels drying as the oak takes over, carrying caramel, vanilla and rounded vanilla sweetness; warm spice fills the middle.",
           "finish": "Balanced medium finish with maple-like sweetness, dry wood and soft char, peanut brittle and oak spice in a bourbon frame, with a calm vanilla return."
         },
         "pl": {
-          "general": "Evan Williams Kentucky Straight Bourbon to klasyczny bourbon od Heaven Hill Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Evan Williams Kentucky Straight to klasyczny bourbon od Heaven Hill Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: orzechowy karmel, karmel, dębowa przyprawa i wanilia, do tego bardziej wytrawna nić przypraw oraz miękki ton miodu.",
           "taste": "Na podniebieniu profil jest bardziej wytrawny, gdy przejmuje go dąb; w tle są karmel, wanilia i zaokrąglona waniliowa słodycz; ciepłe przyprawy wypełniają środek.",
           "finish": "Zbalansowany, średni finisz z klonową słodyczą, suchym drewnem i łagodnym opaleniem, orzechowy karmel i dębowa przyprawa w ramie stylu bourbon, ze spokojnym powrotem wanilii."
@@ -799,13 +661,13 @@
     "heaven-hill-7yo-bottled-in-bond-bourbon": {
       "profile": {
         "en": {
-          "general": "Heaven Hill 7YO Bottled in Bond Bourbon is a classic bourbon from Heaven Hill Distillery, built around the producer's house style and the bottle's strength.",
+          "general": "Heaven Hill 7YO Bottled in Bond is a classic bourbon from Heaven Hill Distillery, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring peanut brittle, caramel, oak spice and vanilla, plus a touch of citrus brightness and soft brown sugar.",
           "taste": "The palate feels sweet first, then spice-led, carrying caramel, vanilla and rounded vanilla sweetness; the grain note keeps it clear.",
           "finish": "Balanced medium finish with caramel, nutmeg and a compact barrel-spice fade, peanut brittle and oak spice in a bourbon frame, with a tidy barrel grip."
         },
         "pl": {
-          "general": "Heaven Hill 7YO Bottled in Bond Bourbon to klasyczny bourbon od Heaven Hill Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Heaven Hill 7YO Bottled in Bond to klasyczny bourbon od Heaven Hill Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: orzechowy karmel, karmel, dębowa przyprawa i wanilia, do tego odrobina cytrusowej jasności oraz łagodny brązowy cukier.",
           "taste": "Na podniebieniu profil jest najpierw słodki, potem przyprawowy; w tle są karmel, wanilia i zaokrąglona waniliowa słodycz; zboże utrzymuje czysty profil.",
           "finish": "Zbalansowany, średni finisz z karmelem, gałką muszkatołową i zwartym echem beczki, orzechowy karmel i dębowa przyprawa w ramie stylu bourbon, ze zwartym chwytem beczki."
@@ -822,13 +684,13 @@
     "heaven-hill-bottled-in-bond-7-year-old-bourbon": {
       "profile": {
         "en": {
-          "general": "Heaven Hill Bottled-in-Bond 7 Year Old Bourbon is a fuller-proof Bottled in Bond bourbon from Heaven Hill Distillery at 100 proof, built around the producer's house style and the bottle's strength.",
+          "general": "Heaven Hill Bottled-in-Bond 7 Year Old is a fuller-proof Bottled in Bond bourbon from Heaven Hill Distillery at 100 proof, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring peanut brittle, caramel, oak spice and vanilla, plus a touch of citrus brightness and a gentle herbal touch in its 100 proof frame.",
           "taste": "The palate feels sweet first, then spice-led, carrying caramel, vanilla and rounded vanilla sweetness; vanilla softens the oak in its 100 proof frame.",
           "finish": "Steady, warm finish with caramelized grain, baking spice and mellow barrel heat, peanut brittle and oak spice after the sweetness fades at 100 proof, with a clean fade."
         },
         "pl": {
-          "general": "Heaven Hill Bottled-in-Bond 7 Year Old Bourbon to pełniejszy Bottled in Bond bourbon od Heaven Hill Distillery przy 100 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Heaven Hill Bottled-in-Bond 7 Year Old to pełniejszy Bottled in Bond bourbon od Heaven Hill Distillery przy 100 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: orzechowy karmel, karmel, dębowa przyprawa i wanilia, do tego odrobina cytrusowej jasności oraz łagodny ziołowy dotyk w ramie 100 proof.",
           "taste": "Na podniebieniu profil jest najpierw słodki, potem przyprawowy; w tle są karmel, wanilia i zaokrąglona waniliowa słodycz; wanilia łagodzi dąb w ramie 100 proof.",
           "finish": "Stabilny, ciepły finisz zostawia karmelizowanym ziarnem, przyprawami korzennymi i ciepłem beczki, orzechowy karmel i dębowa przyprawa po wygaśnięciu słodyczy przy 100 proof, z czystym wygasaniem."
@@ -842,39 +704,16 @@
         ]
       }
     },
-    "heaven-hill-heritage-collection-17-year-old-barrel-proof-bourbon-first-edition": {
-      "profile": {
-        "en": {
-          "general": "Heaven Hill Heritage Collection 17 Year Old Barrel Proof Bourbon is a classic barrel proof bourbon from Heaven Hill Distillery, built around the producer's house style and the bottle's strength.",
-          "nose": "Vanilla-led aromas bring peanut brittle, caramel, oak spice and vanilla, plus a drier spice thread and dry baking spice.",
-          "taste": "The palate feels drying as the oak takes over, carrying caramel, vanilla and rounded vanilla sweetness; spice arrives without turning sharp.",
-          "finish": "Balanced medium finish with dark caramel, vanilla and a tidy oak close, peanut brittle and oak spice in a barrel proof bourbon frame, with a short spice echo."
-        },
-        "pl": {
-          "general": "Heaven Hill Heritage Collection 17 Year Old Barrel Proof Bourbon to klasyczny bourbon o mocy beczki od Heaven Hill Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
-          "nose": "Aromat prowadzi zestaw: orzechowy karmel, karmel, dębowa przyprawa i wanilia, do tego bardziej wytrawna nić przypraw oraz sucha przyprawa korzenna.",
-          "taste": "Na podniebieniu profil jest bardziej wytrawny, gdy przejmuje go dąb; w tle są karmel, wanilia i zaokrąglona waniliowa słodycz; przyprawy nie robią się ostre.",
-          "finish": "Zbalansowany, średni finisz z ciemnym karmelem, wanilią i uporządkowanym dębowym zamknięciem, orzechowy karmel i dębowa przyprawa w ramie stylu bourbon o mocy beczki, z krótkim echem przypraw."
-        }
-      },
-      "meta": {
-        "status": "seeded_runtime_profile",
-        "method": "style_and_bottle_data_synthesis",
-        "sources": [
-          "https://woodencork.com/products/heaven-hill-heritage-collection-17-year-old-barrel-proof-bourbon-first-edition"
-        ]
-      }
-    },
     "jeffersons-ocean-aged-at-sea-blended-straight-bourbon": {
       "profile": {
         "en": {
-          "general": "Jefferson's Ocean Aged at Sea Blended Straight Bourbon is a classic bourbon from Jefferson's (Castle Brands), built around the producer's house style and the bottle's strength.",
+          "general": "Jefferson's Ocean Aged at Sea Blended Straight is a classic bourbon from Jefferson's (Castle Brands), built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring vanilla, caramel, sweet oak and baking spice, plus a softer honeyed middle and clean grain sweetness.",
           "taste": "The palate feels richer through the middle, carrying caramel, baking spice and rounded vanilla sweetness; the oak keeps the sip structured.",
           "finish": "Balanced medium finish with caramel, nutmeg and a compact barrel-spice fade, vanilla and sweet oak in a bourbon frame, with a rounded last impression."
         },
         "pl": {
-          "general": "Jefferson's Ocean Aged at Sea Blended Straight Bourbon to klasyczny bourbon od Jefferson's (Castle Brands), zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Jefferson's Ocean Aged at Sea Blended Straight to klasyczny bourbon od Jefferson's (Castle Brands), zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: wanilia, karmel, słodki dąb i przyprawy korzenne, do tego łagodniejszy, miodowy środek oraz czysta słodycz zboża.",
           "taste": "Na podniebieniu profil jest bogatszy w środkowej części; w tle są karmel, przyprawy korzenne i zaokrąglona waniliowa słodycz; dąb trzyma strukturę łyku.",
           "finish": "Zbalansowany, średni finisz z karmelem, gałką muszkatołową i zwartym echem beczki, wanilia i słodki dąb w ramie stylu bourbon, z zaokrąglonym ostatnim wrażeniem."
@@ -891,13 +730,13 @@
     "jeffersons-ocean-aged-at-sea-bourbon-whiskey": {
       "profile": {
         "en": {
-          "general": "Jefferson's Ocean Aged at Sea Bourbon Whiskey is a classic bourbon from Jefferson's (Castle Brands), built around the producer's house style and the bottle's strength.",
+          "general": "Jefferson's Ocean Aged at Sea is a classic bourbon from Jefferson's (Castle Brands), built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring vanilla, caramel, sweet oak and baking spice, plus a darker barrel-char edge and a compact citrus snap.",
           "taste": "The palate feels compact, clean and classic, carrying caramel, baking spice and rounded vanilla sweetness; sweetness and oak stay in balance.",
           "finish": "Balanced medium finish with dark caramel, vanilla and a tidy oak close, vanilla and sweet oak in a bourbon frame, with a warm final pulse."
         },
         "pl": {
-          "general": "Jefferson's Ocean Aged at Sea Bourbon Whiskey to klasyczny bourbon od Jefferson's (Castle Brands), zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Jefferson's Ocean Aged at Sea to klasyczny bourbon od Jefferson's (Castle Brands), zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: wanilia, karmel, słodki dąb i przyprawy korzenne, do tego ciemniejszy ton opalonej beczki oraz krótki cytrusowy błysk.",
           "taste": "Na podniebieniu profil jest zwarty, czysty i klasyczny; w tle są karmel, przyprawy korzenne i zaokrąglona waniliowa słodycz; słodycz i dąb zostają w równowadze.",
           "finish": "Zbalansowany, średni finisz z ciemnym karmelem, wanilią i uporządkowanym dębowym zamknięciem, wanilia i słodki dąb w ramie stylu bourbon, z ciepłym końcowym pulsem."
@@ -914,13 +753,13 @@
     "jeffersons-ocean-aged-at-sea-cask-strength-blended-straight-bourbon": {
       "profile": {
         "en": {
-          "general": "Jefferson's Ocean Aged at Sea Cask Strength Blended Straight Bourbon is a classic barrel proof bourbon from Jefferson's (Castle Brands), built around the producer's house style and the bottle's strength.",
+          "general": "Jefferson's Ocean Aged at Sea Cask Strength Blended Straight is a classic barrel proof bourbon from Jefferson's (Castle Brands), built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring vanilla, caramel, sweet oak and baking spice, plus a light toasted-sugar lift and a toasted barrel edge.",
           "taste": "The palate feels fuller and more oak-forward, carrying caramel, baking spice and rounded vanilla sweetness; barrel notes add grip.",
           "finish": "Balanced medium finish with maple-like sweetness, dry wood and soft char, vanilla and sweet oak in a barrel proof bourbon frame, with a soft sweet close."
         },
         "pl": {
-          "general": "Jefferson's Ocean Aged at Sea Cask Strength Blended Straight Bourbon to klasyczny bourbon o mocy beczki od Jefferson's (Castle Brands), zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Jefferson's Ocean Aged at Sea Cask Strength Blended Straight to klasyczny bourbon o mocy beczki od Jefferson's (Castle Brands), zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: wanilia, karmel, słodki dąb i przyprawy korzenne, do tego lekki akcent prażonego cukru oraz akcent prażonej beczki.",
           "taste": "Na podniebieniu profil jest pełniejszy i mocniej dębowy; w tle są karmel, przyprawy korzenne i zaokrąglona waniliowa słodycz; nuty beczki dodają chwytu.",
           "finish": "Zbalansowany, średni finisz z klonową słodyczą, suchym drewnem i łagodnym opaleniem, wanilia i słodki dąb w ramie stylu bourbon o mocy beczki, z miękkim słodkim domknięciem."
@@ -937,13 +776,13 @@
     "basil-hayden-10-year-old-kentucky-straight-bourbon": {
       "profile": {
         "en": {
-          "general": "Basil Hayden 10 Year Old Kentucky Straight Bourbon is a classic bourbon from Jim Beam Distillery, built around the producer's house style and the bottle's strength.",
+          "general": "Basil Hayden 10 Year Old Kentucky Straight is a classic bourbon from Jim Beam Distillery, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring roasted peanut, vanilla, brown sugar and dry oak, plus a drier spice thread and a mellow honey tone.",
           "taste": "The palate feels drying as the oak takes over, carrying vanilla, dry oak and rounded vanilla sweetness; warm spice fills the middle.",
           "finish": "Balanced medium finish with orange peel, toasted oak and a clean drying edge, roasted peanut and brown sugar in a bourbon frame, with a calm vanilla return."
         },
         "pl": {
-          "general": "Basil Hayden 10 Year Old Kentucky Straight Bourbon to klasyczny bourbon od Jim Beam Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Basil Hayden 10 Year Old Kentucky Straight to klasyczny bourbon od Jim Beam Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: prażony orzech, wanilia, brązowy cukier i suchy dąb, do tego bardziej wytrawna nić przypraw oraz miękki ton miodu.",
           "taste": "Na podniebieniu profil jest bardziej wytrawny, gdy przejmuje go dąb; w tle są wanilia, suchy dąb i zaokrąglona waniliowa słodycz; ciepłe przyprawy wypełniają środek.",
           "finish": "Zbalansowany, średni finisz z skórką pomarańczy, prażonym dębem i czystą wytrawnością, prażony orzech i brązowy cukier w ramie stylu bourbon, ze spokojnym powrotem wanilii."
@@ -960,13 +799,13 @@
     "basil-hayden-toast-kentucky-straight-bourbon": {
       "profile": {
         "en": {
-          "general": "Basil Hayden Toast Kentucky Straight Bourbon is a classic bourbon from Jim Beam Distillery, built around the producer's house style and the bottle's strength.",
+          "general": "Basil Hayden Toast Kentucky Straight is a classic bourbon from Jim Beam Distillery, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring roasted peanut, vanilla, brown sugar and dry oak, plus a darker barrel-char edge and a compact citrus snap.",
           "taste": "The palate feels compact, clean and classic, carrying vanilla, dry oak and rounded vanilla sweetness; sweetness and oak stay in balance.",
           "finish": "Balanced medium finish with dark caramel, vanilla and a tidy oak close, roasted peanut and brown sugar in a bourbon frame, with a warm final pulse."
         },
         "pl": {
-          "general": "Basil Hayden Toast Kentucky Straight Bourbon to klasyczny bourbon od Jim Beam Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Basil Hayden Toast Kentucky Straight to klasyczny bourbon od Jim Beam Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: prażony orzech, wanilia, brązowy cukier i suchy dąb, do tego ciemniejszy ton opalonej beczki oraz krótki cytrusowy błysk.",
           "taste": "Na podniebieniu profil jest zwarty, czysty i klasyczny; w tle są wanilia, suchy dąb i zaokrąglona waniliowa słodycz; słodycz i dąb zostają w równowadze.",
           "finish": "Zbalansowany, średni finisz z ciemnym karmelem, wanilią i uporządkowanym dębowym zamknięciem, prażony orzech i brązowy cukier w ramie stylu bourbon, z ciepłym końcowym pulsem."
@@ -983,13 +822,13 @@
     "basil-hayden-s-kentucky-straight-bourbon": {
       "profile": {
         "en": {
-          "general": "Basil Hayden's Kentucky Straight Bourbon is a classic bourbon from Jim Beam Distillery, built around the producer's house style and the bottle's strength.",
+          "general": "Basil Hayden's Kentucky Straight is a classic bourbon from Jim Beam Distillery, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring roasted peanut, vanilla, brown sugar and dry oak, plus a drier spice thread and a mellow honey tone.",
           "taste": "The palate feels drying as the oak takes over, carrying vanilla, dry oak and rounded vanilla sweetness; warm spice fills the middle.",
           "finish": "Balanced medium finish with toasted sugar, gentle oak and a calm spice fade, roasted peanut and brown sugar in a bourbon frame, with a calm vanilla return."
         },
         "pl": {
-          "general": "Basil Hayden's Kentucky Straight Bourbon to klasyczny bourbon od Jim Beam Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Basil Hayden's Kentucky Straight to klasyczny bourbon od Jim Beam Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: prażony orzech, wanilia, brązowy cukier i suchy dąb, do tego bardziej wytrawna nić przypraw oraz miękki ton miodu.",
           "taste": "Na podniebieniu profil jest bardziej wytrawny, gdy przejmuje go dąb; w tle są wanilia, suchy dąb i zaokrąglona waniliowa słodycz; ciepłe przyprawy wypełniają środek.",
           "finish": "Zbalansowany, średni finisz z prażonym cukrem, łagodnym dębem i spokojnym wygasaniem przypraw, prażony orzech i brązowy cukier w ramie stylu bourbon, ze spokojnym powrotem wanilii."
@@ -1095,42 +934,19 @@
         ]
       }
     },
-    "knob-creek-18-year-old-bourbon": {
+    "knob-creek-9-year-old-100-proof-bourbon": {
       "profile": {
         "en": {
-          "general": "Knob Creek 100 Proof 18 Year Old Kentucky Straight Bourbon Whiskey is a fuller-proof bourbon from Jim Beam Distillery at 100 proof, built around the producer's house style and the bottle's strength.",
-          "nose": "Vanilla-led aromas bring roasted peanut, vanilla, brown sugar and dry oak, plus a light toasted-sugar lift and a warm pastry note in its 100 proof frame.",
-          "taste": "The palate feels fuller and more oak-forward, carrying vanilla, dry oak and rounded vanilla sweetness; a dry edge tightens the sip in its 100 proof frame.",
-          "finish": "Steady, warm finish with brown sugar, oak grip and a measured sweet fade, roasted peanut and brown sugar after the sweetness fades at 100 proof, with a lingering spice trace."
+          "general": "Knob Creek 9 Year is a fuller-proof bourbon from Jim Beam Distillery at 100 proof, built around the producer's house style and the bottle's strength.",
+          "nose": "Vanilla-led aromas bring roasted peanut, vanilla, brown sugar and dry oak, plus a softer honeyed middle and clean grain sweetness in its 100 proof frame.",
+          "taste": "The palate feels richer through the middle, carrying vanilla, dry oak and rounded vanilla sweetness; the oak keeps the sip structured in its 100 proof frame.",
+          "finish": "Steady, warm finish with light cocoa, barrel spice and a balanced vanilla return, roasted peanut and brown sugar after the sweetness fades at 100 proof, with a rounded last impression."
         },
         "pl": {
-          "general": "Knob Creek 100 Proof 18 Year Old Kentucky Straight Bourbon Whiskey to pełniejszy bourbon od Jim Beam Distillery przy 100 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
-          "nose": "Aromat prowadzi zestaw: prażony orzech, wanilia, brązowy cukier i suchy dąb, do tego lekki akcent prażonego cukru oraz ciepła nuta wypieku w ramie 100 proof.",
-          "taste": "Na podniebieniu profil jest pełniejszy i mocniej dębowy; w tle są wanilia, suchy dąb i zaokrąglona waniliowa słodycz; wytrawna krawędź porządkuje łyk w ramie 100 proof.",
-          "finish": "Stabilny, ciepły finisz zostawia brązowym cukrem, dębowym chwytem i miarowym słodkim zejściem, prażony orzech i brązowy cukier po wygaśnięciu słodyczy przy 100 proof, z dłuższym śladem przypraw."
-        }
-      },
-      "meta": {
-        "status": "seeded_runtime_profile",
-        "method": "style_and_bottle_data_synthesis",
-        "sources": [
-          "https://woodencork.com/products/knob-creek-18-year-old-bourbon"
-        ]
-      }
-    },
-    "knob-creek-kentucky-straight-bourbon": {
-      "profile": {
-        "en": {
-          "general": "Knob Creek 100 Proof Kentucky Straight Bourbon Whiskey is a fuller-proof bourbon from Jim Beam Distillery at 100 proof, built around the producer's house style and the bottle's strength.",
-          "nose": "Vanilla-led aromas bring roasted peanut, vanilla, brown sugar and dry oak, plus a drier spice thread and dry baking spice in its 100 proof frame.",
-          "taste": "The palate feels drying as the oak takes over, carrying vanilla, dry oak and rounded vanilla sweetness; spice arrives without turning sharp in its 100 proof frame.",
-          "finish": "Steady, warm finish with soft barrel spice and a clean vanilla trail, roasted peanut and brown sugar after the sweetness fades at 100 proof, with a short spice echo."
-        },
-        "pl": {
-          "general": "Knob Creek 100 Proof Kentucky Straight Bourbon Whiskey to pełniejszy bourbon od Jim Beam Distillery przy 100 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
-          "nose": "Aromat prowadzi zestaw: prażony orzech, wanilia, brązowy cukier i suchy dąb, do tego bardziej wytrawna nić przypraw oraz sucha przyprawa korzenna w ramie 100 proof.",
-          "taste": "Na podniebieniu profil jest bardziej wytrawny, gdy przejmuje go dąb; w tle są wanilia, suchy dąb i zaokrąglona waniliowa słodycz; przyprawy nie robią się ostre w ramie 100 proof.",
-          "finish": "Stabilny, ciepły finisz zostawia łagodną przyprawą beczki i czystym śladem wanilii, prażony orzech i brązowy cukier po wygaśnięciu słodyczy przy 100 proof, z krótkim echem przypraw."
+          "general": "Knob Creek 9 Year to pełniejszy bourbon od Jim Beam Distillery przy 100 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "nose": "Aromat prowadzi zestaw: prażony orzech, wanilia, brązowy cukier i suchy dąb, do tego łagodniejszy, miodowy środek oraz czysta słodycz zboża w ramie 100 proof.",
+          "taste": "Na podniebieniu profil jest bogatszy w środkowej części; w tle są wanilia, suchy dąb i zaokrąglona waniliowa słodycz; dąb trzyma strukturę łyku w ramie 100 proof.",
+          "finish": "Stabilny, ciepły finisz zostawia lekkim kakao, przyprawą beczki i powrotem wanilii, prażony orzech i brązowy cukier po wygaśnięciu słodyczy przy 100 proof, z zaokrąglonym ostatnim wrażeniem."
         }
       },
       "meta": {
@@ -1144,13 +960,13 @@
     "knob-creek-bourbon-12-year": {
       "profile": {
         "en": {
-          "general": "Knob Creek 12 Year Old 100 Proof Kentucky Straight Bourbon Whiskey is a fuller-proof bourbon from Jim Beam Distillery at 100 proof, built around the producer's house style and the bottle's strength.",
+          "general": "Knob Creek 12 Year Old 100 Proof is a fuller-proof bourbon from Jim Beam Distillery at 100 proof, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring roasted peanut, vanilla, brown sugar and dry oak, plus a light toasted-sugar lift and a toasted barrel edge in its 100 proof frame.",
           "taste": "The palate feels fuller and more oak-forward, carrying vanilla, dry oak and rounded vanilla sweetness; barrel notes add grip in its 100 proof frame.",
           "finish": "Steady, warm finish with vanilla, leathered oak and a quiet toasted note, roasted peanut and brown sugar after the sweetness fades at 100 proof, with a soft sweet close."
         },
         "pl": {
-          "general": "Knob Creek 12 Year Old 100 Proof Kentucky Straight Bourbon Whiskey to pełniejszy bourbon od Jim Beam Distillery przy 100 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Knob Creek 12 Year Old 100 Proof to pełniejszy bourbon od Jim Beam Distillery przy 100 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: prażony orzech, wanilia, brązowy cukier i suchy dąb, do tego lekki akcent prażonego cukru oraz akcent prażonej beczki w ramie 100 proof.",
           "taste": "Na podniebieniu profil jest pełniejszy i mocniej dębowy; w tle są wanilia, suchy dąb i zaokrąglona waniliowa słodycz; nuty beczki dodają chwytu w ramie 100 proof.",
           "finish": "Stabilny, ciepły finisz zostawia wanilią, dojrzalszym dębem i cichą nutą tostową, prażony orzech i brązowy cukier po wygaśnięciu słodyczy przy 100 proof, z miękkim słodkim domknięciem."
@@ -1164,62 +980,16 @@
         ]
       }
     },
-    "knob-creek-9-year-old-single-barrel-reserve": {
-      "profile": {
-        "en": {
-          "general": "Knob Creek 9-year-old Single Barrel Reserve is a classic bourbon from Jim Beam Distillery, built around the producer's house style and the bottle's strength.",
-          "nose": "Vanilla-led aromas bring roasted peanut, vanilla, brown sugar and dry oak, plus a touch of citrus brightness and soft brown sugar.",
-          "taste": "The palate feels sweet first, then spice-led, carrying vanilla, dry oak and rounded vanilla sweetness; the grain note keeps it clear.",
-          "finish": "Balanced medium finish with vanilla cream, polished wood and a light pepper touch, roasted peanut and brown sugar in a bourbon frame, with a tidy barrel grip."
-        },
-        "pl": {
-          "general": "Knob Creek 9-year-old Single Barrel Reserve to klasyczny bourbon od Jim Beam Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
-          "nose": "Aromat prowadzi zestaw: prażony orzech, wanilia, brązowy cukier i suchy dąb, do tego odrobina cytrusowej jasności oraz łagodny brązowy cukier.",
-          "taste": "Na podniebieniu profil jest najpierw słodki, potem przyprawowy; w tle są wanilia, suchy dąb i zaokrąglona waniliowa słodycz; zboże utrzymuje czysty profil.",
-          "finish": "Zbalansowany, średni finisz z kremem waniliowym, wygładzonym drewnem i lekkim pieprzem, prażony orzech i brązowy cukier w ramie stylu bourbon, ze zwartym chwytem beczki."
-        }
-      },
-      "meta": {
-        "status": "seeded_runtime_profile",
-        "method": "style_and_bottle_data_synthesis",
-        "sources": [
-          "https://sklep-domwhisky.pl/product-eng-8965-Knob-Creek-9-year-old-Single-Barrel-Reserve-60-0-75l.html"
-        ]
-      }
-    },
-    "knob-creek-12-year-cask-strength-bourbon": {
-      "profile": {
-        "en": {
-          "general": "Knob Creek Limited Edition 12 Year Old Cask Strength 120 Proof Kentucky Straight Bourbon Whiskey is a high-strength limited release bourbon from Jim Beam Distillery at 120 proof, built around the producer's house style and the bottle's strength.",
-          "nose": "Vanilla-led aromas bring roasted peanut, vanilla, brown sugar and dry oak, plus a rounded dessert-spice note and a light floral lift in its 120 proof frame.",
-          "taste": "The palate feels polished and approachable, carrying vanilla, dry oak and rounded vanilla sweetness; the middle stays rounded in its 120 proof frame.",
-          "finish": "Long, warming finish with toffee, warm spice and a smooth drying close, roasted peanut and brown sugar and lingering barrel heat at 120 proof, with a polished oak return."
-        },
-        "pl": {
-          "general": "Knob Creek Limited Edition 12 Year Old Cask Strength 120 Proof Kentucky Straight Bourbon Whiskey to mocniejszy edycja limitowana bourbona od Jim Beam Distillery przy 120 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
-          "nose": "Aromat prowadzi zestaw: prażony orzech, wanilia, brązowy cukier i suchy dąb, do tego zaokrąglona nuta deserowych przypraw oraz lekka kwiatowa nuta w ramie 120 proof.",
-          "taste": "Na podniebieniu profil jest wygładzony i przystępny; w tle są wanilia, suchy dąb i zaokrąglona waniliowa słodycz; środek pozostaje zaokrąglony w ramie 120 proof.",
-          "finish": "Długi, rozgrzewający finisz z toffi, ciepłymi przyprawami i gładkim wytrawnym domknięciem, prażony orzech i brązowy cukier i ciepłem beczki przy 120 proof, z powrotem wygładzonego dębu."
-        }
-      },
-      "meta": {
-        "status": "seeded_runtime_profile",
-        "method": "style_and_bottle_data_synthesis",
-        "sources": [
-          "https://woodencork.com/products/knob-creek-12-year-cask-strength-bourbon"
-        ]
-      }
-    },
     "knob-creek-120-proof-9-year-single-barrel-reserve-bourbon": {
       "profile": {
         "en": {
-          "general": "Knob Creek Single Barrel Reserve 120 Proof Kentucky Straight Bourbon Whiskey is a high-strength single barrel bourbon from Jim Beam Distillery at 120 proof, built around the producer's house style and the bottle's strength.",
+          "general": "Knob Creek 9 Year Single Barrel Reserve is a high-strength single barrel bourbon from Jim Beam Distillery at 120 proof, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring roasted peanut, vanilla, brown sugar and dry oak, plus a light toasted-sugar lift and a warm pastry note in its 120 proof frame.",
           "taste": "The palate feels fuller and more oak-forward, carrying vanilla, dry oak and rounded vanilla sweetness; a dry edge tightens the sip in its 120 proof frame.",
           "finish": "Long, warming finish with baked sugar, oak polish and a gentle pepper snap, roasted peanut and brown sugar and lingering barrel heat at 120 proof, with a lingering spice trace."
         },
         "pl": {
-          "general": "Knob Creek Single Barrel Reserve 120 Proof Kentucky Straight Bourbon Whiskey to mocniejszy single barrel bourbon od Jim Beam Distillery przy 120 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Knob Creek 9 Year Single Barrel Reserve to mocniejszy single barrel bourbon od Jim Beam Distillery przy 120 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: prażony orzech, wanilia, brązowy cukier i suchy dąb, do tego lekki akcent prażonego cukru oraz ciepła nuta wypieku w ramie 120 proof.",
           "taste": "Na podniebieniu profil jest pełniejszy i mocniej dębowy; w tle są wanilia, suchy dąb i zaokrąglona waniliowa słodycz; wytrawna krawędź porządkuje łyk w ramie 120 proof.",
           "finish": "Długi, rozgrzewający finisz z pieczonym cukrem, wygładzonym dębem i delikatnym pieprzem, prażony orzech i brązowy cukier i ciepłem beczki przy 120 proof, z dłuższym śladem przypraw."
@@ -1282,13 +1052,13 @@
     "ezra-brooks-99-proof-kentucky-straight-bourbon": {
       "profile": {
         "en": {
-          "general": "Ezra Brooks 99 Proof Kentucky Straight Bourbon is a classic bourbon from Lux Row, built around the producer's house style and the bottle's strength.",
+          "general": "Ezra Brooks 99 Proof Kentucky Straight is a classic bourbon from Lux Row, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring vanilla, caramel, sweet oak and baking spice, plus a darker barrel-char edge and a polished vanilla core.",
           "taste": "The palate feels compact, clean and classic, carrying caramel, baking spice and rounded vanilla sweetness; the sweetness stays controlled.",
           "finish": "Balanced medium finish with vanilla, leathered oak and a quiet toasted note, vanilla and sweet oak in a bourbon frame, with a dry final edge."
         },
         "pl": {
-          "general": "Ezra Brooks 99 Proof Kentucky Straight Bourbon to klasyczny bourbon od Lux Row, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Ezra Brooks 99 Proof Kentucky Straight to klasyczny bourbon od Lux Row, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: wanilia, karmel, słodki dąb i przyprawy korzenne, do tego ciemniejszy ton opalonej beczki oraz wygładzony rdzeń wanilii.",
           "taste": "Na podniebieniu profil jest zwarty, czysty i klasyczny; w tle są karmel, przyprawy korzenne i zaokrąglona waniliowa słodycz; słodycz pozostaje pod kontrolą.",
           "finish": "Zbalansowany, średni finisz z wanilią, dojrzalszym dębem i cichą nutą tostową, wanilia i słodki dąb w ramie stylu bourbon, z wytrawną końcówką."
@@ -1351,13 +1121,13 @@
     "rebel-yell-kentucky-straight-bourbon": {
       "profile": {
         "en": {
-          "general": "Rebel Yell Kentucky Straight Bourbon is a classic bourbon from Lux Row, built around the producer's house style and the bottle's strength.",
+          "general": "Rebel Yell Kentucky Straight is a classic bourbon from Lux Row, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring vanilla, caramel, sweet oak and baking spice, plus a drier spice thread and dry baking spice.",
           "taste": "The palate feels drying as the oak takes over, carrying caramel, baking spice and rounded vanilla sweetness; spice arrives without turning sharp.",
           "finish": "Balanced medium finish with dark caramel, vanilla and a tidy oak close, vanilla and sweet oak in a bourbon frame, with a short spice echo."
         },
         "pl": {
-          "general": "Rebel Yell Kentucky Straight Bourbon to klasyczny bourbon od Lux Row, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Rebel Yell Kentucky Straight to klasyczny bourbon od Lux Row, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: wanilia, karmel, słodki dąb i przyprawy korzenne, do tego bardziej wytrawna nić przypraw oraz sucha przyprawa korzenna.",
           "taste": "Na podniebieniu profil jest bardziej wytrawny, gdy przejmuje go dąb; w tle są karmel, przyprawy korzenne i zaokrąglona waniliowa słodycz; przyprawy nie robią się ostre.",
           "finish": "Zbalansowany, średni finisz z ciemnym karmelem, wanilią i uporządkowanym dębowym zamknięciem, wanilia i słodki dąb w ramie stylu bourbon, z krótkim echem przypraw."
@@ -1374,13 +1144,13 @@
     "makers-mark-101-proof-bourbon-whisky": {
       "profile": {
         "en": {
-          "general": "Maker's Mark 101 Proof Bourbon Whisky is a fuller-proof bourbon from Maker's Mark at 101 proof, built around the producer's house style and the bottle's strength.",
+          "general": "Maker's Mark 101 Proof is a fuller-proof bourbon from Maker's Mark at 101 proof, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring wheat sweetness, vanilla cream, caramel and gentle oak, plus a light toasted-sugar lift and a warm pastry note in its 101 proof frame.",
           "taste": "The palate feels fuller and more oak-forward, carrying vanilla cream, gentle oak and rounded vanilla sweetness; a dry edge tightens the sip in its 101 proof frame.",
           "finish": "Steady, warm finish with dark caramel, vanilla and a tidy oak close, wheat sweetness and caramel after the sweetness fades at 101 proof, with a lingering spice trace."
         },
         "pl": {
-          "general": "Maker's Mark 101 Proof Bourbon Whisky to pełniejszy bourbon od Maker's Mark przy 101 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Maker's Mark 101 Proof to pełniejszy bourbon od Maker's Mark przy 101 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: pszeniczna słodycz, krem waniliowy, karmel i łagodny dąb, do tego lekki akcent prażonego cukru oraz ciepła nuta wypieku w ramie 101 proof.",
           "taste": "Na podniebieniu profil jest pełniejszy i mocniej dębowy; w tle są krem waniliowy, łagodny dąb i zaokrąglona waniliowa słodycz; wytrawna krawędź porządkuje łyk w ramie 101 proof.",
           "finish": "Stabilny, ciepły finisz zostawia ciemnym karmelem, wanilią i uporządkowanym dębowym zamknięciem, pszeniczna słodycz i karmel po wygaśnięciu słodyczy przy 101 proof, z dłuższym śladem przypraw."
@@ -1391,52 +1161,6 @@
         "method": "style_and_bottle_data_synthesis",
         "sources": [
           "https://woodencork.com/products/makers-mark-101-proof-bourbon-whisky"
-        ]
-      }
-    },
-    "makers-mark-46-frenched-oak-bills-recipe": {
-      "profile": {
-        "en": {
-          "general": "Maker's Mark 46 Cask Strength Bill's Recipe Frenched Oak Limited Release is a classic limited release bourbon from Maker's Mark at 94 proof, built around the producer's house style and the bottle's strength.",
-          "nose": "Vanilla-led aromas bring wheat sweetness, vanilla cream, caramel and gentle oak, plus a rounded dessert-spice note and a light floral lift in its 94 proof frame.",
-          "taste": "The palate feels polished and approachable, carrying vanilla cream, gentle oak and rounded vanilla sweetness; the middle stays rounded in its 94 proof frame.",
-          "finish": "Balanced medium finish with dry oak, caramel warmth and a light cinnamon lift, wheat sweetness and caramel at 94 proof, with a polished oak return."
-        },
-        "pl": {
-          "general": "Maker's Mark 46 Cask Strength Bill's Recipe Frenched Oak Limited Release to klasyczny edycja limitowana bourbona od Maker's Mark przy 94 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
-          "nose": "Aromat prowadzi zestaw: pszeniczna słodycz, krem waniliowy, karmel i łagodny dąb, do tego zaokrąglona nuta deserowych przypraw oraz lekka kwiatowa nuta w ramie 94 proof.",
-          "taste": "Na podniebieniu profil jest wygładzony i przystępny; w tle są krem waniliowy, łagodny dąb i zaokrąglona waniliowa słodycz; środek pozostaje zaokrąglony w ramie 94 proof.",
-          "finish": "Zbalansowany, średni finisz z suchym dębem, ciepłem karmelu i lekkim cynamonem, pszeniczna słodycz i karmel przy 94 proof, z powrotem wygładzonego dębu."
-        }
-      },
-      "meta": {
-        "status": "seeded_runtime_profile",
-        "method": "style_and_bottle_data_synthesis",
-        "sources": [
-          "https://woodencork.com/products/makers-mark-46-frenched-oak-bills-recipe"
-        ]
-      }
-    },
-    "makers-mark-46-cask-strength-bourbon-limited-edition": {
-      "profile": {
-        "en": {
-          "general": "Maker's Mark 46 Cask Strength Bourbon Limited Edition is a classic limited release bourbon from Maker's Mark at 94 proof, built around the producer's house style and the bottle's strength.",
-          "nose": "Vanilla-led aromas bring wheat sweetness, vanilla cream, caramel and gentle oak, plus a drier spice thread and dry baking spice in its 94 proof frame.",
-          "taste": "The palate feels drying as the oak takes over, carrying vanilla cream, gentle oak and rounded vanilla sweetness; spice arrives without turning sharp in its 94 proof frame.",
-          "finish": "Balanced medium finish with baked sugar, oak polish and a gentle pepper snap, wheat sweetness and caramel at 94 proof, with a short spice echo."
-        },
-        "pl": {
-          "general": "Maker's Mark 46 Cask Strength Bourbon Limited Edition to klasyczny edycja limitowana bourbona od Maker's Mark przy 94 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
-          "nose": "Aromat prowadzi zestaw: pszeniczna słodycz, krem waniliowy, karmel i łagodny dąb, do tego bardziej wytrawna nić przypraw oraz sucha przyprawa korzenna w ramie 94 proof.",
-          "taste": "Na podniebieniu profil jest bardziej wytrawny, gdy przejmuje go dąb; w tle są krem waniliowy, łagodny dąb i zaokrąglona waniliowa słodycz; przyprawy nie robią się ostre w ramie 94 proof.",
-          "finish": "Zbalansowany, średni finisz z pieczonym cukrem, wygładzonym dębem i delikatnym pieprzem, pszeniczna słodycz i karmel przy 94 proof, z krótkim echem przypraw."
-        }
-      },
-      "meta": {
-        "status": "seeded_runtime_profile",
-        "method": "style_and_bottle_data_synthesis",
-        "sources": [
-          "https://woodencork.com/products/makers-mark-46-cask-strength-bourbon-limited-edition"
         ]
       }
     },
@@ -1463,42 +1187,19 @@
         ]
       }
     },
-    "michters-fort-nelson-reserve-barrel-strength-bourbon": {
-      "profile": {
-        "en": {
-          "general": "Michter's 'Fort Nelson Reserve' Barrel Strength Bourbon is a classic bourbon from Michter's Distillery, built around the producer's house style and the bottle's strength.",
-          "nose": "Vanilla-led aromas bring butterscotch, dark sugar, oak and warm spice, plus a light toasted-sugar lift and a warm pastry note.",
-          "taste": "The palate feels fuller and more oak-forward, carrying dark sugar, warm spice and rounded vanilla sweetness; a dry edge tightens the sip.",
-          "finish": "Balanced medium finish with baked sugar, oak polish and a gentle pepper snap, butterscotch and oak in a bourbon frame, with a lingering spice trace."
-        },
-        "pl": {
-          "general": "Michter's 'Fort Nelson Reserve' Barrel Strength Bourbon to klasyczny bourbon od Michter's Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
-          "nose": "Aromat prowadzi zestaw: maślany karmel, ciemny cukier, dąb i ciepłe przyprawy, do tego lekki akcent prażonego cukru oraz ciepła nuta wypieku.",
-          "taste": "Na podniebieniu profil jest pełniejszy i mocniej dębowy; w tle są ciemny cukier, ciepłe przyprawy i zaokrąglona waniliowa słodycz; wytrawna krawędź porządkuje łyk.",
-          "finish": "Zbalansowany, średni finisz z pieczonym cukrem, wygładzonym dębem i delikatnym pieprzem, maślany karmel i dąb w ramie stylu bourbon, z dłuższym śladem przypraw."
-        }
-      },
-      "meta": {
-        "status": "seeded_runtime_profile",
-        "method": "style_and_bottle_data_synthesis",
-        "sources": [
-          "https://woodencork.com/products/michters-fort-nelson-reserve-barrel-strength-bourbon"
-        ]
-      }
-    },
     "michters-bourbon": {
       "profile": {
         "en": {
-          "general": "Michter's Bourbon is a fuller-proof bourbon from Michter's Distillery at 103 proof, built around the producer's house style and the bottle's strength.",
-          "nose": "Vanilla-led aromas bring butterscotch, dark sugar, oak and warm spice, plus a light toasted-sugar lift and a warm pastry note in its 103 proof frame.",
-          "taste": "The palate feels fuller and more oak-forward, carrying dark sugar, warm spice and rounded vanilla sweetness; a dry edge tightens the sip in its 103 proof frame.",
-          "finish": "Steady, warm finish with soft barrel spice and a clean vanilla trail, butterscotch and oak after the sweetness fades at 103 proof, with a lingering spice trace."
+          "general": "Michter's US*1 Small Batch is a classic bourbon from Michter's Distillery at 91.4 proof, built around the producer's house style and the bottle's strength.",
+          "nose": "Vanilla-led aromas bring butterscotch, dark sugar, oak and warm spice, plus a light toasted-sugar lift and a warm pastry note in its 91.4 proof frame.",
+          "taste": "The palate feels fuller and more oak-forward, carrying dark sugar, warm spice and rounded vanilla sweetness; a dry edge tightens the sip in its 91.4 proof frame.",
+          "finish": "Balanced medium finish with soft barrel spice and a clean vanilla trail, butterscotch and oak at 91.4 proof, with a lingering spice trace."
         },
         "pl": {
-          "general": "Michter's Bourbon to pełniejszy bourbon od Michter's Distillery przy 103 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
-          "nose": "Aromat prowadzi zestaw: maślany karmel, ciemny cukier, dąb i ciepłe przyprawy, do tego lekki akcent prażonego cukru oraz ciepła nuta wypieku w ramie 103 proof.",
-          "taste": "Na podniebieniu profil jest pełniejszy i mocniej dębowy; w tle są ciemny cukier, ciepłe przyprawy i zaokrąglona waniliowa słodycz; wytrawna krawędź porządkuje łyk w ramie 103 proof.",
-          "finish": "Stabilny, ciepły finisz zostawia łagodną przyprawą beczki i czystym śladem wanilii, maślany karmel i dąb po wygaśnięciu słodyczy przy 103 proof, z dłuższym śladem przypraw."
+          "general": "Michter's US*1 Small Batch to klasyczny bourbon od Michter's Distillery przy 91.4 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "nose": "Aromat prowadzi zestaw: maślany karmel, ciemny cukier, dąb i ciepłe przyprawy, do tego lekki akcent prażonego cukru oraz ciepła nuta wypieku w ramie 91.4 proof.",
+          "taste": "Na podniebieniu profil jest pełniejszy i mocniej dębowy; w tle są ciemny cukier, ciepłe przyprawy i zaokrąglona waniliowa słodycz; wytrawna krawędź porządkuje łyk w ramie 91.4 proof.",
+          "finish": "Zbalansowany, średni finisz z łagodną przyprawą beczki i czystym śladem wanilii, maślany karmel i dąb przy 91.4 proof, z dłuższym śladem przypraw."
         }
       },
       "meta": {
@@ -1512,13 +1213,13 @@
     "new-riff-8-year-old-kentucky-straight-bourbon-whiskey": {
       "profile": {
         "en": {
-          "general": "New Riff 8 Year Bottled-In-Bond Kentucky Straight Bourbon Whiskey is a fuller-proof Bottled in Bond bourbon from New Riff Distillery at 100 proof, built around the producer's house style and the bottle's strength.",
+          "general": "New Riff 8 Year Bottled-In-Bond is a fuller-proof Bottled in Bond bourbon from New Riff Distillery at 100 proof, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring vanilla, caramel, sweet oak and baking spice, plus a rounded dessert-spice note and a dusty oak accent in its 100 proof frame.",
           "taste": "The palate feels polished and approachable, carrying caramel, baking spice and rounded vanilla sweetness; the caramel note stays clean in its 100 proof frame.",
           "finish": "Steady, warm finish with honeyed sweetness, oak tannin and a short spice echo, vanilla and sweet oak after the sweetness fades at 100 proof, with a compact dry close."
         },
         "pl": {
-          "general": "New Riff 8 Year Bottled-In-Bond Kentucky Straight Bourbon Whiskey to pełniejszy Bottled in Bond bourbon od New Riff Distillery przy 100 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "New Riff 8 Year Bottled-In-Bond to pełniejszy Bottled in Bond bourbon od New Riff Distillery przy 100 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: wanilia, karmel, słodki dąb i przyprawy korzenne, do tego zaokrąglona nuta deserowych przypraw oraz pylisty akcent dębu w ramie 100 proof.",
           "taste": "Na podniebieniu profil jest wygładzony i przystępny; w tle są karmel, przyprawy korzenne i zaokrąglona waniliowa słodycz; karmel pozostaje czysty w ramie 100 proof.",
           "finish": "Stabilny, ciepły finisz zostawia miodową słodyczą, taniną dębu i krótkim echem przypraw, wanilia i słodki dąb po wygaśnięciu słodyczy przy 100 proof, ze zwartym wytrawnym domknięciem."
@@ -1535,13 +1236,13 @@
     "new-riff-bottled-in-bond-kentucky-straight-bourbon-whiskey": {
       "profile": {
         "en": {
-          "general": "New Riff Bottled-In-Bond Kentucky Straight Bourbon Whiskey is a fuller-proof Bottled in Bond bourbon from New Riff Distillery at 100 proof, built around the producer's house style and the bottle's strength.",
+          "general": "New Riff Bottled-In-Bond is a fuller-proof Bottled in Bond bourbon from New Riff Distillery at 100 proof, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring vanilla, caramel, sweet oak and baking spice, plus a touch of citrus brightness and a gentle herbal touch in its 100 proof frame.",
           "taste": "The palate feels sweet first, then spice-led, carrying caramel, baking spice and rounded vanilla sweetness; vanilla softens the oak in its 100 proof frame.",
           "finish": "Steady, warm finish with dry oak, caramel warmth and a light cinnamon lift, vanilla and sweet oak after the sweetness fades at 100 proof, with a clean fade."
         },
         "pl": {
-          "general": "New Riff Bottled-In-Bond Kentucky Straight Bourbon Whiskey to pełniejszy Bottled in Bond bourbon od New Riff Distillery przy 100 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "New Riff Bottled-In-Bond to pełniejszy Bottled in Bond bourbon od New Riff Distillery przy 100 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: wanilia, karmel, słodki dąb i przyprawy korzenne, do tego odrobina cytrusowej jasności oraz łagodny ziołowy dotyk w ramie 100 proof.",
           "taste": "Na podniebieniu profil jest najpierw słodki, potem przyprawowy; w tle są karmel, przyprawy korzenne i zaokrąglona waniliowa słodycz; wanilia łagodzi dąb w ramie 100 proof.",
           "finish": "Stabilny, ciepły finisz zostawia suchym dębem, ciepłem karmelu i lekkim cynamonem, wanilia i słodki dąb po wygaśnięciu słodyczy przy 100 proof, z czystym wygasaniem."
@@ -1558,13 +1259,13 @@
     "noah-s-mill-kentucky-bourbon": {
       "profile": {
         "en": {
-          "general": "Noah's Mill Kentucky Bourbon is a classic bourbon from Noah's Mill, built around the producer's house style and the bottle's strength.",
+          "general": "Noah's Mill Kentucky is a classic bourbon from Noah's Mill, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring vanilla, caramel, sweet oak and baking spice, plus a touch of citrus brightness and soft brown sugar.",
           "taste": "The palate feels sweet first, then spice-led, carrying caramel, baking spice and rounded vanilla sweetness; the grain note keeps it clear.",
           "finish": "Balanced medium finish with light cocoa, barrel spice and a balanced vanilla return, vanilla and sweet oak in a bourbon frame, with a tidy barrel grip."
         },
         "pl": {
-          "general": "Noah's Mill Kentucky Bourbon to klasyczny bourbon od Noah's Mill, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Noah's Mill Kentucky to klasyczny bourbon od Noah's Mill, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: wanilia, karmel, słodki dąb i przyprawy korzenne, do tego odrobina cytrusowej jasności oraz łagodny brązowy cukier.",
           "taste": "Na podniebieniu profil jest najpierw słodki, potem przyprawowy; w tle są karmel, przyprawy korzenne i zaokrąglona waniliowa słodycz; zboże utrzymuje czysty profil.",
           "finish": "Zbalansowany, średni finisz z lekkim kakao, przyprawą beczki i powrotem wanilii, wanilia i słodki dąb w ramie stylu bourbon, ze zwartym chwytem beczki."
@@ -1604,13 +1305,13 @@
     "old-forester-1910-old-fine-whiskey-bourbon-whiskey": {
       "profile": {
         "en": {
-          "general": "Old Forester 1910 \"Old Fine Whiskey\" Bourbon Whiskey is a classic bourbon from Old Forester Distillery at 93 proof, built around the producer's house style and the bottle's strength.",
+          "general": "Old Forester 1910 \"Old Fine Whiskey\" is a classic bourbon from Old Forester Distillery at 93 proof, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring banana bread, brown sugar, oak and pepper spice, plus a light toasted-sugar lift and a toasted barrel edge in its 93 proof frame.",
           "taste": "The palate feels fuller and more oak-forward, carrying brown sugar, pepper spice and rounded vanilla sweetness; barrel notes add grip in its 93 proof frame.",
           "finish": "Balanced medium finish with toasted sugar, gentle oak and a calm spice fade, banana bread and oak at 93 proof, with a soft sweet close."
         },
         "pl": {
-          "general": "Old Forester 1910 \"Old Fine Whiskey\" Bourbon Whiskey to klasyczny bourbon od Old Forester Distillery przy 93 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Old Forester 1910 \"Old Fine Whiskey\" to klasyczny bourbon od Old Forester Distillery przy 93 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: chlebek bananowy, brązowy cukier, dąb i pieprzna przyprawa, do tego lekki akcent prażonego cukru oraz akcent prażonej beczki w ramie 93 proof.",
           "taste": "Na podniebieniu profil jest pełniejszy i mocniej dębowy; w tle są brązowy cukier, pieprzna przyprawa i zaokrąglona waniliowa słodycz; nuty beczki dodają chwytu w ramie 93 proof.",
           "finish": "Zbalansowany, średni finisz z prażonym cukrem, łagodnym dębem i spokojnym wygasaniem przypraw, chlebek bananowy i dąb przy 93 proof, z miękkim słodkim domknięciem."
@@ -1627,13 +1328,13 @@
     "old-forester-1910-extra-old-117-series-bourbon-whiskey": {
       "profile": {
         "en": {
-          "general": "Old Forester 1910 Extra Old 117 Series Bourbon Whiskey is a classic bourbon from Old Forester Distillery at 93 proof, built around the producer's house style and the bottle's strength.",
+          "general": "Old Forester 1910 Extra Old 117 Series is a classic bourbon from Old Forester Distillery at 93 proof, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring banana bread, brown sugar, oak and pepper spice, plus a softer honeyed middle and a richer char note in its 93 proof frame.",
           "taste": "The palate feels richer through the middle, carrying brown sugar, pepper spice and rounded vanilla sweetness; the texture stays compact in its 93 proof frame.",
           "finish": "Balanced medium finish with toffee, warm spice and a smooth drying close, banana bread and oak at 93 proof, with a measured oak fade."
         },
         "pl": {
-          "general": "Old Forester 1910 Extra Old 117 Series Bourbon Whiskey to klasyczny bourbon od Old Forester Distillery przy 93 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Old Forester 1910 Extra Old 117 Series to klasyczny bourbon od Old Forester Distillery przy 93 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: chlebek bananowy, brązowy cukier, dąb i pieprzna przyprawa, do tego łagodniejszy, miodowy środek oraz bogatsza nuta opalenia w ramie 93 proof.",
           "taste": "Na podniebieniu profil jest bogatszy w środkowej części; w tle są brązowy cukier, pieprzna przyprawa i zaokrąglona waniliowa słodycz; tekstura pozostaje zwarta w ramie 93 proof.",
           "finish": "Zbalansowany, średni finisz z toffi, ciepłymi przyprawami i gładkim wytrawnym domknięciem, chlebek bananowy i dąb przy 93 proof, z miarowym wygasaniem dębu."
@@ -1650,13 +1351,13 @@
     "old-forester-1924-10-year-old-kentucky-straight-bourbon-whisky": {
       "profile": {
         "en": {
-          "general": "Old Forester 1924 10-Year-Old Kentucky Straight Bourbon Whisky is a classic bourbon from Old Forester Distillery, built around the producer's house style and the bottle's strength.",
+          "general": "Old Forester 1924 10-Year-Old is a classic bourbon from Old Forester Distillery, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring banana bread, brown sugar, oak and pepper spice, plus a drier spice thread and dry baking spice.",
           "taste": "The palate feels drying as the oak takes over, carrying brown sugar, pepper spice and rounded vanilla sweetness; spice arrives without turning sharp.",
           "finish": "Balanced medium finish with brown sugar, oak grip and a measured sweet fade, banana bread and oak in a bourbon frame, with a short spice echo."
         },
         "pl": {
-          "general": "Old Forester 1924 10-Year-Old Kentucky Straight Bourbon Whisky to klasyczny bourbon od Old Forester Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Old Forester 1924 10-Year-Old to klasyczny bourbon od Old Forester Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: chlebek bananowy, brązowy cukier, dąb i pieprzna przyprawa, do tego bardziej wytrawna nić przypraw oraz sucha przyprawa korzenna.",
           "taste": "Na podniebieniu profil jest bardziej wytrawny, gdy przejmuje go dąb; w tle są brązowy cukier, pieprzna przyprawa i zaokrąglona waniliowa słodycz; przyprawy nie robią się ostre.",
           "finish": "Zbalansowany, średni finisz z brązowym cukrem, dębowym chwytem i miarowym słodkim zejściem, chlebek bananowy i dąb w ramie stylu bourbon, z krótkim echem przypraw."
@@ -1696,13 +1397,13 @@
     "old-forester-king-ranch-edition-bourbon": {
       "profile": {
         "en": {
-          "general": "Old Forester King Ranch Edition Bourbon is a fuller-proof bourbon from Old Forester Distillery at 105 proof, built around the producer's house style and the bottle's strength.",
+          "general": "Old Forester King Ranch Edition is a fuller-proof bourbon from Old Forester Distillery at 105 proof, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring banana bread, brown sugar, oak and pepper spice, plus a rounded dessert-spice note and a light floral lift in its 105 proof frame.",
           "taste": "The palate feels polished and approachable, carrying brown sugar, pepper spice and rounded vanilla sweetness; the middle stays rounded in its 105 proof frame.",
           "finish": "Steady, warm finish with toffee, warm spice and a smooth drying close, banana bread and oak after the sweetness fades at 105 proof, with a polished oak return."
         },
         "pl": {
-          "general": "Old Forester King Ranch Edition Bourbon to pełniejszy bourbon od Old Forester Distillery przy 105 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Old Forester King Ranch Edition to pełniejszy bourbon od Old Forester Distillery przy 105 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: chlebek bananowy, brązowy cukier, dąb i pieprzna przyprawa, do tego zaokrąglona nuta deserowych przypraw oraz lekka kwiatowa nuta w ramie 105 proof.",
           "taste": "Na podniebieniu profil jest wygładzony i przystępny; w tle są brązowy cukier, pieprzna przyprawa i zaokrąglona waniliowa słodycz; środek pozostaje zaokrąglony w ramie 105 proof.",
           "finish": "Stabilny, ciepły finisz zostawia toffi, ciepłymi przyprawami i gładkim wytrawnym domknięciem, chlebek bananowy i dąb po wygaśnięciu słodyczy przy 105 proof, z powrotem wygładzonego dębu."
@@ -1719,13 +1420,13 @@
     "old-forester-statesman-bourbon": {
       "profile": {
         "en": {
-          "general": "Old Forester Statesman Bourbon is a classic bourbon from Old Forester Distillery at 95 proof, built around the producer's house style and the bottle's strength.",
+          "general": "Old Forester Statesman is a classic bourbon from Old Forester Distillery at 95 proof, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring banana bread, brown sugar, oak and pepper spice, plus a darker barrel-char edge and a compact citrus snap in its 95 proof frame.",
           "taste": "The palate feels compact, clean and classic, carrying brown sugar, pepper spice and rounded vanilla sweetness; sweetness and oak stay in balance in its 95 proof frame.",
           "finish": "Balanced medium finish with dark caramel, vanilla and a tidy oak close, banana bread and oak at 95 proof, with a warm final pulse."
         },
         "pl": {
-          "general": "Old Forester Statesman Bourbon to klasyczny bourbon od Old Forester Distillery przy 95 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Old Forester Statesman to klasyczny bourbon od Old Forester Distillery przy 95 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: chlebek bananowy, brązowy cukier, dąb i pieprzna przyprawa, do tego ciemniejszy ton opalonej beczki oraz krótki cytrusowy błysk w ramie 95 proof.",
           "taste": "Na podniebieniu profil jest zwarty, czysty i klasyczny; w tle są brązowy cukier, pieprzna przyprawa i zaokrąglona waniliowa słodycz; słodycz i dąb zostają w równowadze w ramie 95 proof.",
           "finish": "Zbalansowany, średni finisz z ciemnym karmelem, wanilią i uporządkowanym dębowym zamknięciem, chlebek bananowy i dąb przy 95 proof, z ciepłym końcowym pulsem."
@@ -1739,62 +1440,16 @@
         ]
       }
     },
-    "old-rip-van-winkle-10-year-bourbon": {
-      "profile": {
-        "en": {
-          "general": "Old Rip Van Winkle 10 Year Bourbon is a fuller-proof bourbon from Old Rip Van Winkle / Buffalo Trace at 107 proof, built around the producer's house style and the bottle's strength.",
-          "nose": "Vanilla-led aromas bring vanilla, caramel, orange peel and polished oak, plus a touch of citrus brightness and soft brown sugar in its 107 proof frame.",
-          "taste": "The palate feels sweet first, then spice-led, carrying caramel, polished oak and rounded vanilla sweetness; the grain note keeps it clear in its 107 proof frame.",
-          "finish": "Steady, warm finish with caramel, nutmeg and a compact barrel-spice fade, vanilla and orange peel after the sweetness fades at 107 proof, with a tidy barrel grip."
-        },
-        "pl": {
-          "general": "Old Rip Van Winkle 10 Year Bourbon to pełniejszy bourbon od Old Rip Van Winkle / Buffalo Trace przy 107 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
-          "nose": "Aromat prowadzi zestaw: wanilia, karmel, skórka pomarańczy i wygładzony dąb, do tego odrobina cytrusowej jasności oraz łagodny brązowy cukier w ramie 107 proof.",
-          "taste": "Na podniebieniu profil jest najpierw słodki, potem przyprawowy; w tle są karmel, wygładzony dąb i zaokrąglona waniliowa słodycz; zboże utrzymuje czysty profil w ramie 107 proof.",
-          "finish": "Stabilny, ciepły finisz zostawia karmelem, gałką muszkatołową i zwartym echem beczki, wanilia i skórka pomarańczy po wygaśnięciu słodyczy przy 107 proof, ze zwartym chwytem beczki."
-        }
-      },
-      "meta": {
-        "status": "seeded_runtime_profile",
-        "method": "style_and_bottle_data_synthesis",
-        "sources": [
-          "https://woodencork.com/products/old-rip-van-winkle-10-year-bourbon"
-        ]
-      }
-    },
-    "pappy-van-winkle-15-year-bourbon": {
-      "profile": {
-        "en": {
-          "general": "Pappy Van Winkle 15 Year Bourbon is a fuller-proof bourbon from Old Rip Van Winkle / Buffalo Trace at 107 proof, built around the producer's house style and the bottle's strength.",
-          "nose": "Vanilla-led aromas bring vanilla, caramel, orange peel and polished oak, plus a softer honeyed middle and a richer char note in its 107 proof frame.",
-          "taste": "The palate feels richer through the middle, carrying caramel, polished oak and rounded vanilla sweetness; the texture stays compact in its 107 proof frame.",
-          "finish": "Steady, warm finish with sweet grain, clove warmth and a rounded oak finish, vanilla and orange peel after the sweetness fades at 107 proof, with a measured oak fade."
-        },
-        "pl": {
-          "general": "Pappy Van Winkle 15 Year Bourbon to pełniejszy bourbon od Old Rip Van Winkle / Buffalo Trace przy 107 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
-          "nose": "Aromat prowadzi zestaw: wanilia, karmel, skórka pomarańczy i wygładzony dąb, do tego łagodniejszy, miodowy środek oraz bogatsza nuta opalenia w ramie 107 proof.",
-          "taste": "Na podniebieniu profil jest bogatszy w środkowej części; w tle są karmel, wygładzony dąb i zaokrąglona waniliowa słodycz; tekstura pozostaje zwarta w ramie 107 proof.",
-          "finish": "Stabilny, ciepły finisz zostawia słodkim ziarnem, ciepłem goździka i zaokrąglonym dębem, wanilia i skórka pomarańczy po wygaśnięciu słodyczy przy 107 proof, z miarowym wygasaniem dębu."
-        }
-      },
-      "meta": {
-        "status": "seeded_runtime_profile",
-        "method": "style_and_bottle_data_synthesis",
-        "sources": [
-          "https://woodencork.com/products/pappy-van-winkle-15-year-bourbon"
-        ]
-      }
-    },
     "penelope-architect-straight-bourbon": {
       "profile": {
         "en": {
-          "general": "Penelope Architect Straight Bourbon is a classic bourbon from Penelope Bourbon, built around the producer's house style and the bottle's strength.",
+          "general": "Penelope Architect Straight is a classic bourbon from Penelope Bourbon, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring vanilla, caramel, sweet oak and baking spice, plus a light toasted-sugar lift and a warm pastry note.",
           "taste": "The palate feels fuller and more oak-forward, carrying caramel, baking spice and rounded vanilla sweetness; a dry edge tightens the sip.",
           "finish": "Balanced medium finish with dark caramel, vanilla and a tidy oak close, vanilla and sweet oak in a bourbon frame, with a lingering spice trace."
         },
         "pl": {
-          "general": "Penelope Architect Straight Bourbon to klasyczny bourbon od Penelope Bourbon, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Penelope Architect Straight to klasyczny bourbon od Penelope Bourbon, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: wanilia, karmel, słodki dąb i przyprawy korzenne, do tego lekki akcent prażonego cukru oraz ciepła nuta wypieku.",
           "taste": "Na podniebieniu profil jest pełniejszy i mocniej dębowy; w tle są karmel, przyprawy korzenne i zaokrąglona waniliowa słodycz; wytrawna krawędź porządkuje łyk.",
           "finish": "Zbalansowany, średni finisz z ciemnym karmelem, wanilią i uporządkowanym dębowym zamknięciem, wanilia i słodki dąb w ramie stylu bourbon, z dłuższym śladem przypraw."
@@ -1811,13 +1466,13 @@
     "penelope-four-grain-straight-bourbon-whiskey": {
       "profile": {
         "en": {
-          "general": "Penelope Four Grain Straight Bourbon Whiskey is a classic bourbon from Penelope Bourbon, built around the producer's house style and the bottle's strength.",
+          "general": "Penelope Four Grain is a classic bourbon from Penelope Bourbon, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring vanilla, caramel, sweet oak and baking spice, plus a drier spice thread and a mellow honey tone.",
           "taste": "The palate feels drying as the oak takes over, carrying caramel, baking spice and rounded vanilla sweetness; warm spice fills the middle.",
           "finish": "Balanced medium finish with vanilla, leathered oak and a quiet toasted note, vanilla and sweet oak in a bourbon frame, with a calm vanilla return."
         },
         "pl": {
-          "general": "Penelope Four Grain Straight Bourbon Whiskey to klasyczny bourbon od Penelope Bourbon, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Penelope Four Grain to klasyczny bourbon od Penelope Bourbon, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: wanilia, karmel, słodki dąb i przyprawy korzenne, do tego bardziej wytrawna nić przypraw oraz miękki ton miodu.",
           "taste": "Na podniebieniu profil jest bardziej wytrawny, gdy przejmuje go dąb; w tle są karmel, przyprawy korzenne i zaokrąglona waniliowa słodycz; ciepłe przyprawy wypełniają środek.",
           "finish": "Zbalansowany, średni finisz z wanilią, dojrzalszym dębem i cichą nutą tostową, wanilia i słodki dąb w ramie stylu bourbon, ze spokojnym powrotem wanilii."
@@ -1834,13 +1489,13 @@
     "penelope-rio-straight-bourbon-whiskey": {
       "profile": {
         "en": {
-          "general": "Penelope Rio Straight Bourbon Whiskey is a classic bourbon from Penelope Bourbon, built around the producer's house style and the bottle's strength.",
+          "general": "Penelope Rio is a classic bourbon from Penelope Bourbon, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring vanilla, caramel, sweet oak and baking spice, plus a drier spice thread and a mellow honey tone.",
           "taste": "The palate feels drying as the oak takes over, carrying caramel, baking spice and rounded vanilla sweetness; warm spice fills the middle.",
           "finish": "Balanced medium finish with maple-like sweetness, dry wood and soft char, vanilla and sweet oak in a bourbon frame, with a calm vanilla return."
         },
         "pl": {
-          "general": "Penelope Rio Straight Bourbon Whiskey to klasyczny bourbon od Penelope Bourbon, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Penelope Rio to klasyczny bourbon od Penelope Bourbon, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: wanilia, karmel, słodki dąb i przyprawy korzenne, do tego bardziej wytrawna nić przypraw oraz miękki ton miodu.",
           "taste": "Na podniebieniu profil jest bardziej wytrawny, gdy przejmuje go dąb; w tle są karmel, przyprawy korzenne i zaokrąglona waniliowa słodycz; ciepłe przyprawy wypełniają środek.",
           "finish": "Zbalansowany, średni finisz z klonową słodyczą, suchym drewnem i łagodnym opaleniem, wanilia i słodki dąb w ramie stylu bourbon, ze spokojnym powrotem wanilii."
@@ -1851,52 +1506,6 @@
         "method": "style_and_bottle_data_synthesis",
         "sources": [
           "https://sklep-domwhisky.pl/product-eng-37327-Penelope-Rio-Straight-Bourbon-Whiskey-49-0-75l.html"
-        ]
-      }
-    },
-    "rare-character-batch-no-01-bourbon": {
-      "profile": {
-        "en": {
-          "general": "Rare Character Batch No. 01 Straight Bourbon Limited Release is a classic limited release bourbon from Rare Character Whiskey Co., built around the producer's house style and the bottle's strength.",
-          "nose": "Vanilla-led aromas bring vanilla, caramel, sweet oak and baking spice, plus a drier spice thread and dry baking spice.",
-          "taste": "The palate feels drying as the oak takes over, carrying caramel, baking spice and rounded vanilla sweetness; spice arrives without turning sharp.",
-          "finish": "Balanced medium finish with dark caramel, vanilla and a tidy oak close, vanilla and sweet oak in a limited release bourbon frame, with a short spice echo."
-        },
-        "pl": {
-          "general": "Rare Character Batch No. 01 Straight Bourbon Limited Release to klasyczny edycja limitowana bourbona od Rare Character Whiskey Co., zbudowany wokół stylu producenta i mocy tej butelki.",
-          "nose": "Aromat prowadzi zestaw: wanilia, karmel, słodki dąb i przyprawy korzenne, do tego bardziej wytrawna nić przypraw oraz sucha przyprawa korzenna.",
-          "taste": "Na podniebieniu profil jest bardziej wytrawny, gdy przejmuje go dąb; w tle są karmel, przyprawy korzenne i zaokrąglona waniliowa słodycz; przyprawy nie robią się ostre.",
-          "finish": "Zbalansowany, średni finisz z ciemnym karmelem, wanilią i uporządkowanym dębowym zamknięciem, wanilia i słodki dąb w ramie stylu edycja limitowana bourbona, z krótkim echem przypraw."
-        }
-      },
-      "meta": {
-        "status": "seeded_runtime_profile",
-        "method": "style_and_bottle_data_synthesis",
-        "sources": [
-          "https://woodencork.com/products/rare-character-batch-no-01-bourbon"
-        ]
-      }
-    },
-    "rare-character-brook-hill-bourbon-blahzay-10-year-130-13-proof": {
-      "profile": {
-        "en": {
-          "general": "Rare Character Brook Hill Bourbon BLAHZAY 10 Year 130.13 Proof is a softer bourbon from Rare Character Whiskey Co. at 13 proof, built around the producer's house style and the bottle's strength.",
-          "nose": "Vanilla-led aromas bring vanilla, caramel, sweet oak and baking spice, plus a drier spice thread and a mellow honey tone in its 13 proof frame.",
-          "taste": "The palate feels drying as the oak takes over, carrying caramel, baking spice and rounded vanilla sweetness; warm spice fills the middle in its 13 proof frame.",
-          "finish": "Balanced medium finish with maple-like sweetness, dry wood and soft char, vanilla and sweet oak at 13 proof, with a calm vanilla return."
-        },
-        "pl": {
-          "general": "Rare Character Brook Hill Bourbon BLAHZAY 10 Year 130.13 Proof to łagodniejszy bourbon od Rare Character Whiskey Co. przy 13 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
-          "nose": "Aromat prowadzi zestaw: wanilia, karmel, słodki dąb i przyprawy korzenne, do tego bardziej wytrawna nić przypraw oraz miękki ton miodu w ramie 13 proof.",
-          "taste": "Na podniebieniu profil jest bardziej wytrawny, gdy przejmuje go dąb; w tle są karmel, przyprawy korzenne i zaokrąglona waniliowa słodycz; ciepłe przyprawy wypełniają środek w ramie 13 proof.",
-          "finish": "Zbalansowany, średni finisz z klonową słodyczą, suchym drewnem i łagodnym opaleniem, wanilia i słodki dąb przy 13 proof, ze spokojnym powrotem wanilii."
-        }
-      },
-      "meta": {
-        "status": "seeded_runtime_profile",
-        "method": "style_and_bottle_data_synthesis",
-        "sources": [
-          "https://woodencork.com/products/rare-character-brook-hill-bourbon-blahzay-10-year-130-13-proof"
         ]
       }
     },
@@ -1926,13 +1535,13 @@
     "russels-reserve-10-year-bourbon": {
       "profile": {
         "en": {
-          "general": "Russell's Reserve 10 Year Bourbon is a classic bourbon from Wild Turkey Distillery at 90 proof, built around the producer's house style and the bottle's strength.",
+          "general": "Russell's Reserve 10 Year is a classic bourbon from Wild Turkey Distillery at 90 proof, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring toffee, rye spice, orange zest and charred oak, plus a touch of citrus brightness and soft brown sugar in its 90 proof frame.",
           "taste": "The palate feels sweet first, then spice-led, carrying rye spice, charred oak and rounded vanilla sweetness; the grain note keeps it clear in its 90 proof frame.",
           "finish": "Balanced medium finish with vanilla cream, polished wood and a light pepper touch, toffee and orange zest at 90 proof, with a tidy barrel grip."
         },
         "pl": {
-          "general": "Russell's Reserve 10 Year Bourbon to klasyczny bourbon od Wild Turkey Distillery przy 90 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Russell's Reserve 10 Year to klasyczny bourbon od Wild Turkey Distillery przy 90 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: toffi, żytnia przyprawa, skórka pomarańczy i opalany dąb, do tego odrobina cytrusowej jasności oraz łagodny brązowy cukier w ramie 90 proof.",
           "taste": "Na podniebieniu profil jest najpierw słodki, potem przyprawowy; w tle są żytnia przyprawa, opalany dąb i zaokrąglona waniliowa słodycz; zboże utrzymuje czysty profil w ramie 90 proof.",
           "finish": "Zbalansowany, średni finisz z kremem waniliowym, wygładzonym drewnem i lekkim pieprzem, toffi i skórka pomarańczy przy 90 proof, ze zwartym chwytem beczki."
@@ -1946,39 +1555,16 @@
         ]
       }
     },
-    "russells-reserve-15-year-old-limited-release-bourbon": {
-      "profile": {
-        "en": {
-          "general": "Russell's Reserve 15 Year Old Limited Release Bourbon is a fuller-proof limited release bourbon from Wild Turkey Distillery at 112 proof, built around the producer's house style and the bottle's strength.",
-          "nose": "Vanilla-led aromas bring toffee, rye spice, orange zest and charred oak, plus a softer honeyed middle and clean grain sweetness in its 112 proof frame.",
-          "taste": "The palate feels richer through the middle, carrying rye spice, charred oak and rounded vanilla sweetness; the oak keeps the sip structured in its 112 proof frame.",
-          "finish": "Steady, warm finish with honeyed sweetness, oak tannin and a short spice echo, toffee and orange zest after the sweetness fades at 112 proof, with a rounded last impression."
-        },
-        "pl": {
-          "general": "Russell's Reserve 15 Year Old Limited Release Bourbon to pełniejszy edycja limitowana bourbona od Wild Turkey Distillery przy 112 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
-          "nose": "Aromat prowadzi zestaw: toffi, żytnia przyprawa, skórka pomarańczy i opalany dąb, do tego łagodniejszy, miodowy środek oraz czysta słodycz zboża w ramie 112 proof.",
-          "taste": "Na podniebieniu profil jest bogatszy w środkowej części; w tle są żytnia przyprawa, opalany dąb i zaokrąglona waniliowa słodycz; dąb trzyma strukturę łyku w ramie 112 proof.",
-          "finish": "Stabilny, ciepły finisz zostawia miodową słodyczą, taniną dębu i krótkim echem przypraw, toffi i skórka pomarańczy po wygaśnięciu słodyczy przy 112 proof, z zaokrąglonym ostatnim wrażeniem."
-        }
-      },
-      "meta": {
-        "status": "seeded_runtime_profile",
-        "method": "style_and_bottle_data_synthesis",
-        "sources": [
-          "https://woodencork.com/products/russells-reserve-15-year-old-limited-release-bourbon"
-        ]
-      }
-    },
     "russells-reserve-single-barrel-barrel-select-bourbon": {
       "profile": {
         "en": {
-          "general": "Russell's Reserve Single Barrel Bourbon is a fuller-proof single barrel bourbon from Wild Turkey Distillery at 110 proof, built around the producer's house style and the bottle's strength.",
+          "general": "Russell's Reserve Single Barrel is a fuller-proof single barrel bourbon from Wild Turkey Distillery at 110 proof, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring toffee, rye spice, orange zest and charred oak, plus a touch of citrus brightness and a gentle herbal touch in its 110 proof frame.",
           "taste": "The palate feels sweet first, then spice-led, carrying rye spice, charred oak and rounded vanilla sweetness; vanilla softens the oak in its 110 proof frame.",
           "finish": "Steady, warm finish with caramelized grain, baking spice and mellow barrel heat, toffee and orange zest after the sweetness fades at 110 proof, with a clean fade."
         },
         "pl": {
-          "general": "Russell's Reserve Single Barrel Bourbon to pełniejszy single barrel bourbon od Wild Turkey Distillery przy 110 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Russell's Reserve Single Barrel to pełniejszy single barrel bourbon od Wild Turkey Distillery przy 110 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: toffi, żytnia przyprawa, skórka pomarańczy i opalany dąb, do tego odrobina cytrusowej jasności oraz łagodny ziołowy dotyk w ramie 110 proof.",
           "taste": "Na podniebieniu profil jest najpierw słodki, potem przyprawowy; w tle są żytnia przyprawa, opalany dąb i zaokrąglona waniliowa słodycz; wanilia łagodzi dąb w ramie 110 proof.",
           "finish": "Stabilny, ciepły finisz zostawia karmelizowanym ziarnem, przyprawami korzennymi i ciepłem beczki, toffi i skórka pomarańczy po wygaśnięciu słodyczy przy 110 proof, z czystym wygasaniem."
@@ -1995,13 +1581,13 @@
     "wild-turkey-101-bourbon": {
       "profile": {
         "en": {
-          "general": "Wild Turkey 101 Bourbon is a fuller-proof bourbon from Wild Turkey Distillery at 101 proof, built around the producer's house style and the bottle's strength.",
+          "general": "Wild Turkey 101 is a fuller-proof bourbon from Wild Turkey Distillery at 101 proof, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring toffee, rye spice, orange zest and charred oak, plus a rounded dessert-spice note and a dusty oak accent in its 101 proof frame.",
           "taste": "The palate feels polished and approachable, carrying rye spice, charred oak and rounded vanilla sweetness; the caramel note stays clean in its 101 proof frame.",
           "finish": "Steady, warm finish with vanilla cream, polished wood and a light pepper touch, toffee and orange zest after the sweetness fades at 101 proof, with a compact dry close."
         },
         "pl": {
-          "general": "Wild Turkey 101 Bourbon to pełniejszy bourbon od Wild Turkey Distillery przy 101 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Wild Turkey 101 to pełniejszy bourbon od Wild Turkey Distillery przy 101 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: toffi, żytnia przyprawa, skórka pomarańczy i opalany dąb, do tego zaokrąglona nuta deserowych przypraw oraz pylisty akcent dębu w ramie 101 proof.",
           "taste": "Na podniebieniu profil jest wygładzony i przystępny; w tle są żytnia przyprawa, opalany dąb i zaokrąglona waniliowa słodycz; karmel pozostaje czysty w ramie 101 proof.",
           "finish": "Stabilny, ciepły finisz zostawia kremem waniliowym, wygładzonym drewnem i lekkim pieprzem, toffi i skórka pomarańczy po wygaśnięciu słodyczy przy 101 proof, ze zwartym wytrawnym domknięciem."
@@ -2018,13 +1604,13 @@
     "wild-turkey-12-year-old-101-proof": {
       "profile": {
         "en": {
-          "general": "Wild Turkey 12 Year Old 101 Proof Distillers Reserve Bourbon is a fuller-proof bourbon from Wild Turkey Distillery at 101 proof, built around the producer's house style and the bottle's strength.",
+          "general": "Wild Turkey 12 Year Old 101 Proof Distillers Reserve is a fuller-proof bourbon from Wild Turkey Distillery at 101 proof, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring toffee, rye spice, orange zest and charred oak, plus a light toasted-sugar lift and a toasted barrel edge in its 101 proof frame.",
           "taste": "The palate feels fuller and more oak-forward, carrying rye spice, charred oak and rounded vanilla sweetness; barrel notes add grip in its 101 proof frame.",
           "finish": "Steady, warm finish with orange peel, toasted oak and a clean drying edge, toffee and orange zest after the sweetness fades at 101 proof, with a soft sweet close."
         },
         "pl": {
-          "general": "Wild Turkey 12 Year Old 101 Proof Distillers Reserve Bourbon to pełniejszy bourbon od Wild Turkey Distillery przy 101 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Wild Turkey 12 Year Old 101 Proof Distillers Reserve to pełniejszy bourbon od Wild Turkey Distillery przy 101 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: toffi, żytnia przyprawa, skórka pomarańczy i opalany dąb, do tego lekki akcent prażonego cukru oraz akcent prażonej beczki w ramie 101 proof.",
           "taste": "Na podniebieniu profil jest pełniejszy i mocniej dębowy; w tle są żytnia przyprawa, opalany dąb i zaokrąglona waniliowa słodycz; nuty beczki dodają chwytu w ramie 101 proof.",
           "finish": "Stabilny, ciepły finisz zostawia skórką pomarańczy, prażonym dębem i czystą wytrawnością, toffi i skórka pomarańczy po wygaśnięciu słodyczy przy 101 proof, z miękkim słodkim domknięciem."
@@ -2038,39 +1624,16 @@
         ]
       }
     },
-    "wild-turkey-8-year-101-proof-5-24-94": {
-      "profile": {
-        "en": {
-          "general": "Wild Turkey 8 Year 101 Proof 5/24/94 is a fuller-proof bourbon from Wild Turkey Distillery at 101 proof, built around the producer's house style and the bottle's strength.",
-          "nose": "Vanilla-led aromas bring toffee, rye spice, orange zest and charred oak, plus a darker barrel-char edge and a compact citrus snap in its 101 proof frame.",
-          "taste": "The palate feels compact, clean and classic, carrying rye spice, charred oak and rounded vanilla sweetness; sweetness and oak stay in balance in its 101 proof frame.",
-          "finish": "Steady, warm finish with dark caramel, vanilla and a tidy oak close, toffee and orange zest after the sweetness fades at 101 proof, with a warm final pulse."
-        },
-        "pl": {
-          "general": "Wild Turkey 8 Year 101 Proof 5/24/94 to pełniejszy bourbon od Wild Turkey Distillery przy 101 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
-          "nose": "Aromat prowadzi zestaw: toffi, żytnia przyprawa, skórka pomarańczy i opalany dąb, do tego ciemniejszy ton opalonej beczki oraz krótki cytrusowy błysk w ramie 101 proof.",
-          "taste": "Na podniebieniu profil jest zwarty, czysty i klasyczny; w tle są żytnia przyprawa, opalany dąb i zaokrąglona waniliowa słodycz; słodycz i dąb zostają w równowadze w ramie 101 proof.",
-          "finish": "Stabilny, ciepły finisz zostawia ciemnym karmelem, wanilią i uporządkowanym dębowym zamknięciem, toffi i skórka pomarańczy po wygaśnięciu słodyczy przy 101 proof, z ciepłym końcowym pulsem."
-        }
-      },
-      "meta": {
-        "status": "seeded_runtime_profile",
-        "method": "style_and_bottle_data_synthesis",
-        "sources": [
-          "https://woodencork.com/products/wild-turkey-8-year-101-proof-5-24-94"
-        ]
-      }
-    },
     "wild-turkey-longbranch-straight-bourbon": {
       "profile": {
         "en": {
-          "general": "Wild Turkey Longbranch Straight Bourbon is a classic bourbon from Wild Turkey Distillery, built around the producer's house style and the bottle's strength.",
+          "general": "Wild Turkey Longbranch Straight is a classic bourbon from Wild Turkey Distillery, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring toffee, rye spice, orange zest and charred oak, plus a drier spice thread and dry baking spice.",
           "taste": "The palate feels drying as the oak takes over, carrying rye spice, charred oak and rounded vanilla sweetness; spice arrives without turning sharp.",
           "finish": "Balanced medium finish with baked sugar, oak polish and a gentle pepper snap, toffee and orange zest in a bourbon frame, with a short spice echo."
         },
         "pl": {
-          "general": "Wild Turkey Longbranch Straight Bourbon to klasyczny bourbon od Wild Turkey Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Wild Turkey Longbranch Straight to klasyczny bourbon od Wild Turkey Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: toffi, żytnia przyprawa, skórka pomarańczy i opalany dąb, do tego bardziej wytrawna nić przypraw oraz sucha przyprawa korzenna.",
           "taste": "Na podniebieniu profil jest bardziej wytrawny, gdy przejmuje go dąb; w tle są żytnia przyprawa, opalany dąb i zaokrąglona waniliowa słodycz; przyprawy nie robią się ostre.",
           "finish": "Zbalansowany, średni finisz z pieczonym cukrem, wygładzonym dębem i delikatnym pieprzem, toffi i skórka pomarańczy w ramie stylu bourbon, z krótkim echem przypraw."
@@ -2110,13 +1673,13 @@
     "willett-pot-still-reserve-kentucky-straight-bourbon": {
       "profile": {
         "en": {
-          "general": "Willett Pot Still Reserve Kentucky Straight Bourbon is a classic bourbon from Willett Distillery, built around the producer's house style and the bottle's strength.",
+          "general": "Willett Pot Still Reserve Kentucky Straight is a classic bourbon from Willett Distillery, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring herbal spice, caramel, mint and dry oak, plus a drier spice thread and dry baking spice.",
           "taste": "The palate feels drying as the oak takes over, carrying caramel, dry oak and rounded vanilla sweetness; spice arrives without turning sharp.",
           "finish": "Balanced medium finish with soft barrel spice and a clean vanilla trail, herbal spice and mint in a bourbon frame, with a short spice echo."
         },
         "pl": {
-          "general": "Willett Pot Still Reserve Kentucky Straight Bourbon to klasyczny bourbon od Willett Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Willett Pot Still Reserve Kentucky Straight to klasyczny bourbon od Willett Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: ziołowa przyprawa, karmel, mięta i suchy dąb, do tego bardziej wytrawna nić przypraw oraz sucha przyprawa korzenna.",
           "taste": "Na podniebieniu profil jest bardziej wytrawny, gdy przejmuje go dąb; w tle są karmel, suchy dąb i zaokrąglona waniliowa słodycz; przyprawy nie robią się ostre.",
           "finish": "Zbalansowany, średni finisz z łagodną przyprawą beczki i czystym śladem wanilii, ziołowa przyprawa i mięta w ramie stylu bourbon, z krótkim echem przypraw."
@@ -2133,13 +1696,13 @@
     "woodford-reserve-bourbon": {
       "profile": {
         "en": {
-          "general": "Woodford Reserve Bourbon is a classic bourbon from Woodford Reserve Distillery at 90.4 proof, built around the producer's house style and the bottle's strength.",
+          "general": "Woodford Reserve is a classic limited release bourbon from Woodford Reserve Distillery at 90.4 proof, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring dried fruit, cocoa, toasted oak and baking spice, plus a drier spice thread and a mellow honey tone in its 90.4 proof frame.",
           "taste": "The palate feels drying as the oak takes over, carrying cocoa, baking spice and rounded vanilla sweetness; warm spice fills the middle in its 90.4 proof frame.",
           "finish": "Balanced medium finish with toasted sugar, gentle oak and a calm spice fade, dried fruit and toasted oak at 90.4 proof, with a calm vanilla return."
         },
         "pl": {
-          "general": "Woodford Reserve Bourbon to klasyczny bourbon od Woodford Reserve Distillery przy 90.4 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Woodford Reserve to klasyczny edycja limitowana bourbona od Woodford Reserve Distillery przy 90.4 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: suszone owoce, kakao, prażony dąb i przyprawy korzenne, do tego bardziej wytrawna nić przypraw oraz miękki ton miodu w ramie 90.4 proof.",
           "taste": "Na podniebieniu profil jest bardziej wytrawny, gdy przejmuje go dąb; w tle są kakao, przyprawy korzenne i zaokrąglona waniliowa słodycz; ciepłe przyprawy wypełniają środek w ramie 90.4 proof.",
           "finish": "Zbalansowany, średni finisz z prażonym cukrem, łagodnym dębem i spokojnym wygasaniem przypraw, suszone owoce i prażony dąb przy 90.4 proof, ze spokojnym powrotem wanilii."
@@ -2149,20 +1712,20 @@
         "status": "seeded_runtime_profile",
         "method": "style_and_bottle_data_synthesis",
         "sources": [
-          "https://woodencork.com/products/woodford-reserve-bourbon"
+          "https://woodencork.com/products/woodford-reserve-149th-kentucky-derby-2023"
         ]
       }
     },
     "woodford-reserve-double-double-oaked-bourbon": {
       "profile": {
         "en": {
-          "general": "Woodford Reserve Double Double Oaked Bourbon is a classic bourbon from Woodford Reserve Distillery at 90.4 proof, built around the producer's house style and the bottle's strength.",
+          "general": "Woodford Reserve Double Double Oaked is a classic bourbon from Woodford Reserve Distillery at 90.4 proof, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring dried fruit, cocoa, toasted oak and baking spice, plus a rounded dessert-spice note and a dusty oak accent in its 90.4 proof frame.",
           "taste": "The palate feels polished and approachable, carrying cocoa, baking spice and rounded vanilla sweetness; the caramel note stays clean in its 90.4 proof frame.",
           "finish": "Balanced medium finish with caramel, nutmeg and a compact barrel-spice fade, dried fruit and toasted oak at 90.4 proof, with a compact dry close."
         },
         "pl": {
-          "general": "Woodford Reserve Double Double Oaked Bourbon to klasyczny bourbon od Woodford Reserve Distillery przy 90.4 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Woodford Reserve Double Double Oaked to klasyczny bourbon od Woodford Reserve Distillery przy 90.4 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: suszone owoce, kakao, prażony dąb i przyprawy korzenne, do tego zaokrąglona nuta deserowych przypraw oraz pylisty akcent dębu w ramie 90.4 proof.",
           "taste": "Na podniebieniu profil jest wygładzony i przystępny; w tle są kakao, przyprawy korzenne i zaokrąglona waniliowa słodycz; karmel pozostaje czysty w ramie 90.4 proof.",
           "finish": "Zbalansowany, średni finisz z karmelem, gałką muszkatołową i zwartym echem beczki, suszone owoce i prażony dąb przy 90.4 proof, ze zwartym wytrawnym domknięciem."
@@ -2202,13 +1765,13 @@
     "woodford-reserve-double-oaked-bourbon": {
       "profile": {
         "en": {
-          "general": "Woodford Reserve Double Oaked Bourbon is a classic bourbon from Woodford Reserve Distillery at 90.4 proof, built around the producer's house style and the bottle's strength.",
+          "general": "Woodford Reserve Double Oaked is a classic bourbon from Woodford Reserve Distillery at 90.4 proof, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring dried fruit, cocoa, toasted oak and baking spice, plus a touch of citrus brightness and soft brown sugar in its 90.4 proof frame.",
           "taste": "The palate feels sweet first, then spice-led, carrying cocoa, baking spice and rounded vanilla sweetness; the grain note keeps it clear in its 90.4 proof frame.",
           "finish": "Balanced medium finish with caramel, nutmeg and a compact barrel-spice fade, dried fruit and toasted oak at 90.4 proof, with a tidy barrel grip."
         },
         "pl": {
-          "general": "Woodford Reserve Double Oaked Bourbon to klasyczny bourbon od Woodford Reserve Distillery przy 90.4 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Woodford Reserve Double Oaked to klasyczny bourbon od Woodford Reserve Distillery przy 90.4 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: suszone owoce, kakao, prażony dąb i przyprawy korzenne, do tego odrobina cytrusowej jasności oraz łagodny brązowy cukier w ramie 90.4 proof.",
           "taste": "Na podniebieniu profil jest najpierw słodki, potem przyprawowy; w tle są kakao, przyprawy korzenne i zaokrąglona waniliowa słodycz; zboże utrzymuje czysty profil w ramie 90.4 proof.",
           "finish": "Zbalansowany, średni finisz z karmelem, gałką muszkatołową i zwartym echem beczki, suszone owoce i prażony dąb przy 90.4 proof, ze zwartym chwytem beczki."
@@ -2222,39 +1785,16 @@
         ]
       }
     },
-    "woodford-reserve-masters-collection-1838-style-white-corn-kentucky-straight-bourbon": {
-      "profile": {
-        "en": {
-          "general": "Woodford Reserve Master's Collection 1838 Style White Corn Kentucky Straight Bourbon is a classic bourbon from Woodford Reserve Distillery at 90.4 proof, built around the producer's house style and the bottle's strength.",
-          "nose": "Vanilla-led aromas bring dried fruit, cocoa, toasted oak and baking spice, plus a touch of citrus brightness and soft brown sugar in its 90.4 proof frame.",
-          "taste": "The palate feels sweet first, then spice-led, carrying cocoa, baking spice and rounded vanilla sweetness; the grain note keeps it clear in its 90.4 proof frame.",
-          "finish": "Balanced medium finish with honeyed sweetness, oak tannin and a short spice echo, dried fruit and toasted oak at 90.4 proof, with a tidy barrel grip."
-        },
-        "pl": {
-          "general": "Woodford Reserve Master's Collection 1838 Style White Corn Kentucky Straight Bourbon to klasyczny bourbon od Woodford Reserve Distillery przy 90.4 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
-          "nose": "Aromat prowadzi zestaw: suszone owoce, kakao, prażony dąb i przyprawy korzenne, do tego odrobina cytrusowej jasności oraz łagodny brązowy cukier w ramie 90.4 proof.",
-          "taste": "Na podniebieniu profil jest najpierw słodki, potem przyprawowy; w tle są kakao, przyprawy korzenne i zaokrąglona waniliowa słodycz; zboże utrzymuje czysty profil w ramie 90.4 proof.",
-          "finish": "Zbalansowany, średni finisz z miodową słodyczą, taniną dębu i krótkim echem przypraw, suszone owoce i prażony dąb przy 90.4 proof, ze zwartym chwytem beczki."
-        }
-      },
-      "meta": {
-        "status": "seeded_runtime_profile",
-        "method": "style_and_bottle_data_synthesis",
-        "sources": [
-          "https://woodencork.com/products/woodford-reserve-masters-collection-1838-style-white-corn-kentucky-straight-bourbon"
-        ]
-      }
-    },
     "woodford-reserve-masters-collection-brandy-cask-finish-kentucky-straight-bourbon": {
       "profile": {
         "en": {
-          "general": "Woodford Reserve Master's Collection Brandy Cask Finish Kentucky Straight Bourbon is a classic bourbon from Woodford Reserve Distillery at 90.4 proof, built around the producer's house style and the bottle's strength.",
+          "general": "Woodford Reserve Master's Collection Brandy Cask Finish Kentucky Straight is a classic bourbon from Woodford Reserve Distillery at 90.4 proof, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring dried fruit, cocoa, toasted oak and baking spice, plus a softer honeyed middle and clean grain sweetness in its 90.4 proof frame.",
           "taste": "The palate feels richer through the middle, carrying cocoa, baking spice and rounded vanilla sweetness; the oak keeps the sip structured in its 90.4 proof frame.",
           "finish": "Balanced medium finish with caramel, nutmeg and a compact barrel-spice fade, dried fruit and toasted oak at 90.4 proof, with a rounded last impression."
         },
         "pl": {
-          "general": "Woodford Reserve Master's Collection Brandy Cask Finish Kentucky Straight Bourbon to klasyczny bourbon od Woodford Reserve Distillery przy 90.4 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Woodford Reserve Master's Collection Brandy Cask Finish Kentucky Straight to klasyczny bourbon od Woodford Reserve Distillery przy 90.4 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: suszone owoce, kakao, prażony dąb i przyprawy korzenne, do tego łagodniejszy, miodowy środek oraz czysta słodycz zboża w ramie 90.4 proof.",
           "taste": "Na podniebieniu profil jest bogatszy w środkowej części; w tle są kakao, przyprawy korzenne i zaokrąglona waniliowa słodycz; dąb trzyma strukturę łyku w ramie 90.4 proof.",
           "finish": "Zbalansowany, średni finisz z karmelem, gałką muszkatołową i zwartym echem beczki, suszone owoce i prażony dąb przy 90.4 proof, z zaokrąglonym ostatnim wrażeniem."
@@ -2271,13 +1811,13 @@
     "yellowstone-family-recipe-6-year-old-kentucky-straight-bourbon": {
       "profile": {
         "en": {
-          "general": "Yellowstone Family Recipe 6-year-old Kentucky Straight Bourbon is a classic bourbon from Yellowstone Family, built around the producer's house style and the bottle's strength.",
+          "general": "Yellowstone Family Recipe 6-year-old Kentucky Straight is a classic bourbon from Yellowstone Family, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring vanilla, caramel, sweet oak and baking spice, plus a rounded dessert-spice note and a dusty oak accent.",
           "taste": "The palate feels polished and approachable, carrying caramel, baking spice and rounded vanilla sweetness; the caramel note stays clean.",
           "finish": "Balanced medium finish with light cocoa, barrel spice and a balanced vanilla return, vanilla and sweet oak in a bourbon frame, with a compact dry close."
         },
         "pl": {
-          "general": "Yellowstone Family Recipe 6-year-old Kentucky Straight Bourbon to klasyczny bourbon od Yellowstone Family, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Yellowstone Family Recipe 6-year-old Kentucky Straight to klasyczny bourbon od Yellowstone Family, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: wanilia, karmel, słodki dąb i przyprawy korzenne, do tego zaokrąglona nuta deserowych przypraw oraz pylisty akcent dębu.",
           "taste": "Na podniebieniu profil jest wygładzony i przystępny; w tle są karmel, przyprawy korzenne i zaokrąglona waniliowa słodycz; karmel pozostaje czysty.",
           "finish": "Zbalansowany, średni finisz z lekkim kakao, przyprawą beczki i powrotem wanilii, wanilia i słodki dąb w ramie stylu bourbon, ze zwartym wytrawnym domknięciem."
@@ -2294,13 +1834,13 @@
     "yellowstone-select-kentucky-straight-bourbon": {
       "profile": {
         "en": {
-          "general": "Yellowstone Select Kentucky Straight Bourbon is a classic bourbon from Yellowstone Select, built around the producer's house style and the bottle's strength.",
+          "general": "Yellowstone Select Kentucky Straight is a classic bourbon from Yellowstone Select, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring vanilla, caramel, sweet oak and baking spice, plus a rounded dessert-spice note and a dusty oak accent.",
           "taste": "The palate feels polished and approachable, carrying caramel, baking spice and rounded vanilla sweetness; the caramel note stays clean.",
           "finish": "Balanced medium finish with vanilla cream, polished wood and a light pepper touch, vanilla and sweet oak in a bourbon frame, with a compact dry close."
         },
         "pl": {
-          "general": "Yellowstone Select Kentucky Straight Bourbon to klasyczny bourbon od Yellowstone Select, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Yellowstone Select Kentucky Straight to klasyczny bourbon od Yellowstone Select, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: wanilia, karmel, słodki dąb i przyprawy korzenne, do tego zaokrąglona nuta deserowych przypraw oraz pylisty akcent dębu.",
           "taste": "Na podniebieniu profil jest wygładzony i przystępny; w tle są karmel, przyprawy korzenne i zaokrąglona waniliowa słodycz; karmel pozostaje czysty.",
           "finish": "Zbalansowany, średni finisz z kremem waniliowym, wygładzonym drewnem i lekkim pieprzem, wanilia i słodki dąb w ramie stylu bourbon, ze zwartym wytrawnym domknięciem."

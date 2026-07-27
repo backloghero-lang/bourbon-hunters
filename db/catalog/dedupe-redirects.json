@@ -1,7 +1,7 @@
 {
-  "version": 1,
-  "updated": "2026-07-23T21:26:50.407Z",
-  "count": 66,
+  "version": 2,
+  "updated": "2026-07-27T14:55:32.503Z",
+  "count": 178,
   "redirects": {
     "olcc-3888b": "1792-full-proof-kentucky-straight-bourbon",
     "olcc-3884b": "1792-single-barrel-kentucky-straight-bourbon",
@@ -27,14 +27,14 @@
     "olcc-6827b": "freeland-spirits-cask-strength-141-38",
     "olcc-13313b": "green-river-full-proof-101-22",
     "olcc-0832b": "high-west-double-rye-122-45",
-    "olcc-2163b": "knob-creek-101-22",
+    "olcc-2163b": "knob-creek-9-year-old-100-proof-bourbon",
     "olcc-12726b": "multnomah-falls-lodge-100th-anniversary-bourbon-101-38",
     "olcc-11996b": "penelope-barrel-strength-121-22",
     "olcc-10370b": "ransom-101-38",
     "olcc-1703b": "redemption-101-43",
     "olcc-5007b": "redemption-high-rye-101-43",
     "olcc-5539b": "redemption-wheated-bourbon-141-19",
-    "olcc-0191b": "stagg-101-22",
+    "olcc-0191b": "stagg-kentucky-straight-bourbon-batch-18",
     "olcc-13088b": "ukiah-rodeo-141-38",
     "olcc-10752b": "whistlepig-piggyback-141-22",
     "woodford-reserve-rye-101-22": "woodford-reserve-rye-102-22",
@@ -50,475 +50,2245 @@
     "olcc-3353b": "high-west-131-45",
     "olcc-9239b": "legent-101-02",
     "big-bottom-distilling-delta-rye-oregon-llc": "big-bottom-distilling-delta-rye-122-38",
-    "seelbach-s-private-reserve-101-16": "seelbachs-private-reserve-101-16",
-    "blantons-141-02": "blanton-s-101-00",
-    "1816-indiana-rye-149-19": "1816-indiana-rye-102-19",
-    "bardstown-bourbon-company-109-22": "bardstown-bourbon-company-121-22",
-    "jeptha-creed-bottled-in-bond-bourbon-101-22": "jeptha-creed-bottled-in-bond-bourbon-119-22",
-    "old-forester-the-117-series-bottled-in-bond-rye-119-22": "old-forester-the-117-series-bottled-in-bond-rye-112-22",
-    "brothers-bond-101-22": "brother-s-bond-101-43",
-    "lawrenceburg-bourbon-company-101-22": "lawrenceburg-bourbon-company-140-22",
-    "browne-family-spirits-do-epic-shit-121-07": "browne-family-spirits-do-epic-shit-bourbon-129-07",
-    "thresh-winnow-maple-syrup-cask-finished-rye-140-04": "thresh-winnow-maple-syrup-cask-finished-rye-142-04",
-    "jp-wiser-s-161-69": "jp-wisers-161-69",
-    "hashtag-bourbon-140-19": "hashtag-101-19",
-    "stranahan-s-founders-release-140-13": "stranahan-s-founder-s-release-140-13",
-    "mammoth-distilling-woolly-rye-142-06": "mammoth-distilling-woolly-rye-140-06",
-    "sullivans-cove-american-oak-single-cask-old-rare-191-63": "sullivan-s-cove-american-oak-single-cask-old-rare-191-63",
-    "taconic-distillery-distiller-s-select-101-02": "taconic-distillery-distillers-select-101-02",
-    "full-ryde-bourbon-140-09": "full-ryde-bourbon-141-09",
-    "hopes-101-22": "hope-s-101-22",
-    "motor-city-gas-stink-eye-rye-102-06": "motor-city-gas-stink-eye-rye-101-06"
+    "bombergers-declaration-2020-bourbon": "bomberger-s-declaration-kentucky-straight-bourbon-whiskey",
+    "bombergers-declaration-2021-bourbon": "bomberger-s-declaration-kentucky-straight-bourbon-whiskey",
+    "bombergers-declaration-2023-bourbon": "bomberger-s-declaration-kentucky-straight-bourbon-whiskey",
+    "bombergers-declaration-2024-bourbon": "bomberger-s-declaration-kentucky-straight-bourbon-whiskey",
+    "bomberger-s-declaration-2026-release": "bomberger-s-declaration-kentucky-straight-bourbon-whiskey",
+    "bomberger-s-declaration-2025-release-kentucky-straight-bourbon-whiskey": "bomberger-s-declaration-kentucky-straight-bourbon-whiskey",
+    "bomberger-s-declaration-bourbon-2022": "bomberger-s-declaration-kentucky-straight-bourbon-whiskey",
+    "blanton-s-gold-edition-single-barrel-select-barrel-124-by-wooden-cork": "blanton-s-gold-edition-single-barrel-select",
+    "buffalo-trace-bourbon-single-barrel-select-225-freddies-choice": "buffalo-trace-bourbon-1",
+    "stagg-kentucky-straight-bourbon-batch-19-130-proof": "stagg-jr",
+    "stagg-kentucky-straight-bourbon-batch-22a-132-2-proof": "stagg-jr",
+    "stagg-kentucky-straight-bourbon-batch-23a-130-2-proof": "stagg-jr",
+    "stagg-kentucky-straight-bourbon-batch-23b-127-8-proof": "stagg-jr",
+    "stagg-kentucky-straight-bourbon-batch-23c-125-9-proof": "stagg-jr",
+    "stagg-kentucky-straight-bourbon-batch-24a-127-6-proof": "stagg-jr",
+    "stagg-kentucky-straight-bourbon-whiskey-batch-24b-127-8-proof": "stagg-jr",
+    "stagg-kentucky-straight-bourbon-whiskey-batch-24c": "stagg-jr",
+    "stagg-kentucky-straight-bourbon-whiskey-batch-24d": "stagg-jr",
+    "stagg-bourbon-batch-25a": "stagg-jr",
+    "stagg-kentucky-straight-bourbon-whiskey-batch-25b-126-9-proof": "stagg-jr",
+    "stagg-kentucky-straight-bourbon-whiskey-batch-25c": "stagg-jr",
+    "stagg-kentucky-straight-bourbon-whiskey-batch-25d-129-2-proof": "stagg-jr",
+    "stagg-kentucky-straight-bourbon-whiskey-batch-26a-129-3-proof": "stagg-jr",
+    "w-l-weller-full-proof-bourbon-non-chill-filtered-single-barrel-select-by-wooden-cork-114-proof": "w-l-weller-full-proof-bourbon-single-barrel-select-by-wooden-cork",
+    "knob-creek-kentucky-straight-bourbon": "knob-creek-9-year-old-100-proof-bourbon",
+    "knob-creek-9-year-usa-250th-anniversary-bourbon-limited-edition": "knob-creek-9-year-old-100-proof-bourbon",
+    "knob-creek-9-year-old-single-barrel-reserve": "knob-creek-120-proof-9-year-single-barrel-reserve-bourbon",
+    "knob-creek-single-barrel-select-bourbon-6th-floor-god": "knob-creek-120-proof-9-year-single-barrel-reserve-bourbon",
+    "knob-creek-single-barrel-select-bourbon-sdbb-6": "knob-creek-120-proof-9-year-single-barrel-reserve-bourbon",
+    "knob-creek-single-barrel-select-bourbon-sdbb-5-korg-creek": "knob-creek-120-proof-9-year-single-barrel-reserve-bourbon",
+    "knob-creek-single-barrel-select-bourbon-selected-by-fred-noe-iv-for-sdbb-3": "knob-creek-120-proof-9-year-single-barrel-reserve-bourbon",
+    "knob-creek-x-eli-manning-2025-bold-pick-bourbon": "knob-creek-120-proof-9-year-single-barrel-reserve-bourbon",
+    "knob-creek-x-eli-manning-2026-bold-pick-bourbon": "knob-creek-120-proof-9-year-single-barrel-reserve-bourbon",
+    "michters-us-1-toasted-barrel-finish-bourbon-whiskey-2014-first-release": "michters-us-1-toasted-barrel-finish-bourbon-whiskey-2021-release",
+    "michters-us-1-toasted-barrel-finish-bourbon-whiskey-2015-second-release": "michters-us-1-toasted-barrel-finish-bourbon-whiskey-2021-release",
+    "rare-character-batch-no-01-bourbon": "rare-character-s-limited-release-2025-batch-02-bourbon-750ml",
+    "woodford-reserve-149th-kentucky-derby-2023": "woodford-reserve-bourbon",
+    "woodford-reserve-150th-kentucky-derby-2024": "woodford-reserve-bourbon",
+    "woodford-reserve-kentucky-derby-136-2010-whiskey-1l": "woodford-reserve-bourbon",
+    "woodford-reserve-kentucky-derby-137-limited-edition-bourbon-whiskey-1l": "woodford-reserve-bourbon",
+    "woodford-reserve-kentucky-derby-138-limited-edition-bourbon-whiskey-1l": "woodford-reserve-bourbon",
+    "woodford-reserve-kentucky-derby-139-limited-edition-bourbon-whiskey-1l": "woodford-reserve-bourbon",
+    "woodford-reserve-kentucky-derby-140-limited-edition-bourbon-whiskey-1l": "woodford-reserve-bourbon",
+    "woodford-reserve-kentucky-derby-141-limited-edition-bourbon-whiskey-1l": "woodford-reserve-bourbon",
+    "woodford-reserve-kentucky-derby-142-limited-edition-bourbon-whiskey-1l": "woodford-reserve-bourbon",
+    "woodford-reserve-kentucky-straight-bourbon-whiskey-holiday-edition": "woodford-reserve-bourbon",
+    "woodford-reserve-2021-holiday-edition-kentucky-straight-bourbon-whiskey": "woodford-reserve-bourbon",
+    "woodford-reserve-2022-holiday-edition-kentucky-straight-bourbon-whiskey-1l": "woodford-reserve-bourbon",
+    "woodford-reserve-distillers-select-kentucky-straight-bourbon-whiskey-holiday-edition-2019": "woodford-reserve-bourbon",
+    "woodford-reserve-distiller-u2019s-select-holiday-edition-2022": "woodford-reserve-bourbon",
+    "woodford-reserve-holiday-edition-2024": "woodford-reserve-bourbon",
+    "woodford-reserve-holiday-select-limited-edition": "woodford-reserve-bourbon",
+    "woodford-reserve-kentucky-derby-146": "woodford-reserve-bourbon",
+    "woodford-reserve-kentucky-derby-149-2023": "woodford-reserve-bourbon",
+    "woodford-reserve-kentucky-derby-152-edition": "woodford-reserve-bourbon",
+    "woodford-reserve-kentucky-straight-bourbon-whiskey-kentucky-derby-151-edition": "woodford-reserve-bourbon",
+    "elijah-craig-12-year-old-small-batch-barrel-proof-batch-no-a123": "elijah-craig-12-year-old-small-batch-barrel-proof-batch-no-a122",
+    "elijah-craig-12-year-old-small-batch-barrel-proof-batch-no-c921": "elijah-craig-12-year-old-small-batch-barrel-proof-batch-no-a122",
+    "old-forester-single-barrel-barrel-strength-bourbon-whiskey-warehouse-k-floor-8-cork-barrel-pick-133-9-proof": "old-forester-single-barrel-barrel-strength-bourbon-whiskey-warehouse-k-floor-8",
+    "old-forester-single-barrel-barrel-strength-bourbon-whiskey-warehouse-k-floor-8-kroger-pick-134-5": "old-forester-single-barrel-barrel-strength-bourbon-whiskey-warehouse-k-floor-8",
+    "old-forester-single-barrel-barrel-strength-bourbon-whiskey-warehouse-k-floor-8-ohlq-select-pick-135-8-proof": "old-forester-single-barrel-barrel-strength-bourbon-whiskey-warehouse-k-floor-8",
+    "old-forester-single-barrel-barrel-strength-warehouse-k-floor-8-distillery-selection-132-4-proof": "old-forester-single-barrel-barrel-strength-bourbon-whiskey-warehouse-k-floor-8",
+    "old-forester-single-barrel-barrel-strength-warehouse-k-floor-8-ofd-not-what-you-think-134-7-proof": "old-forester-single-barrel-barrel-strength-bourbon-whiskey-warehouse-k-floor-8",
+    "olcc-11936b": "buffalo-trace-bourbon-1",
+    "elijah-craig-pga-2026-championship-commemorative-edition": "elijah-craig-2025-pga-championship-commemorative-edition",
+    "olcc-13130b": "elijah-craig-small-batch-bourbon-2023-ryder-cup-edition",
+    "knob-creek-101-22": "knob-creek-9-year-old-100-proof-bourbon",
+    "olcc-5895b": "knob-creek-9-year-old-100-proof-bourbon",
+    "olcc-6971b": "knob-creek-120-proof-9-year-single-barrel-reserve-bourbon",
+    "olcc-2345b": "michters-bourbon",
+    "olcc-2344b": "michter-s-us-1-original-sour-mash-small-batch",
+    "olcc-2657b": "michters-us-1-toasted-barrel-finish-bourbon-whiskey-2021-release",
+    "woodford-reserve-derby-151-101-22": "woodford-reserve-bourbon",
+    "woodford-reserve-derby-152-101-22": "woodford-reserve-bourbon",
+    "olcc-10541i": "jack-daniel-s-bonded-119-43",
+    "olcc-10622b": "olcc-1159b",
+    "knob-creek-102-22": "olcc-1159b",
+    "olcc-11721b": "olcc-12679b",
+    "eagle-rare-191-00": "eagle-rare-bourbon-1-75l",
+    "stagg-101-22": "stagg-kentucky-straight-bourbon-batch-18",
+    "evan-williams-191-00": "evan-williams-kentucky-straight-bourbon",
+    "olcc-0137b": "evan-williams-kentucky-straight-bourbon-black-label",
+    "olcc-12941i": "old-fitzgerald-7-year-old-bottled-in-bond-bourbon",
+    "olcc-2372b": "jeffersons-ocean-aged-at-sea-bourbon-whiskey",
+    "olcc-4576b": "jeffersons-reserve-old-rum-cask-finish-bourbon",
+    "olcc-3271b": "jeffersons-chefs-collaboration-bourbon",
+    "olcc-2162b": "baker-s-7-years-old",
+    "olcc-9965b": "basil-hayden-toast-kentucky-straight-bourbon",
+    "olcc-3191b": "jim-beam-apple",
+    "olcc-1889b": "jim-beam-honey",
+    "olcc-5720b": "jim-beam-peach",
+    "olcc-12846b": "jim-beam-pineapple",
+    "olcc-8438b": "knob-creek-bourbon-12-year",
+    "olcc-0426b": "knob-creek-smoked-maple-bourbon",
+    "olcc-10867b": "kentucky-owl-straight-bourbon-st-patrick-s-edition",
+    "ezra-brooks-101-22": "ezra-brooks-99-proof-kentucky-straight-bourbon",
+    "olcc-2114b": "maker-s-mark-101-22",
+    "olcc-6071b": "makers-mark-46-bourbon-whisky",
+    "olcc-2799b": "makers-mark-cask-strength-bourbon-whisky",
+    "olcc-4606b": "old-forester-statesman-bourbon",
+    "old-hickory-144-22": "old-hickory-straight-bourbon",
+    "olcc-4696b": "ole-smoky-mango-habanero-whiskey",
+    "olcc-5404b": "ole-smoky-salty-caramel-whiskey",
+    "olcc-9156b": "rabbit-hole-cavehill-kentucky-straight-bourbon",
+    "olcc-6671b": "uncle-nearest-1884-small-batch-whiskey",
+    "olcc-0134b": "russels-reserve-10-year-bourbon",
+    "olcc-6037b": "wild-turkey-101-bourbon",
+    "wild-turkey-140-16": "wild-turkey-bourbon",
+    "olcc-8903b": "willett-pot-still-reserve-kentucky-straight-bourbon",
+    "woodford-reserve-109-11": "woodford-reserve-bourbon",
+    "olcc-12790i": "woodford-reserve-double-double-oaked-bourbon",
+    "olcc-3901b": "yellowstone-select-kentucky-straight-bourbon",
+    "olcc-0155b": "ancient-age-101-22",
+    "olcc-10614b": "olcc-9303b",
+    "olcc-10613b": "olcc-10165b",
+    "olcc-5900b": "olcc-8729b",
+    "bulleit-101-22": "olcc-8729b",
+    "olcc-9039b": "elijah-craig-toasted-barrel-101-22",
+    "olcc-0140b": "jim-beam-101-22",
+    "olcc-5767b": "kentucky-owl-confiscated-101-22",
+    "olcc-7076b": "larceny-barrel-proof-101-22",
+    "olcc-0189b": "old-forester-101-22",
+    "olcc-6546b": "redwood-empire-pipe-dream-141-01",
+    "olcc-12725b": "redwood-empire-haystack-needle-101-01",
+    "olcc-2157b": "wild-turkey-rare-breed-101-23",
+    "booker-s-101-22": "olcc-2115b",
+    "bunnahabhain-12-years-old-153-5k": "olcc-7243b",
+    "olcc-2203b": "bowman-brothers-101-05",
+    "olcc-6374b": "weller-full-proof-101-00",
+    "oregon-spirit-distillers-140-38": "oregon-spirit-distillers-141-38",
+    "four-roses-private-selection-101-22": "four-roses-single-barrel-101-22"
   },
   "groups": [
     {
-      "canonical_id": "1792-full-proof-kentucky-straight-bourbon",
-      "canonical_name": "1792 Full Proof Kentucky Straight Bourbon",
+      "family_key": "bombergers-declaration",
+      "canonical_id": "bomberger-s-declaration-kentucky-straight-bourbon-whiskey",
+      "canonical_name": "Bomberger's Declaration Bourbon",
       "merged_ids": [
-        "olcc-3888b"
+        "bombergers-declaration-2023-bourbon",
+        "bombergers-declaration-2024-bourbon",
+        "bomberger-s-declaration-2026-release",
+        "bomberger-s-declaration-2025-release-kentucky-straight-bourbon-whiskey"
       ]
     },
     {
-      "canonical_id": "1792-single-barrel-kentucky-straight-bourbon",
-      "canonical_name": "1792 Single Barrel Kentucky Straight Bourbon",
+      "family_key": "blantons-gold-edition",
+      "canonical_id": "blanton-s-gold-edition-single-barrel-select",
+      "canonical_name": "Blanton's Gold Edition Single Barrel",
       "merged_ids": [
-        "olcc-3884b"
+        "blanton-s-gold-edition-single-barrel-select-barrel-124-by-wooden-cork"
       ]
     },
     {
-      "canonical_id": "blantons-original-single-barrel-bourbon-whiskey-700ml",
-      "canonical_name": "Blanton's Single Barrel Bourbon",
-      "merged_ids": [
-        "olcc-2170b"
-      ]
-    },
-    {
+      "family_key": "buffalo-trace-standard",
       "canonical_id": "buffalo-trace-bourbon-1",
       "canonical_name": "Buffalo Trace Bourbon",
       "merged_ids": [
-        "olcc-8189b"
+        "buffalo-trace-bourbon-single-barrel-select-225-freddies-choice",
+        "olcc-11936b"
       ]
     },
     {
-      "canonical_id": "weller-special-reserve",
-      "canonical_name": "Weller Special Reserve",
+      "family_key": "stagg-kentucky-straight-bourbon",
+      "canonical_id": "stagg-jr",
+      "canonical_name": "Stagg Kentucky Straight Bourbon",
       "merged_ids": [
-        "olcc-8954b"
+        "stagg-kentucky-straight-bourbon-batch-19-130-proof",
+        "stagg-kentucky-straight-bourbon-batch-24a-127-6-proof",
+        "stagg-kentucky-straight-bourbon-whiskey-batch-24b-127-8-proof",
+        "stagg-kentucky-straight-bourbon-whiskey-batch-24c",
+        "stagg-kentucky-straight-bourbon-whiskey-batch-24d",
+        "stagg-bourbon-batch-25a",
+        "stagg-kentucky-straight-bourbon-whiskey-batch-25b-126-9-proof",
+        "stagg-kentucky-straight-bourbon-whiskey-batch-25c",
+        "stagg-kentucky-straight-bourbon-whiskey-batch-25d-129-2-proof",
+        "stagg-kentucky-straight-bourbon-whiskey-batch-26a-129-3-proof"
       ]
     },
     {
-      "canonical_id": "bull-run-straight-bourbon-whiskey-batch-044",
-      "canonical_name": "Bull Run Straight Bourbon Whiskey,",
+      "family_key": "weller-full-proof",
+      "canonical_id": "w-l-weller-full-proof-bourbon-single-barrel-select-by-wooden-cork",
+      "canonical_name": "W. L. Weller Full Proof Bourbon",
       "merged_ids": [
-        "olcc-0482b"
+        "w-l-weller-full-proof-bourbon-non-chill-filtered-single-barrel-select-by-wooden-cork-114-proof"
       ]
     },
     {
-      "canonical_id": "clyde-may-s-straight-bourbon",
-      "canonical_name": "Clyde May's Straight Bourbon",
+      "family_key": "annual:elijah craig pga championship",
+      "canonical_id": "elijah-craig-2025-pga-championship-commemorative-edition",
+      "canonical_name": "Elijah Craig PGA Championship Commemorative Edition",
       "merged_ids": [
-        "olcc-4009b"
+        "elijah-craig-pga-2026-championship-commemorative-edition"
       ]
     },
     {
-      "canonical_id": "four-roses",
-      "canonical_name": "Four Roses Bourbon",
+      "family_key": "annual:elijah craig small batch ryder cup",
+      "canonical_id": "elijah-craig-small-batch-bourbon-2023-ryder-cup-edition",
+      "canonical_name": "Elijah Craig Small Batch Bourbon, Ryder Cup Edition",
       "merged_ids": [
-        "olcc-8839b"
+        "olcc-13130b"
       ]
     },
     {
-      "canonical_id": "jeffersons-reserve-very-old-bourbon",
-      "canonical_name": "Jeffersons Reserve Bourbon Whiskey",
+      "family_key": "knob-creek-9-year-standard-bourbon",
+      "canonical_id": "knob-creek-9-year-old-100-proof-bourbon",
+      "canonical_name": "Knob Creek 9 Year Bourbon",
       "merged_ids": [
-        "jefferson-s-reserve-101-22",
-        "olcc-8123b"
+        "knob-creek-kentucky-straight-bourbon",
+        "knob-creek-9-year-usa-250th-anniversary-bourbon-limited-edition",
+        "knob-creek-101-22",
+        "olcc-5895b"
       ]
     },
     {
-      "canonical_id": "basil-hayden-s-kentucky-straight-bourbon",
-      "canonical_name": "Basil Hayden's Kentucky Straight Bourbon",
+      "family_key": "knob-creek-9-year-single-barrel-reserve",
+      "canonical_id": "knob-creek-120-proof-9-year-single-barrel-reserve-bourbon",
+      "canonical_name": "Knob Creek 9 Year Single Barrel Reserve",
       "merged_ids": [
-        "olcc-2164b"
+        "knob-creek-9-year-old-single-barrel-reserve",
+        "knob-creek-single-barrel-select-bourbon-6th-floor-god",
+        "knob-creek-single-barrel-select-bourbon-sdbb-6",
+        "knob-creek-single-barrel-select-bourbon-sdbb-5-korg-creek",
+        "knob-creek-x-eli-manning-2025-bold-pick-bourbon",
+        "knob-creek-x-eli-manning-2026-bold-pick-bourbon",
+        "olcc-6971b"
       ]
     },
     {
-      "canonical_id": "new-riff-bottled-in-bond-kentucky-straight-bourbon-whiskey",
-      "canonical_name": "New Riff Bottled-In-Bond Kentucky Straight Bourbon Whiskey",
+      "family_key": "michters-us1-small-batch-bourbon",
+      "canonical_id": "michters-bourbon",
+      "canonical_name": "Michter's US*1 Small Batch Bourbon",
       "merged_ids": [
-        "olcc-13016b"
+        "olcc-2345b"
       ]
     },
     {
-      "canonical_id": "penelope-architect-straight-bourbon",
-      "canonical_name": "Penelope Architect Straight Bourbon",
+      "family_key": "michters-us1-original-sour-mash",
+      "canonical_id": "michter-s-us-1-original-sour-mash-small-batch",
+      "canonical_name": "Michter's US*1 Original Sour Mash Whiskey",
       "merged_ids": [
-        "olcc-11998b"
+        "olcc-2344b"
       ]
     },
     {
-      "canonical_id": "penelope-four-grain-straight-bourbon-whiskey",
-      "canonical_name": "Penelope Four Grain Straight Bourbon Whiskey",
+      "family_key": "michters-us1-toasted-barrel-finish-bourbon",
+      "canonical_id": "michters-us-1-toasted-barrel-finish-bourbon-whiskey-2021-release",
+      "canonical_name": "Michter's US*1 Toasted Barrel Finish Bourbon",
       "merged_ids": [
-        "olcc-11999b"
+        "olcc-2657b"
       ]
     },
     {
-      "canonical_id": "penelope-rio-straight-bourbon-whiskey",
-      "canonical_name": "Penelope Rio Straight Bourbon Whiskey",
+      "family_key": "annual:rare character",
+      "canonical_id": "rare-character-s-limited-release-2025-batch-02-bourbon-750ml",
+      "canonical_name": "Rare Character Straight Bourbon Limited",
       "merged_ids": [
-        "olcc-12827b"
+        "rare-character-batch-no-01-bourbon"
       ]
     },
     {
-      "canonical_id": "russells-reserve-single-barrel-barrel-select-bourbon",
-      "canonical_name": "Russell's Reserve Single Barrel Bourbon",
+      "family_key": "woodford-reserve-standard",
+      "canonical_id": "woodford-reserve-bourbon",
+      "canonical_name": "Woodford Reserve Bourbon",
       "merged_ids": [
-        "olcc-1600b"
+        "woodford-reserve-149th-kentucky-derby-2023",
+        "woodford-reserve-150th-kentucky-derby-2024",
+        "woodford-reserve-holiday-select-limited-edition",
+        "woodford-reserve-kentucky-derby-149-2023",
+        "woodford-reserve-kentucky-derby-152-edition",
+        "woodford-reserve-kentucky-straight-bourbon-whiskey-kentucky-derby-151-edition",
+        "woodford-reserve-derby-151-101-22",
+        "woodford-reserve-derby-152-101-22"
       ]
     },
     {
-      "canonical_id": "broken-top-ascent-121-38",
-      "canonical_name": "BROKEN TOP ASCENT",
+      "family_key": "jack-daniels-bonded",
+      "canonical_id": "jack-daniel-s-bonded-119-43",
+      "canonical_name": "Jack Daniel's Bonded",
       "merged_ids": [
-        "olcc-12026b"
+        "olcc-10541i"
       ]
     },
     {
-      "canonical_id": "broken-top-backcountry-121-38",
-      "canonical_name": "BROKEN TOP BACKCOUNTRY",
+      "family_key": "knob-creek-7-year-rye",
+      "canonical_id": "olcc-1159b",
+      "canonical_name": "Knob Creek 7 Year Rye",
       "merged_ids": [
-        "olcc-12024b"
+        "olcc-10622b",
+        "knob-creek-102-22"
       ]
     },
     {
-      "canonical_id": "bucked-up-whiskey-101-01",
-      "canonical_name": "BUCKED UP WHISKEY",
+      "family_key": "annual:macallan classic cut",
+      "canonical_id": "olcc-12679b",
+      "canonical_name": "THE MACALLAN CLASSIC CUT",
       "merged_ids": [
-        "olcc-10535b"
+        "olcc-11721b"
       ]
     },
     {
-      "canonical_id": "calumet-farm-101-22",
-      "canonical_name": "CALUMET FARM",
+      "family_key": "annual:ichiros malt chichibu us",
+      "canonical_id": "ichiro-s-malt-chichibu-us-edition-2024-190-59",
+      "canonical_name": "ICHIRO'S MALT CHICHIBU US EDITION",
       "merged_ids": [
-        "olcc-2116b"
+        "ichiro-s-malt-chichibu-us-edition-2025-191-59"
       ]
     },
     {
-      "canonical_id": "firefighter-s-reserve-straight-bourbon-101-38",
-      "canonical_name": "FIREFIGHTER'S RESERVE STRAIGHT BOURBON",
+      "family_key": "annual:woodford reserve holiday",
+      "canonical_id": "woodford-reserve-holiday-2024-101-22",
+      "canonical_name": "WOODFORD RESERVE HOLIDAY",
       "merged_ids": [
-        "olcc-12621b"
+        "woodford-reserve-holiday-2025-101-22"
       ]
     },
     {
-      "canonical_id": "freeland-spirits-cask-strength-141-38",
-      "canonical_name": "FREELAND SPIRITS CASK STRENGTH",
+      "family_key": "annual:society",
+      "canonical_id": "society-batch-28-151-5k",
+      "canonical_name": "SOCIETY",
       "merged_ids": [
-        "olcc-6827b"
+        "society-batch-31-151-5k",
+        "society-batch-29-171-5k",
+        "society-batch-33-153-5k"
       ]
     },
     {
-      "canonical_id": "green-river-full-proof-101-22",
-      "canonical_name": "GREEN RIVER FULL PROOF",
+      "canonical_id": "eagle-rare-bourbon-1-75l",
+      "canonical_name": "Eagle Rare",
       "merged_ids": [
-        "olcc-13313b"
+        "eagle-rare-191-00"
       ]
     },
     {
-      "canonical_id": "high-west-double-rye-122-45",
-      "canonical_name": "HIGH WEST DOUBLE RYE",
+      "canonical_id": "stagg-kentucky-straight-bourbon-batch-18",
+      "canonical_name": "Stagg Kentucky Straight Bourbon 131 Proof",
       "merged_ids": [
-        "olcc-0832b"
+        "stagg-101-22"
       ]
     },
     {
-      "canonical_id": "knob-creek-101-22",
-      "canonical_name": "KNOB CREEK",
+      "canonical_id": "elijah-craig-12-year-old-small-batch-barrel-proof-batch-no-a122",
+      "canonical_name": "Elijah Craig 12 Year Old Small Batch Barrel Proof",
       "merged_ids": [
-        "olcc-2163b"
+        "elijah-craig-12-year-old-small-batch-barrel-proof-batch-no-a123",
+        "elijah-craig-12-year-old-small-batch-barrel-proof-batch-no-c921"
       ]
     },
     {
-      "canonical_id": "multnomah-falls-lodge-100th-anniversary-bourbon-101-38",
-      "canonical_name": "MULTNOMAH FALLS LODGE 100TH ANNIVERSARY BOURBON",
+      "canonical_id": "evan-williams-kentucky-straight-bourbon",
+      "canonical_name": "Evan Williams Kentucky Straight",
       "merged_ids": [
-        "olcc-12726b"
+        "evan-williams-191-00"
       ]
     },
     {
-      "canonical_id": "penelope-barrel-strength-121-22",
-      "canonical_name": "PENELOPE BARREL STRENGTH",
+      "canonical_id": "evan-williams-kentucky-straight-bourbon-black-label",
+      "canonical_name": "Evan Williams Kentucky Straight Bourbon Black Label",
       "merged_ids": [
-        "olcc-11996b"
+        "olcc-0137b"
       ]
     },
     {
-      "canonical_id": "ransom-101-38",
-      "canonical_name": "RANSOM",
+      "canonical_id": "old-fitzgerald-7-year-old-bottled-in-bond-bourbon",
+      "canonical_name": "Old Fitzgerald 7 Year Old Bottled in Bond",
       "merged_ids": [
-        "olcc-10370b"
+        "olcc-12941i"
       ]
     },
     {
-      "canonical_id": "redemption-101-43",
-      "canonical_name": "REDEMPTION",
+      "canonical_id": "jeffersons-ocean-aged-at-sea-bourbon-whiskey",
+      "canonical_name": "Jefferson's Ocean Aged at Sea",
       "merged_ids": [
-        "olcc-1703b"
+        "olcc-2372b"
       ]
     },
     {
-      "canonical_id": "redemption-high-rye-101-43",
-      "canonical_name": "REDEMPTION HIGH RYE",
+      "canonical_id": "jeffersons-reserve-old-rum-cask-finish-bourbon",
+      "canonical_name": "Jefferson's Reserve Old Rum Cask Finish",
       "merged_ids": [
-        "olcc-5007b"
+        "olcc-4576b"
       ]
     },
     {
-      "canonical_id": "redemption-wheated-bourbon-141-19",
-      "canonical_name": "REDEMPTION WHEATED BOURBON",
+      "canonical_id": "jeffersons-chefs-collaboration-bourbon",
+      "canonical_name": "Jeffersons Chefs Collaboration",
       "merged_ids": [
-        "olcc-5539b"
+        "olcc-3271b"
       ]
     },
     {
-      "canonical_id": "stagg-101-22",
-      "canonical_name": "STAGG",
+      "canonical_id": "baker-s-7-years-old",
+      "canonical_name": "Baker's 7 years old",
       "merged_ids": [
-        "olcc-0191b"
+        "olcc-2162b"
       ]
     },
     {
-      "canonical_id": "ukiah-rodeo-141-38",
-      "canonical_name": "UKIAH RODEO",
+      "canonical_id": "basil-hayden-toast-kentucky-straight-bourbon",
+      "canonical_name": "Basil Hayden Toast Kentucky Straight",
       "merged_ids": [
-        "olcc-13088b"
+        "olcc-9965b"
       ]
     },
     {
-      "canonical_id": "whistlepig-piggyback-141-22",
-      "canonical_name": "WHISTLEPIG PIGGYBACK",
+      "canonical_id": "jim-beam-apple",
+      "canonical_name": "Jim Beam Apple",
       "merged_ids": [
-        "olcc-10752b"
+        "olcc-3191b"
       ]
     },
     {
-      "canonical_id": "woodford-reserve-rye-102-22",
-      "canonical_name": "WOODFORD RESERVE RYE",
+      "canonical_id": "jim-beam-honey",
+      "canonical_name": "Jim Beam Honey",
       "merged_ids": [
-        "woodford-reserve-rye-101-22",
-        "olcc-3105b"
+        "olcc-1889b"
       ]
     },
     {
-      "canonical_id": "woodinville-101-07",
-      "canonical_name": "WOODINVILLE",
+      "canonical_id": "jim-beam-peach",
+      "canonical_name": "Jim Beam Peach",
       "merged_ids": [
-        "olcc-5162b"
+        "olcc-5720b"
       ]
     },
     {
-      "canonical_id": "speakeasy-101-22",
-      "canonical_name": "SPEAKEASY",
+      "canonical_id": "jim-beam-pineapple",
+      "canonical_name": "Jim Beam Pineapple",
       "merged_ids": [
-        "olcc-13330b"
+        "olcc-12846b"
       ]
     },
     {
-      "canonical_id": "heaven-hill-grain-to-glass-101-22",
-      "canonical_name": "HEAVEN HILL GRAIN TO GLASS",
+      "canonical_id": "knob-creek-bourbon-12-year",
+      "canonical_name": "Knob Creek 12 Year Old 100 Proof",
       "merged_ids": [
-        "olcc-12202i"
+        "olcc-8438b"
       ]
     },
     {
-      "canonical_id": "penelope-wheated-101-44",
-      "canonical_name": "PENELOPE WHEATED",
+      "canonical_id": "knob-creek-smoked-maple-bourbon",
+      "canonical_name": "Knob Creek Smoked Maple",
       "merged_ids": [
-        "olcc-12753b"
+        "olcc-0426b"
       ]
     },
     {
-      "canonical_id": "horse-soldier-101-16",
-      "canonical_name": "HORSE SOLDIER",
+      "canonical_id": "kentucky-owl-straight-bourbon-st-patrick-s-edition",
+      "canonical_name": "Kentucky Owl Straight Bourbon, St. Patrick's Edition",
       "merged_ids": [
-        "olcc-12873b"
+        "olcc-10867b"
       ]
     },
     {
-      "canonical_id": "green-river-101-22",
-      "canonical_name": "GREEN RIVER",
+      "canonical_id": "ezra-brooks-99-proof-kentucky-straight-bourbon",
+      "canonical_name": "Ezra Brooks 99 Proof Kentucky Straight",
       "merged_ids": [
-        "olcc-13311b"
+        "ezra-brooks-101-22"
       ]
     },
     {
-      "canonical_id": "elijah-craig-barrel-proof-rye-102-22",
-      "canonical_name": "ELIJAH CRAIG BARREL PROOF RYE",
+      "canonical_id": "maker-s-mark-101-22",
+      "canonical_name": "MAKER'S MARK",
       "merged_ids": [
-        "olcc-13385b"
+        "olcc-2114b"
       ]
     },
     {
-      "canonical_id": "redemption-rye-102-43",
-      "canonical_name": "REDEMPTION RYE",
+      "canonical_id": "makers-mark-46-bourbon-whisky",
+      "canonical_name": "Maker's Mark 46",
       "merged_ids": [
-        "olcc-1704b"
+        "olcc-6071b"
       ]
     },
     {
-      "canonical_id": "high-west-131-45",
-      "canonical_name": "HIGH WEST",
+      "canonical_id": "makers-mark-cask-strength-bourbon-whisky",
+      "canonical_name": "Maker's Mark Cask Strength",
       "merged_ids": [
-        "olcc-3353b"
+        "olcc-2799b"
       ]
     },
     {
-      "canonical_id": "legent-101-02",
-      "canonical_name": "LEGENT",
+      "canonical_id": "old-forester-single-barrel-barrel-strength-bourbon-whiskey-warehouse-k-floor-8",
+      "canonical_name": "Old Forester Single Barrel Barrel Strength",
       "merged_ids": [
-        "olcc-9239b"
+        "old-forester-single-barrel-barrel-strength-bourbon-whiskey-warehouse-k-floor-8-cork-barrel-pick-133-9-proof",
+        "old-forester-single-barrel-barrel-strength-warehouse-k-floor-8-distillery-selection-132-4-proof",
+        "old-forester-single-barrel-barrel-strength-warehouse-k-floor-8-ofd-not-what-you-think-134-7-proof"
       ]
     },
     {
-      "canonical_id": "big-bottom-distilling-delta-rye-122-38",
-      "canonical_name": "BIG BOTTOM DISTILLING DELTA RYE",
+      "canonical_id": "old-forester-statesman-bourbon",
+      "canonical_name": "Old Forester Statesman",
       "merged_ids": [
-        "big-bottom-distilling-delta-rye-oregon-llc"
+        "olcc-4606b"
       ]
     },
     {
-      "canonical_id": "seelbachs-private-reserve-101-16",
-      "canonical_name": "SEELBACHS PRIVATE RESERVE",
+      "canonical_id": "old-hickory-straight-bourbon",
+      "canonical_name": "Old Hickory Straight",
       "merged_ids": [
-        "seelbach-s-private-reserve-101-16"
+        "old-hickory-144-22"
+      ]
+    },
+    {
+      "canonical_id": "ole-smoky-charred-moonshine",
+      "canonical_name": "Ole Smoky Charred Moonshine",
+      "merged_ids": [
+        "ole-smoky-charred-moonshine-140-43"
+      ]
+    },
+    {
+      "canonical_id": "ole-smoky-mango-habanero-whiskey",
+      "canonical_name": "Ole Smoky Mango Habanero",
+      "merged_ids": [
+        "olcc-4696b"
+      ]
+    },
+    {
+      "canonical_id": "ole-smoky-salty-caramel-whiskey",
+      "canonical_name": "Ole Smoky Salty Caramel",
+      "merged_ids": [
+        "olcc-5404b"
+      ]
+    },
+    {
+      "canonical_id": "rabbit-hole-cavehill-kentucky-straight-bourbon",
+      "canonical_name": "Rabbit Hole Cavehill Kentucky Straight",
+      "merged_ids": [
+        "olcc-9156b"
+      ]
+    },
+    {
+      "canonical_id": "uncle-nearest-1884-small-batch-whiskey",
+      "canonical_name": "Uncle Nearest 1884 Small batch",
+      "merged_ids": [
+        "olcc-6671b"
+      ]
+    },
+    {
+      "canonical_id": "russels-reserve-10-year-bourbon",
+      "canonical_name": "Russell's Reserve 10 Year",
+      "merged_ids": [
+        "olcc-0134b"
+      ]
+    },
+    {
+      "canonical_id": "wild-turkey-101-bourbon",
+      "canonical_name": "Wild Turkey 101",
+      "merged_ids": [
+        "olcc-6037b"
+      ]
+    },
+    {
+      "canonical_id": "wild-turkey-bourbon",
+      "canonical_name": "Wild Turkey",
+      "merged_ids": [
+        "wild-turkey-140-16"
+      ]
+    },
+    {
+      "canonical_id": "willett-pot-still-reserve-kentucky-straight-bourbon",
+      "canonical_name": "Willett Pot Still Reserve Kentucky Straight",
+      "merged_ids": [
+        "olcc-8903b"
+      ]
+    },
+    {
+      "canonical_id": "woodford-reserve-bourbon",
+      "canonical_name": "Woodford Reserve",
+      "merged_ids": [
+        "woodford-reserve-109-11"
+      ]
+    },
+    {
+      "canonical_id": "woodford-reserve-double-double-oaked-bourbon",
+      "canonical_name": "Woodford Reserve Double Double Oaked",
+      "merged_ids": [
+        "olcc-12790i"
+      ]
+    },
+    {
+      "canonical_id": "yellowstone-select-kentucky-straight-bourbon",
+      "canonical_name": "Yellowstone Select Kentucky Straight",
+      "merged_ids": [
+        "olcc-3901b"
+      ]
+    },
+    {
+      "canonical_id": "ancient-age-101-22",
+      "canonical_name": "ANCIENT AGE",
+      "merged_ids": [
+        "olcc-0155b"
+      ]
+    },
+    {
+      "canonical_id": "olcc-9303b",
+      "canonical_name": "BIRD DOG PEANUT BUTTER FLAVORED",
+      "merged_ids": [
+        "olcc-10614b"
+      ]
+    },
+    {
+      "canonical_id": "olcc-10165b",
+      "canonical_name": "BIRD DOG SALTED CARAMEL FLAVORED",
+      "merged_ids": [
+        "olcc-10613b"
+      ]
+    },
+    {
+      "canonical_id": "olcc-8729b",
+      "canonical_name": "BULLEIT STRAIGHT BOURBON 90 PROOF",
+      "merged_ids": [
+        "olcc-5900b",
+        "bulleit-101-22"
+      ]
+    },
+    {
+      "canonical_id": "elijah-craig-toasted-barrel-101-22",
+      "canonical_name": "ELIJAH CRAIG TOASTED BARREL",
+      "merged_ids": [
+        "olcc-9039b"
+      ]
+    },
+    {
+      "canonical_id": "jim-beam-101-22",
+      "canonical_name": "JIM BEAM",
+      "merged_ids": [
+        "olcc-0140b"
+      ]
+    },
+    {
+      "canonical_id": "kentucky-owl-confiscated-101-22",
+      "canonical_name": "KENTUCKY OWL CONFISCATED",
+      "merged_ids": [
+        "olcc-5767b"
+      ]
+    },
+    {
+      "canonical_id": "larceny-barrel-proof-101-22",
+      "canonical_name": "LARCENY BARREL PROOF",
+      "merged_ids": [
+        "olcc-7076b"
+      ]
+    },
+    {
+      "canonical_id": "old-forester-101-22",
+      "canonical_name": "OLD FORESTER",
+      "merged_ids": [
+        "olcc-0189b"
+      ]
+    },
+    {
+      "canonical_id": "redwood-empire-pipe-dream-141-01",
+      "canonical_name": "REDWOOD EMPIRE PIPE DREAM",
+      "merged_ids": [
+        "olcc-6546b"
+      ]
+    },
+    {
+      "canonical_id": "redwood-empire-haystack-needle-101-01",
+      "canonical_name": "REDWOOD EMPIRE HAYSTACK NEEDLE",
+      "merged_ids": [
+        "olcc-12725b"
+      ]
+    },
+    {
+      "canonical_id": "wild-turkey-rare-breed-101-23",
+      "canonical_name": "WILD TURKEY RARE BREED",
+      "merged_ids": [
+        "olcc-2157b"
+      ]
+    },
+    {
+      "canonical_id": "olcc-2115b",
+      "canonical_name": "BOOKERS",
+      "merged_ids": [
+        "booker-s-101-22"
+      ]
+    },
+    {
+      "canonical_id": "olcc-7243b",
+      "canonical_name": "BUNNAHABHAIN 12 YEAR",
+      "merged_ids": [
+        "bunnahabhain-12-years-old-153-5k"
+      ]
+    },
+    {
+      "canonical_id": "bowman-brothers-101-05",
+      "canonical_name": "BOWMAN BROTHERS",
+      "merged_ids": [
+        "olcc-2203b"
+      ]
+    },
+    {
+      "canonical_id": "weller-full-proof-101-00",
+      "canonical_name": "WELLER FULL PROOF",
+      "merged_ids": [
+        "olcc-6374b"
+      ]
+    },
+    {
+      "canonical_id": "oregon-spirit-distillers-141-38",
+      "canonical_name": "OREGON SPIRIT DISTILLERS",
+      "merged_ids": [
+        "oregon-spirit-distillers-140-38"
+      ]
+    },
+    {
+      "canonical_id": "four-roses-single-barrel-101-22",
+      "canonical_name": "FOUR ROSES SINGLE BARREL",
+      "merged_ids": [
+        "four-roses-private-selection-101-22"
       ]
     },
     {
       "canonical_id": "blanton-s-101-00",
       "canonical_name": "BLANTON'S",
       "merged_ids": [
-        "blantons-141-02"
+        "blanton-s-192-92"
       ]
     },
     {
-      "canonical_id": "1816-indiana-rye-102-19",
-      "canonical_name": "1816 INDIANA RYE",
+      "canonical_id": "registered-distillery-one-101-22",
+      "canonical_name": "REGISTERED DISTILLERY ONE",
       "merged_ids": [
-        "1816-indiana-rye-149-19"
+        "registered-distillery-one-109-22"
       ]
     },
     {
-      "canonical_id": "bardstown-bourbon-company-121-22",
-      "canonical_name": "BARDSTOWN BOURBON COMPANY",
+      "canonical_id": "bear-creek-distillery-141-13",
+      "canonical_name": "BEAR CREEK DISTILLERY",
       "merged_ids": [
-        "bardstown-bourbon-company-109-22"
+        "bear-creek-distillery-140-13"
       ]
     },
     {
-      "canonical_id": "jeptha-creed-bottled-in-bond-bourbon-119-22",
-      "canonical_name": "JEPTHA CREED BOTTLED-IN-BOND BOURBON",
+      "canonical_id": "quests-end-121-16",
+      "canonical_name": "QUESTS END",
       "merged_ids": [
-        "jeptha-creed-bottled-in-bond-bourbon-101-22"
+        "quest-s-end-120-16"
       ]
     },
     {
-      "canonical_id": "old-forester-the-117-series-bottled-in-bond-rye-112-22",
-      "canonical_name": "OLD FORESTER THE 117 SERIES - BOTTLED IN BOND RYE",
+      "canonical_id": "lost-lantern-101-46",
+      "canonical_name": "LOST LANTERN",
       "merged_ids": [
-        "old-forester-the-117-series-bottled-in-bond-rye-119-22"
+        "lost-lantern-109-46"
       ]
     },
     {
-      "canonical_id": "brother-s-bond-101-43",
-      "canonical_name": "BROTHER'S BOND",
+      "canonical_id": "seelbachs-private-reserve-101-16",
+      "canonical_name": "SEELBACHS PRIVATE RESERVE",
       "merged_ids": [
-        "brothers-bond-101-22"
+        "seelbach-s-private-reserve-144-16"
       ]
     },
     {
-      "canonical_id": "lawrenceburg-bourbon-company-140-22",
-      "canonical_name": "LAWRENCEBURG BOURBON COMPANY",
+      "canonical_id": "jimmy-s-121-44",
+      "canonical_name": "JIMMY'S",
       "merged_ids": [
-        "lawrenceburg-bourbon-company-101-22"
+        "jimmy-s-129-44"
       ]
     },
     {
-      "canonical_id": "browne-family-spirits-do-epic-shit-bourbon-129-07",
-      "canonical_name": "BROWNE FAMILY SPIRITS DO EPIC SHIT BOURBON",
+      "canonical_id": "backbone-bourbon-101-19",
+      "canonical_name": "BACKBONE",
       "merged_ids": [
-        "browne-family-spirits-do-epic-shit-121-07"
+        "backbone-109-22"
       ]
     },
     {
-      "canonical_id": "thresh-winnow-maple-syrup-cask-finished-rye-142-04",
-      "canonical_name": "THRESH & WINNOW MAPLE SYRUP CASK FINISHED RYE",
+      "canonical_id": "eclipse-101-19",
+      "canonical_name": "ECLIPSE",
       "merged_ids": [
-        "thresh-winnow-maple-syrup-cask-finished-rye-140-04"
+        "eclipse-140-22"
       ]
     },
     {
-      "canonical_id": "jp-wisers-161-69",
-      "canonical_name": "JP WISERS",
+      "canonical_id": "wildfether-distilling-141-03",
+      "canonical_name": "WILDFETHER DISTILLING",
       "merged_ids": [
-        "jp-wiser-s-161-69"
+        "wildfether-distilling-140-03"
       ]
     },
     {
-      "canonical_id": "hashtag-101-19",
-      "canonical_name": "HASHTAG",
+      "canonical_id": "blackout-101-22",
+      "canonical_name": "BLACKOUT",
       "merged_ids": [
-        "hashtag-bourbon-140-19"
+        "blackout-109-22"
       ]
     },
     {
-      "canonical_id": "stranahan-s-founder-s-release-140-13",
-      "canonical_name": "STRANAHAN'S FOUNDER'S RELEASE",
+      "canonical_id": "war-cannon-spirits-101-02",
+      "canonical_name": "WAR CANNON SPIRITS",
       "merged_ids": [
-        "stranahan-s-founders-release-140-13"
+        "war-cannon-spirits-109-02"
       ]
     },
     {
-      "canonical_id": "mammoth-distilling-woolly-rye-140-06",
-      "canonical_name": "MAMMOTH DISTILLING WOOLLY RYE",
+      "canonical_id": "dream-spirits-121-05",
+      "canonical_name": "DREAM SPIRITS",
       "merged_ids": [
-        "mammoth-distilling-woolly-rye-142-06"
+        "dream-spirits-109-05"
       ]
     },
     {
-      "canonical_id": "sullivan-s-cove-american-oak-single-cask-old-rare-191-63",
-      "canonical_name": "SULLIVAN'S COVE AMERICAN OAK SINGLE CASK OLD & RARE",
+      "canonical_id": "still-austin-101-44",
+      "canonical_name": "STILL AUSTIN",
       "merged_ids": [
-        "sullivans-cove-american-oak-single-cask-old-rare-191-63"
+        "still-austin-140-44"
       ]
     },
     {
-      "canonical_id": "taconic-distillery-distillers-select-101-02",
-      "canonical_name": "TACONIC DISTILLERY DISTILLERS SELECT",
+      "canonical_id": "the-world-whiskey-society-101-08",
+      "canonical_name": "THE WORLD WHISKEY SOCIETY",
       "merged_ids": [
-        "taconic-distillery-distiller-s-select-101-02"
+        "world-whiskey-society-191-00"
       ]
     },
     {
-      "canonical_id": "full-ryde-bourbon-141-09",
-      "canonical_name": "FULL RYDE BOURBON",
+      "canonical_id": "barrell-bourbon-121-22",
+      "canonical_name": "BARRELL",
       "merged_ids": [
-        "full-ryde-bourbon-140-09"
+        "barrell-whiskey-139-22"
       ]
     },
     {
-      "canonical_id": "hope-s-101-22",
-      "canonical_name": "HOPE'S",
+      "canonical_id": "common-ritual-101-29",
+      "canonical_name": "COMMON RITUAL",
       "merged_ids": [
-        "hopes-101-22"
+        "common-ritual-140-29"
       ]
     },
     {
-      "canonical_id": "motor-city-gas-stink-eye-rye-101-06",
-      "canonical_name": "MOTOR CITY GAS STINK EYE RYE",
+      "canonical_id": "e-g-booz-101-22",
+      "canonical_name": "E.G. BOOZ",
       "merged_ids": [
-        "motor-city-gas-stink-eye-rye-102-06"
+        "e-g-booz-140-22"
+      ]
+    },
+    {
+      "canonical_id": "savage-cooke-101-01",
+      "canonical_name": "SAVAGE & COOKE",
+      "merged_ids": [
+        "savage-cooke-140-01"
+      ]
+    },
+    {
+      "canonical_id": "high-west-cask-collection-121-45",
+      "canonical_name": "HIGH WEST CASK COLLECTION",
+      "merged_ids": [
+        "high-west-cask-collection-129-45"
+      ]
+    },
+    {
+      "canonical_id": "singular-reserve-141-16",
+      "canonical_name": "SINGULAR RESERVE",
+      "merged_ids": [
+        "singular-reserve-140-16"
+      ]
+    },
+    {
+      "canonical_id": "manatawny-still-works-141-39",
+      "canonical_name": "MANATAWNY STILL WORKS",
+      "merged_ids": [
+        "manatawny-still-works-140-39"
+      ]
+    },
+    {
+      "canonical_id": "distillers-share-101-22",
+      "canonical_name": "DISTILLERS' SHARE",
+      "merged_ids": [
+        "distillers-share-140-22"
+      ]
+    },
+    {
+      "canonical_id": "short-path-distillery-141-26",
+      "canonical_name": "SHORT PATH DISTILLERY",
+      "merged_ids": [
+        "short-path-distillery-140-26"
+      ]
+    },
+    {
+      "canonical_id": "dry-fly-distilling-101-07",
+      "canonical_name": "DRY FLY DISTILLING",
+      "merged_ids": [
+        "dry-fly-distilling-109-07"
+      ]
+    },
+    {
+      "canonical_id": "penelope-101-29",
+      "canonical_name": "PENELOPE",
+      "merged_ids": [
+        "penelope-140-29"
+      ]
+    },
+    {
+      "canonical_id": "yellow-rose-distilling-141-44",
+      "canonical_name": "YELLOW ROSE DISTILLING",
+      "merged_ids": [
+        "yellow-rose-distilling-140-44"
+      ]
+    },
+    {
+      "canonical_id": "remus-101-29",
+      "canonical_name": "REMUS",
+      "merged_ids": [
+        "remus-109-29"
+      ]
+    },
+    {
+      "canonical_id": "r6-distillery-141-01",
+      "canonical_name": "R6 DISTILLERY",
+      "merged_ids": [
+        "r6-distillery-140-01"
+      ]
+    },
+    {
+      "canonical_id": "sweet-home-spirits-141-10",
+      "canonical_name": "SWEET HOME SPIRITS",
+      "merged_ids": [
+        "sweet-home-spirits-140-35"
+      ]
+    },
+    {
+      "canonical_id": "captain-s-table-141-01",
+      "canonical_name": "CAPTAIN'S TABLE",
+      "merged_ids": [
+        "captain-s-table-140-01"
+      ]
+    },
+    {
+      "canonical_id": "iron-fish-distillery-141-06",
+      "canonical_name": "IRON FISH DISTILLERY",
+      "merged_ids": [
+        "iron-fish-distillery-140-06"
+      ]
+    },
+    {
+      "canonical_id": "wonderland-101-06",
+      "canonical_name": "WONDERLAND",
+      "merged_ids": [
+        "wonderland-120-06"
+      ]
+    },
+    {
+      "canonical_id": "yellowstone-101-22",
+      "canonical_name": "YELLOWSTONE",
+      "merged_ids": [
+        "yellowstone-140-29"
+      ]
+    },
+    {
+      "canonical_id": "whistlepig-141-46",
+      "canonical_name": "WHISTLEPIG",
+      "merged_ids": [
+        "whistlepig-140-02"
+      ]
+    },
+    {
+      "canonical_id": "old-forester-the-117-series-warehouse-1-barrels-111-22",
+      "canonical_name": "OLD FORESTER THE 117 SERIES",
+      "merged_ids": [
+        "old-forester-the-117-series-119-22"
+      ]
+    },
+    {
+      "canonical_id": "old-soul-101-28",
+      "canonical_name": "OLD SOUL",
+      "merged_ids": [
+        "old-soul-109-28"
+      ]
+    },
+    {
+      "canonical_id": "rd-one-kentucky-straight-bourbon-whiskey-101-22",
+      "canonical_name": "RD ONE",
+      "merged_ids": [
+        "rd-one-109-22"
+      ]
+    },
+    {
+      "canonical_id": "copper-cask-101-40",
+      "canonical_name": "COPPER & CASK",
+      "merged_ids": [
+        "copper-cask-190-69"
+      ]
+    },
+    {
+      "canonical_id": "high-west-barrel-select-121-45",
+      "canonical_name": "HIGH WEST BARREL SELECT",
+      "merged_ids": [
+        "high-west-barrel-select-129-45"
+      ]
+    },
+    {
+      "canonical_id": "36522-the-distillery-101-01",
+      "canonical_name": "36522 THE DISTILLERY",
+      "merged_ids": [
+        "36522-the-distillery-140-01"
+      ]
+    },
+    {
+      "canonical_id": "single-barrel-bourbon-141-14",
+      "canonical_name": "SINGLE BARREL",
+      "merged_ids": [
+        "private-selection-140-43",
+        "single-barrel-whiskey-140-44"
+      ]
+    },
+    {
+      "canonical_id": "evernorth-spirits-co-121-06",
+      "canonical_name": "EVERNORTH SPIRITS CO",
+      "merged_ids": [
+        "evernorth-spirits-co-140-06"
+      ]
+    },
+    {
+      "canonical_id": "bull-run-distilling-co-101-38",
+      "canonical_name": "BULL RUN DISTILLING CO",
+      "merged_ids": [
+        "bull-run-distilling-co-140-38",
+        "bull-run-distilling-co-batch-no-100-140-38"
+      ]
+    },
+    {
+      "canonical_id": "amrut-aatma-cask-874-191-5i",
+      "canonical_name": "AMRUT AATMA",
+      "merged_ids": [
+        "amrut-aatma-cask-6222-191-5i"
+      ]
+    },
+    {
+      "canonical_id": "field-of-dreams-141-19",
+      "canonical_name": "FIELD OF DREAMS",
+      "merged_ids": [
+        "field-of-dreams"
+      ]
+    },
+    {
+      "canonical_id": "disobedient-spirits-fort-necessity-141-39",
+      "canonical_name": "DISOBEDIENT SPIRITS FORT NECESSITY",
+      "merged_ids": [
+        "disobedient-spirits-fort-necessity-140-39"
+      ]
+    },
+    {
+      "canonical_id": "world-whisky-society-reserve-collection-101-08",
+      "canonical_name": "WORLD WHISKY SOCIETY RESERVE COLLECTION",
+      "merged_ids": [
+        "world-whiskey-society-reserve-collection-144-08"
+      ]
+    },
+    {
+      "canonical_id": "jesse-james-141-43",
+      "canonical_name": "JESSE JAMES",
+      "merged_ids": [
+        "jesse-james-140-43"
+      ]
+    },
+    {
+      "canonical_id": "hard-truth-distilling-co-101-19",
+      "canonical_name": "HARD TRUTH DISTILLING CO.",
+      "merged_ids": [
+        "hard-truth-distilling-co-129-19"
+      ]
+    },
+    {
+      "canonical_id": "deep-roots-distillery-usa-cask-club-141-26",
+      "canonical_name": "DEEP ROOTS DISTILLERY USA CASK CLUB",
+      "merged_ids": [
+        "deep-roots-distillery-usa-cask-club-140-26"
+      ]
+    },
+    {
+      "canonical_id": "st-bridget-s-kirk-batch-no-2-151-5k",
+      "canonical_name": "ST BRIDGET'S KIRK BATCH: NO. 2",
+      "merged_ids": [
+        "st-bridget-s-kirk-batch-no-3-151-5k",
+        "st-bridget-s-kirk-batch-no-4-151-5k",
+        "st-bridget-s-kirk-151-5k"
+      ]
+    },
+    {
+      "canonical_id": "chicken-cock-101-22",
+      "canonical_name": "CHICKEN COCK",
+      "merged_ids": [
+        "chicken-cock-140-22"
+      ]
+    },
+    {
+      "canonical_id": "malloy-hall-141-03",
+      "canonical_name": "MALLOY HALL",
+      "merged_ids": [
+        "malloy-hall-140-03"
+      ]
+    },
+    {
+      "canonical_id": "two-souls-101-48",
+      "canonical_name": "TWO SOULS",
+      "merged_ids": [
+        "two-souls-109-48"
+      ]
+    },
+    {
+      "canonical_id": "lasso-motel-101-44",
+      "canonical_name": "LASSO MOTEL",
+      "merged_ids": [
+        "lasso-motel-109-44"
+      ]
+    },
+    {
+      "canonical_id": "flaviar-101-22",
+      "canonical_name": "FLAVIAR",
+      "merged_ids": [
+        "flaviar-192-59"
+      ]
+    },
+    {
+      "canonical_id": "herman-marshall-101-44",
+      "canonical_name": "HERMAN MARSHALL",
+      "merged_ids": [
+        "herman-marshall-140-44"
+      ]
+    },
+    {
+      "canonical_id": "old-tavern-farm-distillery-141-02",
+      "canonical_name": "OLD TAVERN FARM DISTILLERY",
+      "merged_ids": [
+        "old-tavern-farm-distillery-140-02"
+      ]
+    },
+    {
+      "canonical_id": "thresh-winnow-10-year-rye-142-04",
+      "canonical_name": "THRESH & WINNOW 10 YEAR RYE",
+      "merged_ids": [
+        "thresh-winnow-10-year-old-100-rye-140-04"
+      ]
+    },
+    {
+      "canonical_id": "abraham-bowman-101-05",
+      "canonical_name": "ABRAHAM BOWMAN",
+      "merged_ids": [
+        "abraham-bowman-140-05"
+      ]
+    },
+    {
+      "canonical_id": "obbink-distilling-141-27",
+      "canonical_name": "OBBINK DISTILLING",
+      "merged_ids": [
+        "obbink-distilling-139-27"
+      ]
+    },
+    {
+      "canonical_id": "gordon-macphail-153-5k",
+      "canonical_name": "GORDON & MACPHAIL",
+      "merged_ids": [
+        "gordon-macphail-cask-22606303-153-5k"
+      ]
+    },
+    {
+      "canonical_id": "stock-exchange-club-101-01",
+      "canonical_name": "STOCK EXCHANGE CLUB",
+      "merged_ids": [
+        "stock-exchange-club-140-01"
+      ]
+    },
+    {
+      "canonical_id": "town-s-end-141-01",
+      "canonical_name": "TOWN'S END",
+      "merged_ids": [
+        "town-s-end-140-01"
+      ]
+    },
+    {
+      "canonical_id": "tantrick-craft-spirits-141-06",
+      "canonical_name": "TANTRICK CRAFT SPIRITS",
+      "merged_ids": [
+        "tantrick-craft-spirits-140-06"
+      ]
+    },
+    {
+      "canonical_id": "blue-run-101-22",
+      "canonical_name": "BLUE RUN",
+      "merged_ids": [
+        "blue-run-129-22"
+      ]
+    },
+    {
+      "canonical_id": "farm-estate-101-29",
+      "canonical_name": "FARM & ESTATE",
+      "merged_ids": [
+        "farm-estate-140-29"
+      ]
+    },
+    {
+      "canonical_id": "weller-101-22",
+      "canonical_name": "WELLER",
+      "merged_ids": [
+        "weller-192-00"
+      ]
+    },
+    {
+      "canonical_id": "bfd-101-44",
+      "canonical_name": "BFD",
+      "merged_ids": [
+        "bfd-140-44"
+      ]
+    },
+    {
+      "canonical_id": "fireside-141-13",
+      "canonical_name": "FIRESIDE",
+      "merged_ids": [
+        "fireside-140-13"
+      ]
+    },
+    {
+      "canonical_id": "last-chance-distilling-101-07",
+      "canonical_name": "LAST CHANCE DISTILLING",
+      "merged_ids": [
+        "last-chance-distilling-140-07"
+      ]
+    },
+    {
+      "canonical_id": "driftless-glen-101-48",
+      "canonical_name": "DRIFTLESS GLEN",
+      "merged_ids": [
+        "driftless-glen-140-48"
+      ]
+    },
+    {
+      "canonical_id": "jacob-s-pardon-141-22",
+      "canonical_name": "JACOB'S PARDON",
+      "merged_ids": [
+        "jacob-s-pardon-140-22"
+      ]
+    },
+    {
+      "canonical_id": "appalachian-spirits-101-39",
+      "canonical_name": "APPALACHIAN SPIRITS",
+      "merged_ids": [
+        "appalachian-spirits-140-39"
+      ]
+    },
+    {
+      "canonical_id": "silverbelly-101-43",
+      "canonical_name": "SILVERBELLY",
+      "merged_ids": [
+        "silverbelly-140-43"
+      ]
+    },
+    {
+      "canonical_id": "ellison-distillery-141-06",
+      "canonical_name": "ELLISON DISTILLERY",
+      "merged_ids": [
+        "ellison-distillery-140-06"
+      ]
+    },
+    {
+      "canonical_id": "art-of-the-spirits-american-whiskey-airmen-141-13",
+      "canonical_name": "ART OF THE SPIRITS AMERICAN WHISKEY AIRMEN",
+      "merged_ids": [
+        "art-of-the-spirits-american-whiskey-airmen-120-13"
+      ]
+    },
+    {
+      "canonical_id": "nashville-barrel-company-101-43",
+      "canonical_name": "NASHVILLE BARREL COMPANY",
+      "merged_ids": [
+        "nashville-barrel-company-140-43"
+      ]
+    },
+    {
+      "canonical_id": "dark-arts-whiskey-house-cask-strength-101-22",
+      "canonical_name": "DARK ARTS WHISKEY HOUSE CASK STRENGTH",
+      "merged_ids": [
+        "dark-arts-whiskey-house-cask-strength-129-22"
+      ]
+    },
+    {
+      "canonical_id": "middle-west-spirits-101-39",
+      "canonical_name": "MIDDLE WEST SPIRITS",
+      "merged_ids": [
+        "middle-west-spirits-109-39"
+      ]
+    },
+    {
+      "canonical_id": "straight-american-141-38",
+      "canonical_name": "STRAIGHT AMERICAN",
+      "merged_ids": [
+        "american-whiskey-140-06"
+      ]
+    },
+    {
+      "canonical_id": "shadow-ridge-spirits-company-141-01",
+      "canonical_name": "SHADOW RIDGE SPIRITS COMPANY",
+      "merged_ids": [
+        "shadow-ridge-spirits-company-140-01"
+      ]
+    },
+    {
+      "canonical_id": "honest-hillbilly-141-39",
+      "canonical_name": "HONEST HILLBILLY",
+      "merged_ids": [
+        "honest-hillbilly-140-39"
+      ]
+    },
+    {
+      "canonical_id": "oakley-13-yrs-101-22",
+      "canonical_name": "OAKLEY 13 YRS",
+      "merged_ids": [
+        "oakley-13-year-101-22"
+      ]
+    },
+    {
+      "canonical_id": "west-fork-whsky-co-bottled-in-bond-141-19",
+      "canonical_name": "WEST FORK WHSKY CO. BOTTLED-IN-BOND",
+      "merged_ids": [
+        "west-fork-whsky-co-bottled-in-bond-119-19"
+      ]
+    },
+    {
+      "canonical_id": "canton-distillery-brand-101-02",
+      "canonical_name": "CANTON DISTILLERY BRAND",
+      "merged_ids": [
+        "canton-distillery-brand-140-02"
+      ]
+    },
+    {
+      "canonical_id": "rock-town-101-12",
+      "canonical_name": "ROCK TOWN",
+      "merged_ids": [
+        "rock-town-140-12"
+      ]
+    },
+    {
+      "canonical_id": "rieger-101-29",
+      "canonical_name": "RIEGER",
+      "merged_ids": [
+        "rieger-137-29"
+      ]
+    },
+    {
+      "canonical_id": "new-dawn-101-02",
+      "canonical_name": "NEW DAWN",
+      "merged_ids": [
+        "new-dawn-140-02"
+      ]
+    },
+    {
+      "canonical_id": "minden-mill-101-32",
+      "canonical_name": "MINDEN MILL",
+      "merged_ids": [
+        "minden-mill-140-32"
+      ]
+    },
+    {
+      "canonical_id": "mile-high-distillery-101-06",
+      "canonical_name": "MILE HIGH DISTILLERY",
+      "merged_ids": [
+        "mile-high-distillery-140-06"
+      ]
+    },
+    {
+      "canonical_id": "copper-fox-141-05",
+      "canonical_name": "COPPER FOX",
+      "merged_ids": [
+        "copper-fox-140-05"
+      ]
+    },
+    {
+      "canonical_id": "broken-spirts-distillery-141-01",
+      "canonical_name": "BROKEN SPIRTS DISTILLERY",
+      "merged_ids": [
+        "broken-spirts-distillery-140-01"
+      ]
+    },
+    {
+      "canonical_id": "boulder-spirits-cask-strength-bourbon-2024-101-13",
+      "canonical_name": "BOULDER SPIRITS CASK STRENGTH",
+      "merged_ids": [
+        "boulder-spirits-cask-strength-101-13"
+      ]
+    },
+    {
+      "canonical_id": "djk-imports-12-year-101-22",
+      "canonical_name": "DJK IMPORTS 12 YEAR",
+      "merged_ids": [
+        "djk-imports-12-year-192-00"
+      ]
+    },
+    {
+      "canonical_id": "writers-tears-cask-strength-2024-171-5e",
+      "canonical_name": "WRITERS' TEARS CASK STRENGTH",
+      "merged_ids": [
+        "writers-tears-cask-strength-171-5e"
+      ]
+    },
+    {
+      "canonical_id": "rabbit-hole-101-22",
+      "canonical_name": "RABBIT HOLE",
+      "merged_ids": [
+        "rabbit-hole-140-22"
+      ]
+    },
+    {
+      "canonical_id": "three-chord-131-06",
+      "canonical_name": "THREE CHORD",
+      "merged_ids": [
+        "three-chord-140-06"
+      ]
+    },
+    {
+      "canonical_id": "alvin-langston-141-01",
+      "canonical_name": "ALVIN LANGSTON",
+      "merged_ids": [
+        "alvin-langston-140-41"
+      ]
+    },
+    {
+      "canonical_id": "laws-whiskey-house-101-13",
+      "canonical_name": "LAWS WHISKEY HOUSE",
+      "merged_ids": [
+        "laws-whiskey-house-140-13"
+      ]
+    },
+    {
+      "canonical_id": "abstraction-spirits-101-22",
+      "canonical_name": "ABSTRACTION SPIRITS",
+      "merged_ids": [
+        "abstraction-spirits-144-22"
+      ]
+    },
+    {
+      "canonical_id": "fenwicks-distillery-141-19",
+      "canonical_name": "FENWICKS DISTILLERY",
+      "merged_ids": [
+        "fenwicks-distillery-140-19"
+      ]
+    },
+    {
+      "canonical_id": "woodlawn-distilling-141-02",
+      "canonical_name": "WOODLAWN DISTILLING",
+      "merged_ids": [
+        "woodlawn-distilling-140-02"
+      ]
+    },
+    {
+      "canonical_id": "tincup-141-19",
+      "canonical_name": "TINCUP",
+      "merged_ids": [
+        "tincup-140-13"
+      ]
+    },
+    {
+      "canonical_id": "iron-city-distiller-s-reserve-121-39",
+      "canonical_name": "IRON CITY DISTILLER'S RESERVE",
+      "merged_ids": [
+        "iron-city-distiller-s-reserve-129-39"
+      ]
+    },
+    {
+      "canonical_id": "c23-101-16",
+      "canonical_name": "C23",
+      "merged_ids": [
+        "c23-140-16"
+      ]
+    },
+    {
+      "canonical_id": "chicken-cock-reserve-cask-101-22",
+      "canonical_name": "CHICKEN COCK RESERVE CASK",
+      "merged_ids": [
+        "chicken-cock-reserve-cask"
+      ]
+    },
+    {
+      "canonical_id": "old-louisville-whiskey-co-101-22",
+      "canonical_name": "OLD LOUISVILLE WHISKEY CO.",
+      "merged_ids": [
+        "old-louisville-whiskey-co-100-22"
+      ]
+    },
+    {
+      "canonical_id": "hayner-distilling-co-101-09",
+      "canonical_name": "HAYNER DISTILLING CO.",
+      "merged_ids": [
+        "hayner-distilling-co-120-09"
+      ]
+    },
+    {
+      "canonical_id": "dark-arts-whiskey-house-101-22",
+      "canonical_name": "DARK ARTS WHISKEY HOUSE",
+      "merged_ids": [
+        "dark-arts-whiskey-house-140-00"
+      ]
+    },
+    {
+      "canonical_id": "art-of-the-spirits-american-whiskey-range-riders-101-13",
+      "canonical_name": "ART OF THE SPIRITS AMERICAN WHISKEY RANGE RIDERS",
+      "merged_ids": [
+        "art-of-the-spirits-american-whiskey-range-riders-129-13"
+      ]
+    },
+    {
+      "canonical_id": "wyoming-whiskey-private-stock-115-proof-141-49",
+      "canonical_name": "WYOMING WHISKEY PRIVATE STOCK 115 PROOF",
+      "merged_ids": [
+        "wyoming-whiskey-private-stock-141-49",
+        "wyoming-whiskey-private-stock-100-proof-141-49",
+        "wyoming-whiskey-private-stock-105-proof-141-49",
+        "wyoming-whiskey-private-stock-110-proof-141-49"
+      ]
+    },
+    {
+      "canonical_id": "eagle-rare-aged-10-years-101-02",
+      "canonical_name": "EAGLE RARE AGED 10 YEARS",
+      "merged_ids": [
+        "eagle-rare-aged-10-years-191-22"
+      ]
+    },
+    {
+      "canonical_id": "noco-distillery-141-13",
+      "canonical_name": "NOCO DISTILLERY",
+      "merged_ids": [
+        "noco-distillery-140-13"
+      ]
+    },
+    {
+      "canonical_id": "george-burdell-141-08",
+      "canonical_name": "GEORGE BURDELL",
+      "merged_ids": [
+        "george-burdell-100-proof-bourbon-whiskey-141-08"
+      ]
+    },
+    {
+      "canonical_id": "weller-12-year-old-101-00",
+      "canonical_name": "WELLER 12 YEAR OLD",
+      "merged_ids": [
+        "weller-12-year-101-02"
+      ]
+    },
+    {
+      "canonical_id": "breckenridge-131-13",
+      "canonical_name": "BRECKENRIDGE",
+      "merged_ids": [
+        "breckenridge-140-13"
+      ]
+    },
+    {
+      "canonical_id": "a-141-16",
+      "canonical_name": "A",
+      "merged_ids": [
+        "a-140-16"
+      ]
+    },
+    {
+      "canonical_id": "mythology-101-23",
+      "canonical_name": "MYTHOLOGY",
+      "merged_ids": [
+        "mythology-129-13"
+      ]
+    },
+    {
+      "canonical_id": "the-fear-city-spirits-co-101-35",
+      "canonical_name": "THE FEAR CITY SPIRITS CO.",
+      "merged_ids": [
+        "fear-city-spirits-co-140-35"
+      ]
+    },
+    {
+      "canonical_id": "hazelbaker-111-22",
+      "canonical_name": "HAZELBAKER",
+      "merged_ids": [
+        "hazelbaker-119-22"
+      ]
+    },
+    {
+      "canonical_id": "crazy-loon-141-02",
+      "canonical_name": "CRAZY LOON",
+      "merged_ids": [
+        "crazy-loon-whiskey-140-02"
+      ]
+    },
+    {
+      "canonical_id": "cut-spike-distillery-141-31",
+      "canonical_name": "CUT SPIKE DISTILLERY",
+      "merged_ids": [
+        "cut-spike-distillery-140-31"
+      ]
+    },
+    {
+      "canonical_id": "water-tower-distilling-co-101-06",
+      "canonical_name": "WATER TOWER DISTILLING CO.",
+      "merged_ids": [
+        "water-tower-distilling-co-michigan-llc"
+      ]
+    },
+    {
+      "canonical_id": "altered-spirits-distillery-101-48",
+      "canonical_name": "ALTERED SPIRITS DISTILLERY",
+      "merged_ids": [
+        "altered-spirits-distillery-144-48"
+      ]
+    },
+    {
+      "canonical_id": "black-frost-131-27",
+      "canonical_name": "BLACK FROST",
+      "merged_ids": [
+        "black-frost-139-27"
+      ]
+    },
+    {
+      "canonical_id": "mean-spirits-distillery-141-05",
+      "canonical_name": "MEAN SPIRITS DISTILLERY",
+      "merged_ids": [
+        "mean-spirits-distillery"
+      ]
+    },
+    {
+      "canonical_id": "willett-101-02",
+      "canonical_name": "WILLETT",
+      "merged_ids": [
+        "willett-192-00"
+      ]
+    },
+    {
+      "canonical_id": "north-shore-101-04",
+      "canonical_name": "NORTH SHORE",
+      "merged_ids": [
+        "north-shore-140-04"
+      ]
+    },
+    {
+      "canonical_id": "bull-run-distilling-company-taster-s-club-101-38",
+      "canonical_name": "BULL RUN DISTILLING COMPANY TASTER'S CLUB",
+      "merged_ids": [
+        "bull-run-distilling-company-taster-s-club-140-38"
+      ]
+    },
+    {
+      "canonical_id": "heaven-hill-small-batch-101-22",
+      "canonical_name": "HEAVEN HILL SMALL BATCH",
+      "merged_ids": [
+        "heaven-hill-small-batch-109-22"
+      ]
+    },
+    {
+      "canonical_id": "bull-run-distilling-co-barrel-strength-101-38",
+      "canonical_name": "BULL RUN DISTILLING CO BARREL STRENGTH",
+      "merged_ids": [
+        "bull-run-distilling-co-barrel-strength-140-38"
+      ]
+    },
+    {
+      "canonical_id": "adventure-spirits-distilling-141-09",
+      "canonical_name": "ADVENTURE SPIRITS DISTILLING",
+      "merged_ids": [
+        "adventure-spirits-distilling-140-09"
+      ]
+    },
+    {
+      "canonical_id": "franklin-distillery-141-22",
+      "canonical_name": "FRANKLIN DISTILLERY",
+      "merged_ids": [
+        "franklin-distillery-140-22"
+      ]
+    },
+    {
+      "canonical_id": "shawn-elliot-141-19",
+      "canonical_name": "SHAWN ELLIOT",
+      "merged_ids": [
+        "shawn-elliot-144-23"
+      ]
+    },
+    {
+      "canonical_id": "society-batch-28-151-5k",
+      "canonical_name": "SOCIETY",
+      "merged_ids": [
+        "society-100-50-153-5k"
+      ]
+    },
+    {
+      "canonical_id": "old-dominick-blend-no-1-101-43",
+      "canonical_name": "OLD DOMINICK BLEND NO. 1",
+      "merged_ids": [
+        "old-dominick-blend-no-1-129-43"
+      ]
+    },
+    {
+      "canonical_id": "dust-bowl-distillery-141-01",
+      "canonical_name": "DUST BOWL DISTILLERY",
+      "merged_ids": [
+        "dust-bowl-distillery-140-01"
+      ]
+    },
+    {
+      "canonical_id": "the-bomb-101-44",
+      "canonical_name": "THE BOMB",
+      "merged_ids": [
+        "the-bomb-140-44"
+      ]
+    },
+    {
+      "canonical_id": "onw-101-35",
+      "canonical_name": "ONW",
+      "merged_ids": [
+        "onw-140-35"
+      ]
+    },
+    {
+      "canonical_id": "tattersall-111-48",
+      "canonical_name": "TATTERSALL",
+      "merged_ids": [
+        "tattersall-119-48"
+      ]
+    },
+    {
+      "canonical_id": "king-s-family-distillery-141-43",
+      "canonical_name": "KING'S FAMILY DISTILLERY",
+      "merged_ids": [
+        "king-s-family-distillery-140-43"
+      ]
+    },
+    {
+      "canonical_id": "earl-giles-distillery-141-27",
+      "canonical_name": "EARL GILES DISTILLERY",
+      "merged_ids": [
+        "earl-giles-distillery-140-27"
+      ]
+    },
+    {
+      "canonical_id": "lockwood-distilling-co-101-44",
+      "canonical_name": "LOCKWOOD DISTILLING CO.",
+      "merged_ids": [
+        "lockwood-distilling-co-137-44"
+      ]
+    },
+    {
+      "canonical_id": "r-farm-distilling-co-101-29",
+      "canonical_name": "R/FARM DISTILLING CO.",
+      "merged_ids": [
+        "r-farm-distilling-co-140-29"
+      ]
+    },
+    {
+      "canonical_id": "one-part-101-25",
+      "canonical_name": "ONE PART",
+      "merged_ids": [
+        "one-part-140-25"
+      ]
+    },
+    {
+      "canonical_id": "driven-101-13",
+      "canonical_name": "DRIVEN",
+      "merged_ids": [
+        "driven-straight-bourbon-95-proof-101-13"
+      ]
+    },
+    {
+      "canonical_id": "american-metal-whiskey-101-02",
+      "canonical_name": "AMERICAN METAL",
+      "merged_ids": [
+        "american-metal-whiskey-140-46"
+      ]
+    },
+    {
+      "canonical_id": "bonetree-101-01",
+      "canonical_name": "BONETREE",
+      "merged_ids": [
+        "bonetree-109-01"
+      ]
+    },
+    {
+      "canonical_id": "13th-century-whiskey-straight-bourbon-101-13",
+      "canonical_name": "13TH CENTURY WHISKEY STRAIGHT",
+      "merged_ids": [
+        "13th-century-whiskey-140-13"
+      ]
+    },
+    {
+      "canonical_id": "dark-waters-distillery-141-14",
+      "canonical_name": "DARK WATERS DISTILLERY",
+      "merged_ids": [
+        "dark-waters-distillery-140-14"
+      ]
+    },
+    {
+      "canonical_id": "schnaubelt-distillery-141-01",
+      "canonical_name": "SCHNAUBELT DISTILLERY",
+      "merged_ids": [
+        "schnaubelt-distillery-whiskey-140-01"
+      ]
+    },
+    {
+      "canonical_id": "onyx-amber-101-13",
+      "canonical_name": "ONYX & AMBER",
+      "merged_ids": [
+        "onyx-amber-140-13"
+      ]
+    },
+    {
+      "canonical_id": "old-carter-whiskey-co-101-22",
+      "canonical_name": "OLD CARTER WHISKEY CO",
+      "merged_ids": [
+        "old-carter-whiskey-co-100-22"
+      ]
+    },
+    {
+      "canonical_id": "old-carter-whiskey-co-barrel-strength-101-22",
+      "canonical_name": "OLD CARTER WHISKEY CO BARREL STRENGTH",
+      "merged_ids": [
+        "old-carter-whiskey-co-barrel-strength-109-22"
+      ]
+    },
+    {
+      "canonical_id": "belfour-small-batch-101-22",
+      "canonical_name": "BELFOUR SMALL BATCH",
+      "merged_ids": [
+        "belfour-small-batch-140-22"
+      ]
+    },
+    {
+      "canonical_id": "dna-lounge-101-01",
+      "canonical_name": "DNA LOUNGE",
+      "merged_ids": [
+        "dna-lounge-137-01"
+      ]
+    },
+    {
+      "canonical_id": "blanton-s-gold-edition-101-22",
+      "canonical_name": "BLANTON'S GOLD EDITION",
+      "merged_ids": [
+        "blanton-s-gold-edition-140-00"
+      ]
+    },
+    {
+      "canonical_id": "the-whiskey-blendery-121-44",
+      "canonical_name": "THE WHISKEY BLENDERY",
+      "merged_ids": [
+        "the-whiskey-blendery-120-44"
+      ]
+    },
+    {
+      "canonical_id": "mossy-horn-101-44",
+      "canonical_name": "MOSSY HORN",
+      "merged_ids": [
+        "mossy-horn-137-44"
+      ]
+    },
+    {
+      "canonical_id": "barrel-banter-101-44",
+      "canonical_name": "BARREL & BANTER",
+      "merged_ids": [
+        "barrel-banter-140-44"
+      ]
+    },
+    {
+      "canonical_id": "distiller-s-reserve-bourbon-141-32",
+      "canonical_name": "DISTILLER'S RESERVE",
+      "merged_ids": [
+        "distiller-s-reserve-109-39"
+      ]
+    },
+    {
+      "canonical_id": "lime-creek-distillery-small-batch-141-44",
+      "canonical_name": "LIME CREEK DISTILLERY SMALL BATCH",
+      "merged_ids": [
+        "lime-creek-distillery-small-batch-140-44"
+      ]
+    },
+    {
+      "canonical_id": "belle-meade-121-43",
+      "canonical_name": "BELLE MEADE",
+      "merged_ids": [
+        "belle-meade-140-00"
+      ]
+    },
+    {
+      "canonical_id": "stoutridge-111-02",
+      "canonical_name": "STOUTRIDGE",
+      "merged_ids": [
+        "stoutridge-119-02"
+      ]
+    },
+    {
+      "canonical_id": "black-band-141-04",
+      "canonical_name": "BLACK BAND",
+      "merged_ids": [
+        "black-band-140-04"
+      ]
+    },
+    {
+      "canonical_id": "copper-cask-private-batch-101-40",
+      "canonical_name": "COPPER & CASK PRIVATE BATCH",
+      "merged_ids": [
+        "copper-cask-private-batch-120-40"
+      ]
+    },
+    {
+      "canonical_id": "horse-with-no-name-141-00",
+      "canonical_name": "HORSE WITH NO NAME",
+      "merged_ids": [
+        "horse-with-no-name-191-00"
+      ]
+    },
+    {
+      "canonical_id": "j-mattingly-1845-131-22",
+      "canonical_name": "J. MATTINGLY 1845",
+      "merged_ids": [
+        "j-mattingly-1845-144-22"
+      ]
+    },
+    {
+      "canonical_id": "the-macallan-12-years-old-153-5k",
+      "canonical_name": "THE MACALLAN 12 YEARS OLD",
+      "merged_ids": [
+        "the-macallan-12-year-old-110-proof-153-5k"
+      ]
+    },
+    {
+      "canonical_id": "fountain-run-111-22",
+      "canonical_name": "FOUNTAIN RUN",
+      "merged_ids": [
+        "fountain-run-119-22"
+      ]
+    },
+    {
+      "canonical_id": "heritage-distilling-co-cask-club-cask-club-bourbon-141-38",
+      "canonical_name": "HERITAGE DISTILLING CO. CASK CLUB CASK CLUB",
+      "merged_ids": [
+        "heritage-distilling-co-cask-club-cask-club-whiskey-140-38"
+      ]
+    },
+    {
+      "canonical_id": "k-luke-cask-finished-131-22",
+      "canonical_name": "K. LUKE CASK FINISHED",
+      "merged_ids": [
+        "k-luke-cask-finished-129-22"
+      ]
+    },
+    {
+      "canonical_id": "purple-toad-distillery-101-22",
+      "canonical_name": "PURPLE TOAD DISTILLERY",
+      "merged_ids": [
+        "purple-toad-distillery-140-22"
+      ]
+    },
+    {
+      "canonical_id": "the-wine-trust-101-02",
+      "canonical_name": "THE WINE TRUST",
+      "merged_ids": [
+        "the-wine-trust-190-59"
+      ]
+    },
+    {
+      "canonical_id": "centennial-whiskey-101-39",
+      "canonical_name": "CENTENNIAL",
+      "merged_ids": [
+        "centennial-whiskey-140-48"
+      ]
+    },
+    {
+      "canonical_id": "tears-of-the-left-101-22",
+      "canonical_name": "TEARS OF THE LEFT",
+      "merged_ids": [
+        "tears-of-the-left-109-22"
+      ]
+    },
+    {
+      "canonical_id": "las-toxicas-131-32",
+      "canonical_name": "LAS TOXICAS",
+      "merged_ids": [
+        "las-toxicas-137-32"
+      ]
+    },
+    {
+      "canonical_id": "j-mattingly-1845-one-hell-of-a-pick-141-22",
+      "canonical_name": "J. MATTINGLY 1845 ONE HELL OF A PICK",
+      "merged_ids": [
+        "j-mattingly-1845-one-hell-of-a-pick-144-22"
+      ]
+    },
+    {
+      "canonical_id": "binder-s-stash-101-22",
+      "canonical_name": "BINDER'S STASH",
+      "merged_ids": [
+        "binder-s-stash-140-22"
+      ]
+    },
+    {
+      "canonical_id": "peppermint-hippo-131-49",
+      "canonical_name": "PEPPERMINT HIPPO",
+      "merged_ids": [
+        "peppermint-hippo-137-32"
+      ]
+    },
+    {
+      "canonical_id": "cape-horn-101-00",
+      "canonical_name": "CAPE HORN",
+      "merged_ids": [
+        "cape-horn-190-00"
+      ]
+    },
+    {
+      "canonical_id": "onyx-and-amber-straight-bourbon-whiskey-101-13",
+      "canonical_name": "ONYX AND AMBER",
+      "merged_ids": [
+        "onyx-and-amber-140-13"
+      ]
+    },
+    {
+      "canonical_id": "switchgrass-spirits-101-29",
+      "canonical_name": "SWITCHGRASS SPIRITS",
+      "merged_ids": [
+        "switchgrass-spirits-140-29"
+      ]
+    },
+    {
+      "canonical_id": "loco-boys-brewing-company-141-06",
+      "canonical_name": "LOCO BOYS BREWING COMPANY",
+      "merged_ids": [
+        "loco-boys-brewing-company-140-06"
+      ]
+    },
+    {
+      "canonical_id": "frankie-s-bourbon-141-07",
+      "canonical_name": "FRANKIE'S",
+      "merged_ids": [
+        "frankie-s-137-07"
+      ]
+    },
+    {
+      "canonical_id": "1890-wyo-131-49",
+      "canonical_name": "1890 WYO",
+      "merged_ids": [
+        "1890-wyo-137-49"
+      ]
+    },
+    {
+      "canonical_id": "old-sport-101-22",
+      "canonical_name": "OLD SPORT",
+      "merged_ids": [
+        "old-sport-109-22"
+      ]
+    },
+    {
+      "canonical_id": "backroads-distilling-company-141-19",
+      "canonical_name": "BACKROADS DISTILLING COMPANY",
+      "merged_ids": [
+        "backroads-distilling-company-140-19"
+      ]
+    },
+    {
+      "canonical_id": "big-spring-spirits-141-39",
+      "canonical_name": "BIG SPRING SPIRITS",
+      "merged_ids": [
+        "big-spring-spirits-140-39"
+      ]
+    },
+    {
+      "canonical_id": "mad-angler-141-06",
+      "canonical_name": "MAD ANGLER",
+      "merged_ids": [
+        "mad-angler-129-06"
+      ]
+    },
+    {
+      "canonical_id": "now-whiskey-141-16",
+      "canonical_name": "NOW",
+      "merged_ids": [
+        "now-whiskey-140-16"
+      ]
+    },
+    {
+      "canonical_id": "doc-bubba-s-101-39",
+      "canonical_name": "DOC & BUBBA'S",
+      "merged_ids": [
+        "doc-bubba-s-140-39"
+      ]
+    },
+    {
+      "canonical_id": "copper-dome-141-29",
+      "canonical_name": "COPPER DOME",
+      "merged_ids": [
+        "copper-dome-140-29"
+      ]
+    },
+    {
+      "canonical_id": "wenzel-distillery-121-22",
+      "canonical_name": "WENZEL DISTILLERY",
+      "merged_ids": [
+        "wenzel-distillery-140-22"
+      ]
+    },
+    {
+      "canonical_id": "uncommon-spirits-101-13",
+      "canonical_name": "UNCOMMON SPIRITS",
+      "merged_ids": [
+        "uncommon-spirits-140-13"
+      ]
+    },
+    {
+      "canonical_id": "layer-8-141-29",
+      "canonical_name": "LAYER 8",
+      "merged_ids": [
+        "layer-8-140-29"
+      ]
+    },
+    {
+      "canonical_id": "art-of-the-spirits-american-whiskey-fight-believe-hope-survive-101-13",
+      "canonical_name": "ART OF THE SPIRITS AMERICAN WHISKEY FIGHT. BELIEVE. HOPE. SURVIVE.",
+      "merged_ids": [
+        "art-of-the-spirits-american-whiskey-fight-believe-hope-survive-129-13"
+      ]
+    },
+    {
+      "canonical_id": "either-oar-141-02",
+      "canonical_name": "EITHER OAR",
+      "merged_ids": [
+        "either-oar-140-02"
+      ]
+    },
+    {
+      "canonical_id": "proof-and-wood-141-22",
+      "canonical_name": "PROOF AND WOOD",
+      "merged_ids": [
+        "proof-and-wood-144-22"
+      ]
+    },
+    {
+      "canonical_id": "bonetree-distillery-141-01",
+      "canonical_name": "BONETREE DISTILLERY",
+      "merged_ids": [
+        "bonetree-distillery-140-01"
+      ]
+    },
+    {
+      "canonical_id": "liberty-legacies-141-08",
+      "canonical_name": "LIBERTY LEGACIES",
+      "merged_ids": [
+        "liberty-legacies-191-00"
+      ]
+    },
+    {
+      "canonical_id": "deep-bourbon-121-01",
+      "canonical_name": "DEEP",
+      "merged_ids": [
+        "deep-whiskey-129-01"
+      ]
+    },
+    {
+      "canonical_id": "leiper-s-fork-distillery-141-43",
+      "canonical_name": "LEIPER'S FORK DISTILLERY",
+      "merged_ids": [
+        "leiper-s-fork-distillery-140-43"
+      ]
+    },
+    {
+      "canonical_id": "old-cypress-101-23",
+      "canonical_name": "OLD CYPRESS",
+      "merged_ids": [
+        "old-cypress-109-23"
+      ]
+    },
+    {
+      "canonical_id": "burton-james-reserve-101-22",
+      "canonical_name": "BURTON JAMES RESERVE",
+      "merged_ids": [
+        "burton-james-reserve-129-22"
+      ]
+    },
+    {
+      "canonical_id": "lennox-141-06",
+      "canonical_name": "LENNOX",
+      "merged_ids": [
+        "lennox-140-06"
+      ]
+    },
+    {
+      "canonical_id": "the-cumberland-141-43",
+      "canonical_name": "THE CUMBERLAND",
+      "merged_ids": [
+        "the-cumberland-140-43"
+      ]
+    },
+    {
+      "canonical_id": "bushwood-101-22",
+      "canonical_name": "BUSHWOOD",
+      "merged_ids": [
+        "bushwood-140-22"
+      ]
+    },
+    {
+      "canonical_id": "locke-co-distilling-141-13",
+      "canonical_name": "LOCKE + CO DISTILLING",
+      "merged_ids": [
+        "locke-co-distilling-140-13"
+      ]
+    },
+    {
+      "canonical_id": "dierbergs-101-22",
+      "canonical_name": "DIERBERGS",
+      "merged_ids": [
+        "dierbergs-137-22"
+      ]
+    },
+    {
+      "canonical_id": "side-hustle-brews-spirits-101-39",
+      "canonical_name": "SIDE HUSTLE BREWS & SPIRITS",
+      "merged_ids": [
+        "side-hustle-brews-spirits-140-39"
+      ]
+    },
+    {
+      "canonical_id": "annandale-man-o-sword-cask-483-153-5k",
+      "canonical_name": "ANNANDALE MAN O'SWORD",
+      "merged_ids": [
+        "annandale-man-o-sword-cask-755-153-5k"
+      ]
+    },
+    {
+      "canonical_id": "man-o-words-cask-487-153-5k",
+      "canonical_name": "MAN O'WORDS",
+      "merged_ids": [
+        "man-o-words-cask-121-153-5k",
+        "man-o-words-cask-1639-153-5k"
+      ]
+    },
+    {
+      "canonical_id": "lockwood-distilling-101-44",
+      "canonical_name": "LOCKWOOD DISTILLING",
+      "merged_ids": [
+        "lockwood-distilling-140-44"
+      ]
+    },
+    {
+      "canonical_id": "hidden-cask-141-35",
+      "canonical_name": "HIDDEN CASK",
+      "merged_ids": [
+        "hidden-cask-140-35"
       ]
     }
   ]

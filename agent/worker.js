@@ -18,9 +18,9 @@ const DEFAULT_DB_URL = "https://raw.githubusercontent.com/" + REPO + "/main/db/c
 const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters. Krotko, z jajem, ale rzeczowo. quality=jakosc 1-5, value=jakosc/cena 1-5 (5 swietna i tania, 1 slaba i droga). Pisz {{LANG}}. Zwroc tylko JSON.";
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
 const MULTI_CANDIDATE_CONFIDENCE = 0.9;
-const SCAN_ORCHESTRATOR_VERSION = "visual-only-catalog-v1-pre-ocr-restored";
-const SCAN_CATALOG_VERSION = "ttb-olcc-retail-filtered-v3";
-const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v5-admin-moderation";
+const SCAN_ORCHESTRATOR_VERSION = "visual-only-catalog-v3-quality-assets";
+const SCAN_CATALOG_VERSION = "ttb-olcc-quality-catalog-v8-categories";
+const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v6-highres-cutout";
 const CATALOG_MODERATION_VERSION = "catalog-moderation-orchestrator-admin-v1";
 const CATALOG_LICENSE_VERSION = "catalog-license-2026-07-18-v1";
 const TELEMETRY_VERSION = "scanner-telemetry-v1";
@@ -502,6 +502,19 @@ async function cleanupStaleCatalogSubmissions(env, limit){
   }
   return {cleaned:cleaned};
 }
+async function transformBottleCutout(env, mime, image){
+  if(!env.IMAGES) return null;
+  const bytes=decodeBase64(String(image||""));
+  if(!bytes.byteLength || bytes.byteLength>6000000) throw new Error("image_too_large");
+  const output=await env.IMAGES.input(new Blob([bytes],{type:mime}).stream())
+    .transform({segment:"foreground"})
+    .transform({trim:"border"})
+    .transform({width:960,height:1280,fit:"contain",background:"transparent",sharpen:1})
+    .output({format:"image/webp"});
+  const response=output.response();
+  if(!response.ok) throw new Error("image_transform_"+response.status);
+  return new Uint8Array(await response.arrayBuffer());
+}
 async function createBottlePreview(env, request, user, body){
   if(!(await catalogDataSchemaReady(env))) return {error:"schema_catalog_lifecycle_missing",status:501};
   await cleanupStaleCatalogSubmissions(env,20);
@@ -530,14 +543,8 @@ async function createBottlePreview(env, request, user, body){
     const bytes=decodeBase64(image);
     if(bytes.byteLength>6000000) throw new Error("image_too_large");
     await env.BOTTLE_IMAGES.put(originalKey,bytes,{httpMetadata:{contentType:mime}});
-    const output=await env.IMAGES.input(new Blob([bytes],{type:mime}).stream())
-      .transform({segment:"foreground"})
-      .transform({trim:"border"})
-      .transform({width:820,height:1080,fit:"contain",background:"transparent",sharpen:1})
-      .output({format:"image/webp"});
-    const response=output.response();
-    if(!response.ok) throw new Error("image_transform_"+response.status);
-    const processed=new Uint8Array(await response.arrayBuffer());
+    const processed=await transformBottleCutout(env,mime,image);
+    if(!processed) throw new Error("image_pipeline_unavailable");
     const assetSha=await sha256Bytes(processed);
     await env.BOTTLE_IMAGES.put(processedKey,processed,{httpMetadata:{contentType:"image/webp",cacheControl:"public, max-age=31536000, immutable"}});
     await env.BOTTLE_IMAGES.delete(originalKey);
@@ -1619,7 +1626,8 @@ export default {
     const key="q:"+quotaActor+":"+new Date().toISOString().slice(0,10);
     let used=0;
     let remainingQuota=null;
-    if(!owner && env.DS_KV && LIMIT>0){
+    const confirmationOnly=mode==="rate"&&!!confirmedId;
+    if(!owner && !confirmationOnly && env.DS_KV && LIMIT>0){
       used=parseInt((await env.DS_KV.get(key))||"0",10);
       if(used>=LIMIT) return scanResponse({limited:true,remaining:0,limit:LIMIT},200,"limited",{error_code:"daily_limit"});
       await env.DS_KV.put(key,String(used+1),{expirationTtl:90000});
@@ -1628,6 +1636,37 @@ export default {
 
     const db=await getDB(env,request);
     minConfidence=clamp01(env.MIN_MATCH_CONFIDENCE||DEFAULT_MATCH_CONFIDENCE) || DEFAULT_MATCH_CONFIDENCE;
+    if(mode==="rate" && confirmedId){
+      const resolvedConfirmedId=db&&db.id_redirects&&db.id_redirects[confirmedId]||confirmedId;
+      hit=(db.bottles||[]).find(function(bottle){ return bottle&&bottle.id===resolvedConfirmedId&&!bottle.scan_disabled; })||null;
+      if(!hit) return scanResponse({error:"confirmed_bottle_not_found"},404,"error",{error_code:"confirmed_bottle_not_found"});
+      const result=Object.assign({},hit);
+      if(!result.image){
+        const cutoutStarted=Date.now();
+        try{
+          const cutout=await transformBottleCutout(env,mime,image);
+          if(cutout){
+            result.image="data:image/webp;base64,"+encodeBase64(cutout);
+            result.has_image=true;
+            result.source="scan_preview";
+            result.temporary_scan_asset=true;
+            result.catalog_asset_missing=true;
+            recordServiceUsage(env,scanId,scanUser&&scanUser.id,{provider:"cloudflare",stage:"image_cutout",model:"cloudflare-images",status:200,attempts:1,duration_ms:Date.now()-cutoutStarted}).catch(function(){});
+          }
+        }catch(e){
+          result.catalog_asset_missing=true;
+          result.preview_error=String(e&&e.message?e.message:e).slice(0,120);
+          recordServiceUsage(env,scanId,scanUser&&scanUser.id,{provider:"cloudflare",stage:"image_cutout",model:"cloudflare-images",status:500,attempts:1,duration_ms:Date.now()-cutoutStarted}).catch(function(){});
+        }
+      }
+      dbConfidence=1;
+      overallConfidence=1;
+      agentTrace={version:SCAN_ORCHESTRATOR_VERSION,confirmed_by_user:true,confirmed_id:resolvedConfirmedId,requested_id:confirmedId};
+      return scanResponse({
+        result:result,mode:mode,matched:resolvedConfirmedId,confidence:1,
+        remaining:remainingQuota,owner:owner,agents:agentTrace
+      },200,"confirmed",{matched_bottle_id:resolvedConfirmedId});
+    }
     if(mode==="analyze" && confirmedId){
       const resolvedConfirmedId=db&&db.id_redirects&&db.id_redirects[confirmedId]||confirmedId;
       hit=(db.bottles||[]).find(function(bottle){ return bottle&&bottle.id===resolvedConfirmedId; })||null;

@@ -6,11 +6,14 @@ import { webcrypto } from "node:crypto";
 const root=path.resolve(import.meta.dirname,"..");
 const workerPath=path.join(root,"agent","worker.js");
 const catalogPath=path.join(root,"db","catalog","scan-index.json");
+const catalogSource=fs.readFileSync(catalogPath,"utf8");
 
 let source=fs.readFileSync(workerPath,"utf8").replace("export default {","globalThis.__worker={");
 source+="\nglobalThis.__scannerTest={applyScanCatalogOverrides,matchBottleWithVisual};";
 const context={
-  console,fetch,Response,Request,Headers,URL,TextEncoder,TextDecoder,
+  console,
+  fetch:async()=>new Response(catalogSource,{status:200,headers:{"Content-Type":"application/json"}}),
+  Response,Request,Headers,URL,TextEncoder,TextDecoder,Blob,
   crypto:webcrypto,atob,btoa,setTimeout,clearTimeout
 };
 vm.runInNewContext(source,context,{filename:"worker.js"});
@@ -90,6 +93,33 @@ const top2Rate=top2/sampleSize;
 assert(top1Rate>=.98,`Synthetic top-1 regression: ${(top1Rate*100).toFixed(1)}%; misses=${JSON.stringify(misses)}`);
 assert(top2Rate>=.99,`Synthetic top-2 regression: ${(top2Rate*100).toFixed(1)}%; misses=${JSON.stringify(misses)}`);
 
+const imagePipeline={
+  input(){
+    return {
+      transform(){ return this; },
+      output(){ return {response:()=>new Response(new Uint8Array([82,73,70,70,1,2,3,4]),{status:200,headers:{"Content-Type":"image/webp"}})}; }
+    };
+  }
+};
+const confirmationRequest=new Request("https://bourbon-hunters.darekmaslyk.workers.dev/",{
+  method:"POST",
+  headers:{"Content-Type":"application/json","Origin":"https://backloghero-lang.github.io"},
+  body:JSON.stringify({
+    image:btoa("confirmed-bottle-photo".repeat(20)),
+    mime:"image/jpeg",
+    lang:"pl",
+    mode:"rate",
+    confirmed_id:"bulleit-bottled-in-bond-111-22",
+    device_id:"scanner-regression"
+  })
+});
+const confirmationResponse=await context.__worker.fetch(confirmationRequest,{IMAGES:imagePipeline},{waitUntil(){}});
+const confirmation=await confirmationResponse.json();
+assert(confirmationResponse.status===200,`Confirmed cutout returned ${confirmationResponse.status}: ${JSON.stringify(confirmation)}`);
+assert(confirmation.matched==="bulleit-bottled-in-bond-111-22",`Confirmed cutout matched ${confirmation.matched||"nothing"}`);
+assert(String(confirmation.result&&confirmation.result.image||"").startsWith("data:image/webp;base64,"),"Confirmed cutout image is missing");
+assert(confirmation.result&&confirmation.result.temporary_scan_asset===true,"Confirmed cutout is not marked as temporary");
+
 console.log(JSON.stringify({
   ok:true,
   orchestrator:"scanner-regression-v1",
@@ -104,5 +134,6 @@ console.log(JSON.stringify({
     ambiguous
   },
   misses,
-  single_source_confidence:Number(singleSource.dbConfidence.toFixed(3))
+  single_source_confidence:Number(singleSource.dbConfidence.toFixed(3)),
+  confirmed_cutout:{matched:confirmation.matched,temporary:confirmation.result.temporary_scan_asset}
 },null,2));

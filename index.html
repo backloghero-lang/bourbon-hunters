@@ -448,6 +448,9 @@
   .scan-candidate-type{width:100%;margin-top:6px;font-size:8px;line-height:1.2;letter-spacing:.4px;text-transform:uppercase;color:#77D59A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .scan-confirm-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;max-width:430px;margin:auto}
   .scan-confirm-actions .btn{min-width:0}
+  .scan-confirm.single .scan-candidates{grid-template-columns:minmax(0,1fr);max-width:320px}
+  .scan-confirm.single .scan-candidate{cursor:default;opacity:1}
+  .scan-confirm.single .scan-candidate-name{font-size:14px}
   @media (max-width:360px){.scan-confirm{padding-left:7px;padding-right:7px}.scan-candidates{gap:4px}.scan-candidate{padding-left:3px;padding-right:3px;min-height:218px;grid-template-rows:140px auto auto}.scan-candidate-media{height:140px}.scan-candidate-name{font-size:11px}}
   .age-gate{position:fixed;inset:0;z-index:9998;display:none;place-items:center;padding:12px;background:#000;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
   .age-gate.show{display:grid}
@@ -845,7 +848,7 @@ const RUNTIME_BOTTLE_IDS = [
   "woodford-reserve-bourbon",
   "woodford-reserve-double-oaked-bourbon",
   "jim-beam-white-label",
-  "knob-creek-kentucky-straight-bourbon",
+  "knob-creek-9-year-old-100-proof-bourbon",
   "knob-creek-bourbon-12-year",
   "makers-mark-101-proof-bourbon-whisky",
   "basil-hayden-s-kentucky-straight-bourbon",
@@ -860,42 +863,26 @@ const RUNTIME_BOTTLE_IDS = [
   "michters-bourbon",
   "buffalo-trace-kosher-wheat-recipe-bourbon",
   "eagle-rare-12-year-old-bourbon",
-  "w-l-weller-bourbon-12-year-1-75l",
   "w-l-weller-single-barrel",
   "weller-special-reserve",
   "blanton-s-gold-edition-single-barrel-select",
   "blantons-130-proof-straight-from-the-barrel-bourbon",
-  "colonel-e-h-taylor-four-grain-bourbon-whiskey",
-  "colonel-e-h-taylor-jr-warehouse-c-bourbon-whiskey",
   "stagg-jr",
-  "old-rip-van-winkle-10-year-bourbon",
-  "pappy-van-winkle-15-year-bourbon",
   "wild-turkey-longbranch-straight-bourbon",
   "wild-turkey-rare-breed-barrel-proof-bez-opakowania",
   "wild-turkey-101-bourbon",
   "wild-turkey-12-year-old-101-proof",
-  "wild-turkey-8-year-101-proof-5-24-94",
   "russells-reserve-single-barrel-barrel-select-bourbon",
-  "russells-reserve-15-year-old-limited-release-bourbon",
   "four-roses-obsf-single-barrel-bourbon",
   "four-roses-obsk-single-barrel-bourbon",
   "four-roses-oesk-single-barrel-bourbon",
   "four-roses-oeso-single-barrel-bourbon",
   "elijah-craig-15-year-old-single-barrel",
-  "elijah-craig-21-year-single-barrel-bourbon",
   "elijah-craig-small-batch-old-label",
-  "elijah-craig-21-year-barrel-27-10-30-90",
-  "knob-creek-9-year-old-single-barrel-reserve",
-  "knob-creek-12-year-cask-strength-bourbon",
   "knob-creek-120-proof-9-year-single-barrel-reserve-bourbon",
-  "knob-creek-18-year-old-bourbon",
   "maker-s-mark-no-46-french-oaked",
-  "makers-mark-46-frenched-oak-bills-recipe",
-  "makers-mark-46-cask-strength-bourbon-limited-edition",
-  "michters-fort-nelson-reserve-barrel-strength-bourbon",
   "old-bardstown-straight-bourbon-black-label",
   "bardstown-fusion-series-no-5-kentucky-straight-bourbon",
-  "bardstown-bourbon-company-copper-kings-10-year-muscat-finish-94-proof-first-release",
   "bardstown-bourbon-chateau-de-laubade",
   "old-forester-1924-10-year-old-kentucky-straight-bourbon-whisky",
   "old-forester-statesman-bourbon",
@@ -904,16 +891,12 @@ const RUNTIME_BOTTLE_IDS = [
   "old-forester-king-ranch-edition-bourbon",
   "heaven-hill-7yo-bottled-in-bond-bourbon",
   "heaven-hill-bottled-in-bond-7-year-old-bourbon",
-  "heaven-hill-heritage-collection-17-year-old-barrel-proof-bourbon-first-edition",
   "woodford-reserve-double-oaked-bez-opakowania",
   "woodford-reserve-double-double-oaked-bourbon",
-  "woodford-reserve-masters-collection-1838-style-white-corn-kentucky-straight-bourbon",
   "woodford-reserve-masters-collection-brandy-cask-finish-kentucky-straight-bourbon",
   "jeffersons-ocean-aged-at-sea-blended-straight-bourbon",
   "jeffersons-ocean-aged-at-sea-bourbon-whiskey",
   "jeffersons-ocean-aged-at-sea-cask-strength-blended-straight-bourbon",
-  "rare-character-brook-hill-bourbon-blahzay-10-year-130-13-proof",
-  "rare-character-batch-no-01-bourbon",
   "new-riff-8-year-old-kentucky-straight-bourbon-whiskey",
   "new-riff-bottled-in-bond-kentucky-straight-bourbon-whiskey",
   "jim-beam-black-extra-aged-unpacked",
@@ -939,7 +922,7 @@ const RUNTIME_BOTTLE_IDS = [
   "rebel-kentucky-straight-bourbon-cabernet-sauvignon-barrels",
   "noah-s-mill-kentucky-bourbon"
 ];
-const FEATURED_IDS = ["buffalo-trace-bourbon-1","blantons-original-single-barrel-bourbon-whiskey-700ml","eagle-rare-10-year-kentucky-straight-bourbon-whiskey-700ml","woodford-reserve-bourbon","knob-creek-kentucky-straight-bourbon"];
+const FEATURED_IDS = ["buffalo-trace-bourbon-1","blantons-original-single-barrel-bourbon-whiskey-700ml","eagle-rare-10-year-kentucky-straight-bourbon-whiskey-700ml","woodford-reserve-bourbon","knob-creek-9-year-old-100-proof-bourbon"];
 const FALLBACK_RECOMMENDATION_IDS = ["buffalo-trace-bourbon-1","woodford-reserve-bourbon","four-roses","noah-s-mill-kentucky-bourbon"];
 const RUNTIME_IMAGE_DIR = "assets/bourbons/runtime-100/";
 const RUNTIME_THUMB_DIR = "assets/bourbons/list-thumbs/";
@@ -1034,7 +1017,9 @@ Object.assign(I18N.pl,{
   showComments:"Poka\u017c komentarze", hideText:"Zwi\u0144", moreText:"Wi\u0119cej", recommendedBy:"Poleca",
   catalogPreviewTitle:"Podgl\u0105d butelki", catalogProcessing:"Wycinam butelk\u0119 ze zdj\u0119cia...", catalogProcessingCopy:"Agent obrazu przygotowuje czysty podgl\u0105d pasuj\u0105cy do aplikacji.",
   acceptImage:"Akceptuj\u0119 i dodaj\u0119", retakeImage:"Zr\u00f3b zdj\u0119cie ponownie", saveWithoutImage:"Zapisz bez zdj\u0119cia", addToCatalog:"Uzupe\u0142nij i dodaj do katalogu", addToCollection:"Dodaj do kolekcji", catalogLicenseNote:"Akceptuj\u0105c, pozwalasz Bourbon Hunters bezterminowo u\u017cywa\u0107 gotowego assetu katalogowego. Oryginalne zdj\u0119cie i pliki robocze zostan\u0105 usuni\u0119te.",
-  catalogNoPreview:"Nie uda\u0142o si\u0119 przygotowa\u0107 wyci\u0119cia.", catalogNoPreviewCopy:"Mo\u017cesz zrobi\u0107 nowe zdj\u0119cie albo zapisa\u0107 same dane.", catalogSaved:"Butelka zapisana i dodana do Ostatnio dodanych.", catalogLogin:"Zaloguj si\u0119, aby doda\u0107 butelk\u0119 do katalogu.", catalogError:"Nie uda\u0142o si\u0119 zapisa\u0107 butelki.", catalogHit:"Mam trafienie"
+  catalogNoPreview:"Nie uda\u0142o si\u0119 przygotowa\u0107 wyci\u0119cia.", catalogNoPreviewCopy:"Mo\u017cesz zrobi\u0107 nowe zdj\u0119cie albo zapisa\u0107 same dane.", catalogSaved:"Butelka zapisana i dodana do Ostatnio dodanych.", catalogLogin:"Zaloguj si\u0119, aby doda\u0107 butelk\u0119 do katalogu.", catalogError:"Nie uda\u0142o si\u0119 zapisa\u0107 butelki.", catalogHit:"Mam trafienie",
+  scanConfirmSingleTitle:"Czy to ta butelka?", scanConfirmSingleBody:"Sprawd\u017a nazw\u0119 i potwierd\u017a. Po potwierdzeniu przygotuj\u0119 zdj\u0119cie butelki i poka\u017c\u0119 szczeg\u00f3\u0142y.",
+  scanConfirmSingleOk:"Tak, to ta", scanConfirmSingleCancel:"Nie, spr\u00f3buj ponownie"
 });
 Object.assign(I18N.en,{
   termsTitle:"Terms of Service", privacyTitle:"Privacy Policy", forgotPassword:"Forgot password?", resetTitle:"Reset password",
@@ -1064,7 +1049,9 @@ Object.assign(I18N.en,{
   showComments:"Show comments", hideText:"Collapse", moreText:"More", recommendedBy:"Recommended by",
   catalogPreviewTitle:"Bottle preview", catalogProcessing:"Cutting the bottle from the photo...", catalogProcessingCopy:"The image agent is preparing a clean preview for the app.",
   acceptImage:"Accept and add", retakeImage:"Take another photo", saveWithoutImage:"Save without photo", addToCatalog:"Complete and add to catalog", addToCollection:"Add to collection", catalogLicenseNote:"By accepting, you allow Bourbon Hunters to keep and use the finished catalog asset. The original photo and working files will be deleted.",
-  catalogNoPreview:"The bottle cutout could not be prepared.", catalogNoPreviewCopy:"Take another photo or save the bottle data without an image.", catalogSaved:"Bottle saved and added to Recently added.", catalogLogin:"Sign in to add a bottle to the catalog.", catalogError:"The bottle could not be saved.", catalogHit:"Found a match"
+  catalogNoPreview:"The bottle cutout could not be prepared.", catalogNoPreviewCopy:"Take another photo or save the bottle data without an image.", catalogSaved:"Bottle saved and added to Recently added.", catalogLogin:"Sign in to add a bottle to the catalog.", catalogError:"The bottle could not be saved.", catalogHit:"Found a match",
+  scanConfirmSingleTitle:"Is this the bottle?", scanConfirmSingleBody:"Check the name and confirm it. I will prepare the bottle image and show its details after confirmation.",
+  scanConfirmSingleOk:"Yes, that's it", scanConfirmSingleCancel:"No, try again"
 });
 Object.assign(I18N.pl,{
   searchPh:"Szukaj whisky lub destylarni...",
@@ -1116,7 +1103,7 @@ function styleLabel(key){
   const labels=lang==="pl" ? {
     standard:"Klasyczny",wheated:"Wheated",limited:"Limitowana",scotch:"Scotch",irish:"Irish",
     japanese:"Japanese",rye:"Rye",american_malt:"American Single Malt",tennessee:"Tennessee",
-    canadian:"Canadian",corn_wheat:"Corn & Wheat",american_other:"American Whiskey",
+    canadian:"Canadian",corn_wheat:"Corn & Wheat",flavored:"Whiskey smakowa",american_other:"American Whiskey",
     world:"World Whisky",other_whisky:"Pozostałe"
   } : {};
   const st=styleMeta(key);
@@ -1199,7 +1186,7 @@ function detectLang(){
   const n=String(list[0]||"en").toLowerCase();
   return n.indexOf("pl")===0?"pl":"en";
 }
-let lang=detectLang(), DB=[], DYNAMIC_RECENT=[], curDist="all", curCat="all", renderN=RENDER_LIMIT;
+let lang=detectLang(), DB=[], DYNAMIC_RECENT=[], ID_REDIRECTS={}, curDist="all", curCat="all", renderN=RENDER_LIMIT;
 let BROWSE_META={families:{bourbon:0,whisky:0},bourbon:{},whisky:{}};
 let whiskyCatalogLoaded=false, whiskyCatalogPromise=null;
 let exploreFamily="all", exploreLockedFamily="", exploreStyles=[];
@@ -1236,9 +1223,16 @@ function fmtPrice(b){
 
 /* ---------- lista życzeń (localStorage) ---------- */
 let WL=(function(){ try{ return JSON.parse(localStorage.getItem("bh_wishlist")||"[]"); }catch(e){ return []; } })();
-function wlHas(id){ return WL.indexOf(id)>=0; }
+function canonicalBottleId(id){
+  id=String(id||"");
+  const seen={};
+  while(id&&ID_REDIRECTS[id]&&!seen[id]){ seen[id]=1; id=String(ID_REDIRECTS[id]); }
+  return id;
+}
+function bottleById(id){ id=canonicalBottleId(id); return DB.find(function(b){ return b.id===id; })||null; }
+function wlHas(id){ return WL.indexOf(canonicalBottleId(id))>=0; }
 function wlSave(){ try{ localStorage.setItem("bh_wishlist",JSON.stringify(WL)); }catch(e){} }
-function wlToggle(id){ const i=WL.indexOf(id); if(i>=0){ WL.splice(i,1); wlSave(); return false; } WL.push(id); wlSave(); return true; }
+function wlToggle(id){ id=canonicalBottleId(id); const i=WL.indexOf(id); if(i>=0){ WL.splice(i,1); wlSave(); return false; } WL.push(id); wlSave(); return true; }
 let toastTimer=null;
 function toast(msg){ const el=document.getElementById("toast"); if(!el) return; el.textContent=msg; el.classList.add("show"); clearTimeout(toastTimer); toastTimer=setTimeout(function(){ el.classList.remove("show"); },2000); }
 function valueScore(o){
@@ -1257,14 +1251,14 @@ function shopPitchHtml(){
 function heartHtml(id){ return '<div class="heart'+(wlHas(id)?' on':'')+'" data-heart="'+esc(id)+'" role="button" aria-label="wishlist"></div>'; }
 const HUNT=(function(){ try{ return JSON.parse(localStorage.getItem("bh_hunted")||"[]"); }catch(e){ return []; } })();
 let OWNED=(function(){ try{ return JSON.parse(localStorage.getItem("bh_collection")||"[]"); }catch(e){ return []; } })();
-function ownHas(id){ return OWNED.indexOf(id)>=0; }
+function ownHas(id){ return OWNED.indexOf(canonicalBottleId(id))>=0; }
 function ownSave(){ try{ localStorage.setItem("bh_collection",JSON.stringify(OWNED)); }catch(e){} }
-function ownToggle(id){ const i=OWNED.indexOf(id); if(i>=0){ OWNED.splice(i,1); ownSave(); return false; } OWNED.push(id); ownSave(); return true; }
+function ownToggle(id){ id=canonicalBottleId(id); const i=OWNED.indexOf(id); if(i>=0){ OWNED.splice(i,1); ownSave(); return false; } OWNED.push(id); ownSave(); return true; }
 function ownHtml(id){ return '<div class="own'+(ownHas(id)?' on':'')+'" data-own="'+esc(id)+'" role="button" aria-label="collection"></div>'; }
 let collectionTab="wishlist";
 const UR=(function(){ try{ return JSON.parse(localStorage.getItem("bh_user_ratings")||"{}"); }catch(e){ return {}; } })();
 function urSave(){ try{ localStorage.setItem("bh_user_ratings",JSON.stringify(UR)); }catch(e){} }
-function urStars(id){ const n=Number(UR[id]||0); let out='<div class="user-stars" data-userstars="'+esc(id)+'">'; for(let i=1;i<=5;i++){ out+='<span data-ur="'+esc(id)+'" data-v="'+i+'" class="'+(i<=n?'on':'')+'">★</span>'; } return out+'</div>'; }
+function urStars(id){ id=canonicalBottleId(id); const n=Number(UR[id]||0); let out='<div class="user-stars" data-userstars="'+esc(id)+'">'; for(let i=1;i<=5;i++){ out+='<span data-ur="'+esc(id)+'" data-v="'+i+'" class="'+(i<=n?'on':'')+'">★</span>'; } return out+'</div>'; }
 const PROFILE_BADGES=[
   {id:"glass",label:"Szklanka",src:"assets/profile-badges/glass.png"},
   {id:"bottle",label:"Butelka",src:"assets/profile-badges/bottle.png"},
@@ -1305,7 +1299,7 @@ function normalizeRecommendation(r){
   r=r||{};
   return {
     id:String(r.id||""),
-    bottle_id:String(r.bottle_id||""),
+    bottle_id:canonicalBottleId(r.bottle_id),
     bottle_name:String(r.bottle_name||""),
     user_id:String(r.user_id||""),
     username:String(r.username||"Hunter"),
@@ -1317,7 +1311,7 @@ function normalizeRecommendation(r){
   };
 }
 function bottleForRec(rec){
-  return DB.find(function(b){ return b.id===rec.bottle_id; }) || null;
+  return bottleById(rec.bottle_id);
 }
 function recByHtml(rec){
   const people=(rec&&rec.people)||[rec];
@@ -1498,10 +1492,11 @@ function mergeCommunityRatings(ratings){
   ratings=ratings||{};
   Object.keys(ratings).forEach(function(id){
     const r=ratings[id]||{};
-    CR[id]={avg:r.avg==null?null:Number(r.avg),count:Number(r.count)||0};
+    CR[canonicalBottleId(id)]={avg:r.avg==null?null:Number(r.avg),count:Number(r.count)||0};
   });
 }
 function communityRating(id){
+  id=canonicalBottleId(id);
   const r=CR[id]||{};
   const count=Number(r.count)||0;
   const avg=count ? Number(r.avg) : null;
@@ -1740,18 +1735,27 @@ function saveProfileBadge(){
 }
 function uniqueList(list){
   const seen={};
-  return (list||[]).filter(function(id){ id=String(id||""); if(!id||seen[id]) return false; seen[id]=1; return true; });
+  return (list||[]).map(canonicalBottleId).filter(function(id){ if(!id||seen[id]) return false; seen[id]=1; return true; });
 }
 function bottlePayload(id){
-  const b=DB.find(function(x){ return x.id===id; });
+  id=canonicalBottleId(id);
+  const b=bottleById(id);
   return b ? {id:b.id,name:b.name,distillery:b.distillery,category:b.category,type:b.type,proof:b.proof,image:b.image} : {id:id};
+}
+function normalizeStoredBottleState(){
+  WL=uniqueList(WL); wlSave();
+  OWNED=uniqueList(OWNED); ownSave();
+  const migrated={};
+  Object.keys(UR).forEach(function(id){ migrated[canonicalBottleId(id)]=UR[id]; });
+  Object.keys(UR).forEach(function(id){ delete UR[id]; });
+  Object.assign(UR,migrated); urSave();
 }
 function applyBootstrap(boot){
   if(!boot) return;
   WL=uniqueList(boot.wishlist||WL); wlSave();
   OWNED=uniqueList(boot.collection||OWNED); ownSave();
   Object.keys(UR).forEach(function(k){ delete UR[k]; });
-  Object.assign(UR,boot.ratings||{}); urSave();
+  Object.keys(boot.ratings||{}).forEach(function(id){ UR[canonicalBottleId(id)]=boot.ratings[id]; }); urSave();
   if(boot.recommendations_count!=null){ USER_STATS.recommendations_count=Number(boot.recommendations_count)||0; userStatsSave(); }
   if(DB.length){ renderHome(); renderExplore(); renderHomeCollection(); }
   if(document.getElementById("view-collection").classList.contains("active")) renderCollection(collectionTab);
@@ -1791,10 +1795,12 @@ function syncBootstrap(pushLocal){
 }
 function syncList(type,id,active){
   if(!AUTH_TOKEN) return;
+  id=canonicalBottleId(id);
   bhApi("/me/"+type,{method:"POST",body:JSON.stringify({bottle_id:id,active:!!active,bottle_data:bottlePayload(id)})}).catch(function(){});
 }
 function syncRating(id,rating){
   if(!AUTH_TOKEN) return;
+  id=canonicalBottleId(id);
   bhApi("/me/rating",{method:"POST",body:JSON.stringify({bottle_id:id,rating:rating})}).then(function(data){
     if(data&&data.rating_aggregate){
       mergeCommunityRatings((function(){ const o={}; o[id]=data.rating_aggregate; return o; })());
@@ -2318,7 +2324,7 @@ function ratingPanel(o){
   return '<div class="row">'+pills+'</div>';
 }
 function bottleActionId(o){
-  if(o && o.id) return o.id;
+  if(o && o.id) return canonicalBottleId(o.id);
   const name=String((o&&o.name)||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
   const hit=DB.find(function(b){ return String(b.name||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim()===name; });
   return hit ? hit.id : (o&&o.name ? "scan:"+o.name : "scan");
@@ -2341,7 +2347,7 @@ function featCard(b, kick, rec){
     '<div class="feat-visual"><div class="bottlepic'+(isAgentCutout(b)?' agent-cutout':'')+'">'+(b.image?'<img src="'+esc(b.image)+'" loading="lazy" decoding="async" alt="">':mysteryBottleHtml(true))+valueBadgeHtml(b)+'</div>'+
     (price?'<div class="feat-price-chip">'+esc(price)+'</div>':'')+'</div></div>';
 }
-function isAgentCutout(b){ return !!(b && (b.source==="community_catalog" || b.has_image===true)); }
+function isAgentCutout(b){ return !!(b && (b.source==="community_catalog" || b.source==="catalog_preview" || b.source==="scan_preview" || b.has_image===true)); }
 function mysteryBottleHtml(small){ return '<div class="mystery-bottle'+(small?' small':'')+'" aria-label="Brak zdjecia"><span>?</span></div>'; }
 function t(k){ return (I18N[lang]&&I18N[lang][k])||I18N.pl[k]||k; }
 function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
@@ -2694,7 +2700,9 @@ Promise.all([
   fetch(BROWSE_META_URL).then(function(r){ return r.ok ? r.json() : {}; }).catch(function(){ return {}; })
 ]).then(function(res){
   BROWSE_META=res[2]||BROWSE_META;
+  ID_REDIRECTS=res[0].id_redirects||{};
   DB=applyProfiles(prepareBottleDataset(res[0].bottles||[]), res[1]);
+  normalizeStoredBottleState();
   renderHome();
   renderExplore();
   fetchCommunityRatings(DB.map(function(b){ return b.id; }));
@@ -3079,7 +3087,8 @@ renderBadgePicker();
 openResetFromUrl();
 
 function openDetail(id, keepReturn, skipRecommendationFetch){
-  const b = DB.find(function(x){return x.id===id;});
+  id=canonicalBottleId(id);
+  const b = bottleById(id);
   if(!b) return;
   currentDetailId=id;
   if(!keepReturn) detailReturnView=currentView && currentView!=="detail" ? currentView : "explore";
@@ -3279,7 +3288,7 @@ function handlePickedFile(e){
 }
 function compress(file){ return new Promise(function(resolve,reject){
   if(!file || (file.type && file.type.indexOf("image/")!==0)){ reject(new Error("not-image")); return; }
-  const max=1440;
+  const max=1800;
   function imageQuality(canvas){
     const sample=document.createElement("canvas");
     const scale=Math.min(1,180/Math.max(canvas.width,canvas.height));
@@ -3311,7 +3320,7 @@ function compress(file){ return new Promise(function(resolve,reject){
       const c=document.createElement("canvas"); c.width=w; c.height=h;
       const ctx=c.getContext("2d"); if(!ctx){ throw new Error("no-canvas"); }
       ctx.drawImage(source,0,0,w,h);
-      const d=c.toDataURL("image/jpeg",0.84);
+      const d=c.toDataURL("image/jpeg",0.91);
       if(cleanup) cleanup();
       resolve({b64:d.split(",")[1],mime:"image/jpeg",quality:imageQuality(c)});
     }catch(err){ if(cleanup) cleanup(); reject(err); }
@@ -3368,7 +3377,8 @@ function renderLowConfidence(data){
 }
 function hydrateScanCandidate(candidate){
   candidate=candidate||{};
-  const local=DB.find(function(bottle){ return bottle.id===candidate.id; })||null;
+  const canonicalId=canonicalBottleId(candidate.id);
+  const local=bottleById(canonicalId);
   const result=Object.assign({},local||{},candidate.result||{});
   if(local){
     result.image=result.image||local.image||"";
@@ -3376,7 +3386,7 @@ function hydrateScanCandidate(candidate){
     result.profile_meta=local.profile_meta||result.profile_meta;
   }
   if(candidate.image_failed) result.image="";
-  result.id=candidate.id||result.id||bottleActionId(result);
+  result.id=canonicalId||result.id||bottleActionId(result);
   result.scan_match_id=result.id;
   result.scan_confidence=Number(candidate.confidence)||0;
   result.in_app_catalog=true;
@@ -3389,6 +3399,7 @@ function renderScanConfirmation(data){
   pendingScanId=String(data&&data.scan_id||"");
   selectedScanCandidateId=pendingScanCandidates.length===1?pendingScanCandidates[0].id:"";
   if(!pendingScanCandidates.length){ renderLowConfidence(data||{}); return; }
+  const single=pendingScanCandidates.length===1;
   document.getElementById("view-scan").classList.add("is-confirming");
   const cards=pendingScanCandidates.map(function(candidate){
     const result=hydrateScanCandidate(candidate);
@@ -3403,12 +3414,12 @@ function renderScanConfirmation(data){
     '</button>';
   }).join("");
   document.getElementById("scanResult").innerHTML=
-    '<div class="scan-confirm">'+
-      '<h2>'+esc(t("scanConfirmTitle"))+'</h2><p>'+esc(t("scanConfirmBody"))+'</p>'+
+    '<div class="scan-confirm'+(single?' single':'')+'">'+
+      '<h2>'+esc(t(single?"scanConfirmSingleTitle":"scanConfirmTitle"))+'</h2><p>'+esc(t(single?"scanConfirmSingleBody":"scanConfirmBody"))+'</p>'+
       '<div class="scan-candidates" style="--candidate-count:'+pendingScanCandidates.length+'">'+cards+'</div>'+
       '<div class="scan-confirm-actions">'+
-        '<button class="btn btn-alt" type="button" data-scan-cancel="1">'+esc(t("scanConfirmCancel"))+'</button>'+
-        '<button class="btn" type="button" data-scan-confirm="1"'+(selectedScanCandidateId?'':' disabled')+'>'+esc(t("scanConfirmOk"))+'</button>'+
+        '<button class="btn btn-alt" type="button" data-scan-cancel="1">'+esc(t(single?"scanConfirmSingleCancel":"scanConfirmCancel"))+'</button>'+
+        '<button class="btn" type="button" data-scan-confirm="1"'+(selectedScanCandidateId?'':' disabled')+'>'+esc(t(single?"scanConfirmSingleOk":"scanConfirmOk"))+'</button>'+
       '</div>'+
     '</div>';
   document.querySelectorAll("[data-scan-candidate-image]").forEach(function(img){
@@ -3440,8 +3451,7 @@ function confirmScanCandidate(){
   const result=hydrateScanCandidate(candidate);
   reportScanChoice("confirmed",candidate.id);
   pendingScanCandidates=[];
-  if(result.image){ renderScan(result,pendingScanMode); return; }
-  prepareConfirmedCandidateAsset(result,pendingScanMode);
+  scan(pendingScanMode||"rate",result.scan_match_id||result.id);
 }
 function renderCandidateAssetProcessing(result){
   currentScanResult=result;
@@ -3532,7 +3542,7 @@ function renderScan(res, mode){
   currentScanResult=res;
   if(!res.catalog_preview_pending) syncScanResult(res);
   const origin=[res.distillery,res.region].filter(Boolean).map(esc).join(" · ");
-  const img=res.image?'<div class="dphoto'+(isAgentCutout(res)?' agent-cutout':'')+'">'+bottleActionsHtml(res)+'<img src="'+esc(res.image)+'" alt="'+esc(res.name||"")+'" loading="eager" decoding="async">'+valueBadgeHtml(res)+'</div>':'';
+  const img='<div class="dphoto'+(isAgentCutout(res)?' agent-cutout':'')+'">'+bottleActionsHtml(res)+(res.image?'<img src="'+esc(res.image)+'" alt="'+esc(res.name||"")+'" loading="eager" decoding="async">':mysteryBottleHtml(false))+valueBadgeHtml(res)+'</div>';
   let head='<div class="card"><div class="name">'+esc(res.name||"-")+'</div>'+
     '<div class="dtype">'+esc(categoryLabel(res))+'</div>'+
     (origin?'<div class="dorigin">'+origin+'</div>':'')+img+

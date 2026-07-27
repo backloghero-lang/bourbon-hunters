@@ -26,18 +26,32 @@ await page.evaluate(()=>{
   document.getElementById("ageGate")?.classList.remove("show");
   document.getElementById("intro")?.remove();
 });
-await page.waitForFunction(()=>typeof DB!=="undefined" && DB.length>=500);
+await page.waitForFunction(()=>typeof DB!=="undefined" && DB.length>=250);
 
 const homeCategories=await page.locator("#catGrid .cat").count();
 if(homeCategories!==6) throw new Error(`Expected 6 home categories, got ${homeCategories}`);
 const whiskyHomeCount=Number(await page.locator('.cat[data-family="whisky"] .cnt').innerText());
-if(whiskyHomeCount<5000) throw new Error(`Unexpected Whisky count: ${whiskyHomeCount}`);
+const whiskyMetaCount=await page.evaluate(()=>Number(BROWSE_META.families.whisky)||0);
+if(whiskyHomeCount!==whiskyMetaCount) throw new Error(`Whisky Home/meta count mismatch: ${whiskyHomeCount}/${whiskyMetaCount}`);
 await page.locator("#catGrid").scrollIntoViewIfNeeded();
 await page.screenshot({path:path.join(output,"whisky-home-categories-mobile.png")});
 
 await page.locator('.cat[data-family="whisky"]').click();
 await page.waitForFunction(()=>typeof whiskyCatalogLoaded!=="undefined" && whiskyCatalogLoaded===true,{timeout:20000});
 await page.waitForSelector('[data-explore-style="scotch"]');
+
+const homeCounterAudit=await page.evaluate(()=>[...document.querySelectorAll("#catGrid .cat")].map((tile)=>{
+  const family=tile.dataset.family||"";
+  const style=tile.dataset.style||"";
+  const shown=Number(tile.querySelector(".cnt")?.textContent||0);
+  const actual=family==="whisky"
+    ? DB.filter((bottle)=>bottleFamily(bottle)==="whisky").length
+    : DB.filter((bottle)=>bottleFamily(bottle)==="bourbon"&&styleMatch(bottle,style)).length;
+  return {family,style,shown,actual};
+}));
+if(homeCounterAudit.some((item)=>item.shown!==item.actual)){
+  throw new Error(`Home category counters differ from filtered data: ${JSON.stringify(homeCounterAudit)}`);
+}
 
 const lockedState=await page.evaluate(()=>({
   title:document.getElementById("exploreTitle")?.textContent,
@@ -47,7 +61,7 @@ const lockedState=await page.evaluate(()=>({
 }));
 if(lockedState.title!=="Whisky") throw new Error(`Unexpected locked title: ${lockedState.title}`);
 if(lockedState.familyButtons!==0) throw new Error("Locked Whisky view should only show Whisky subfilters");
-for(const required of ["scotch","irish","japanese","rye","american_malt","canadian"]){
+for(const required of ["scotch","irish","japanese","rye","american_malt"]){
   if(!lockedState.styles.includes(required)) throw new Error(`Missing Whisky filter: ${required}`);
 }
 if(lockedState.visibleFamilies.some((family)=>family!=="whisky")) throw new Error("Bourbon leaked into Whisky view");
@@ -93,4 +107,4 @@ if(!listFilterState.recommendationFamilies.includes("bourbon") || !listFilterSta
 await browser.close();
 
 if(errors.length) throw new Error(errors.join("\n"));
-console.log(JSON.stringify({ok:true,homeCategories,whiskyHomeCount,lockedState,mobileDimensions,listFilterState},null,2));
+console.log(JSON.stringify({ok:true,homeCategories,whiskyHomeCount,homeCounterAudit,lockedState,mobileDimensions,listFilterState},null,2));
