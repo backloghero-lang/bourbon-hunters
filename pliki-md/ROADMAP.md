@@ -4,9 +4,11 @@ Ten plik sluzy do planowania kolejnych prac. Szczegoly bugow trzymamy w `BUGS.md
 
 ## Teraz
 
-- Wypchnac oczekujacy commit `23b69fb` i wdrozyc Worker `ocr-visual-fusion-catalog-10k-v4-split-models`.
-- Zweryfikowac skan Jefferson's po rozdzieleniu visual Flash i OCR Flash-Lite.
-- Utrzymac prog dopasowania 80% oraz osobne komunikaty: odczyt etykiety, dopasowanie do bazy i remis wariantow.
+- Utrzymac skaner `visual-only-catalog-v3-quality-assets`; OCR pozostaje wylaczony.
+- Zweryfikowac end-to-end potwierdzenie jednej i dwoch propozycji oraz podglad wycietego assetu.
+- Obserwowac jakosc kanonicznego katalogu i usuwac kolejne duplikaty produktow zamiast zwiekszac liczbe rekordow.
+- Zweryfikowac feed 6 artykulow startowych oraz automatyczne publikacje w poniedzialek i czwartek.
+- Sprawdzic po 30 dniach, czy retencja usuwa artykuly wedlug `created_at`, ale nie odtwarza seeda.
 - Etap `BH 1.1`: przygotowac projekt pod TWA/Google Play jako nastepny naturalny krok po PWA.
 - Dopracowac stan zalogowany/niezalogowany w profilu.
 - Przetestowac end-to-end konto: register, login, logout, reset hasla, welcome email.
@@ -43,7 +45,7 @@ Ten plik sluzy do planowania kolejnych prac. Szczegoly bugow trzymamy w `BUGS.md
 - Rozwazyc mape destylarni, odznaki i notatki.
 - Przygotowac produkt pod Google Play i kampanie marketingowa w USA.
 - Wdrozyc uzgodniony model z `MONETYZACJA-I-LIMITY.md`: anonim 1/dzien, Free 5/dzien i 30/miesiac, Pro 30/dzien i 300/miesiac, rozszerzone AI 20/miesiac.
-- Dodac telemetrie dopiero po ustabilizowaniu core aplikacji; bazowy plan jest w `TELEMETRY.md`.
+- Rozwijac istniejaca telemetrie operacyjna zgodnie z `TELEMETRY.md`.
 - Rozwijac konto uzytkownika etapami: email/password juz istnieje, Google/Apple pozniej.
 
 ## Plan dojscia do pelnoprawnej aplikacji

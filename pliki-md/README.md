@@ -13,6 +13,7 @@ Ten folder trzyma dokumenty robocze, decyzje, roadmapy i pomocnicze skrypty.
 - `HANDOFF.md` - szybki kontekst dla kolejnego watku.
 - `HANDOFF-BH-1.1.md` - aktualny handoff do kolejnego etapu projektu.
 - `INSTRUKCJA.md` - wdrozenie, Worker, D1 i testowanie.
+- `NEWS.md` - feed artykulow, agent, Cron, retencja i diagnostyka.
 - `DESIGN.md` - zasady wizualne.
 - `MONETYZACJA-I-LIMITY.md` - plan Free/Pro, limity skanow, cena startowa, reklamy i kolejnosc wdrozenia.
 
@@ -32,8 +33,9 @@ Ten folder trzyma dokumenty robocze, decyzje, roadmapy i pomocnicze skrypty.
 
 - Publiczne repo sluzy jako demo/showcase.
 - Produkcyjna monetyzacja powinna isc w prywatnym repo.
-- Zwykly skaner pokazuje wynik tylko przy pewnosci dopasowania minimum 80%.
-- Slabe trafienia ida do stanu `Hunter AI Plus`, bez losowego wyniku.
+- Produkcyjny skaner jest obecnie `visual-only`; OCR pozostaje wylaczony po rollbacku.
+- User potwierdza jedna lub dwie propozycje przed otwarciem szczegolow; skaner nie pokazuje losowego wyniku.
 - Email/password jest podpiete do Cloudflare Worker + D1.
-- Google Sign-In nie jest jeszcze podpiete.
+- Google Sign-In jest podpiete przez Cloudflare Worker.
+- Feed newsow ma 6 wpisow startowych, odswieza sie w poniedzialek i czwartek i usuwa wpisy po 30 dniach.
 - Aktualny etap startowy dla kolejnego watku: `HANDOFF-BH-1.1.md`.

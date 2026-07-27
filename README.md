@@ -5,13 +5,13 @@
 <p align="center">
   <img src="https://img.shields.io/badge/type-PWA-c8a25a?style=for-the-badge">
   <img src="https://img.shields.io/badge/backend-Cloudflare%20Worker-f38020?style=for-the-badge&logo=cloudflare&logoColor=white">
-  <img src="https://img.shields.io/badge/AI-Hunter-c8a25a?style=for-the-badge">
+  <img src="https://img.shields.io/badge/scanner-visual%20AI-c8a25a?style=for-the-badge">
   <img src="https://img.shields.io/badge/hosting-GitHub%20Pages-181717?style=for-the-badge&logo=github&logoColor=white">
 </p>
 
 <h1 align="center">Bourbon Hunters</h1>
 <p align="center"><b>DISCOVER - TRACK - HUNT</b></p>
-<p align="center">Premium PWA prototype for bourbon discovery, bottle scanning, wishlist, collection tracking and account sync.</p>
+<p align="center">A premium PWA for label-based bottle recognition, whisky discovery, ratings, recommendations and collection tracking.</p>
 
 ---
 
@@ -19,77 +19,114 @@
 
 | View | Link |
 |---|---|
-| App | [bourbon-hunters](https://backloghero-lang.github.io/bourbon-hunters/) |
+| App | [Bourbon Hunters PWA](https://backloghero-lang.github.io/bourbon-hunters/) |
 | Test launcher | [test-index.html](https://backloghero-lang.github.io/bourbon-hunters/test-index.html) |
 | Project docs | [`pliki-md`](pliki-md) |
-| Figma importer | [`design/figma-import-plugin`](design/figma-import-plugin) |
+| News agent | [`pliki-md/NEWS.md`](pliki-md/NEWS.md) |
+| Deployment guide | [`pliki-md/INSTRUKCJA.md`](pliki-md/INSTRUKCJA.md) |
 | Worker | [`agent/worker.js`](agent/worker.js) |
 | D1 schema | [`agent/d1-schema.sql`](agent/d1-schema.sql) |
 
-## What It Does Today
+## Current Product
 
-The scanner reads a bottle label photo and asks Hunter to match it against the bourbon database.
-
-Current quality rule:
-
-1. The visual agent identifies the bottle while the OCR agent reads the front label independently.
-2. The orchestrator compares both outputs against the 10k scan index.
-3. A result requires a distinctive brand/name anchor; category-only phrases such as `American Single Malt Whiskey` cannot become a match.
-4. A normal result is shown only at 80% confidence with a clear lead over competing records. Otherwise the app asks for a sharper label photo.
-
-| Feature | Status |
+| Area | Current behavior |
 |---|---|
-| Fast rating | Database-first result with price/value and tasting profile |
-| Bottle details | Concise varied general info plus nose, taste and finish |
-| AI analysis | Deeper description for confident matches |
-| Hunter AI Plus | Planned Pro feature for deeper matching, web search, profile creation and saving new finds |
-| Accounts | Email/password through Cloudflare Worker + D1 |
-| Account sync | Wishlist, collection, user ratings and scan history |
-| Username validation | Duplicate username detection with generated suggestions |
-| Password reset | UI, Worker endpoint and Resend email flow ready |
-| Transactional email | Resend-ready welcome and password reset emails |
-| Google Sign-In | OAuth through Google and the Cloudflare Worker |
-| Age gate | Entry gate before intro plus date of birth at registration |
-| Community catalog | Confirmed scan-index matches can be published to D1 with an optional user-approved bottle cutout |
+| Bottle scanner | Visual-only label recognition. OCR is disabled after the rollback described in `pliki-md/DECISIONS.md`. |
+| Match confirmation | The user confirms one or two catalog candidates before opening bottle details. |
+| Catalog | Canonical products shared by the lightweight app database and the scanner index; vintages, private picks, gift sets and duplicate labels are consolidated or removed. |
+| Bottle details | Proof/ABV, suggested price, community rating, personal rating, general information and tasting notes. |
+| Collections | Wishlist, collection, ratings and scan history synchronize through the Worker after sign-in. |
+| Community | User recommendations, comments, profile markers and community ratings. |
+| Accounts | Email/password, password reset and Google OAuth through Cloudflare Worker + D1. |
+| Bottle images | Published catalog assets use R2 and Cloudflare Images. A user can also create a private local cutout for a bottle that has no image. |
+| Whisky news | Public feed on Home and `Profile -> Articles`, seeded with six starter articles and refreshed every Monday and Thursday. |
+
+The scanner must not invent a bottle when the catalog evidence is weak. A recognized candidate is displayed for explicit user confirmation; uncertain scans return a retry state.
 
 ## Architecture
 
 ```text
-Phone / PWA -> Cloudflare Worker -> database match / Hunter AI
-index.html     agent/worker.js      D1, R2, Images, KV, whisky catalog
+GitHub Pages PWA
+  |
+  +--> Cloudflare Worker
+         |
+         +--> Gemini visual matching and grounded news discovery
+         +--> D1: accounts, sync, ratings, catalog, telemetry, news
+         +--> R2: approved shared bottle assets
+         +--> Cloudflare Images: cutout and image normalization
 ```
 
-- Frontend: `index.html`, `manifest.json`, `sw.js`.
-- Backend: `agent/worker.js` on Cloudflare Workers.
-- User data: Cloudflare D1 for accounts, sessions, wishlist, collection, ratings and scan history.
-- D1 migrations: run `agent/d1-schema.sql` for a fresh database. Existing databases use the numbered migrations through `agent/d1-migration-v66-telemetry-reports.sql`.
+- Frontend: `index.html`, `manifest.json`, `sw.js`, `spirit-taxonomy.js`.
+- Backend: `agent/worker.js`.
+- Lightweight UI catalog: `db/bourbons.json`.
+- Scanner catalog: `db/catalog/scan-index.json`.
 - Static hosting: GitHub Pages.
-- Project docs and planning files: `pliki-md/`.
-- Figma asset importer code: `design/figma-import-plugin/`.
+- Current PWA cache: `bourbon-hunters-v101`.
 
-## Current Backend Notes
+## Whisky News
 
-- Registration requires email, password, username and date of birth.
-- Passwords are stored as PBKDF2 SHA-256 hashes with salt, never as plain text.
-- The Worker exposes `/auth/health` for a quick D1/schema check.
-- Transactional emails use Resend when `RESEND_API_KEY` and `MAIL_FROM` are configured. Welcome, password reset and data deletion templates live in `pliki-md/email-templates/`.
-- Current Worker health reports auth, scanner/catalog versions, individual D1 schema flags, Google/email readiness and image-pipeline readiness.
-- User-approved bottle cutouts use an Images binding named `IMAGES` and a private R2 bucket binding named `BOTTLE_IMAGES`.
-- Source catalog photos are temporary. After processing, only the user-approved catalog asset is retained under `catalog/published/`; account deletion does not remove that shared asset.
+The news feature stores only article metadata, short original summaries and external links. It does not copy full article text or source images into Bourbon Hunters storage.
 
-## Community Catalog Deployment
+- Public endpoint: `GET /news`.
+- Admin refresh: `POST /admin/news/refresh`.
+- Allowed publishers: Whisky Advocate, Whisky Magazine, The Whiskey Wash and Distiller.
+- Empty feed: one-time seed of six verified starter articles.
+- Schedule: one daily Cron Trigger; the Worker fetches up to three new articles on Monday and Thursday.
+- Retention: articles are deleted 30 days after `created_at`.
+- Deduplication: unique canonical URL plus an execution marker in `news_agent_runs`.
+- Full operating guide: [`pliki-md/NEWS.md`](pliki-md/NEWS.md).
 
-1. Run `agent/d1-migration-v64-catalog-submissions.sql` and `agent/d1-migration-v65-catalog-data-lifecycle.sql` if needed, then run `agent/d1-migration-v66-telemetry-reports.sql` against the existing D1 database.
-2. Create or select a private R2 bucket and bind it to the Worker as `BOTTLE_IMAGES`.
-3. Add a Cloudflare Images binding named `IMAGES`.
-4. Replace/deploy `agent/worker.js`.
-5. Add a daily Worker Cron Trigger, for example `0 3 * * *`, so abandoned previews are removed after 24 hours. New submissions also run opportunistic cleanup.
-6. Publish the frontend through GitHub Pages and refresh the installed PWA so cache `bourbon-hunters-v91` is active.
-7. Verify `/auth/health`: `catalog_schema`, `catalog_data_schema`, `telemetry_schema`, `operational_telemetry_ready`, `image_pipeline_ready`, `d1` and the existing schema flags should all be `true`.
+## Deployment
+
+For an existing environment, keep this order:
+
+1. Run the missing numbered D1 migrations through `agent/d1-migration-v68-whisky-news.sql`.
+2. Confirm Worker bindings: `DB`, `BOTTLE_IMAGES` and `IMAGES`.
+3. Configure Worker secrets and variables described in [`pliki-md/INSTRUKCJA.md`](pliki-md/INSTRUKCJA.md).
+4. Deploy the current `agent/worker.js`.
+5. Keep one daily Cron Trigger, for example `0 3 * * *`.
+6. Publish the frontend through GitHub Pages.
+7. Open [`/auth/health`](https://bourbon-hunters.darekmaslyk.workers.dev/auth/health) and verify the required schema/readiness flags.
+
+News requires:
+
+```text
+news_schema: true
+news_agent_ready: true
+news_agent_version: whisky-news-google-grounded-v1
+news_retention_days: 30
+starter_news_count: 6
+```
+
+No additional migration is required after v68 to enable the starter feed or 30-day retention.
+
+## Validation
+
+Useful checks:
+
+```powershell
+node --check agent/worker.js
+node scripts/news-agent-regression.mjs
+node scripts/ui-news-scroll-smoke.mjs
+node scripts/ui-local-photo-smoke.mjs
+node scripts/ui-taxonomy-smoke.mjs
+```
+
+The test launcher can clear the installed PWA cache when a phone still displays an older GitHub Pages build.
+
+## Documentation
+
+- [`pliki-md/HANDOFF.md`](pliki-md/HANDOFF.md) - current technical state and recent work.
+- [`pliki-md/HANDOFF-BH-1.1.md`](pliki-md/HANDOFF-BH-1.1.md) - compact continuation context.
+- [`pliki-md/PROJECT.md`](pliki-md/PROJECT.md) - product direction.
+- [`pliki-md/DECISIONS.md`](pliki-md/DECISIONS.md) - durable architecture and product decisions.
+- [`pliki-md/ROADMAP.md`](pliki-md/ROADMAP.md) - current and future work.
+- [`pliki-md/NEWS.md`](pliki-md/NEWS.md) - news feed, agent, Cron, retention and troubleshooting.
+- [`pliki-md/INSTRUKCJA.md`](pliki-md/INSTRUKCJA.md) - Cloudflare and GitHub deployment steps.
 
 ## Project Direction
 
-This public repo is a showcase/prototype. The commercial version should move into a private production repo before adding paywall, Google Play release work, advanced AI Plus logic, image storage and business integrations.
+This public repository is a showcase and working prototype. Before introducing production billing, store releases or private business integrations, the commercial version should move to a private production repository with separate environments and secrets.
 
 ## Responsible Use
 

@@ -225,3 +225,13 @@ Ten plik trzyma stale ustalenia, zeby nie ginely w dlugich watkach.
 - `spirit-taxonomy-v2` jest jedynym zrodlem klasyfikacji dla Home, filtrow list, Kolekcji, Polecanych i szczegolow.
 - Silna deklaracja produktu (`Rye`, `Wheat Whiskey`, `Malt`, `Tennessee`, kraj pochodzenia lub smak) ma pierwszenstwo przed historycznym polem `type`.
 - Licznik kategorii na Home musi byc rowny liczbie rekordow zwracanych przez ten sam filtr po otwarciu kategorii; kontroluje to `scripts/ui-taxonomy-smoke.mjs`.
+
+## 2026-07-27 - Feed newsow i retencja
+
+- Home oraz `Profil -> Artykuly` korzystaja z jednego publicznego feedu `GET /news`.
+- Agent moze publikowac tylko artykuly z allowlisty: Whisky Advocate, Whisky Magazine, The Whiskey Wash i Distiller.
+- W D1 zapisujemy metadane, krotkie streszczenia PL/EN i zewnetrzny URL miniatury. Nie kopiujemy pelnej tresci ani pliku obrazu wydawcy.
+- Pierwszy pusty feed jest jednorazowo uzupelniany 6 zweryfikowanymi artykulami. Marker `starter-news-v1` zapobiega ponownemu seedowaniu po ich wygasnieciu.
+- Jeden dzienny Cron wykonuje cleanup codziennie, a pobieranie maksymalnie 3 nowych artykulow tylko w poniedzialek i czwartek.
+- Artykuly sa usuwane 30 dni po `created_at`. Canonical URL jest unikalny, wiec ten sam artykul nie wraca jako duplikat.
+- Operacyjny opis, endpointy i diagnostyka znajduja sie w `pliki-md/NEWS.md`.

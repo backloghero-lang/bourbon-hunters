@@ -14,7 +14,7 @@ Rdzen zabawy ma dzialac jak kolekcjonerski indeks: czesc butelek jest zakryta zn
 
 - Skanowanie etykiety butelki.
 - Szybka ocena z lokalnej bazy.
-- Brak pewnego trafienia nie moze zwracac losowej butelki; ponizej 80% pewnosci pokazujemy stan Hunter AI Plus.
+- Brak pewnego trafienia nie moze zwracac losowej butelki; user potwierdza kandydata przed otwarciem szczegolow.
 - Przegladanie bazy bourbonow.
 - Wyszukiwanie butelek.
 - Dodawanie do listy zyczen.
@@ -23,13 +23,14 @@ Rdzen zabawy ma dzialac jak kolekcjonerski indeks: czesc butelek jest zakryta zn
 - Osobna, rozszerzona analiza Hunter AI.
 - Zapisywanie nowych znalezisk usera do pozniejszej obrobki i dodania do widokow.
 - Odblokowywanie butelek w kolekcjonerskim katalogu.
+- Czytanie krotkiego, aktualnego feedu wiadomosci ze swiata whisky.
 
 ## Zasady produktu
 
 - Pierwszy ekran ma byc aplikacja, nie marketingowy landing page.
 - Szybka ocena ma korzystac najpierw z lokalnej bazy.
 - Jesli butelka jest w bazie, user dostaje instant info.
-- Jesli dopasowanie ma ponizej 80% pewnosci, zwykly skaner nie zgaduje i kieruje do Hunter AI Plus.
+- Skaner jest obecnie visual-only. OCR zostal wylaczony, a user zawsze potwierdza jedna lub dwie propozycje.
 - Hunter AI / Hunter AI Plus jest funkcja rozszerzona, wolniejsza i bardziej opisowa.
 - User nie widzi nazwy dostawcy AI; w UI uzywamy nazwy Hunter.
 - Aplikacja dobiera jezyk z telefonu lub przegladarki: `pl*` -> polski, reszta -> angielski.
@@ -38,7 +39,8 @@ Rdzen zabawy ma dzialac jak kolekcjonerski indeks: czesc butelek jest zakryta zn
 - Docelowo produkt ma byc gotowy pod Google Play i akcje marketingowa na USA.
 - Na finiszu planowany jest limit darmowych skanow, np. 20, a potem reklamy lub inny model monetyzacji.
 - Core aplikacji zostaje local-first, ale rozpoczelismy etap kont i synchronizacji przez Cloudflare Worker + D1.
-- Telemetria wchodzi pozniej, po ustabilizowaniu core flow i polityk prywatnosci.
+- Telemetria operacyjna skanera jest zapisywana w D1 z retencja opisana w `TELEMETRY.md`.
+- Feed newsow korzysta z dozwolonej listy wydawcow, zapisuje tylko metadane i streszczenia oraz usuwa wpisy po 30 dniach.
 
 ## Styl
 
@@ -51,10 +53,12 @@ Rdzen zabawy ma dzialac jak kolekcjonerski indeks: czesc butelek jest zakryta zn
 
 ## Zrodla danych i assetow
 
-- Baza: `db/bourbons.json` (obecnie 539 pozycji).
+- Lekka baza aplikacji: `db/bourbons.json`.
+- Indeks rozpoznawania: `db/catalog/scan-index.json`.
 - Zdjecia butelek: `assets/bourbons/`.
 - Assety produkcyjne i referencyjne: `design/figma-assets/`.
 - Figma jest katalogiem wizualnym i miejscem projektowania, nie zrodlem runtime.
+- Newsy i historia uruchomien agenta sa w D1; szczegoly procesu opisuje `NEWS.md`.
 
 ## Dane i prawa do zdjec
 
