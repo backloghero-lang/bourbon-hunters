@@ -451,39 +451,16 @@
         ]
       }
     },
-    "four-roses-obsf-single-barrel-bourbon": {
-      "profile": {
-        "en": {
-          "general": "Four Roses OBSF Single Barrel is a classic single barrel bourbon from Four Roses Distillery, built around the producer's house style and the bottle's strength.",
-          "nose": "Vanilla-led aromas bring red fruit, honey, floral spice and soft oak, plus a touch of citrus brightness and a gentle herbal touch.",
-          "taste": "The palate feels sweet first, then spice-led, carrying honey, soft oak and rounded vanilla sweetness; vanilla softens the oak.",
-          "finish": "Balanced medium finish with caramelized grain, baking spice and mellow barrel heat, red fruit and floral spice in a single barrel bourbon frame, with a clean fade."
-        },
-        "pl": {
-          "general": "Four Roses OBSF Single Barrel to klasyczny single barrel bourbon od Four Roses Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
-          "nose": "Aromat prowadzi zestaw: czerwone owoce, miód, kwiatowa przyprawa i łagodny dąb, do tego odrobina cytrusowej jasności oraz łagodny ziołowy dotyk.",
-          "taste": "Na podniebieniu profil jest najpierw słodki, potem przyprawowy; w tle są miód, łagodny dąb i zaokrąglona waniliowa słodycz; wanilia łagodzi dąb.",
-          "finish": "Zbalansowany, średni finisz z karmelizowanym ziarnem, przyprawami korzennymi i ciepłem beczki, czerwone owoce i kwiatowa przyprawa w ramie stylu single barrel bourbon, z czystym wygasaniem."
-        }
-      },
-      "meta": {
-        "status": "seeded_runtime_profile",
-        "method": "style_and_bottle_data_synthesis",
-        "sources": [
-          "https://woodencork.com/products/four-roses-obsf-single-barrel-bourbon"
-        ]
-      }
-    },
     "four-roses-obsk-single-barrel-bourbon": {
       "profile": {
         "en": {
-          "general": "Four Roses OBSK Single Barrel is a fuller-proof single barrel bourbon from Four Roses Distillery at 100 proof, built around the producer's house style and the bottle's strength.",
+          "general": "Four Roses Single Barrel is a fuller-proof single barrel bourbon from Four Roses Distillery at 100 proof, built around the producer's house style and the bottle's strength.",
           "nose": "Vanilla-led aromas bring red fruit, honey, floral spice and soft oak, plus a drier spice thread and a mellow honey tone in its 100 proof frame.",
           "taste": "The palate feels drying as the oak takes over, carrying honey, soft oak and rounded vanilla sweetness; warm spice fills the middle in its 100 proof frame.",
           "finish": "Steady, warm finish with orange peel, toasted oak and a clean drying edge, red fruit and floral spice after the sweetness fades at 100 proof, with a calm vanilla return."
         },
         "pl": {
-          "general": "Four Roses OBSK Single Barrel to pełniejszy single barrel bourbon od Four Roses Distillery przy 100 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
+          "general": "Four Roses Single Barrel to pełniejszy single barrel bourbon od Four Roses Distillery przy 100 proof, zbudowany wokół stylu producenta i mocy tej butelki.",
           "nose": "Aromat prowadzi zestaw: czerwone owoce, miód, kwiatowa przyprawa i łagodny dąb, do tego bardziej wytrawna nić przypraw oraz miękki ton miodu w ramie 100 proof.",
           "taste": "Na podniebieniu profil jest bardziej wytrawny, gdy przejmuje go dąb; w tle są miód, łagodny dąb i zaokrąglona waniliowa słodycz; ciepłe przyprawy wypełniają środek w ramie 100 proof.",
           "finish": "Stabilny, ciepły finisz zostawia skórką pomarańczy, prażonym dębem i czystą wytrawnością, czerwone owoce i kwiatowa przyprawa po wygaśnięciu słodyczy przy 100 proof, ze spokojnym powrotem wanilii."
@@ -494,52 +471,6 @@
         "method": "style_and_bottle_data_synthesis",
         "sources": [
           "https://woodencork.com/products/four-roses-obsk-single-barrel-bourbon"
-        ]
-      }
-    },
-    "four-roses-oesk-single-barrel-bourbon": {
-      "profile": {
-        "en": {
-          "general": "Four Roses OESK Single Barrel is a classic single barrel bourbon from Four Roses Distillery, built around the producer's house style and the bottle's strength.",
-          "nose": "Vanilla-led aromas bring red fruit, honey, floral spice and soft oak, plus a softer honeyed middle and a richer char note.",
-          "taste": "The palate feels richer through the middle, carrying honey, soft oak and rounded vanilla sweetness; the texture stays compact.",
-          "finish": "Balanced medium finish with toffee, warm spice and a smooth drying close, red fruit and floral spice in a single barrel bourbon frame, with a measured oak fade."
-        },
-        "pl": {
-          "general": "Four Roses OESK Single Barrel to klasyczny single barrel bourbon od Four Roses Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
-          "nose": "Aromat prowadzi zestaw: czerwone owoce, miód, kwiatowa przyprawa i łagodny dąb, do tego łagodniejszy, miodowy środek oraz bogatsza nuta opalenia.",
-          "taste": "Na podniebieniu profil jest bogatszy w środkowej części; w tle są miód, łagodny dąb i zaokrąglona waniliowa słodycz; tekstura pozostaje zwarta.",
-          "finish": "Zbalansowany, średni finisz z toffi, ciepłymi przyprawami i gładkim wytrawnym domknięciem, czerwone owoce i kwiatowa przyprawa w ramie stylu single barrel bourbon, z miarowym wygasaniem dębu."
-        }
-      },
-      "meta": {
-        "status": "seeded_runtime_profile",
-        "method": "style_and_bottle_data_synthesis",
-        "sources": [
-          "https://woodencork.com/products/four-roses-oesk-single-barrel-bourbon"
-        ]
-      }
-    },
-    "four-roses-oeso-single-barrel-bourbon": {
-      "profile": {
-        "en": {
-          "general": "Four Roses OESO Single Barrel is a classic single barrel bourbon from Four Roses Distillery, built around the producer's house style and the bottle's strength.",
-          "nose": "Vanilla-led aromas bring red fruit, honey, floral spice and soft oak, plus a rounded dessert-spice note and a light floral lift.",
-          "taste": "The palate feels polished and approachable, carrying honey, soft oak and rounded vanilla sweetness; the middle stays rounded.",
-          "finish": "Balanced medium finish with sweet grain, clove warmth and a rounded oak finish, red fruit and floral spice in a single barrel bourbon frame, with a polished oak return."
-        },
-        "pl": {
-          "general": "Four Roses OESO Single Barrel to klasyczny single barrel bourbon od Four Roses Distillery, zbudowany wokół stylu producenta i mocy tej butelki.",
-          "nose": "Aromat prowadzi zestaw: czerwone owoce, miód, kwiatowa przyprawa i łagodny dąb, do tego zaokrąglona nuta deserowych przypraw oraz lekka kwiatowa nuta.",
-          "taste": "Na podniebieniu profil jest wygładzony i przystępny; w tle są miód, łagodny dąb i zaokrąglona waniliowa słodycz; środek pozostaje zaokrąglony.",
-          "finish": "Zbalansowany, średni finisz z słodkim ziarnem, ciepłem goździka i zaokrąglonym dębem, czerwone owoce i kwiatowa przyprawa w ramie stylu single barrel bourbon, z powrotem wygładzonego dębu."
-        }
-      },
-      "meta": {
-        "status": "seeded_runtime_profile",
-        "method": "style_and_bottle_data_synthesis",
-        "sources": [
-          "https://woodencork.com/products/four-roses-oeso-single-barrel-bourbon"
         ]
       }
     },

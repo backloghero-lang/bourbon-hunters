@@ -1,7 +1,7 @@
 {
   "version": 3,
-  "updated": "2026-07-27T14:55:32.503Z",
-  "count": 1042,
+  "updated": "2026-07-27T16:02:09.581Z",
+  "count": 1028,
   "target": 10000,
   "price_limits": {
     "PLN": 1000,
@@ -20,8 +20,8 @@
   "retail_max_usd": 500,
   "retail_records_removed": 528,
   "product_consolidation_version": "retail-product-v2",
-  "product_duplicates_removed": 178,
-  "product_redirect_count": 178,
+  "product_duplicates_removed": 191,
+  "product_redirect_count": 191,
   "retail_max_pln": 1500,
   "image_quality_version": "single-bottle-transparent-v3-no-watermarks",
   "id_redirects": {
@@ -202,7 +202,20 @@
     "olcc-2203b": "bowman-brothers-101-05",
     "olcc-6374b": "weller-full-proof-101-00",
     "oregon-spirit-distillers-140-38": "oregon-spirit-distillers-141-38",
-    "four-roses-private-selection-101-22": "four-roses-single-barrel-101-22"
+    "four-roses-private-selection-101-22": "four-roses-obsk-single-barrel-bourbon",
+    "buffalo-trace-bourbon-single-barrel-032-select-by-wooden-cork": "buffalo-trace-bourbon-1",
+    "buffalo-trace-bourbon-single-barrel-select-by-wooden-cork": "buffalo-trace-bourbon-1",
+    "four-roses-obsf-single-barrel-bourbon": "four-roses-obsk-single-barrel-bourbon",
+    "four-roses-obsk-single-barrel-bourbon-hotel-covington-pick-125-2-proof": "four-roses-obsk-single-barrel-bourbon",
+    "four-roses-obsk-single-barrel-bourbon-kroger-pick-122-4-proof": "four-roses-obsk-single-barrel-bourbon",
+    "four-roses-oesk-single-barrel-bourbon": "four-roses-obsk-single-barrel-bourbon",
+    "four-roses-oeso-single-barrel-bourbon": "four-roses-obsk-single-barrel-bourbon",
+    "olcc-1031b": "four-roses-obsk-single-barrel-bourbon",
+    "olcc-8774b": "four-roses-obsk-single-barrel-bourbon",
+    "four-roses-single-barrel-101-22": "four-roses-obsk-single-barrel-bourbon",
+    "olcc-12806b": "four-roses-obsk-single-barrel-bourbon",
+    "olcc-12807b": "four-roses-obsk-single-barrel-bourbon",
+    "olcc-12808b": "four-roses-obsk-single-barrel-bourbon"
   },
   "bottles": [
     {
@@ -2513,7 +2526,9 @@
         "BUFFALO TRACE",
         "BUFFALO TRACE BOURBON",
         "Buffalo Trace Bourbon Single Barrel Select",
-        "BUFFALO TRACE SINGLE BARREL SELECT"
+        "BUFFALO TRACE SINGLE BARREL SELECT",
+        "Buffalo Trace Bourbon Single",
+        "Buffalo Trace Bourbon Single Barrel"
       ],
       "price_status": "verified",
       "catalog_status": "verified",
@@ -2543,100 +2558,6 @@
       "source_id": "25048001000235",
       "image_quality": "single-bottle-transparent-v3-no-watermarks",
       "image_source": "assets/bourbons/buffalo-trace-bourbon-1.webp"
-    },
-    {
-      "abv": 45,
-      "category": "Pojedyncza beczka",
-      "desc": "Experience the pinnacle of craftsmanship and flavor with Wooden Cork's exclusive Buffalo Trace Bourbon Single Barrel Selection. Handpicked from the heart of Kentucky, this exceptional bourbon embodies the rich heritage and meticulous attention to detail that Buffalo Trace Distillery is renowned for. Tasting Notes: Nose: A delightful aroma of caramel, vanilla, and a hint of oak, inviting you into a world of complex flavors. Palate: A harmonious blend of dark chocolate, ripe fruit, and toasted spices, with a subtle sweetness that is perfectly balanced by the warmth of the bourbon. Finish: Aâ¦",
-      "distillery": "Buffalo Trace Distillery",
-      "id": "buffalo-trace-bourbon-single-barrel-032-select-by-wooden-cork",
-      "image": "",
-      "mashbill": "Mash #1 (niski udzial zyta)",
-      "name": "Buffalo Trace Bourbon Single",
-      "notes": "Wanilia, karmel, lekka przyprawa, dab",
-      "price": 22.99,
-      "price_pln": "160-200 zl",
-      "price_str": "$22.99",
-      "proof": 90,
-      "quality": 4,
-      "region": "Kentucky",
-      "source": "woodencork+curated",
-      "status": "sold_out",
-      "type": "Bourbon Kentucky Straight",
-      "url": "https://woodencork.com/products/buffalo-trace-bourbon-single-barrel-032-select-by-wooden-cork",
-      "value": 5,
-      "aliases": [
-        "Buffalo Trace Bourbon Single"
-      ],
-      "price_status": "verified",
-      "catalog_status": "verified",
-      "profile": {
-        "basis": "style_estimate",
-        "confidence": "low",
-        "en": {
-          "general": "Buffalo Trace Bourbon Single is registered in the TTB label database as bourbon kentucky straight from Kentucky.",
-          "nose": "Expected style profile: caramel, vanilla and corn sweetness.",
-          "taste": "Expected style profile: vanilla, corn sweetness and charred oak.",
-          "finish": "Expected style profile: a balanced close of corn sweetness and charred oak."
-        },
-        "pl": {
-          "general": "Buffalo Trace Bourbon Single figuruje w rejestrze etykiet TTB jako bourbon kentucky straight z regionu Kentucky.",
-          "nose": "Przewidywany profil stylu: karmel, wanilia i kukurydziana słodycz.",
-          "taste": "Przewidywany profil stylu: wanilia, kukurydziana słodycz i opalany dąb.",
-          "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą kukurydziana słodycz i opalany dąb."
-        }
-      },
-      "source_refs": [
-        "woodencork+curated"
-      ],
-      "image_quality": "mystery-fallback"
-    },
-    {
-      "abv": 45,
-      "category": "Pojedyncza beczka",
-      "desc": "Experience the pinnacle of craftsmanship and flavor with Wooden Cork's exclusive Buffalo Trace Bourbon Single Barrel Selection. Handpicked from the heart of Kentucky, this exceptional bourbon embodies the rich heritage and meticulous attention to detail that Buffalo Trace Distillery is renowned for. Tasting Notes: Nose: A delightful aroma of caramel, vanilla, and a hint of oak, inviting you into a world of complex flavors. Palate: A harmonious blend of dark chocolate, ripe fruit, and toasted spices, with a subtle sweetness that is perfectly balanced by the warmth of the bourbon. Finish: Aâ¦",
-      "distillery": "Buffalo Trace Distillery",
-      "id": "buffalo-trace-bourbon-single-barrel-select-by-wooden-cork",
-      "image": "",
-      "mashbill": "Mash #1 (niski udzial zyta)",
-      "name": "Buffalo Trace Bourbon Single Barrel",
-      "notes": "Wanilia, karmel, lekka przyprawa, dab",
-      "price": 15.99,
-      "price_pln": "160-200 zl",
-      "price_str": "$15.99",
-      "proof": 90,
-      "quality": 4,
-      "region": "Kentucky",
-      "source": "woodencork+curated",
-      "status": "sold_out",
-      "type": "Bourbon Kentucky Straight",
-      "url": "https://woodencork.com/products/buffalo-trace-bourbon-single-barrel-select-by-wooden-cork",
-      "value": 5,
-      "aliases": [
-        "Buffalo Trace Bourbon Single Barrel"
-      ],
-      "price_status": "verified",
-      "catalog_status": "verified",
-      "profile": {
-        "basis": "style_estimate",
-        "confidence": "low",
-        "en": {
-          "general": "Buffalo Trace Bourbon Single Barrel is registered in the TTB label database as bourbon kentucky straight from Kentucky.",
-          "nose": "Expected style profile: caramel, vanilla and corn sweetness.",
-          "taste": "Expected style profile: vanilla, corn sweetness and charred oak.",
-          "finish": "Expected style profile: a balanced close of corn sweetness and charred oak."
-        },
-        "pl": {
-          "general": "Buffalo Trace Bourbon Single Barrel figuruje w rejestrze etykiet TTB jako bourbon kentucky straight z regionu Kentucky.",
-          "nose": "Przewidywany profil stylu: karmel, wanilia i kukurydziana słodycz.",
-          "taste": "Przewidywany profil stylu: wanilia, kukurydziana słodycz i opalany dąb.",
-          "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą kukurydziana słodycz i opalany dąb."
-        }
-      },
-      "source_refs": [
-        "woodencork+curated"
-      ],
-      "image_quality": "mystery-fallback"
     },
     {
       "abv": 45,
@@ -4025,64 +3946,15 @@
       "image_source": "assets/bourbons/four-roses.webp"
     },
     {
-      "abv": 60,
-      "category": "Pojedyncza beczka",
-      "desc": "Four Roses OBSF Single Barrel Bourbon 750mL Introducing the Four Roses OBSF Single Barrel Bourbon , a masterpiece from the renowned Four Roses distillery. This exceptional bourbon is part of the new Single Barrel Collection, showcasing the distillery's dedication to quality and innovation. With its unique mash bill and proprietary yeast strain, OBSF offers a flavor profile that is both distinctive and memorable. Tasting Experience Nose: Delight in the herbal and floral aromas, enhanced by bright rye spice and a hint of fresh apple. Palate: Enjoy a balanced mix of vanilla, clove, and cocoa,â¦",
-      "distillery": "Four Roses Distillery",
-      "id": "four-roses-obsf-single-barrel-bourbon",
-      "image": "assets/bourbons/clean/four-roses-obsf-single-barrel-bourbon.webp",
-      "mashbill": null,
-      "name": "Four Roses OBSF Single Barrel",
-      "notes": null,
-      "price": 49.99,
-      "price_pln": null,
-      "price_str": "$49.99",
-      "proof": null,
-      "quality": null,
-      "region": "Kentucky",
-      "source": "woodencork",
-      "status": "available",
-      "type": "Bourbon Kentucky Straight",
-      "url": "https://woodencork.com/products/four-roses-obsf-single-barrel-bourbon",
-      "value": null,
-      "aliases": [
-        "Four Roses OBSF Single Barrel",
-        "Four Roses OBSF Single Barrel Bourbon"
-      ],
-      "price_status": "verified",
-      "catalog_status": "verified",
-      "profile": {
-        "basis": "style_estimate",
-        "confidence": "low",
-        "en": {
-          "general": "Four Roses OBSF Single Barrel Bourbon is registered in the TTB label database as bourbon kentucky straight from Kentucky.",
-          "nose": "Expected style profile: caramel, vanilla and corn sweetness.",
-          "taste": "Expected style profile: vanilla, corn sweetness and charred oak.",
-          "finish": "Expected style profile: a balanced close of corn sweetness and charred oak."
-        },
-        "pl": {
-          "general": "Four Roses OBSF Single Barrel Bourbon figuruje w rejestrze etykiet TTB jako bourbon kentucky straight z regionu Kentucky.",
-          "nose": "Przewidywany profil stylu: karmel, wanilia i kukurydziana słodycz.",
-          "taste": "Przewidywany profil stylu: wanilia, kukurydziana słodycz i opalany dąb.",
-          "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą kukurydziana słodycz i opalany dąb."
-        }
-      },
-      "source_refs": [
-        "woodencork"
-      ],
-      "image_quality": "single-bottle-transparent-v3-no-watermarks",
-      "image_source": "assets/bourbons/four-roses-obsf-single-barrel-bourbon.webp"
-    },
-    {
       "abv": 50,
       "category": "Pojedyncza beczka",
       "desc": "Craftsmanship & Origin: Four Roses OBSK Single Barrel Bourbon 750ml Four Roses OBSK Single Barrel Bourbon 750ml is a Kentucky Straight Bourbon Whiskey in the premium bourbon whiskey category, made in Kentucky and bottled as an official single-barrel release. It spotlights the OBSK recipe—Four Roses’ high-rye mash bill paired with the proprietary “K” yeast strain—built to deliver structured spice and balanced warmth. This bottle is not part of the Private Selection program. Instead, it’s released as a standalone expression, giving you a focused, recipe-driven look at one of Four Roses’ tenâ¦",
       "distillery": "Four Roses Distillery",
       "id": "four-roses-obsk-single-barrel-bourbon",
       "image": "assets/bourbons/clean/four-roses-obsk-single-barrel-bourbon.webp",
-      "mashbill": null,
-      "name": "Four Roses OBSK Single Barrel",
-      "notes": null,
+      "mashbill": "Co najmniej 51% kukurydzy; dokładny mashbill wymaga danych producenta",
+      "name": "Four Roses Single Barrel",
+      "notes": "karmel, wanilia i kukurydziana słodycz.",
       "price": 49.99,
       "price_pln": null,
       "price_str": "$49.99",
@@ -4095,8 +3967,29 @@
       "url": "https://woodencork.com/products/four-roses-obsk-single-barrel-bourbon",
       "value": null,
       "aliases": [
+        "Four Roses Single Barrel",
+        "Four Roses OBSF Single Barrel",
+        "Four Roses OBSF Single Barrel Bourbon",
         "Four Roses OBSK Single Barrel",
-        "Four Roses OBSK Single Barrel Bourbon"
+        "Four Roses OBSK Single Barrel Bourbon",
+        "Four Roses OBSK Single Barrel Bourbon Hotel Covington Pick 125.2 Proof",
+        "Four Roses OBSK Single Barrel Bourbon Kroger Pick 122.4 Proof",
+        "Four Roses OESK Single Barrel",
+        "Four Roses OESK Single Barrel Bourbon",
+        "Four Roses OESO Single Barrel",
+        "Four Roses OESO Single Barrel Bourbon",
+        "FOUR ROSES S/B BARREL STRENGTH",
+        "FOUR ROSES SINGLE BARREL KENTUCKY BOURBN",
+        "FOUR ROSES SINGLE BARREL",
+        "FOUR ROSES",
+        "SINGLE BARREL",
+        "SINGLE BARREL FOUR ROSES",
+        "FOUR ROSES PRIVATE SELECTION",
+        "PRIVATE SELECTION",
+        "PRIVATE SELECTION FOUR ROSES",
+        "FOUR ROSES SINGLE BARREL OBSF",
+        "FOUR ROSES SINGLE BARREL OESK",
+        "FOUR ROSES SINGLE BARREL OESO"
       ],
       "price_status": "verified",
       "catalog_status": "verified",
@@ -4117,249 +4010,15 @@
         }
       },
       "source_refs": [
-        "woodencork"
+        "woodencork",
+        "ttb-cola",
+        "olcc"
       ],
       "image_quality": "single-bottle-transparent-v3-no-watermarks",
-      "image_source": "assets/bourbons/four-roses-obsk-single-barrel-bourbon.webp"
-    },
-    {
-      "abv": 62.6,
-      "category": "Pojedyncza beczka",
-      "desc": "125.2 proof. OBSK. Hotel Covington Pick. Four Roses — the highest-proof Four Roses OBSK single barrel in the current Wooden Cork collection, selected by Hotel Covington — a Kentucky hospitality venue with direct roots in the state's bourbon culture. OBSK is one of Four Roses' ten proprietary mashbill-yeast combinations: O = Four Roses Distillery, B = Straight Bourbon, S = Small (high rye) mashbill, K = the K-strain yeast that produces a full-bodied, spicy profile. The OBSK combination is among the most assertive of the ten Four Roses recipes — the high rye mash bill produces grain spice whileâ¦",
-      "distillery": "Four Roses Distillery",
-      "id": "four-roses-obsk-single-barrel-bourbon-hotel-covington-pick-125-2-proof",
-      "image": "",
-      "mashbill": null,
-      "name": "Four Roses OBSK Single Barrel Bourbon Hotel Covington Pick 125.2 Proof",
-      "notes": null,
-      "price": 349.99,
-      "price_pln": null,
-      "price_str": "$349.99",
-      "proof": 125.2,
-      "quality": null,
-      "region": "Kentucky",
-      "source": "woodencork",
-      "status": "available",
-      "type": "Bourbon Kentucky Straight",
-      "url": "https://woodencork.com/products/four-roses-obsk-single-barrel-bourbon-hotel-covington-pick-125-2-proof",
-      "value": null,
-      "aliases": [
-        "Four Roses OBSK Single Barrel Bourbon Hotel Covington Pick 125.2 Proof"
-      ],
-      "price_status": "verified",
-      "catalog_status": "verified",
-      "profile": {
-        "basis": "style_estimate",
-        "confidence": "low",
-        "en": {
-          "general": "Four Roses OBSK Single Barrel Bourbon Hotel Covington Pick 125.2 Proof is registered in the TTB label database as bourbon kentucky straight from Kentucky.",
-          "nose": "Expected style profile: caramel, vanilla and corn sweetness.",
-          "taste": "Expected style profile: vanilla, corn sweetness and charred oak.",
-          "finish": "Expected style profile: a balanced close of corn sweetness and charred oak."
-        },
-        "pl": {
-          "general": "Four Roses OBSK Single Barrel Bourbon Hotel Covington Pick 125.2 Proof figuruje w rejestrze etykiet TTB jako bourbon kentucky straight z regionu Kentucky.",
-          "nose": "Przewidywany profil stylu: karmel, wanilia i kukurydziana słodycz.",
-          "taste": "Przewidywany profil stylu: wanilia, kukurydziana słodycz i opalany dąb.",
-          "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą kukurydziana słodycz i opalany dąb."
-        }
-      },
-      "source_refs": [
-        "woodencork"
-      ],
-      "image_quality": "mystery-fallback"
-    },
-    {
-      "abv": 25,
-      "category": "Pojedyncza beczka",
-      "desc": "Old Forester Single Barrel Barrel Strength — Warehouse K, Floor 8, 134.5 proof, Kroger Pick. A named retailer selection by Kroger's spirits buying team from the Old Forester single barrel program, bottled at 134.5 proof — 1 proof above the standard 133.5-proof Warehouse K expression also in the collection. Kroger has developed a meaningful single barrel selection program with Kentucky distilleries through its deep market presence. The Kroger Pick designation adds retailer provenance to the Warehouse K, Floor 8 position — two barrels from the same rickhouse floor at virtually identical proofâ¦",
-      "distillery": "Four Roses Distillery",
-      "id": "four-roses-obsk-single-barrel-bourbon-kroger-pick-122-4-proof",
-      "image": "",
-      "mashbill": null,
-      "name": "Four Roses OBSK Single Barrel Bourbon Kroger Pick 122.4 Proof",
-      "notes": null,
-      "price": 349.99,
-      "price_pln": null,
-      "price_str": "$349.99",
-      "proof": 122.4,
-      "quality": null,
-      "region": "Kentucky",
-      "source": "woodencork",
-      "status": "available",
-      "type": "Bourbon Kentucky Straight",
-      "url": "https://woodencork.com/products/four-roses-obsk-single-barrel-bourbon-kroger-pick-122-4-proof",
-      "value": null,
-      "aliases": [
-        "Four Roses OBSK Single Barrel Bourbon Kroger Pick 122.4 Proof"
-      ],
-      "price_status": "verified",
-      "catalog_status": "verified",
-      "profile": {
-        "basis": "style_estimate",
-        "confidence": "low",
-        "en": {
-          "general": "Four Roses OBSK Single Barrel Bourbon Kroger Pick 122.4 Proof is registered in the TTB label database as bourbon kentucky straight from Kentucky.",
-          "nose": "Expected style profile: caramel, vanilla and corn sweetness.",
-          "taste": "Expected style profile: vanilla, corn sweetness and charred oak.",
-          "finish": "Expected style profile: a balanced close of corn sweetness and charred oak."
-        },
-        "pl": {
-          "general": "Four Roses OBSK Single Barrel Bourbon Kroger Pick 122.4 Proof figuruje w rejestrze etykiet TTB jako bourbon kentucky straight z regionu Kentucky.",
-          "nose": "Przewidywany profil stylu: karmel, wanilia i kukurydziana słodycz.",
-          "taste": "Przewidywany profil stylu: wanilia, kukurydziana słodycz i opalany dąb.",
-          "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą kukurydziana słodycz i opalany dąb."
-        }
-      },
-      "source_refs": [
-        "woodencork"
-      ],
-      "image_quality": "mystery-fallback"
-    },
-    {
-      "abv": 75,
-      "category": "Pojedyncza beczka",
-      "desc": "Four Roses OESK Single Barrel Bourbon 750mL Discover the Four Roses OESK Single Barrel Bourbon , a remarkable addition to the esteemed Single Barrel Collection. Crafted with precision, this bourbon celebrates two decades of excellence, offering a unique blend of mash bill and yeast strain for a rich and deep flavor experience. Inspired by the award-winning OBSV recipe, OESK delivers a new tasting adventure with warm, inviting flavors. Flavor Profile Nose: Enjoy the aromas of baking spices and mellow oak, balanced with soft hints of tea leaves and caramel. Palate: Experience a smooth and richâ¦",
-      "distillery": "Four Roses Distillery",
-      "id": "four-roses-oesk-single-barrel-bourbon",
-      "image": "assets/bourbons/clean/four-roses-oesk-single-barrel-bourbon.webp",
-      "mashbill": null,
-      "name": "Four Roses OESK Single Barrel",
-      "notes": null,
-      "price": 49.99,
-      "price_pln": null,
-      "price_str": "$49.99",
-      "proof": null,
-      "quality": null,
-      "region": "Kentucky",
-      "source": "woodencork",
-      "status": "sold_out",
-      "type": "Bourbon Kentucky Straight",
-      "url": "https://woodencork.com/products/four-roses-oesk-single-barrel-bourbon",
-      "value": null,
-      "aliases": [
-        "Four Roses OESK Single Barrel",
-        "Four Roses OESK Single Barrel Bourbon"
-      ],
-      "price_status": "verified",
-      "catalog_status": "verified",
-      "profile": {
-        "basis": "style_estimate",
-        "confidence": "low",
-        "en": {
-          "general": "Four Roses OESK Single Barrel Bourbon is registered in the TTB label database as bourbon kentucky straight from Kentucky.",
-          "nose": "Expected style profile: caramel, vanilla and corn sweetness.",
-          "taste": "Expected style profile: vanilla, corn sweetness and charred oak.",
-          "finish": "Expected style profile: a balanced close of corn sweetness and charred oak."
-        },
-        "pl": {
-          "general": "Four Roses OESK Single Barrel Bourbon figuruje w rejestrze etykiet TTB jako bourbon kentucky straight z regionu Kentucky.",
-          "nose": "Przewidywany profil stylu: karmel, wanilia i kukurydziana słodycz.",
-          "taste": "Przewidywany profil stylu: wanilia, kukurydziana słodycz i opalany dąb.",
-          "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą kukurydziana słodycz i opalany dąb."
-        }
-      },
-      "source_refs": [
-        "woodencork"
-      ],
-      "image_quality": "single-bottle-transparent-v3-no-watermarks",
-      "image_source": "assets/bourbons/four-roses-oesk-single-barrel-bourbon.webp"
-    },
-    {
-      "abv": 75,
-      "category": "Pojedyncza beczka",
-      "desc": "Four Roses OESO Single Barrel Bourbon 750mL Introducing the Four Roses OESO Single Barrel Bourbon , a distinguished addition to the acclaimed Single Barrel Collection. Crafted to celebrate two decades of bourbon excellence, this unique expression combines a special mash bill with the O yeast strain, offering a rich, fruit-forward experience that delights the senses. Tasting Notes Nose: Bright aromas of rich red fruit, complemented by hints of vanilla and soft brown sugar. Palate: A luscious profile of ripe berries and stone fruits, layered with sweet vanilla, caramelized brown sugar, andâ¦",
-      "distillery": "Four Roses Distillery",
-      "id": "four-roses-oeso-single-barrel-bourbon",
-      "image": "assets/bourbons/clean/four-roses-oeso-single-barrel-bourbon.webp",
-      "mashbill": null,
-      "name": "Four Roses OESO Single Barrel",
-      "notes": null,
-      "price": 49.99,
-      "price_pln": null,
-      "price_str": "$49.99",
-      "proof": null,
-      "quality": null,
-      "region": "Kentucky",
-      "source": "woodencork",
-      "status": "sold_out",
-      "type": "Bourbon Kentucky Straight",
-      "url": "https://woodencork.com/products/four-roses-oeso-single-barrel-bourbon",
-      "value": null,
-      "aliases": [
-        "Four Roses OESO Single Barrel",
-        "Four Roses OESO Single Barrel Bourbon"
-      ],
-      "price_status": "verified",
-      "catalog_status": "verified",
-      "profile": {
-        "basis": "style_estimate",
-        "confidence": "low",
-        "en": {
-          "general": "Four Roses OESO Single Barrel Bourbon is registered in the TTB label database as bourbon kentucky straight from Kentucky.",
-          "nose": "Expected style profile: caramel, vanilla and corn sweetness.",
-          "taste": "Expected style profile: vanilla, corn sweetness and charred oak.",
-          "finish": "Expected style profile: a balanced close of corn sweetness and charred oak."
-        },
-        "pl": {
-          "general": "Four Roses OESO Single Barrel Bourbon figuruje w rejestrze etykiet TTB jako bourbon kentucky straight z regionu Kentucky.",
-          "nose": "Przewidywany profil stylu: karmel, wanilia i kukurydziana słodycz.",
-          "taste": "Przewidywany profil stylu: wanilia, kukurydziana słodycz i opalany dąb.",
-          "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą kukurydziana słodycz i opalany dąb."
-        }
-      },
-      "source_refs": [
-        "woodencork"
-      ],
-      "image_quality": "single-bottle-transparent-v3-no-watermarks",
-      "image_source": "assets/bourbons/four-roses-oeso-single-barrel-bourbon.webp"
-    },
-    {
-      "abv": null,
-      "category": "Edycja limitowana",
-      "desc": "Four Roses The Ten Recipe Tasting Experience Limited Edition Introducing the rare and limited edition Four Roses Ten Recipe Tasting Experience . This extraordinary kit features all ten unique bourbon recipes that define the essence of Four Roses' renowned bourbons. It is these ten signature recipes that set Four Roses apart and imbue each bottle with its distinctive character. Discover the Essence of Four Roses Inside the kit, bourbon enthusiasts will discover 50ml bottles of each recipe, allowing them to savor the origins of our exceptional offerings. Each bottle is meticulously crafted toâ¦",
-      "distillery": "Four Roses Distillery",
-      "id": "four-roses-the-ten-recipe-tasting-experience-limited-edition",
-      "image": "",
-      "mashbill": null,
-      "name": "Four Roses The Ten Recipe Tasting Experience Limited Edition",
-      "notes": null,
-      "price": 149.99,
-      "price_pln": null,
-      "price_str": "$149.99",
-      "proof": null,
-      "quality": null,
-      "region": "Kentucky",
-      "source": "woodencork",
-      "status": "sold_out",
-      "type": "Bourbon Kentucky Straight",
-      "url": "https://woodencork.com/products/four-roses-the-ten-recipe-tasting-experience-limited-edition",
-      "value": null,
-      "aliases": [
-        "Four Roses The Ten Recipe Tasting Experience Limited Edition"
-      ],
-      "price_status": "verified",
-      "catalog_status": "verified",
-      "profile": {
-        "basis": "style_estimate",
-        "confidence": "low",
-        "en": {
-          "general": "Four Roses The Ten Recipe Tasting Experience Limited Edition is registered in the TTB label database as bourbon kentucky straight from Kentucky.",
-          "nose": "Expected style profile: caramel, vanilla and corn sweetness.",
-          "taste": "Expected style profile: vanilla, corn sweetness and charred oak.",
-          "finish": "Expected style profile: a balanced close of corn sweetness and charred oak."
-        },
-        "pl": {
-          "general": "Four Roses The Ten Recipe Tasting Experience Limited Edition figuruje w rejestrze etykiet TTB jako bourbon kentucky straight z regionu Kentucky.",
-          "nose": "Przewidywany profil stylu: karmel, wanilia i kukurydziana słodycz.",
-          "taste": "Przewidywany profil stylu: wanilia, kukurydziana słodycz i opalany dąb.",
-          "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą kukurydziana słodycz i opalany dąb."
-        }
-      },
-      "source_refs": [
-        "woodencork"
-      ],
-      "image_quality": "mystery-fallback"
+      "image_source": "assets/bourbons/four-roses-obsk-single-barrel-bourbon.webp",
+      "producer_permit": "DSP-KY-8",
+      "source_url": "https://www.ttbonline.gov/colasonline/publicSearchColasBasic.do?action=publicDisplaySearchBasic&ttbid=24207001000388",
+      "source_id": "24207001000388"
     },
     {
       "abv": null,
@@ -22253,198 +21912,6 @@
         },
         "pl": {
           "general": "FISHHAWK FLEET WHISKEY figuruje w rejestrze etykiet TTB jako domestic whiskey.",
-          "nose": "Przewidywany profil stylu: zbożowa słodycz, wanilia i łagodny dąb.",
-          "taste": "Przewidywany profil stylu: wanilia, łagodny dąb i ciepłe przyprawy.",
-          "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą łagodny dąb i ciepłe przyprawy."
-        }
-      },
-      "source_refs": [
-        "olcc"
-      ]
-    },
-    {
-      "id": "olcc-1031b",
-      "name": "FOUR ROSES S/B BARREL STRENGTH",
-      "aliases": [
-        "FOUR ROSES S/B BARREL STRENGTH"
-      ],
-      "distillery": null,
-      "producer_permit": null,
-      "region": null,
-      "type": "DOMESTIC WHISKEY",
-      "category": "Whiskey",
-      "proof": 109,
-      "abv": 54.5,
-      "mashbill": "Dokładny mashbill wymaga danych producenta",
-      "price": 99.95,
-      "price_currency": "USD",
-      "price_range": "$80-130",
-      "price_status": "verified",
-      "quality": null,
-      "value": null,
-      "notes": "zbożowa słodycz, wanilia i łagodny dąb.",
-      "desc": "FOUR ROSES S/B BARREL STRENGTH — DOMESTIC WHISKEY, 109 proof, kraj niepodany. Cena referencyjna pochodzi z oficjalnego katalogu OLCC.",
-      "image": "",
-      "status": "catalog",
-      "source": "olcc",
-      "source_id": "1031B",
-      "source_url": "https://data.oregon.gov/d/vmf2-f83h",
-      "catalog_status": "verified",
-      "profile": {
-        "basis": "style_estimate",
-        "confidence": "low",
-        "en": {
-          "general": "FOUR ROSES S/B BARREL STRENGTH is registered in the TTB label database as domestic whiskey.",
-          "nose": "Expected style profile: grain sweetness, vanilla and gentle oak.",
-          "taste": "Expected style profile: vanilla, gentle oak and warm spice.",
-          "finish": "Expected style profile: a balanced close of gentle oak and warm spice."
-        },
-        "pl": {
-          "general": "FOUR ROSES S/B BARREL STRENGTH figuruje w rejestrze etykiet TTB jako domestic whiskey.",
-          "nose": "Przewidywany profil stylu: zbożowa słodycz, wanilia i łagodny dąb.",
-          "taste": "Przewidywany profil stylu: wanilia, łagodny dąb i ciepłe przyprawy.",
-          "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą łagodny dąb i ciepłe przyprawy."
-        }
-      },
-      "source_refs": [
-        "olcc"
-      ]
-    },
-    {
-      "id": "olcc-8774b",
-      "name": "FOUR ROSES SINGLE BARREL KENTUCKY BOURBN",
-      "aliases": [
-        "FOUR ROSES SINGLE BARREL KENTUCKY BOURBN"
-      ],
-      "distillery": null,
-      "producer_permit": null,
-      "region": null,
-      "type": "DOMESTIC WHISKEY",
-      "category": "Whiskey",
-      "proof": 100,
-      "abv": 50,
-      "mashbill": "Dokładny mashbill wymaga danych producenta",
-      "price": 49.95,
-      "price_currency": "USD",
-      "price_range": "$25-55",
-      "price_status": "verified",
-      "quality": null,
-      "value": null,
-      "notes": "zbożowa słodycz, wanilia i łagodny dąb.",
-      "desc": "FOUR ROSES SINGLE BARREL KENTUCKY BOURBN — DOMESTIC WHISKEY, 100 proof, kraj niepodany. Cena referencyjna pochodzi z oficjalnego katalogu OLCC.",
-      "image": "",
-      "status": "catalog",
-      "source": "olcc",
-      "source_id": "8774B",
-      "source_url": "https://data.oregon.gov/d/vmf2-f83h",
-      "catalog_status": "verified",
-      "profile": {
-        "basis": "style_estimate",
-        "confidence": "low",
-        "en": {
-          "general": "FOUR ROSES SINGLE BARREL KENTUCKY BOURBN is registered in the TTB label database as domestic whiskey.",
-          "nose": "Expected style profile: grain sweetness, vanilla and gentle oak.",
-          "taste": "Expected style profile: vanilla, gentle oak and warm spice.",
-          "finish": "Expected style profile: a balanced close of gentle oak and warm spice."
-        },
-        "pl": {
-          "general": "FOUR ROSES SINGLE BARREL KENTUCKY BOURBN figuruje w rejestrze etykiet TTB jako domestic whiskey.",
-          "nose": "Przewidywany profil stylu: zbożowa słodycz, wanilia i łagodny dąb.",
-          "taste": "Przewidywany profil stylu: wanilia, łagodny dąb i ciepłe przyprawy.",
-          "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą łagodny dąb i ciepłe przyprawy."
-        }
-      },
-      "source_refs": [
-        "olcc"
-      ]
-    },
-    {
-      "id": "olcc-12806b",
-      "name": "FOUR ROSES SINGLE BARREL OBSF",
-      "aliases": [
-        "FOUR ROSES SINGLE BARREL OBSF"
-      ],
-      "distillery": null,
-      "producer_permit": null,
-      "region": null,
-      "type": "DOMESTIC WHISKEY",
-      "category": "Whiskey",
-      "proof": 100,
-      "abv": 50,
-      "mashbill": "Dokładny mashbill wymaga danych producenta",
-      "price": 49.95,
-      "price_currency": "USD",
-      "price_range": "$25-55",
-      "price_status": "verified",
-      "quality": null,
-      "value": null,
-      "notes": "zbożowa słodycz, wanilia i łagodny dąb.",
-      "desc": "FOUR ROSES SINGLE BARREL OBSF — DOMESTIC WHISKEY, 100 proof, kraj niepodany. Cena referencyjna pochodzi z oficjalnego katalogu OLCC.",
-      "image": "",
-      "status": "catalog",
-      "source": "olcc",
-      "source_id": "12806B",
-      "source_url": "https://data.oregon.gov/d/vmf2-f83h",
-      "catalog_status": "verified",
-      "profile": {
-        "basis": "style_estimate",
-        "confidence": "low",
-        "en": {
-          "general": "FOUR ROSES SINGLE BARREL OBSF is registered in the TTB label database as domestic whiskey.",
-          "nose": "Expected style profile: grain sweetness, vanilla and gentle oak.",
-          "taste": "Expected style profile: vanilla, gentle oak and warm spice.",
-          "finish": "Expected style profile: a balanced close of gentle oak and warm spice."
-        },
-        "pl": {
-          "general": "FOUR ROSES SINGLE BARREL OBSF figuruje w rejestrze etykiet TTB jako domestic whiskey.",
-          "nose": "Przewidywany profil stylu: zbożowa słodycz, wanilia i łagodny dąb.",
-          "taste": "Przewidywany profil stylu: wanilia, łagodny dąb i ciepłe przyprawy.",
-          "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą łagodny dąb i ciepłe przyprawy."
-        }
-      },
-      "source_refs": [
-        "olcc"
-      ]
-    },
-    {
-      "id": "olcc-12807b",
-      "name": "FOUR ROSES SINGLE BARREL OESK",
-      "aliases": [
-        "FOUR ROSES SINGLE BARREL OESK"
-      ],
-      "distillery": null,
-      "producer_permit": null,
-      "region": null,
-      "type": "DOMESTIC WHISKEY",
-      "category": "Whiskey",
-      "proof": 100,
-      "abv": 50,
-      "mashbill": "Dokładny mashbill wymaga danych producenta",
-      "price": 49.95,
-      "price_currency": "USD",
-      "price_range": "$25-55",
-      "price_status": "verified",
-      "quality": null,
-      "value": null,
-      "notes": "zbożowa słodycz, wanilia i łagodny dąb.",
-      "desc": "FOUR ROSES SINGLE BARREL OESK — DOMESTIC WHISKEY, 100 proof, kraj niepodany. Cena referencyjna pochodzi z oficjalnego katalogu OLCC.",
-      "image": "",
-      "status": "catalog",
-      "source": "olcc",
-      "source_id": "12807B",
-      "source_url": "https://data.oregon.gov/d/vmf2-f83h",
-      "catalog_status": "verified",
-      "profile": {
-        "basis": "style_estimate",
-        "confidence": "low",
-        "en": {
-          "general": "FOUR ROSES SINGLE BARREL OESK is registered in the TTB label database as domestic whiskey.",
-          "nose": "Expected style profile: grain sweetness, vanilla and gentle oak.",
-          "taste": "Expected style profile: vanilla, gentle oak and warm spice.",
-          "finish": "Expected style profile: a balanced close of gentle oak and warm spice."
-        },
-        "pl": {
-          "general": "FOUR ROSES SINGLE BARREL OESK figuruje w rejestrze etykiet TTB jako domestic whiskey.",
           "nose": "Przewidywany profil stylu: zbożowa słodycz, wanilia i łagodny dąb.",
           "taste": "Przewidywany profil stylu: wanilia, łagodny dąb i ciepłe przyprawy.",
           "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą łagodny dąb i ciepłe przyprawy."
@@ -42375,54 +41842,6 @@
       ]
     },
     {
-      "id": "olcc-12808b",
-      "name": "FOUR ROSES SINGLE BARREL OESO",
-      "aliases": [
-        "FOUR ROSES SINGLE BARREL OESO"
-      ],
-      "distillery": null,
-      "producer_permit": null,
-      "region": null,
-      "type": "DOMESTIC WHISKEY",
-      "category": "Whiskey",
-      "proof": 100,
-      "abv": 50,
-      "mashbill": "Dokładny mashbill wymaga danych producenta",
-      "price": 49.95,
-      "price_currency": "USD",
-      "price_range": "$25-55",
-      "price_status": "verified",
-      "quality": null,
-      "value": null,
-      "notes": "zbożowa słodycz, wanilia i łagodny dąb.",
-      "desc": "FOUR ROSES SINGLE BARREL OESO — DOMESTIC WHISKEY, 100 proof, kraj niepodany. Cena referencyjna pochodzi z oficjalnego katalogu OLCC.",
-      "image": "",
-      "status": "catalog",
-      "source": "olcc",
-      "source_id": "12808B",
-      "source_url": "https://data.oregon.gov/d/vmf2-f83h",
-      "catalog_status": "verified",
-      "profile": {
-        "basis": "style_estimate",
-        "confidence": "low",
-        "en": {
-          "general": "FOUR ROSES SINGLE BARREL OESO is registered in the TTB label database as domestic whiskey.",
-          "nose": "Expected style profile: grain sweetness, vanilla and gentle oak.",
-          "taste": "Expected style profile: vanilla, gentle oak and warm spice.",
-          "finish": "Expected style profile: a balanced close of gentle oak and warm spice."
-        },
-        "pl": {
-          "general": "FOUR ROSES SINGLE BARREL OESO figuruje w rejestrze etykiet TTB jako domestic whiskey.",
-          "nose": "Przewidywany profil stylu: zbożowa słodycz, wanilia i łagodny dąb.",
-          "taste": "Przewidywany profil stylu: wanilia, łagodny dąb i ciepłe przyprawy.",
-          "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą łagodny dąb i ciepłe przyprawy."
-        }
-      },
-      "source_refs": [
-        "olcc"
-      ]
-    },
-    {
       "id": "olcc-12826b",
       "name": "LUX ROW SMALL BATCH PX SHERRY FINISH",
       "aliases": [
@@ -49605,61 +49024,6 @@
           "nose": "Przewidywany profil stylu: żytnie przyprawy, zioła i karmel.",
           "taste": "Przewidywany profil stylu: zioła, karmel i suchy dąb.",
           "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą karmel i suchy dąb."
-        }
-      },
-      "source_refs": [
-        "ttb-cola"
-      ]
-    },
-    {
-      "id": "four-roses-single-barrel-101-22",
-      "name": "FOUR ROSES SINGLE BARREL",
-      "aliases": [
-        "FOUR ROSES SINGLE BARREL",
-        "FOUR ROSES",
-        "SINGLE BARREL",
-        "SINGLE BARREL FOUR ROSES",
-        "FOUR ROSES PRIVATE SELECTION",
-        "PRIVATE SELECTION",
-        "PRIVATE SELECTION FOUR ROSES"
-      ],
-      "distillery": "Four Roses Distillery",
-      "producer_permit": "DSP-KY-8",
-      "region": "KENTUCKY",
-      "type": "STRAIGHT BOURBON WHISKY",
-      "category": "Straight Bourbon",
-      "proof": 100,
-      "abv": 50,
-      "mashbill": "Co najmniej 51% kukurydzy; dokładny mashbill wymaga danych producenta",
-      "price": 49.95,
-      "price_currency": "USD",
-      "price_range": "$25-55",
-      "price_status": "verified",
-      "quality": null,
-      "value": null,
-      "notes": "karmel, wanilia i kukurydziana słodycz.",
-      "desc": "FOUR ROSES SINGLE BARREL — STRAIGHT BOURBON WHISKY, KENTUCKY. Dane identyfikacyjne pochodzą z publicznego rejestru etykiet TTB.",
-      "image": "",
-      "status": "catalog",
-      "source": "ttb-cola",
-      "source_id": "24207001000388",
-      "source_url": "https://www.ttbonline.gov/colasonline/publicSearchColasBasic.do?action=publicDisplaySearchBasic&ttbid=24207001000388",
-      "completed_date": "08/28/2024",
-      "catalog_status": "verified",
-      "profile": {
-        "basis": "style_estimate",
-        "confidence": "low",
-        "en": {
-          "general": "FOUR ROSES SINGLE BARREL is registered in the TTB label database as straight bourbon whisky from KENTUCKY.",
-          "nose": "Expected style profile: caramel, vanilla and corn sweetness.",
-          "taste": "Expected style profile: vanilla, corn sweetness and charred oak.",
-          "finish": "Expected style profile: a balanced close of corn sweetness and charred oak."
-        },
-        "pl": {
-          "general": "FOUR ROSES SINGLE BARREL figuruje w rejestrze etykiet TTB jako straight bourbon whisky z regionu KENTUCKY.",
-          "nose": "Przewidywany profil stylu: karmel, wanilia i kukurydziana słodycz.",
-          "taste": "Przewidywany profil stylu: wanilia, kukurydziana słodycz i opalany dąb.",
-          "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą kukurydziana słodycz i opalany dąb."
         }
       },
       "source_refs": [

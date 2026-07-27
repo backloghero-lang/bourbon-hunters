@@ -1,11 +1,11 @@
 {
   "version": 3,
-  "updated": "2026-07-27T14:55:32.503Z",
+  "updated": "2026-07-27T16:02:09.581Z",
   "policy": "retail-relevance-2026-v3-quality-first",
   "max_usd": 500,
   "max_pln": 1500,
-  "before": 9018,
-  "after": 1042,
+  "before": 9004,
+  "after": 1028,
   "removed": 7976,
   "quality_removed": 7976,
   "reasons": {
@@ -26,6 +26,6 @@
     }
   },
   "product_consolidation_version": "retail-product-v2",
-  "product_duplicates_removed": 178,
-  "product_redirect_count": 178
+  "product_duplicates_removed": 191,
+  "product_redirect_count": 191
 }

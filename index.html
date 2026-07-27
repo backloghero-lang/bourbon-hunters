@@ -146,7 +146,12 @@
 
   /* list rows (Odkrywaj / Lista życzeń) */
   .blist{display:flex;flex-direction:column;gap:10px}
-  .brow{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px;cursor:pointer;transition:transform .08s,border-color .2s}
+  .brow{display:flex;align-items:center;gap:14px;background:
+    linear-gradient(100deg,rgba(92,24,20,.72) 0%,rgba(17,15,12,.94) 48%,rgba(7,62,42,.74) 100%),
+    url("design/figma-assets/home-pack-v2/app-background-v3.jpg") center/cover no-repeat;
+    border:1px solid rgba(226,176,112,.3);border-radius:14px;padding:10px 12px;cursor:pointer;transition:transform .08s,border-color .2s,box-shadow .2s;
+    box-shadow:inset 0 1px 0 rgba(255,226,174,.05),0 10px 24px rgba(0,0,0,.24)}
+  .brow:hover{border-color:rgba(226,176,112,.52);box-shadow:inset 0 1px 0 rgba(255,226,174,.08),0 12px 28px rgba(0,0,0,.34)}
   .brow:active{transform:scale(.99)}
   .brow .pic{flex:0 0 54px;height:74px;border-radius:9px;overflow:hidden;display:grid;place-items:center;font-size:30px;background:radial-gradient(70% 70% at 50% 25%,rgba(220,184,119,.16),rgba(0,0,0,.3));position:relative}
   .brow .pic img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;object-position:center}
@@ -247,8 +252,14 @@
   .rec-empty{flex:0 0 92%;scroll-snap-align:start;min-height:152px;display:grid;align-content:center;gap:8px;color:#C9B493;border:1px dashed rgba(226,176,112,.28);border-radius:18px;background:rgba(0,0,0,.18);padding:22px;font-size:13px;line-height:1.45}
   .rec-empty b{display:block;font-family:var(--serif);font-size:20px;color:#F6E1BC;line-height:1.1}
   .rec-list{display:grid;gap:12px}
-  .rec-list-card{display:grid;grid-template-columns:76px 1fr;gap:12px;align-items:center;border:1px solid rgba(226,176,112,.22);border-radius:18px;background:linear-gradient(180deg,rgba(29,24,18,.72),rgba(10,7,5,.9));padding:12px;box-shadow:0 14px 26px rgba(0,0,0,.24);cursor:pointer}
+  .rec-list-card{display:grid;grid-template-columns:76px 1fr;gap:12px;align-items:center;border:1px solid rgba(226,176,112,.3);border-radius:18px;background:
+    linear-gradient(100deg,rgba(92,24,20,.72) 0%,rgba(17,15,12,.94) 48%,rgba(7,62,42,.74) 100%),
+    url("design/figma-assets/home-pack-v2/app-background-v3.jpg") center/cover no-repeat;
+    padding:12px;box-shadow:inset 0 1px 0 rgba(255,226,174,.05),0 14px 26px rgba(0,0,0,.28);cursor:pointer}
   .rec-list-card img{width:70px;height:96px;object-fit:contain;filter:drop-shadow(0 12px 14px rgba(0,0,0,.45))}
+  .rec-list-card .mystery-bottle.small{width:36px;height:66px;border-radius:9px 9px 7px 7px}
+  .rec-list-card .mystery-bottle.small:before{top:-14px;width:15px;height:17px}
+  .rec-list-card .mystery-bottle.small span{font-size:21px}
   .rec-list-card h4{margin:0 0 6px;font-family:var(--serif);font-size:18px;line-height:1.12;color:#F6E1BC}
   .rec-list-card p{margin:8px 0 0;color:#C9B493;font-size:12px;line-height:1.42;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .recommend-box{margin:16px 0 0;border:1px solid rgba(226,176,112,.2);border-radius:18px;background:linear-gradient(180deg,rgba(29,24,18,.72),rgba(10,7,5,.9));padding:14px}
@@ -340,6 +351,10 @@
   .dphoto:before{content:"";position:absolute;inset:0;background:url("design/figma-assets/asset-pack-v1/noise-overlay.png") center/cover repeat;opacity:.12;pointer-events:none}
   .dphoto img{position:relative;z-index:1;width:auto!important;height:auto!important;max-width:66%!important;max-height:68%!important;object-fit:contain!important;object-position:center!important;filter:contrast(1.04) saturate(1.04) drop-shadow(0 18px 22px rgba(0,0,0,.55))}
   .dphoto.agent-cutout img{max-width:78%!important;max-height:78%!important;transform:scale(1.08);transform-origin:center}
+  .local-photo-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:-4px 0 16px}
+  .local-photo-actions button{min-height:42px;border:1px solid rgba(226,176,112,.48);border-radius:8px;background:rgba(16,11,7,.84);color:var(--gold);font-weight:800;padding:10px 14px;cursor:pointer}
+  .local-photo-actions button.secondary{color:var(--muted);border-color:rgba(226,176,112,.22)}
+  .local-photo-note{flex-basis:100%;margin:0;color:var(--muted);font-size:12px;line-height:1.4}
   .d-actions{position:absolute;top:12px;right:12px;z-index:3;display:flex;gap:9px}
   .shot img{width:100%;height:100%;object-fit:cover}
 
@@ -585,6 +600,7 @@
       </div>
       <input type="file" id="file" accept="image/*" capture="environment" hidden>
       <input type="file" id="galleryFile" accept="image/*" hidden>
+      <input type="file" id="localBottleImageInput" accept="image/*" capture="environment" hidden>
       <div class="btns">
         <button class="scan-side" id="pickGallery" type="button" aria-label="Galeria">Galeria</button>
         <button class="btn btn-go" id="goRate" disabled data-i18n="btnRate">⭐ Ocena</button>
@@ -873,10 +889,7 @@ const RUNTIME_BOTTLE_IDS = [
   "wild-turkey-101-bourbon",
   "wild-turkey-12-year-old-101-proof",
   "russells-reserve-single-barrel-barrel-select-bourbon",
-  "four-roses-obsf-single-barrel-bourbon",
   "four-roses-obsk-single-barrel-bourbon",
-  "four-roses-oesk-single-barrel-bourbon",
-  "four-roses-oeso-single-barrel-bourbon",
   "elijah-craig-15-year-old-single-barrel",
   "elijah-craig-small-batch-old-label",
   "knob-creek-120-proof-9-year-single-barrel-reserve-bourbon",
@@ -1019,7 +1032,10 @@ Object.assign(I18N.pl,{
   acceptImage:"Akceptuj\u0119 i dodaj\u0119", retakeImage:"Zr\u00f3b zdj\u0119cie ponownie", saveWithoutImage:"Zapisz bez zdj\u0119cia", addToCatalog:"Uzupe\u0142nij i dodaj do katalogu", addToCollection:"Dodaj do kolekcji", catalogLicenseNote:"Akceptuj\u0105c, pozwalasz Bourbon Hunters bezterminowo u\u017cywa\u0107 gotowego assetu katalogowego. Oryginalne zdj\u0119cie i pliki robocze zostan\u0105 usuni\u0119te.",
   catalogNoPreview:"Nie uda\u0142o si\u0119 przygotowa\u0107 wyci\u0119cia.", catalogNoPreviewCopy:"Mo\u017cesz zrobi\u0107 nowe zdj\u0119cie albo zapisa\u0107 same dane.", catalogSaved:"Butelka zapisana i dodana do Ostatnio dodanych.", catalogLogin:"Zaloguj si\u0119, aby doda\u0107 butelk\u0119 do katalogu.", catalogError:"Nie uda\u0142o si\u0119 zapisa\u0107 butelki.", catalogHit:"Mam trafienie",
   scanConfirmSingleTitle:"Czy to ta butelka?", scanConfirmSingleBody:"Sprawd\u017a nazw\u0119 i potwierd\u017a. Po potwierdzeniu przygotuj\u0119 zdj\u0119cie butelki i poka\u017c\u0119 szczeg\u00f3\u0142y.",
-  scanConfirmSingleOk:"Tak, to ta", scanConfirmSingleCancel:"Nie, spr\u00f3buj ponownie"
+  scanConfirmSingleOk:"Tak, to ta", scanConfirmSingleCancel:"Nie, spr\u00f3buj ponownie",
+  addLocalBottlePhoto:"Dodaj swoje zdj\u0119cie", changeLocalBottlePhoto:"Zmie\u0144 zdj\u0119cie", removeLocalBottlePhoto:"Usu\u0144 lokalne zdj\u0119cie",
+  localBottlePhotoNote:"Zdj\u0119cie jest zapisane tylko na tym urz\u0105dzeniu.", localBottlePhotoSaved:"Lokalne zdj\u0119cie zosta\u0142o zapisane.",
+  localBottlePhotoRemoved:"Lokalne zdj\u0119cie zosta\u0142o usuni\u0119te.", localBottlePhotoError:"Nie uda\u0142o si\u0119 zapisa\u0107 tego zdj\u0119cia."
 });
 Object.assign(I18N.en,{
   termsTitle:"Terms of Service", privacyTitle:"Privacy Policy", forgotPassword:"Forgot password?", resetTitle:"Reset password",
@@ -1051,7 +1067,10 @@ Object.assign(I18N.en,{
   acceptImage:"Accept and add", retakeImage:"Take another photo", saveWithoutImage:"Save without photo", addToCatalog:"Complete and add to catalog", addToCollection:"Add to collection", catalogLicenseNote:"By accepting, you allow Bourbon Hunters to keep and use the finished catalog asset. The original photo and working files will be deleted.",
   catalogNoPreview:"The bottle cutout could not be prepared.", catalogNoPreviewCopy:"Take another photo or save the bottle data without an image.", catalogSaved:"Bottle saved and added to Recently added.", catalogLogin:"Sign in to add a bottle to the catalog.", catalogError:"The bottle could not be saved.", catalogHit:"Found a match",
   scanConfirmSingleTitle:"Is this the bottle?", scanConfirmSingleBody:"Check the name and confirm it. I will prepare the bottle image and show its details after confirmation.",
-  scanConfirmSingleOk:"Yes, that's it", scanConfirmSingleCancel:"No, try again"
+  scanConfirmSingleOk:"Yes, that's it", scanConfirmSingleCancel:"No, try again",
+  addLocalBottlePhoto:"Add your photo", changeLocalBottlePhoto:"Change photo", removeLocalBottlePhoto:"Remove local photo",
+  localBottlePhotoNote:"This photo is stored only on this device.", localBottlePhotoSaved:"Local photo saved.",
+  localBottlePhotoRemoved:"Local photo removed.", localBottlePhotoError:"This photo could not be saved."
 });
 Object.assign(I18N.pl,{
   searchPh:"Szukaj whisky lub destylarni...",
@@ -1191,6 +1210,8 @@ let BROWSE_META={families:{bourbon:0,whisky:0},bourbon:{},whisky:{}};
 let whiskyCatalogLoaded=false, whiskyCatalogPromise=null;
 let exploreFamily="all", exploreLockedFamily="", exploreStyles=[];
 let recommendationFamily="all", recommendationStyles=[];
+let LOCAL_BOTTLE_IMAGES={}, pendingLocalBottleImageId="";
+const LOCAL_BOTTLE_IMAGE_DB="bourbon-hunters-local-bottle-images-v1";
 const collectionFamilies={wishlist:"all",owned:"all"};
 const collectionStyles={wishlist:[],owned:[]};
 const PLN_PER_USD = 4.0; // orientacyjne UI; docelowo kurs moze przyjsc z Workera
@@ -1230,6 +1251,66 @@ function canonicalBottleId(id){
   return id;
 }
 function bottleById(id){ id=canonicalBottleId(id); return DB.find(function(b){ return b.id===id; })||null; }
+function officialBottleImage(b){ return String((b&&(b.thumb||b.image))||""); }
+function localBottleImage(b){
+  const id=canonicalBottleId(b&&b.id);
+  return id&&LOCAL_BOTTLE_IMAGES[id] ? String(LOCAL_BOTTLE_IMAGES[id]) : "";
+}
+function bottleImage(b){ return localBottleImage(b)||officialBottleImage(b); }
+function bottleImageHtml(b,small,alt){
+  const src=bottleImage(b);
+  return src
+    ? '<img src="'+esc(src)+'" alt="'+esc(alt||b&&b.name||"")+'" data-bottle-image="1" data-mystery-size="'+(small?"small":"large")+'" loading="'+(small?"lazy":"eager")+'" decoding="async">'
+    : mysteryBottleHtml(!!small);
+}
+function openLocalBottleImageDb(){
+  return new Promise(function(resolve,reject){
+    if(!window.indexedDB){ reject(new Error("indexeddb-unavailable")); return; }
+    const request=indexedDB.open(LOCAL_BOTTLE_IMAGE_DB,1);
+    request.onupgradeneeded=function(){
+      const db=request.result;
+      if(!db.objectStoreNames.contains("images")) db.createObjectStore("images",{keyPath:"bottle_id"});
+    };
+    request.onsuccess=function(){ resolve(request.result); };
+    request.onerror=function(){ reject(request.error||new Error("indexeddb-open")); };
+  });
+}
+function loadLocalBottleImages(){
+  return openLocalBottleImageDb().then(function(db){
+    return new Promise(function(resolve,reject){
+      const request=db.transaction("images","readonly").objectStore("images").getAll();
+      request.onsuccess=function(){
+        LOCAL_BOTTLE_IMAGES={};
+        (request.result||[]).forEach(function(item){
+          if(item&&item.bottle_id&&item.data_url) LOCAL_BOTTLE_IMAGES[canonicalBottleId(item.bottle_id)]=item.data_url;
+        });
+        db.close();
+        resolve(LOCAL_BOTTLE_IMAGES);
+      };
+      request.onerror=function(){ db.close(); reject(request.error||new Error("indexeddb-read")); };
+    });
+  }).catch(function(){ LOCAL_BOTTLE_IMAGES={}; return LOCAL_BOTTLE_IMAGES; });
+}
+function saveLocalBottleImage(id,dataUrl){
+  id=canonicalBottleId(id);
+  return openLocalBottleImageDb().then(function(db){
+    return new Promise(function(resolve,reject){
+      const request=db.transaction("images","readwrite").objectStore("images").put({bottle_id:id,data_url:dataUrl,updated_at:new Date().toISOString()});
+      request.onsuccess=function(){ db.close(); LOCAL_BOTTLE_IMAGES[id]=dataUrl; resolve(); };
+      request.onerror=function(){ db.close(); reject(request.error||new Error("indexeddb-write")); };
+    });
+  });
+}
+function removeLocalBottleImage(id){
+  id=canonicalBottleId(id);
+  return openLocalBottleImageDb().then(function(db){
+    return new Promise(function(resolve,reject){
+      const request=db.transaction("images","readwrite").objectStore("images").delete(id);
+      request.onsuccess=function(){ db.close(); delete LOCAL_BOTTLE_IMAGES[id]; resolve(); };
+      request.onerror=function(){ db.close(); reject(request.error||new Error("indexeddb-delete")); };
+    });
+  });
+}
 function wlHas(id){ return WL.indexOf(canonicalBottleId(id))>=0; }
 function wlSave(){ try{ localStorage.setItem("bh_wishlist",JSON.stringify(WL)); }catch(e){} }
 function wlToggle(id){ id=canonicalBottleId(id); const i=WL.indexOf(id); if(i>=0){ WL.splice(i,1); wlSave(); return false; } WL.push(id); wlSave(); return true; }
@@ -1957,8 +2038,7 @@ function openResetFromUrl(){
 
 /* wiersz listy (Odkrywaj / Lista życzeń) */
 function listRow(b){
-  const img=b.thumb||b.image;
-  const pic=img?'<div class="pic"><img src="'+esc(img)+'" alt="'+esc(b.name)+'" loading="lazy" decoding="async">'+valueBadgeHtml(b)+'</div>':'<div class="pic">'+mysteryBottleHtml(true)+valueBadgeHtml(b)+'</div>';
+  const pic='<div class="pic">'+bottleImageHtml(b,true,b.name)+valueBadgeHtml(b)+'</div>';
   const proof=b.proof?(b.proof+' Proof'):(b.abv?(b.abv+'% ABV'):'');
   const shownName=compactBottleName(b);
   return '<div class="brow" data-id="'+esc(b.id)+'">'+pic+
@@ -2344,7 +2424,7 @@ function featCard(b, kick, rec){
     '<div class="info"><h4 title="'+esc(shownName)+'">'+esc(shownName)+'</h4>'+
     '<div class="feat-tags"><span class="feat-tag">'+esc(tag)+'</span></div>'+
     '<span class="btn-sm" data-id="'+esc(b.id)+'">'+t("viewAll").split(" ")[0]+' →</span></div>'+
-    '<div class="feat-visual"><div class="bottlepic'+(isAgentCutout(b)?' agent-cutout':'')+'">'+(b.image?'<img src="'+esc(b.image)+'" loading="lazy" decoding="async" alt="">':mysteryBottleHtml(true))+valueBadgeHtml(b)+'</div>'+
+    '<div class="feat-visual"><div class="bottlepic'+(isAgentCutout(b)?' agent-cutout':'')+'">'+bottleImageHtml(b,true,b.name)+valueBadgeHtml(b)+'</div>'+
     (price?'<div class="feat-price-chip">'+esc(price)+'</div>':'')+'</div></div>';
 }
 function isAgentCutout(b){ return !!(b && (b.source==="community_catalog" || b.source==="catalog_preview" || b.source==="scan_preview" || b.has_image===true)); }
@@ -2697,7 +2777,8 @@ function fetchRecentCatalog(){
 Promise.all([
   fetch(DB_URL).then(function(r){return r.json();}),
   fetch(PROFILES_URL).then(function(r){ return r.ok ? r.json() : {profiles:{}}; }).catch(function(){ return {profiles:{}}; }),
-  fetch(BROWSE_META_URL).then(function(r){ return r.ok ? r.json() : {}; }).catch(function(){ return {}; })
+  fetch(BROWSE_META_URL).then(function(r){ return r.ok ? r.json() : {}; }).catch(function(){ return {}; }),
+  loadLocalBottleImages()
 ]).then(function(res){
   BROWSE_META=res[2]||BROWSE_META;
   ID_REDIRECTS=res[0].id_redirects||{};
@@ -2766,7 +2847,7 @@ function renderRecommendationsView(){
   el.innerHTML='<div class="rec-list">'+recs.map(function(rec){
     const b=bottleForRec(rec);
     return '<div class="rec-list-card" data-id="'+esc(b.id)+'">'+
-      (b.image?'<img src="'+esc(b.image)+'" alt="" loading="lazy" decoding="async">':'<div></div>')+
+      bottleImageHtml(b,true,b.name)+
       '<div><h4>'+esc(compactBottleName(b))+'</h4>'+recByHtml(rec)+
       '<p>'+esc(rec.comment)+'</p></div></div>';
   }).join("")+'</div>';
@@ -2875,6 +2956,27 @@ function renderExplore(){
 
 /* delegacja klikniec na karty/destylarnie */
 document.addEventListener("click",function(e){
+  const localPhotoAdd=e.target.closest("[data-local-photo-add]");
+  if(localPhotoAdd){
+    e.preventDefault();
+    e.stopPropagation();
+    pendingLocalBottleImageId=canonicalBottleId(localPhotoAdd.getAttribute("data-local-photo-add"));
+    const input=document.getElementById("localBottleImageInput");
+    if(input) input.click();
+    return;
+  }
+  const localPhotoRemove=e.target.closest("[data-local-photo-remove]");
+  if(localPhotoRemove){
+    e.preventDefault();
+    e.stopPropagation();
+    const id=canonicalBottleId(localPhotoRemove.getAttribute("data-local-photo-remove"));
+    removeLocalBottleImage(id).then(function(){
+      renderHome(); renderExplore(); renderHomeCollection(); renderRecommendationsView();
+      if(currentDetailId===id) openDetail(id,true,true);
+      toast(t("localBottlePhotoRemoved"));
+    }).catch(function(){ toast(t("localBottlePhotoError")); });
+    return;
+  }
   const ctab=e.target.closest("[data-ctab]");
   if(ctab){ renderCollection(ctab.getAttribute("data-ctab")); return; }
   const exploreFamilyEl=e.target.closest("[data-explore-family]");
@@ -3057,6 +3159,11 @@ document.addEventListener("click",function(e){
   if(e.target.id==="loadMoreBtn"){ renderN+=RENDER_LIMIT; renderExplore(); return; }
   if(e.target.id==="goAnalyzeBtn"){ scan("analyze",currentScanResult&&currentScanResult.scan_match_id); return; }
 });
+document.addEventListener("error",function(e){
+  const img=e.target;
+  if(!img || !img.matches || !img.matches("img[data-bottle-image]")) return;
+  img.outerHTML=mysteryBottleHtml(img.getAttribute("data-mystery-size")==="small");
+},true);
 document.getElementById("catAll").addEventListener("click",function(){ openExploreFamily("all",false,[]); });
 document.getElementById("featuredAll").addEventListener("click",function(){ renderRecommendationsView(); showView("recommendations"); });
 document.getElementById("recentAll").addEventListener("click",function(){ openExploreFamily("all",false,[]); });
@@ -3086,6 +3193,15 @@ renderHunterProfile();
 renderBadgePicker();
 openResetFromUrl();
 
+function localBottlePhotoControls(b){
+  const hasLocal=!!localBottleImage(b);
+  if(officialBottleImage(b) && !hasLocal) return "";
+  return '<div class="local-photo-actions">'+
+    '<button type="button" data-local-photo-add="'+esc(b.id)+'">'+esc(t(hasLocal?"changeLocalBottlePhoto":"addLocalBottlePhoto"))+'</button>'+
+    (hasLocal?'<button class="secondary" type="button" data-local-photo-remove="'+esc(b.id)+'">'+esc(t("removeLocalBottlePhoto"))+'</button>':'')+
+    '<p class="local-photo-note">'+esc(t("localBottlePhotoNote"))+'</p>'+
+  '</div>';
+}
 function openDetail(id, keepReturn, skipRecommendationFetch){
   id=canonicalBottleId(id);
   const b = bottleById(id);
@@ -3094,7 +3210,7 @@ function openDetail(id, keepReturn, skipRecommendationFetch){
   if(!keepReturn) detailReturnView=currentView && currentView!=="detail" ? currentView : "explore";
   const origin = [b.distillery,b.region].filter(Boolean).map(esc).join(" · ");
   const actions = bottleActionsHtml(b);
-  const pic = b.image ? '<div class="dphoto'+(isAgentCutout(b)?' agent-cutout':'')+'">'+actions+'<img src="'+esc(b.image)+'" alt="'+esc(b.name)+'" loading="eager" decoding="async">'+valueBadgeHtml(b)+'</div>' : '<div class="dphoto">'+actions+mysteryBottleHtml(false)+valueBadgeHtml(b)+'</div>';
+  const pic = '<div class="dphoto'+(isAgentCutout(b)?' agent-cutout':'')+'">'+actions+bottleImageHtml(b,false,b.name)+valueBadgeHtml(b)+'</div>';
   const statusBadge = b.status==="sold_out" || b.available===false
     ? '<span class="badge net">'+t("statusSold")+'</span>'
     : '<span class="badge db">'+t("statusAvail")+'</span>';
@@ -3102,7 +3218,7 @@ function openDetail(id, keepReturn, skipRecommendationFetch){
     '<div style="display:flex;justify-content:flex-start;align-items:center;margin-bottom:8px">'+statusBadge+'</div>'+
     '<div class="dhead">'+esc(b.name)+'</div>'+
     '<div class="dtype">'+esc(categoryLabel(b))+'</div>'+
-    (origin?'<div class="dorigin">'+origin+'</div>':'')+pic+
+    (origin?'<div class="dorigin">'+origin+'</div>':'')+pic+localBottlePhotoControls(b)+
     ratingPanel(b)+generalInfoBlock(b)+tastingBlock(b)+
     (b.mashbill?'<div class="sec-t">'+t("mashbill")+'</div><p class="desc">'+esc(localizedMashbill(b.mashbill))+'</p>':'')+
     (b.url?'<div class="links" style="margin-top:14px"><a href="'+esc(b.url)+'" target="_blank" rel="noopener">'+t("viewShop")+'</a></div>':'')+
@@ -3113,6 +3229,24 @@ function openDetail(id, keepReturn, skipRecommendationFetch){
     if(currentDetailId===id && document.getElementById("view-detail").classList.contains("active")) openDetail(id,true,true);
   });
 }
+const localBottleImageInput=document.getElementById("localBottleImageInput");
+if(localBottleImageInput) localBottleImageInput.addEventListener("change",function(){
+  const file=localBottleImageInput.files&&localBottleImageInput.files[0];
+  const id=canonicalBottleId(pendingLocalBottleImageId);
+  localBottleImageInput.value="";
+  if(!file||!id) return;
+  compress(file).then(function(result){
+    return saveLocalBottleImage(id,"data:"+result.mime+";base64,"+result.b64);
+  }).then(function(){
+    pendingLocalBottleImageId="";
+    renderHome(); renderExplore(); renderHomeCollection(); renderRecommendationsView();
+    if(currentDetailId===id) openDetail(id,true,true);
+    toast(t("localBottlePhotoSaved"));
+  }).catch(function(){
+    pendingLocalBottleImageId="";
+    toast(t("localBottlePhotoError"));
+  });
+});
 /* ================= SKANER ================= */
 let imgData=null, scanImageQuality=null, imgMime="image/jpeg", busy=false, loadTimer=null;
 let currentScanResult=null, catalogSubmissionId="", catalogRetakePending=false;
@@ -3381,7 +3515,7 @@ function hydrateScanCandidate(candidate){
   const local=bottleById(canonicalId);
   const result=Object.assign({},local||{},candidate.result||{});
   if(local){
-    result.image=result.image||local.image||"";
+    result.image=localBottleImage(local)||result.image||local.image||"";
     result.profile=local.profile||result.profile;
     result.profile_meta=local.profile_meta||result.profile_meta;
   }
@@ -3404,9 +3538,7 @@ function renderScanConfirmation(data){
   const cards=pendingScanCandidates.map(function(candidate){
     const result=hydrateScanCandidate(candidate);
     const selected=result.id===selectedScanCandidateId;
-    const media=result.image
-      ? '<img src="'+esc(result.image)+'" alt="'+esc(result.name||"")+'" data-scan-candidate-image="1" loading="eager" decoding="async">'
-      : mysteryBottleHtml(true);
+    const media=bottleImageHtml(result,true,result.name||"");
     return '<button class="scan-candidate'+(selected?' selected':'')+'" type="button" data-scan-candidate="'+esc(result.id)+'" aria-pressed="'+(selected?'true':'false')+'">'+
       '<span class="scan-candidate-media">'+media+'</span>'+
       '<span class="scan-candidate-name">'+esc(result.name||candidate.name||"-")+'</span>'+
@@ -3422,16 +3554,6 @@ function renderScanConfirmation(data){
         '<button class="btn" type="button" data-scan-confirm="1"'+(selectedScanCandidateId?'':' disabled')+'>'+esc(t(single?"scanConfirmSingleOk":"scanConfirmOk"))+'</button>'+
       '</div>'+
     '</div>';
-  document.querySelectorAll("[data-scan-candidate-image]").forEach(function(img){
-    img.addEventListener("error",function(){
-      const media=img.closest(".scan-candidate-media");
-      const card=img.closest("[data-scan-candidate]");
-      const id=card&&card.getAttribute("data-scan-candidate");
-      const candidate=pendingScanCandidates.find(function(item){ return item.id===id; });
-      if(candidate) candidate.image_failed=true;
-      if(media) media.innerHTML=mysteryBottleHtml(true);
-    },{once:true});
-  });
   document.getElementById("scanResult").scrollIntoView({behavior:"smooth",block:"start"});
 }
 function selectScanCandidate(id){
@@ -3542,7 +3664,7 @@ function renderScan(res, mode){
   currentScanResult=res;
   if(!res.catalog_preview_pending) syncScanResult(res);
   const origin=[res.distillery,res.region].filter(Boolean).map(esc).join(" · ");
-  const img='<div class="dphoto'+(isAgentCutout(res)?' agent-cutout':'')+'">'+bottleActionsHtml(res)+(res.image?'<img src="'+esc(res.image)+'" alt="'+esc(res.name||"")+'" loading="eager" decoding="async">':mysteryBottleHtml(false))+valueBadgeHtml(res)+'</div>';
+  const img='<div class="dphoto'+(isAgentCutout(res)?' agent-cutout':'')+'">'+bottleActionsHtml(res)+bottleImageHtml(res,false,res.name||"")+valueBadgeHtml(res)+'</div>';
   let head='<div class="card"><div class="name">'+esc(res.name||"-")+'</div>'+
     '<div class="dtype">'+esc(categoryLabel(res))+'</div>'+
     (origin?'<div class="dorigin">'+origin+'</div>':'')+img+

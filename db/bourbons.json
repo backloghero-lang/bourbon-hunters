@@ -1,13 +1,13 @@
 {
-  "count": 292,
+  "count": 285,
   "source": "woodencork.com/products.json (filtered to priority bourbon brands)",
-  "updated": "2026-07-27T14:55:32.503Z",
+  "updated": "2026-07-27T16:02:09.581Z",
   "version": 8,
   "retail_filter_version": "retail-relevance-2026-v3-quality-first",
   "retail_max_usd": 500,
   "product_consolidation_version": "retail-product-v2",
-  "product_duplicates_removed": 77,
-  "product_redirect_count": 77,
+  "product_duplicates_removed": 84,
+  "product_redirect_count": 84,
   "retail_records_removed": 0,
   "retail_max_pln": 1500,
   "image_quality_version": "single-bottle-transparent-v3-no-watermarks",
@@ -88,7 +88,14 @@
     "old-forester-single-barrel-barrel-strength-bourbon-whiskey-warehouse-k-floor-8-kroger-pick-134-5": "old-forester-single-barrel-barrel-strength-bourbon-whiskey-warehouse-k-floor-8",
     "old-forester-single-barrel-barrel-strength-bourbon-whiskey-warehouse-k-floor-8-ohlq-select-pick-135-8-proof": "old-forester-single-barrel-barrel-strength-bourbon-whiskey-warehouse-k-floor-8",
     "old-forester-single-barrel-barrel-strength-warehouse-k-floor-8-distillery-selection-132-4-proof": "old-forester-single-barrel-barrel-strength-bourbon-whiskey-warehouse-k-floor-8",
-    "old-forester-single-barrel-barrel-strength-warehouse-k-floor-8-ofd-not-what-you-think-134-7-proof": "old-forester-single-barrel-barrel-strength-bourbon-whiskey-warehouse-k-floor-8"
+    "old-forester-single-barrel-barrel-strength-warehouse-k-floor-8-ofd-not-what-you-think-134-7-proof": "old-forester-single-barrel-barrel-strength-bourbon-whiskey-warehouse-k-floor-8",
+    "buffalo-trace-bourbon-single-barrel-032-select-by-wooden-cork": "buffalo-trace-bourbon-1",
+    "buffalo-trace-bourbon-single-barrel-select-by-wooden-cork": "buffalo-trace-bourbon-1",
+    "four-roses-obsf-single-barrel-bourbon": "four-roses-obsk-single-barrel-bourbon",
+    "four-roses-obsk-single-barrel-bourbon-hotel-covington-pick-125-2-proof": "four-roses-obsk-single-barrel-bourbon",
+    "four-roses-obsk-single-barrel-bourbon-kroger-pick-122-4-proof": "four-roses-obsk-single-barrel-bourbon",
+    "four-roses-oesk-single-barrel-bourbon": "four-roses-obsk-single-barrel-bourbon",
+    "four-roses-oeso-single-barrel-bourbon": "four-roses-obsk-single-barrel-bourbon"
   },
   "bottles": [
     {
@@ -1577,71 +1584,15 @@
       "aliases": [
         "Buffalo Trace",
         "Buffalo Trace Bourbon",
-        "Buffalo Trace Bourbon Single Barrel Select"
+        "Buffalo Trace Bourbon Single Barrel Select",
+        "Buffalo Trace Bourbon Single",
+        "Buffalo Trace Bourbon Single Barrel"
       ],
       "source_refs": [
         "woodencork+curated"
       ],
       "image_quality": "single-bottle-transparent-v3-no-watermarks",
       "image_source": "assets/bourbons/buffalo-trace-bourbon-1.webp"
-    },
-    {
-      "abv": 45,
-      "category": "Pojedyncza beczka",
-      "desc": "Experience the pinnacle of craftsmanship and flavor with Wooden Cork's exclusive Buffalo Trace Bourbon Single Barrel Selection. Handpicked from the heart of Kentucky, this exceptional bourbon embodies the rich heritage and meticulous attention to detail that Buffalo Trace Distillery is renowned for. Tasting Notes: Nose: A delightful aroma of caramel, vanilla, and a hint of oak, inviting you into a world of complex flavors. Palate: A harmonious blend of dark chocolate, ripe fruit, and toasted spices, with a subtle sweetness that is perfectly balanced by the warmth of the bourbon. Finish: Aâ¦",
-      "distillery": "Buffalo Trace Distillery",
-      "id": "buffalo-trace-bourbon-single-barrel-032-select-by-wooden-cork",
-      "image": "",
-      "mashbill": "Mash #1 (niski udzial zyta)",
-      "name": "Buffalo Trace Bourbon Single",
-      "notes": "Wanilia, karmel, lekka przyprawa, dab",
-      "price": 22.99,
-      "price_pln": "160-200 zl",
-      "price_str": "$22.99",
-      "proof": 90,
-      "quality": 4,
-      "region": "Kentucky",
-      "source": "woodencork+curated",
-      "status": "sold_out",
-      "type": "Bourbon Kentucky Straight",
-      "url": "https://woodencork.com/products/buffalo-trace-bourbon-single-barrel-032-select-by-wooden-cork",
-      "value": 5,
-      "aliases": [
-        "Buffalo Trace Bourbon Single"
-      ],
-      "source_refs": [
-        "woodencork+curated"
-      ],
-      "image_quality": "mystery-fallback"
-    },
-    {
-      "abv": 45,
-      "category": "Pojedyncza beczka",
-      "desc": "Experience the pinnacle of craftsmanship and flavor with Wooden Cork's exclusive Buffalo Trace Bourbon Single Barrel Selection. Handpicked from the heart of Kentucky, this exceptional bourbon embodies the rich heritage and meticulous attention to detail that Buffalo Trace Distillery is renowned for. Tasting Notes: Nose: A delightful aroma of caramel, vanilla, and a hint of oak, inviting you into a world of complex flavors. Palate: A harmonious blend of dark chocolate, ripe fruit, and toasted spices, with a subtle sweetness that is perfectly balanced by the warmth of the bourbon. Finish: Aâ¦",
-      "distillery": "Buffalo Trace Distillery",
-      "id": "buffalo-trace-bourbon-single-barrel-select-by-wooden-cork",
-      "image": "",
-      "mashbill": "Mash #1 (niski udzial zyta)",
-      "name": "Buffalo Trace Bourbon Single Barrel",
-      "notes": "Wanilia, karmel, lekka przyprawa, dab",
-      "price": 15.99,
-      "price_pln": "160-200 zl",
-      "price_str": "$15.99",
-      "proof": 90,
-      "quality": 4,
-      "region": "Kentucky",
-      "source": "woodencork+curated",
-      "status": "sold_out",
-      "type": "Bourbon Kentucky Straight",
-      "url": "https://woodencork.com/products/buffalo-trace-bourbon-single-barrel-select-by-wooden-cork",
-      "value": 5,
-      "aliases": [
-        "Buffalo Trace Bourbon Single Barrel"
-      ],
-      "source_refs": [
-        "woodencork+curated"
-      ],
-      "image_quality": "mystery-fallback"
     },
     {
       "abv": 45,
@@ -2628,37 +2579,6 @@
       "image_source": "assets/bourbons/four-roses.webp"
     },
     {
-      "abv": 60,
-      "category": "Pojedyncza beczka",
-      "desc": "Four Roses OBSF Single Barrel Bourbon 750mL Introducing the Four Roses OBSF Single Barrel Bourbon , a masterpiece from the renowned Four Roses distillery. This exceptional bourbon is part of the new Single Barrel Collection, showcasing the distillery's dedication to quality and innovation. With its unique mash bill and proprietary yeast strain, OBSF offers a flavor profile that is both distinctive and memorable. Tasting Experience Nose: Delight in the herbal and floral aromas, enhanced by bright rye spice and a hint of fresh apple. Palate: Enjoy a balanced mix of vanilla, clove, and cocoa,â¦",
-      "distillery": "Four Roses Distillery",
-      "id": "four-roses-obsf-single-barrel-bourbon",
-      "image": "assets/bourbons/clean/four-roses-obsf-single-barrel-bourbon.webp",
-      "mashbill": null,
-      "name": "Four Roses OBSF Single Barrel",
-      "notes": null,
-      "price": 49.99,
-      "price_pln": null,
-      "price_str": "$49.99",
-      "proof": null,
-      "quality": null,
-      "region": "Kentucky",
-      "source": "woodencork",
-      "status": "available",
-      "type": "Bourbon Kentucky Straight",
-      "url": "https://woodencork.com/products/four-roses-obsf-single-barrel-bourbon",
-      "value": null,
-      "aliases": [
-        "Four Roses OBSF Single Barrel",
-        "Four Roses OBSF Single Barrel Bourbon"
-      ],
-      "source_refs": [
-        "woodencork"
-      ],
-      "image_quality": "single-bottle-transparent-v3-no-watermarks",
-      "image_source": "assets/bourbons/four-roses-obsf-single-barrel-bourbon.webp"
-    },
-    {
       "abv": 50,
       "category": "Pojedyncza beczka",
       "desc": "Craftsmanship & Origin: Four Roses OBSK Single Barrel Bourbon 750ml Four Roses OBSK Single Barrel Bourbon 750ml is a Kentucky Straight Bourbon Whiskey in the premium bourbon whiskey category, made in Kentucky and bottled as an official single-barrel release. It spotlights the OBSK recipe—Four Roses’ high-rye mash bill paired with the proprietary “K” yeast strain—built to deliver structured spice and balanced warmth. This bottle is not part of the Private Selection program. Instead, it’s released as a standalone expression, giving you a focused, recipe-driven look at one of Four Roses’ tenâ¦",
@@ -2666,7 +2586,7 @@
       "id": "four-roses-obsk-single-barrel-bourbon",
       "image": "assets/bourbons/clean/four-roses-obsk-single-barrel-bourbon.webp",
       "mashbill": null,
-      "name": "Four Roses OBSK Single Barrel",
+      "name": "Four Roses Single Barrel",
       "notes": null,
       "price": 49.99,
       "price_pln": null,
@@ -2680,126 +2600,15 @@
       "url": "https://woodencork.com/products/four-roses-obsk-single-barrel-bourbon",
       "value": null,
       "aliases": [
+        "Four Roses Single Barrel",
+        "Four Roses OBSF Single Barrel",
+        "Four Roses OBSF Single Barrel Bourbon",
         "Four Roses OBSK Single Barrel",
-        "Four Roses OBSK Single Barrel Bourbon"
-      ],
-      "source_refs": [
-        "woodencork"
-      ],
-      "image_quality": "single-bottle-transparent-v3-no-watermarks",
-      "image_source": "assets/bourbons/four-roses-obsk-single-barrel-bourbon.webp"
-    },
-    {
-      "abv": 62.6,
-      "category": "Pojedyncza beczka",
-      "desc": "125.2 proof. OBSK. Hotel Covington Pick. Four Roses — the highest-proof Four Roses OBSK single barrel in the current Wooden Cork collection, selected by Hotel Covington — a Kentucky hospitality venue with direct roots in the state's bourbon culture. OBSK is one of Four Roses' ten proprietary mashbill-yeast combinations: O = Four Roses Distillery, B = Straight Bourbon, S = Small (high rye) mashbill, K = the K-strain yeast that produces a full-bodied, spicy profile. The OBSK combination is among the most assertive of the ten Four Roses recipes — the high rye mash bill produces grain spice whileâ¦",
-      "distillery": "Four Roses Distillery",
-      "id": "four-roses-obsk-single-barrel-bourbon-hotel-covington-pick-125-2-proof",
-      "image": "",
-      "mashbill": null,
-      "name": "Four Roses OBSK Single Barrel Bourbon Hotel Covington Pick 125.2 Proof",
-      "notes": null,
-      "price": 349.99,
-      "price_pln": null,
-      "price_str": "$349.99",
-      "proof": 125.2,
-      "quality": null,
-      "region": "Kentucky",
-      "source": "woodencork",
-      "status": "available",
-      "type": "Bourbon Kentucky Straight",
-      "url": "https://woodencork.com/products/four-roses-obsk-single-barrel-bourbon-hotel-covington-pick-125-2-proof",
-      "value": null,
-      "aliases": [
-        "Four Roses OBSK Single Barrel Bourbon Hotel Covington Pick 125.2 Proof"
-      ],
-      "source_refs": [
-        "woodencork"
-      ],
-      "image_quality": "mystery-fallback"
-    },
-    {
-      "abv": 25,
-      "category": "Pojedyncza beczka",
-      "desc": "Old Forester Single Barrel Barrel Strength — Warehouse K, Floor 8, 134.5 proof, Kroger Pick. A named retailer selection by Kroger's spirits buying team from the Old Forester single barrel program, bottled at 134.5 proof — 1 proof above the standard 133.5-proof Warehouse K expression also in the collection. Kroger has developed a meaningful single barrel selection program with Kentucky distilleries through its deep market presence. The Kroger Pick designation adds retailer provenance to the Warehouse K, Floor 8 position — two barrels from the same rickhouse floor at virtually identical proofâ¦",
-      "distillery": "Four Roses Distillery",
-      "id": "four-roses-obsk-single-barrel-bourbon-kroger-pick-122-4-proof",
-      "image": "",
-      "mashbill": null,
-      "name": "Four Roses OBSK Single Barrel Bourbon Kroger Pick 122.4 Proof",
-      "notes": null,
-      "price": 349.99,
-      "price_pln": null,
-      "price_str": "$349.99",
-      "proof": 122.4,
-      "quality": null,
-      "region": "Kentucky",
-      "source": "woodencork",
-      "status": "available",
-      "type": "Bourbon Kentucky Straight",
-      "url": "https://woodencork.com/products/four-roses-obsk-single-barrel-bourbon-kroger-pick-122-4-proof",
-      "value": null,
-      "aliases": [
-        "Four Roses OBSK Single Barrel Bourbon Kroger Pick 122.4 Proof"
-      ],
-      "source_refs": [
-        "woodencork"
-      ],
-      "image_quality": "mystery-fallback"
-    },
-    {
-      "abv": 75,
-      "category": "Pojedyncza beczka",
-      "desc": "Four Roses OESK Single Barrel Bourbon 750mL Discover the Four Roses OESK Single Barrel Bourbon , a remarkable addition to the esteemed Single Barrel Collection. Crafted with precision, this bourbon celebrates two decades of excellence, offering a unique blend of mash bill and yeast strain for a rich and deep flavor experience. Inspired by the award-winning OBSV recipe, OESK delivers a new tasting adventure with warm, inviting flavors. Flavor Profile Nose: Enjoy the aromas of baking spices and mellow oak, balanced with soft hints of tea leaves and caramel. Palate: Experience a smooth and richâ¦",
-      "distillery": "Four Roses Distillery",
-      "id": "four-roses-oesk-single-barrel-bourbon",
-      "image": "assets/bourbons/clean/four-roses-oesk-single-barrel-bourbon.webp",
-      "mashbill": null,
-      "name": "Four Roses OESK Single Barrel",
-      "notes": null,
-      "price": 49.99,
-      "price_pln": null,
-      "price_str": "$49.99",
-      "proof": null,
-      "quality": null,
-      "region": "Kentucky",
-      "source": "woodencork",
-      "status": "sold_out",
-      "type": "Bourbon Kentucky Straight",
-      "url": "https://woodencork.com/products/four-roses-oesk-single-barrel-bourbon",
-      "value": null,
-      "aliases": [
+        "Four Roses OBSK Single Barrel Bourbon",
+        "Four Roses OBSK Single Barrel Bourbon Hotel Covington Pick 125.2 Proof",
+        "Four Roses OBSK Single Barrel Bourbon Kroger Pick 122.4 Proof",
         "Four Roses OESK Single Barrel",
-        "Four Roses OESK Single Barrel Bourbon"
-      ],
-      "source_refs": [
-        "woodencork"
-      ],
-      "image_quality": "single-bottle-transparent-v3-no-watermarks",
-      "image_source": "assets/bourbons/four-roses-oesk-single-barrel-bourbon.webp"
-    },
-    {
-      "abv": 75,
-      "category": "Pojedyncza beczka",
-      "desc": "Four Roses OESO Single Barrel Bourbon 750mL Introducing the Four Roses OESO Single Barrel Bourbon , a distinguished addition to the acclaimed Single Barrel Collection. Crafted to celebrate two decades of bourbon excellence, this unique expression combines a special mash bill with the O yeast strain, offering a rich, fruit-forward experience that delights the senses. Tasting Notes Nose: Bright aromas of rich red fruit, complemented by hints of vanilla and soft brown sugar. Palate: A luscious profile of ripe berries and stone fruits, layered with sweet vanilla, caramelized brown sugar, andâ¦",
-      "distillery": "Four Roses Distillery",
-      "id": "four-roses-oeso-single-barrel-bourbon",
-      "image": "assets/bourbons/clean/four-roses-oeso-single-barrel-bourbon.webp",
-      "mashbill": null,
-      "name": "Four Roses OESO Single Barrel",
-      "notes": null,
-      "price": 49.99,
-      "price_pln": null,
-      "price_str": "$49.99",
-      "proof": null,
-      "quality": null,
-      "region": "Kentucky",
-      "source": "woodencork",
-      "status": "sold_out",
-      "type": "Bourbon Kentucky Straight",
-      "url": "https://woodencork.com/products/four-roses-oeso-single-barrel-bourbon",
-      "value": null,
-      "aliases": [
+        "Four Roses OESK Single Barrel Bourbon",
         "Four Roses OESO Single Barrel",
         "Four Roses OESO Single Barrel Bourbon"
       ],
@@ -2807,7 +2616,7 @@
         "woodencork"
       ],
       "image_quality": "single-bottle-transparent-v3-no-watermarks",
-      "image_source": "assets/bourbons/four-roses-oeso-single-barrel-bourbon.webp"
+      "image_source": "assets/bourbons/four-roses-obsk-single-barrel-bourbon.webp"
     },
     {
       "abv": null,

@@ -105,6 +105,14 @@ const knobSingleBarrel=base.bottles.filter((record)=>/knob creek.*(?:single barr
 if(knobSingleBarrel.length!==1 || knobSingleBarrel[0].id!=="knob-creek-120-proof-9-year-single-barrel-reserve-bourbon"){
   fail(`Knob Creek Single Barrel is not canonical: ${knobSingleBarrel.map((record)=>record.name).join(", ")}`);
 }
+const buffaloStandard=base.bottles.filter((record)=>/^buffalo trace(?: bourbon)?(?: single(?: barrel)?)?$/i.test(record.name));
+if(buffaloStandard.length!==1 || buffaloStandard[0].id!=="buffalo-trace-bourbon-1" || !buffaloStandard[0].image){
+  fail(`Buffalo Trace standard is not canonical: ${buffaloStandard.map((record)=>record.name).join(", ")}`);
+}
+const fourRosesSingleBarrel=base.bottles.filter((record)=>/four roses.*(?:obsf|obsk|oesk|oeso|single barrel|s\/b barrel)/i.test(record.name));
+if(fourRosesSingleBarrel.length!==1 || fourRosesSingleBarrel[0].id!=="four-roses-obsk-single-barrel-bourbon" || !fourRosesSingleBarrel[0].image){
+  fail(`Four Roses Single Barrel is not canonical: ${fourRosesSingleBarrel.map((record)=>record.name).join(", ")}`);
+}
 const jackBonded=catalog.bottles.filter((record)=>/jack daniel.*bonded/i.test([record.name,...(record.aliases||[])].join(" ")));
 const jackBondedStandard=jackBonded.find((record)=>record.id==="jack-daniel-s-bonded-119-43");
 const jackBondedRye=jackBonded.find((record)=>/\bbonded rye\b/i.test([record.name,...(record.aliases||[])].join(" ")));

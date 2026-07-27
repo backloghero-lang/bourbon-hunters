@@ -9,17 +9,19 @@ Uzyj go jako pierwszego dokumentu przy starcie watku `Przekaz Bourbon Hunter 1.1
 
 ## Aktualizacja 2026-07-27 - katalog quality-first i czyste assety
 
-- Katalog skanera ma 1042 zweryfikowane produkty. Po bazowym odrzuceniu 7976 rekordow `recognition_only` usunieto tez pozostale zestawy, RTD i produkty spoza whisky.
-- Lekka baza startowa ma 292 produkty. Po klasyfikacji do przegladania aplikacja pokazuje 748 kanonicznych pozycji: 274 Bourbon i 474 Whisky.
+- Katalog skanera ma 1028 zweryfikowanych produktow. Po bazowym odrzuceniu 7976 rekordow `recognition_only` usunieto tez pozostale zestawy, RTD i produkty spoza whisky.
+- Lekka baza startowa ma 285 produktow. Po klasyfikacji do przegladania aplikacja pokazuje 741 kanonicznych pozycji: 267 Bourbon i 474 Whisky.
 - Obowiazuja limity `MAX_RETAIL_USD=500` i `MAX_RETAIL_PLN=1500`.
 - `scripts/clean_bottle_assets.mjs` tworzy przezroczyste WebP w `assets/bourbons/clean/`, bez nadpisywania zrodel.
 - Aktywne sa tylko obrazy jednej butelki bez pudelek, zestawow, dodatkowych przedmiotow i watermarkow. Pozostale rekordy uzywaja kontrolowanego placeholdera.
 - Raport obrazow: `db/catalog/image-quality-report.json`; jawne decyzje: `db/catalog/image-asset-overrides.json`.
-- Lekka baza ma 115 aktywnych czystych assetow i 177 placeholderow.
+- Lekka baza ma 112 aktywnych czystych assetow i 173 placeholdery.
 - Nowe skany wysylaja obraz do 1800 px przy JPEG 0.91, a Worker tworzy podglad 960x1280.
 - Taksonomia `spirit-taxonomy-v2` jest wspolna dla Home, Odkrywaj, Kolekcji, Polecanych i szczegolow. Licznik kafla jest liczony z tej samej listy, ktora otwiera kafel.
-- Worker: `visual-only-catalog-v3-quality-assets`; katalog: `ttb-olcc-quality-catalog-v8-categories`; submission: `community-catalog-images-v6-highres-cutout`.
-- Cache PWA: `bourbon-hunters-v99`.
+- Buffalo Trace standard oraz techniczne receptury/private picki Four Roses Single Barrel sa scalone w kanoniczne produkty; stare ID prowadza przez `id_redirects`.
+- Produkt bez oficjalnego assetu pokazuje mystery bottle. W szczegolach user moze przypisac wlasne zdjecie, przechowywane wylacznie lokalnie w IndexedDB danego urzadzenia.
+- Worker: `visual-only-catalog-v3-quality-assets`; katalog: `ttb-olcc-quality-catalog-v9-canonical-products`; submission: `community-catalog-images-v6-highres-cutout`.
+- Cache PWA: `bourbon-hunters-v100`.
 - Nie ma migracji D1. Najpierw GitHub i zielone Actions, potem Worker, health i odswiezenie PWA.
 
 ## Aktualizacja 2026-07-27 - produkty kanoniczne i potwierdzony asset skanera

@@ -30,7 +30,7 @@ Aktualny oczekiwany stan Workera:
   "scan_orchestrator_version": "visual-only-catalog-v3-quality-assets",
   "scan_mode": "visual_only",
   "scan_ocr_enabled": false,
-  "scan_catalog_version": "ttb-olcc-quality-catalog-v8-categories",
+  "scan_catalog_version": "ttb-olcc-quality-catalog-v9-canonical-products",
   "catalog_submission_version": "community-catalog-images-v6-highres-cutout",
   "catalog_moderation_version": "catalog-moderation-orchestrator-admin-v1",
   "catalog_license_version": "catalog-license-2026-07-18-v1",
@@ -215,7 +215,7 @@ Ta zmiana dotyczy GitHub Pages. Nie wymaga podmiany Workera, migracji D1 ani zmi
 5. Sprawdź na Home kafel Whisky z liczbą pozycji.
 6. Wejdź w Whisky i sprawdź filtry Scotch, Irish, Japanese, Rye i pozostałe.
 
-Aktualny cache: `bourbon-hunters-v99`.
+Aktualny cache: `bourbon-hunters-v100`.
 
 ## Wdrozenie skanera visual-only i skonsolidowanego katalogu
 
@@ -229,7 +229,7 @@ Ta zmiana wymaga aktualizacji GitHub Pages i Workera. Nie wymaga migracji D1 ani
 5. Otworz `https://bourbon-hunters.darekmaslyk.workers.dev/auth/health`.
 6. Sprawdz, czy `scan_orchestrator_version` ma wartosc:
    `visual-only-catalog-v3-quality-assets`.
-   `scan_catalog_version` ma byc `ttb-olcc-quality-catalog-v8-categories`.
+   `scan_catalog_version` ma byc `ttb-olcc-quality-catalog-v9-canonical-products`.
    `catalog_submission_version` ma byc `community-catalog-images-v6-highres-cutout`.
    Dodatkowo `scan_mode` ma byc `visual_only`, a `scan_ocr_enabled` ma byc `false`.
 7. Na telefonie otworz `test-index.html`, kliknij `Wyczysc cache/PWA`, a potem `Odswiez build`.

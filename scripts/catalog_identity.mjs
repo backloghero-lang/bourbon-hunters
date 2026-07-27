@@ -260,7 +260,19 @@ const PRODUCT_FAMILY_RULES=[
     key:"buffalo-trace-standard",
     id:"buffalo-trace-bourbon-1",
     name:"Buffalo Trace Bourbon",
-    test:/\bbuffalo trace\b.*\bsingle barrel select\b/
+    proof:90,
+    category:"Standard",
+    nameTest:/^buffalo trace(?: bourbon)?(?: single(?: barrel)?)?(?: 032)?(?: select by wooden cork)?$/,
+    test:/\bbuffalo trace\b/
+  },
+  {
+    key:"four-roses-single-barrel",
+    id:"four-roses-obsk-single-barrel-bourbon",
+    name:"Four Roses Single Barrel",
+    proof:100,
+    category:"Pojedyncza beczka",
+    nameTest:/^four roses (?:(?:obsf|obsk|oesk|oeso)(?: single barrel(?: bourbon)?)?(?: hotel covington pick| kroger pick)?(?: \d+(?: \d+)? proof)?|single barrel(?: kentucky bourbn)?(?: (?:obsf|obsk|oesk|oeso))?|s b barrel strength)$/,
+    test:/\bfour roses\b.*(?:\bobsf\b|\bobsk\b|\boesk\b|\boeso\b|\bsingle barrel\b|\bs b barrel strength\b)/
   },
   {
     key:"weller-full-proof",

@@ -221,7 +221,7 @@ Ten plik trzyma stale ustalenia, zeby nie ginely w dlugich watkach.
 - Aktywny obraz musi byc przezroczystym WebP z `assets/bourbons/clean/` i przedstawiać jedna butelke.
 - Nie usuwamy watermarkow ze zdjec zewnetrznych. Obraz z watermarkiem, pudelkiem, zestawem, sama etykieta lub dodatkiem dostaje placeholder do czasu legalnej podmiany.
 - Oryginalne pliki pozostaja nietkniete, a decyzje pipeline sa zapisane w raporcie i pliku overrides.
-- Aktualna wersja health: `visual-only-catalog-v3-quality-assets`, katalog `ttb-olcc-quality-catalog-v8-categories`, OCR wylaczony.
+- Aktualna wersja health: `visual-only-catalog-v3-quality-assets`, katalog `ttb-olcc-quality-catalog-v9-canonical-products`, OCR wylaczony.
 - `spirit-taxonomy-v2` jest jedynym zrodlem klasyfikacji dla Home, filtrow list, Kolekcji, Polecanych i szczegolow.
 - Silna deklaracja produktu (`Rye`, `Wheat Whiskey`, `Malt`, `Tennessee`, kraj pochodzenia lub smak) ma pierwszenstwo przed historycznym polem `type`.
 - Licznik kategorii na Home musi byc rowny liczbie rekordow zwracanych przez ten sam filtr po otwarciu kategorii; kontroluje to `scripts/ui-taxonomy-smoke.mjs`.

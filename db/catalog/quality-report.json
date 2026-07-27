@@ -1,7 +1,7 @@
 {
   "version": 3,
-  "updated": "2026-07-27T14:55:32.503Z",
-  "count": 1042,
+  "updated": "2026-07-27T16:02:09.581Z",
+  "count": 1028,
   "target": 10000,
   "price_limits": {
     "PLN": 1000,
@@ -20,12 +20,12 @@
     "olcc_eligible": 805
   },
   "deduplicated": 12880,
-  "selected_verified_price": 1042,
+  "selected_verified_price": 1028,
   "selected_recognition_only": 0,
   "missing": {
-    "proof": 153,
-    "abv": 139,
-    "distillery": 719,
+    "proof": 149,
+    "abv": 138,
+    "distillery": 714,
     "price": 0
   },
   "original_count": 10000,
@@ -47,8 +47,8 @@
     "luxury-collector-release": 24
   },
   "product_consolidation_version": "retail-product-v2",
-  "product_duplicates_removed": 178,
-  "product_redirect_count": 178,
+  "product_duplicates_removed": 191,
+  "product_redirect_count": 191,
   "retail_max_pln": 1500,
   "image_quality_version": "single-bottle-transparent-v3-no-watermarks"
 }

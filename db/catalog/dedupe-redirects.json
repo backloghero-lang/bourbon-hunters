@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "updated": "2026-07-27T14:55:32.503Z",
-  "count": 178,
+  "updated": "2026-07-27T16:02:09.581Z",
+  "count": 191,
   "redirects": {
     "olcc-3888b": "1792-full-proof-kentucky-straight-bourbon",
     "olcc-3884b": "1792-single-barrel-kentucky-straight-bourbon",
@@ -180,7 +180,20 @@
     "olcc-2203b": "bowman-brothers-101-05",
     "olcc-6374b": "weller-full-proof-101-00",
     "oregon-spirit-distillers-140-38": "oregon-spirit-distillers-141-38",
-    "four-roses-private-selection-101-22": "four-roses-single-barrel-101-22"
+    "four-roses-private-selection-101-22": "four-roses-obsk-single-barrel-bourbon",
+    "buffalo-trace-bourbon-single-barrel-032-select-by-wooden-cork": "buffalo-trace-bourbon-1",
+    "buffalo-trace-bourbon-single-barrel-select-by-wooden-cork": "buffalo-trace-bourbon-1",
+    "four-roses-obsf-single-barrel-bourbon": "four-roses-obsk-single-barrel-bourbon",
+    "four-roses-obsk-single-barrel-bourbon-hotel-covington-pick-125-2-proof": "four-roses-obsk-single-barrel-bourbon",
+    "four-roses-obsk-single-barrel-bourbon-kroger-pick-122-4-proof": "four-roses-obsk-single-barrel-bourbon",
+    "four-roses-oesk-single-barrel-bourbon": "four-roses-obsk-single-barrel-bourbon",
+    "four-roses-oeso-single-barrel-bourbon": "four-roses-obsk-single-barrel-bourbon",
+    "olcc-1031b": "four-roses-obsk-single-barrel-bourbon",
+    "olcc-8774b": "four-roses-obsk-single-barrel-bourbon",
+    "four-roses-single-barrel-101-22": "four-roses-obsk-single-barrel-bourbon",
+    "olcc-12806b": "four-roses-obsk-single-barrel-bourbon",
+    "olcc-12807b": "four-roses-obsk-single-barrel-bourbon",
+    "olcc-12808b": "four-roses-obsk-single-barrel-bourbon"
   },
   "groups": [
     {
@@ -208,7 +221,9 @@
       "canonical_name": "Buffalo Trace Bourbon",
       "merged_ids": [
         "buffalo-trace-bourbon-single-barrel-select-225-freddies-choice",
-        "olcc-11936b"
+        "olcc-11936b",
+        "buffalo-trace-bourbon-single-barrel-032-select-by-wooden-cork",
+        "buffalo-trace-bourbon-single-barrel-select-by-wooden-cork"
       ]
     },
     {
@@ -2289,6 +2304,24 @@
       "canonical_name": "HIDDEN CASK",
       "merged_ids": [
         "hidden-cask-140-35"
+      ]
+    },
+    {
+      "family_key": "four-roses-single-barrel",
+      "canonical_id": "four-roses-obsk-single-barrel-bourbon",
+      "canonical_name": "Four Roses Single Barrel",
+      "merged_ids": [
+        "four-roses-obsf-single-barrel-bourbon",
+        "four-roses-obsk-single-barrel-bourbon-hotel-covington-pick-125-2-proof",
+        "four-roses-obsk-single-barrel-bourbon-kroger-pick-122-4-proof",
+        "four-roses-oesk-single-barrel-bourbon",
+        "four-roses-oeso-single-barrel-bourbon",
+        "olcc-1031b",
+        "olcc-8774b",
+        "four-roses-single-barrel-101-22",
+        "olcc-12806b",
+        "olcc-12807b",
+        "olcc-12808b"
       ]
     }
   ]

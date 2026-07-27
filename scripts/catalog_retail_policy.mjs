@@ -48,7 +48,7 @@ export function retailPackagingBundleReason(record){
   const text=identityAscii(record&&record.name);
   if(!text) return "";
   const bundle=
-    /\bgift\b|\bvap\b|\btwin pack\b|\bseasonal rotating bag\b|\b(?:sampler|miniature|variety|value)\s+(?:pack|set)\b|\b(?:glassware|barware)\s+(?:pack|set|kit)\b|\b(?:cocktail|old fashioned)\s+kit\b|\b(?:with|w)\s+(?:\d+\s+)?(?:(?:rocks?|shot)\s+)?(?:glass(?:es)?|gls|coasters?|tumblers?|mugs?|flasks?|ice mold|whisk(?:e)?y stones?|water bottle)\b|\b(?:glass(?:es)?|coasters?|tumblers?|mugs?|flasks?)\s+(?:pack|set|kit)\b/;
+    /\bgift\b|\bvap\b|\btwin pack\b|\btasting experience\b|\bseasonal rotating bag\b|\b(?:sampler|miniature|variety|value)\s+(?:pack|set)\b|\b(?:glassware|barware)\s+(?:pack|set|kit)\b|\b(?:cocktail|old fashioned)\s+kit\b|\b(?:with|w)\s+(?:\d+\s+)?(?:(?:rocks?|shot)\s+)?(?:glass(?:es)?|gls|coasters?|tumblers?|mugs?|flasks?|ice mold|whisk(?:e)?y stones?|water bottle)\b|\b(?:glass(?:es)?|coasters?|tumblers?|mugs?|flasks?)\s+(?:pack|set|kit)\b/;
   return bundle.test(text)?"gift-or-accessory-bundle":"";
 }
 

@@ -1,13 +1,13 @@
 {
   "version": 2,
-  "updated": "2026-07-27T14:55:32.503Z",
+  "updated": "2026-07-27T16:02:09.581Z",
   "policy": "retail-product-v2",
   "base": {
-    "before": 292,
-    "after": 292,
-    "merged": 77,
+    "before": 285,
+    "after": 285,
+    "merged": 84,
     "merged_this_run": 0,
-    "redirects_total": 77,
+    "redirects_total": 84,
     "retail_removed": 0,
     "groups": [
       {
@@ -37,7 +37,9 @@
         "canonical_id": "buffalo-trace-bourbon-1",
         "canonical_name": "Buffalo Trace Bourbon",
         "merged_ids": [
-          "buffalo-trace-bourbon-single-barrel-select-225-freddies-choice"
+          "buffalo-trace-bourbon-single-barrel-select-225-freddies-choice",
+          "buffalo-trace-bourbon-single-barrel-032-select-by-wooden-cork",
+          "buffalo-trace-bourbon-single-barrel-select-by-wooden-cork"
         ]
       },
       {
@@ -296,6 +298,18 @@
         "merged_ids": [
           "russell-s-reserve-single-rickhouse-2024-camp-nelson-b-bourbon-whiskey",
           "russell-s-reserve-single-rickhouse-2025-camp-nelson-e-bourbon-whiskey"
+        ]
+      },
+      {
+        "family_key": "four-roses-single-barrel",
+        "canonical_id": "four-roses-obsk-single-barrel-bourbon",
+        "canonical_name": "Four Roses Single Barrel",
+        "merged_ids": [
+          "four-roses-obsf-single-barrel-bourbon",
+          "four-roses-obsk-single-barrel-bourbon-hotel-covington-pick-125-2-proof",
+          "four-roses-obsk-single-barrel-bourbon-kroger-pick-122-4-proof",
+          "four-roses-oesk-single-barrel-bourbon",
+          "four-roses-oeso-single-barrel-bourbon"
         ]
       }
     ],
@@ -928,12 +942,12 @@
     ]
   },
   "catalog": {
-    "before": 1046,
-    "after": 1042,
-    "merged": 178,
-    "merged_this_run": 0,
-    "redirects_total": 178,
-    "retail_removed": 4,
+    "before": 1032,
+    "after": 1028,
+    "merged": 191,
+    "merged_this_run": 3,
+    "redirects_total": 191,
+    "retail_removed": 1,
     "groups": [
       {
         "family_key": "bombergers-declaration",
@@ -960,7 +974,9 @@
         "canonical_name": "Buffalo Trace Bourbon",
         "merged_ids": [
           "buffalo-trace-bourbon-single-barrel-select-225-freddies-choice",
-          "olcc-11936b"
+          "olcc-11936b",
+          "buffalo-trace-bourbon-single-barrel-032-select-by-wooden-cork",
+          "buffalo-trace-bourbon-single-barrel-select-by-wooden-cork"
         ]
       },
       {
@@ -3041,6 +3057,24 @@
         "canonical_name": "HIDDEN CASK",
         "merged_ids": [
           "hidden-cask-140-35"
+        ]
+      },
+      {
+        "family_key": "four-roses-single-barrel",
+        "canonical_id": "four-roses-obsk-single-barrel-bourbon",
+        "canonical_name": "Four Roses Single Barrel",
+        "merged_ids": [
+          "four-roses-obsf-single-barrel-bourbon",
+          "four-roses-obsk-single-barrel-bourbon-hotel-covington-pick-125-2-proof",
+          "four-roses-obsk-single-barrel-bourbon-kroger-pick-122-4-proof",
+          "four-roses-oesk-single-barrel-bourbon",
+          "four-roses-oeso-single-barrel-bourbon",
+          "olcc-1031b",
+          "olcc-8774b",
+          "four-roses-single-barrel-101-22",
+          "olcc-12806b",
+          "olcc-12807b",
+          "olcc-12808b"
         ]
       }
     ],
@@ -43184,6 +43218,11 @@
         "id": "olcc-11072b",
         "name": "TWISTED TEA",
         "reason": "ready-to-drink-not-whiskey"
+      },
+      {
+        "id": "four-roses-the-ten-recipe-tasting-experience-limited-edition",
+        "name": "Four Roses The Ten Recipe Tasting Experience Limited Edition",
+        "reason": "gift-or-accessory-bundle"
       }
     ]
   }
