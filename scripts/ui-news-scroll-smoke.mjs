@@ -19,11 +19,13 @@ const articles=Array.from({length:4},(_,index)=>({
 const browser=await chromium.launch({headless:true,executablePath:chrome});
 const page=await browser.newPage({viewport:{width:390,height:844},deviceScaleFactor:1,hasTouch:true});
 const errors=[];
+let newsAuthHeader="";
 page.on("pageerror",(error)=>errors.push("pageerror: "+error.message));
 page.on("console",(message)=>{
   if(message.type()==="error"&&!message.text().includes("Failed to load resource")) errors.push("console: "+message.text());
 });
 await page.route("**/news?*",async(route)=>{
+  newsAuthHeader=route.request().headers().authorization||"";
   await route.fulfill({status:200,contentType:"application/json",body:JSON.stringify({articles,news_ready:true})});
 });
 await page.goto(target,{waitUntil:"domcontentloaded"});
@@ -31,7 +33,25 @@ await page.evaluate(()=>{
   AGE_GATE_RUNTIME_OK=true;
   document.getElementById("ageGate")?.classList.remove("show");
 });
+await page.locator("#homeNewsList [data-news-auth]").waitFor();
+await page.locator("#homeNewsList [data-news-auth]").click();
+await page.locator("#newsAuthModal.show").waitFor();
+const guestDiagnostics={
+  lockedCards:await page.locator("#homeNewsList .news-card").count(),
+  modalTitle:await page.locator("#newsAuthTitle").textContent()
+};
+if(guestDiagnostics.lockedCards!==0) throw new Error("Guest can see news cards: "+JSON.stringify(guestDiagnostics));
+await page.locator("#newsAuthClose").click();
+await page.evaluate(()=>{
+  AUTH_TOKEN="news-smoke-token";
+  AUTH_USER={id:"news-smoke-user",email:"hunter@example.com",username:"Hunter"};
+  localStorage.setItem(AUTH_TOKEN_KEY,AUTH_TOKEN);
+  localStorage.setItem(AUTH_USER_KEY,JSON.stringify(AUTH_USER));
+  renderHomeNews();
+  fetchNews();
+});
 await page.locator("#homeNewsList .news-card").first().waitFor();
+if(newsAuthHeader!=="Bearer news-smoke-token") throw new Error("News request is missing authentication: "+newsAuthHeader);
 
 const diagnostics=await page.evaluate(()=>{
   const scroller=document.getElementById("featuredRow");
@@ -78,4 +98,4 @@ if(!externalDiagnostics.state||externalDiagnostics.state.view!=="articles") thro
 if(errors.length) throw new Error(errors.join("\n"));
 
 await browser.close();
-console.log(JSON.stringify({ok:true,diagnostics,articleCards,externalDiagnostics},null,2));
+console.log(JSON.stringify({ok:true,guestDiagnostics,diagnostics,articleCards,externalDiagnostics},null,2));

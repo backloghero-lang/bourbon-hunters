@@ -8,7 +8,7 @@ Ten plik ma byc pierwszym kontekstem dla nowego watku Codexa, np. `Przekaz Bourb
 
 - Aktualny skaner to przywrocony tryb visual-only: `visual-only-catalog-v3-quality-assets`; OCR jest wylaczony.
 - Aktualny katalog skanera: `ttb-olcc-quality-catalog-v9-canonical-products`; aktualny pipeline assetow: `community-catalog-images-v6-highres-cutout`.
-- Cache PWA: `bourbon-hunters-v102`.
+- Cache PWA: `bourbon-hunters-v103`.
 - Przed aktualnym deployem Workera trzeba uruchomic `agent/d1-migration-v68-whisky-news.sql`.
 - Health ma pokazac `news_schema: true`, `news_agent_ready: true`, `local_image_cutout_ready: true` i `news_agent_version: whisky-news-google-grounded-v1`.
 - Publiczne newsy sa widoczne na Home oraz w `Profil -> Artykuly`. Jeden dzienny Cron uruchamia agenta tylko w poniedzialki i czwartki.
@@ -17,6 +17,8 @@ Ten plik ma byc pierwszym kontekstem dla nowego watku Codexa, np. `Przekaz Bourb
 - Aktualny lokalny pipeline to `local-bottle-cutout-v2-quality-gated`: WebP 960x1280, centrowanie i bramka jakosci odrzucajaca dlonie, uciecia oraz dziury segmentacji.
 - Butelki sa powiekszone tylko w szczegolach; miniatury list pozostaja bez zmian.
 - Linki newsow otwieraja przegladarke zewnetrzna, a PWA odtwarza widok po ewentualnym przeladowaniu przez Androida.
+- News feed i `GET /news` sa dostepne tylko po zalogowaniu; guest dostaje modal logowania/rejestracji.
+- Szczegoly preferuja pelny `image`, a listy zachowuja `thumb`. Profil ma belki z jasnego drewna w jodelke przechodzacego w opalone drewno.
 - Aktualne szczegoly zawsze sa w `pliki-md/HANDOFF.md`; ponizszy blok z 2026-07-23 jest historia architektury sprzed rollbacku OCR.
 
 ## Historyczny stan 2026-07-23

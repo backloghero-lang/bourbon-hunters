@@ -2,6 +2,9 @@ import fs from "node:fs";
 import vm from "node:vm";
 
 let source=fs.readFileSync(new URL("../agent/worker.js",import.meta.url),"utf8");
+if(!source.includes('const newsUser=await authUser(env,request)') || !source.includes('if(!newsUser) return J({error:"unauthorized"},401,cors)')){
+  throw new Error("News endpoint must require an authenticated user");
+}
 source=source.replace("export default {","globalThis.__workerDefault={");
 source+="\nglobalThis.__newsTest={canonicalNewsUrl,newsSourceForUrl,newsMetaValue,newsCanonicalFromHtml,STARTER_NEWS,NEWS_RETENTION_DAYS};\n";
 const context={URL,console,globalThis:null};

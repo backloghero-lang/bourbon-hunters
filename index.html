@@ -205,6 +205,10 @@
   .profile-account .pa-stat span{display:block;margin-top:4px;font-size:8px;text-transform:uppercase;letter-spacing:.45px;color:#A99572;font-weight:900}
   .profile-menu{display:flex;flex-direction:column;gap:12px;margin-top:12px}
   .profile-row{width:100%;display:grid;grid-template-columns:54px 1fr 22px;align-items:center;gap:14px;border:1px solid rgba(226,176,112,.18);border-radius:18px;background:linear-gradient(180deg,rgba(29,24,18,.72),rgba(10,7,5,.88));color:#F6E1BC;padding:12px 14px;text-align:left;font-size:15px;font-weight:900;letter-spacing:.2px;cursor:pointer;box-shadow:0 12px 24px rgba(0,0,0,.22)}
+  #view-profile .profile-row,#view-hunter-profile .profile-row{border-color:rgba(238,190,119,.42);background:
+    linear-gradient(90deg,rgba(28,14,5,.06) 0%,rgba(20,10,5,.2) 48%,rgba(2,5,5,.7) 100%),
+    url("design/figma-assets/profile-herringbone-burnt-v1.webp") center/cover no-repeat;color:#FFF1D2;text-shadow:0 2px 5px rgba(0,0,0,.88);box-shadow:inset 0 1px 0 rgba(255,232,190,.22),inset 0 -18px 34px rgba(0,0,0,.22),0 14px 28px rgba(0,0,0,.3)}
+  #view-profile .profile-ico,#view-hunter-profile .profile-ico{background:rgba(12,8,5,.62);border-color:rgba(255,220,159,.34);color:#F3C778;box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
   .profile-row:active{transform:scale(.99)}
   .profile-row[aria-disabled="true"]{opacity:.52;filter:grayscale(.8)}
   .profile-ico{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;background:rgba(246,225,188,.08);border:1px solid rgba(226,176,112,.14);color:#E2B070}
@@ -366,6 +370,19 @@
   .news-card-meta{display:flex;gap:7px;align-items:center;color:#D19B61;font-size:9px;line-height:1.2;text-transform:uppercase;font-weight:900}
   .news-card h4{margin:5px 0 5px;color:#F6E1BC;font-family:var(--serif);font-size:16px;line-height:1.15;letter-spacing:0}
   .news-card p{margin:0;color:#C9B493;font-size:11px;line-height:1.4;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
+  .news-lock{width:100%;min-height:112px;display:grid;grid-template-columns:48px 1fr;align-items:center;gap:13px;border:1px solid rgba(226,176,112,.3);border-radius:8px;background:linear-gradient(110deg,rgba(92,24,20,.48),rgba(9,8,7,.94) 48%,rgba(7,62,42,.42));color:#F6E1BC;padding:15px;text-align:left;cursor:pointer;box-shadow:0 14px 28px rgba(0,0,0,.25)}
+  .news-lock svg{width:30px;height:30px;margin:auto;color:#E2B070}
+  .news-lock b{display:block;font-family:var(--serif);font-size:17px;line-height:1.15}
+  .news-lock span{display:block;margin-top:5px;color:#C9B493;font-size:12px;line-height:1.4}
+  .news-auth-modal{position:fixed;inset:0;z-index:96;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.74);padding:14px}
+  .news-auth-modal.show{display:flex}
+  .news-auth-sheet{width:min(100%,430px);border:1px solid rgba(226,176,112,.42);border-radius:8px;background:linear-gradient(180deg,rgba(28,19,12,.98),rgba(8,6,5,.99));padding:20px 18px calc(18px + env(safe-area-inset-bottom));box-shadow:0 28px 70px rgba(0,0,0,.68)}
+  .news-auth-sheet h3{margin:0;color:#F6E1BC;font-family:var(--serif);font-size:24px;line-height:1.12}
+  .news-auth-sheet p{margin:9px 0 18px;color:#C9B493;font-size:13px;line-height:1.5}
+  .news-auth-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  .news-auth-actions button{min-height:46px;border:1px solid rgba(226,176,112,.44);border-radius:8px;background:rgba(0,0,0,.24);color:#E2B070;font-weight:900;cursor:pointer}
+  .news-auth-actions .primary{background:linear-gradient(180deg,#F1C875,#B86A33);color:#1B1008}
+  .news-auth-close{width:100%;margin-top:9px;min-height:40px;border:0;background:transparent;color:#A99572;font-weight:800;cursor:pointer}
   .articles-view{padding-bottom:110px}
   .articles-intro{margin:-6px 0 16px;color:#B7A486;font-size:12px;line-height:1.45}
   .local-photo-modal{position:fixed;inset:0;z-index:95;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.74);padding:14px}
@@ -888,6 +905,18 @@
   </div>
 </div>
 
+<div class="news-auth-modal" id="newsAuthModal" aria-hidden="true">
+  <div class="news-auth-sheet" role="dialog" aria-modal="true" aria-labelledby="newsAuthTitle">
+    <h3 id="newsAuthTitle" data-i18n="newsAuthTitle">Newsy dla zalogowanych łowców</h3>
+    <p data-i18n="newsAuthCopy">Zaloguj się albo załóż konto, aby czytać cotygodniowy wybór artykułów o whisky.</p>
+    <div class="news-auth-actions">
+      <button type="button" data-open-view="register" data-i18n="registerTab">Rejestracja</button>
+      <button class="primary" type="button" data-open-view="signin" data-i18n="signInTab">Logowanie</button>
+    </div>
+    <button class="news-auth-close" id="newsAuthClose" type="button" data-i18n="later">Później</button>
+  </div>
+</div>
+
 <nav class="nav" id="bottomNav">
   <button data-view="home" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></svg><span data-i18n="navHome">Start</span></button>
   <button data-view="explore"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg><span data-i18n="navExplore">Odkrywaj</span></button>
@@ -1092,6 +1121,7 @@ Object.assign(I18N.pl,{
   localBottlePhotoRemoved:"Lokalne zdj\u0119cie zosta\u0142o usuni\u0119te.", localBottlePhotoError:"Nie uda\u0142o si\u0119 zapisa\u0107 tego zdj\u0119cia.",
   newsTitle:"Whisky news", newsAllTitle:"Artyku\u0142y o whisky", newsIntro:"Najciekawsze teksty ze sprawdzonych \u017ar\u00f3de\u0142, od\u015bwie\u017cane w poniedzia\u0142ki i czwartki.",
   newsLoading:"Szukam najnowszych artyku\u0142\u00f3w...", newsEmpty:"Nowe artyku\u0142y pojawi\u0105 si\u0119 po najbli\u017cszej aktualizacji.", readArticle:"Czytaj artyku\u0142",
+  newsAuthTitle:"Newsy dla zalogowanych \u0142owc\u00f3w", newsAuthCopy:"Zaloguj si\u0119 albo za\u0142\u00f3\u017c konto, aby czyta\u0107 cotygodniowy wyb\u00f3r artyku\u0142\u00f3w o whisky.",
   localPhotoPreviewTitle:"Podgl\u0105d zdj\u0119cia", localPhotoProcessing:"Wycinam i centruj\u0119 butelk\u0119...", localPhotoProcessingCopy:"Surowe zdj\u0119cie nie zostanie zapisane w chmurze.",
   localPhotoReady:"Tak b\u0119dzie wygl\u0105da\u0107 butelka w aplikacji.", useLocalPhoto:"U\u017cyj zdj\u0119cia", cancel:"Anuluj", localPhotoLimit:"Dzisiejszy limit obr\u00f3bki zdj\u0119\u0107 zosta\u0142 wykorzystany.",
   localPhotoQualityError:"Poka\u017c ca\u0142\u0105 butelk\u0119 od korka do dna. Nie trzymaj jej za szyjk\u0119 i usu\u0144 d\u0142onie oraz inne przedmioty z kadru."
@@ -1132,6 +1162,7 @@ Object.assign(I18N.en,{
   localBottlePhotoRemoved:"Local photo removed.", localBottlePhotoError:"This photo could not be saved.",
   newsTitle:"Whisky news", newsAllTitle:"Whisky articles", newsIntro:"Useful reads from trusted sources, refreshed every Monday and Thursday.",
   newsLoading:"Finding the latest articles...", newsEmpty:"New articles will appear after the next refresh.", readArticle:"Read article",
+  newsAuthTitle:"News for signed-in hunters", newsAuthCopy:"Sign in or create an account to read the weekly selection of whisky articles.",
   localPhotoPreviewTitle:"Photo preview", localPhotoProcessing:"Cutting out and centering the bottle...", localPhotoProcessingCopy:"The original photo will not be stored in the cloud.",
   localPhotoReady:"This is how the bottle will look in the app.", useLocalPhoto:"Use photo", cancel:"Cancel", localPhotoLimit:"Today's photo processing limit has been reached.",
   localPhotoQualityError:"Show the whole bottle from cap to base. Do not hold the neck, and keep hands and other objects outside the frame."
@@ -1315,14 +1346,14 @@ function canonicalBottleId(id){
   return id;
 }
 function bottleById(id){ id=canonicalBottleId(id); return DB.find(function(b){ return b.id===id; })||null; }
-function officialBottleImage(b){ return String((b&&(b.thumb||b.image))||""); }
+function officialBottleImage(b,small){ return String((b&&(small?(b.thumb||b.image):(b.image||b.thumb)))||""); }
 function localBottleImage(b){
   const id=canonicalBottleId(b&&b.id);
   return id&&LOCAL_BOTTLE_IMAGES[id] ? String(LOCAL_BOTTLE_IMAGES[id]) : "";
 }
-function bottleImage(b){ return localBottleImage(b)||officialBottleImage(b); }
+function bottleImage(b,small){ return localBottleImage(b)||officialBottleImage(b,small); }
 function bottleImageHtml(b,small,alt){
-  const src=bottleImage(b);
+  const src=bottleImage(b,small);
   return src
     ? '<img src="'+esc(src)+'" alt="'+esc(alt||b&&b.name||"")+'" data-bottle-image="1" data-mystery-size="'+(small?"small":"large")+'" loading="'+(small?"lazy":"eager")+'" decoding="async">'
     : mysteryBottleHtml(!!small);
@@ -1675,6 +1706,8 @@ function saveAuth(data){
     if(AUTH_IS_ADMIN) localStorage.setItem(AUTH_ADMIN_KEY,"1"); else localStorage.removeItem(AUTH_ADMIN_KEY);
   }catch(e){}
   renderProfile();
+  renderHomeNews();
+  if(AUTH_TOKEN) fetchNews();
 }
 function bhApi(path,opts){
   opts=opts||{};
@@ -2610,6 +2643,7 @@ let currentView="home", detailReturnView="explore", legalReturnView="profile", c
 let swipeStartX=0, swipeStartY=0, swipeLastX=0, swipeScrollLeft=0, swipeStartIndex=0, swipeMoved=false, swipeScroller=null, swipeAxis="";
 function showView(name){
   if(name==="admin-reports" && !AUTH_IS_ADMIN) name="profile";
+  if(name==="articles" && (!AUTH_TOKEN || !AUTH_USER)){ openNewsAuthModal(); return; }
   document.getElementById("appRoot").className = "app is-" + name;
   document.querySelectorAll(".view").forEach(function(v){ v.classList.toggle("active", v.id==="view-"+name); });
   document.querySelectorAll(".nav button").forEach(function(b){ b.classList.toggle("on", b.getAttribute("data-view")===name); });
@@ -2866,6 +2900,18 @@ function newsCardHtml(item){
     '<div class="news-card-body"><div class="news-card-meta"><span>'+esc(item.source_name||"Whisky")+'</span>'+(date?'<span>'+esc(date)+'</span>':'')+'</div>'+
     '<h4>'+esc(item.title||"")+'</h4><p>'+esc(excerpt)+'</p></div></a>';
 }
+function openNewsAuthModal(){
+  const modal=document.getElementById("newsAuthModal");
+  if(!modal) return;
+  modal.classList.add("show");
+  modal.setAttribute("aria-hidden","false");
+}
+function closeNewsAuthModal(){
+  const modal=document.getElementById("newsAuthModal");
+  if(!modal) return;
+  modal.classList.remove("show");
+  modal.setAttribute("aria-hidden","true");
+}
 const EXTERNAL_RETURN_KEY="bh_external_return_v1";
 let externalArticleOpenedAt=0;
 function externalReturnState(){
@@ -2918,21 +2964,25 @@ function restoreExternalReturn(){
 function renderHomeNews(){
   const box=document.getElementById("homeNewsList");
   if(!box) return;
+  if(!AUTH_TOKEN || !AUTH_USER){
+    box.innerHTML='<button class="news-lock" type="button" data-news-auth><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg><span><b>'+esc(t("newsAuthTitle"))+'</b><span>'+esc(t("newsAuthCopy"))+'</span></span></button>';
+    return;
+  }
   if(!NEWS_ITEMS.length){ box.innerHTML='<div class="empty">'+esc(newsPromise?t("newsLoading"):t("newsEmpty"))+'</div>'; return; }
   box.innerHTML=NEWS_ITEMS.slice(0,3).map(newsCardHtml).join("");
 }
 function renderArticles(){
   const box=document.getElementById("articlesList");
   if(!box) return;
+  if(!AUTH_TOKEN || !AUTH_USER){ box.innerHTML=""; return; }
   if(!NEWS_ITEMS.length){ box.innerHTML='<div class="empty">'+esc(newsPromise?t("newsLoading"):t("newsEmpty"))+'</div>'; return; }
   box.innerHTML=NEWS_ITEMS.map(newsCardHtml).join("");
 }
 function fetchNews(){
+  if(!AUTH_TOKEN || !AUTH_USER){ renderHomeNews(); renderArticles(); return Promise.resolve([]); }
   if(newsPromise) return newsPromise;
   if(!WORKER_URL){ renderHomeNews(); renderArticles(); return Promise.resolve([]); }
-  newsPromise=fetch(WORKER_URL+"/news?limit=24",{cache:"no-store"}).then(function(response){
-    return response.ok?response.json():{articles:[]};
-  }).then(function(data){
+  newsPromise=bhApi("/news?limit=24",{method:"GET",cache:"no-store"}).then(function(data){
     NEWS_ITEMS=Array.isArray(data.articles)?data.articles:[];
     return NEWS_ITEMS;
   }).catch(function(){ return []; }).then(function(items){
@@ -3197,6 +3247,7 @@ document.addEventListener("click",function(e){
   const openView=e.target.closest("[data-open-view]");
   if(openView){
     e.preventDefault();
+    closeNewsAuthModal();
     let target=openView.getAttribute("data-open-view");
     if(target==="terms" || target==="privacy") legalReturnView=currentView;
     if((currentView==="terms" || currentView==="privacy") && target==="register") target=legalReturnView||"profile";
@@ -3246,6 +3297,12 @@ document.addEventListener("click",function(e){
     if(profileAction.getAttribute("data-profile-action")==="delete-profile"){ e.preventDefault(); deleteProfileAccount(); return; }
     toast(t("inProgress")); return;
   }
+  const newsAuth=e.target.closest("[data-news-auth]");
+  if(newsAuth){ e.preventDefault(); openNewsAuthModal(); return; }
+  const newsAuthClose=e.target.closest("#newsAuthClose");
+  if(newsAuthClose){ e.preventDefault(); closeNewsAuthModal(); return; }
+  const newsAuthModal=e.target.closest("#newsAuthModal");
+  if(newsAuthModal && e.target.id==="newsAuthModal"){ closeNewsAuthModal(); return; }
   const reportDays=e.target.closest("[data-report-days]");
   if(reportDays){ e.preventDefault(); loadAdminReport(reportDays.getAttribute("data-report-days")); return; }
   const refreshNews=e.target.closest("#refreshNewsBtn");

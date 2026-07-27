@@ -7,6 +7,17 @@ Aktualizacja: 2026-07-05.
 Najnowszy kontekst dla kolejnego etapu jest w `pliki-md/HANDOFF-BH-1.1.md`.
 Uzyj go jako pierwszego dokumentu przy starcie watku `Przekaz Bourbon Hunter 1.1`.
 
+## Aktualizacja 2026-07-27 - pelne assety szczegolow, news auth i profil wood
+
+- `bottleImageHtml` rozdziela teraz zrodla: listy uzywaja `thumb`, a szczegoly i wynik skanu preferuja pelny `image`. Naprawia to male butelki bez powiekszania miniaturek na listach.
+- Angel's Envy Port Finish ma nowy wysokiej rozdzielczosci, przezroczysty asset katalogowy przygotowany na podstawie poprzedniego obrazu. Pozostale dobre assety nie zostaly zmienione.
+- Sekcja newsow jest dostepna dopiero po zalogowaniu. Guest widzi zamkniety teaser i modal z wyborami `Rejestracja` oraz `Logowanie`.
+- `GET /news` wymaga poprawnej sesji Bearer; blokada nie jest tylko elementem frontendu. Health potwierdza to polem `news_auth_required: true`.
+- Belki w `Profil` i `Moj profil` korzystaja z wygenerowanej tekstury jasnego debu w jodelke, przechodzacego w lekko opalone i weglowe drewno: `design/figma-assets/profile-herringbone-burnt-v1.webp`.
+- README zostal przebudowany na produktowa prezentacje funkcji i zawiera slot oraz 7-scenowy scenariusz filmu happy path.
+- Cache PWA: `bourbon-hunters-v103`.
+- Brak migracji D1. Wymagany jest deploy Workera oraz GitHub Pages.
+
 ## Aktualizacja 2026-07-27 - szczegoly butelki, zewnetrzne artykuly i cutout QA
 
 - Butelka jest powiekszona tylko w widoku szczegolow i wyniku skanu. Rozmiary miniaturek na listach nie zostaly zmienione.
@@ -15,13 +26,13 @@ Uzyj go jako pierwszego dokumentu przy starcie watku `Przekaz Bourbon Hunter 1.1
 - `local-bottle-cutout-v2-quality-gated` usuwa tlo, przycina przezroczysty margines, centruje obiekt na przezroczystym canvasie 960x1280 i zapisuje WebP quality 92.
 - Gemini wykonuje dodatkowa kontrole gotowego wyciecia. Ujecia z dlonia, ucinajace korek lub podstawe, z dziurami segmentacji albo wieloma obiektami zwracaja `422 cutout_quality` i prosbe o ponowne zdjecie.
 - Health pokazuje `local_image_pipeline_version: local-bottle-cutout-v2-quality-gated` oraz `cutout_quality_ready: true`, gdy sa podpiete `IMAGES` i `GEMINI_API_KEY`.
-- Cache PWA: `bourbon-hunters-v102`.
+- Historyczny cache tego etapu: `bourbon-hunters-v102`.
 - Ten etap nie wymaga migracji D1. Wymaga deployu Workera i publikacji frontendu.
 
 ## Aktualizacja 2026-07-27 - newsy, gesty i lokalne wycinanie zdjec
 
 - Karuzele na Home maja `touch-action: pan-y` i blokade osi dopiero po rozpoznaniu wyraznego gestu poziomego. Pionowy scroll dziala po rozpoczeciu gestu bezposrednio na karcie.
-- Publiczny endpoint `GET /news` zwraca aktualny feed artykulow dla Home i widoku `Profil -> Artykuly`.
+- Endpoint `GET /news` zwraca feed dla zalogowanych uzytkownikow Home i widoku `Profil -> Artykuly`.
 - Agent newsow korzysta z Gemini z Google Search, ale akceptuje artykuly tylko z bialej listy: Whisky Advocate, Whisky Magazine, The Whiskey Wash i Distiller.
 - Tytul, canonical URL, data i miniatura sa dodatkowo sprawdzane na stronie zrodlowej. Duplikaty canonical URL nie sa publikowane, a agent nigdy nie tworzy wpisu bez prawdziwego artykulu.
 - Dzienny Cron pozostaje jeden. W poniedzialek i czwartek Worker dodaje maksymalnie 3 nowe artykuly; w pozostale dni wykonuje tylko dotychczasowe czyszczenie.
