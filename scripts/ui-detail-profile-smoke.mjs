@@ -51,7 +51,7 @@ const profile=await page.evaluate(()=>{
   const row=document.querySelector("#view-profile .profile-row");
   return {background:getComputedStyle(row).backgroundImage,rowHeight:Math.round(row.getBoundingClientRect().height)};
 });
-if(!profile.background.includes("profile-herringbone-burnt-v1.webp")) throw new Error("Profile wood texture is missing: "+JSON.stringify(profile));
+if(!profile.background.includes("assets/brand/profile-herringbone-burnt-v1.webp")) throw new Error("Profile wood texture is missing: "+JSON.stringify(profile));
 if(process.env.BH_PROFILE_SCREENSHOT) await page.screenshot({path:process.env.BH_PROFILE_SCREENSHOT,fullPage:true});
 if(errors.length) throw new Error(errors.join("\n"));
 

@@ -13,9 +13,9 @@ Uzyj go jako pierwszego dokumentu przy starcie watku `Przekaz Bourbon Hunter 1.1
 - Angel's Envy Port Finish ma nowy wysokiej rozdzielczosci, przezroczysty asset katalogowy przygotowany na podstawie poprzedniego obrazu. Pozostale dobre assety nie zostaly zmienione.
 - Sekcja newsow jest dostepna dopiero po zalogowaniu. Guest widzi zamkniety teaser i modal z wyborami `Rejestracja` oraz `Logowanie`.
 - `GET /news` wymaga poprawnej sesji Bearer; blokada nie jest tylko elementem frontendu. Health potwierdza to polem `news_auth_required: true`.
-- Belki w `Profil` i `Moj profil` korzystaja z wygenerowanej tekstury jasnego debu w jodelke, przechodzacego w lekko opalone i weglowe drewno: `design/figma-assets/profile-herringbone-burnt-v1.webp`.
+- Belki w `Profil` i `Moj profil` korzystaja z wygenerowanej tekstury jasnego debu w jodelke, przechodzacego w lekko opalone i weglowe drewno: `assets/brand/profile-herringbone-burnt-v1.webp`. CSS ma dodatkowy awaryjny wzor desek, gdyby asset nie zostal pobrany.
 - README zostal przebudowany na produktowa prezentacje funkcji i zawiera slot oraz 7-scenowy scenariusz filmu happy path.
-- Cache PWA: `bourbon-hunters-v103`.
+- Cache PWA: `bourbon-hunters-v104`.
 - Brak migracji D1. Wymagany jest deploy Workera oraz GitHub Pages.
 
 ## Aktualizacja 2026-07-27 - szczegoly butelki, zewnetrzne artykuly i cutout QA

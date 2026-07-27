@@ -80,7 +80,7 @@ Cykl zycia zdjec katalogowych wymaga:
 4. W D1 uruchom `agent/d1-migration-v68-whisky-news.sql`.
 5. Dopiero potem wklej i zdeployuj aktualny `agent/worker.js`.
 6. W Workerze pozostaw jeden dzienny Cron Trigger, np. `0 3 * * *`. Czyszczenie dziala codziennie, a newsy tylko w poniedzialek i czwartek.
-7. Wyslij frontend na GitHub i odswiez PWA do cache `bourbon-hunters-v103`.
+7. Wyslij frontend na GitHub i odswiez PWA do cache `bourbon-hunters-v104`.
 8. Sprawdz pelny health: `https://bourbon-hunters.darekmaslyk.workers.dev/auth/health`.
 
 Kolejnosc jest wazna: migracje D1 -> Worker -> GitHub/PWA. Bez v67 user nie moze zatwierdzic assetu, a bez v68 feed newsow pozostanie pusty.
@@ -224,7 +224,7 @@ Ta zmiana dotyczy GitHub Pages. Nie wymaga podmiany Workera, migracji D1 ani zmi
 5. Sprawdź na Home kafel Whisky z liczbą pozycji.
 6. Wejdź w Whisky i sprawdź filtry Scotch, Irish, Japanese, Rye i pozostałe.
 
-Aktualny cache: `bourbon-hunters-v103`.
+Aktualny cache: `bourbon-hunters-v104`.
 
 Po deployu Workera `/health` powinien zwracac `news_auth_required: true`.
 
