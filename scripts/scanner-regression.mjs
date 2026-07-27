@@ -7,8 +7,18 @@ const root=path.resolve(import.meta.dirname,"..");
 const workerPath=path.join(root,"agent","worker.js");
 const catalogPath=path.join(root,"db","catalog","scan-index.json");
 const catalogSource=fs.readFileSync(catalogPath,"utf8");
+const workerSource=fs.readFileSync(workerPath,"utf8");
 
-let source=fs.readFileSync(workerPath,"utf8").replace("export default {","globalThis.__worker={");
+for(const required of [
+  'local-bottle-cutout-v2-quality-gated',
+  '.transform({width:960,height:1280,fit:"pad"',
+  '"bottle_cutout_qa"',
+  'preview_error="cutout_quality"'
+]){
+  if(!workerSource.includes(required)) throw new Error(`Missing image-pipeline guard: ${required}`);
+}
+
+let source=workerSource.replace("export default {","globalThis.__worker={");
 source+="\nglobalThis.__scannerTest={applyScanCatalogOverrides,matchBottleWithVisual};";
 const context={
   console,

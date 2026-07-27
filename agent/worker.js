@@ -7,7 +7,7 @@
 //   3b) tryb "analyze"-> rozbudowany opis + historia destylarni z linkami (Gemini + Google Search), fakty z bazy jako grunt.
 //
 // SEKRETY: GEMINI_API_KEY (wymagany), DEV_KEY (opcjonalny)
-// ZMIENNE: MODEL, IDENT_MODEL, NEWS_MODEL, TEMP_RATE, TEMP_ANALYZE, THINK_ANALYZE, MAX_RATE, MAX_ANALYZE, DAILY_LIMIT, LOCAL_CUTOUT_DAILY_LIMIT, LOCAL_CUTOUT_IP_DAILY_LIMIT, ALLOW_ORIGIN, PROMPT_URL, DB_URL, APP_URL, GOOGLE_REDIRECT_URI
+// ZMIENNE: MODEL, IDENT_MODEL, CUTOUT_QA_MODEL, NEWS_MODEL, TEMP_RATE, TEMP_ANALYZE, THINK_ANALYZE, MAX_RATE, MAX_ANALYZE, DAILY_LIMIT, LOCAL_CUTOUT_DAILY_LIMIT, LOCAL_CUTOUT_IP_DAILY_LIMIT, ALLOW_ORIGIN, PROMPT_URL, DB_URL, APP_URL, GOOGLE_REDIRECT_URI
 // SEKRETY OAuth: GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, opcjonalnie GOOGLE_STATE_SECRET
 // KV: DS_KV (limit + zapis nowosci). Klucze nowosci: "new:<id>".
 // D1: DB (konta, sesje, wishlist, kolekcja, oceny).
@@ -25,7 +25,7 @@ const CATALOG_MODERATION_VERSION = "catalog-moderation-orchestrator-admin-v1";
 const CATALOG_LICENSE_VERSION = "catalog-license-2026-07-18-v1";
 const TELEMETRY_VERSION = "scanner-telemetry-v1";
 const NEWS_AGENT_VERSION = "whisky-news-google-grounded-v1";
-const LOCAL_IMAGE_PIPELINE_VERSION = "local-bottle-cutout-v1";
+const LOCAL_IMAGE_PIPELINE_VERSION = "local-bottle-cutout-v2-quality-gated";
 const NEWS_RETENTION_DAYS = 30;
 const CATALOG_SYSTEM_USER_ID = "catalog-system";
 const AUTH_VERSION = "auth-pbkdf2-100000-google-v3";
@@ -515,11 +515,55 @@ async function transformBottleCutout(env, mime, image){
   const output=await env.IMAGES.input(new Blob([bytes],{type:mime}).stream())
     .transform({segment:"foreground"})
     .transform({trim:"border"})
-    .transform({width:960,height:1280,fit:"contain",background:"transparent",sharpen:1})
-    .output({format:"image/webp"});
+    .transform({width:960,height:1280,fit:"pad",background:"rgba(0,0,0,0)",sharpen:1})
+    .output({format:"image/webp",quality:92});
   const response=output.response();
   if(!response.ok) throw new Error("image_transform_"+response.status);
   return new Uint8Array(await response.arrayBuffer());
+}
+async function assessBottleCutout(env, bottleName, processed){
+  if(!env.GEMINI_API_KEY || !processed || !processed.byteLength){
+    return {checked:false,acceptable:true,reason_code:"qa_unavailable",confidence:0,usage:null};
+  }
+  const payload={
+    __model:env.CUTOUT_QA_MODEL||env.IDENT_MODEL||env.MODEL||"gemini-2.5-flash",
+    contents:[{role:"user",parts:[
+      {text:"Ocen wyciety asset butelki do katalogu aplikacji. Nazwa produktu dla kontekstu: "+String(bottleName||"nieznana").slice(0,180)+". Zaakceptuj tylko jedna kompletna butelke widoczna od korka do dna, bez dloni, palcow, polki, cenowki ani innych obiektow. Odrzuc asset, jezeli szyjka, korek, etykieta lub dno sa uciete, przezroczyste, maja dziury albo zostaly uszkodzone przez usuwanie tla. Nie oceniaj poprawnosci marki i nie poprawiaj etykiety. centered oznacza, ze butelka jest pionowa i wizualnie wycentrowana. Zwroc reason_code: ok, hand_or_object, bottle_cut_off, segmentation_damage, multiple_objects albo poor_framing."},
+      {inlineData:{mimeType:"image/webp",data:encodeBase64(processed)}}
+    ]}],
+    generationConfig:{
+      temperature:0,maxOutputTokens:220,thinkingConfig:{thinkingBudget:0},
+      responseMimeType:"application/json",
+      responseSchema:{
+        type:"OBJECT",
+        properties:{
+          acceptable:{type:"BOOLEAN"},
+          complete_bottle:{type:"BOOLEAN"},
+          occlusion_present:{type:"BOOLEAN"},
+          segmentation_damage:{type:"BOOLEAN"},
+          centered:{type:"BOOLEAN"},
+          reason_code:{type:"STRING"},
+          confidence:{type:"NUMBER",minimum:0,maximum:1}
+        },
+        required:["acceptable","complete_bottle","occlusion_present","segmentation_damage","centered","reason_code","confidence"]
+      }
+    }
+  };
+  const response=await callGemini(env,payload,"bottle_cutout_qa");
+  if(response.err) return {checked:false,acceptable:true,reason_code:"qa_unavailable",confidence:0,usage:response.usage};
+  const data=parseJson(response.txt)||{};
+  const confidence=clamp01(data.confidence);
+  const decisive=confidence>=0.68;
+  const acceptable=!decisive || !!(data.acceptable && data.complete_bottle && !data.occlusion_present && !data.segmentation_damage);
+  return {
+    checked:decisive,
+    acceptable:acceptable,
+    reason_code:acceptable?"ok":String(data.reason_code||"poor_framing").slice(0,80),
+    confidence:confidence,
+    complete_bottle:!!data.complete_bottle,
+    centered:!!data.centered,
+    usage:response.usage
+  };
 }
 async function createBottlePreview(env, request, user, body){
   if(!(await catalogDataSchemaReady(env))) return {error:"schema_catalog_lifecycle_missing",status:501};
@@ -551,6 +595,9 @@ async function createBottlePreview(env, request, user, body){
     await env.BOTTLE_IMAGES.put(originalKey,bytes,{httpMetadata:{contentType:mime}});
     const processed=await transformBottleCutout(env,mime,image);
     if(!processed) throw new Error("image_pipeline_unavailable");
+    const quality=await assessBottleCutout(env,bottle.name,processed);
+    if(quality.usage) await recordServiceUsage(env,null,user.id,quality.usage).catch(function(){});
+    if(!quality.acceptable) throw new Error("cutout_quality_"+quality.reason_code);
     const assetSha=await sha256Bytes(processed);
     await env.BOTTLE_IMAGES.put(processedKey,processed,{httpMetadata:{contentType:"image/webp",cacheControl:"public, max-age=31536000, immutable"}});
     await env.BOTTLE_IMAGES.delete(originalKey);
@@ -1248,8 +1295,14 @@ async function createLocalBottleCutout(env, request, body){
   try{
     const processed=await transformBottleCutout(env,mime,image);
     if(!processed) throw new Error("image_pipeline_unavailable");
+    const quality=await assessBottleCutout(env,String(body&&body.bottle_name||body&&body.bottle_id||""),processed);
+    if(quality.usage) await recordServiceUsage(env,null,user&&user.id,quality.usage).catch(function(){});
+    if(!quality.acceptable){
+      await recordServiceUsage(env,null,user&&user.id,{provider:"cloudflare",stage:"local_image_cutout",model:"cloudflare-images",status:422,attempts:1,duration_ms:Date.now()-started}).catch(function(){});
+      return {error:"cutout_quality",reason_code:quality.reason_code,retry:true,status:422,pipeline_version:LOCAL_IMAGE_PIPELINE_VERSION};
+    }
     await recordServiceUsage(env,null,user&&user.id,{provider:"cloudflare",stage:"local_image_cutout",model:"cloudflare-images",status:200,attempts:1,duration_ms:Date.now()-started}).catch(function(){});
-    return {ok:true,image:"data:image/webp;base64,"+encodeBase64(processed),mime:"image/webp",width:960,height:1280,pipeline_version:LOCAL_IMAGE_PIPELINE_VERSION};
+    return {ok:true,image:"data:image/webp;base64,"+encodeBase64(processed),mime:"image/webp",width:960,height:1280,quality_checked:quality.checked,pipeline_version:LOCAL_IMAGE_PIPELINE_VERSION};
   }catch(e){
     await recordServiceUsage(env,null,user&&user.id,{provider:"cloudflare",stage:"local_image_cutout",model:"cloudflare-images",status:500,attempts:1,duration_ms:Date.now()-started}).catch(function(){});
     return {error:"image_cutout_failed",detail:String(e&&e.message?e.message:e).slice(0,120),status:502};
@@ -1287,7 +1340,7 @@ async function handleApi(request, env, cors){
       }
       catch(e){ detail=String(e&&e.message?e.message:e).slice(0,220); }
     }
-    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_mode:"visual_only",scan_ocr_enabled:false,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_moderation_version:CATALOG_MODERATION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,news_agent_version:NEWS_AGENT_VERSION,local_image_pipeline_version:LOCAL_IMAGE_PIPELINE_VERSION,news_schedule:"Monday and Thursday via daily UTC cron",news_retention_days:NEWS_RETENTION_DAYS,starter_news_count:STARTER_NEWS.length,catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,catalog_moderation_schema:catalog_moderation_schema,telemetry_schema:telemetry_schema,news_schema:news_schema,news_agent_ready:news_schema&&!!env.GEMINI_API_KEY,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),local_image_cutout_ready:!!env.IMAGES,email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
+    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_mode:"visual_only",scan_ocr_enabled:false,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_moderation_version:CATALOG_MODERATION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,news_agent_version:NEWS_AGENT_VERSION,local_image_pipeline_version:LOCAL_IMAGE_PIPELINE_VERSION,news_schedule:"Monday and Thursday via daily UTC cron",news_retention_days:NEWS_RETENTION_DAYS,starter_news_count:STARTER_NEWS.length,catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,catalog_moderation_schema:catalog_moderation_schema,telemetry_schema:telemetry_schema,news_schema:news_schema,news_agent_ready:news_schema&&!!env.GEMINI_API_KEY,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),local_image_cutout_ready:!!env.IMAGES,cutout_quality_ready:!!(env.IMAGES&&env.GEMINI_API_KEY),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
   }
   if(path==="/auth/google/start" && request.method==="GET"){
     const returnUrl=allowedReturnUrl(env,url.searchParams.get("return")||appUrl(env));
@@ -1935,12 +1988,22 @@ export default {
         try{
           const cutout=await transformBottleCutout(env,mime,image);
           if(cutout){
-            result.image="data:image/webp;base64,"+encodeBase64(cutout);
-            result.has_image=true;
-            result.source="scan_preview";
-            result.temporary_scan_asset=true;
-            result.catalog_asset_missing=true;
-            recordServiceUsage(env,scanId,scanUser&&scanUser.id,{provider:"cloudflare",stage:"image_cutout",model:"cloudflare-images",status:200,attempts:1,duration_ms:Date.now()-cutoutStarted}).catch(function(){});
+            const quality=await assessBottleCutout(env,result.name||resolvedConfirmedId,cutout);
+            if(quality.usage) recordServiceUsage(env,scanId,scanUser&&scanUser.id,quality.usage).catch(function(){});
+            if(quality.acceptable){
+              result.image="data:image/webp;base64,"+encodeBase64(cutout);
+              result.has_image=true;
+              result.source="scan_preview";
+              result.temporary_scan_asset=true;
+              result.catalog_asset_missing=true;
+              result.cutout_quality_checked=quality.checked;
+              recordServiceUsage(env,scanId,scanUser&&scanUser.id,{provider:"cloudflare",stage:"image_cutout",model:"cloudflare-images",status:200,attempts:1,duration_ms:Date.now()-cutoutStarted}).catch(function(){});
+            }else{
+              result.catalog_asset_missing=true;
+              result.preview_error="cutout_quality";
+              result.preview_reason=quality.reason_code;
+              recordServiceUsage(env,scanId,scanUser&&scanUser.id,{provider:"cloudflare",stage:"image_cutout",model:"cloudflare-images",status:422,attempts:1,duration_ms:Date.now()-cutoutStarted}).catch(function(){});
+            }
           }
         }catch(e){
           result.catalog_asset_missing=true;

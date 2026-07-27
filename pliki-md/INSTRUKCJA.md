@@ -35,7 +35,7 @@ Aktualny oczekiwany stan Workera:
   "catalog_moderation_version": "catalog-moderation-orchestrator-admin-v1",
   "catalog_license_version": "catalog-license-2026-07-18-v1",
   "news_agent_version": "whisky-news-google-grounded-v1",
-  "local_image_pipeline_version": "local-bottle-cutout-v1",
+  "local_image_pipeline_version": "local-bottle-cutout-v2-quality-gated",
   "news_retention_days": 30,
   "starter_news_count": 6,
   "pbkdf2_iterations": 100000,
@@ -52,6 +52,7 @@ Aktualny oczekiwany stan Workera:
   "news_schema": true,
   "news_agent_ready": true,
   "local_image_cutout_ready": true,
+  "cutout_quality_ready": true,
   "image_pipeline_ready": true,
   "email_ready": true,
   "google_ready": true
@@ -79,7 +80,7 @@ Cykl zycia zdjec katalogowych wymaga:
 4. W D1 uruchom `agent/d1-migration-v68-whisky-news.sql`.
 5. Dopiero potem wklej i zdeployuj aktualny `agent/worker.js`.
 6. W Workerze pozostaw jeden dzienny Cron Trigger, np. `0 3 * * *`. Czyszczenie dziala codziennie, a newsy tylko w poniedzialek i czwartek.
-7. Wyslij frontend na GitHub i odswiez PWA do cache `bourbon-hunters-v101`.
+7. Wyslij frontend na GitHub i odswiez PWA do cache `bourbon-hunters-v102`.
 8. Sprawdz pelny health: `https://bourbon-hunters.darekmaslyk.workers.dev/auth/health`.
 
 Kolejnosc jest wazna: migracje D1 -> Worker -> GitHub/PWA. Bez v67 user nie moze zatwierdzic assetu, a bez v68 feed newsow pozostanie pusty.
@@ -223,7 +224,7 @@ Ta zmiana dotyczy GitHub Pages. Nie wymaga podmiany Workera, migracji D1 ani zmi
 5. Sprawdź na Home kafel Whisky z liczbą pozycji.
 6. Wejdź w Whisky i sprawdź filtry Scotch, Irish, Japanese, Rye i pozostałe.
 
-Aktualny cache: `bourbon-hunters-v101`.
+Aktualny cache: `bourbon-hunters-v102`.
 
 ## Wdrozenie newsow, poprawionych gestow i lokalnego wycinania zdjec
 

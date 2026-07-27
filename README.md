@@ -34,12 +34,12 @@
 | Bottle scanner | Visual-only label recognition. OCR is disabled after the rollback described in `pliki-md/DECISIONS.md`. |
 | Match confirmation | The user confirms one or two catalog candidates before opening bottle details. |
 | Catalog | Canonical products shared by the lightweight app database and the scanner index; vintages, private picks, gift sets and duplicate labels are consolidated or removed. |
-| Bottle details | Proof/ABV, suggested price, community rating, personal rating, general information and tasting notes. |
+| Bottle details | Large, centered bottle presentation plus proof/ABV, suggested price, community rating, personal rating, general information and tasting notes. List thumbnails keep their compact size. |
 | Collections | Wishlist, collection, ratings and scan history synchronize through the Worker after sign-in. |
 | Community | User recommendations, comments, profile markers and community ratings. |
 | Accounts | Email/password, password reset and Google OAuth through Cloudflare Worker + D1. |
-| Bottle images | Published catalog assets use R2 and Cloudflare Images. A user can also create a private local cutout for a bottle that has no image. |
-| Whisky news | Public feed on Home and `Profile -> Articles`, seeded with six starter articles and refreshed every Monday and Thursday. |
+| Bottle images | Published catalog assets use R2 and Cloudflare Images. Private local cutouts are normalized to 960x1280 and quality-checked for cropped bottles, hands and damaged segmentation. |
+| Whisky news | Public feed on Home and `Profile -> Articles`, seeded with six starter articles and refreshed every Monday and Thursday. Article links open outside the PWA and the app restores its prior view if Android reloads it. |
 
 The scanner must not invent a bottle when the catalog evidence is weak. A recognized candidate is displayed for explicit user confirmation; uncertain scans return a retry state.
 
@@ -61,7 +61,7 @@ GitHub Pages PWA
 - Lightweight UI catalog: `db/bourbons.json`.
 - Scanner catalog: `db/catalog/scan-index.json`.
 - Static hosting: GitHub Pages.
-- Current PWA cache: `bourbon-hunters-v101`.
+- Current PWA cache: `bourbon-hunters-v102`.
 
 ## Whisky News
 
@@ -96,6 +96,8 @@ news_agent_ready: true
 news_agent_version: whisky-news-google-grounded-v1
 news_retention_days: 30
 starter_news_count: 6
+local_image_pipeline_version: local-bottle-cutout-v2-quality-gated
+cutout_quality_ready: true
 ```
 
 No additional migration is required after v68 to enable the starter feed or 30-day retention.

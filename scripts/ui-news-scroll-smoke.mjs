@@ -61,7 +61,21 @@ await page.evaluate(()=>showView("articles"));
 await page.locator("#articlesList .news-card").first().waitFor();
 const articleCards=await page.locator("#articlesList .news-card").count();
 if(articleCards!==4) throw new Error("Articles view did not render the full feed");
+await page.evaluate(()=>{
+  window.__openedArticle="";
+  window.open=(url)=>{
+    window.__openedArticle=String(url||"");
+    return {opener:null};
+  };
+});
+await page.locator("#articlesList .news-card").first().click();
+const externalDiagnostics=await page.evaluate(()=>({
+  opened:window.__openedArticle,
+  state:JSON.parse(sessionStorage.getItem("bh_external_return_v1")||"null")
+}));
+if(externalDiagnostics.opened!=="https://whiskyadvocate.com/News") throw new Error("Article did not open outside the current app view: "+JSON.stringify(externalDiagnostics));
+if(!externalDiagnostics.state||externalDiagnostics.state.view!=="articles") throw new Error("Article return state was not saved: "+JSON.stringify(externalDiagnostics));
 if(errors.length) throw new Error(errors.join("\n"));
 
 await browser.close();
-console.log(JSON.stringify({ok:true,diagnostics,articleCards},null,2));
+console.log(JSON.stringify({ok:true,diagnostics,articleCards,externalDiagnostics},null,2));

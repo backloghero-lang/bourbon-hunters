@@ -7,6 +7,17 @@ Aktualizacja: 2026-07-05.
 Najnowszy kontekst dla kolejnego etapu jest w `pliki-md/HANDOFF-BH-1.1.md`.
 Uzyj go jako pierwszego dokumentu przy starcie watku `Przekaz Bourbon Hunter 1.1`.
 
+## Aktualizacja 2026-07-27 - szczegoly butelki, zewnetrzne artykuly i cutout QA
+
+- Butelka jest powiekszona tylko w widoku szczegolow i wyniku skanu. Rozmiary miniaturek na listach nie zostaly zmienione.
+- Kontener szczegolow ma responsywna wysokosc 500-680 px, a asset zajmuje do 98% dostepnej przestrzeni bez sztucznego skalowania i obcinania korka.
+- Link artykulu jest otwierany poza PWA. Przed wyjsciem aplikacja zapisuje widok i scroll w `sessionStorage`; jesli Android przeladuje PWA, stan jest odtwarzany bez ponownego intro i bramki wieku.
+- `local-bottle-cutout-v2-quality-gated` usuwa tlo, przycina przezroczysty margines, centruje obiekt na przezroczystym canvasie 960x1280 i zapisuje WebP quality 92.
+- Gemini wykonuje dodatkowa kontrole gotowego wyciecia. Ujecia z dlonia, ucinajace korek lub podstawe, z dziurami segmentacji albo wieloma obiektami zwracaja `422 cutout_quality` i prosbe o ponowne zdjecie.
+- Health pokazuje `local_image_pipeline_version: local-bottle-cutout-v2-quality-gated` oraz `cutout_quality_ready: true`, gdy sa podpiete `IMAGES` i `GEMINI_API_KEY`.
+- Cache PWA: `bourbon-hunters-v102`.
+- Ten etap nie wymaga migracji D1. Wymaga deployu Workera i publikacji frontendu.
+
 ## Aktualizacja 2026-07-27 - newsy, gesty i lokalne wycinanie zdjec
 
 - Karuzele na Home maja `touch-action: pan-y` i blokade osi dopiero po rozpoznaniu wyraznego gestu poziomego. Pionowy scroll dziala po rozpoczeciu gestu bezposrednio na karcie.

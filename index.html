@@ -347,10 +347,11 @@
   .legal-note{border:1px solid rgba(226,176,112,.22);border-radius:14px;background:rgba(0,0,0,.18);padding:12px;color:#C9B493}
 
   /* unified bottle image frame */
-  .dphoto{position:relative;width:100%;height:430px;border-radius:18px;border:1px solid rgba(226,176,112,.22);display:grid;place-items:center;margin:16px 0;background:linear-gradient(180deg,rgba(4,3,2,.02),rgba(4,2,1,.12)),url("assets/detail/bottle-detail-bg.png") center bottom/cover no-repeat;overflow:hidden;box-shadow:inset 0 0 54px rgba(0,0,0,.36),0 18px 36px rgba(0,0,0,.24)}
+  .dphoto{position:relative;width:100%;height:clamp(500px,68dvh,680px);border-radius:18px;border:1px solid rgba(226,176,112,.22);display:grid;place-items:center;margin:16px 0;background:linear-gradient(180deg,rgba(4,3,2,.02),rgba(4,2,1,.12)),url("assets/detail/bottle-detail-bg.png") center bottom/cover no-repeat;overflow:hidden;box-shadow:inset 0 0 54px rgba(0,0,0,.36),0 18px 36px rgba(0,0,0,.24)}
   .dphoto:before{content:"";position:absolute;inset:0;background:url("design/figma-assets/asset-pack-v1/noise-overlay.png") center/cover repeat;opacity:.12;pointer-events:none}
-  .dphoto img{position:relative;z-index:1;width:auto!important;height:auto!important;max-width:66%!important;max-height:68%!important;object-fit:contain!important;object-position:center!important;filter:contrast(1.04) saturate(1.04) drop-shadow(0 18px 22px rgba(0,0,0,.55))}
-  .dphoto.agent-cutout img{max-width:78%!important;max-height:78%!important;transform:scale(1.08);transform-origin:center}
+  .dphoto img{position:relative;z-index:1;width:auto!important;height:auto!important;max-width:94%!important;max-height:96%!important;object-fit:contain!important;object-position:center!important;filter:contrast(1.04) saturate(1.04) drop-shadow(0 18px 22px rgba(0,0,0,.55))}
+  .dphoto.agent-cutout img{max-width:98%!important;max-height:98%!important}
+  @media (max-height:720px){.dphoto{height:clamp(430px,64dvh,540px)}}
   .local-photo-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:-4px 0 16px}
   .local-photo-actions button{min-height:42px;border:1px solid rgba(226,176,112,.48);border-radius:8px;background:rgba(16,11,7,.84);color:var(--gold);font-weight:800;padding:10px 14px;cursor:pointer}
   .local-photo-actions button.secondary{color:var(--muted);border-color:rgba(226,176,112,.22)}
@@ -1092,7 +1093,8 @@ Object.assign(I18N.pl,{
   newsTitle:"Whisky news", newsAllTitle:"Artyku\u0142y o whisky", newsIntro:"Najciekawsze teksty ze sprawdzonych \u017ar\u00f3de\u0142, od\u015bwie\u017cane w poniedzia\u0142ki i czwartki.",
   newsLoading:"Szukam najnowszych artyku\u0142\u00f3w...", newsEmpty:"Nowe artyku\u0142y pojawi\u0105 si\u0119 po najbli\u017cszej aktualizacji.", readArticle:"Czytaj artyku\u0142",
   localPhotoPreviewTitle:"Podgl\u0105d zdj\u0119cia", localPhotoProcessing:"Wycinam i centruj\u0119 butelk\u0119...", localPhotoProcessingCopy:"Surowe zdj\u0119cie nie zostanie zapisane w chmurze.",
-  localPhotoReady:"Tak b\u0119dzie wygl\u0105da\u0107 butelka w aplikacji.", useLocalPhoto:"U\u017cyj zdj\u0119cia", cancel:"Anuluj", localPhotoLimit:"Dzisiejszy limit obr\u00f3bki zdj\u0119\u0107 zosta\u0142 wykorzystany."
+  localPhotoReady:"Tak b\u0119dzie wygl\u0105da\u0107 butelka w aplikacji.", useLocalPhoto:"U\u017cyj zdj\u0119cia", cancel:"Anuluj", localPhotoLimit:"Dzisiejszy limit obr\u00f3bki zdj\u0119\u0107 zosta\u0142 wykorzystany.",
+  localPhotoQualityError:"Poka\u017c ca\u0142\u0105 butelk\u0119 od korka do dna. Nie trzymaj jej za szyjk\u0119 i usu\u0144 d\u0142onie oraz inne przedmioty z kadru."
 });
 Object.assign(I18N.en,{
   termsTitle:"Terms of Service", privacyTitle:"Privacy Policy", forgotPassword:"Forgot password?", resetTitle:"Reset password",
@@ -1131,7 +1133,8 @@ Object.assign(I18N.en,{
   newsTitle:"Whisky news", newsAllTitle:"Whisky articles", newsIntro:"Useful reads from trusted sources, refreshed every Monday and Thursday.",
   newsLoading:"Finding the latest articles...", newsEmpty:"New articles will appear after the next refresh.", readArticle:"Read article",
   localPhotoPreviewTitle:"Photo preview", localPhotoProcessing:"Cutting out and centering the bottle...", localPhotoProcessingCopy:"The original photo will not be stored in the cloud.",
-  localPhotoReady:"This is how the bottle will look in the app.", useLocalPhoto:"Use photo", cancel:"Cancel", localPhotoLimit:"Today's photo processing limit has been reached."
+  localPhotoReady:"This is how the bottle will look in the app.", useLocalPhoto:"Use photo", cancel:"Cancel", localPhotoLimit:"Today's photo processing limit has been reached.",
+  localPhotoQualityError:"Show the whole bottle from cap to base. Do not hold the neck, and keep hands and other objects outside the frame."
 });
 Object.assign(I18N.pl,{
   searchPh:"Szukaj whisky lub destylarni...",
@@ -2488,7 +2491,7 @@ function featCard(b, kick, rec){
     '<div class="feat-visual"><div class="bottlepic'+(isAgentCutout(b)?' agent-cutout':'')+'">'+bottleImageHtml(b,true,b.name)+valueBadgeHtml(b)+'</div>'+
     (price?'<div class="feat-price-chip">'+esc(price)+'</div>':'')+'</div></div>';
 }
-function isAgentCutout(b){ return !!(b && (b.source==="community_catalog" || b.source==="catalog_preview" || b.source==="scan_preview" || b.has_image===true)); }
+function isAgentCutout(b){ return !!(b && (localBottleImage(b) || b.source==="community_catalog" || b.source==="catalog_preview" || b.source==="scan_preview" || b.has_image===true)); }
 function mysteryBottleHtml(small){ return '<div class="mystery-bottle'+(small?' small':'')+'" aria-label="Brak zdjecia"><span>?</span></div>'; }
 function t(k){ return (I18N[lang]&&I18N[lang][k])||I18N.pl[k]||k; }
 function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
@@ -2499,6 +2502,7 @@ const AGE_GATE_MIN=18;
 let AGE_GATE_RUNTIME_OK=false;
 function hasAgeGateOk(){
   if(AUTH_TOKEN && AUTH_USER) return true;
+  if(typeof externalReturnState==="function" && externalReturnState()) return true;
   return AGE_GATE_RUNTIME_OK;
 }
 function dateYearsAgo(years){
@@ -2857,10 +2861,59 @@ function newsCardHtml(item){
   const excerpt=lang==="pl" ? (item.excerpt_pl||item.excerpt_en||"") : (item.excerpt_en||item.excerpt_pl||"");
   const image=String(item.image_url||"design/figma-assets/home-pack-v2/home-header-v3.jpg");
   const date=newsDateLabel(item.published_at);
-  return '<a class="news-card" href="'+esc(item.url||"#")+'" target="_blank" rel="noopener noreferrer" aria-label="'+esc((item.title||"")+" - "+t("readArticle"))+'">'+
+  return '<a class="news-card" href="'+esc(item.url||"#")+'" target="_blank" rel="noopener noreferrer" data-external-article="'+esc(item.url||"")+'" aria-label="'+esc((item.title||"")+" - "+t("readArticle"))+'">'+
     '<img src="'+esc(image)+'" alt="" loading="lazy" onerror="this.onerror=null;this.src=\'design/figma-assets/home-pack-v2/home-header-v3.jpg\'">'+
     '<div class="news-card-body"><div class="news-card-meta"><span>'+esc(item.source_name||"Whisky")+'</span>'+(date?'<span>'+esc(date)+'</span>':'')+'</div>'+
     '<h4>'+esc(item.title||"")+'</h4><p>'+esc(excerpt)+'</p></div></a>';
+}
+const EXTERNAL_RETURN_KEY="bh_external_return_v1";
+let externalArticleOpenedAt=0;
+function externalReturnState(){
+  try{
+    const state=JSON.parse(sessionStorage.getItem(EXTERNAL_RETURN_KEY)||"null");
+    return state&&Date.now()-Number(state.at||0)<15*60*1000 ? state : null;
+  }catch(e){ return null; }
+}
+function rememberExternalReturn(){
+  try{
+    sessionStorage.setItem(EXTERNAL_RETURN_KEY,JSON.stringify({
+      at:Date.now(),
+      view:currentView==="articles"?"articles":"home",
+      scrollY:Math.max(0,Math.round(window.scrollY||0))
+    }));
+  }catch(e){}
+}
+function openExternalArticle(url){
+  let parsed;
+  try{ parsed=new URL(String(url||""),location.href); }catch(e){ return false; }
+  if(parsed.protocol!=="https:" && parsed.protocol!=="http:") return false;
+  rememberExternalReturn();
+  externalArticleOpenedAt=Date.now();
+  const absolute=parsed.href;
+  if(/Android/i.test(navigator.userAgent||"")){
+    const intent="intent://"+parsed.host+parsed.pathname+parsed.search+parsed.hash+
+      "#Intent;scheme="+parsed.protocol.replace(":","")+
+      ";action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;"+
+      "S.browser_fallback_url="+encodeURIComponent(absolute)+";end";
+    window.location.href=intent;
+    return true;
+  }
+  const opened=window.open(absolute,"_blank","noopener,noreferrer");
+  if(opened) try{ opened.opener=null; }catch(e){}
+  return true;
+}
+document.addEventListener("visibilitychange",function(){
+  if(document.visibilityState!=="visible" || !externalArticleOpenedAt) return;
+  externalArticleOpenedAt=0;
+  try{ sessionStorage.removeItem(EXTERNAL_RETURN_KEY); }catch(e){}
+});
+function restoreExternalReturn(){
+  const state=externalReturnState();
+  if(!state) return false;
+  try{ sessionStorage.removeItem(EXTERNAL_RETURN_KEY); }catch(e){}
+  if(state.view==="articles") showView("articles");
+  setTimeout(function(){ window.scrollTo({top:Math.max(0,Number(state.scrollY)||0),behavior:"instant"}); },80);
+  return true;
 }
 function renderHomeNews(){
   const box=document.getElementById("homeNewsList");
@@ -2911,6 +2964,7 @@ Promise.all([
   syncBootstrap(false);
   fetchRecentCatalog();
   fetchNews();
+  restoreExternalReturn();
 }).catch(function(){ DB=[]; });
 
 
@@ -3078,6 +3132,13 @@ function renderExplore(){
 
 /* delegacja klikniec na karty/destylarnie */
 document.addEventListener("click",function(e){
+  const externalArticle=e.target.closest("[data-external-article]");
+  if(externalArticle){
+    e.preventDefault();
+    e.stopPropagation();
+    openExternalArticle(externalArticle.getAttribute("data-external-article"));
+    return;
+  }
   const localPhotoAdd=e.target.closest("[data-local-photo-add]");
   if(localPhotoAdd){
     e.preventDefault();
@@ -3391,8 +3452,9 @@ function processLocalBottlePhoto(file,id){
   localBottleImageBusy=true;
   setLocalPhotoModal(true);
   renderLocalPhotoState(t("localPhotoProcessing"),t("localPhotoProcessingCopy"));
+  const bottle=bottleById(pendingLocalBottleImageId);
   return compress(file).then(function(result){
-    return bhApi("/catalog/local-cutout",{method:"POST",body:JSON.stringify({image:result.b64,mime:result.mime,device_id:DEVICE_ID})});
+    return bhApi("/catalog/local-cutout",{method:"POST",body:JSON.stringify({image:result.b64,mime:result.mime,device_id:DEVICE_ID,bottle_id:pendingLocalBottleImageId,bottle_name:bottle&&bottle.name||""})});
   }).then(function(data){
     if(!data||!data.image) throw {error:"image_cutout_failed"};
     pendingLocalBottleImageData=String(data.image);
@@ -3401,7 +3463,9 @@ function processLocalBottlePhoto(file,id){
     if(preview) preview.innerHTML='<img src="'+esc(pendingLocalBottleImageData)+'" alt="'+esc(t("localPhotoReady"))+'">';
     if(accept) accept.disabled=false;
   }).catch(function(err){
-    const message=err&&err.error==="local_cutout_limit"?t("localPhotoLimit"):t("localBottlePhotoError");
+    const message=err&&err.error==="local_cutout_limit"
+      ? t("localPhotoLimit")
+      : (err&&err.error==="cutout_quality"?t("localPhotoQualityError"):t("localBottlePhotoError"));
     renderLocalPhotoState(t("localBottlePhotoError"),message);
   }).then(function(){ localBottleImageBusy=false; });
 }
@@ -3996,6 +4060,10 @@ if("serviceWorker" in navigator){ window.addEventListener("load",function(){ nav
   var done=false;
   var started=false;
   function finish(){ if(done) return; done=true; intro.classList.add("is-fading"); setTimeout(function(){ if(intro&&intro.parentNode) intro.parentNode.removeChild(intro); },620); }
+  try{
+    var externalState=JSON.parse(sessionStorage.getItem("bh_external_return_v1")||"null");
+    if(externalState&&Date.now()-Number(externalState.at||0)<15*60*1000){ intro.remove(); return; }
+  }catch(e){}
   if(skip) skip.addEventListener("click",function(e){ e.preventDefault(); e.stopPropagation(); finish(); });
   if(video){
     video.muted=true;
