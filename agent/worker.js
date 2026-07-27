@@ -26,6 +26,7 @@ const CATALOG_LICENSE_VERSION = "catalog-license-2026-07-18-v1";
 const TELEMETRY_VERSION = "scanner-telemetry-v1";
 const NEWS_AGENT_VERSION = "whisky-news-google-grounded-v1";
 const LOCAL_IMAGE_PIPELINE_VERSION = "local-bottle-cutout-v1";
+const NEWS_RETENTION_DAYS = 30;
 const CATALOG_SYSTEM_USER_ID = "catalog-system";
 const AUTH_VERSION = "auth-pbkdf2-100000-google-v3";
 const PBKDF2_ITERATIONS = 100000;
@@ -993,6 +994,50 @@ const NEWS_SOURCES={
   "thewhiskeywash.com":"The Whiskey Wash",
   "distiller.com":"Distiller"
 };
+const STARTER_NEWS=[
+  {
+    url:"https://www.whiskymag.com/articles/tormore-the-pearl-of-speyside-shines-with-core-range-launch/",
+    title:"The 'Pearl of Speyside' shines with core range Tormore launch",
+    excerpt_pl:"Tormore wprowadza podstawowa serie single maltow: Timeless oraz wersje 12- i 16-letnia. Nowa linia stawia na lekki, owocowy charakter destylatu zamiast dominacji beczki.",
+    excerpt_en:"Tormore is launching a core single malt range: Timeless plus 12- and 16-year-old expressions. The line emphasizes the distillery's light, fruity spirit rather than heavy cask influence.",
+    category:"scotch",published_at:"2026-06-15T00:00:00Z"
+  },
+  {
+    url:"https://www.whiskymag.com/articles/inside-the-dalmores-reimagined-distillery-and-visitor-experience/",
+    title:"Inside The Dalmore's reimagined distillery and visitor experience",
+    excerpt_pl:"The Dalmore podwoil potencjal produkcyjny do 9 mln litrow rocznie i ponownie otworzyl sie dla gosci. Nowe wizyty maja kameralny, spersonalizowany charakter i sa kierowane do maksymalnie osmiu osob.",
+    excerpt_en:"The Dalmore has doubled its potential production capacity to 9 million litres a year and reopened to visitors. Its new tours are private, tailored experiences for groups of up to eight.",
+    category:"scotch",published_at:"2026-06-10T00:00:00Z"
+  },
+  {
+    url:"https://www.whiskymag.com/articles/spirit-of-speyside-whisky-festival-celebrates-record-breaking-year/",
+    title:"Spirit of Speyside Whisky Festival celebrates record-breaking year",
+    excerpt_pl:"Edycja 2026 festiwalu Spirit of Speyside po raz pierwszy przekroczyla 500 tys. funtow sprzedazy. Ponad 60 procent biletow kupili goscie zagraniczni.",
+    excerpt_en:"The 2026 Spirit of Speyside festival exceeded GBP 500,000 in sales for the first time. International visitors accounted for more than 60 percent of ticket sales.",
+    category:"scotch",published_at:"2026-05-05T00:00:00Z"
+  },
+  {
+    url:"https://whiskymag.com/articles/worlds-best-whiskies-announced-in-world-whiskies-awards-2026/",
+    title:"World's Best whiskies announced in World Whiskies Awards 2026",
+    excerpt_pl:"World Whiskies Awards 2026 pokazaly szeroki, miedzynarodowy przekroj zwyciezcow. Tytul najlepszego single malta otrzymal Bowmore 21 Years Old Sherry Cask.",
+    excerpt_en:"The 2026 World Whiskies Awards highlighted winners from established and emerging whisky regions. Bowmore 21 Years Old Sherry Cask took the World's Best Single Malt title.",
+    category:"world",published_at:"2026-03-25T00:00:00Z"
+  },
+  {
+    url:"https://whiskyadvocate.com/knob-creek-blenders-edition-series-01",
+    title:"Knob Creek's New Series Spotlights the Art of the Blend",
+    excerpt_pl:"Knob Creek uruchamia serie Blender's Edition. Pierwsze wydanie laczy bourbony w wieku co najmniej 10 lat i skupia sie na slodkich nutach wanilii, wisni oraz syropu klonowego.",
+    excerpt_en:"Knob Creek is launching its Blender's Edition series. The debut blends bourbons aged at least 10 years and focuses on sweet vanilla, cherry and maple notes.",
+    category:"bourbon",published_at:"2026-04-09T00:00:00Z"
+  },
+  {
+    url:"https://distiller.com/articles/how-to-get-in-to-bourbon-bourbon-beginner-s-guide",
+    title:"How to get in to bourbon - a practical beginner's guide",
+    excerpt_pl:"Praktyczne wprowadzenie do bourbona: podstawowe zasady produkcji, sposob degustacji i najczestsze profile smakowe. Tekst podpowiada tez niedrogie, szeroko dostepne butelki na start.",
+    excerpt_en:"A practical introduction to bourbon covering production rules, tasting technique and common flavour profiles. It also suggests approachable, widely available bottles for beginners.",
+    category:"bourbon",published_at:"2025-05-30T00:00:00Z"
+  }
+];
 function newsSourceForUrl(value){
   try{
     const host=new URL(String(value||"")).hostname.toLowerCase().replace(/^www\./,"");
@@ -1041,7 +1086,11 @@ function newsCanonicalFromHtml(html, fallback){
 async function fetchNewsMetadata(value){
   const sourceUrl=canonicalNewsUrl(value);
   if(!sourceUrl) return null;
-  const response=await fetch(sourceUrl,{headers:{Accept:"text/html,application/xhtml+xml"}});
+  const controller=new AbortController();
+  const timeout=setTimeout(function(){ controller.abort(); },8000);
+  let response;
+  try{ response=await fetch(sourceUrl,{headers:{Accept:"text/html,application/xhtml+xml"},signal:controller.signal}); }
+  finally{ clearTimeout(timeout); }
   if(!response.ok) return null;
   const contentType=String(response.headers.get("Content-Type")||"");
   if(contentType.indexOf("text/html")<0) return null;
@@ -1072,6 +1121,37 @@ function publicNewsArticle(row){
     image_url:row.image_url||"",url:row.canonical_url,source_name:row.source_name,
     category:row.category||"whisky",published_at:row.article_published_at||row.created_at
   };
+}
+async function seedStarterNews(env){
+  if(!(await newsSchemaReady(env))) return {seeded:0,ready:false};
+  const issueKey="starter-news-v1";
+  const marker=await env.DB.prepare("SELECT id FROM news_agent_runs WHERE issue_key=? AND status='completed' LIMIT 1").bind(issueKey).first();
+  if(marker) return {seeded:0,ready:true,already_seeded:true};
+  const articleIssueKey=newsIssueKey(new Date());
+  const metadata=await Promise.all(STARTER_NEWS.map(function(article){
+    return fetchNewsMetadata(article.url).catch(function(){ return null; });
+  }));
+  const now=new Date().toISOString();
+  let seeded=0;
+  for(let index=0;index<STARTER_NEWS.length;index++){
+    const article=STARTER_NEWS[index];
+    const meta=metadata[index];
+    const canonicalUrl=(meta&&meta.canonical_url)||canonicalNewsUrl(article.url);
+    if(!canonicalUrl) continue;
+    const result=await env.DB.prepare("INSERT OR IGNORE INTO news_articles (id,canonical_url,source_url,source_name,title,excerpt_pl,excerpt_en,image_url,category,article_published_at,issue_key,status,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)")
+      .bind(crypto.randomUUID(),canonicalUrl,(meta&&meta.source_url)||canonicalUrl,(meta&&meta.source_name)||newsSourceForUrl(canonicalUrl),(meta&&meta.title)||article.title,article.excerpt_pl,article.excerpt_en,(meta&&meta.image_url)||null,article.category,article.published_at,articleIssueKey,"published",now,now).run();
+    seeded+=Number(result.meta&&result.meta.changes||0);
+  }
+  await env.DB.prepare("INSERT INTO news_agent_runs (id,issue_key,status,candidates_found,articles_added,detail,started_at,completed_at) VALUES (?,?,?,?,?,?,?,?)")
+    .bind(crypto.randomUUID(),issueKey,"completed",STARTER_NEWS.length,seeded,"one-time starter feed",now,new Date().toISOString()).run();
+  return {seeded:seeded,ready:true};
+}
+async function cleanupNews(env){
+  if(!(await newsSchemaReady(env))) return {deleted:0};
+  const cutoff=new Date(Date.now()-NEWS_RETENTION_DAYS*86400000).toISOString();
+  const result=await env.DB.prepare("DELETE FROM news_articles WHERE created_at<?").bind(cutoff).run();
+  await env.DB.prepare("DELETE FROM news_agent_runs WHERE started_at<? AND issue_key<>?").bind(new Date(Date.now()-180*86400000).toISOString(),"starter-news-v1").run();
+  return {deleted:Number(result.meta&&result.meta.changes||0),cutoff:cutoff};
 }
 async function newsFeed(env, limit){
   if(!(await newsSchemaReady(env))) return {articles:[],news_ready:false};
@@ -1207,7 +1287,7 @@ async function handleApi(request, env, cors){
       }
       catch(e){ detail=String(e&&e.message?e.message:e).slice(0,220); }
     }
-    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_mode:"visual_only",scan_ocr_enabled:false,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_moderation_version:CATALOG_MODERATION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,news_agent_version:NEWS_AGENT_VERSION,local_image_pipeline_version:LOCAL_IMAGE_PIPELINE_VERSION,news_schedule:"Monday and Thursday via daily UTC cron",catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,catalog_moderation_schema:catalog_moderation_schema,telemetry_schema:telemetry_schema,news_schema:news_schema,news_agent_ready:news_schema&&!!env.GEMINI_API_KEY,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),local_image_cutout_ready:!!env.IMAGES,email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
+    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_mode:"visual_only",scan_ocr_enabled:false,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_moderation_version:CATALOG_MODERATION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,news_agent_version:NEWS_AGENT_VERSION,local_image_pipeline_version:LOCAL_IMAGE_PIPELINE_VERSION,news_schedule:"Monday and Thursday via daily UTC cron",news_retention_days:NEWS_RETENTION_DAYS,starter_news_count:STARTER_NEWS.length,catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,catalog_moderation_schema:catalog_moderation_schema,telemetry_schema:telemetry_schema,news_schema:news_schema,news_agent_ready:news_schema&&!!env.GEMINI_API_KEY,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),local_image_cutout_ready:!!env.IMAGES,email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
   }
   if(path==="/auth/google/start" && request.method==="GET"){
     const returnUrl=allowedReturnUrl(env,url.searchParams.get("return")||appUrl(env));
@@ -1240,6 +1320,7 @@ async function handleApi(request, env, cors){
   }
   const dbErr=needDB(env,cors); if(dbErr) return dbErr;
   if(path==="/news" && request.method==="GET"){
+    await seedStarterNews(env);
     const feed=await newsFeed(env,url.searchParams.get("limit"));
     return J(feed,200,cors);
   }
@@ -1959,8 +2040,8 @@ export default {
   },
   async scheduled(controller, env, ctx){
     const weekday=new Date(controller.scheduledTime||Date.now()).getUTCDay();
-    const tasks=[cleanupStaleCatalogSubmissions(env,200),cleanupTelemetry(env)];
-    if(weekday===1 || weekday===4) tasks.push(refreshWhiskyNews(env,"scheduled"));
+    const tasks=[cleanupStaleCatalogSubmissions(env,200),cleanupTelemetry(env),cleanupNews(env)];
+    if(weekday===1 || weekday===4) tasks.push(seedStarterNews(env).then(function(){ return refreshWhiskyNews(env,"scheduled"); }));
     ctx.waitUntil(Promise.all(tasks));
   }
 }

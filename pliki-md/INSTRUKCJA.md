@@ -36,6 +36,8 @@ Aktualny oczekiwany stan Workera:
   "catalog_license_version": "catalog-license-2026-07-18-v1",
   "news_agent_version": "whisky-news-google-grounded-v1",
   "local_image_pipeline_version": "local-bottle-cutout-v1",
+  "news_retention_days": 30,
+  "starter_news_count": 6,
   "pbkdf2_iterations": 100000,
   "d1": true,
   "schema": true,
@@ -239,6 +241,7 @@ Ta paczka wymaga migracji D1, Workera i GitHub Pages.
 10. Sprawdz trzy rzeczy: pionowy scroll rozpoczęty na karcie Home, trzy newsy na Home oraz podglad wycietej butelki przed zapisaniem lokalnego zdjecia.
 
 Endpoint `/news` jest publiczny. Agent zapisuje w D1 tylko metadane, krotkie streszczenia i zewnetrzny URL miniatury; nie kopiuje tresci artykulu ani obrazu do R2.
+Przy pustej tabeli pierwszy odczyt `/news` zapisuje jednorazowo 6 wpisow startowych. Dzienny Cron usuwa artykuly po 30 dniach od `created_at`. Ponowne uruchamianie migracji v68 nie jest potrzebne.
 
 ## Wdrozenie skanera visual-only i skonsolidowanego katalogu
 

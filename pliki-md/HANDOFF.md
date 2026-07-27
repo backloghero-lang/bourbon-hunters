@@ -15,6 +15,8 @@ Uzyj go jako pierwszego dokumentu przy starcie watku `Przekaz Bourbon Hunter 1.1
 - Tytul, canonical URL, data i miniatura sa dodatkowo sprawdzane na stronie zrodlowej. Duplikaty canonical URL nie sa publikowane, a agent nigdy nie tworzy wpisu bez prawdziwego artykulu.
 - Dzienny Cron pozostaje jeden. W poniedzialek i czwartek Worker dodaje maksymalnie 3 nowe artykuly; w pozostale dni wykonuje tylko dotychczasowe czyszczenie.
 - Administrator moze uruchomic pobranie recznie przyciskiem `Pobierz 3 najnowsze artykuly` w `Profil -> Raporty`.
+- Pusty feed jest jednorazowo uzupelniany 6 prawdziwymi artykulami startowymi z dozwolonych zrodel. Znacznik `starter-news-v1` zapobiega ponownemu odtwarzaniu ich po wygasnieciu.
+- Artykuly sa usuwane przez dzienny Cron po 30 dniach od `created_at`, czyli od momentu pojawienia sie w aplikacji. Health pokazuje `news_retention_days: 30` i `starter_news_count: 6`.
 - Migracja `agent/d1-migration-v68-whisky-news.sql` dodaje `news_articles` i `news_agent_runs`.
 - Zdjecie dodawane lokalnie do produktu bez assetu przechodzi przez `POST /catalog/local-cutout`: Cloudflare Images usuwa tlo, centruje butelke i zwraca WebP 960x1280.
 - Surowe zdjecie nie jest zapisywane w R2 ani D1. Dopiero po potwierdzeniu podgladu gotowy WebP trafia do IndexedDB na danym urzadzeniu.

@@ -12,6 +12,7 @@ Ten plik ma byc pierwszym kontekstem dla nowego watku Codexa, np. `Przekaz Bourb
 - Przed aktualnym deployem Workera trzeba uruchomic `agent/d1-migration-v68-whisky-news.sql`.
 - Health ma pokazac `news_schema: true`, `news_agent_ready: true`, `local_image_cutout_ready: true` i `news_agent_version: whisky-news-google-grounded-v1`.
 - Publiczne newsy sa widoczne na Home oraz w `Profil -> Artykuly`. Jeden dzienny Cron uruchamia agenta tylko w poniedzialki i czwartki.
+- Pierwszy odczyt pustego feedu dodaje jednorazowo 6 artykulow startowych. Kazdy wpis znika po 30 dniach od pojawienia sie w aplikacji.
 - Lokalna fotografia produktu bez assetu jest najpierw wycinana przez Cloudflare Images i wymaga potwierdzenia. Surowy plik nie jest przechowywany w chmurze.
 - Aktualne szczegoly zawsze sa w `pliki-md/HANDOFF.md`; ponizszy blok z 2026-07-23 jest historia architektury sprzed rollbacku OCR.
 
