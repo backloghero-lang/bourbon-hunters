@@ -68,7 +68,7 @@
   .sec-head a{font-size:12px;color:#E2B070;font-weight:800;cursor:pointer}
 
   /* featured carousel */
-  .hscroll{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;touch-action:pan-x;padding-bottom:6px;margin:0 -16px;padding-left:16px;padding-right:16px}
+  .hscroll{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;touch-action:pan-y;padding-bottom:6px;margin:0 -16px;padding-left:16px;padding-right:16px}
   .hscroll::-webkit-scrollbar{display:none}
   .swipe-dots{display:flex;justify-content:center;align-items:center;gap:6px;margin:8px 0 4px;min-height:8px}
   .swipe-dot{width:6px;height:6px;border-radius:999px;background:rgba(226,176,112,.28);transition:width .2s,background .2s,opacity .2s;opacity:.8}
@@ -355,6 +355,32 @@
   .local-photo-actions button{min-height:42px;border:1px solid rgba(226,176,112,.48);border-radius:8px;background:rgba(16,11,7,.84);color:var(--gold);font-weight:800;padding:10px 14px;cursor:pointer}
   .local-photo-actions button.secondary{color:var(--muted);border-color:rgba(226,176,112,.22)}
   .local-photo-note{flex-basis:100%;margin:0;color:var(--muted);font-size:12px;line-height:1.4}
+  .news-list{display:grid;gap:10px;padding-bottom:8px}
+  .news-card{display:grid;grid-template-columns:108px minmax(0,1fr);min-height:104px;overflow:hidden;border:1px solid rgba(226,176,112,.25);border-radius:8px;color:inherit;text-decoration:none;background:
+    linear-gradient(100deg,rgba(92,24,20,.62) 0%,rgba(13,12,10,.94) 50%,rgba(7,62,42,.62) 100%),
+    url("design/figma-assets/home-pack-v2/app-background-v3.jpg") center/cover no-repeat;
+    box-shadow:0 12px 24px rgba(0,0,0,.25)}
+  .news-card img{width:108px;height:100%;min-height:104px;object-fit:cover;background:#0A0806}
+  .news-card-body{min-width:0;padding:10px 11px}
+  .news-card-meta{display:flex;gap:7px;align-items:center;color:#D19B61;font-size:9px;line-height:1.2;text-transform:uppercase;font-weight:900}
+  .news-card h4{margin:5px 0 5px;color:#F6E1BC;font-family:var(--serif);font-size:16px;line-height:1.15;letter-spacing:0}
+  .news-card p{margin:0;color:#C9B493;font-size:11px;line-height:1.4;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
+  .articles-view{padding-bottom:110px}
+  .articles-intro{margin:-6px 0 16px;color:#B7A486;font-size:12px;line-height:1.45}
+  .local-photo-modal{position:fixed;inset:0;z-index:95;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.74);padding:14px}
+  .local-photo-modal.show{display:flex}
+  .local-photo-sheet{width:min(520px,100%);max-height:calc(100dvh - 28px);overflow:auto;border:1px solid rgba(226,176,112,.34);border-radius:20px;background:linear-gradient(180deg,#1C1610,#080604);box-shadow:0 24px 80px rgba(0,0,0,.76)}
+  .local-photo-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border-bottom:1px solid rgba(226,176,112,.16)}
+  .local-photo-head h3{margin:0;font-family:var(--serif);font-size:21px;color:#F6E1BC}
+  .local-photo-head button{border:0;background:transparent;color:#E2B070;font-size:26px;line-height:1;cursor:pointer}
+  .local-photo-preview{margin:16px;aspect-ratio:4/5;max-height:54dvh;display:grid;place-items:center;overflow:hidden;border:1px solid rgba(226,176,112,.22);border-radius:8px;background:url("assets/detail/bottle-detail-bg.png") center/cover no-repeat}
+  .local-photo-preview img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 18px 18px rgba(0,0,0,.55))}
+  .local-photo-state{padding:24px;text-align:center;color:#C9B493;font-size:13px;line-height:1.5}
+  .local-photo-state b{display:block;margin-bottom:8px;color:#F6E1BC;font-family:var(--serif);font-size:21px}
+  .local-photo-modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:0 16px 18px}
+  .local-photo-modal-actions button{min-height:46px;border:1px solid rgba(226,176,112,.42);border-radius:8px;background:rgba(0,0,0,.2);color:#E2B070;font-weight:900;cursor:pointer}
+  .local-photo-modal-actions .primary{grid-column:1/-1;background:linear-gradient(180deg,#F1C875,#B86A33);color:#1B1008}
+  .local-photo-modal-actions button:disabled{opacity:.5;cursor:wait}
   .d-actions{position:absolute;top:12px;right:12px;z-index:3;display:flex;gap:9px}
   .shot img{width:100%;height:100%;object-fit:cover}
 
@@ -551,6 +577,9 @@
     <div class="hscroll" id="recentRow"></div>
     <div class="swipe-dots" id="recentDots" aria-hidden="true"></div>
 
+    <div class="sec-head"><h3 data-i18n="newsTitle">Whisky news</h3><a id="newsAll" data-i18n="viewAll">Zobacz wszystkie</a></div>
+    <div class="news-list" id="homeNewsList" aria-live="polite"></div>
+
     <div class="sec-head"><h3 data-i18n="homeCollection">Moja kolekcja</h3><a id="homeCollectionAll" data-i18n="viewAll">Zobacz wszystkie</a></div>
     <div class="hscroll" id="homeCollectionRow"></div>
     <div class="swipe-dots" id="homeCollectionDots" aria-hidden="true"></div>
@@ -574,6 +603,14 @@
     <div class="sec-head" style="margin-top:8px"><h3 data-i18n="featuredAllTitle">Polecane przez łowców</h3></div>
     <div class="filter-stack" id="recommendationFilterChips"></div>
     <div id="recommendationsList"></div>
+  </section>
+
+  <!-- ARTICLES -->
+  <section class="view articles-view" id="view-articles">
+    <span class="back" data-open-view="profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg> <span data-i18n="back">Wstecz</span></span>
+    <div class="sec-head" style="margin-top:8px"><h3 data-i18n="newsAllTitle">Whisky news</h3></div>
+    <p class="articles-intro" data-i18n="newsIntro">Najciekawsze teksty ze sprawdzonych źródeł, odświeżane w poniedziałki i czwartki.</p>
+    <div class="news-list" id="articlesList" aria-live="polite"></div>
   </section>
 
   <!-- DETAIL -->
@@ -639,7 +676,7 @@
       <button class="profile-row" type="button" data-open-view="register" data-auth-guest><span class="profile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19c0-2.2-2.7-4-6-4s-6 1.8-6 4"/><circle cx="9" cy="8" r="4"/><path d="M19 8v6M16 11h6"/></svg></span><span data-i18n="registerTab">Register</span><span class="chev">&rsaquo;</span></button>
       <button class="profile-row" type="button" data-open-view="signin" data-auth-guest><span class="profile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><path d="M10 17l5-5-5-5M15 12H3"/></svg></span><span data-i18n="signInTab">Sign In</span><span class="chev">&rsaquo;</span></button>
       <button class="profile-row" type="button" data-open-view="hunter-profile" data-auth-user><span class="profile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4.5 20c.8-3.6 4-5.5 7.5-5.5S18.7 16.4 19.5 20"/><path d="M17 3l1 2 2 .3-1.5 1.5.4 2.2L17 8l-1.9 1 .4-2.2L14 5.3l2-.3z"/></svg></span><span data-i18n="myProfileTab">Mój profil</span><span class="chev">&rsaquo;</span></button>
-      <button class="profile-row" type="button" data-profile-action="articles"><span class="profile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span><span data-i18n="articlesTab">Articles</span><span class="chev">&rsaquo;</span></button>
+      <button class="profile-row" type="button" data-open-view="articles"><span class="profile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span><span data-i18n="articlesTab">Articles</span><span class="chev">&rsaquo;</span></button>
       <button class="profile-row" type="button" data-open-view="admin-reports" data-auth-admin style="display:none"><span class="profile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V9M10 19V5M16 19v-7M22 19V3"/></svg></span><span>Raporty</span><span class="chev">&rsaquo;</span></button>
       <button class="profile-row" type="button" data-profile-action="pro"><span class="profile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l2.7 5.5 6.1.9-4.4 4.3 1 6.1L12 16.9 6.6 19.8l1-6.1-4.4-4.3 6.1-.9L12 3z"/></svg></span><span data-i18n="proTab">Wersja Pro</span><span class="chev">&rsaquo;</span></button>
       <button class="profile-row" type="button" data-profile-action="settings" aria-disabled="true"><span class="profile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.9l.1.1a2 2 0 01-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.9-.3 1.7 1.7 0 00-1 1.6V21a2 2 0 01-4 0v-.1a1.7 1.7 0 00-1-1.6 1.7 1.7 0 00-1.9.3l-.1.1A2 2 0 014.2 17l.1-.1A1.7 1.7 0 004.6 15a1.7 1.7 0 00-1.6-1H3a2 2 0 010-4h.1a1.7 1.7 0 001.6-1 1.7 1.7 0 00-.3-1.9l-.1-.1A2 2 0 017 4.2l.1.1A1.7 1.7 0 009 4.6 1.7 1.7 0 0010 3V3a2 2 0 014 0v.1a1.7 1.7 0 001 1.6 1.7 1.7 0 001.9-.3l.1-.1A2 2 0 0119.8 7l-.1.1a1.7 1.7 0 00-.3 1.9 1.7 1.7 0 001.6 1h.1a2 2 0 010 4H21a1.7 1.7 0 00-1.6 1z"/></svg></span><span data-i18n="settingsTab">Ustawienia</span><span class="chev">&rsaquo;</span></button>
@@ -655,6 +692,7 @@
     </div>
     <div class="admin-report">
       <div class="admin-periods"><button type="button" data-report-days="7">7 dni</button><button class="on" type="button" data-report-days="30">30 dni</button><button type="button" data-report-days="90">90 dni</button></div>
+      <button class="btn btn-alt" id="refreshNewsBtn" type="button" style="width:100%;margin:0 0 14px">Pobierz 3 najnowsze artykuły</button>
       <div id="adminReportBody" aria-live="polite"><div class="empty">Ładowanie raportu...</div></div>
     </div>
   </section>
@@ -831,6 +869,21 @@
     </div>
     <div class="catalog-preview" id="catalogPreview"></div>
     <div class="catalog-preview-actions" id="catalogPreviewActions"></div>
+  </div>
+</div>
+
+<div class="local-photo-modal" id="localPhotoModal" aria-hidden="true">
+  <div class="local-photo-sheet" role="dialog" aria-modal="true" aria-labelledby="localPhotoTitle">
+    <div class="local-photo-head">
+      <h3 id="localPhotoTitle" data-i18n="localPhotoPreviewTitle">Podgląd zdjęcia</h3>
+      <button type="button" id="localPhotoClose" aria-label="Close">&times;</button>
+    </div>
+    <div class="local-photo-preview" id="localPhotoPreview"></div>
+    <div class="local-photo-modal-actions">
+      <button class="primary" type="button" id="localPhotoAccept" disabled data-i18n="useLocalPhoto">Użyj zdjęcia</button>
+      <button type="button" id="localPhotoRetake" data-i18n="retakeImage">Zrób zdjęcie ponownie</button>
+      <button type="button" id="localPhotoCancel" data-i18n="cancel">Anuluj</button>
+    </div>
   </div>
 </div>
 
@@ -1035,7 +1088,11 @@ Object.assign(I18N.pl,{
   scanConfirmSingleOk:"Tak, to ta", scanConfirmSingleCancel:"Nie, spr\u00f3buj ponownie",
   addLocalBottlePhoto:"Dodaj swoje zdj\u0119cie", changeLocalBottlePhoto:"Zmie\u0144 zdj\u0119cie", removeLocalBottlePhoto:"Usu\u0144 lokalne zdj\u0119cie",
   localBottlePhotoNote:"Zdj\u0119cie jest zapisane tylko na tym urz\u0105dzeniu.", localBottlePhotoSaved:"Lokalne zdj\u0119cie zosta\u0142o zapisane.",
-  localBottlePhotoRemoved:"Lokalne zdj\u0119cie zosta\u0142o usuni\u0119te.", localBottlePhotoError:"Nie uda\u0142o si\u0119 zapisa\u0107 tego zdj\u0119cia."
+  localBottlePhotoRemoved:"Lokalne zdj\u0119cie zosta\u0142o usuni\u0119te.", localBottlePhotoError:"Nie uda\u0142o si\u0119 zapisa\u0107 tego zdj\u0119cia.",
+  newsTitle:"Whisky news", newsAllTitle:"Artyku\u0142y o whisky", newsIntro:"Najciekawsze teksty ze sprawdzonych \u017ar\u00f3de\u0142, od\u015bwie\u017cane w poniedzia\u0142ki i czwartki.",
+  newsLoading:"Szukam najnowszych artyku\u0142\u00f3w...", newsEmpty:"Nowe artyku\u0142y pojawi\u0105 si\u0119 po najbli\u017cszej aktualizacji.", readArticle:"Czytaj artyku\u0142",
+  localPhotoPreviewTitle:"Podgl\u0105d zdj\u0119cia", localPhotoProcessing:"Wycinam i centruj\u0119 butelk\u0119...", localPhotoProcessingCopy:"Surowe zdj\u0119cie nie zostanie zapisane w chmurze.",
+  localPhotoReady:"Tak b\u0119dzie wygl\u0105da\u0107 butelka w aplikacji.", useLocalPhoto:"U\u017cyj zdj\u0119cia", cancel:"Anuluj", localPhotoLimit:"Dzisiejszy limit obr\u00f3bki zdj\u0119\u0107 zosta\u0142 wykorzystany."
 });
 Object.assign(I18N.en,{
   termsTitle:"Terms of Service", privacyTitle:"Privacy Policy", forgotPassword:"Forgot password?", resetTitle:"Reset password",
@@ -1070,7 +1127,11 @@ Object.assign(I18N.en,{
   scanConfirmSingleOk:"Yes, that's it", scanConfirmSingleCancel:"No, try again",
   addLocalBottlePhoto:"Add your photo", changeLocalBottlePhoto:"Change photo", removeLocalBottlePhoto:"Remove local photo",
   localBottlePhotoNote:"This photo is stored only on this device.", localBottlePhotoSaved:"Local photo saved.",
-  localBottlePhotoRemoved:"Local photo removed.", localBottlePhotoError:"This photo could not be saved."
+  localBottlePhotoRemoved:"Local photo removed.", localBottlePhotoError:"This photo could not be saved.",
+  newsTitle:"Whisky news", newsAllTitle:"Whisky articles", newsIntro:"Useful reads from trusted sources, refreshed every Monday and Thursday.",
+  newsLoading:"Finding the latest articles...", newsEmpty:"New articles will appear after the next refresh.", readArticle:"Read article",
+  localPhotoPreviewTitle:"Photo preview", localPhotoProcessing:"Cutting out and centering the bottle...", localPhotoProcessingCopy:"The original photo will not be stored in the cloud.",
+  localPhotoReady:"This is how the bottle will look in the app.", useLocalPhoto:"Use photo", cancel:"Cancel", localPhotoLimit:"Today's photo processing limit has been reached."
 });
 Object.assign(I18N.pl,{
   searchPh:"Szukaj whisky lub destylarni...",
@@ -1210,7 +1271,7 @@ let BROWSE_META={families:{bourbon:0,whisky:0},bourbon:{},whisky:{}};
 let whiskyCatalogLoaded=false, whiskyCatalogPromise=null;
 let exploreFamily="all", exploreLockedFamily="", exploreStyles=[];
 let recommendationFamily="all", recommendationStyles=[];
-let LOCAL_BOTTLE_IMAGES={}, pendingLocalBottleImageId="";
+let LOCAL_BOTTLE_IMAGES={}, pendingLocalBottleImageId="", pendingLocalBottleImageData="", localBottleImageBusy=false;
 const LOCAL_BOTTLE_IMAGE_DB="bourbon-hunters-local-bottle-images-v1";
 const collectionFamilies={wishlist:"all",owned:"all"};
 const collectionStyles={wishlist:[],owned:[]};
@@ -2477,6 +2538,7 @@ function applyLang(){
   document.querySelectorAll("[data-i18n]").forEach(function(el){ const k=el.getAttribute("data-i18n"); if(I18N[lang][k]) el.textContent=I18N[lang][k]; });
   document.querySelectorAll("[data-i18n-ph]").forEach(function(el){ const k=el.getAttribute("data-i18n-ph"); if(I18N[lang][k]) el.placeholder=I18N[lang][k]; });
   if(DB.length){ renderHome(); renderExplore(); }
+  renderHomeNews(); renderArticles();
 }
 
 function prepareBottleDataset(list){
@@ -2541,7 +2603,7 @@ function ensureWhiskyCatalog(){
 
 /* ---------- NAV ---------- */
 let currentView="home", detailReturnView="explore", legalReturnView="profile", currentDetailId="";
-let swipeStartX=0, swipeStartY=0, swipeLastX=0, swipeScrollLeft=0, swipeStartIndex=0, swipeMoved=false, swipeScroller=null;
+let swipeStartX=0, swipeStartY=0, swipeLastX=0, swipeScrollLeft=0, swipeStartIndex=0, swipeMoved=false, swipeScroller=null, swipeAxis="";
 function showView(name){
   if(name==="admin-reports" && !AUTH_IS_ADMIN) name="profile";
   document.getElementById("appRoot").className = "app is-" + name;
@@ -2557,6 +2619,7 @@ function showView(name){
   if(name==="badge-picker"){ pendingBadge=USER_PROFILE.badge||"glass"; renderBadgePicker(); }
   if(name==="admin-reports") loadAdminReport(adminReportDays);
   if(name==="recommendations"){ renderRecommendationsView(); fetchRecommendations(); }
+  if(name==="articles"){ renderArticles(); fetchNews(); }
   if((name==="home" || name==="explore" || name==="collection") && DB.length) fetchCommunityRatings(DB.map(function(b){ return b.id; }));
   if(name!=="detail") currentView=name;
   window.scrollTo({top:0,behavior:"instant"});
@@ -2625,13 +2688,18 @@ document.addEventListener("touchstart",function(e){
   swipeScrollLeft=scroller.scrollLeft;
   swipeStartIndex=carouselIndex(scroller);
   swipeMoved=false;
+  swipeAxis="";
 },{passive:true});
 document.addEventListener("touchmove",function(e){
   if(!swipeScroller || !e.touches || !e.touches[0]) return;
   swipeLastX=e.touches[0].clientX;
   const dx=swipeLastX-swipeStartX;
   const dy=e.touches[0].clientY-swipeStartY;
-  if(Math.abs(dx)>8 && Math.abs(dx)>Math.abs(dy)){
+  if(!swipeAxis && Math.max(Math.abs(dx),Math.abs(dy))>8){
+    swipeAxis=Math.abs(dx)>Math.abs(dy)*1.15?"x":"y";
+  }
+  if(swipeAxis==="y") return;
+  if(swipeAxis==="x"){
     swipeMoved=true;
     swipeScroller.scrollLeft=swipeScrollLeft-dx;
     if(swipeScroller._bhDotUpdate) swipeScroller._bhDotUpdate();
@@ -2647,6 +2715,12 @@ document.addEventListener("touchend",function(){
     setTimeout(swipeScroller._bhDotUpdate,120);
   }
   swipeScroller=null;
+  swipeAxis="";
+},{passive:true});
+document.addEventListener("touchcancel",function(){
+  swipeScroller=null;
+  swipeMoved=false;
+  swipeAxis="";
 },{passive:true});
 document.addEventListener("input",function(e){
   const draft=e.target&&e.target.closest ? e.target.closest("[data-recommend-draft]") : null;
@@ -2772,6 +2846,52 @@ function fetchRecentCatalog(){
     return DYNAMIC_RECENT;
   }).catch(function(){ return []; });
 }
+let NEWS_ITEMS=[], newsPromise=null;
+function newsDateLabel(value){
+  const date=new Date(value||"");
+  if(!Number.isFinite(date.getTime())) return "";
+  try{ return date.toLocaleDateString(lang==="pl"?"pl-PL":"en-US",{day:"numeric",month:"short",year:"numeric"}); }
+  catch(e){ return ""; }
+}
+function newsCardHtml(item){
+  const excerpt=lang==="pl" ? (item.excerpt_pl||item.excerpt_en||"") : (item.excerpt_en||item.excerpt_pl||"");
+  const image=String(item.image_url||"design/figma-assets/home-pack-v2/home-header-v3.jpg");
+  const date=newsDateLabel(item.published_at);
+  return '<a class="news-card" href="'+esc(item.url||"#")+'" target="_blank" rel="noopener noreferrer" aria-label="'+esc((item.title||"")+" - "+t("readArticle"))+'">'+
+    '<img src="'+esc(image)+'" alt="" loading="lazy" onerror="this.onerror=null;this.src=\'design/figma-assets/home-pack-v2/home-header-v3.jpg\'">'+
+    '<div class="news-card-body"><div class="news-card-meta"><span>'+esc(item.source_name||"Whisky")+'</span>'+(date?'<span>'+esc(date)+'</span>':'')+'</div>'+
+    '<h4>'+esc(item.title||"")+'</h4><p>'+esc(excerpt)+'</p></div></a>';
+}
+function renderHomeNews(){
+  const box=document.getElementById("homeNewsList");
+  if(!box) return;
+  if(!NEWS_ITEMS.length){ box.innerHTML='<div class="empty">'+esc(newsPromise?t("newsLoading"):t("newsEmpty"))+'</div>'; return; }
+  box.innerHTML=NEWS_ITEMS.slice(0,3).map(newsCardHtml).join("");
+}
+function renderArticles(){
+  const box=document.getElementById("articlesList");
+  if(!box) return;
+  if(!NEWS_ITEMS.length){ box.innerHTML='<div class="empty">'+esc(newsPromise?t("newsLoading"):t("newsEmpty"))+'</div>'; return; }
+  box.innerHTML=NEWS_ITEMS.map(newsCardHtml).join("");
+}
+function fetchNews(){
+  if(newsPromise) return newsPromise;
+  if(!WORKER_URL){ renderHomeNews(); renderArticles(); return Promise.resolve([]); }
+  newsPromise=fetch(WORKER_URL+"/news?limit=24",{cache:"no-store"}).then(function(response){
+    return response.ok?response.json():{articles:[]};
+  }).then(function(data){
+    NEWS_ITEMS=Array.isArray(data.articles)?data.articles:[];
+    return NEWS_ITEMS;
+  }).catch(function(){ return []; }).then(function(items){
+    newsPromise=null;
+    renderHomeNews();
+    renderArticles();
+    return items;
+  });
+  renderHomeNews();
+  renderArticles();
+  return newsPromise;
+}
 
 /* ---------- DB ---------- */
 Promise.all([
@@ -2790,6 +2910,7 @@ Promise.all([
   fetchRecommendations();
   syncBootstrap(false);
   fetchRecentCatalog();
+  fetchNews();
 }).catch(function(){ DB=[]; });
 
 
@@ -2810,6 +2931,7 @@ function renderHome(){
   // recently added (ostatnie z bazy) — styl jak "Polecane"
   const recent = DYNAMIC_RECENT.length ? DYNAMIC_RECENT.slice(0,12) : DB.slice(-12).reverse();
   document.getElementById("recentRow").innerHTML = recent.map(function(b){ return featCard(b, t("recent")); }).join("");
+  renderHomeNews();
   renderHomeCollection();
   setupHomeSwipeDots();
 }
@@ -3065,6 +3187,20 @@ document.addEventListener("click",function(e){
   }
   const reportDays=e.target.closest("[data-report-days]");
   if(reportDays){ e.preventDefault(); loadAdminReport(reportDays.getAttribute("data-report-days")); return; }
+  const refreshNews=e.target.closest("#refreshNewsBtn");
+  if(refreshNews){
+    e.preventDefault();
+    refreshNews.disabled=true;
+    refreshNews.textContent=authText("Fetching articles...","Pobieram artyku\u0142y...");
+    bhApi("/admin/news/refresh",{method:"POST"}).then(function(result){
+      NEWS_ITEMS=[]; newsPromise=null;
+      return fetchNews().then(function(){ toast(authText("News refreshed: ","Newsy od\u015bwie\u017cone: ")+(Number(result.added)||0)); });
+    }).catch(function(err){ toast(String(err&&err.error||t("errGeneric"))); }).then(function(){
+      refreshNews.disabled=false;
+      refreshNews.textContent=authText("Fetch 3 latest articles","Pobierz 3 najnowsze artyku\u0142y");
+    });
+    return;
+  }
   const moderationDecision=e.target.closest("[data-moderation-decision]");
   if(moderationDecision){
     e.preventDefault();
@@ -3167,6 +3303,7 @@ document.addEventListener("error",function(e){
 document.getElementById("catAll").addEventListener("click",function(){ openExploreFamily("all",false,[]); });
 document.getElementById("featuredAll").addEventListener("click",function(){ renderRecommendationsView(); showView("recommendations"); });
 document.getElementById("recentAll").addEventListener("click",function(){ openExploreFamily("all",false,[]); });
+document.getElementById("newsAll").addEventListener("click",function(){ showView("articles"); });
 document.getElementById("homeCollectionAll").addEventListener("click",function(){ collectionTab="owned"; renderCollection("owned"); showView("collection"); });
 document.getElementById("exploreSearchInput").addEventListener("input",function(){ renderN=RENDER_LIMIT; renderExplore(); });
 document.getElementById("detailBack").addEventListener("click",function(){ showView(detailReturnView||"explore"); });
@@ -3230,22 +3367,83 @@ function openDetail(id, keepReturn, skipRecommendationFetch){
   });
 }
 const localBottleImageInput=document.getElementById("localBottleImageInput");
+function setLocalPhotoModal(open){
+  const modal=document.getElementById("localPhotoModal");
+  if(!modal) return;
+  modal.classList.toggle("show",!!open);
+  modal.setAttribute("aria-hidden",open?"false":"true");
+}
+function renderLocalPhotoState(title,copy){
+  const preview=document.getElementById("localPhotoPreview");
+  const accept=document.getElementById("localPhotoAccept");
+  if(preview) preview.innerHTML='<div class="local-photo-state"><b>'+esc(title)+'</b>'+esc(copy||"")+'</div>';
+  if(accept) accept.disabled=true;
+}
+function closeLocalPhotoModal(clearBottle){
+  if(localBottleImageBusy) return;
+  setLocalPhotoModal(false);
+  pendingLocalBottleImageData="";
+  if(clearBottle!==false) pendingLocalBottleImageId="";
+}
+function processLocalBottlePhoto(file,id){
+  pendingLocalBottleImageId=canonicalBottleId(id);
+  pendingLocalBottleImageData="";
+  localBottleImageBusy=true;
+  setLocalPhotoModal(true);
+  renderLocalPhotoState(t("localPhotoProcessing"),t("localPhotoProcessingCopy"));
+  return compress(file).then(function(result){
+    return bhApi("/catalog/local-cutout",{method:"POST",body:JSON.stringify({image:result.b64,mime:result.mime,device_id:DEVICE_ID})});
+  }).then(function(data){
+    if(!data||!data.image) throw {error:"image_cutout_failed"};
+    pendingLocalBottleImageData=String(data.image);
+    const preview=document.getElementById("localPhotoPreview");
+    const accept=document.getElementById("localPhotoAccept");
+    if(preview) preview.innerHTML='<img src="'+esc(pendingLocalBottleImageData)+'" alt="'+esc(t("localPhotoReady"))+'">';
+    if(accept) accept.disabled=false;
+  }).catch(function(err){
+    const message=err&&err.error==="local_cutout_limit"?t("localPhotoLimit"):t("localBottlePhotoError");
+    renderLocalPhotoState(t("localBottlePhotoError"),message);
+  }).then(function(){ localBottleImageBusy=false; });
+}
 if(localBottleImageInput) localBottleImageInput.addEventListener("change",function(){
   const file=localBottleImageInput.files&&localBottleImageInput.files[0];
   const id=canonicalBottleId(pendingLocalBottleImageId);
   localBottleImageInput.value="";
   if(!file||!id) return;
-  compress(file).then(function(result){
-    return saveLocalBottleImage(id,"data:"+result.mime+";base64,"+result.b64);
-  }).then(function(){
-    pendingLocalBottleImageId="";
+  processLocalBottlePhoto(file,id);
+});
+const localPhotoAccept=document.getElementById("localPhotoAccept");
+if(localPhotoAccept) localPhotoAccept.addEventListener("click",function(){
+  const id=canonicalBottleId(pendingLocalBottleImageId);
+  const data=pendingLocalBottleImageData;
+  if(!id||!data||localBottleImageBusy) return;
+  localPhotoAccept.disabled=true;
+  saveLocalBottleImage(id,data).then(function(){
+    localBottleImageBusy=false;
+    closeLocalPhotoModal(true);
     renderHome(); renderExplore(); renderHomeCollection(); renderRecommendationsView();
     if(currentDetailId===id) openDetail(id,true,true);
     toast(t("localBottlePhotoSaved"));
   }).catch(function(){
-    pendingLocalBottleImageId="";
+    localBottleImageBusy=false;
+    localPhotoAccept.disabled=false;
     toast(t("localBottlePhotoError"));
   });
+});
+const localPhotoRetake=document.getElementById("localPhotoRetake");
+if(localPhotoRetake) localPhotoRetake.addEventListener("click",function(){
+  if(localBottleImageBusy) return;
+  pendingLocalBottleImageData="";
+  setLocalPhotoModal(false);
+  if(localBottleImageInput) localBottleImageInput.click();
+});
+["localPhotoClose","localPhotoCancel"].forEach(function(id){
+  const button=document.getElementById(id);
+  if(button) button.addEventListener("click",function(){ closeLocalPhotoModal(true); });
+});
+const localPhotoModal=document.getElementById("localPhotoModal");
+if(localPhotoModal) localPhotoModal.addEventListener("click",function(event){
+  if(event.target===localPhotoModal) closeLocalPhotoModal(true);
 });
 /* ================= SKANER ================= */
 let imgData=null, scanImageQuality=null, imgMime="image/jpeg", busy=false, loadTimer=null;

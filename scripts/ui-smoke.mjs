@@ -14,6 +14,9 @@ page.on("console",(message)=>{ if(message.type()==="error") errors.push("console
 await page.route("**/admin/catalog/moderation",async(route)=>{
   await route.fulfill({status:200,contentType:"application/json",body:JSON.stringify({items:[]})});
 });
+await page.route("**/news?*",async(route)=>{
+  await route.fulfill({status:200,contentType:"application/json",body:JSON.stringify({articles:[],news_ready:true})});
+});
 await page.goto(target,{waitUntil:"domcontentloaded"});
 await page.waitForTimeout(1200);
 await page.evaluate(()=>{

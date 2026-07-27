@@ -7,6 +7,21 @@ Aktualizacja: 2026-07-05.
 Najnowszy kontekst dla kolejnego etapu jest w `pliki-md/HANDOFF-BH-1.1.md`.
 Uzyj go jako pierwszego dokumentu przy starcie watku `Przekaz Bourbon Hunter 1.1`.
 
+## Aktualizacja 2026-07-27 - newsy, gesty i lokalne wycinanie zdjec
+
+- Karuzele na Home maja `touch-action: pan-y` i blokade osi dopiero po rozpoznaniu wyraznego gestu poziomego. Pionowy scroll dziala po rozpoczeciu gestu bezposrednio na karcie.
+- Publiczny endpoint `GET /news` zwraca aktualny feed artykulow dla Home i widoku `Profil -> Artykuly`.
+- Agent newsow korzysta z Gemini z Google Search, ale akceptuje artykuly tylko z bialej listy: Whisky Advocate, Whisky Magazine, The Whiskey Wash i Distiller.
+- Tytul, canonical URL, data i miniatura sa dodatkowo sprawdzane na stronie zrodlowej. Duplikaty canonical URL nie sa publikowane, a agent nigdy nie tworzy wpisu bez prawdziwego artykulu.
+- Dzienny Cron pozostaje jeden. W poniedzialek i czwartek Worker dodaje maksymalnie 3 nowe artykuly; w pozostale dni wykonuje tylko dotychczasowe czyszczenie.
+- Administrator moze uruchomic pobranie recznie przyciskiem `Pobierz 3 najnowsze artykuly` w `Profil -> Raporty`.
+- Migracja `agent/d1-migration-v68-whisky-news.sql` dodaje `news_articles` i `news_agent_runs`.
+- Zdjecie dodawane lokalnie do produktu bez assetu przechodzi przez `POST /catalog/local-cutout`: Cloudflare Images usuwa tlo, centruje butelke i zwraca WebP 960x1280.
+- Surowe zdjecie nie jest zapisywane w R2 ani D1. Dopiero po potwierdzeniu podgladu gotowy WebP trafia do IndexedDB na danym urzadzeniu.
+- Domyslny limit wycinania to 10/dzien na konto lub urzadzenie oraz 40/dzien na IP; admin jest zwolniony. Zmienne: `LOCAL_CUTOUT_DAILY_LIMIT` i `LOCAL_CUTOUT_IP_DAILY_LIMIT`.
+- Testy: `scripts/news-agent-regression.mjs`, `scripts/ui-news-scroll-smoke.mjs`, `scripts/ui-local-photo-smoke.mjs`.
+- Cache PWA: `bourbon-hunters-v101`.
+
 ## Aktualizacja 2026-07-27 - katalog quality-first i czyste assety
 
 - Katalog skanera ma 1028 zweryfikowanych produktow. Po bazowym odrzuceniu 7976 rekordow `recognition_only` usunieto tez pozostale zestawy, RTD i produkty spoza whisky.
@@ -21,8 +36,8 @@ Uzyj go jako pierwszego dokumentu przy starcie watku `Przekaz Bourbon Hunter 1.1
 - Buffalo Trace standard oraz techniczne receptury/private picki Four Roses Single Barrel sa scalone w kanoniczne produkty; stare ID prowadza przez `id_redirects`.
 - Produkt bez oficjalnego assetu pokazuje mystery bottle. W szczegolach user moze przypisac wlasne zdjecie, przechowywane wylacznie lokalnie w IndexedDB danego urzadzenia.
 - Worker: `visual-only-catalog-v3-quality-assets`; katalog: `ttb-olcc-quality-catalog-v9-canonical-products`; submission: `community-catalog-images-v6-highres-cutout`.
-- Cache PWA: `bourbon-hunters-v100`.
-- Nie ma migracji D1. Najpierw GitHub i zielone Actions, potem Worker, health i odswiezenie PWA.
+- Historyczny cache tego etapu: `bourbon-hunters-v100`.
+- Sam etap katalogu nie mial migracji D1; pozniejszy feed newsow wymaga migracji v68.
 
 ## Aktualizacja 2026-07-27 - produkty kanoniczne i potwierdzony asset skanera
 

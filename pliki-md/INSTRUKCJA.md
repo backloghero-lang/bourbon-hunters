@@ -34,6 +34,8 @@ Aktualny oczekiwany stan Workera:
   "catalog_submission_version": "community-catalog-images-v6-highres-cutout",
   "catalog_moderation_version": "catalog-moderation-orchestrator-admin-v1",
   "catalog_license_version": "catalog-license-2026-07-18-v1",
+  "news_agent_version": "whisky-news-google-grounded-v1",
+  "local_image_pipeline_version": "local-bottle-cutout-v1",
   "pbkdf2_iterations": 100000,
   "d1": true,
   "schema": true,
@@ -45,6 +47,9 @@ Aktualny oczekiwany stan Workera:
   "catalog_data_schema": true,
   "catalog_moderation_schema": true,
   "telemetry_schema": true,
+  "news_schema": true,
+  "news_agent_ready": true,
+  "local_image_cutout_ready": true,
   "image_pipeline_ready": true,
   "email_ready": true,
   "google_ready": true
@@ -69,12 +74,13 @@ Cykl zycia zdjec katalogowych wymaga:
 1. W D1 uruchom `agent/d1-migration-v65-catalog-data-lifecycle.sql`.
 2. W D1 uruchom `agent/d1-migration-v66-telemetry-reports.sql`.
 3. W D1 uruchom `agent/d1-migration-v67-catalog-moderation.sql`.
-4. Dopiero potem wklej i zdeployuj aktualny `agent/worker.js`.
-5. W Workerze pozostaw dzienny Cron Trigger, np. `0 3 * * *`, do usuwania porzuconych podgladow i telemetrii starszej niz 90 dni.
-6. Wyslij frontend na GitHub i odswiez PWA do cache `bourbon-hunters-v92`.
-7. Sprawdz pelny health: `https://bourbon-hunters.darekmaslyk.workers.dev/auth/health`.
+4. W D1 uruchom `agent/d1-migration-v68-whisky-news.sql`.
+5. Dopiero potem wklej i zdeployuj aktualny `agent/worker.js`.
+6. W Workerze pozostaw jeden dzienny Cron Trigger, np. `0 3 * * *`. Czyszczenie dziala codziennie, a newsy tylko w poniedzialek i czwartek.
+7. Wyslij frontend na GitHub i odswiez PWA do cache `bourbon-hunters-v101`.
+8. Sprawdz pelny health: `https://bourbon-hunters.darekmaslyk.workers.dev/auth/health`.
 
-Kolejnosc jest wazna: migracje D1 -> Worker -> GitHub/PWA. Bez v67 user nie moze zatwierdzic assetu, bo Worker celowo nie publikuje juz niczego z pominieciem moderacji.
+Kolejnosc jest wazna: migracje D1 -> Worker -> GitHub/PWA. Bez v67 user nie moze zatwierdzic assetu, a bez v68 feed newsow pozostanie pusty.
 
 Ponizsze starsze sekcje zostaja jako pomoc historyczna, ale w razie sprzecznosci obowiazuje aktualna zasada powyzej.
 
@@ -215,7 +221,24 @@ Ta zmiana dotyczy GitHub Pages. Nie wymaga podmiany Workera, migracji D1 ani zmi
 5. Sprawdź na Home kafel Whisky z liczbą pozycji.
 6. Wejdź w Whisky i sprawdź filtry Scotch, Irish, Japanese, Rye i pozostałe.
 
-Aktualny cache: `bourbon-hunters-v100`.
+Aktualny cache: `bourbon-hunters-v101`.
+
+## Wdrozenie newsow, poprawionych gestow i lokalnego wycinania zdjec
+
+Ta paczka wymaga migracji D1, Workera i GitHub Pages.
+
+1. Otworz Cloudflare -> D1 -> `bourbon-hunters-db` -> Console.
+2. Wklej i uruchom caly plik `agent/d1-migration-v68-whisky-news.sql`.
+3. W Workerze `bourbon-hunters` zastap kod aktualnym `agent/worker.js` i kliknij `Deploy`.
+4. Nie tworz drugiego Cron Triggera. Istniejacy dzienny Cron wystarczy; Worker sam sprawdza poniedzialek i czwartek.
+5. Otworz `https://bourbon-hunters.darekmaslyk.workers.dev/auth/health`.
+6. Sprawdz `news_schema: true`, `news_agent_ready: true`, `local_image_cutout_ready: true` oraz `news_agent_version: whisky-news-google-grounded-v1`.
+7. Uruchom `WYSLIJ-NA-GITHUB.bat` i poczekaj na zielone GitHub Actions.
+8. Na telefonie otworz `test-index.html`, kliknij `Wyczysc cache/PWA`, a potem `Odswiez build`.
+9. Aby nie czekac do dnia publikacji, wejdz jako admin w `Profil -> Raporty` i kliknij `Pobierz 3 najnowsze artykuly`.
+10. Sprawdz trzy rzeczy: pionowy scroll rozpoczęty na karcie Home, trzy newsy na Home oraz podglad wycietej butelki przed zapisaniem lokalnego zdjecia.
+
+Endpoint `/news` jest publiczny. Agent zapisuje w D1 tylko metadane, krotkie streszczenia i zewnetrzny URL miniatury; nie kopiuje tresci artykulu ani obrazu do R2.
 
 ## Wdrozenie skanera visual-only i skonsolidowanego katalogu
 

@@ -1,10 +1,21 @@
 # Bourbon Hunters 1.1 - handoff do kolejnego etapu
 
-Aktualizacja: 2026-07-23.
+Aktualizacja: 2026-07-27.
 
 Ten plik ma byc pierwszym kontekstem dla nowego watku Codexa, np. `Przekaz Bourbon Hunter 1.1`.
 
-## Stan nadrzedny 2026-07-23
+## Stan nadrzedny 2026-07-27
+
+- Aktualny skaner to przywrocony tryb visual-only: `visual-only-catalog-v3-quality-assets`; OCR jest wylaczony.
+- Aktualny katalog skanera: `ttb-olcc-quality-catalog-v9-canonical-products`; aktualny pipeline assetow: `community-catalog-images-v6-highres-cutout`.
+- Cache PWA: `bourbon-hunters-v101`.
+- Przed aktualnym deployem Workera trzeba uruchomic `agent/d1-migration-v68-whisky-news.sql`.
+- Health ma pokazac `news_schema: true`, `news_agent_ready: true`, `local_image_cutout_ready: true` i `news_agent_version: whisky-news-google-grounded-v1`.
+- Publiczne newsy sa widoczne na Home oraz w `Profil -> Artykuly`. Jeden dzienny Cron uruchamia agenta tylko w poniedzialki i czwartki.
+- Lokalna fotografia produktu bez assetu jest najpierw wycinana przez Cloudflare Images i wymaga potwierdzenia. Surowy plik nie jest przechowywany w chmurze.
+- Aktualne szczegoly zawsze sa w `pliki-md/HANDOFF.md`; ponizszy blok z 2026-07-23 jest historia architektury sprzed rollbacku OCR.
+
+## Historyczny stan 2026-07-23
 
 - Punkt powrotu przed przebudowa skanera: `backup-before-scanner-v10-6f3605e`.
 - Aktualny skaner: `ocr-visual-fusion-catalog-10k-v10-calibrated-moderated`.

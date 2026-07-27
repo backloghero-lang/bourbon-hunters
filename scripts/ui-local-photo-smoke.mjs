@@ -12,9 +12,13 @@ const photoPath=path.resolve("assets/profile-badges/bottle.png");
 const browser=await chromium.launch({headless:true,executablePath:chrome});
 const page=await browser.newPage({viewport:{width:390,height:844},deviceScaleFactor:1});
 const errors=[];
+const processedImage="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M/wHwAF/gL+X1y/AAAAAElFTkSuQmCC";
 page.on("pageerror",(error)=>errors.push("pageerror: "+error.message));
 page.on("console",(message)=>{
   if(message.type()==="error"&&!message.text().includes("Failed to load resource")) errors.push("console: "+message.text());
+});
+await page.route("**/catalog/local-cutout",async(route)=>{
+  await route.fulfill({status:200,contentType:"application/json",body:JSON.stringify({ok:true,image:processedImage,mime:"image/webp",width:960,height:1280})});
 });
 
 async function openMissingBottle(){
@@ -44,7 +48,11 @@ const chooserPromise=page.waitForEvent("filechooser");
 await page.locator("[data-local-photo-add]").click();
 const chooser=await chooserPromise;
 await chooser.setFiles(photoPath);
-await page.waitForTimeout(2500);
+await page.locator("#localPhotoModal.show #localPhotoAccept:not([disabled])").waitFor();
+const beforeAccept=await page.evaluate((id)=>!!LOCAL_BOTTLE_IMAGES[id],bottleId);
+if(beforeAccept) throw new Error("Local image was saved before user confirmation");
+await page.locator("#localPhotoAccept").click();
+await page.waitForFunction((id)=>!!LOCAL_BOTTLE_IMAGES[id],bottleId);
 const saveDiagnostics=await page.evaluate((id)=>({
   hasLocal:!!LOCAL_BOTTLE_IMAGES[id],
   image:document.querySelector("#detailBody .dphoto img[data-bottle-image]")?.getAttribute("src")||"",
