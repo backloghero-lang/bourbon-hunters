@@ -18,7 +18,7 @@ const DEFAULT_DB_URL = "https://raw.githubusercontent.com/" + REPO + "/main/db/c
 const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters. Krotko, z jajem, ale rzeczowo. quality=jakosc 1-5, value=jakosc/cena 1-5 (5 swietna i tania, 1 slaba i droga). Pisz {{LANG}}. Zwroc tylko JSON.";
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
 const MULTI_CANDIDATE_CONFIDENCE = 0.9;
-const SCAN_ORCHESTRATOR_VERSION = "visual-only-catalog-v4-preconfirm-cutout";
+const SCAN_ORCHESTRATOR_VERSION = "visual-only-catalog-v5-direct-result";
 const SCAN_CATALOG_VERSION = "ttb-olcc-quality-catalog-v9-canonical-products";
 const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v6-highres-cutout";
 const CATALOG_MODERATION_VERSION = "catalog-moderation-orchestrator-admin-v1";
@@ -2094,7 +2094,24 @@ export default {
             return scanResponse({error:"image_cutout_failed",retry:true,detail:String(e&&e.message?e.message:e).slice(0,120)},200,"cutout_failed",{error_code:"image_cutout_failed",candidates:candidates});
           }
         }
-        return scanResponse({needs_confirmation:true,candidates:candidates,scan_preview_image:scanPreviewImage,suggested:candidates[0].id,mode:mode,remaining:remainingQuota,owner:owner,agents:agentTrace},200,"candidates_presented",{candidates:candidates,suggested_bottle_id:candidates[0].id});
+        const selected=candidates[0];
+        const result=Object.assign({},selected.result||{});
+        if(scanPreviewImage){
+          result.image=scanPreviewImage;
+          result.has_image=true;
+          result.has_catalog_image=false;
+          result.source="scan_preview";
+          result.temporary_scan_asset=true;
+          result.catalog_asset_missing=true;
+        }else{
+          result.has_image=!!result.image;
+          result.has_catalog_image=!!result.image;
+          result.catalog_asset_missing=false;
+        }
+        overallConfidence=Number(selected.confidence)||overallConfidence;
+        dbConfidence=overallConfidence;
+        hit=(db.bottles||[]).find(function(bottle){ return bottle&&bottle.id===selected.id; })||hit;
+        return scanResponse({result:result,mode:mode,matched:selected.id,confidence:overallConfidence,remaining:remainingQuota,owner:owner,agents:agentTrace},200,"matched",{candidates:candidates,matched_bottle_id:selected.id,suggested_bottle_id:selected.id});
       }
       return lowConfidenceResponse(mode);
     }

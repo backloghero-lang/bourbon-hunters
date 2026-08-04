@@ -482,6 +482,10 @@
   .btn{flex:1;border:none;border-radius:14px;padding:14px 10px;font-size:15px;font-weight:800;cursor:pointer;transition:transform .08s,opacity .2s}
   .btn:active{transform:scale(.97)}
   .btn-bottle{border:1px solid rgba(95,199,122,.62);background:linear-gradient(180deg,#28563A,#0D291B);color:#EFF9F1;box-shadow:inset 0 1px 0 rgba(220,255,229,.16),0 10px 22px rgba(3,28,14,.34);text-shadow:0 1px 2px rgba(0,0,0,.72)}
+  .scan-result-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:10px 16px 0}
+  .scan-result-actions.single{grid-template-columns:minmax(0,1fr)}
+  .scan-result-actions .btn{min-width:0;min-height:50px;margin:0!important;padding:10px 8px;display:flex;align-items:center;justify-content:center;gap:7px;font-size:13px;line-height:1.15}
+  .scan-result-actions svg{width:19px;height:19px;flex:0 0 19px}
   .btn-go{display:none;min-height:112px;background:url("design/figma-assets/scanner-pack-v1/scan-button.png") center top/86px 86px no-repeat;color:#F6E1BC;text-shadow:0 2px 8px #000;box-shadow:none;padding:86px 0 0;font-size:12px;letter-spacing:.9px;text-transform:uppercase}
   .btn-alt{background:rgba(0,0,0,.25);color:var(--amber2);border:1px solid var(--amber)}
   .btn[disabled]{opacity:.4;cursor:default}
@@ -494,27 +498,10 @@
   .badge.net{background:rgba(217,139,58,.15);color:var(--new);border:1px solid rgba(217,139,58,.4)}
   .links{font-size:12px;line-height:1.7}.links a{color:var(--amber);word-break:break-all}
   .card{background:linear-gradient(160deg,rgba(29,27,24,.9),rgba(16,12,8,.94)),url("design/figma-assets/scanner-pack-v1/result-card-bg.png") center/cover no-repeat;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow);margin:16px}
+  #scanResult>.card{scroll-margin-top:12px}
+  .app.is-scan.has-scan-result .topbar{display:none}
   .name{font-size:21px;font-weight:800;font-family:var(--serif);margin:0 0 2px}
   .scan-view.is-confirming .hero{display:none}
-  .scan-confirm{margin:4px 0 18px;padding:20px 12px 16px;text-align:center;border:1px solid rgba(226,176,112,.42);border-radius:20px;background:linear-gradient(180deg,rgba(22,17,12,.96),rgba(5,4,3,.98)),url("design/figma-assets/scanner-pack-v1/result-card-bg.png") center/cover no-repeat;box-shadow:var(--shadow)}
-  .scan-confirm h2{margin:0 0 6px;font:800 21px/1.15 var(--serif);color:#F6E6C8}
-  .scan-confirm>p{margin:0 auto 16px;max-width:330px;color:#C9B493;font-size:12px;line-height:1.5}
-  .scan-candidates{display:grid;grid-template-columns:repeat(var(--candidate-count),minmax(0,1fr));gap:7px;align-items:stretch;margin:0 auto 16px;max-width:430px}
-  .scan-candidate{appearance:none;min-width:0;min-height:252px;padding:7px 5px 10px;border:1px solid rgba(226,176,112,.3);border-radius:12px;background:rgba(0,0,0,.34);color:#F6E6C8;display:grid;grid-template-rows:150px auto auto auto;align-items:start;cursor:pointer;overflow:hidden;transition:border-color .16s,background .16s,box-shadow .16s,opacity .16s}
-  .scan-candidate:not(.selected){opacity:.72}
-  .scan-candidate.selected{opacity:1;border-color:#E2B070;background:rgba(69,43,18,.42);box-shadow:0 0 0 2px rgba(226,176,112,.18),0 0 20px rgba(218,106,45,.2)}
-  .scan-candidate-media{width:100%;height:150px;display:grid;place-items:center;overflow:hidden;border-radius:8px;background:radial-gradient(circle at 50% 56%,rgba(131,77,28,.22),rgba(0,0,0,.42) 70%)}
-  .scan-candidate-media img{display:block;width:100%;height:100%;object-fit:contain;padding:4px}
-  .scan-candidate-media .mystery-bottle.small{transform:scale(.86)}
-  .scan-candidate-name{width:100%;margin-top:8px;font:800 12px/1.18 var(--serif);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
-  .scan-candidate-type{width:100%;margin-top:6px;font-size:8px;line-height:1.2;letter-spacing:.4px;text-transform:uppercase;color:#77D59A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .scan-candidate-strength{width:100%;margin-top:5px;font-size:9px;line-height:1.2;color:#E8CD93;font-weight:800;white-space:normal;overflow-wrap:anywhere}
-  .scan-confirm-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;max-width:430px;margin:auto}
-  .scan-confirm-actions .btn{min-width:0}
-  .scan-confirm.single .scan-candidates{grid-template-columns:minmax(0,1fr);max-width:320px}
-  .scan-confirm.single .scan-candidate{cursor:default;opacity:1}
-  .scan-confirm.single .scan-candidate-name{font-size:14px}
-  @media (max-width:360px){.scan-confirm{padding-left:7px;padding-right:7px}.scan-candidates{gap:4px}.scan-candidate{padding-left:3px;padding-right:3px;min-height:242px;grid-template-rows:140px auto auto auto}.scan-candidate-media{height:140px}.scan-candidate-name{font-size:11px}}
   .age-gate{position:fixed;inset:0;z-index:9998;display:none;place-items:center;padding:12px;background:#000;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
   .age-gate.show{display:grid}
   .age-card{position:relative;width:min(430px,calc(100vw - 24px));height:min(calc((100vw - 24px) * 1.77),calc(100dvh - 24px),760px);border:0;border-radius:0;background:#000 url("assets/brand/age-gate.png") center top/100% auto no-repeat;box-shadow:0 26px 90px rgba(0,0,0,.82);overflow:hidden}
@@ -534,8 +521,9 @@
   /* bottom nav */
   .nav{position:fixed;left:50%;right:auto;bottom:calc(10px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:40;width:min(496px,calc(100% - 22px));height:72px;padding:0 10px;
     background:
-      radial-gradient(80% 140% at 50% 0%,rgba(226,176,112,.18),transparent 58%),
-      linear-gradient(180deg,rgba(29,24,18,.92),rgba(10,7,5,.98));
+      linear-gradient(90deg,rgba(4,3,2,.96) 0%,rgba(7,5,3,.76) 17%,rgba(10,7,4,.26) 42%,rgba(10,7,4,.26) 58%,rgba(7,5,3,.76) 83%,rgba(4,3,2,.96) 100%),
+      linear-gradient(180deg,rgba(17,12,8,.64),rgba(6,4,3,.82)),
+      url("assets/brand/profile-herringbone-burnt-v1.webp") center 53%/cover no-repeat;
     border:1px solid rgba(184,99,51,.42);border-radius:28px;box-shadow:0 14px 34px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.04);
     display:flex;align-items:center;justify-content:space-around;max-width:520px;margin:0 auto;backdrop-filter:blur(12px)}
   .nav button{background:none;border:none;color:#9F8B69;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:9.5px;font-weight:800;cursor:pointer;padding:8px 5px;flex:1;letter-spacing:.2px}
@@ -1058,7 +1046,7 @@ const I18N = {
     catBourbon:"Bourbon", catRye:"Rye", catTenn:"Tennessee", catWheat:"Wheated", catScotch:"Scotch", catWorld:"Świat",
     byDist:"Przeglądaj wg destylarni", allDist:"Wszystkie", distLbl:"Destylarnia", loadMore:"Pokaż więcej", results:"poz.",
     priceK:"Cena", statusAvail:"Dostępny", statusSold:"Niedostępny", viewShop:"Zobacz w sklepie ↗", noResults:"Brak wyników dla tego filtra.",
-    allCat:"Wszystkie", stWheated:"Wheated", stSingle:"Single Barrel", stSmall:"Small Batch", stProof:"Barrel Proof", stBib:"Bottled-in-Bond", stLimited:"Edycja limitowana", aiBtn:"🔎 Analiza AI", aiPlusBtn:"Hunter AI Plus", lowConfTitle:"Nie mam pewnego dopasowania", lowConfBody:"Marka lub wariant nie są wystarczająco czytelne. Zrób wyraźniejsze zdjęcie przedniej etykiety — nie pokażę przypadkowej butelki.", scanRetryPhoto:"Zrób zdjęcie ponownie", scanConfirmTitle:"Czy to któraś z nich?", scanConfirmBody:"Wybierz właściwą butelkę. Szczegóły pokażę dopiero po Twoim potwierdzeniu.", scanConfirmOk:"Potwierdź", scanConfirmCancel:"Żadna z nich", scanAgain:"Skanuj ponownie",
+    allCat:"Wszystkie", stWheated:"Wheated", stSingle:"Single Barrel", stSmall:"Small Batch", stProof:"Barrel Proof", stBib:"Bottled-in-Bond", stLimited:"Edycja limitowana", aiBtn:"🔎 Analiza AI", aiPlusBtn:"Hunter AI Plus", lowConfTitle:"Nie mam pewnego dopasowania", lowConfBody:"Marka lub wariant nie są wystarczająco czytelne. Zrób wyraźniejsze zdjęcie przedniej etykiety — nie pokażę przypadkowej butelki.", scanRetryPhoto:"Zrób zdjęcie ponownie", scanAgain:"Skanuj ponownie",
     wlAdded:"Dodano do listy życzeń ♥", ownAdded:"Dodano do kolekcji", wlEmpty:"Twoja lista życzeń jest pusta. Dodawaj butelki serduszkiem ♡.", emptyHunted:"Nie masz jeszcze upolowanych butelek.", emptyCollection:"Twoja kolekcja jest pusta.", noseT:"Nos", tasteT:"Smak", finishT:"Finisz", suggestedPrice:"Cena sugerowana", dbQuality:"Ocena społeczności", userQuality:"Twoja ocena",
     wlT:"Lista życzeń", wlD:"Zapisuj bourbony, które chcesz upolować.", huT:"Upolowane", huD:"Oznaczaj butelki, które już zdobyłeś.",
     coT:"Moja kolekcja", coD:"Twoja półka — wszystkie posiadane butelki w jednym miejscu.", registerTab:"Register", signInTab:"Sign In", articlesTab:"Articles", proTab:"Wersja Pro", settingsTab:"Ustawienia", profileName:"Bourbon Hunters", profileCopy:"Zaloguj się, aby później synchronizować kolekcję, skany i notatki między urządzeniami.", proStrip:"Więcej funkcji. Bez reklam.", joinPro:"Join Pro", later:"Later", registerTitle:"Sign up", registerIntro:"Utwórz profil łowcy, aby synchronizować kolekcję.", signInTitle:"Sign in", signInIntro:"Wróć do swojej półki, skanów i notatek degustacyjnych.", signUpBtn:"Sign Up", signInBtn:"Sign In", googleSignUp:"Sign up with Google", googleSignIn:"Sign in with Google", alreadyAccount:"Already have an account?", noAccount:"No account yet?", authConsent:"By proceeding, you agree to our", andText:"and", authPending:"Google Sign-In podłączymy w kolejnym etapie.", googleAuthStarting:"Przekierowanie do Google...", googleAuthOk:"Zalogowano przez Google i zsynchronizowano.", googleAuthFail:"Nie udało się zalogować przez Google.", inProgress:"W budowie", soonTag:"Wkrótce" },
@@ -1080,7 +1068,7 @@ const I18N = {
     catBourbon:"Bourbon", catRye:"Rye", catTenn:"Tennessee", catWheat:"Wheated", catScotch:"Scotch", catWorld:"World",
     byDist:"Browse by distillery", allDist:"All", distLbl:"Distillery", loadMore:"Load more", results:"items",
     priceK:"Price", statusAvail:"In stock", statusSold:"Sold out", viewShop:"View in shop ↗", noResults:"No results for this filter.",
-    allCat:"All", stWheated:"Wheated", stSingle:"Single Barrel", stSmall:"Small Batch", stProof:"Barrel Proof", stBib:"Bottled-in-Bond", stLimited:"Limited Edition", aiBtn:"🔎 AI Analysis", aiPlusBtn:"Hunter AI Plus", lowConfTitle:"No confident match", lowConfBody:"The brand or expression is not clear enough. Take a sharper photo of the front label — I will not show a random bottle.", scanRetryPhoto:"Take another photo", scanConfirmTitle:"Is it one of these?", scanConfirmBody:"Choose the correct bottle. Details appear only after you confirm it.", scanConfirmOk:"Confirm", scanConfirmCancel:"None of these", scanAgain:"Scan again",
+    allCat:"All", stWheated:"Wheated", stSingle:"Single Barrel", stSmall:"Small Batch", stProof:"Barrel Proof", stBib:"Bottled-in-Bond", stLimited:"Limited Edition", aiBtn:"🔎 AI Analysis", aiPlusBtn:"Hunter AI Plus", lowConfTitle:"No confident match", lowConfBody:"The brand or expression is not clear enough. Take a sharper photo of the front label — I will not show a random bottle.", scanRetryPhoto:"Take another photo", scanAgain:"Scan again",
     wlAdded:"Added to wishlist ♥", ownAdded:"Added to collection", wlEmpty:"Your wishlist is empty. Add bottles with the ♡ heart.", emptyHunted:"No hunted bottles yet.", emptyCollection:"Your collection is empty.", noseT:"Nose", tasteT:"Taste", finishT:"Finish", suggestedPrice:"Suggested price", dbQuality:"Community rating", userQuality:"Your rating",
     wlT:"Wishlist", wlD:"Save the bourbons you want to hunt down.", huT:"Hunted", huD:"Mark the bottles you've already bagged.",
     coT:"My collection", coD:"Your shelf — every bottle you own in one place.", registerTab:"Register", signInTab:"Sign In", articlesTab:"Articles", proTab:"Pro version", settingsTab:"Settings", profileName:"Bourbon Hunters", profileCopy:"Sign in to sync your shelf, scans and tasting notes across devices.", proStrip:"More features. No ads.", joinPro:"Join Pro", later:"Later", registerTitle:"Sign up", registerIntro:"Create your hunter profile to sync your collection.", signInTitle:"Sign in", signInIntro:"Return to your shelf, scans and tasting notes.", signUpBtn:"Sign Up", signInBtn:"Sign In", googleSignUp:"Sign up with Google", googleSignIn:"Sign in with Google", alreadyAccount:"Already have an account?", noAccount:"No account yet?", authConsent:"By proceeding, you agree to our", andText:"and", authPending:"Google Sign-In will be connected in the next stage.", googleAuthStarting:"Redirecting to Google...", googleAuthOk:"Signed in with Google and synced.", googleAuthFail:"Google sign-in failed.", inProgress:"In progress", soonTag:"Soon" }
@@ -1118,8 +1106,6 @@ Object.assign(I18N.pl,{
   catalogPreviewTitle:"Podgl\u0105d butelki", catalogProcessing:"Wycinam butelk\u0119 ze zdj\u0119cia...", catalogProcessingCopy:"Agent obrazu przygotowuje czysty podgl\u0105d pasuj\u0105cy do aplikacji.",
   acceptImage:"Akceptuj\u0119 i dodaj\u0119", retakeImage:"Zr\u00f3b zdj\u0119cie ponownie", saveWithoutImage:"Zapisz bez zdj\u0119cia", addToCatalog:"Uzupe\u0142nij i dodaj do katalogu", addToCollection:"Dodaj do kolekcji", catalogLicenseNote:"Akceptuj\u0105c, pozwalasz Bourbon Hunters bezterminowo u\u017cywa\u0107 gotowego assetu katalogowego. Oryginalne zdj\u0119cie i pliki robocze zostan\u0105 usuni\u0119te.",
   catalogNoPreview:"Nie uda\u0142o si\u0119 przygotowa\u0107 wyci\u0119cia.", catalogNoPreviewCopy:"Mo\u017cesz zrobi\u0107 nowe zdj\u0119cie albo zapisa\u0107 same dane.", catalogSaved:"Butelka zapisana i dodana do Ostatnio dodanych.", catalogLogin:"Zaloguj si\u0119, aby doda\u0107 butelk\u0119 do katalogu.", catalogError:"Nie uda\u0142o si\u0119 zapisa\u0107 butelki.", catalogHit:"Mam trafienie",
-  scanConfirmSingleTitle:"Czy to ta butelka?", scanConfirmSingleBody:"Sprawd\u017a przygotowan\u0105 butelk\u0119, nazw\u0119 i podstawowe dane. Po potwierdzeniu poka\u017c\u0119 szczeg\u00f3\u0142y.",
-  scanConfirmSingleOk:"Tak, to ta", scanConfirmSingleCancel:"Nie, spr\u00f3buj ponownie",
   addLocalBottlePhoto:"Dodaj swoje zdj\u0119cie", changeLocalBottlePhoto:"Zmie\u0144 zdj\u0119cie", removeLocalBottlePhoto:"Usu\u0144 lokalne zdj\u0119cie",
   localBottlePhotoNote:"Zdj\u0119cie jest zapisane tylko na tym urz\u0105dzeniu.", localBottlePhotoSaved:"Lokalne zdj\u0119cie zosta\u0142o zapisane.",
   localBottlePhotoRemoved:"Lokalne zdj\u0119cie zosta\u0142o usuni\u0119te.", localBottlePhotoError:"Nie uda\u0142o si\u0119 zapisa\u0107 tego zdj\u0119cia.",
@@ -1159,8 +1145,6 @@ Object.assign(I18N.en,{
   catalogPreviewTitle:"Bottle preview", catalogProcessing:"Cutting the bottle from the photo...", catalogProcessingCopy:"The image agent is preparing a clean preview for the app.",
   acceptImage:"Accept and add", retakeImage:"Take another photo", saveWithoutImage:"Save without photo", addToCatalog:"Complete and add to catalog", addToCollection:"Add to collection", catalogLicenseNote:"By accepting, you allow Bourbon Hunters to keep and use the finished catalog asset. The original photo and working files will be deleted.",
   catalogNoPreview:"The bottle cutout could not be prepared.", catalogNoPreviewCopy:"Take another photo or save the bottle data without an image.", catalogSaved:"Bottle saved and added to Recently added.", catalogLogin:"Sign in to add a bottle to the catalog.", catalogError:"The bottle could not be saved.", catalogHit:"Found a match",
-  scanConfirmSingleTitle:"Is this the bottle?", scanConfirmSingleBody:"Check the prepared bottle, its name and key details. I will show the full details after confirmation.",
-  scanConfirmSingleOk:"Yes, that's it", scanConfirmSingleCancel:"No, try again",
   addLocalBottlePhoto:"Add your photo", changeLocalBottlePhoto:"Change photo", removeLocalBottlePhoto:"Remove local photo",
   localBottlePhotoNote:"This photo is stored only on this device.", localBottlePhotoSaved:"Local photo saved.",
   localBottlePhotoRemoved:"Local photo removed.", localBottlePhotoError:"This photo could not be saved.",
@@ -3281,12 +3265,6 @@ document.addEventListener("click",function(e){
   if(aiPlusAction){ e.preventDefault(); toast(t("inProgress")); return; }
   const scanRetryAction=e.target.closest("[data-scan-retry]");
   if(scanRetryAction){ e.preventDefault(); resetShot(); fileInput.click(); return; }
-  const scanCandidate=e.target.closest("[data-scan-candidate]");
-  if(scanCandidate){ e.preventDefault(); selectScanCandidate(scanCandidate.getAttribute("data-scan-candidate")); return; }
-  const scanConfirm=e.target.closest("[data-scan-confirm]");
-  if(scanConfirm){ e.preventDefault(); confirmScanCandidate(); return; }
-  const scanCancel=e.target.closest("[data-scan-cancel]");
-  if(scanCancel){ e.preventDefault(); reportScanChoice("cancelled",""); resetShot(); return; }
   const scanNew=e.target.closest("[data-scan-new]");
   if(scanNew){
     e.preventDefault(); resetShot();
@@ -3572,8 +3550,7 @@ if(localPhotoModal) localPhotoModal.addEventListener("click",function(event){
 });
 /* ================= SKANER ================= */
 let imgData=null, scanImageQuality=null, imgMime="image/jpeg", busy=false, loadTimer=null;
-let currentScanResult=null, catalogSubmissionId="", catalogRetakePending=false;
-let pendingScanCandidates=[], selectedScanCandidateId="", pendingScanMode="rate", pendingScanId="";
+let currentScanResult=null, currentScanMode="rate", catalogSubmissionId="", catalogRetakePending=false;
 const shot=document.getElementById("shot"), fileInput=document.getElementById("file"), galleryInput=document.getElementById("galleryFile");
 const scanPreview=document.getElementById("scanPreview");
 const goRate=document.getElementById("goRate");
@@ -3584,7 +3561,8 @@ if(retakeQuick) retakeQuick.addEventListener("click",function(){ if(busy) return
 fileInput.addEventListener("change",handlePickedFile);
 galleryInput.addEventListener("change",handlePickedFile);
 function resetShot(){
-  imgData=null; scanImageQuality=null; imgMime="image/jpeg"; currentScanResult=null; pendingScanCandidates=[]; selectedScanCandidateId=""; pendingScanMode="rate"; pendingScanId=""; goRate.disabled=true;
+  imgData=null; scanImageQuality=null; imgMime="image/jpeg"; currentScanResult=null; currentScanMode="rate"; goRate.disabled=true;
+  document.getElementById("appRoot").classList.remove("has-scan-result");
   document.getElementById("view-scan").classList.remove("is-confirming");
   if(scanPreview) scanPreview.removeAttribute("src");
   shot.classList.remove("has-shot","is-loading");
@@ -3668,7 +3646,7 @@ function confirmCatalogDecision(decision){
       }
       setCatalogModal(false); catalogSubmissionId="";
       toast(authText("Sent for catalog review.","Wysłano do akceptacji katalogu."));
-      if(currentScanResult) renderScan(currentScanResult,pendingScanMode||"rate");
+      if(currentScanResult) renderScan(currentScanResult,currentScanMode||"rate");
       return;
     }
     if(data.bottle) mergeDynamicCatalog([data.bottle].concat(DYNAMIC_RECENT.filter(function(b){ return b.id!==data.bottle.id; })));
@@ -3683,7 +3661,7 @@ function confirmCatalogDecision(decision){
     }
     setCatalogModal(false); catalogSubmissionId=""; toast(t("catalogSaved"));
     fetchRecentCatalog(); renderHome(); renderExplore();
-    if(currentScanResult) renderScan(currentScanResult,pendingScanMode||"rate");
+    if(currentScanResult) renderScan(currentScanResult,currentScanMode||"rate");
   }).catch(function(){
     toast(t("catalogError"));
     if(actions) actions.querySelectorAll("button").forEach(function(btn){ btn.disabled=false; });
@@ -3832,93 +3810,6 @@ function renderLowConfidence(data){
     '</div>';
   document.getElementById("scanResult").scrollIntoView({behavior:"smooth",block:"start"});
 }
-function hydrateScanCandidate(candidate){
-  candidate=candidate||{};
-  const canonicalId=canonicalBottleId(candidate.id);
-  const local=bottleById(canonicalId);
-  const result=Object.assign({},local||{},candidate.result||{});
-  if(local){
-    result.image=localBottleImage(local)||result.image||local.image||"";
-    result.profile=local.profile||result.profile;
-    result.profile_meta=local.profile_meta||result.profile_meta;
-  }
-  if(candidate.image_failed) result.image="";
-  result.id=canonicalId||result.id||bottleActionId(result);
-  result.scan_match_id=result.id;
-  result.scan_confidence=Number(candidate.confidence)||0;
-  result.in_app_catalog=true;
-  result.has_catalog_image=!!result.image;
-  return result;
-}
-function renderScanConfirmation(data){
-  pendingScanCandidates=(data&&Array.isArray(data.candidates)?data.candidates:[]).slice(0,2);
-  const scanPreviewImage=String(data&&data.scan_preview_image||"");
-  if(scanPreviewImage){
-    pendingScanCandidates.forEach(function(candidate){
-      candidate.result=Object.assign({},candidate.result||{});
-      if(!candidate.result.image){
-        candidate.result.image=scanPreviewImage;
-        candidate.result.thumb="";
-        candidate.result.has_image=true;
-        candidate.result.has_catalog_image=false;
-        candidate.result.source="scan_preview";
-        candidate.result.temporary_scan_asset=true;
-        candidate.result.catalog_asset_missing=true;
-        candidate.image_failed=false;
-      }
-    });
-  }
-  pendingScanMode=(data&&data.mode)||"rate";
-  pendingScanId=String(data&&data.scan_id||"");
-  selectedScanCandidateId=pendingScanCandidates.length===1?pendingScanCandidates[0].id:"";
-  if(!pendingScanCandidates.length){ renderLowConfidence(data||{}); return; }
-  const single=pendingScanCandidates.length===1;
-  document.getElementById("view-scan").classList.add("is-confirming");
-  const cards=pendingScanCandidates.map(function(candidate){
-    const result=hydrateScanCandidate(candidate);
-    const selected=result.id===selectedScanCandidateId;
-    const media=bottleImageHtml(result,true,result.name||"");
-    const strength=alcoholValue(result);
-    return '<button class="scan-candidate'+(selected?' selected':'')+'" type="button" data-scan-candidate="'+esc(result.id)+'" aria-pressed="'+(selected?'true':'false')+'">'+
-      '<span class="scan-candidate-media">'+media+'</span>'+
-      '<span class="scan-candidate-name">'+esc(result.name||candidate.name||"-")+'</span>'+
-      '<span class="scan-candidate-type">'+esc(categoryLabel(result))+'</span>'+
-      (strength&&strength!=="-"?'<span class="scan-candidate-strength">'+esc(strength)+'</span>':'')+
-    '</button>';
-  }).join("");
-  document.getElementById("scanResult").innerHTML=
-    '<div class="scan-confirm'+(single?' single':'')+'">'+
-      '<h2>'+esc(t(single?"scanConfirmSingleTitle":"scanConfirmTitle"))+'</h2><p>'+esc(t(single?"scanConfirmSingleBody":"scanConfirmBody"))+'</p>'+
-      '<div class="scan-candidates" style="--candidate-count:'+pendingScanCandidates.length+'">'+cards+'</div>'+
-      '<div class="scan-confirm-actions">'+
-        '<button class="btn btn-alt" type="button" data-scan-cancel="1">'+esc(t(single?"scanConfirmSingleCancel":"scanConfirmCancel"))+'</button>'+
-        '<button class="btn" type="button" data-scan-confirm="1"'+(selectedScanCandidateId?'':' disabled')+'>'+esc(t(single?"scanConfirmSingleOk":"scanConfirmOk"))+'</button>'+
-      '</div>'+
-    '</div>';
-  document.getElementById("scanResult").scrollIntoView({behavior:"smooth",block:"start"});
-}
-function selectScanCandidate(id){
-  if(!pendingScanCandidates.some(function(candidate){ return candidate.id===id; })) return;
-  selectedScanCandidateId=id;
-  document.querySelectorAll("[data-scan-candidate]").forEach(function(card){
-    const selected=card.getAttribute("data-scan-candidate")===id;
-    card.classList.toggle("selected",selected);
-    card.setAttribute("aria-pressed",selected?"true":"false");
-  });
-  const confirm=document.querySelector("[data-scan-confirm]");
-  if(confirm) confirm.disabled=false;
-}
-function confirmScanCandidate(){
-  const candidate=pendingScanCandidates.find(function(item){ return item.id===selectedScanCandidateId; });
-  if(!candidate) return;
-  const result=hydrateScanCandidate(candidate);
-  const mode=pendingScanMode||"rate";
-  reportScanChoice("confirmed",candidate.id);
-  pendingScanCandidates=[];
-  selectedScanCandidateId="";
-  document.getElementById("view-scan").classList.remove("is-confirming");
-  renderScan(result,mode);
-}
 function renderCandidateAssetProcessing(result){
   currentScanResult=result;
   document.getElementById("scanResult").innerHTML='<div class="card"><div class="name">'+esc(result.name||"-")+'</div><div class="catalog-preview-state">'+mysteryBottleHtml(true)+'<b>'+esc(t("catalogProcessing"))+'</b>'+esc(t("catalogProcessingCopy"))+'</div></div>';
@@ -3955,12 +3846,6 @@ function prepareConfirmedCandidateAsset(result, mode){
     toast(t("catalogError"));
   });
 }
-function reportScanChoice(choice, selectedId){
-  if(!pendingScanId) return Promise.resolve();
-  const scanId=pendingScanId;
-  pendingScanId="";
-  return bhApi("/telemetry/scan-choice",{method:"POST",body:JSON.stringify({scan_id:scanId,choice:choice,selected_bottle_id:selectedId||"",device_id:DEVICE_ID})}).catch(function(){});
-}
 function scan(mode,confirmedId){
   if(!imgData||busy) return; if(!WORKER_URL){ showErr("WORKER_URL?"); return; }
   startLoading(mode);
@@ -3975,7 +3860,6 @@ function scan(mode,confirmedId){
     if(data.limited){ showErr(t("errScanLimit")); return; }
     if(data.error==="quota_exhausted"){ showErr(t("errQuota")); return; }
     if(data.error==="low_image_quality"){ showErr(lang==="pl"?"Zdjęcie jest zbyt ciemne, prześwietlone albo nieostre. Zrób je ponownie z etykietą na środku.":"The photo is too dark, overexposed or blurry. Retake it with the label centered."); return; }
-    if(data.needs_confirmation){ renderScanConfirmation(data); return; }
     if(data.needsPro || data.error==="low_confidence"){ renderLowConfidence(data); return; }
     if(data.retry){ showErr(t("errRetry")); return; }
     if(data.error||!data.result){ showErr(t("errGeneric")+(data.error?" ["+data.error+(data.status?" "+data.status:"")+(data.raw?": "+String(data.raw).slice(0,160):"")+"]":"")); return; }
@@ -4003,9 +3887,11 @@ function scan(mode,confirmedId){
 }
 goRate.addEventListener("click",function(){ scan("rate"); });
 function renderScan(res, mode){
+  document.getElementById("appRoot").classList.add("has-scan-result");
   document.getElementById("view-scan").classList.add("is-confirming");
   if(!Array.isArray(res.description)) normalizeTasting(res);
   currentScanResult=res;
+  currentScanMode=mode||"rate";
   if(!res.catalog_preview_pending) syncScanResult(res);
   const origin=[res.distillery,res.region].filter(Boolean).map(esc).join(" · ");
   const img='<div class="dphoto'+(isAgentCutout(res)?' agent-cutout':'')+'">'+bottleActionsHtml(res)+bottleImageHtml(res,false,res.name||"")+valueBadgeHtml(res)+'</div>';
@@ -4033,9 +3919,10 @@ function renderScan(res, mode){
     : ((!res.image || res.catalog_asset_missing)
       ? '<button class="btn btn-bottle" type="button" data-add-catalog="1" style="width:100%;margin-top:14px">'+esc(t("addToCatalog"))+'</button>'
       : '<button class="btn btn-bottle" type="button" data-add-scan-collection="'+esc(res.scan_match_id||res.id)+'" style="width:100%;margin-top:14px">'+esc(ownHas(res.scan_match_id||res.id)?t("ownAdded"):t("addToCollection"))+'</button>');
-  const extra = (mode!=="analyze") ? '<button class="btn btn-alt" id="goAnalyzeBtn" style="width:100%;margin-top:10px">'+t("aiBtn")+'</button>' : '';
-  const scanAgain='<button class="btn btn-alt" type="button" data-scan-new="1" style="width:100%;margin-top:10px">'+esc(t("scanAgain"))+'</button>';
-  document.getElementById("scanResult").innerHTML=head+body+catalogAction+'</div>'+extra+scanAgain;
+  const extra = (mode!=="analyze") ? '<button class="btn btn-alt" id="goAnalyzeBtn">'+t("aiBtn")+'</button>' : '';
+  const scanAgain='<button class="btn btn-bottle" type="button" data-scan-new="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 10-2.3 5.7"/><path d="M20 4v7h-7"/></svg><span>'+esc(t("scanAgain"))+'</span></button>';
+  const resultActions='<div class="scan-result-actions'+(extra?'':' single')+'">'+extra+scanAgain+'</div>';
+  document.getElementById("scanResult").innerHTML=head+body+catalogAction+'</div>'+resultActions;
   document.getElementById("scanResult").scrollIntoView({behavior:"smooth",block:"start"});
 }
 applyLang();

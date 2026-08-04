@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import { createRequire } from "node:module";
 
 const modules=process.env.CODEX_NODE_MODULES||"C:/Users/masly/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/.pnpm/playwright@1.61.1/node_modules";
@@ -5,8 +7,11 @@ const require=createRequire(modules.replace(/\\/g,"/")+"/scanner-smoke-entry.js"
 const { chromium }=require("playwright");
 const chrome=process.env.CHROME_PATH||"C:/Program Files/Google/Chrome/Application/chrome.exe";
 const target=process.env.BH_SMOKE_URL||"http://127.0.0.1:8765/index.html";
-const bottleId="bulleit-bottled-in-bond-111-22";
-const pixel="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M/wHwAF/gL+Xw4Z5QAAAABJRU5ErkJggg==";
+const bottleId="eagle-rare-10-year-kentucky-straight-bourbon-whiskey-700ml";
+const assetPath=path.resolve(import.meta.dirname,"..","assets","bourbons","clean","eagle-rare-10-year-kentucky-straight-bourbon-whiskey-700ml.webp");
+const bottleImage="data:image/webp;base64,"+fs.readFileSync(assetPath).toString("base64");
+let responseVariant="missing";
+let scannerRequests=0;
 let confirmedRequests=0;
 
 const browser=await chromium.launch({headless:true,executablePath:chrome});
@@ -24,19 +29,21 @@ await page.route("https://bourbon-hunters.darekmaslyk.workers.dev/**",async(rout
   const request=route.request();
   const url=new URL(request.url());
   if(request.method()==="POST" && url.pathname==="/"){
+    scannerRequests++;
     const body=request.postDataJSON();
-    if(body.confirmed_id){
-      confirmedRequests++;
-      await route.fulfill({status:200,contentType:"application/json",body:JSON.stringify({
-        result:{
-          id:bottleId,name:"Bulleit Bottled in Bond",type:"Bourbon",category:"Bottled in Bond",
-          proof:100,abv:50,price_str:"$50-90",image:pixel,source:"scan_preview",
-          temporary_scan_asset:true,catalog_asset_missing:true
-        },
-        mode:"rate",matched:bottleId,confidence:1
-      })});
-      return;
-    }
+    if(body.confirmed_id) confirmedRequests++;
+    const missing=responseVariant==="missing";
+    await route.fulfill({status:200,contentType:"application/json",body:JSON.stringify({
+      result:{
+        id:bottleId,name:"Eagle Rare 10 Year",type:"Bourbon",category:"Kentucky Straight Bourbon",
+        distillery:"Buffalo Trace Distillery",region:"Kentucky",mashbill:"Corn, rye and malted barley",
+        proof:90,abv:45,price_str:"$45-70",quality:4,value:4,
+        image:bottleImage,source:missing?"scan_preview":"baza",temporary_scan_asset:missing,
+        catalog_asset_missing:missing,has_image:true,has_catalog_image:!missing
+      },
+      mode:"rate",matched:bottleId,confidence:.97
+    })});
+    return;
   }
   if(url.pathname==="/recommendations"){
     await route.fulfill({status:200,contentType:"application/json",body:JSON.stringify({recommendations:[]})});
@@ -47,76 +54,59 @@ await page.route("https://bourbon-hunters.darekmaslyk.workers.dev/**",async(rout
 
 await page.goto(target,{waitUntil:"domcontentloaded"});
 await page.waitForFunction(()=>Array.isArray(DB)&&DB.length>0);
-await page.evaluate((value)=>{ window.__scannerSmokePixel=value; },pixel);
 const migratedCollection=await page.evaluate(()=>OWNED.slice());
-await page.evaluate((id)=>{
-  document.getElementById("ageGate").classList.remove("show");
-  showView("scan");
-  imgData="a".repeat(240);
-  imgMime="image/jpeg";
-  renderScanConfirmation({
-    scan_id:"scan-single",
-    mode:"rate",
-    scan_preview_image:window.__scannerSmokePixel,
-    candidates:[{id:id,name:"Bulleit Bottled in Bond",confidence:.96,result:{id:id,name:"Bulleit Bottled in Bond",category:"Bottled in Bond",proof:100,abv:50}}]
-  });
-},bottleId);
 
-const single={
-  title:await page.locator(".scan-confirm h2").innerText(),
-  cancel:await page.locator("[data-scan-cancel]").innerText(),
-  confirm:await page.locator("[data-scan-confirm]").innerText(),
-  candidates:await page.locator("[data-scan-candidate]").count(),
-  category:await page.locator(".scan-candidate-type").innerText(),
-  strength:await page.locator(".scan-candidate-strength").innerText(),
-  image:await page.locator(".scan-candidate-media img").getAttribute("src")
-};
-if(process.env.BH_SMOKE_SCREENSHOT) await page.screenshot({path:process.env.BH_SMOKE_SCREENSHOT+"-single.png",fullPage:true});
-await page.locator("[data-scan-confirm]").click();
-await page.waitForSelector("#scanResult .dphoto img");
-const detail=await page.evaluate(()=>({
-  name:document.querySelector("#scanResult .name")?.textContent||"",
-  image:document.querySelector("#scanResult .dphoto img")?.getAttribute("src")||"",
-  addButtonClass:document.querySelector("#scanResult [data-add-catalog],#scanResult [data-add-scan-collection]")?.className||"",
-  width:document.documentElement.clientWidth,
-  scrollWidth:document.documentElement.scrollWidth
-}));
-if(process.env.BH_SMOKE_SCREENSHOT) await page.screenshot({path:process.env.BH_SMOKE_SCREENSHOT+"-detail.png",fullPage:true});
-
-await page.evaluate((id)=>{
-  renderScanConfirmation({
-    scan_id:"scan-double",
-    mode:"rate",
-    scan_preview_image:window.__scannerSmokePixel,
-    candidates:[
-      {id:id,name:"Bulleit Bottled in Bond",confidence:.96,result:{id:id,name:"Bulleit Bottled in Bond",category:"Bottled in Bond",proof:100,abv:50}},
-      {id:"bulleit-bourbon",name:"Bulleit Bourbon",confidence:.92,result:{id:"bulleit-bourbon",name:"Bulleit Bourbon",category:"Standard"}}
-    ]
+async function runScan(expectedSource){
+  await page.evaluate(()=>{
+    document.getElementById("ageGate").classList.remove("show");
+    showView("scan");
+    resetShot();
+    imgData="a".repeat(240);
+    imgMime="image/jpeg";
+    scan("rate");
   });
-},bottleId);
-const multiple={
-  title:await page.locator(".scan-confirm h2").innerText(),
-  candidates:await page.locator("[data-scan-candidate]").count(),
-  width:await page.evaluate(()=>document.documentElement.clientWidth),
-  scrollWidth:await page.evaluate(()=>document.documentElement.scrollWidth)
-};
-if(process.env.BH_SMOKE_SCREENSHOT) await page.screenshot({path:process.env.BH_SMOKE_SCREENSHOT+"-multiple.png",fullPage:true});
+  await page.waitForFunction((source)=>currentScanResult&&currentScanResult.source===source,expectedSource);
+  await page.waitForSelector("#scanResult .dphoto img");
+  await page.waitForTimeout(700);
+  return page.evaluate(()=>(
+    {
+      name:document.querySelector("#scanResult .name")?.textContent||"",
+      imageType:(document.querySelector("#scanResult .dphoto img")?.getAttribute("src")||"").slice(0,24),
+      confirmationCards:document.querySelectorAll(".scan-confirm,[data-scan-confirm]").length,
+      addCatalog:document.querySelectorAll("[data-add-catalog]").length,
+      addCollection:document.querySelectorAll("[data-add-scan-collection]").length,
+      actionButtons:document.querySelectorAll(".scan-result-actions .btn").length,
+      scanButtonClass:document.querySelector("[data-scan-new]")?.className||"",
+      scanButtonIcons:document.querySelectorAll("[data-scan-new] svg").length,
+      actionColumns:getComputedStyle(document.querySelector(".scan-result-actions")).gridTemplateColumns,
+      navBackground:getComputedStyle(document.getElementById("bottomNav")).backgroundImage,
+      width:document.documentElement.clientWidth,
+      scrollWidth:document.documentElement.scrollWidth
+    }
+  ));
+}
+
+const missing=await runScan("scan_preview");
+if(process.env.BH_SMOKE_SCREENSHOT) await page.screenshot({path:process.env.BH_SMOKE_SCREENSHOT+"-direct-missing.png",fullPage:true});
+responseVariant="catalog";
+const catalog=await runScan("baza");
+if(process.env.BH_SMOKE_SCREENSHOT) await page.screenshot({path:process.env.BH_SMOKE_SCREENSHOT+"-direct-catalog.png",fullPage:true});
 await browser.close();
 
 if(errors.length) throw new Error(errors.join("\n"));
 if(!migratedCollection.includes("knob-creek-120-proof-9-year-single-barrel-reserve-bourbon") || !migratedCollection.includes("michters-single-barrel-10-year-old-bourbon")){
   throw new Error("Legacy collection IDs were not migrated: "+JSON.stringify(migratedCollection));
 }
-if(single.candidates!==1 || single.title!=="Czy to ta butelka?") throw new Error("Single candidate flow is incorrect: "+JSON.stringify(single));
-if(!/Tak, to ta/.test(single.confirm) || !/spróbuj ponownie/i.test(single.cancel)) throw new Error("Single candidate actions are incorrect: "+JSON.stringify(single));
-if(single.category!=="BOTTLED IN BOND" || !/100 proof.*50% ABV/i.test(single.strength)) throw new Error("Candidate facts are missing: "+JSON.stringify(single));
-if(single.image!==pixel) throw new Error("Prepared cutout is missing before confirmation: "+JSON.stringify(single));
-if(detail.name!=="Bulleit Bottled in Bond" || !detail.image.startsWith("data:image/png")) throw new Error("Confirmed detail has no prepared image: "+JSON.stringify(detail));
-if(detail.image!==single.image) throw new Error("Confirmation did not reuse the prepared cutout");
-if(confirmedRequests!==0) throw new Error("Confirmation sent a second scanner request");
-if(!detail.addButtonClass.includes("btn-bottle")) throw new Error("Scanner add button is not bottle green: "+JSON.stringify(detail));
-if(detail.scrollWidth>detail.width+1) throw new Error("Scanner detail has horizontal overflow: "+JSON.stringify(detail));
-if(multiple.candidates!==2 || multiple.title!=="Czy to któraś z nich?") throw new Error("Two-candidate flow is incorrect: "+JSON.stringify(multiple));
-if(multiple.scrollWidth>multiple.width+1) throw new Error("Two-candidate confirmation has horizontal overflow: "+JSON.stringify(multiple));
+if(scannerRequests!==2 || confirmedRequests!==0) throw new Error(`Unexpected scanner requests: total=${scannerRequests}, confirmed=${confirmedRequests}`);
+if(missing.confirmationCards!==0 || catalog.confirmationCards!==0) throw new Error("Removed confirmation screen is still rendered");
+if(missing.addCatalog!==1 || missing.addCollection!==0) throw new Error("Missing catalog asset has incorrect action: "+JSON.stringify(missing));
+if(catalog.addCatalog!==0 || catalog.addCollection!==1) throw new Error("Catalog bottle has incorrect action: "+JSON.stringify(catalog));
+for(const state of [missing,catalog]){
+  if(state.name!=="Eagle Rare 10 Year" || !state.imageType.startsWith("data:image/webp")) throw new Error("Direct result is incomplete: "+JSON.stringify(state));
+  if(state.actionButtons!==2 || !state.scanButtonClass.includes("btn-bottle") || state.scanButtonIcons!==1) throw new Error("Result actions are incorrect: "+JSON.stringify(state));
+  if(state.actionColumns.split(" ").length!==2) throw new Error("Result actions are not symmetrical columns: "+JSON.stringify(state));
+  if(!state.navBackground.includes("profile-herringbone-burnt-v1.webp")) throw new Error("Bottom navigation has no wood texture");
+  if(state.scrollWidth>state.width+1) throw new Error("Scanner result has horizontal overflow: "+JSON.stringify(state));
+}
 
-console.log(JSON.stringify({ok:true,migratedCollection,single,detail,multiple},null,2));
+console.log(JSON.stringify({ok:true,migratedCollection,scannerRequests,missing,catalog},null,2));

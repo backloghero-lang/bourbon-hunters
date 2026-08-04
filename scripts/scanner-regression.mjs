@@ -14,7 +14,6 @@ for(const required of [
   '.transform({width:960,height:1280,fit:"pad"',
   '"bottle_cutout_qa"',
   'preview_error="cutout_quality"',
-  'scan_preview_image',
   'scan_candidate_cutout'
 ]){
   if(!workerSource.includes(required)) throw new Error(`Missing image-pipeline guard: ${required}`);
@@ -137,8 +136,9 @@ const initialRequest=new Request("https://bourbon-hunters.darekmaslyk.workers.de
 const initialResponse=await context.__worker.fetch(initialRequest,{IMAGES:imagePipeline,GEMINI_API_KEY:"test"},{waitUntil(){}});
 const initial=await initialResponse.json();
 assert(initialResponse.status===200,`Initial cutout returned ${initialResponse.status}: ${JSON.stringify(initial)}`);
-assert(initial.needs_confirmation===true,"Initial scan did not return confirmation candidates");
-assert(String(initial.scan_preview_image||"").startsWith("data:image/webp;base64,"),"Initial scan preview image is missing");
+assert(initial.matched==="bulleit-bottled-in-bond-111-22",`Initial scan matched ${initial.matched||"nothing"}`);
+assert(String(initial.result&&initial.result.image||"").startsWith("data:image/webp;base64,"),"Direct scan preview image is missing");
+assert(initial.result&&initial.result.catalog_asset_missing===true,"Direct scan result is not marked for catalog completion");
 
 const confirmationRequest=new Request("https://bourbon-hunters.darekmaslyk.workers.dev/",{
   method:"POST",
@@ -174,6 +174,6 @@ console.log(JSON.stringify({
   },
   misses,
   single_source_confidence:Number(singleSource.dbConfidence.toFixed(3)),
-  preconfirmation_cutout:{candidates:initial.candidates.length,preview:true},
+  direct_result:{matched:initial.matched,preview:true,catalog_asset_missing:initial.result.catalog_asset_missing},
   confirmed_cutout:{matched:confirmation.matched,temporary:confirmation.result.temporary_scan_asset}
 },null,2));
