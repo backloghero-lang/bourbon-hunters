@@ -7,13 +7,22 @@ Aktualizacja: 2026-07-05.
 Najnowszy kontekst dla kolejnego etapu jest w `pliki-md/HANDOFF-BH-1.1.md`.
 Uzyj go jako pierwszego dokumentu przy starcie watku `Przekaz Bourbon Hunter 1.1`.
 
+## Aktualizacja 2026-08-04 - Popular 200
+
+- `db/catalog/popular-200.json` zawiera audytowalna liste 100 popularnych bourbonow i 100 popularnych whisky oparta na raportach sprzedazy oraz aktualnych listach bestsellerow.
+- `scripts/sync_popular_200.mjs` laczy jednoznaczne odpowiedniki, zachowuje zdjecia i historyczne ID, dodaje brakujace rekordy oraz przebudowuje indeks tokenow skanera.
+- Pelny katalog quality-first ma 1127 kanonicznych produktow. Wszystkie 200 pozycji Popular 200 ma nazwy i aliasy przygotowane pod rozpoznawanie etykiet.
+- Test `scripts/test_popular_200.mjs` przechodzi dla 200/200 nazw oraz 177/177 podstawowych aliasow. Regresja skanera nadal osiaga 99,8% top-1 na probce 1000 nazw.
+- Worker raportuje `scan_catalog_version: popular-200-2026-v1`; cache PWA to `bourbon-hunters-v109`.
+- Wdrozenie wymaga najpierw GitHub Pages, a potem podmiany Workera. Brak migracji D1.
+
 ## Aktualizacja 2026-07-27 - pelne assety szczegolow, news auth i profil wood
 
 ### Doprecyzowanie UI skanera 2026-08-04
 
 - Karta potwierdzenia trafienia pokazuje teraz kategorie/odmiane oraz moc jako proof i ABV.
 - Przyciski dodania butelki do katalogu lub kolekcji oraz akceptacji assetu maja wspolny butelkowo-zielony styl `btn-bottle`.
-- Cache PWA: `bourbon-hunters-v107`.
+- Cache PWA: `bourbon-hunters-v109`.
 
 - `bottleImageHtml` rozdziela teraz zrodla: listy uzywaja `thumb`, a szczegoly i wynik skanu preferuja pelny `image`. Naprawia to male butelki bez powiekszania miniaturek na listach.
 - Angel's Envy Port Finish ma nowy wysokiej rozdzielczosci, przezroczysty asset katalogowy przygotowany na podstawie poprzedniego obrazu. Pozostale dobre assety nie zostaly zmienione.
@@ -55,17 +64,19 @@ Uzyj go jako pierwszego dokumentu przy starcie watku `Przekaz Bourbon Hunter 1.1
 ## Aktualizacja 2026-07-27 - katalog quality-first i czyste assety
 
 - Katalog skanera ma 1028 zweryfikowanych produktow. Po bazowym odrzuceniu 7976 rekordow `recognition_only` usunieto tez pozostale zestawy, RTD i produkty spoza whisky.
-- Lekka baza startowa ma 285 produktow. Po klasyfikacji do przegladania aplikacja pokazuje 741 kanonicznych pozycji: 267 Bourbon i 474 Whisky.
+- Lekka baza startowa ma 285 produktow. Po klasyfikacji do przegladania aplikacja pokazuje 748 kanonicznych pozycji: 267 Bourbon i 481 Whisky.
 - Obowiazuja limity `MAX_RETAIL_USD=500` i `MAX_RETAIL_PLN=1500`.
 - `scripts/clean_bottle_assets.mjs` tworzy przezroczyste WebP w `assets/bourbons/clean/`, bez nadpisywania zrodel.
 - Aktywne sa tylko obrazy jednej butelki bez pudelek, zestawow, dodatkowych przedmiotow i watermarkow. Pozostale rekordy uzywaja kontrolowanego placeholdera.
 - Raport obrazow: `db/catalog/image-quality-report.json`; jawne decyzje: `db/catalog/image-asset-overrides.json`.
 - Lekka baza ma 112 aktywnych czystych assetow i 173 placeholdery.
-- Nowe skany wysylaja obraz do 1800 px przy JPEG 0.91, a Worker tworzy podglad 960x1280.
+- Nowe skany wysylaja obraz do 1800 px przy JPEG 0.91. Rozpoznawanie dostaje w tym samym wywolaniu kompozycje pelnego zdjecia i zblizenia korpusu/etykiety, a Worker tworzy podglad 960x1280 z oryginalnego kadru.
 - Taksonomia `spirit-taxonomy-v2` jest wspolna dla Home, Odkrywaj, Kolekcji, Polecanych i szczegolow. Licznik kafla jest liczony z tej samej listy, ktora otwiera kafel.
 - Buffalo Trace standard oraz techniczne receptury/private picki Four Roses Single Barrel sa scalone w kanoniczne produkty; stare ID prowadza przez `id_redirects`.
 - Produkt bez oficjalnego assetu pokazuje mystery bottle. W szczegolach user moze przypisac wlasne zdjecie, przechowywane wylacznie lokalnie w IndexedDB danego urzadzenia.
-- Worker: `visual-only-catalog-v5-direct-result`; katalog: `ttb-olcc-quality-catalog-v9-canonical-products`; submission: `community-catalog-images-v6-highres-cutout`.
+- Worker: `visual-only-catalog-v6-mobile-label-view`; katalog: `ttb-olcc-quality-catalog-v9-canonical-products`; submission: `community-catalog-images-v6-highres-cutout`.
+- Odkrywaj, Polecane, Wishlist i Kolekcja korzystaja ze wspolnego renderera filtrow rodziny i stylu.
+- `db/catalog/manual-popular-whisky.json` uzupelnia popularne braki katalogu, obecnie m.in. Bushmills oraz kanoniczne warianty Jack Daniel's i Jim Beam.
 - Skaner nie pokazuje juz osobnego ekranu potwierdzenia. Najlepsze pewne dopasowanie przechodzi od razu do szczegolow. Dla rekordu bez gotowego assetu Worker najpierw wycina butelke, a szczegoly pokazuja przycisk uzupelnienia katalogu.
 - Historyczny cache tego etapu: `bourbon-hunters-v100`.
 - Sam etap katalogu nie mial migracji D1; pozniejszy feed newsow wymaga migracji v68.
@@ -82,7 +93,7 @@ Uzyj go jako pierwszego dokumentu przy starcie watku `Przekaz Bourbon Hunter 1.1
 - Gift sety, VAP, twin packi oraz warianty ze szklankami, podkladkami, kubkami, flaskami i cocktail kitami sa usuwane calkowicie, takze z aliasow.
 - Przyklad: roczniki Michter's 10 Year sa jednym produktem `Michter's 10 Year Single Barrel Bourbon`.
 - Przyklad: Knob Creek SDBB, private picks i nazwy beczek sa jednym produktem `Knob Creek 9 Year Single Barrel Reserve`; prawdziwe inne ekspresje nadal sa osobne.
-- Jedna propozycja skanera ma osobny ekran `Czy to ta butelka?`; ekran mnogi pozostaje tylko dla dwoch propozycji.
+- Skaner nie ma juz posredniego ekranu wyboru. Pewne dopasowanie otwiera bezposrednio szczegoly, a brak pewnego dopasowania prosi o nowe zdjecie.
 - Po potwierdzeniu Worker nie uruchamia ponownie Gemini i nie pobiera drugiego limitu skanu. Dla butelki bez assetu wykonuje wyciecie Cloudflare Images i zwraca tymczasowy podglad do szczegolow.
 - Tymczasowy podglad nie jest automatycznie publikowany we wspolnym katalogu. Publikacja nadal wymaga licencji usera i moderacji admina.
 - Raport konsolidacji: `db/catalog/product-consolidation-report.json`.

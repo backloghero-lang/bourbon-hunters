@@ -18,8 +18,8 @@ const DEFAULT_DB_URL = "https://raw.githubusercontent.com/" + REPO + "/main/db/c
 const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters. Krotko, z jajem, ale rzeczowo. quality=jakosc 1-5, value=jakosc/cena 1-5 (5 swietna i tania, 1 slaba i droga). Pisz {{LANG}}. Zwroc tylko JSON.";
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
 const MULTI_CANDIDATE_CONFIDENCE = 0.9;
-const SCAN_ORCHESTRATOR_VERSION = "visual-only-catalog-v5-direct-result";
-const SCAN_CATALOG_VERSION = "ttb-olcc-quality-catalog-v9-canonical-products";
+const SCAN_ORCHESTRATOR_VERSION = "visual-only-catalog-v6-mobile-label-view";
+const SCAN_CATALOG_VERSION = "popular-200-2026-v1";
 const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v6-highres-cutout";
 const CATALOG_MODERATION_VERSION = "catalog-moderation-orchestrator-admin-v1";
 const CATALOG_LICENSE_VERSION = "catalog-license-2026-07-18-v1";
@@ -53,6 +53,26 @@ const SCAN_RECORD_OVERRIDES={
     proof:94,abv:47,distillery:"Jack Daniel Distillery",type:"Tennessee Whiskey",category:"Single Barrel"
   },
   "olcc-2169b":{scanDisabled:true},
+  "olcc-0146b":{
+    aliases:["Jack Daniel's Old No. 7","Jack Daniels Old No 7","Jack Daniel's Black Label","Jack Daniels Tennessee Whiskey"],
+    proof:80,abv:40,distillery:"Jack Daniel Distillery",type:"Tennessee Whiskey",category:"Tennessee"
+  },
+  "jim-beam-white-label":{
+    aliases:["Jim Beam","Jim Beam Original","Jim Beam White Label","Jim Beam Kentucky Straight Bourbon Whiskey"],
+    proof:80,abv:40,distillery:"James B. Beam Distilling Co.",type:"Kentucky Straight Bourbon Whiskey",category:"Straight Bourbon"
+  },
+  "jim-beam-101-22":{scanDisabled:true},
+  "olcc-0133b":{
+    aliases:["Jim Beam Black","Jim Beam Black 7 Year","Jim Beam Black Extra Aged"],
+    distillery:"James B. Beam Distilling Co.",type:"Kentucky Straight Bourbon Whiskey",category:"Straight Bourbon"
+  },
+  "jim-beam-black-7-letni":{scanDisabled:true},
+  "jim-beam-black-extra-aged-unpacked":{scanDisabled:true},
+  "olcc-3982b":{
+    aliases:["Jim Beam Double Oak","Jim Beam Double Oaked"],
+    distillery:"James B. Beam Distilling Co.",type:"Kentucky Straight Bourbon Whiskey",category:"Double Oaked"
+  },
+  "olcc-5173b":{scanDisabled:true},
   "knob-creek-9-year-old-100-proof-bourbon":{
     aliases:[
       "Knob Creek 9 Year","Knob Creek 9 Years","Knob Creek 9 Year Old",
@@ -66,10 +86,35 @@ const SCAN_RECORD_OVERRIDES={
   "knob-creek-101-22":{scanDisabled:true},
   "olcc-2163b":{scanDisabled:true}
 };
+const SCAN_EXTRA_RECORDS=[
+  {id:"bushmills-original-irish-whiskey",name:"Bushmills Original",aliases:["Bushmills Original","Bushmills Original Irish Whiskey","Bushmills White Label"],distillery:"Old Bushmills Distillery",region:"Ireland",type:"Blended Irish Whiskey",category:"Irish",proof:80,abv:40,mashbill:null,price:null,quality:null,value:null,notes:"Light fruit, vanilla, honey and warm spice",desc:"A smooth blended Irish whiskey combining malt and grain whiskey.",image:"",source:"manual_official",catalog_status:"verified"},
+  {id:"bushmills-black-bush-irish-whiskey",name:"Bushmills Black Bush",aliases:["Bushmills Black Bush","Black Bush","Black Bush Irish Whiskey"],distillery:"Old Bushmills Distillery",region:"Ireland",type:"Blended Irish Whiskey",category:"Irish",proof:80,abv:40,mashbill:null,price:null,quality:null,value:null,notes:"Sherry, dried fruit and toasted nuts",desc:"A malt-forward Irish blend matured in Oloroso sherry and bourbon casks.",image:"",source:"manual_official",catalog_status:"verified"},
+  {id:"bushmills-10-year-old-single-malt",name:"Bushmills 10 Year Old Single Malt",aliases:["Bushmills 10 Year","Bushmills 10 Year Old","Bushmills 10 Year Single Malt","Bushmills 10 Year Old Single Malt Irish Whiskey"],distillery:"Old Bushmills Distillery",region:"Ireland",type:"Single Malt Irish Whiskey",category:"Irish",proof:80,abv:40,mashbill:null,price:null,quality:null,value:null,notes:"Apple, honey and milk chocolate",desc:"A ten-year-old triple-distilled Irish single malt.",image:"",source:"manual_official",catalog_status:"verified"},
+  {id:"bushmills-12-year-old-single-malt",name:"Bushmills 12 Year Old Single Malt",aliases:["Bushmills 12 Year","Bushmills 12 Year Old","Bushmills 12 Year Single Malt","Bushmills 12 Year Old Single Malt Irish Whiskey"],distillery:"Old Bushmills Distillery",region:"Ireland",type:"Single Malt Irish Whiskey",category:"Irish",proof:80,abv:40,mashbill:null,price:null,quality:null,value:null,notes:"Dark chocolate, dried fruit and spice",desc:"A twelve-year-old Irish single malt with rich cask influence.",image:"",source:"manual_official",catalog_status:"verified"},
+  {id:"bushmills-16-year-old-single-malt",name:"Bushmills 16 Year Old Single Malt",aliases:["Bushmills 16 Year","Bushmills 16 Year Old","Bushmills 16 Year Single Malt","Bushmills 16 Year Old Single Malt Irish Whiskey"],distillery:"Old Bushmills Distillery",region:"Ireland",type:"Single Malt Irish Whiskey",category:"Irish",proof:80,abv:40,mashbill:null,price:null,quality:null,value:null,notes:"Almond, honey, fruit and port cask richness",desc:"A sixteen-year-old Irish single malt finished in port casks.",image:"",source:"manual_official",catalog_status:"verified"},
+  {id:"bushmills-prohibition-recipe",name:"Bushmills Prohibition Recipe",aliases:["Bushmills Prohibition Recipe","Bushmills Prohibition Recipe Irish Whiskey","Bushmills Peaky Blinders Prohibition Recipe"],distillery:"Old Bushmills Distillery",region:"Ireland",type:"Blended Irish Whiskey",category:"Irish",proof:92,abv:46,mashbill:null,price:null,quality:null,value:null,notes:"Rich grain, vanilla, spice and oak",desc:"A higher-proof Bushmills blend inspired by a pre-Prohibition style.",image:"",source:"manual_official",catalog_status:"verified"},
+  {id:"jim-beam-single-barrel",name:"Jim Beam Single Barrel",aliases:["Jim Beam Single Barrel","Jim Beam Single Barrel Kentucky Straight Bourbon Whiskey"],distillery:"James B. Beam Distilling Co.",region:"Kentucky",type:"Kentucky Straight Bourbon Whiskey",category:"Single Barrel",proof:null,abv:null,mashbill:null,price:null,quality:null,value:null,notes:"Oak, caramel and vanilla",desc:"A hand-selected single-barrel expression from Jim Beam.",image:"",source:"manual_official",catalog_status:"verified"},
+  {id:"jack-daniel-s-bonded-triple-mash",name:"Jack Daniel's Bonded Triple Mash",aliases:["Jack Daniel's Bonded Triple Mash","Jack Daniels Bonded Triple Mash","Jack Daniel's Triple Mash"],distillery:"Jack Daniel Distillery",region:"Tennessee",type:"Blended Straight Whiskey",category:"Bottled-in-Bond",proof:100,abv:50,mashbill:null,price:null,quality:null,value:null,notes:"Honey, malt, oak and soft spice",desc:"A bottled-in-bond blend of three straight whiskeys from Jack Daniel's.",image:"",source:"manual_official",catalog_status:"verified"}
+];
 function applyScanCatalogOverrides(db){
   const bottles=db&&db.bottles||[];
   const byId={};
   bottles.forEach(function(bottle){ if(bottle&&bottle.id) byId[bottle.id]=bottle; });
+  SCAN_EXTRA_RECORDS.forEach(function(record){
+    if(!record || !record.id || byId[record.id]) return;
+    const extraNames=[record.name].concat(Array.isArray(record.aliases)?record.aliases:[]).map(norm).filter(Boolean);
+    const existing=bottles.find(function(bottle){
+      return [bottle&&bottle.name].concat(Array.isArray(bottle&&bottle.aliases)?bottle.aliases:[])
+        .map(norm).some(function(name){ return extraNames.indexOf(name)>=0; });
+    });
+    if(existing){
+      existing.aliases=Array.from(new Set((Array.isArray(existing.aliases)?existing.aliases:[]).concat(record.name,record.aliases||[])));
+      return;
+    }
+    const copy=Object.assign({},record,{aliases:(record.aliases||[]).slice()});
+    byId[copy.id]=copy;
+    bottles.push(copy);
+  });
   Object.keys(SCAN_RECORD_OVERRIDES).forEach(function(overrideId){
     const canonicalId=db&&db.id_redirects&&db.id_redirects[overrideId]||overrideId;
     const bottle=byId[canonicalId];
@@ -81,7 +126,7 @@ function applyScanCatalogOverrides(db){
     ["distillery","type","category"].forEach(function(field){
       if(typeof override[field]==="string" && override[field]) bottle[field]=override[field];
     });
-    if(override.scanDisabled && overrideId===canonicalId) bottle.scan_disabled=true;
+    if(override.scanDisabled && overrideId===canonicalId && bottle.source!=="popular_200_curated") bottle.scan_disabled=true;
   });
   return rebuildScanTokenIndex(db);
 }
@@ -1673,7 +1718,7 @@ const GENERIC_MATCH_TOKENS={
   whiskey:1,whisky:1,bourbon:1,american:1,single:1,malt:1,straight:1,domestic:1,kentucky:1,
   blended:1,blend:1,spirit:1,spirits:1,distillery:1,distilling:1,reserve:1,small:1,batch:1,
   barrel:1,cask:1,aged:1,year:1,years:1,proof:1,bottled:1,bond:1,rye:1,grain:1,oak:1,
-  finish:1,finished:1,label:1,edition:1,limited:1,release:1,original:1,old:1
+  finish:1,finished:1,label:1,edition:1,limited:1,release:1,original:1,old:1,bib:1
 };
 function distinctiveTokens(value){
   const seen={};
@@ -1728,6 +1773,7 @@ function variantMarkers(text){
 
 function canonicalRecordScore(bottle){
   let score=0;
+  score+=Number(bottle&&bottle.recognition_priority)||0;
   if(bottle&&bottle.image) score+=6;
   if(bottle&&bottle.community_catalog) score+=5;
   if(bottle&&bottle.distillery) score+=2;
@@ -1860,7 +1906,7 @@ async function callVisualAgent(env, mime, image){
   const payload={
     __model: env.IDENT_MODEL||env.MODEL||"gemini-2.5-flash",
     contents:[{role:"user",parts:[
-      {text:"Rozpoznaj dokladna nazwe butelki whisky lub bourbona na zdjeciu: marka, wariant oraz widoczny wiek lub edycja. Korzystaj z calego wygladu butelki, etykiety, logo i widocznych napisow. Nie wymyslaj brakujacego wariantu. Zwroc najwyzej dwie mozliwe nazwy. Jesli to nie jest butelka whisky albo nie da sie rozpoznac marki, ustaw name=\"\" i confidence=0."},
+      {text:"Rozpoznaj dokladna nazwe butelki whisky lub bourbona: marka, wariant oraz widoczny wiek lub edycja. Obraz moze byc zestawieniem dwoch kadrow tej samej fotografii: pelnego ujecia po lewej i zblizenia korpusu oraz etykiety po prawej. Ignoruj dlon trzymajaca szyjke, regaly, inne butelki i tlo. Najwieksza wage nadaj logo marki, tekstowi glownej etykiety, kolorowi etykiety, ksztaltowi butelki oraz oznaczeniom wariantu, wieku, proof i ABV. Dlon lub zaslonieta szyjka nie oznacza braku butelki, jesli etykieta pozwala rozpoznac produkt. Nie wymyslaj niewidocznego wariantu. Zwroc do czterech realnych mozliwych nazw, gdy widoczne cechy pasuja do kilku wariantow. Jesli to nie jest butelka whisky albo nie da sie rozpoznac marki, ustaw name=\"\" i confidence=0."},
       {inlineData:{mimeType:mime,data:image}}
     ]}],
     generationConfig:{
@@ -1872,7 +1918,7 @@ async function callVisualAgent(env, mime, image){
           name:{type:"STRING"},
           confidence:{type:"NUMBER",minimum:0,maximum:1},
           evidence:{type:"ARRAY",items:{type:"STRING"},maxItems:5},
-          candidates:{type:"ARRAY",items:{type:"OBJECT",properties:{name:{type:"STRING"},confidence:{type:"NUMBER",minimum:0,maximum:1}},required:["name","confidence"]},maxItems:2}
+          candidates:{type:"ARRAY",items:{type:"OBJECT",properties:{name:{type:"STRING"},confidence:{type:"NUMBER",minimum:0,maximum:1}},required:["name","confidence"]},maxItems:4}
         },
         required:["name","confidence","evidence","candidates"]
       }
@@ -1919,12 +1965,14 @@ export default {
 
     let body; try{ body=await request.json(); }catch(e){ return J({error:"bad json"},400,cors); }
     const image=(body.image||"").toString();
+    const recognitionImage=(body.recognition_image||"").toString();
     const mime=["image/jpeg","image/png","image/webp"].includes(body.mime)?body.mime:"image/jpeg";
     const lang=["pl","en","es"].includes(body.lang)?body.lang:"pl";
     const mode=body.mode==="analyze"?"analyze":"rate";
     const confirmedId=String(body.confirmed_id||"").trim().slice(0,180);
     if(!image||image.length<100) return J({error:"no image"},400,cors);
     if(image.length>8000000) return J({error:"image too large"},413,cors);
+    if(recognitionImage.length>6000000) return J({error:"recognition image too large"},413,cors);
     const imageQuality=body.image_quality&&typeof body.image_quality==="object" ? body.image_quality : null;
     if(imageQuality && imageQuality.acceptable===false){
       const brightness=Number(imageQuality.brightness);
@@ -2030,7 +2078,7 @@ export default {
       agentTrace={version:SCAN_ORCHESTRATOR_VERSION,confirmed_by_user:true,confirmed_id:resolvedConfirmedId,requested_id:confirmedId};
     } else {
       // Jeden agent wizualny rozpoznaje nazwe. Dopasowanie do katalogu jest deterministyczne.
-      const visual=await callVisualAgent(env,mime,image);
+      const visual=await callVisualAgent(env,mime,recognitionImage.length>=100?recognitionImage:image);
       telemetryUsage=[visual&&visual.usage].filter(Boolean);
       if(visual&&visual.err){
         const quotaExhausted=visual.err.status===429;

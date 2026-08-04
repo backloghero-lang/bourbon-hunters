@@ -1,14 +1,16 @@
 # Bourbon Hunters 1.1 - handoff do kolejnego etapu
 
-Aktualizacja: 2026-07-27.
+Aktualizacja: 2026-08-04.
 
 Ten plik ma byc pierwszym kontekstem dla nowego watku Codexa, np. `Przekaz Bourbon Hunter 1.1`.
 
 ## Stan nadrzedny 2026-07-27
 
-- Aktualny skaner to przywrocony tryb visual-only: `visual-only-catalog-v5-direct-result`; OCR jest wylaczony.
+- Aktualny skaner to tryb visual-only `visual-only-catalog-v6-mobile-label-view`; OCR jest wylaczony. Jedno wywolanie AI dostaje kompozycje pelnego zdjecia i automatycznego zblizenia etykiety, co poprawia rozpoznawanie butelek trzymanych za szyjke bez zuzywania drugiego skanu.
 - Aktualny katalog skanera: `ttb-olcc-quality-catalog-v9-canonical-products`; aktualny pipeline assetow: `community-catalog-images-v6-highres-cutout`.
-- Cache PWA: `bourbon-hunters-v107`.
+- Cache PWA: `bourbon-hunters-v108`.
+- Filtry w Odkrywaj, Polecanych, Wishlist i Kolekcji korzystaja z jednego renderera: rodzina Bourbon/Whisky oraz podtypy maja te sama kolejnosc, liczniki i zachowanie.
+- Reczne rekordy popularnych produktow uzupelniaja brakujace rodziny Bushmills oraz kanoniczne warianty Jack Daniel's i Jim Beam; ich zrodlo to `db/catalog/manual-popular-whisky.json`.
 - Brakujacy asset butelki jest przygotowywany podczas loadera. Po skanie aplikacja otwiera od razu szczegoly, bez posredniego ekranu potwierdzenia.
 - Przed aktualnym deployem Workera trzeba uruchomic `agent/d1-migration-v68-whisky-news.sql`.
 - Health ma pokazac `news_schema: true`, `news_agent_ready: true`, `local_image_cutout_ready: true` i `news_agent_version: whisky-news-google-grounded-v1`.

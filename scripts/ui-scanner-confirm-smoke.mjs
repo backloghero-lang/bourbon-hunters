@@ -13,6 +13,7 @@ const bottleImage="data:image/webp;base64,"+fs.readFileSync(assetPath).toString(
 let responseVariant="missing";
 let scannerRequests=0;
 let confirmedRequests=0;
+let recognitionRequests=0;
 
 const browser=await chromium.launch({headless:true,executablePath:chrome});
 const page=await browser.newPage({viewport:{width:390,height:844},deviceScaleFactor:1,locale:"pl-PL"});
@@ -32,6 +33,7 @@ await page.route("https://bourbon-hunters.darekmaslyk.workers.dev/**",async(rout
     scannerRequests++;
     const body=request.postDataJSON();
     if(body.confirmed_id) confirmedRequests++;
+    if(String(body.recognition_image||"").length>=100) recognitionRequests++;
     const missing=responseVariant==="missing";
     await route.fulfill({status:200,contentType:"application/json",body:JSON.stringify({
       result:{
@@ -55,6 +57,17 @@ await page.route("https://bourbon-hunters.darekmaslyk.workers.dev/**",async(rout
 await page.goto(target,{waitUntil:"domcontentloaded"});
 await page.waitForFunction(()=>Array.isArray(DB)&&DB.length>0);
 const migratedCollection=await page.evaluate(()=>OWNED.slice());
+const unifiedFilters=await page.evaluate(()=>{
+  const state=bottleFilterState(DB,"bourbon",[]);
+  const host=document.createElement("div");
+  host.innerHTML=bottleFilterHtml("test",state,false);
+  return {
+    familyRows:host.querySelectorAll(".filter-family-row").length,
+    styleRows:host.querySelectorAll(".filter-style-row").length,
+    allButtons:host.querySelectorAll("[data-test-family='all'],[data-test-style-all]").length,
+    selected:state.selected.length
+  };
+});
 
 async function runScan(expectedSource){
   await page.evaluate(()=>{
@@ -62,6 +75,7 @@ async function runScan(expectedSource){
     showView("scan");
     resetShot();
     imgData="a".repeat(240);
+    scanRecognitionImage="b".repeat(240);
     imgMime="image/jpeg";
     scan("rate");
   });
@@ -94,10 +108,14 @@ if(process.env.BH_SMOKE_SCREENSHOT) await page.screenshot({path:process.env.BH_S
 await browser.close();
 
 if(errors.length) throw new Error(errors.join("\n"));
+if(unifiedFilters.familyRows!==1 || unifiedFilters.styleRows!==1 || unifiedFilters.allButtons!==2 || unifiedFilters.selected!==0){
+  throw new Error("Unified filter renderer failed: "+JSON.stringify(unifiedFilters));
+}
 if(!migratedCollection.includes("knob-creek-120-proof-9-year-single-barrel-reserve-bourbon") || !migratedCollection.includes("michters-single-barrel-10-year-old-bourbon")){
   throw new Error("Legacy collection IDs were not migrated: "+JSON.stringify(migratedCollection));
 }
 if(scannerRequests!==2 || confirmedRequests!==0) throw new Error(`Unexpected scanner requests: total=${scannerRequests}, confirmed=${confirmedRequests}`);
+if(recognitionRequests!==2) throw new Error(`Recognition composite was not sent: ${recognitionRequests}/2`);
 if(missing.confirmationCards!==0 || catalog.confirmationCards!==0) throw new Error("Removed confirmation screen is still rendered");
 if(missing.addCatalog!==1 || missing.addCollection!==0) throw new Error("Missing catalog asset has incorrect action: "+JSON.stringify(missing));
 if(catalog.addCatalog!==0 || catalog.addCollection!==1) throw new Error("Catalog bottle has incorrect action: "+JSON.stringify(catalog));
@@ -109,4 +127,4 @@ for(const state of [missing,catalog]){
   if(state.scrollWidth>state.width+1) throw new Error("Scanner result has horizontal overflow: "+JSON.stringify(state));
 }
 
-console.log(JSON.stringify({ok:true,migratedCollection,scannerRequests,missing,catalog},null,2));
+console.log(JSON.stringify({ok:true,migratedCollection,unifiedFilters,scannerRequests,recognitionRequests,missing,catalog},null,2));

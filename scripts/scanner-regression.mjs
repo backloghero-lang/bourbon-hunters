@@ -77,6 +77,46 @@ const fixtures=[
     label:"Jack Daniel's Single Barrel Rye",
     expected:"jack-daniel-s-single-barrel-rye-142-43",
     vision:{name:"Jack Daniel's Single Barrel Rye",confidence:.97,candidates:[]}
+  },
+  {
+    label:"Jack Daniel's Old No. 7",
+    expected:"olcc-0146b",
+    vision:{name:"Jack Daniel's Old No. 7",confidence:.97,candidates:[]}
+  },
+  {
+    label:"Jim Beam White Label",
+    expected:"jim-beam-white-label",
+    vision:{name:"Jim Beam White Label",confidence:.97,candidates:[]}
+  },
+  {
+    label:"Jim Beam Black",
+    expected:"olcc-0133b",
+    vision:{name:"Jim Beam Black",confidence:.97,candidates:[]}
+  },
+  {
+    label:"Jim Beam Double Oak",
+    expected:"olcc-3982b",
+    vision:{name:"Jim Beam Double Oak",confidence:.97,candidates:[]}
+  },
+  {
+    label:"Jim Beam Single Barrel",
+    expected:"jim-beam-single-barrel",
+    vision:{name:"Jim Beam Single Barrel",confidence:.97,candidates:[]}
+  },
+  {
+    label:"Bushmills Original",
+    expected:"bushmills-original-irish-whiskey",
+    vision:{name:"Bushmills Original Irish Whiskey",confidence:.97,candidates:[]}
+  },
+  {
+    label:"Bushmills Black Bush",
+    expected:"bushmills-black-bush-irish-whiskey",
+    vision:{name:"Bushmills Black Bush",confidence:.97,candidates:[]}
+  },
+  {
+    label:"Bushmills 10 Year",
+    expected:"bushmills-10-year-old-single-malt",
+    vision:{name:"Bushmills 10 Year Old Single Malt",confidence:.97,candidates:[]}
   }
 ];
 

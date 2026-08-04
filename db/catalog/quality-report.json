@@ -1,7 +1,7 @@
 {
   "version": 3,
-  "updated": "2026-07-27T16:02:09.581Z",
-  "count": 1028,
+  "updated": "2026-08-04T16:55:07.211Z",
+  "count": 1127,
   "target": 10000,
   "price_limits": {
     "PLN": 1000,
@@ -17,16 +17,17 @@
     "existing": 346,
     "ttb": 17626,
     "olcc_current_whisky": 1077,
-    "olcc_eligible": 805
+    "olcc_eligible": 805,
+    "popular": 200
   },
   "deduplicated": 12880,
-  "selected_verified_price": 1028,
-  "selected_recognition_only": 0,
+  "selected_verified_price": 927,
+  "selected_recognition_only": 200,
   "missing": {
-    "proof": 149,
-    "abv": 138,
-    "distillery": 714,
-    "price": 0
+    "proof": 243,
+    "abv": 232,
+    "distillery": 817,
+    "price": 106
   },
   "original_count": 10000,
   "dedupe_version": "catalog-identity-safe-v1",

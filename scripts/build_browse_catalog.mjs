@@ -8,15 +8,18 @@ const taxonomy = require("../spirit-taxonomy.js");
 const root = path.resolve(import.meta.dirname, "..");
 const sourcePath = path.join(root, "db", "catalog", "bottles.json");
 const basePath = path.join(root, "db", "bourbons.json");
+const manualPath = path.join(root, "db", "catalog", "manual-popular-whisky.json");
 const outputPath = path.join(root, "db", "catalog", "browse-whisky.json");
 const metaPath = path.join(root, "db", "catalog", "browse-meta.json");
 
 const source = JSON.parse(fs.readFileSync(sourcePath, "utf8"));
 const base = JSON.parse(fs.readFileSync(basePath, "utf8"));
+const manual = fs.existsSync(manualPath) ? JSON.parse(fs.readFileSync(manualPath, "utf8")) : { bottles: [] };
 const all = Array.isArray(source.bottles) ? source.bottles : [];
 const baseRecords = Array.isArray(base.bottles) ? base.bottles : [];
+const manualRecords = Array.isArray(manual.bottles) ? manual.bottles : [];
 const whiskyById = new Map();
-[...baseRecords, ...all]
+[...baseRecords, ...manualRecords, ...all]
   .filter((bottle) => taxonomy.family(bottle) === "whisky")
   .forEach((bottle) => whiskyById.set(bottle.id, {
     id: bottle.id,
@@ -71,7 +74,7 @@ fs.writeFileSync(outputPath, `${JSON.stringify({ ...common, count: whisky.length
 fs.writeFileSync(metaPath, `${JSON.stringify({
   ...common,
   count: catalogCounts.families.bourbon + catalogCounts.families.whisky,
-  source_count: all.length,
+  source_count: all.length + manualRecords.length,
   families: catalogCounts.families,
   bourbon: catalogCounts.bourbon,
   whisky: catalogCounts.whisky

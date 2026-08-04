@@ -27,7 +27,7 @@ Aktualny oczekiwany stan Workera:
 {
   "ok": true,
   "auth_version": "auth-pbkdf2-100000-google-v3",
-  "scan_orchestrator_version": "visual-only-catalog-v5-direct-result",
+  "scan_orchestrator_version": "visual-only-catalog-v6-mobile-label-view",
   "scan_mode": "visual_only",
   "scan_ocr_enabled": false,
   "scan_catalog_version": "ttb-olcc-quality-catalog-v9-canonical-products",
@@ -80,7 +80,7 @@ Cykl zycia zdjec katalogowych wymaga:
 4. W D1 uruchom `agent/d1-migration-v68-whisky-news.sql`.
 5. Dopiero potem wklej i zdeployuj aktualny `agent/worker.js`.
 6. W Workerze pozostaw jeden dzienny Cron Trigger, np. `0 3 * * *`. Czyszczenie dziala codziennie, a newsy tylko w poniedzialek i czwartek.
-7. Wyslij frontend na GitHub i odswiez PWA do cache `bourbon-hunters-v107`.
+7. Wyslij frontend na GitHub i odswiez PWA do cache `bourbon-hunters-v109`.
 8. Sprawdz pelny health: `https://bourbon-hunters.darekmaslyk.workers.dev/auth/health`.
 
 Kolejnosc jest wazna: migracje D1 -> Worker -> GitHub/PWA. Bez v67 user nie moze zatwierdzic assetu, a bez v68 feed newsow pozostanie pusty.
@@ -224,7 +224,19 @@ Ta zmiana dotyczy GitHub Pages. Nie wymaga podmiany Workera, migracji D1 ani zmi
 5. Sprawdź na Home kafel Whisky z liczbą pozycji.
 6. Wejdź w Whisky i sprawdź filtry Scotch, Irish, Japanese, Rye i pozostałe.
 
-Aktualny cache: `bourbon-hunters-v107`.
+Aktualny cache: `bourbon-hunters-v109`.
+
+## Wdrozenie katalogu Popular 200 - 2026-08-04
+
+Aktualizacja dodaje 100 popularnych bourbonow i 100 popularnych whisky do kanonicznego katalogu skanera. Nie wymaga migracji D1.
+
+1. Najpierw uruchom `WYSLIJ-NA-GITHUB.bat`, poniewaz Worker pobiera `db/catalog/scan-index.json` bezposrednio z repozytorium.
+2. Poczekaj na zakonczone powodzeniem GitHub Actions.
+3. W Cloudflare podmien `agent/worker.js` i kliknij `Deploy`.
+4. W `/health` sprawdz `scan_catalog_version: popular-200-2026-v1`.
+5. Po przyszlej przebudowie katalogu uruchom kolejno `node scripts/sync_popular_200.mjs`, `node scripts/build_browse_catalog.mjs` i `node scripts/test_popular_200.mjs`.
+
+Manifest: `db/catalog/popular-200.json`. Raport pokrycia: `db/catalog/popular-200-report.json`. Test wymaga wyniku 200/200 nazw kanonicznych i co najmniej 95% podstawowych aliasow.
 
 Po deployu Workera `/health` powinien zwracac `news_auth_required: true`.
 
@@ -257,14 +269,14 @@ Ta zmiana wymaga aktualizacji GitHub Pages i Workera. Nie wymaga migracji D1 ani
 4. Kliknij `Deploy`.
 5. Otworz `https://bourbon-hunters.darekmaslyk.workers.dev/auth/health`.
 6. Sprawdz, czy `scan_orchestrator_version` ma wartosc:
-   `visual-only-catalog-v5-direct-result`.
+   `visual-only-catalog-v6-mobile-label-view`.
    `scan_catalog_version` ma byc `ttb-olcc-quality-catalog-v9-canonical-products`.
    `catalog_submission_version` ma byc `community-catalog-images-v6-highres-cutout`.
    Dodatkowo `scan_mode` ma byc `visual_only`, a `scan_ocr_enabled` ma byc `false`.
 7. Na telefonie otworz `test-index.html`, kliknij `Wyczysc cache/PWA`, a potem `Odswiez build`.
-8. Zeskanuj `Jack Daniel's Bonded`, `Knob Creek 9` i jeden wariant `Single Barrel`.
+8. Zeskanuj z telefonu `Jack Daniel's Bonded`, `Jim Beam Double Oak` i `Bushmills Original`, trzymajac jedna z butelek za szyjke. Skan nadal liczy sie jako jedno uzycie, mimo automatycznego zblizenia etykiety.
 9. Nie dodawaj zmiennej `OCR_MODEL`; skaner jej nie uzywa.
-10. Sprawdz pojedynczy wynik bez assetu: ekran ma pytac `Czy to ta butelka?`, a po potwierdzeniu szczegoly maja pokazac wycieta butelke.
+10. Sprawdz pojedynczy wynik bez assetu: aplikacja ma przejsc bezposrednio do szczegolow i pokazac wycieta butelke oraz przycisk uzupelnienia katalogu.
 
 Skaner przechodzi bezposrednio z loadera do szczegolow najlepszego pewnego dopasowania. Jesli rekord nie ma gotowego assetu, Worker najpierw przygotowuje wyciecie butelki; przy blednym wycieciu aplikacja prosi o nowe zdjecie. Taki wynik ma przycisk uzupelnienia katalogu. Rekord z gotowym assetem nie pokazuje przycisku katalogu. Publikacja nowego assetu nadal przechodzi przez zgode usera i moderacje.
 

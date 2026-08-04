@@ -104,4 +104,8 @@ Film pokazujący prawidłowe wykonanie zdjęcia i pełną drogę butelki od skan
 | Instrukcja wdrożenia | [`pliki-md/INSTRUKCJA.md`](pliki-md/INSTRUKCJA.md) |
 | Aktualny dokument przekazania | [`pliki-md/HANDOFF.md`](pliki-md/HANDOFF.md) |
 
+## Popular 200
+
+Katalog rozpoznawania obejmuje dodatkową, ręcznie kuratorowaną listę 100 popularnych bourbonów i 100 popularnych whisky. Pełne nazwy oraz skróty widoczne na etykietach są przechowywane jako aliasy, a automatyczny test sprawdza każdą z 200 pozycji przez ten sam matcher, którego używa Worker.
+
 <p align="center"><sub>Projekt rozwijany jako aplikacja PWA przeznaczona dla pełnoletnich użytkowników. Ceny i oceny są orientacyjne. Pij odpowiedzialnie.</sub></p>

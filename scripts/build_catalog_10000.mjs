@@ -8,6 +8,8 @@ import { MAX_RETAIL_USD, RETAIL_FILTER_VERSION, retailPriceUsd, retailRemovalRea
 const ROOT = path.resolve(import.meta.dirname, "..");
 const OUT_DIR = path.join(ROOT, "db", "catalog");
 const EXISTING_DB = path.join(ROOT, "db", "bourbons.json");
+const MANUAL_DB = path.join(ROOT, "db", "catalog", "manual-popular-whisky.json");
+const POPULAR_DB = path.join(ROOT, "db", "catalog", "popular-200-catalog.json");
 const OLCC_FILE = process.env.OLCC_FILE || path.join(process.env.TEMP || "", "olcc-pricing.csv");
 const TARGET = Number(process.env.CATALOG_TARGET || 10000);
 const TTB_FROM = process.env.TTB_FROM || "2024-01-01";
@@ -441,13 +443,17 @@ function scanRecord(record) {
 async function main() {
   const existingRaw = JSON.parse(fs.readFileSync(EXISTING_DB, "utf8")).bottles;
   const existing = existingRaw.map(fromExisting).filter(Boolean);
+  const manualRaw = fs.existsSync(MANUAL_DB) ? JSON.parse(fs.readFileSync(MANUAL_DB, "utf8")).bottles || [] : [];
+  const manual = manualRaw.map(fromExisting).filter(Boolean);
+  const popularRaw = fs.existsSync(POPULAR_DB) ? JSON.parse(fs.readFileSync(POPULAR_DB, "utf8")).bottles || [] : [];
+  const popular = popularRaw.map(fromExisting).filter(Boolean);
   const olcc = readOlcc();
   const olccRecords = olcc.map(fromOlcc).filter(Boolean);
   const prices = olccIndex(olcc);
   const ttbRows = await downloadTtb();
   const distilleries = buildDistilleryIndex(existingRaw, ttbRows);
   const ttb = ttbRows.map((row) => fromTtb(row, prices, distilleries)).filter(Boolean);
-  const dedupeResult = dedupe([...existing, ...olccRecords, ...ttb]);
+  const dedupeResult = dedupe([...popular, ...existing, ...manual, ...olccRecords, ...ttb]);
   const merged = dedupeResult.records;
   const retailRemoved=merged.map((record)=>({record,reason:retailRemovalReason(record)})).filter((item)=>item.reason);
   const retailEligible=merged.filter((record)=>!retailRemovalReason(record));
@@ -465,7 +471,7 @@ async function main() {
     target: TARGET,
     price_limits: { PLN: PRICE_LIMIT_PLN, USD: PRICE_LIMIT_USD },
     profile_policy: "Tasting text marked style_estimate is an original expected style profile, not a verified producer tasting note.",
-    sources: ["Existing Bourbon Hunters catalog", "TTB Public COLA Registry", "Oregon OLCC Monthly Pricing"],
+    sources: ["Popular 200 curated catalog", "Existing Bourbon Hunters catalog", "TTB Public COLA Registry", "Oregon OLCC Monthly Pricing"],
     dedupe_version:"catalog-identity-safe-v1",
     duplicate_records_removed:dedupeResult.removed,
     retail_filter_version:RETAIL_FILTER_VERSION,
@@ -491,7 +497,7 @@ async function main() {
   },null,2)}\n`);
   const report = {
     ...meta,
-    source_rows: { existing: existing.length, ttb: ttbRows.length, olcc_current_whisky: olcc.length, olcc_eligible: olccRecords.length },
+    source_rows: { popular: popular.length, existing: existing.length, ttb: ttbRows.length, olcc_current_whisky: olcc.length, olcc_eligible: olccRecords.length },
     deduplicated: merged.length,
     retail_eligible: retailEligible.length,
     retail_removal_reasons: retailReasons,

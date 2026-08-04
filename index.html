@@ -140,6 +140,8 @@
   .filter-stack{margin:0 0 16px}
   .filter-stack .chips{margin-bottom:8px}
   .filter-stack .chips:last-child{margin-bottom:0}
+  .filter-stack .filter-family-row{padding-bottom:3px}
+  .filter-stack .filter-style-row{padding-top:1px}
   .browse-title{font-family:var(--serif);font-size:24px;line-height:1.1;color:#F6E1BC;margin:0 0 14px}
   .browse-loading{display:flex;align-items:center;justify-content:center;min-height:180px;color:var(--muted);font-size:13px;text-align:center}
   .empty{color:var(--muted);font-size:13px;text-align:center;padding:30px 10px;line-height:1.6}
@@ -1233,10 +1235,30 @@ function styleChipHtml(prefix, counts, active, styles){
 }
 function familyChipHtml(prefix, active, counts){
   counts=counts||{};
-  let html='<div class="chips"><button class="chip'+(active==="all"?' on':'')+'" data-'+prefix+'-family="all">'+t("all")+'</button>';
+  let html='<div class="chips filter-family-row"><button class="chip'+(active==="all"?' on':'')+'" data-'+prefix+'-family="all">'+t("all")+'</button>';
   if(counts.bourbon) html+='<button class="chip'+(active==="bourbon"?' on':'')+'" data-'+prefix+'-family="bourbon">'+t("familyBourbon")+' '+counts.bourbon+'</button>';
   if(counts.whisky) html+='<button class="chip'+(active==="whisky"?' on':'')+'" data-'+prefix+'-family="whisky">'+t("familyWhisky")+' '+counts.whisky+'</button>';
   return html+'</div>';
+}
+function bottleFilterState(list, family, active){
+  list=Array.isArray(list)?list:[];
+  family=family||"all";
+  const familyCounts=SPIRITS.counts(list).families;
+  const styles=family==="all" ? [] : stylesForFamily(family);
+  const familyItems=family==="all" ? list : list.filter(function(b){ return bottleFamily(b)===family; });
+  const counts=styleCounts(familyItems,family==="all"?"":family);
+  const validKeys=styles.map(function(style){ return style.key; });
+  const selected=(active||[]).filter(function(key){ return validKeys.indexOf(key)>=0 && counts[key]>0; });
+  return {family:family,familyCounts:familyCounts,styles:styles,counts:counts,selected:selected,familyItems:familyItems};
+}
+function bottleFilterHtml(prefix, state, hideFamily){
+  let html=hideFamily ? "" : familyChipHtml(prefix,state.family,state.familyCounts);
+  if(state.styles.length) html+='<div class="chips filter-style-row">'+styleChipHtml(prefix,state.counts,state.selected,state.styles)+'</div>';
+  return html;
+}
+function bottleMatchesFilter(bottle, state){
+  if(state.family!=="all" && bottleFamily(bottle)!==state.family) return false;
+  return !state.selected.length || bottleStyleKeys(bottle).some(function(key){ return state.selected.indexOf(key)>=0; });
 }
 function toggleValue(list,key){
   const i=list.indexOf(key);
@@ -2661,21 +2683,10 @@ function renderCollection(tab){
   const chips=document.getElementById("collectionStyleChips");
   const family=collectionFamilies[collectionTab]||"all";
   const active=collectionStyles[collectionTab]||[];
-  const familyCounts=SPIRITS.counts(allItems).families;
-  const familyItems=family==="all" ? allItems : allItems.filter(function(b){ return bottleFamily(b)===family; });
-  const styles=family==="all" ? [] : stylesForFamily(family);
-  const counts=styleCounts(familyItems,family==="all"?"":family);
-  const validKeys=styles.map(function(style){ return style.key; });
-  const validActive=active.filter(function(k){ return validKeys.indexOf(k)>=0 && counts[k]>0; });
-  collectionStyles[collectionTab]=validActive;
-  if(chips){
-    let html=allItems.length ? familyChipHtml("coll",family,familyCounts) : "";
-    if(styles.length) html+='<div class="chips">'+styleChipHtml("coll",counts,validActive,styles)+'</div>';
-    chips.innerHTML=html;
-  }
-  const items=familyItems.filter(function(b){
-    return !validActive.length || bottleStyleKeys(b).some(function(key){ return validActive.indexOf(key)>=0; });
-  });
+  const filterState=bottleFilterState(allItems,family,active);
+  collectionStyles[collectionTab]=filterState.selected;
+  if(chips) chips.innerHTML=allItems.length ? bottleFilterHtml("coll",filterState,false) : "";
+  const items=allItems.filter(function(b){ return bottleMatchesFilter(b,filterState); });
   el.innerHTML = items.length ? '<div class="blist">'+items.map(listRow).join("")+'</div>' : '<div class="empty">'+t(emptyKey)+'</div>';
 }
 function openExploreFamily(family,locked,styles){
@@ -3034,21 +3045,11 @@ function renderRecommendationsView(){
   if(!el) return;
   const allRecs=feedRecommendations(100);
   const allBottles=allRecs.map(bottleForRec);
-  const familyCounts=SPIRITS.counts(allBottles).families;
-  const familyItems=recommendationFamily==="all" ? allBottles : allBottles.filter(function(b){ return bottleFamily(b)===recommendationFamily; });
-  const styles=recommendationFamily==="all" ? [] : stylesForFamily(recommendationFamily);
-  const counts=styleCounts(familyItems,recommendationFamily==="all"?"":recommendationFamily);
-  const validKeys=styles.map(function(style){ return style.key; });
-  recommendationStyles=recommendationStyles.filter(function(key){ return validKeys.indexOf(key)>=0 && counts[key]>0; });
-  if(chips){
-    let html=allRecs.length ? familyChipHtml("rec",recommendationFamily,familyCounts) : "";
-    if(styles.length) html+='<div class="chips">'+styleChipHtml("rec",counts,recommendationStyles,styles)+'</div>';
-    chips.innerHTML=html;
-  }
+  const filterState=bottleFilterState(allBottles,recommendationFamily,recommendationStyles);
+  recommendationStyles=filterState.selected;
+  if(chips) chips.innerHTML=allRecs.length ? bottleFilterHtml("rec",filterState,false) : "";
   const recs=allRecs.filter(function(rec){
-    const bottle=bottleForRec(rec);
-    if(recommendationFamily!=="all" && bottleFamily(bottle)!==recommendationFamily) return false;
-    return !recommendationStyles.length || bottleStyleKeys(bottle).some(function(key){ return recommendationStyles.indexOf(key)>=0; });
+    return bottleMatchesFilter(bottleForRec(rec),filterState);
   });
   if(!allRecs.length){
     el.innerHTML='<div class="empty">'+esc(t("recEmptyBody"))+'</div>';
@@ -3080,26 +3081,19 @@ function renderHomeCollection(){
 function renderExplore(){
   {
     const family=exploreLockedFamily || exploreFamily;
-    const familyCounts=whiskyCatalogLoaded ? SPIRITS.counts(DB).families : {
+    const filterState=bottleFilterState(DB,family,exploreStyles);
+    filterState.familyCounts=whiskyCatalogLoaded ? filterState.familyCounts : {
       bourbon:DB.filter(function(b){ return bottleFamily(b)==="bourbon"; }).length,
       whisky:Number(BROWSE_META.families.whisky)||0
     };
-    const familyItems=family==="all" ? DB : DB.filter(function(b){ return bottleFamily(b)===family; });
-    const counts=styleCounts(familyItems,family==="all"?"":family);
-    const styles=family==="all" ? [] : stylesForFamily(family);
-    const validKeys=styles.map(function(style){ return style.key; });
-    exploreStyles=exploreStyles.filter(function(key){ return validKeys.indexOf(key)>=0 && counts[key]>0; });
-    let filters=exploreLockedFamily ? "" : familyChipHtml("explore",family,familyCounts);
-    if(styles.length) filters+='<div class="chips">'+styleChipHtml("explore",counts,exploreStyles,styles)+'</div>';
-    document.getElementById("exploreChips").innerHTML=filters;
+    exploreStyles=filterState.selected;
+    document.getElementById("exploreChips").innerHTML=bottleFilterHtml("explore",filterState,!!exploreLockedFamily);
     const title=document.getElementById("exploreTitle");
     if(title) title.textContent=family==="whisky" ? t("whiskyBrowseTitle") : (family==="bourbon" ? t("bourbonBrowseTitle") : t("explore"));
     const q=(document.getElementById("exploreSearchInput").value||"").toLowerCase().trim();
     const list=DB.filter(function(b){
-      const okFamily=family==="all" || bottleFamily(b)===family;
-      const okStyle=!exploreStyles.length || bottleStyleKeys(b).some(function(key){ return exploreStyles.indexOf(key)>=0; });
       const okQ=!q || (b.name+" "+(b.distillery||"")).toLowerCase().indexOf(q)>=0;
-      return okFamily && okStyle && okQ;
+      return bottleMatchesFilter(b,filterState) && okQ;
     });
     const grid=document.getElementById("exploreGrid");
     const bar=document.getElementById("exploreMore");
@@ -3549,7 +3543,7 @@ if(localPhotoModal) localPhotoModal.addEventListener("click",function(event){
   if(event.target===localPhotoModal) closeLocalPhotoModal(true);
 });
 /* ================= SKANER ================= */
-let imgData=null, scanImageQuality=null, imgMime="image/jpeg", busy=false, loadTimer=null;
+let imgData=null, scanRecognitionImage=null, scanImageQuality=null, imgMime="image/jpeg", busy=false, loadTimer=null;
 let currentScanResult=null, currentScanMode="rate", catalogSubmissionId="", catalogRetakePending=false;
 const shot=document.getElementById("shot"), fileInput=document.getElementById("file"), galleryInput=document.getElementById("galleryFile");
 const scanPreview=document.getElementById("scanPreview");
@@ -3561,7 +3555,7 @@ if(retakeQuick) retakeQuick.addEventListener("click",function(){ if(busy) return
 fileInput.addEventListener("change",handlePickedFile);
 galleryInput.addEventListener("change",handlePickedFile);
 function resetShot(){
-  imgData=null; scanImageQuality=null; imgMime="image/jpeg"; currentScanResult=null; currentScanMode="rate"; goRate.disabled=true;
+  imgData=null; scanRecognitionImage=null; scanImageQuality=null; imgMime="image/jpeg"; currentScanResult=null; currentScanMode="rate"; goRate.disabled=true;
   document.getElementById("appRoot").classList.remove("has-scan-result");
   document.getElementById("view-scan").classList.remove("is-confirming");
   if(scanPreview) scanPreview.removeAttribute("src");
@@ -3698,7 +3692,7 @@ function handlePickedFile(e){
   document.getElementById("scanResult").innerHTML="";
   readLocalPreview(f).then(function(src){ if(src) setShotPreview(src); }).catch(function(){});
   compress(f).then(function(res){
-    imgData=res.b64; scanImageQuality=res.quality||null; imgMime=res.mime;
+    imgData=res.b64; scanRecognitionImage=res.recognitionB64||null; scanImageQuality=res.quality||null; imgMime=res.mime;
     shot.classList.add("has-shot");
     shot.classList.remove("is-loading");
     if(retakeQuick) retakeQuick.classList.add("has-shot");
@@ -3707,7 +3701,7 @@ function handlePickedFile(e){
     document.getElementById("scanResult").innerHTML=""; document.getElementById("err").style.display="none";
     shouldAutoRate=true;
   }).catch(function(){
-    imgData=null; scanImageQuality=null; imgMime="image/jpeg"; goRate.disabled=true;
+    imgData=null; scanRecognitionImage=null; scanImageQuality=null; imgMime="image/jpeg"; goRate.disabled=true;
     if(scanPreview) scanPreview.removeAttribute("src");
     shot.classList.remove("has-shot");
     if(retakeQuick) retakeQuick.classList.remove("has-shot");
@@ -3756,9 +3750,28 @@ function compress(file){ return new Promise(function(resolve,reject){
       const ctx=c.getContext("2d"); if(!ctx){ throw new Error("no-canvas"); }
       ctx.drawImage(source,0,0,w,h);
       const d=c.toDataURL("image/jpeg",0.91);
+      const recognition=recognitionComposite(c);
       if(cleanup) cleanup();
-      resolve({b64:d.split(",")[1],mime:"image/jpeg",quality:imageQuality(c)});
+      resolve({b64:d.split(",")[1],recognitionB64:recognition,mime:"image/jpeg",quality:imageQuality(c)});
     }catch(err){ if(cleanup) cleanup(); reject(err); }
+  }
+  function drawContained(ctx,source,sx,sy,sw,sh,dx,dy,dw,dh){
+    const scale=Math.min(dw/sw,dh/sh);
+    const outW=sw*scale,outH=sh*scale;
+    ctx.drawImage(source,sx,sy,sw,sh,dx+(dw-outW)/2,dy+(dh-outH)/2,outW,outH);
+  }
+  function recognitionComposite(source){
+    const view=document.createElement("canvas");
+    view.width=1400; view.height=900;
+    const ctx=view.getContext("2d");
+    if(!ctx) return "";
+    ctx.fillStyle="#080604"; ctx.fillRect(0,0,view.width,view.height);
+    drawContained(ctx,source,0,0,source.width,source.height,24,24,510,852);
+    const sx=Math.round(source.width*.12),sy=Math.round(source.height*.18);
+    const sw=Math.max(1,Math.round(source.width*.76)),sh=Math.max(1,Math.round(source.height*.78));
+    drawContained(ctx,source,sx,sy,sw,sh,558,24,818,852);
+    ctx.fillStyle="rgba(226,176,112,.38)"; ctx.fillRect(545,24,2,852);
+    return view.toDataURL("image/jpeg",0.9).split(",")[1]||"";
   }
   function fallbackImage(){
     const img=new Image(), url=URL.createObjectURL(file);
@@ -3853,7 +3866,7 @@ function scan(mode,confirmedId){
   const dev=localStorage.getItem("bh_dev")||"";
   const headers={"Content-Type":"application/json"};
   if(AUTH_TOKEN) headers.Authorization="Bearer "+AUTH_TOKEN;
-  fetch(WORKER_URL,{method:"POST",headers:headers,body:JSON.stringify({image:imgData,image_quality:scanImageQuality,mime:imgMime,lang:lang,mode:mode,dev:dev,confirmed_id:confirmedId||"",device_id:DEVICE_ID})})
+  fetch(WORKER_URL,{method:"POST",headers:headers,body:JSON.stringify({image:imgData,recognition_image:scanRecognitionImage||"",image_quality:scanImageQuality,mime:imgMime,lang:lang,mode:mode,dev:dev,confirmed_id:confirmedId||"",device_id:DEVICE_ID})})
   .then(function(r){return r.json();}).then(function(data){
     stopLoading();
     if(data.error==="not_bottle"){ showErr(t("notBottle")); return; }
@@ -3872,11 +3885,15 @@ function scan(mode,confirmedId){
           profile: local.profile || data.result.profile,
           profile_meta: local.profile_meta || data.result.profile_meta
         });
+      } else if(data.result.source==="baza" && data.result.isNew!==true){
+        data.result.id=data.matched;
+        mergeBrowseCatalog([data.result]);
+        local=DB.find(function(b){ return b.id===data.matched; })||data.result;
       }
     }
     data.result.id=data.matched||data.result.id||bottleActionId(data.result);
     data.result.scan_match_id=data.matched||data.result.id;
-    data.result.in_app_catalog=!!local;
+    data.result.in_app_catalog=!!local || !!(data.matched && data.result.source==="baza" && data.result.isNew!==true);
     data.result.scan_confidence=data.confidence;
     renderScan(data.result, data.mode);
     if(catalogRetakePending && !data.result.in_app_catalog){

@@ -28,6 +28,16 @@ function distinctiveTokens(value) {
   return [...new Set(toks(value).filter((word) => !genericTokens.has(word)))];
 }
 
+// Production rebuilds the token index after applying aliases and redirects.
+db.token_index={};
+db.bottles.forEach((bottle,index)=>{
+  if(!bottle || bottle.scan_disabled) return;
+  for(const token of distinctiveTokens([bottle.name,bottle.distillery,...(bottle.aliases||[])].join(" "))){
+    if(!db.token_index[token]) db.token_index[token]=[];
+    if(!db.token_index[token].includes(index)) db.token_index[token].push(index);
+  }
+});
+
 function spiritClass(value) {
   const text=norm(value);
   if(text.includes("bourbon")) return "bourbon";
