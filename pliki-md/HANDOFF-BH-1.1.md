@@ -6,9 +6,10 @@ Ten plik ma byc pierwszym kontekstem dla nowego watku Codexa, np. `Przekaz Bourb
 
 ## Stan nadrzedny 2026-07-27
 
-- Aktualny skaner to przywrocony tryb visual-only: `visual-only-catalog-v3-quality-assets`; OCR jest wylaczony.
+- Aktualny skaner to przywrocony tryb visual-only: `visual-only-catalog-v4-preconfirm-cutout`; OCR jest wylaczony.
 - Aktualny katalog skanera: `ttb-olcc-quality-catalog-v9-canonical-products`; aktualny pipeline assetow: `community-catalog-images-v6-highres-cutout`.
-- Cache PWA: `bourbon-hunters-v104`.
+- Cache PWA: `bourbon-hunters-v106`.
+- Brakujacy asset butelki jest przygotowywany jeszcze podczas loadera skanera. Potwierdzenie i szczegoly pokazuja ten sam obraz bez ponownego rozpoznawania.
 - Przed aktualnym deployem Workera trzeba uruchomic `agent/d1-migration-v68-whisky-news.sql`.
 - Health ma pokazac `news_schema: true`, `news_agent_ready: true`, `local_image_cutout_ready: true` i `news_agent_version: whisky-news-google-grounded-v1`.
 - Publiczne newsy sa widoczne na Home oraz w `Profil -> Artykuly`. Jeden dzienny Cron uruchamia agenta tylko w poniedzialki i czwartki.

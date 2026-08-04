@@ -18,7 +18,7 @@ const DEFAULT_DB_URL = "https://raw.githubusercontent.com/" + REPO + "/main/db/c
 const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters. Krotko, z jajem, ale rzeczowo. quality=jakosc 1-5, value=jakosc/cena 1-5 (5 swietna i tania, 1 slaba i droga). Pisz {{LANG}}. Zwroc tylko JSON.";
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
 const MULTI_CANDIDATE_CONFIDENCE = 0.9;
-const SCAN_ORCHESTRATOR_VERSION = "visual-only-catalog-v3-quality-assets";
+const SCAN_ORCHESTRATOR_VERSION = "visual-only-catalog-v4-preconfirm-cutout";
 const SCAN_CATALOG_VERSION = "ttb-olcc-quality-catalog-v9-canonical-products";
 const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v6-highres-cutout";
 const CATALOG_MODERATION_VERSION = "catalog-moderation-orchestrator-admin-v1";
@@ -2074,7 +2074,27 @@ export default {
         }).slice(0,2);
         const candidates=highConfidenceCandidates.length>=2 ? highConfidenceCandidates : [bestCandidate];
         await enrichScanCandidatesWithCatalogAssets(env,request,candidates);
-        return scanResponse({needs_confirmation:true,candidates:candidates,suggested:candidates[0].id,mode:mode,remaining:remainingQuota,owner:owner,agents:agentTrace},200,"candidates_presented",{candidates:candidates,suggested_bottle_id:candidates[0].id});
+        let scanPreviewImage="";
+        const needsScanPreview=candidates.some(function(candidate){ return !(candidate&&candidate.result&&candidate.result.image); });
+        if(needsScanPreview){
+          if(!env.IMAGES) return scanResponse({error:"image_pipeline_unavailable",retry:true},200,"cutout_failed",{error_code:"image_pipeline_unavailable",candidates:candidates});
+          const cutoutStarted=Date.now();
+          try{
+            const cutout=await transformBottleCutout(env,mime,image);
+            if(!cutout) return scanResponse({error:"image_cutout_failed",retry:true},200,"cutout_failed",{error_code:"empty_cutout",candidates:candidates});
+            const quality=await assessBottleCutout(env,candidates[0].name||bottleName,cutout);
+            if(quality.usage) telemetryUsage.push(quality.usage);
+            telemetryUsage.push({provider:"cloudflare",stage:"scan_candidate_cutout",model:"cloudflare-images",status:quality.acceptable?200:422,attempts:1,duration_ms:Date.now()-cutoutStarted});
+            if(!quality.acceptable){
+              return scanResponse({error:"cutout_quality",retry:true,reason_code:quality.reason_code},200,"cutout_failed",{error_code:"cutout_quality",candidates:candidates});
+            }
+            scanPreviewImage="data:image/webp;base64,"+encodeBase64(cutout);
+          }catch(e){
+            telemetryUsage.push({provider:"cloudflare",stage:"scan_candidate_cutout",model:"cloudflare-images",status:500,attempts:1,duration_ms:Date.now()-cutoutStarted});
+            return scanResponse({error:"image_cutout_failed",retry:true,detail:String(e&&e.message?e.message:e).slice(0,120)},200,"cutout_failed",{error_code:"image_cutout_failed",candidates:candidates});
+          }
+        }
+        return scanResponse({needs_confirmation:true,candidates:candidates,scan_preview_image:scanPreviewImage,suggested:candidates[0].id,mode:mode,remaining:remainingQuota,owner:owner,agents:agentTrace},200,"candidates_presented",{candidates:candidates,suggested_bottle_id:candidates[0].id});
       }
       return lowConfidenceResponse(mode);
     }

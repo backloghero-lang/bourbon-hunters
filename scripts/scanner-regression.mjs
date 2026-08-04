@@ -13,7 +13,9 @@ for(const required of [
   'local-bottle-cutout-v2-quality-gated',
   '.transform({width:960,height:1280,fit:"pad"',
   '"bottle_cutout_qa"',
-  'preview_error="cutout_quality"'
+  'preview_error="cutout_quality"',
+  'scan_preview_image',
+  'scan_candidate_cutout'
 ]){
   if(!workerSource.includes(required)) throw new Error(`Missing image-pipeline guard: ${required}`);
 }
@@ -22,7 +24,17 @@ let source=workerSource.replace("export default {","globalThis.__worker={");
 source+="\nglobalThis.__scannerTest={applyScanCatalogOverrides,matchBottleWithVisual};";
 const context={
   console,
-  fetch:async()=>new Response(catalogSource,{status:200,headers:{"Content-Type":"application/json"}}),
+  fetch:async(url,options)=>{
+    if(String(url).includes("generativelanguage.googleapis.com")){
+      const body=JSON.parse(options&&options.body||"{}");
+      const prompt=String(body.contents&&body.contents[0]&&body.contents[0].parts&&body.contents[0].parts[0]&&body.contents[0].parts[0].text||"");
+      const result=prompt.includes("Ocen wyciety asset")
+        ? {acceptable:true,complete_bottle:true,occlusion_present:false,segmentation_damage:false,centered:true,reason_code:"ok",confidence:.99}
+        : {name:"Bulleit Bottled in Bond",confidence:.97,evidence:["label"],candidates:[]};
+      return new Response(JSON.stringify({candidates:[{content:{parts:[{text:JSON.stringify(result)}]}}]}),{status:200,headers:{"Content-Type":"application/json"}});
+    }
+    return new Response(catalogSource,{status:200,headers:{"Content-Type":"application/json"}});
+  },
   Response,Request,Headers,URL,TextEncoder,TextDecoder,Blob,
   crypto:webcrypto,atob,btoa,setTimeout,clearTimeout
 };
@@ -111,6 +123,23 @@ const imagePipeline={
     };
   }
 };
+const initialRequest=new Request("https://bourbon-hunters.darekmaslyk.workers.dev/",{
+  method:"POST",
+  headers:{"Content-Type":"application/json","Origin":"https://backloghero-lang.github.io"},
+  body:JSON.stringify({
+    image:btoa("candidate-bottle-photo".repeat(20)),
+    mime:"image/jpeg",
+    lang:"pl",
+    mode:"rate",
+    device_id:"scanner-regression"
+  })
+});
+const initialResponse=await context.__worker.fetch(initialRequest,{IMAGES:imagePipeline,GEMINI_API_KEY:"test"},{waitUntil(){}});
+const initial=await initialResponse.json();
+assert(initialResponse.status===200,`Initial cutout returned ${initialResponse.status}: ${JSON.stringify(initial)}`);
+assert(initial.needs_confirmation===true,"Initial scan did not return confirmation candidates");
+assert(String(initial.scan_preview_image||"").startsWith("data:image/webp;base64,"),"Initial scan preview image is missing");
+
 const confirmationRequest=new Request("https://bourbon-hunters.darekmaslyk.workers.dev/",{
   method:"POST",
   headers:{"Content-Type":"application/json","Origin":"https://backloghero-lang.github.io"},
@@ -145,5 +174,6 @@ console.log(JSON.stringify({
   },
   misses,
   single_source_confidence:Number(singleSource.dbConfidence.toFixed(3)),
+  preconfirmation_cutout:{candidates:initial.candidates.length,preview:true},
   confirmed_cutout:{matched:confirmation.matched,temporary:confirmation.result.temporary_scan_asset}
 },null,2));

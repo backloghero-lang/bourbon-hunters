@@ -9,13 +9,19 @@ Uzyj go jako pierwszego dokumentu przy starcie watku `Przekaz Bourbon Hunter 1.1
 
 ## Aktualizacja 2026-07-27 - pelne assety szczegolow, news auth i profil wood
 
+### Doprecyzowanie UI skanera 2026-08-04
+
+- Karta potwierdzenia trafienia pokazuje teraz kategorie/odmiane oraz moc jako proof i ABV.
+- Przyciski dodania butelki do katalogu lub kolekcji oraz akceptacji assetu maja wspolny butelkowo-zielony styl `btn-bottle`.
+- Cache PWA: `bourbon-hunters-v106`.
+
 - `bottleImageHtml` rozdziela teraz zrodla: listy uzywaja `thumb`, a szczegoly i wynik skanu preferuja pelny `image`. Naprawia to male butelki bez powiekszania miniaturek na listach.
 - Angel's Envy Port Finish ma nowy wysokiej rozdzielczosci, przezroczysty asset katalogowy przygotowany na podstawie poprzedniego obrazu. Pozostale dobre assety nie zostaly zmienione.
 - Sekcja newsow jest dostepna dopiero po zalogowaniu. Guest widzi zamkniety teaser i modal z wyborami `Rejestracja` oraz `Logowanie`.
 - `GET /news` wymaga poprawnej sesji Bearer; blokada nie jest tylko elementem frontendu. Health potwierdza to polem `news_auth_required: true`.
 - Belki w `Profil` i `Moj profil` korzystaja z wygenerowanej tekstury jasnego debu w jodelke, przechodzacego w lekko opalone i weglowe drewno: `assets/brand/profile-herringbone-burnt-v1.webp`. CSS ma dodatkowy awaryjny wzor desek, gdyby asset nie zostal pobrany.
 - README zostal przebudowany na produktowa prezentacje funkcji i zawiera slot oraz 7-scenowy scenariusz filmu happy path.
-- Cache PWA: `bourbon-hunters-v104`.
+- Historyczny cache poprzedniego etapu: `bourbon-hunters-v104`.
 - Brak migracji D1. Wymagany jest deploy Workera oraz GitHub Pages.
 
 ## Aktualizacja 2026-07-27 - szczegoly butelki, zewnetrzne artykuly i cutout QA
@@ -59,7 +65,8 @@ Uzyj go jako pierwszego dokumentu przy starcie watku `Przekaz Bourbon Hunter 1.1
 - Taksonomia `spirit-taxonomy-v2` jest wspolna dla Home, Odkrywaj, Kolekcji, Polecanych i szczegolow. Licznik kafla jest liczony z tej samej listy, ktora otwiera kafel.
 - Buffalo Trace standard oraz techniczne receptury/private picki Four Roses Single Barrel sa scalone w kanoniczne produkty; stare ID prowadza przez `id_redirects`.
 - Produkt bez oficjalnego assetu pokazuje mystery bottle. W szczegolach user moze przypisac wlasne zdjecie, przechowywane wylacznie lokalnie w IndexedDB danego urzadzenia.
-- Worker: `visual-only-catalog-v3-quality-assets`; katalog: `ttb-olcc-quality-catalog-v9-canonical-products`; submission: `community-catalog-images-v6-highres-cutout`.
+- Worker: `visual-only-catalog-v4-preconfirm-cutout`; katalog: `ttb-olcc-quality-catalog-v9-canonical-products`; submission: `community-catalog-images-v6-highres-cutout`.
+- Dla kandydata bez gotowego assetu katalogowego Worker wycina butelke przed pokazaniem ekranu potwierdzenia. Ten sam tymczasowy asset jest ponownie uzywany w szczegolach, bez drugiego requestu skanera.
 - Historyczny cache tego etapu: `bourbon-hunters-v100`.
 - Sam etap katalogu nie mial migracji D1; pozniejszy feed newsow wymaga migracji v68.
 
