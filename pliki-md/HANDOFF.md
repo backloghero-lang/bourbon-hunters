@@ -327,4 +327,13 @@ node scripts/test_spirit_taxonomy.mjs
 - Odtworzenie danych: `node scripts/prune_hidden_spirits.mjs`, potem `node scripts/sync_popular_200.mjs` i `node scripts/build_browse_catalog.mjs`.
 - Test: `node scripts/test_catalog_visibility.mjs`.
 
+## Aktualizacja 2026-08-05 - odzyskiwanie wydan newsow i przyciski zdjec
+
+- Agent newsow ma wersje `whisky-news-google-grounded-v2-release-recovery`.
+- Poniedzialek i czwartek otwieraja osobne wydanie po trzy artykuly. Dzienny Cron ponawia nieudane wydanie w kolejnych dniach i uzupelnia je do trzech pozycji.
+- Artykuly startowe maja osobny `issue_key`, wiec nie blokuja automatycznego wydania.
+- Health pokazuje `news_current_release`, `news_article_count` i `news_last_run`.
+- Przyciski dodania, zmiany i usuniecia lokalnego zdjecia sa wewnatrz ramki butelki przy jej dolnych rogach.
+- Cache PWA: `bourbon-hunters-v112`. Migracja D1 nie jest wymagana.
+
 

@@ -6,7 +6,7 @@ if(!source.includes('const newsUser=await authUser(env,request)') || !source.inc
   throw new Error("News endpoint must require an authenticated user");
 }
 source=source.replace("export default {","globalThis.__workerDefault={");
-source+="\nglobalThis.__newsTest={canonicalNewsUrl,newsSourceForUrl,newsMetaValue,newsCanonicalFromHtml,STARTER_NEWS,NEWS_RETENTION_DAYS};\n";
+source+="\nglobalThis.__newsTest={canonicalNewsUrl,newsSourceForUrl,newsMetaValue,newsCanonicalFromHtml,newsReleaseSlot,STARTER_NEWS,NEWS_RETENTION_DAYS};\n";
 const context={URL,console,globalThis:null};
 context.globalThis=context;
 vm.runInNewContext(source,context,{filename:"worker.js"});
@@ -26,6 +26,10 @@ if(api.newsMetaValue(html,"og:title")!=="A new & useful whisky story") throw new
 if(api.newsCanonicalFromHtml(html,"https://www.whiskymag.com/articles/new-release/")!=="https://whiskymag.com/articles/new-release") throw new Error("HTML canonical parsing failed");
 if(api.STARTER_NEWS.length!==6) throw new Error("Expected six starter news articles");
 if(api.NEWS_RETENTION_DAYS!==30) throw new Error("News retention must be 30 days");
+if(api.newsReleaseSlot(new Date("2026-08-02T12:00:00Z"))!=="2026-07-30") throw new Error("Sunday must use the Thursday release slot");
+if(api.newsReleaseSlot(new Date("2026-08-03T00:00:00Z"))!=="2026-08-03") throw new Error("Monday must open a new release slot");
+if(api.newsReleaseSlot(new Date("2026-08-05T23:59:00Z"))!=="2026-08-03") throw new Error("Wednesday must recover the Monday release slot");
+if(api.newsReleaseSlot(new Date("2026-08-06T00:00:00Z"))!=="2026-08-06") throw new Error("Thursday must open a new release slot");
 for(const article of api.STARTER_NEWS){
   if(!api.canonicalNewsUrl(article.url)) throw new Error("Starter URL is not approved: "+article.url);
   if(!article.excerpt_pl||!article.excerpt_en) throw new Error("Starter article is missing a bilingual summary");

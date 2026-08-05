@@ -27,14 +27,16 @@ Aktualny oczekiwany stan Workera:
 {
   "ok": true,
   "auth_version": "auth-pbkdf2-100000-google-v3",
-  "scan_orchestrator_version": "visual-only-catalog-v6-mobile-label-view",
+  "scan_orchestrator_version": "visual-only-catalog-v7-resilient-fallback",
   "scan_mode": "visual_only",
   "scan_ocr_enabled": false,
-  "scan_catalog_version": "ttb-olcc-quality-catalog-v9-canonical-products",
+  "scan_catalog_version": "popular-200-curated-v2-no-flavors",
   "catalog_submission_version": "community-catalog-images-v6-highres-cutout",
   "catalog_moderation_version": "catalog-moderation-orchestrator-admin-v1",
   "catalog_license_version": "catalog-license-2026-07-18-v1",
-  "news_agent_version": "whisky-news-google-grounded-v1",
+  "news_agent_version": "whisky-news-google-grounded-v2-release-recovery",
+  "news_target_per_release": 3,
+  "news_article_count": 6,
   "local_image_pipeline_version": "local-bottle-cutout-v2-quality-gated",
   "news_retention_days": 30,
   "starter_news_count": 6,
@@ -79,8 +81,8 @@ Cykl zycia zdjec katalogowych wymaga:
 3. W D1 uruchom `agent/d1-migration-v67-catalog-moderation.sql`.
 4. W D1 uruchom `agent/d1-migration-v68-whisky-news.sql`.
 5. Dopiero potem wklej i zdeployuj aktualny `agent/worker.js`.
-6. W Workerze pozostaw jeden dzienny Cron Trigger, np. `0 3 * * *`. Czyszczenie dziala codziennie, a newsy tylko w poniedzialek i czwartek.
-7. Wyslij frontend na GitHub i odswiez PWA do cache `bourbon-hunters-v109`.
+6. W Workerze pozostaw jeden dzienny Cron Trigger, np. `0 3 * * *`. Agent tworzy wydania poniedzialkowe i czwartkowe, a w pozostale dni automatycznie uzupelnia nieudane lub niepelne wydanie do trzech artykulow.
+7. Wyslij frontend na GitHub i odswiez PWA do cache `bourbon-hunters-v112`.
 8. Sprawdz pelny health: `https://bourbon-hunters.darekmaslyk.workers.dev/auth/health`.
 
 Kolejnosc jest wazna: migracje D1 -> Worker -> GitHub/PWA. Bez v67 user nie moze zatwierdzic assetu, a bez v68 feed newsow pozostanie pusty.
@@ -224,7 +226,7 @@ Ta zmiana dotyczy GitHub Pages. Nie wymaga podmiany Workera, migracji D1 ani zmi
 5. Sprawdź na Home kafel Whisky z liczbą pozycji.
 6. Wejdź w Whisky i sprawdź filtry Scotch, Irish, Japanese, Rye i pozostałe.
 
-Aktualny cache: `bourbon-hunters-v109`.
+Aktualny cache: `bourbon-hunters-v112`.
 
 ## Wdrozenie katalogu Popular 200 - 2026-08-04
 
@@ -249,7 +251,7 @@ Ta paczka wymaga migracji D1, Workera i GitHub Pages.
 3. W Workerze `bourbon-hunters` zastap kod aktualnym `agent/worker.js` i kliknij `Deploy`.
 4. Nie tworz drugiego Cron Triggera. Istniejacy dzienny Cron wystarczy; Worker sam sprawdza poniedzialek i czwartek.
 5. Otworz `https://bourbon-hunters.darekmaslyk.workers.dev/auth/health`.
-6. Sprawdz `news_schema: true`, `news_agent_ready: true`, `local_image_cutout_ready: true` oraz `news_agent_version: whisky-news-google-grounded-v1`.
+6. Sprawdz `news_schema: true`, `news_agent_ready: true`, `local_image_cutout_ready: true` oraz `news_agent_version: whisky-news-google-grounded-v2-release-recovery`. Pola `news_article_count` i `news_last_run` pokazuja stan feedu oraz wynik ostatniego przebiegu.
 7. Uruchom `WYSLIJ-NA-GITHUB.bat` i poczekaj na zielone GitHub Actions.
 8. Na telefonie otworz `test-index.html`, kliknij `Wyczysc cache/PWA`, a potem `Odswiez build`.
 9. Aby nie czekac do dnia publikacji, wejdz jako admin w `Profil -> Raporty` i kliknij `Pobierz 3 najnowsze artykuly`.

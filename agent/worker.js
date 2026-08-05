@@ -24,7 +24,7 @@ const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v6-highres-cutout";
 const CATALOG_MODERATION_VERSION = "catalog-moderation-orchestrator-admin-v1";
 const CATALOG_LICENSE_VERSION = "catalog-license-2026-07-18-v1";
 const TELEMETRY_VERSION = "scanner-telemetry-v1";
-const NEWS_AGENT_VERSION = "whisky-news-google-grounded-v1";
+const NEWS_AGENT_VERSION = "whisky-news-google-grounded-v2-release-recovery";
 const LOCAL_IMAGE_PIPELINE_VERSION = "local-bottle-cutout-v2-quality-gated";
 const NEWS_RETENTION_DAYS = 30;
 const CATALOG_SYSTEM_USER_ID = "catalog-system";
@@ -1220,6 +1220,14 @@ async function fetchNewsMetadata(value){
 function newsIssueKey(date){
   return (date||new Date()).toISOString().slice(0,10);
 }
+function newsReleaseSlot(date){
+  const current=new Date(date||Date.now());
+  const weekday=current.getUTCDay();
+  const daysBack=weekday===0 ? 3 : (weekday>=4 ? weekday-4 : weekday-1);
+  current.setUTCHours(0,0,0,0);
+  current.setUTCDate(current.getUTCDate()-daysBack);
+  return newsIssueKey(current);
+}
 function publicNewsArticle(row){
   return {
     id:row.id,title:row.title,excerpt_pl:row.excerpt_pl,excerpt_en:row.excerpt_en,
@@ -1232,7 +1240,7 @@ async function seedStarterNews(env){
   const issueKey="starter-news-v1";
   const marker=await env.DB.prepare("SELECT id FROM news_agent_runs WHERE issue_key=? AND status='completed' LIMIT 1").bind(issueKey).first();
   if(marker) return {seeded:0,ready:true,already_seeded:true};
-  const articleIssueKey=newsIssueKey(new Date());
+  const articleIssueKey="starter-news-v1";
   const metadata=await Promise.all(STARTER_NEWS.map(function(article){
     return fetchNewsMetadata(article.url).catch(function(){ return null; });
   }));
@@ -1264,10 +1272,10 @@ async function newsFeed(env, limit){
     .bind(Math.max(1,Math.min(30,Number(limit)||12))).all();
   return {articles:(rows.results||[]).map(publicNewsArticle),news_ready:true,agent_version:NEWS_AGENT_VERSION};
 }
-async function refreshWhiskyNews(env, reason){
+async function refreshWhiskyNews(env, reason, scheduledAt){
   if(!(await newsSchemaReady(env))) return {ok:false,error:"news_schema_missing"};
   if(!env.GEMINI_API_KEY) return {ok:false,error:"gemini_missing"};
-  const issueKey=newsIssueKey(new Date());
+  const issueKey=newsReleaseSlot(new Date(scheduledAt||Date.now()));
   const existing=await env.DB.prepare("SELECT COUNT(*) AS count FROM news_articles WHERE issue_key=? AND status='published'").bind(issueKey).first();
   if(Number(existing&&existing.count)>=3) return {ok:true,status:"skipped",reason:"issue_complete",issue_key:issueKey,added:0};
   const recentRun=await env.DB.prepare("SELECT status,started_at FROM news_agent_runs WHERE issue_key=? ORDER BY started_at DESC LIMIT 1").bind(issueKey).first();
@@ -1279,11 +1287,14 @@ async function refreshWhiskyNews(env, reason){
   await env.DB.prepare("INSERT INTO news_agent_runs (id,issue_key,status,candidates_found,articles_added,detail,started_at) VALUES (?,?,?,?,?,?,?)")
     .bind(runId,issueKey,"running",0,0,String(reason||"scheduled").slice(0,80),startedAt).run();
   try{
+    const priorRows=await env.DB.prepare("SELECT canonical_url FROM news_articles WHERE status='published' ORDER BY created_at DESC LIMIT 60").all();
+    const priorUrls=(priorRows.results||[]).map(function(row){ return row.canonical_url; }).filter(Boolean);
     const prompt=[
       "Find the newest useful whisky industry or culture articles published by these sources only:",
       "whiskyadvocate.com, whiskymag.com, thewhiskeywash.com, distiller.com.",
       "Today is "+issueKey+". Return up to 12 real article pages, not home pages, category pages, ads, shops or press-release indexes.",
       "Prefer articles from the last 14 days and a useful mix of bourbon, Scotch, Irish, Japanese and world whisky.",
+      "Do not return any of these URLs already used by the app: "+priorUrls.join(", "),
       "For each article write a factual 1-2 sentence summary in Polish and English. Do not invent facts.",
       "Return ONLY JSON: {\"articles\":[{\"title\":\"\",\"url\":\"https://...\",\"excerpt_pl\":\"\",\"excerpt_en\":\"\",\"category\":\"bourbon|scotch|irish|japanese|world|industry\",\"published_at\":\"ISO date or empty\"}]}."
     ].join("\n");
@@ -1297,27 +1308,28 @@ async function refreshWhiskyNews(env, reason){
     if(result.err) throw new Error("news_agent_"+String(result.err.status||"upstream"));
     const parsed=parseJson(result.txt)||{};
     const candidates=Array.isArray(parsed.articles)?parsed.articles.slice(0,12):[];
-    let added=0;
+    let added=0, invalidUrl=0, metadataRejected=0, duplicates=0, incomplete=0;
     for(const candidate of candidates){
       if(added>=3) break;
       const submittedUrl=canonicalNewsUrl(candidate&&candidate.url);
-      if(!submittedUrl) continue;
+      if(!submittedUrl){ invalidUrl++; continue; }
       let metadata=null;
       try{ metadata=await fetchNewsMetadata(submittedUrl); }catch(e){ metadata=null; }
-      if(!metadata || !metadata.title) continue;
+      if(!metadata || !metadata.title){ metadataRejected++; continue; }
       const duplicate=await env.DB.prepare("SELECT id FROM news_articles WHERE canonical_url=?").bind(metadata.canonical_url).first();
-      if(duplicate) continue;
+      if(duplicate){ duplicates++; continue; }
       const excerptPl=decodeNewsText(candidate.excerpt_pl||metadata.description).slice(0,520);
       const excerptEn=decodeNewsText(candidate.excerpt_en||metadata.description).slice(0,520);
-      if(!excerptPl || !excerptEn) continue;
+      if(!excerptPl || !excerptEn){ incomplete++; continue; }
       const now=new Date().toISOString();
       await env.DB.prepare("INSERT INTO news_articles (id,canonical_url,source_url,source_name,title,excerpt_pl,excerpt_en,image_url,category,article_published_at,issue_key,status,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)")
         .bind(crypto.randomUUID(),metadata.canonical_url,metadata.source_url,metadata.source_name,metadata.title,excerptPl,excerptEn,metadata.image_url||null,String(candidate.category||"whisky").slice(0,40),metadata.published_at||String(candidate.published_at||"").slice(0,80)||null,issueKey,"published",now,now).run();
       added++;
     }
     const completedAt=new Date().toISOString();
+    const detail=JSON.stringify({validation:"completed",invalid_url:invalidUrl,metadata_rejected:metadataRejected,duplicates:duplicates,incomplete:incomplete});
     await env.DB.prepare("UPDATE news_agent_runs SET status='completed',candidates_found=?,articles_added=?,detail=?,completed_at=? WHERE id=?")
-      .bind(candidates.length,added,"source validation and duplicate check completed",completedAt,runId).run();
+      .bind(candidates.length,added,detail,completedAt,runId).run();
     return {ok:true,status:"completed",issue_key:issueKey,candidates:candidates.length,added:added};
   }catch(e){
     const completedAt=new Date().toISOString();
@@ -1370,7 +1382,7 @@ async function handleApi(request, env, cors){
   const url=new URL(request.url);
   const path=url.pathname.replace(/\/+$/,"");
   if(path==="/auth/health" && request.method==="GET"){
-    let schema=false, reset_schema=false, profile_schema=false, recommendations_schema=false, identity_schema=false, catalog_schema=false, catalog_data_schema=false, catalog_moderation_schema=false, telemetry_schema=false, news_schema=false, detail="";
+    let schema=false, reset_schema=false, profile_schema=false, recommendations_schema=false, identity_schema=false, catalog_schema=false, catalog_data_schema=false, catalog_moderation_schema=false, telemetry_schema=false, news_schema=false, news_article_count=0, news_last_run=null, detail="";
     if(env.DB){
       try{
         await env.DB.prepare("SELECT id FROM users LIMIT 1").first();
@@ -1395,10 +1407,16 @@ async function handleApi(request, env, cors){
         if(schema && catalog_data_schema && catalog_moderation_schema && !telemetry_schema) detail="telemetry migration v66 is missing";
         news_schema=await newsSchemaReady(env);
         if(schema && telemetry_schema && !news_schema) detail="whisky news migration v68 is missing";
+        if(news_schema){
+          const newsCount=await env.DB.prepare("SELECT COUNT(*) AS count FROM news_articles WHERE status='published'").first();
+          const lastNewsRun=await env.DB.prepare("SELECT issue_key,status,candidates_found,articles_added,detail,started_at,completed_at FROM news_agent_runs ORDER BY started_at DESC LIMIT 1").first();
+          news_article_count=Number(newsCount&&newsCount.count)||0;
+          news_last_run=lastNewsRun||null;
+        }
       }
       catch(e){ detail=String(e&&e.message?e.message:e).slice(0,220); }
     }
-    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_mode:"visual_only",scan_ocr_enabled:false,scanner_ai_ready:!!env.GEMINI_API_KEY,scanner_primary_model:env.IDENT_MODEL||env.MODEL||"gemini-2.5-flash",scanner_fallback_model:env.IDENT_FALLBACK_MODEL||"gemini-2.5-flash-lite",scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_moderation_version:CATALOG_MODERATION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,news_agent_version:NEWS_AGENT_VERSION,local_image_pipeline_version:LOCAL_IMAGE_PIPELINE_VERSION,news_schedule:"Monday and Thursday via daily UTC cron",news_retention_days:NEWS_RETENTION_DAYS,starter_news_count:STARTER_NEWS.length,news_auth_required:true,catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,catalog_moderation_schema:catalog_moderation_schema,telemetry_schema:telemetry_schema,news_schema:news_schema,news_agent_ready:news_schema&&!!env.GEMINI_API_KEY,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),local_image_cutout_ready:!!env.IMAGES,cutout_quality_ready:!!(env.IMAGES&&env.GEMINI_API_KEY),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
+    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_mode:"visual_only",scan_ocr_enabled:false,scanner_ai_ready:!!env.GEMINI_API_KEY,scanner_primary_model:env.IDENT_MODEL||env.MODEL||"gemini-2.5-flash",scanner_fallback_model:env.IDENT_FALLBACK_MODEL||"gemini-2.5-flash-lite",scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_moderation_version:CATALOG_MODERATION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,news_agent_version:NEWS_AGENT_VERSION,news_schedule:"Monday and Thursday releases with daily recovery via UTC cron",news_target_per_release:3,news_current_release:newsReleaseSlot(new Date()),news_article_count:news_article_count,news_last_run:news_last_run,local_image_pipeline_version:LOCAL_IMAGE_PIPELINE_VERSION,news_retention_days:NEWS_RETENTION_DAYS,starter_news_count:STARTER_NEWS.length,news_auth_required:true,catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,catalog_moderation_schema:catalog_moderation_schema,telemetry_schema:telemetry_schema,news_schema:news_schema,news_agent_ready:news_schema&&!!env.GEMINI_API_KEY,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),local_image_cutout_ready:!!env.IMAGES,cutout_quality_ready:!!(env.IMAGES&&env.GEMINI_API_KEY),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
   }
   if(path==="/auth/google/start" && request.method==="GET"){
     const returnUrl=allowedReturnUrl(env,url.searchParams.get("return")||appUrl(env));
@@ -2220,9 +2238,8 @@ export default {
     return scanResponse({result:ra, mode:mode, remaining:remainingQuota, owner:owner, matched:hit?hit.id:null, confidence:overallConfidence, agents:agentTrace},200,"analyzed",{matched_bottle_id:hit&&hit.id});
   },
   async scheduled(controller, env, ctx){
-    const weekday=new Date(controller.scheduledTime||Date.now()).getUTCDay();
     const tasks=[cleanupStaleCatalogSubmissions(env,200),cleanupTelemetry(env),cleanupNews(env)];
-    if(weekday===1 || weekday===4) tasks.push(seedStarterNews(env).then(function(){ return refreshWhiskyNews(env,"scheduled"); }));
+    tasks.push(seedStarterNews(env).then(function(){ return refreshWhiskyNews(env,"scheduled",controller.scheduledTime); }));
     ctx.waitUntil(Promise.all(tasks));
   }
 }
