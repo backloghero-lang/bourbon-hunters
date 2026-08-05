@@ -335,12 +335,12 @@ Ta zmiana wymaga aktualizacji GitHub Pages i Workera. Nie wymaga migracji D1 ani
 3. Zastap caly kod zawartoscia pliku `agent/worker.js`.
 4. Kliknij `Deploy`.
 5. Otworz `https://bourbon-hunters.darekmaslyk.workers.dev/auth/health`.
-6. Sprawdz, czy `scan_orchestrator_version` ma wartosc:
-   `visual-only-catalog-v8-mobile-foreground`.
+6. W zalogowanym profilu administratora otworz `Raporty` i sprawdz, czy `scan_orchestrator_version` ma wartosc:
+   `visual-only-catalog-v9-model-resolver`.
    `scan_catalog_version` ma byc `popular-200-curated-v2-no-flavors`.
    `catalog_submission_version` ma byc `community-catalog-images-v6-highres-cutout`.
    Dodatkowo `scan_mode` ma byc `visual_only`, a `scan_ocr_enabled` ma byc `false`.
-   `scanner_ai_ready` i `scanner_mobile_foreground` maja byc `true`, `scanner_primary_model` ma wskazywac `gemini-2.5-flash-lite`, a `scanner_fallback_model` ma wskazywac `gemini-2.5-flash`.
+   `scanner_ai_ready`, `scanner_model_discovery` i `scanner_mobile_foreground` maja byc `true`. Domyslne modele to `gemini-3.5-flash-lite` oraz `gemini-3.6-flash`.
 7. Na telefonie otworz `test-index.html`, kliknij `Wyczysc cache/PWA`, a potem `Odswiez build`.
 8. Zeskanuj z telefonu `Jack Daniel's Bonded`, `Jim Beam Double Oak` i `Bushmills 12 Year Old`, trzymajac jedna z butelek za szyjke. Skan nadal liczy sie jako jedno uzycie, mimo przygotowania pomocniczego widoku pierwszego planu.
 9. Nie dodawaj zmiennej `OCR_MODEL`; skaner jej nie uzywa.
@@ -348,6 +348,8 @@ Ta zmiana wymaga aktualizacji GitHub Pages i Workera. Nie wymaga migracji D1 ani
 
 Skaner przechodzi bezposrednio z loadera do szczegolow najlepszego pewnego dopasowania. Jesli rekord nie ma gotowego assetu, Worker najpierw przygotowuje wyciecie butelki; przy blednym wycieciu aplikacja prosi o nowe zdjecie. Taki wynik ma przycisk uzupelnienia katalogu. Rekord z gotowym assetem nie pokazuje przycisku katalogu. Publikacja nowego assetu nadal przechodzi przez zgode usera i moderacje.
 
-Przy odpowiedzi `503` z Gemini Worker przechodzi z lekkiego modelu podstawowego na `gemini-2.5-flash`. Odpowiedz `429` nadal oznacza prawdziwy limit i nie jest maskowana modelem zapasowym. Opcjonalne zmienne `IDENT_MODEL` i `IDENT_FALLBACK_MODEL` pozwalaja zmienic modele bez edycji kodu.
+Worker pobiera z Gemini liste modeli dostepnych dla aktualnego klucza i przechowuje ja przez 10 minut. Niedostepne identyfikatory zapisane w zmiennych Cloudflare sa pomijane. Odpowiedz `400` lub `404` dla pojedynczego modelu uruchamia kolejny zgodny model, a `503` uruchamia retry i fallback. Odpowiedz `429` nadal oznacza prawdziwy limit i nie jest maskowana modelem zapasowym. Opcjonalne zmienne `IDENT_MODEL` i `IDENT_FALLBACK_MODEL` pozostaja obslugiwane, ale nie sa wymagane.
+
+Po tej aktualizacji nie wykonuj migracji D1 ani nie zmieniaj sekretu `GEMINI_API_KEY`. Wymagana jest jedynie publikacja `agent/worker.js` w Cloudflare. Test lokalny: `node scripts/scanner-provider-fallback.mjs`.
 
 Stare identyfikatory z kolekcji, wishlist i ocen sa automatycznie przenoszone na produkty kanoniczne. Nie wykonuj recznych aktualizacji D1.

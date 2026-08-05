@@ -18,7 +18,7 @@ const DEFAULT_DB_URL = "https://raw.githubusercontent.com/" + REPO + "/main/db/c
 const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters. Krotko, z jajem, ale rzeczowo. quality=jakosc 1-5, value=jakosc/cena 1-5 (5 swietna i tania, 1 slaba i droga). Pisz {{LANG}}. Zwroc tylko JSON.";
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
 const MULTI_CANDIDATE_CONFIDENCE = 0.9;
-const SCAN_ORCHESTRATOR_VERSION = "visual-only-catalog-v8-mobile-foreground";
+const SCAN_ORCHESTRATOR_VERSION = "visual-only-catalog-v9-model-resolver";
 const SCAN_CATALOG_VERSION = "popular-200-curated-v2-no-flavors";
 const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v6-highres-cutout";
 const CATALOG_MODERATION_VERSION = "catalog-moderation-orchestrator-admin-v1";
@@ -34,6 +34,7 @@ const PBKDF2_ITERATIONS = 100000;
 const PROFILE_BADGE_IDS = ["glass","bottle","barrel","seal","hat","star","distillery","notes","opener","horseshoe"];
 
 let _p = { t:null, at:0 }, _db = { d:null, at:0 }, _communityDb = { d:null, at:0 };
+let _geminiModels = { names:null, at:0 };
 const SCAN_RECORD_OVERRIDES={
   "jeffersons-very-small-batch-bourbon-whiskey-copy":{aliases:["Jefferson's Bourbon","Jefferson's Blend of Straight Bourbon Whiskey"],abv:41.15},
   "jack-daniel-s-bonded-119-43":{
@@ -643,13 +644,13 @@ async function assessBottleCutout(env, bottleName, processed){
     return {checked:false,acceptable:true,reason_code:"qa_unavailable",confidence:0,usage:null};
   }
   const payload={
-    __model:env.CUTOUT_QA_MODEL||env.IDENT_MODEL||env.MODEL||"gemini-2.5-flash",
+    __model:env.CUTOUT_QA_MODEL||env.IDENT_MODEL||"gemini-3.5-flash-lite",
     contents:[{role:"user",parts:[
       {text:"Ocen wyciety asset butelki do katalogu aplikacji. Nazwa produktu dla kontekstu: "+String(bottleName||"nieznana").slice(0,180)+". Zaakceptuj tylko jedna kompletna butelke widoczna od korka do dna, bez dloni, palcow, polki, cenowki ani innych obiektow. Odrzuc asset, jezeli szyjka, korek, etykieta lub dno sa uciete, przezroczyste, maja dziury albo zostaly uszkodzone przez usuwanie tla. Nie oceniaj poprawnosci marki i nie poprawiaj etykiety. centered oznacza, ze butelka jest pionowa i wizualnie wycentrowana. Zwroc reason_code: ok, hand_or_object, bottle_cut_off, segmentation_damage, multiple_objects albo poor_framing."},
       {inlineData:{mimeType:"image/webp",data:encodeBase64(processed)}}
     ]}],
     generationConfig:{
-      temperature:0,maxOutputTokens:220,thinkingConfig:{thinkingBudget:0},
+      maxOutputTokens:220,
       responseMimeType:"application/json",
       responseSchema:{
         type:"OBJECT",
@@ -1439,7 +1440,7 @@ async function refreshWhiskyNews(env, reason, scheduledAt){
       "Return ONLY JSON: {\"articles\":[{\"title\":\"\",\"url\":\"https://...\",\"excerpt_pl\":\"\",\"excerpt_en\":\"\",\"category\":\"bourbon|scotch|irish|japanese|world|industry\",\"published_at\":\"ISO date or empty\"}]}."
     ].join("\n");
     const result=await callGemini(env,{
-      __model:env.NEWS_MODEL||env.MODEL||"gemini-2.5-flash",
+      __model:env.NEWS_MODEL||"gemini-3.6-flash",
       contents:[{role:"user",parts:[{text:prompt}]}],
       tools:[{google_search:{}}],
       generationConfig:{temperature:0.2,maxOutputTokens:3000}
@@ -1563,7 +1564,7 @@ async function handleApi(request, env, cors){
       }
       catch(e){ detail=String(e&&e.message?e.message:e).slice(0,220); }
     }
-    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,security_version:SECURITY_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_mode:"visual_only",scan_ocr_enabled:false,scanner_ai_ready:!!env.GEMINI_API_KEY,scanner_primary_model:env.IDENT_MODEL||"gemini-2.5-flash-lite",scanner_fallback_model:env.IDENT_FALLBACK_MODEL||env.MODEL||"gemini-2.5-flash",scanner_mobile_foreground:!!env.IMAGES,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_moderation_version:CATALOG_MODERATION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,news_agent_version:NEWS_AGENT_VERSION,news_schedule:"Monday and Thursday releases with daily recovery via UTC cron",news_target_per_release:3,news_current_release:newsReleaseSlot(new Date()),news_article_count:news_article_count,news_last_run:news_last_run,local_image_pipeline_version:LOCAL_IMAGE_PIPELINE_VERSION,news_retention_days:NEWS_RETENTION_DAYS,starter_news_count:STARTER_NEWS.length,news_auth_required:true,catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,auth_security_schema:auth_security_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,catalog_moderation_schema:catalog_moderation_schema,telemetry_schema:telemetry_schema,news_schema:news_schema,news_agent_ready:news_schema&&!!env.GEMINI_API_KEY,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),local_image_cutout_ready:!!env.IMAGES,cutout_quality_ready:!!(env.IMAGES&&env.GEMINI_API_KEY),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
+    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,security_version:SECURITY_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_mode:"visual_only",scan_ocr_enabled:false,scanner_ai_ready:!!env.GEMINI_API_KEY,scanner_primary_model:env.IDENT_MODEL||"gemini-3.5-flash-lite",scanner_fallback_model:env.IDENT_FALLBACK_MODEL||"gemini-3.6-flash",scanner_model_discovery:true,scanner_mobile_foreground:!!env.IMAGES,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_moderation_version:CATALOG_MODERATION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,news_agent_version:NEWS_AGENT_VERSION,news_schedule:"Monday and Thursday releases with daily recovery via UTC cron",news_target_per_release:3,news_current_release:newsReleaseSlot(new Date()),news_article_count:news_article_count,news_last_run:news_last_run,local_image_pipeline_version:LOCAL_IMAGE_PIPELINE_VERSION,news_retention_days:NEWS_RETENTION_DAYS,starter_news_count:STARTER_NEWS.length,news_auth_required:true,catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,auth_security_schema:auth_security_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,catalog_moderation_schema:catalog_moderation_schema,telemetry_schema:telemetry_schema,news_schema:news_schema,news_agent_ready:news_schema&&!!env.GEMINI_API_KEY,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),local_image_cutout_ready:!!env.IMAGES,cutout_quality_ready:!!(env.IMAGES&&env.GEMINI_API_KEY),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
   }
   if(path==="/auth/google/start" && request.method==="GET"){
     const returnUrl=allowedReturnUrl(env,url.searchParams.get("return")||appUrl(env));
@@ -2150,12 +2151,12 @@ async function callVisualAgent(env, mime, image, foreground){
     imageParts.push({inlineData:{mimeType:"image/webp",data:encodeBase64(foreground)}});
   }
   const payload={
-    __model: env.IDENT_MODEL||"gemini-2.5-flash-lite",
+    __model: env.IDENT_MODEL||"gemini-3.5-flash-lite",
     contents:[{role:"user",parts:[
       {text:"Rozpoznaj dokladna nazwe butelki whisky lub bourbona: marka, wariant oraz widoczny wiek lub edycja. Kadr moze byc przekrzywiony, zrobiony w slabym swietle i zawierac dlon trzymajaca szyjke, regaly, monitor, stol lub inne butelki. Najpierw znajdz glowna butelke i ignoruj wszystko poza nia. Dlon albo zasloniety korek nie oznacza braku butelki, jezeli korpus i etykieta sa czytelne. Najwieksza wage nadaj logo marki, nazwie wariantu, liczbie wieku, tekstowi glownej etykiety, kolorowi etykiety, ksztaltowi butelki oraz oznaczeniom proof i ABV. Polacz dowody z obu obrazow, ale nie wymyslaj niewidocznego wariantu. Zwroc do czterech realnych mozliwych nazw, gdy widoczne cechy pasuja do kilku wariantow. Jesli to nie jest butelka whisky albo nie da sie rozpoznac marki, ustaw name=\"\" i confidence=0."}
     ].concat(imageParts)}],
     generationConfig:{
-      temperature:0,maxOutputTokens:260,thinkingConfig:{thinkingBudget:0},
+      maxOutputTokens:260,
       responseMimeType:"application/json",
       responseSchema:{
         type:"OBJECT",
@@ -2174,24 +2175,75 @@ async function callVisualAgent(env, mime, image, foreground){
   return {data:parseJson(r.txt)||{},usage:r.usage};
 }
 
-async function callGemini(env, payload, stage){
-  const primaryModel = payload.__model || env.MODEL || "gemini-2.5-flash";
-  const fallbackModel = (stage==="visual_identification" || stage==="bottle_cutout_qa")
-    ? (env.IDENT_FALLBACK_MODEL||env.MODEL||(primaryModel==="gemini-2.5-flash-lite"?"gemini-2.5-flash":"gemini-2.5-flash-lite"))
-    : "";
-  const models=[primaryModel];
-  if(fallbackModel && fallbackModel!==primaryModel) models.push(fallbackModel);
+function cleanGeminiModelName(value){
+  return String(value||"").trim().replace(/^models\//,"").slice(0,120);
+}
+function uniqueGeminiModels(values){
+  const seen={};
+  return values.map(cleanGeminiModelName).filter(function(model){
+    if(!model || seen[model]) return false;
+    seen[model]=true;
+    return true;
+  });
+}
+async function availableGeminiModels(env){
+  if(_geminiModels.names && Date.now()-_geminiModels.at<10*60*1000) return _geminiModels.names;
+  try{
+    const url="https://generativelanguage.googleapis.com/v1beta/models?pageSize=1000&key="+env.GEMINI_API_KEY;
+    const response=await fetch(url,{headers:{Accept:"application/json"}});
+    if(!response.ok) return null;
+    const data=await response.json();
+    const names=(Array.isArray(data.models)?data.models:[]).filter(function(model){
+      return Array.isArray(model.supportedGenerationMethods) && model.supportedGenerationMethods.indexOf("generateContent")!==-1;
+    }).map(function(model){ return cleanGeminiModelName(model.name); }).filter(Boolean);
+    if(names.length){
+      _geminiModels={names:names,at:Date.now()};
+      return names;
+    }
+  }catch(e){}
+  return null;
+}
+async function geminiModelsForStage(env, payload, stage){
+  const visual=stage==="visual_identification" || stage==="bottle_cutout_qa";
+  const requested=payload.__model || "";
+  const preferred=visual
+    ? [requested,env.IDENT_MODEL,"gemini-3.5-flash-lite","gemini-3.6-flash",env.IDENT_FALLBACK_MODEL,env.MODEL,"gemini-3.1-flash-lite"]
+    : [requested,stage==="whisky_news"?env.NEWS_MODEL:"","gemini-3.6-flash","gemini-3.5-flash",env.MODEL,"gemini-3.5-flash-lite"];
+  const models=uniqueGeminiModels(preferred);
+  const available=await availableGeminiModels(env);
+  if(!available) return models;
+  const allowed={};
+  available.forEach(function(model){ allowed[model]=true; });
+  const filtered=models.filter(function(model){ return !!allowed[model]; });
+  return filtered.length ? filtered : models;
+}
+function geminiPayloadForModel(payload, model){
   const requestPayload=Object.assign({},payload);
   delete requestPayload.__model;
-  const started=Date.now();
-  let r=null, st=0, dt="brak odpowiedzi", attempts=0, usedModel=primaryModel;
-  if(!env.GEMINI_API_KEY){
-    return {err:{status:401,detail:"gemini_missing"},usage:geminiUsage(null,{stage:stage,model:primaryModel,status:401,attempts:0,duration_ms:0})};
+  if(requestPayload.generationConfig){
+    requestPayload.generationConfig=Object.assign({},requestPayload.generationConfig);
+    if(/^gemini-3\./.test(model)){
+      delete requestPayload.generationConfig.temperature;
+      delete requestPayload.generationConfig.topP;
+      delete requestPayload.generationConfig.topK;
+      delete requestPayload.generationConfig.thinkingConfig;
+    }
   }
+  return requestPayload;
+}
+async function callGemini(env, payload, stage){
+  const requestedModel=cleanGeminiModelName(payload.__model||env.MODEL||"gemini-3.6-flash");
+  const started=Date.now();
+  let r=null, st=0, dt="brak odpowiedzi", attempts=0, usedModel=requestedModel;
+  if(!env.GEMINI_API_KEY){
+    return {err:{status:401,detail:"gemini_missing"},usage:geminiUsage(null,{stage:stage,model:requestedModel,status:401,attempts:0,duration_ms:0})};
+  }
+  const models=await geminiModelsForStage(env,payload,stage);
   outer: for(let m=0;m<models.length;m++){
     usedModel=models[m];
     const url="https://generativelanguage.googleapis.com/v1beta/models/"+usedModel+":generateContent?key="+env.GEMINI_API_KEY;
     const attemptsPerModel=stage==="visual_identification"?1:2;
+    const requestPayload=geminiPayloadForModel(payload,usedModel);
     for(let a=0;a<attemptsPerModel;a++){
       attempts++;
       let rr;
@@ -2199,8 +2251,10 @@ async function callGemini(env, payload, stage){
       catch(e){ st=0; dt="network"; }
       if(rr&&rr.ok){ r=rr; break outer; }
       if(rr){ st=rr.status; dt=(await rr.text()).slice(0,400); }
+      if(st===401 || st===403 || st===429) break outer;
+      if(st===400 || st===404) break;
       const retryable=st===0||st===408||st===500||st===502||st===503||st===504;
-      if(st===429 || !retryable) break outer;
+      if(!retryable) break;
       const hasNextAttempt=a<attemptsPerModel-1 || m<models.length-1;
       if(hasNextAttempt){
         const backoff=Math.min(8000,1200*Math.pow(2,attempts-1));
@@ -2213,7 +2267,7 @@ async function callGemini(env, payload, stage){
   let txt=""; try{ txt=data.candidates[0].content.parts.map(function(p){return p.text||"";}).join("").trim(); }catch(e){}
   let sources=[];
   try{ sources=(data.candidates[0].groundingMetadata.groundingChunks||[]).filter(function(c){return c.web;}).slice(0,6).map(function(c){return {title:c.web.title||c.web.uri,url:c.web.uri};}); }catch(e){}
-  return { txt:txt, sources:sources,usage:geminiUsage(data,{stage:stage,model:usedModel,status:200,attempts:attempts,duration_ms:Date.now()-started}),fallback_used:usedModel!==primaryModel };
+  return { txt:txt, sources:sources,usage:geminiUsage(data,{stage:stage,model:usedModel,status:200,attempts:attempts,duration_ms:Date.now()-started}),fallback_used:usedModel!==requestedModel };
 }
 
 export default {

@@ -207,6 +207,7 @@ Priorytet 3: synchronizacja
 Priorytet 4: skaner
 
 - Dopolerowac UI skanera i statusy.
+- Aktualny adapter Gemini skanera to `visual-only-catalog-v9-model-resolver`: wykrywa modele dostepne dla klucza i przechodzi dalej po `404`; domyslnie uzywa `gemini-3.5-flash-lite` z fallbackiem `gemini-3.6-flash`.
 - Dopracowac rozroznienie: szybki wynik z bazy vs Hunter AI Plus.
 - Zaprojektowac storage zdjec usera w R2.
 

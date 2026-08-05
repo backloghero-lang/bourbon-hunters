@@ -341,6 +341,17 @@ node scripts/test_spirit_taxonomy.mjs
 - Health pokazuje `scanner_ai_ready`, `scanner_primary_model`, `scanner_fallback_model` i `scanner_mobile_foreground`.
 - Test regresyjny: `node scripts/scanner-provider-fallback.mjs`.
 
+## Aktualizacja 2026-08-05 - odbudowany resolver modeli Gemini
+
+- Wersja Workera: `visual-only-catalog-v9-model-resolver`.
+- Przyczyna awarii skanera na PC i telefonie byla odpowiedz Gemini `404` dla starych identyfikatorow `gemini-2.5-flash-lite` i `gemini-2.5-flash` dostepnych w konfiguracji projektu.
+- Worker pobiera przez `models.list` modele dostepne dla klucza, filtruje je po `generateContent` i cache'uje wynik przez 10 minut.
+- Skaner preferuje `gemini-3.5-flash-lite`, a nastepnie `gemini-3.6-flash`. News i analiza preferuja `gemini-3.6-flash`.
+- `404` oraz blad konfiguracji pojedynczego modelu nie koncza calego skanu; uruchamiany jest kolejny model. `401`, `403` i `429` nadal zatrzymuja wywolanie, bo oznaczaja problem z kluczem, dostepem albo limitem projektu.
+- Dla modeli Gemini 3 Worker usuwa przestarzale parametry samplowania i stary `thinkingBudget`.
+- Zmiana nie wymaga migracji D1. Po publikacji GitHub trzeba podmienic i wdrozyc `agent/worker.js` w Cloudflare.
+- Test `scripts/scanner-provider-fallback.mjs` obejmuje niedostepna liste modeli, filtrowanie starego modelu i przejscie po `404`.
+
 ## Aktualizacja 2026-08-05 - kuracja kategorii i filtrow
 
 - Z aplikacji i indeksu skanera usunieto whiskey smakowe, likiery whiskey oraz warianty infused/cream.
