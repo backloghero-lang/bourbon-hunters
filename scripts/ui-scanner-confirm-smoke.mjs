@@ -108,7 +108,7 @@ if(process.env.BH_SMOKE_SCREENSHOT) await page.screenshot({path:process.env.BH_S
 await browser.close();
 
 if(errors.length) throw new Error(errors.join("\n"));
-if(unifiedFilters.familyRows!==1 || unifiedFilters.styleRows!==1 || unifiedFilters.allButtons!==2 || unifiedFilters.selected!==0){
+if(unifiedFilters.familyRows!==1 || unifiedFilters.styleRows!==1 || unifiedFilters.allButtons!==0 || unifiedFilters.selected!==0){
   throw new Error("Unified filter renderer failed: "+JSON.stringify(unifiedFilters));
 }
 if(!migratedCollection.includes("knob-creek-120-proof-9-year-single-barrel-reserve-bourbon") || !migratedCollection.includes("michters-single-barrel-10-year-old-bourbon")){

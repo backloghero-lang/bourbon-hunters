@@ -18,7 +18,7 @@ const DEFAULT_DB_URL = "https://raw.githubusercontent.com/" + REPO + "/main/db/c
 const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters. Krotko, z jajem, ale rzeczowo. quality=jakosc 1-5, value=jakosc/cena 1-5 (5 swietna i tania, 1 slaba i droga). Pisz {{LANG}}. Zwroc tylko JSON.";
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
 const MULTI_CANDIDATE_CONFIDENCE = 0.9;
-const SCAN_ORCHESTRATOR_VERSION = "visual-only-catalog-v7-resilient-fallback";
+const SCAN_ORCHESTRATOR_VERSION = "visual-only-catalog-v8-mobile-foreground";
 const SCAN_CATALOG_VERSION = "popular-200-curated-v2-no-flavors";
 const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v6-highres-cutout";
 const CATALOG_MODERATION_VERSION = "catalog-moderation-orchestrator-admin-v1";
@@ -90,7 +90,7 @@ const SCAN_EXTRA_RECORDS=[
   {id:"bushmills-original-irish-whiskey",name:"Bushmills Original",aliases:["Bushmills Original","Bushmills Original Irish Whiskey","Bushmills White Label"],distillery:"Old Bushmills Distillery",region:"Ireland",type:"Blended Irish Whiskey",category:"Irish",proof:80,abv:40,mashbill:null,price:null,quality:null,value:null,notes:"Light fruit, vanilla, honey and warm spice",desc:"A smooth blended Irish whiskey combining malt and grain whiskey.",image:"",source:"manual_official",catalog_status:"verified"},
   {id:"bushmills-black-bush-irish-whiskey",name:"Bushmills Black Bush",aliases:["Bushmills Black Bush","Black Bush","Black Bush Irish Whiskey"],distillery:"Old Bushmills Distillery",region:"Ireland",type:"Blended Irish Whiskey",category:"Irish",proof:80,abv:40,mashbill:null,price:null,quality:null,value:null,notes:"Sherry, dried fruit and toasted nuts",desc:"A malt-forward Irish blend matured in Oloroso sherry and bourbon casks.",image:"",source:"manual_official",catalog_status:"verified"},
   {id:"bushmills-10-year-old-single-malt",name:"Bushmills 10 Year Old Single Malt",aliases:["Bushmills 10 Year","Bushmills 10 Year Old","Bushmills 10 Year Single Malt","Bushmills 10 Year Old Single Malt Irish Whiskey"],distillery:"Old Bushmills Distillery",region:"Ireland",type:"Single Malt Irish Whiskey",category:"Irish",proof:80,abv:40,mashbill:null,price:null,quality:null,value:null,notes:"Apple, honey and milk chocolate",desc:"A ten-year-old triple-distilled Irish single malt.",image:"",source:"manual_official",catalog_status:"verified"},
-  {id:"bushmills-12-year-old-single-malt",name:"Bushmills 12 Year Old Single Malt",aliases:["Bushmills 12 Year","Bushmills 12 Year Old","Bushmills 12 Year Single Malt","Bushmills 12 Year Old Single Malt Irish Whiskey"],distillery:"Old Bushmills Distillery",region:"Ireland",type:"Single Malt Irish Whiskey",category:"Irish",proof:80,abv:40,mashbill:null,price:null,quality:null,value:null,notes:"Dark chocolate, dried fruit and spice",desc:"A twelve-year-old Irish single malt with rich cask influence.",image:"",source:"manual_official",catalog_status:"verified"},
+  {id:"bushmills-12-year-old-single-malt",name:"Bushmills 12 Year Old Single Malt",aliases:["Bushmills 12 Year","Bushmills 12 Year Old","Bushmills 12 Year Single Malt","Bushmills 12 Year Old Single Malt Irish Whiskey"],distillery:"Old Bushmills Distillery",region:"Ireland",type:"Single Malt Irish Whiskey",category:"Irish",proof:80,abv:40,mashbill:null,price:null,quality:null,value:null,notes:"Dark chocolate, dried fruit and spice",desc:"A twelve-year-old Irish single malt with rich cask influence.",image:"assets/bourbons/clean/bushmills-12-year-old-single-malt.webp",source:"manual_official",catalog_status:"verified"},
   {id:"bushmills-16-year-old-single-malt",name:"Bushmills 16 Year Old Single Malt",aliases:["Bushmills 16 Year","Bushmills 16 Year Old","Bushmills 16 Year Single Malt","Bushmills 16 Year Old Single Malt Irish Whiskey"],distillery:"Old Bushmills Distillery",region:"Ireland",type:"Single Malt Irish Whiskey",category:"Irish",proof:80,abv:40,mashbill:null,price:null,quality:null,value:null,notes:"Almond, honey, fruit and port cask richness",desc:"A sixteen-year-old Irish single malt finished in port casks.",image:"",source:"manual_official",catalog_status:"verified"},
   {id:"bushmills-prohibition-recipe",name:"Bushmills Prohibition Recipe",aliases:["Bushmills Prohibition Recipe","Bushmills Prohibition Recipe Irish Whiskey","Bushmills Peaky Blinders Prohibition Recipe"],distillery:"Old Bushmills Distillery",region:"Ireland",type:"Blended Irish Whiskey",category:"Irish",proof:92,abv:46,mashbill:null,price:null,quality:null,value:null,notes:"Rich grain, vanilla, spice and oak",desc:"A higher-proof Bushmills blend inspired by a pre-Prohibition style.",image:"",source:"manual_official",catalog_status:"verified"},
   {id:"jim-beam-single-barrel",name:"Jim Beam Single Barrel",aliases:["Jim Beam Single Barrel","Jim Beam Single Barrel Kentucky Straight Bourbon Whiskey"],distillery:"James B. Beam Distilling Co.",region:"Kentucky",type:"Kentucky Straight Bourbon Whiskey",category:"Single Barrel",proof:null,abv:null,mashbill:null,price:null,quality:null,value:null,notes:"Oak, caramel and vanilla",desc:"A hand-selected single-barrel expression from Jim Beam.",image:"",source:"manual_official",catalog_status:"verified"},
@@ -576,6 +576,19 @@ async function transformBottleCutout(env, mime, image){
     .output({format:"image/webp",quality:92});
   const response=output.response();
   if(!response.ok) throw new Error("image_transform_"+response.status);
+  return new Uint8Array(await response.arrayBuffer());
+}
+async function transformRecognitionForeground(env, mime, image){
+  if(!env.IMAGES) return null;
+  const bytes=decodeBase64(String(image||""));
+  if(!bytes.byteLength || bytes.byteLength>6000000) return null;
+  const output=await env.IMAGES.input(new Blob([bytes],{type:mime}).stream())
+    .transform({segment:"foreground"})
+    .transform({trim:"border"})
+    .transform({width:960,height:1100,fit:"pad",background:"rgba(0,0,0,0)",sharpen:1})
+    .output({format:"image/webp",quality:84});
+  const response=output.response();
+  if(!response.ok) throw new Error("recognition_foreground_"+response.status);
   return new Uint8Array(await response.arrayBuffer());
 }
 async function assessBottleCutout(env, bottleName, processed){
@@ -1416,7 +1429,7 @@ async function handleApi(request, env, cors){
       }
       catch(e){ detail=String(e&&e.message?e.message:e).slice(0,220); }
     }
-    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_mode:"visual_only",scan_ocr_enabled:false,scanner_ai_ready:!!env.GEMINI_API_KEY,scanner_primary_model:env.IDENT_MODEL||env.MODEL||"gemini-2.5-flash",scanner_fallback_model:env.IDENT_FALLBACK_MODEL||"gemini-2.5-flash-lite",scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_moderation_version:CATALOG_MODERATION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,news_agent_version:NEWS_AGENT_VERSION,news_schedule:"Monday and Thursday releases with daily recovery via UTC cron",news_target_per_release:3,news_current_release:newsReleaseSlot(new Date()),news_article_count:news_article_count,news_last_run:news_last_run,local_image_pipeline_version:LOCAL_IMAGE_PIPELINE_VERSION,news_retention_days:NEWS_RETENTION_DAYS,starter_news_count:STARTER_NEWS.length,news_auth_required:true,catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,catalog_moderation_schema:catalog_moderation_schema,telemetry_schema:telemetry_schema,news_schema:news_schema,news_agent_ready:news_schema&&!!env.GEMINI_API_KEY,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),local_image_cutout_ready:!!env.IMAGES,cutout_quality_ready:!!(env.IMAGES&&env.GEMINI_API_KEY),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
+    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_mode:"visual_only",scan_ocr_enabled:false,scanner_ai_ready:!!env.GEMINI_API_KEY,scanner_primary_model:env.IDENT_MODEL||"gemini-2.5-flash-lite",scanner_fallback_model:env.IDENT_FALLBACK_MODEL||env.MODEL||"gemini-2.5-flash",scanner_mobile_foreground:!!env.IMAGES,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_moderation_version:CATALOG_MODERATION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,news_agent_version:NEWS_AGENT_VERSION,news_schedule:"Monday and Thursday releases with daily recovery via UTC cron",news_target_per_release:3,news_current_release:newsReleaseSlot(new Date()),news_article_count:news_article_count,news_last_run:news_last_run,local_image_pipeline_version:LOCAL_IMAGE_PIPELINE_VERSION,news_retention_days:NEWS_RETENTION_DAYS,starter_news_count:STARTER_NEWS.length,news_auth_required:true,catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,catalog_moderation_schema:catalog_moderation_schema,telemetry_schema:telemetry_schema,news_schema:news_schema,news_agent_ready:news_schema&&!!env.GEMINI_API_KEY,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),local_image_cutout_ready:!!env.IMAGES,cutout_quality_ready:!!(env.IMAGES&&env.GEMINI_API_KEY),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
   }
   if(path==="/auth/google/start" && request.method==="GET"){
     const returnUrl=allowedReturnUrl(env,url.searchParams.get("return")||appUrl(env));
@@ -1747,6 +1760,7 @@ function textBottleScore(text, bottle){
 
 const GENERIC_MATCH_TOKENS={
   whiskey:1,whisky:1,bourbon:1,american:1,single:1,malt:1,straight:1,domestic:1,kentucky:1,
+  irish:1,scotch:1,japanese:1,canadian:1,tennessee:1,
   blended:1,blend:1,spirit:1,spirits:1,distillery:1,distilling:1,reserve:1,small:1,batch:1,
   barrel:1,cask:1,aged:1,year:1,years:1,proof:1,bottled:1,bond:1,rye:1,grain:1,oak:1,
   finish:1,finished:1,label:1,edition:1,limited:1,release:1,original:1,old:1,bib:1
@@ -1768,6 +1782,10 @@ function observedDistinctiveTokens(names){
 function sharedTokens(left, right){
   const set={}; (left||[]).forEach(function(token){ set[token]=1; });
   return (right||[]).filter(function(token){ return !!set[token]; });
+}
+function ageMarker(value){
+  const match=norm(value).match(/\b(\d{1,2})\s*(?:year|years|yr|yrs|yo)\b/);
+  return match ? match[1] : "";
 }
 
 function compactVision(vision){
@@ -1896,15 +1914,23 @@ function matchBottleWithVisual(db, vision){
     if(!bottleDistinctive.length || !brandAnchors.length) return;
     const bottleContext=distinctiveTokens([(b&&b.name)||"",Array.isArray(b&&b.aliases)?b.aliases.join(" "):"",(b&&b.distillery)||"",(b&&b.region)||""].join(" "));
     const unmatchedObserved=observed.filter(function(token){ return bottleContext.indexOf(token)<0; });
+    const observedNumbers=toks(bestVisual.name).filter(function(token){ return /^\d{1,4}$/.test(token); });
+    const bottleNumbers=toks(b&&b.name).filter(function(token){ return /^\d{1,4}$/.test(token); });
+    const numericConflict=!!(observedNumbers.length&&bottleNumbers.length&&!sharedTokens(observedNumbers,bottleNumbers).length);
+    const observedAge=ageMarker(bestVisual.name);
+    const bottleAge=ageMarker([(b&&b.name)||"",Array.isArray(b&&b.aliases)?b.aliases.join(" "):""].join(" "));
+    const ageConflict=!!(observedAge&&bottleAge&&observedAge!==bottleAge);
     let confidence=bestVisual.confidence;
     if(unmatchedObserved.length) confidence=Math.min(confidence,Math.max(0.7,0.94-unmatchedObserved.length*0.06));
+    if(numericConflict) confidence=Math.min(confidence,0.68);
+    if(ageConflict) confidence=Math.min(confidence,0.55);
     rows.push({
       bottle:b,
       dbConfidence:confidence,
       brandAnchored:true,
       brandAnchors:brandAnchors,
       matchedFields:["visual","brand_anchor"],
-      evidence:{visual:bestVisual.confidence,database:bestVisual.lexical,primary:bestVisual.primaryLexical,exact:bestVisual.exact,primaryExact:bestVisual.primaryExact,source:bestVisual.source,brandAnchors:brandAnchors,unmatchedObserved:unmatchedObserved}
+      evidence:{visual:bestVisual.confidence,database:bestVisual.lexical,primary:bestVisual.primaryLexical,exact:bestVisual.exact,primaryExact:bestVisual.primaryExact,source:bestVisual.source,brandAnchors:brandAnchors,unmatchedObserved:unmatchedObserved,numericConflict:numericConflict,observedAge:observedAge,bottleAge:bottleAge,ageConflict:ageConflict}
     });
   });
   rows.sort(function(a,b){
@@ -1933,13 +1959,19 @@ function matchBottleWithVisual(db, vision){
   return best;
 }
 
-async function callVisualAgent(env, mime, image){
+async function callVisualAgent(env, mime, image, foreground){
+  const imageParts=[
+    {text:"Pierwszy obraz to pelny kadr z telefonu. Drugi obraz, jezeli wystepuje, to automatycznie odseparowany pierwszy plan z tego samego kadru; moze nadal zawierac dlon albo miec drobne uszkodzenia segmentacji."},
+    {inlineData:{mimeType:mime,data:image}}
+  ];
+  if(foreground&&foreground.byteLength){
+    imageParts.push({inlineData:{mimeType:"image/webp",data:encodeBase64(foreground)}});
+  }
   const payload={
-    __model: env.IDENT_MODEL||env.MODEL||"gemini-2.5-flash",
+    __model: env.IDENT_MODEL||"gemini-2.5-flash-lite",
     contents:[{role:"user",parts:[
-      {text:"Rozpoznaj dokladna nazwe butelki whisky lub bourbona: marka, wariant oraz widoczny wiek lub edycja. Obraz moze byc zestawieniem dwoch kadrow tej samej fotografii: pelnego ujecia po lewej i zblizenia korpusu oraz etykiety po prawej. Ignoruj dlon trzymajaca szyjke, regaly, inne butelki i tlo. Najwieksza wage nadaj logo marki, tekstowi glownej etykiety, kolorowi etykiety, ksztaltowi butelki oraz oznaczeniom wariantu, wieku, proof i ABV. Dlon lub zaslonieta szyjka nie oznacza braku butelki, jesli etykieta pozwala rozpoznac produkt. Nie wymyslaj niewidocznego wariantu. Zwroc do czterech realnych mozliwych nazw, gdy widoczne cechy pasuja do kilku wariantow. Jesli to nie jest butelka whisky albo nie da sie rozpoznac marki, ustaw name=\"\" i confidence=0."},
-      {inlineData:{mimeType:mime,data:image}}
-    ]}],
+      {text:"Rozpoznaj dokladna nazwe butelki whisky lub bourbona: marka, wariant oraz widoczny wiek lub edycja. Kadr moze byc przekrzywiony, zrobiony w slabym swietle i zawierac dlon trzymajaca szyjke, regaly, monitor, stol lub inne butelki. Najpierw znajdz glowna butelke i ignoruj wszystko poza nia. Dlon albo zasloniety korek nie oznacza braku butelki, jezeli korpus i etykieta sa czytelne. Najwieksza wage nadaj logo marki, nazwie wariantu, liczbie wieku, tekstowi glownej etykiety, kolorowi etykiety, ksztaltowi butelki oraz oznaczeniom proof i ABV. Polacz dowody z obu obrazow, ale nie wymyslaj niewidocznego wariantu. Zwroc do czterech realnych mozliwych nazw, gdy widoczne cechy pasuja do kilku wariantow. Jesli to nie jest butelka whisky albo nie da sie rozpoznac marki, ustaw name=\"\" i confidence=0."}
+    ].concat(imageParts)}],
     generationConfig:{
       temperature:0,maxOutputTokens:260,thinkingConfig:{thinkingBudget:0},
       responseMimeType:"application/json",
@@ -1963,7 +1995,7 @@ async function callVisualAgent(env, mime, image){
 async function callGemini(env, payload, stage){
   const primaryModel = payload.__model || env.MODEL || "gemini-2.5-flash";
   const fallbackModel = (stage==="visual_identification" || stage==="bottle_cutout_qa")
-    ? (env.IDENT_FALLBACK_MODEL||"gemini-2.5-flash-lite")
+    ? (env.IDENT_FALLBACK_MODEL||env.MODEL||(primaryModel==="gemini-2.5-flash-lite"?"gemini-2.5-flash":"gemini-2.5-flash-lite"))
     : "";
   const models=[primaryModel];
   if(fallbackModel && fallbackModel!==primaryModel) models.push(fallbackModel);
@@ -1977,7 +2009,8 @@ async function callGemini(env, payload, stage){
   outer: for(let m=0;m<models.length;m++){
     usedModel=models[m];
     const url="https://generativelanguage.googleapis.com/v1beta/models/"+usedModel+":generateContent?key="+env.GEMINI_API_KEY;
-    for(let a=0;a<2;a++){
+    const attemptsPerModel=stage==="visual_identification"?1:2;
+    for(let a=0;a<attemptsPerModel;a++){
       attempts++;
       let rr;
       try{ rr=await fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(requestPayload)}); }
@@ -1986,7 +2019,7 @@ async function callGemini(env, payload, stage){
       if(rr){ st=rr.status; dt=(await rr.text()).slice(0,400); }
       const retryable=st===0||st===408||st===500||st===502||st===503||st===504;
       if(st===429 || !retryable) break outer;
-      const hasNextAttempt=a<1 || m<models.length-1;
+      const hasNextAttempt=a<attemptsPerModel-1 || m<models.length-1;
       if(hasNextAttempt){
         const backoff=Math.min(8000,1200*Math.pow(2,attempts-1));
         await sleep(backoff+Math.floor(Math.random()*500));
@@ -2126,12 +2159,24 @@ export default {
       dbConfidence=1; overallConfidence=1; confidentHit=true;
       agentTrace={version:SCAN_ORCHESTRATOR_VERSION,confirmed_by_user:true,confirmed_id:resolvedConfirmedId,requested_id:confirmedId};
     } else {
-      // Jeden agent wizualny rozpoznaje nazwe. Dopasowanie do katalogu jest deterministyczne.
-      const visual=await callVisualAgent(env,mime,recognitionImage.length>=100?recognitionImage:image);
-      telemetryUsage=[visual&&visual.usage].filter(Boolean);
+      // Pelny kadr i odseparowany pierwszy plan trafiaja do jednego agenta wizualnego.
+      const recognitionSource=recognitionImage.length>=100?recognitionImage:image;
+      let recognitionForeground=null;
+      const foregroundStarted=Date.now();
+      if(env.IMAGES){
+        try{
+          recognitionForeground=await transformRecognitionForeground(env,mime,recognitionSource);
+          if(recognitionForeground) telemetryUsage.push({provider:"cloudflare",stage:"recognition_foreground",model:"cloudflare-images",status:200,attempts:1,duration_ms:Date.now()-foregroundStarted});
+        }catch(e){
+          telemetryUsage.push({provider:"cloudflare",stage:"recognition_foreground",model:"cloudflare-images",status:500,attempts:1,duration_ms:Date.now()-foregroundStarted});
+        }
+      }
+      const visual=await callVisualAgent(env,mime,recognitionSource,recognitionForeground);
+      telemetryUsage.push.apply(telemetryUsage,[visual&&visual.usage].filter(Boolean));
       if(visual&&visual.err){
         const quotaExhausted=visual.err.status===429;
-        return scanResponse({error:quotaExhausted?"quota_exhausted":"upstream",status:visual.err.status,detail:visual.err.detail||"agent_error",retry:!quotaExhausted},quotaExhausted?429:(visual.err.status===0?502:503),quotaExhausted?"quota_exhausted":"upstream_error",{error_code:quotaExhausted?"gemini_quota":"visual_agent_failed"});
+        const providerError=visual.err.status===0?"network":([408,504].includes(visual.err.status)?"timeout":(visual.err.status===503?"overloaded":"unavailable"));
+        return scanResponse({error:quotaExhausted?"quota_exhausted":"upstream",status:visual.err.status,provider_error:providerError,detail:visual.err.detail||"agent_error",retry:!quotaExhausted},quotaExhausted?429:(visual.err.status===0?502:503),quotaExhausted?"quota_exhausted":"upstream_error",{error_code:quotaExhausted?"gemini_quota":"visual_agent_"+providerError});
       }
       const idj=compactVision((visual&&visual.data)||{});
       bottleName=String(idj.name||"").trim();

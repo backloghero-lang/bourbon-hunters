@@ -117,6 +117,11 @@ const fixtures=[
     label:"Bushmills 10 Year",
     expected:"bushmills-10-year-old-single-malt",
     vision:{name:"Bushmills 10 Year Old Single Malt",confidence:.97,candidates:[]}
+  },
+  {
+    label:"Bushmills 12 Year",
+    expected:"bushmills-12-year-old-single-malt",
+    vision:{name:"Bushmills 12 Year Old Single Malt Irish Whiskey",confidence:.97,candidates:[]}
   }
 ];
 
@@ -131,6 +136,8 @@ const fixtureResults=fixtures.map((fixture)=>{
 
 const singleSource=match({name:"Maker's Mark 46 Kentucky Straight Bourbon Whisky",confidence:.95,candidates:[]});
 assert(singleSource&&singleSource.dbConfidence>=.8,`Visual-only exact match must pass, got ${singleSource&&singleSource.dbConfidence}`);
+const unsupportedBushmillsAge=match({name:"Bushmills 15 Year Old Single Malt Irish Whiskey",confidence:.97,candidates:[]});
+assert(!unsupportedBushmillsAge||unsupportedBushmillsAge.dbConfidence<.8,`Unsupported Bushmills age must not become a confident catalog hit: ${unsupportedBushmillsAge&&unsupportedBushmillsAge.dbConfidence}`);
 
 const counts={};
 for(const bottle of db.bottles) counts[norm(bottle.name)]=(counts[norm(bottle.name)]||0)+1;

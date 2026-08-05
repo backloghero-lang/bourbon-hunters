@@ -13,7 +13,7 @@ const context={
   console,
   fetch:async(url)=>{
     calls.push(String(url));
-    if(String(url).includes("gemini-2.5-flash-lite")){
+    if(String(url).includes("gemini-2.5-flash:")){
       return new Response(JSON.stringify({
         candidates:[{content:{parts:[{text:'{"name":"Bulleit Bottled in Bond","confidence":0.97,"evidence":["label"],"candidates":[]}'}]}}],
         usageMetadata:{promptTokenCount:10,candidatesTokenCount:8,totalTokenCount:18}
@@ -33,15 +33,15 @@ const context={
 vm.runInNewContext(source,context,{filename:"worker.js"});
 
 const result=await context.__providerTest.callGemini({GEMINI_API_KEY:"test"},{
-  __model:"gemini-2.5-flash",
+  __model:"gemini-2.5-flash-lite",
   contents:[{role:"user",parts:[{text:"identify"}]}]
 },"visual_identification");
 
 if(result.err) throw new Error(`Fallback failed: ${JSON.stringify(result.err)}`);
 if(result.fallback_used!==true) throw new Error("Fallback model was not reported as used");
-if(result.usage?.model!=="gemini-2.5-flash-lite") throw new Error(`Unexpected model: ${result.usage?.model}`);
-if(calls.length!==3) throw new Error(`Expected two primary calls and one fallback call, got ${calls.length}`);
-if(!calls[0].includes("gemini-2.5-flash:") || !calls[1].includes("gemini-2.5-flash:")) throw new Error("Primary retries are missing");
-if(!calls[2].includes("gemini-2.5-flash-lite:")) throw new Error("Fallback request is missing");
+if(result.usage?.model!=="gemini-2.5-flash") throw new Error(`Unexpected model: ${result.usage?.model}`);
+if(calls.length!==2) throw new Error(`Expected one primary call and one fallback call, got ${calls.length}`);
+if(!calls[0].includes("gemini-2.5-flash-lite:")) throw new Error("Primary request is missing");
+if(!calls[1].includes("gemini-2.5-flash:")) throw new Error("Fallback request is missing");
 
 console.log(JSON.stringify({ok:true,calls:calls.length,fallback_model:result.usage.model,attempts:result.usage.attempts},null,2));

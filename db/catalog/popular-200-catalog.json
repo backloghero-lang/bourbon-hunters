@@ -8320,19 +8320,18 @@
       "aliases": [
         "Bushmills 12 Year",
         "Bushmills 12",
-        "Bushmills 12 Year Old Old Single Malt",
         "Bushmills 12 YR Old Single Malt",
         "Bushmills 12 YO Old Single Malt",
         "Bushmills 12 Year Old",
         "Bushmills 12 YR",
         "Bushmills 12 YO"
       ],
-      "distillery": "",
+      "distillery": "Old Bushmills Distillery",
       "region": "Ireland",
       "type": "Irish Whiskey",
       "category": "Irish",
-      "proof": null,
-      "abv": null,
+      "proof": 80,
+      "abv": 40,
       "mashbill": null,
       "price": null,
       "price_str": null,
@@ -8357,12 +8356,13 @@
           "finish": "czysty finisz z miodem i lagodna przyprawa"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/clean/bushmills-12-year-old-single-malt.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
         "popular-200-2026-v1",
-        "popular_200_curated"
+        "popular_200_curated",
+        "https://bushmills.com/products/12-year"
       ],
       "catalog_status": "curated",
       "spirit_family": "whisky",

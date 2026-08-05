@@ -27,7 +27,7 @@ Aktualny oczekiwany stan Workera:
 {
   "ok": true,
   "auth_version": "auth-pbkdf2-100000-google-v3",
-  "scan_orchestrator_version": "visual-only-catalog-v7-resilient-fallback",
+  "scan_orchestrator_version": "visual-only-catalog-v8-mobile-foreground",
   "scan_mode": "visual_only",
   "scan_ocr_enabled": false,
   "scan_catalog_version": "popular-200-curated-v2-no-flavors",
@@ -82,7 +82,7 @@ Cykl zycia zdjec katalogowych wymaga:
 4. W D1 uruchom `agent/d1-migration-v68-whisky-news.sql`.
 5. Dopiero potem wklej i zdeployuj aktualny `agent/worker.js`.
 6. W Workerze pozostaw jeden dzienny Cron Trigger, np. `0 3 * * *`. Agent tworzy wydania poniedzialkowe i czwartkowe, a w pozostale dni automatycznie uzupelnia nieudane lub niepelne wydanie do trzech artykulow.
-7. Wyslij frontend na GitHub i odswiez PWA do cache `bourbon-hunters-v112`.
+7. Wyslij frontend na GitHub i odswiez PWA do cache `bourbon-hunters-v114`.
 8. Sprawdz pelny health: `https://bourbon-hunters.darekmaslyk.workers.dev/auth/health`.
 
 Kolejnosc jest wazna: migracje D1 -> Worker -> GitHub/PWA. Bez v67 user nie moze zatwierdzic assetu, a bez v68 feed newsow pozostanie pusty.
@@ -226,7 +226,7 @@ Ta zmiana dotyczy GitHub Pages. Nie wymaga podmiany Workera, migracji D1 ani zmi
 5. Sprawdź na Home kafel Whisky z liczbą pozycji.
 6. Wejdź w Whisky i sprawdź filtry Scotch, Irish, Japanese, Rye i pozostałe.
 
-Aktualny cache: `bourbon-hunters-v112`.
+Aktualny cache: `bourbon-hunters-v114`.
 
 ## Wdrozenie katalogu Popular 200 - 2026-08-04
 
@@ -271,18 +271,18 @@ Ta zmiana wymaga aktualizacji GitHub Pages i Workera. Nie wymaga migracji D1 ani
 4. Kliknij `Deploy`.
 5. Otworz `https://bourbon-hunters.darekmaslyk.workers.dev/auth/health`.
 6. Sprawdz, czy `scan_orchestrator_version` ma wartosc:
-   `visual-only-catalog-v7-resilient-fallback`.
+   `visual-only-catalog-v8-mobile-foreground`.
    `scan_catalog_version` ma byc `popular-200-curated-v2-no-flavors`.
    `catalog_submission_version` ma byc `community-catalog-images-v6-highres-cutout`.
    Dodatkowo `scan_mode` ma byc `visual_only`, a `scan_ocr_enabled` ma byc `false`.
-   `scanner_ai_ready` ma byc `true`, `scanner_primary_model` ma wskazywac `gemini-2.5-flash`, a `scanner_fallback_model` ma wskazywac `gemini-2.5-flash-lite`.
+   `scanner_ai_ready` i `scanner_mobile_foreground` maja byc `true`, `scanner_primary_model` ma wskazywac `gemini-2.5-flash-lite`, a `scanner_fallback_model` ma wskazywac `gemini-2.5-flash`.
 7. Na telefonie otworz `test-index.html`, kliknij `Wyczysc cache/PWA`, a potem `Odswiez build`.
-8. Zeskanuj z telefonu `Jack Daniel's Bonded`, `Jim Beam Double Oak` i `Bushmills Original`, trzymajac jedna z butelek za szyjke. Skan nadal liczy sie jako jedno uzycie, mimo automatycznego zblizenia etykiety.
+8. Zeskanuj z telefonu `Jack Daniel's Bonded`, `Jim Beam Double Oak` i `Bushmills 12 Year Old`, trzymajac jedna z butelek za szyjke. Skan nadal liczy sie jako jedno uzycie, mimo przygotowania pomocniczego widoku pierwszego planu.
 9. Nie dodawaj zmiennej `OCR_MODEL`; skaner jej nie uzywa.
 10. Sprawdz pojedynczy wynik bez assetu: aplikacja ma przejsc bezposrednio do szczegolow i pokazac wycieta butelke oraz przycisk uzupelnienia katalogu.
 
 Skaner przechodzi bezposrednio z loadera do szczegolow najlepszego pewnego dopasowania. Jesli rekord nie ma gotowego assetu, Worker najpierw przygotowuje wyciecie butelki; przy blednym wycieciu aplikacja prosi o nowe zdjecie. Taki wynik ma przycisk uzupelnienia katalogu. Rekord z gotowym assetem nie pokazuje przycisku katalogu. Publikacja nowego assetu nadal przechodzi przez zgode usera i moderacje.
 
-Przy odpowiedzi `503` z Gemini Worker wykonuje retry z wykladniczym opoznieniem i automatycznie przechodzi na `gemini-2.5-flash-lite`. Odpowiedz `429` nadal oznacza prawdziwy limit i nie jest maskowana modelem zapasowym. Opcjonalna zmienna `IDENT_FALLBACK_MODEL` pozwala zmienic model zapasowy bez edycji kodu.
+Przy odpowiedzi `503` z Gemini Worker przechodzi z lekkiego modelu podstawowego na `gemini-2.5-flash`. Odpowiedz `429` nadal oznacza prawdziwy limit i nie jest maskowana modelem zapasowym. Opcjonalne zmienne `IDENT_MODEL` i `IDENT_FALLBACK_MODEL` pozwalaja zmienic modele bez edycji kodu.
 
 Stare identyfikatory z kolekcji, wishlist i ocen sa automatycznie przenoszone na produkty kanoniczne. Nie wykonuj recznych aktualizacji D1.

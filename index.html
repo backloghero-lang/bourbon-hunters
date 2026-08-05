@@ -1018,7 +1018,60 @@ const RUNTIME_BOTTLE_IDS = [
   "noah-s-mill-kentucky-bourbon"
 ];
 const FEATURED_IDS = ["buffalo-trace-bourbon-1","blantons-original-single-barrel-bourbon-whiskey-700ml","eagle-rare-10-year-kentucky-straight-bourbon-whiskey-700ml","woodford-reserve-bourbon","knob-creek-9-year-old-100-proof-bourbon"];
-const FALLBACK_RECOMMENDATION_IDS = ["buffalo-trace-bourbon-1","woodford-reserve-bourbon","four-roses","noah-s-mill-kentucky-bourbon"];
+const STARTER_RECOMMENDATION_SETS = [
+  {bottle_id:"buffalo-trace-bourbon-1",reviews:[
+    ["OakRider","barrel",5,"Dużo karmelu i wanilii, a przy tym bardzo uczciwa cena. Butelka, do której regularnie wracam.","Plenty of caramel and vanilla at a very fair price. A bottle I return to regularly."],
+    ["KentuckyTom","horseshoe",4,"Łagodny, uniwersalny bourbon. Dobry na czysto i do klasycznego Old Fashioned.","A smooth, versatile bourbon. Good neat and in a classic Old Fashioned."],
+    ["MartaNeat","glass",4,"Przyjemny start dla początkujących, ale nadal ma wystarczająco charakteru na spokojny wieczór.","A friendly starting point for beginners, with enough character for a relaxed evening."]
+  ]},
+  {bottle_id:"woodford-reserve-bourbon",reviews:[
+    ["BarrelNote","notes",5,"Bogatszy i bardziej przyprawowy niż sugeruje pierwsza słodycz. Bardzo równy finisz.","Richer and spicier than the opening sweetness suggests, with a very balanced finish."],
+    ["WhiskyNomad","distillery",4,"Kakao, dąb i pomarańcza. Dobra butelka do powolnego poznawania bourbona.","Cocoa, oak and orange. A fine bottle for slowly exploring bourbon."],
+    ["CopperFox","seal",4,"Klasyczny profil bez dziwnych skrótów. Solidny wybór na prezent i do domowego barku.","A classic profile without odd shortcuts. A solid gift and home-bar choice."],
+    ["DarekOnRocks","glass",3,"Na lodzie traci trochę aromatu, ale na czysto wypada zdecydowanie lepiej.","It loses some aroma over ice, but performs much better neat."]
+  ]},
+  {bottle_id:"woodford-reserve-double-oaked-bourbon",reviews:[
+    ["ToastedOak","barrel",5,"Mocno deserowy profil: karmel, kakao i opiekane drewno. Świetny po kolacji.","A deeply dessert-like profile: caramel, cocoa and toasted wood. Excellent after dinner."],
+    ["NoseFirst","notes",5,"Druga beczka naprawdę robi różnicę. Jest gęściej i słodziej niż w podstawowym Woodfordzie.","The second barrel genuinely matters. It is richer and sweeter than standard Woodford."],
+    ["AmberGlass","glass",4,"Bardzo aromatyczny, choć dla fanów wytrawnych bourbonów może być odrobinę za słodki.","Very aromatic, though fans of drier bourbon may find it slightly too sweet."]
+  ]},
+  {bottle_id:"bushmills-12-year-old-single-malt",reviews:[
+    ["IrishOak","star",5,"Owocowa, miodowa i bardzo gładka. Sherry dodaje jej charakteru, ale nie przykrywa lekkiego stylu Bushmills.","Fruity, honeyed and very smooth. Sherry adds character without hiding the lighter Bushmills style."],
+    ["MaltTraveler","barrel",4,"Dojrzałe jabłko, wanilia i odrobina przypraw. Dwanaście lat czuć bardziej w równowadze niż w ciężkim dębie.","Ripe apple, vanilla and a little spice. The twelve years show more in balance than in heavy oak."],
+    ["KubaTastes","glass",4,"Przyjemna irlandzka single malt do spokojnego picia. Najlepsza po kilku minutach w kieliszku.","An enjoyable Irish single malt for an easy pour. Best after a few minutes in the glass."],
+    ["HunterKate","hat",4,"Dobry krok wyżej od podstawowych blendów: nadal łagodna, ale ma wyraźniejszy finisz i więcej owoców.","A good step up from entry-level blends: still gentle, but with a clearer finish and more fruit."]
+  ]},
+  {bottle_id:"makers-mark-46-bourbon-whisky",reviews:[
+    ["WheatedFan","star",5,"Miękki pszenny profil z dodatkową wanilią i przyprawami z francuskiego dębu.","A soft wheated profile with extra vanilla and spice from French oak."],
+    ["RedWax","seal",4,"Pełniejszy od klasycznego Maker's Mark, ale nadal łatwy i przyjemny do picia.","Fuller than classic Maker's Mark, while remaining easy and enjoyable to drink."],
+    ["SundayPour","glass",4,"Bardzo dobry kompromis między słodyczą, dębem i mocą.","A very good balance of sweetness, oak and strength."]
+  ]},
+  {bottle_id:"eagle-rare-bourbon-1-75l",reviews:[
+    ["TenYearTrail","horseshoe",5,"Wiśnie, wanilia i elegancki dąb. W dobrej cenie to zakup bez zastanowienia.","Cherry, vanilla and elegant oak. At a fair price, it is an easy buy."],
+    ["RareFind","star",5,"Delikatny na początku, potem pokazuje dużo suszonych owoców i przypraw.","Gentle at first, then it opens into dried fruit and spice."],
+    ["BottleScout","opener",4,"Bardzo dobry bourbon, tylko dostępność bywa trudniejsza niż sama degustacja.","A very good bourbon, though finding it can be harder than tasting it." ]
+  ]},
+  {bottle_id:"wild-turkey-101-bourbon",reviews:[
+    ["ProofHunter","hat",5,"Moc, smak i cena składają się tutaj wyjątkowo dobrze. Świetny bourbon codzienny.","Proof, flavour and price come together exceptionally well. A great everyday bourbon."],
+    ["CampfirePour","barrel",4,"Karmel, pieprz i mocniejszy finisz. Nie jest subtelny, ale jest bardzo konkretny.","Caramel, pepper and a stronger finish. It is not subtle, but it delivers."],
+    ["Classic101","seal",4,"Działa na czysto, z lodem i w koktajlu. Jeden z najbardziej uniwersalnych wyborów.","Works neat, over ice and in cocktails. One of the most versatile choices." ]
+  ]},
+  {bottle_id:"knob-creek-9-year-old-100-proof-bourbon",reviews:[
+    ["NineYearOak","barrel",5,"Orzechy, karmel i solidny dąb bez przesadnej goryczy. Bardzo dobry stosunek jakości do ceny.","Nuts, caramel and solid oak without excessive bitterness. Very good value."],
+    ["BeamShelf","distillery",4,"100 proof daje odpowiednią intensywność, a dziewięć lat dobrze porządkuje całość.","The 100 proof brings intensity, while nine years of age keeps it composed."],
+    ["NeatOnly","glass",4,"Najlepiej smakuje po krótkim odpoczynku w szkle i z kilkoma kroplami wody.","Best after a short rest in the glass with a few drops of water." ]
+  ]},
+  {bottle_id:"russels-reserve-10-year-bourbon",reviews:[
+    ["TurkeyHouse","distillery",5,"Dojrzały dąb, tytoń i wanilia. Spokojniejszy od 101, ale bardzo poukładany.","Mature oak, tobacco and vanilla. Calmer than 101, but very well composed."],
+    ["OldRick","barrel",4,"Klasyczny profil z wyraźnym wiekiem. Dobra butelka do degustacji bez pośpiechu.","A classic profile with noticeable age. A good bottle for unhurried tasting."],
+    ["GoldLabel","seal",4,"Nie krzyczy mocą, tylko pokazuje balans. Z czasem w szkle robi się coraz lepszy.","It does not shout with proof; it shows balance. It keeps improving in the glass." ]
+  ]},
+  {bottle_id:"elijah-craig-small-batch-bourbon",reviews:[
+    ["SmallBatcher","barrel",5,"Karmel, przyprawy i lekko orzechowy finisz. Bardzo pewny wybór w swojej cenie.","Caramel, spice and a lightly nutty finish. A very dependable choice for the price."],
+    ["CharLevel","notes",4,"Wyraźnie czuć opaloną beczkę, ale słodycz dobrze utrzymuje balans.","The charred barrel is easy to notice, while sweetness keeps it balanced."],
+    ["WeekendDram","glass",4,"Przystępny, ale nie nudny. Dobrze pokazuje klasyczny styl Kentucky.","Approachable without being boring. A good expression of classic Kentucky style." ]
+  ]}
+];
 const RUNTIME_IMAGE_DIR = "assets/bourbons/runtime-100/";
 const RUNTIME_THUMB_DIR = "assets/bourbons/list-thumbs/";
 const RENDER_LIMIT = 60; /* ile kart renderujemy na raz (wydajnosc przy tysiacach rekordow) */
@@ -1044,7 +1097,7 @@ const I18N = {
     valLbl:"Jakość / Cena", quality:"Jakość", price:"Cena (orient.)", distillery:"Destylarnia", region:"Region", mashbill:"Mash bill", abv:"Moc",
     descT:"Opis", infoT:"Informacje ogólne", historyT:"Historia", linksT:"Linki", notesT:"Profil smaku", sourcesT:"Źródła", fromDb:"Z bazy", fromNet:"Nowość — z sieci", category:"Kategoria",
     notBottle:"Hunter nie widzi tu butelki whisky. Zrób wyraźne zdjęcie etykiety i spróbuj jeszcze raz.",
-    errGeneric:"Coś poszło nie tak. Spróbuj ponownie za chwilę.", errRetry:"Usługa rozpoznawania obrazu chwilowo nie odpowiedziała. Spróbuj ponownie za moment.", errProviderBusy:"Gemini zwrócił błąd przeciążenia. Hunter spróbował także modelu zapasowego, ale oba są chwilowo niedostępne.", errNetwork:"Nie udało się połączyć z Workerem. Sprawdź połączenie i spróbuj ponownie.", errConfig:"Skaner AI wymaga sprawdzenia konfiguracji Workera.", errQuota:"Dzienny limit skanera AI został wykorzystany. Limit Gemini odnowi się następnego dnia rano.", errScanLimit:"Wykorzystałeś dzisiejszy limit bezpłatnych skanów.",
+    errGeneric:"Coś poszło nie tak. Spróbuj ponownie za chwilę.", errRetry:"Usługa rozpoznawania obrazu chwilowo nie odpowiedziała. Spróbuj ponownie za moment.", errProviderBusy:"Modele rozpoznawania są chwilowo przeciążone. Hunter sprawdził model podstawowy i zapasowy.", errProviderTimeout:"Usługa rozpoznawania przekroczyła czas odpowiedzi. Zdjęcie jest zachowane — spróbuj ponownie za moment.", errProviderNetwork:"Worker nie połączył się z usługą rozpoznawania. Zdjęcie jest zachowane — spróbuj ponownie.", errNetwork:"Nie udało się połączyć z Workerem. Sprawdź połączenie i spróbuj ponownie.", errConfig:"Skaner AI wymaga sprawdzenia konfiguracji Workera.", errQuota:"Dzienny limit skanera AI został wykorzystany. Limit Gemini odnowi się następnego dnia rano.", errScanLimit:"Wykorzystałeś dzisiejszy limit bezpłatnych skanów.",
     vibe:"Vibe-coded z Claude · projekt weekendowy", explore_t:"Odkrywaj",
     navHome:"Start", navExplore:"Odkrywaj", navScan:"Skanuj", navColl:"Kolekcja", navProfile:"Profil", homeCollection:"Moja kolekcja",
     collTitle:"Twoja kolekcja", collSoon:"Wkrótce: zapis zeskanowanych butelek, ulubione i notatki. Budujemy to w kolejnym etapie.",
@@ -1066,7 +1119,7 @@ const I18N = {
     valLbl:"Quality / Price", quality:"Quality", price:"Price (approx.)", distillery:"Distillery", region:"Region", mashbill:"Mash bill", abv:"ABV",
     descT:"Description", infoT:"General info", historyT:"History", linksT:"Links", notesT:"Tasting notes", sourcesT:"Sources", fromDb:"From database", fromNet:"New — from the web", category:"Category",
     notBottle:"Hunter sees no whisky bottle here. Take a clear photo of the label and try again.",
-    errGeneric:"Something went wrong. Please try again shortly.", errRetry:"The image recognition service did not respond. Try again in a moment.", errProviderBusy:"Gemini reported overload. Hunter also tried the fallback model, but both are temporarily unavailable.", errNetwork:"The app could not reach the Worker. Check your connection and try again.", errConfig:"The AI scanner Worker configuration needs attention.", errQuota:"The daily AI scanner quota has been used. Gemini's quota will reset the following morning.", errScanLimit:"You have used today's free scan allowance.",
+    errGeneric:"Something went wrong. Please try again shortly.", errRetry:"The image recognition service did not respond. Try again in a moment.", errProviderBusy:"The recognition models are temporarily overloaded. Hunter checked both the primary and fallback model.", errProviderTimeout:"Image recognition timed out. Your photo is still here — try again in a moment.", errProviderNetwork:"The Worker could not reach the recognition service. Your photo is still here — try again.", errNetwork:"The app could not reach the Worker. Check your connection and try again.", errConfig:"The AI scanner Worker configuration needs attention.", errQuota:"The daily AI scanner quota has been used. Gemini's quota will reset the following morning.", errScanLimit:"You have used today's free scan allowance.",
     vibe:"Vibe-coded with Claude · a weekend project", explore_t:"Explore",
     navHome:"Home", navExplore:"Explore", navScan:"Scan", navColl:"Collection", navProfile:"Profile", homeCollection:"My collection",
     collTitle:"Your collection", collSoon:"Coming soon: save scanned bottles, favourites and notes. We build this in the next stage.",
@@ -1505,6 +1558,27 @@ function normalizeRecommendation(r){
     updated_at:String(r.updated_at||"")
   };
 }
+function starterRecommendations(bottleId){
+  const out=[];
+  STARTER_RECOMMENDATION_SETS.forEach(function(set,setIndex){
+    const id=canonicalBottleId(set.bottle_id);
+    const bottle=bottleById(id);
+    if(!bottle || !officialBottleImage(bottle) || (bottleId && id!==canonicalBottleId(bottleId))) return;
+    (set.reviews||[]).forEach(function(review,reviewIndex){
+      out.push(normalizeRecommendation({
+        id:"starter-rec-"+setIndex+"-"+reviewIndex,
+        user_id:"starter-user-"+String(review[0]||reviewIndex).toLowerCase(),
+        bottle_id:id,
+        bottle_name:bottle.name,
+        username:review[0],
+        badge:review[1],
+        rating:review[2],
+        comment:lang==="pl"?review[3]:review[4]
+      }));
+    });
+  });
+  return out;
+}
 function bottleForRec(rec){
   return bottleById(rec.bottle_id);
 }
@@ -1515,35 +1589,29 @@ function recByHtml(rec){
     return '<span class="profile-badge" style="'+badgeStyle(p.badge||"glass")+'"></span>';
   }).join("")+'<span class="rec-by-count">'+(people.length>1?people.length:"1")+'</span></div>';
 }
-function uniqueRecommendations(list){
+function allRecommendations(list){
   const seen={};
   return (list||[]).map(normalizeRecommendation).filter(function(r){
-    if(!r.bottle_id || seen[r.bottle_id]) return false;
-    seen[r.bottle_id]=1;
+    const key=r.id || r.bottle_id+":"+r.user_id;
+    if(!r.bottle_id || seen[key]) return false;
+    seen[key]=1;
     return !!bottleForRec(r);
   });
 }
+function uniqueRecommendations(list){
+  const seen={};
+  return allRecommendations(list).filter(function(r){
+    if(seen[r.bottle_id]) return false;
+    seen[r.bottle_id]=1;
+    return true;
+  });
+}
 function recommendationPeopleFor(bottleId, fallbackRec){
-  const people=uniqueRecommendations(RECS).filter(function(r){ return r.bottle_id===bottleId; });
+  const people=allRecommendations(RECS.concat(starterRecommendations(bottleId))).filter(function(r){ return r.bottle_id===bottleId; });
   return people.length ? people.slice(0,8) : [fallbackRec].filter(Boolean);
 }
 function fallbackRecommendations(){
-  return FALLBACK_RECOMMENDATION_IDS.map(function(id,i){
-    const b=DB.find(function(x){ return x.id===id; });
-    if(!b) return null;
-    return normalizeRecommendation({
-      id:"fallback-"+id,
-      user_id:"system",
-      bottle_id:id,
-      bottle_name:b.name,
-      username:"Bourbon Hunters",
-      badge:["glass","barrel","star","seal"][i%4],
-      rating:Math.max(4,Number(valueScore(b))||4),
-      comment:lang==="pl" ? "Dobry stosunek ceny do jakości i bezpieczny wybór do sprawdzenia na start." : "Good value for money and a safe bottle to check first.",
-      created_at:"",
-      updated_at:""
-    });
-  }).filter(Boolean);
+  return uniqueRecommendations(starterRecommendations());
 }
 function feedRecommendations(limit){
   const out=[], seen={};
@@ -1555,7 +1623,9 @@ function feedRecommendations(limit){
   });
   return out.slice(0,limit||100);
 }
-function commentsFor(id){ return COMMENTS[id]||[]; }
+function commentsFor(id){
+  return allRecommendations((COMMENTS[id]||[]).concat(starterRecommendations(id)));
+}
 function dateLabel(value){
   if(!value) return "";
   const d=new Date(value);
@@ -3729,7 +3799,7 @@ function handlePickedFile(e){
 }
 function compress(file){ return new Promise(function(resolve,reject){
   if(!file || (file.type && file.type.indexOf("image/")!==0)){ reject(new Error("not-image")); return; }
-  const max=1800;
+  const max=1600;
   function imageQuality(canvas){
     const sample=document.createElement("canvas");
     const scale=Math.min(1,180/Math.max(canvas.width,canvas.height));
@@ -3761,7 +3831,7 @@ function compress(file){ return new Promise(function(resolve,reject){
       const c=document.createElement("canvas"); c.width=w; c.height=h;
       const ctx=c.getContext("2d"); if(!ctx){ throw new Error("no-canvas"); }
       ctx.drawImage(source,0,0,w,h);
-      const d=c.toDataURL("image/jpeg",0.91);
+      const d=c.toDataURL("image/jpeg",0.88);
       const recognition=recognitionComposite(c);
       if(cleanup) cleanup();
       resolve({b64:d.split(",")[1],recognitionB64:recognition,mime:"image/jpeg",quality:imageQuality(c)});
@@ -3774,16 +3844,14 @@ function compress(file){ return new Promise(function(resolve,reject){
   }
   function recognitionComposite(source){
     const view=document.createElement("canvas");
-    view.width=1400; view.height=900;
+    const maxRecognition=1280;
+    const scale=Math.min(1,maxRecognition/Math.max(source.width,source.height));
+    view.width=Math.max(1,Math.round(source.width*scale));
+    view.height=Math.max(1,Math.round(source.height*scale));
     const ctx=view.getContext("2d");
     if(!ctx) return "";
-    ctx.fillStyle="#080604"; ctx.fillRect(0,0,view.width,view.height);
-    drawContained(ctx,source,0,0,source.width,source.height,24,24,510,852);
-    const sx=Math.round(source.width*.12),sy=Math.round(source.height*.18);
-    const sw=Math.max(1,Math.round(source.width*.76)),sh=Math.max(1,Math.round(source.height*.78));
-    drawContained(ctx,source,sx,sy,sw,sh,558,24,818,852);
-    ctx.fillStyle="rgba(226,176,112,.38)"; ctx.fillRect(545,24,2,852);
-    return view.toDataURL("image/jpeg",0.9).split(",")[1]||"";
+    ctx.drawImage(source,0,0,source.width,source.height,0,0,view.width,view.height);
+    return view.toDataURL("image/jpeg",0.84).split(",")[1]||"";
   }
   function fallbackImage(){
     const img=new Image(), url=URL.createObjectURL(file);
@@ -3884,7 +3952,9 @@ function scan(mode,confirmedId){
     if(data.error==="not_bottle"){ showErr(t("notBottle")); return; }
     if(data.limited){ showErr(t("errScanLimit")); return; }
     if(data.error==="quota_exhausted"){ showErr(t("errQuota")); return; }
-    if(data.error==="upstream" && Number(data.status)===503){ showErr(t("errProviderBusy")); return; }
+    if(data.error==="upstream" && data.provider_error==="timeout"){ showErr(t("errProviderTimeout")); return; }
+    if(data.error==="upstream" && data.provider_error==="network"){ showErr(t("errProviderNetwork")); return; }
+    if(data.error==="upstream" && (data.provider_error==="overloaded" || Number(data.status)===503)){ showErr(t("errProviderBusy")); return; }
     if(data.error==="upstream" && (Number(data.status)===400 || Number(data.status)===401 || Number(data.status)===403)){ showErr(t("errConfig")); return; }
     if(data.error==="low_image_quality"){ showErr(lang==="pl"?"Zdjęcie jest zbyt ciemne, prześwietlone albo nieostre. Zrób je ponownie z etykietą na środku.":"The photo is too dark, overexposed or blurry. Retake it with the label centered."); return; }
     if(data.needsPro || data.error==="low_confidence"){ renderLowConfidence(data); return; }

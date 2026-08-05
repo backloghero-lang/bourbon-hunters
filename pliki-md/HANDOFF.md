@@ -304,15 +304,17 @@ node scripts/test_spirit_taxonomy.mjs
 - Testy regresyjne obejmuja rozdzielone dowody dla `Jack Daniel's Bonded` i `Knob Creek 9`.
 - Wersja Workera po wdrozeniu: `ocr-visual-fusion-catalog-10k-v11-split-label-evidence`.
 
-## Aktualizacja 2026-08-05 - odpornosc skanera na 503
+## Aktualizacja 2026-08-05 - skaner mobilny i odpornosc na 503
 
 - Aktualny skaner pozostaje w trybie `visual_only`; OCR jest wylaczony.
-- Wersja Workera: `visual-only-catalog-v7-resilient-fallback`.
-- Model podstawowy: `gemini-2.5-flash`.
-- Po dwoch odpowiedziach `503`, `5xx`, `408` albo bledzie transportu Worker automatycznie probuje `gemini-2.5-flash-lite`.
-- Retry uzywa wykladniczego opoznienia z jitterem, zamiast trzech szybkich ponowien.
+- Wersja Workera: `visual-only-catalog-v8-mobile-foreground`.
+- Frontend wysyla lekki pelny kadr bez sztywnego cropu. Worker dodatkowo odseparowuje pierwszy plan przez Cloudflare Images i przekazuje modelowi oba widoki tej samej fotografii.
+- Dlon, regaly i tlo nie sa podstawa odrzucenia, jezeli glowna etykieta zawiera marke i wariant.
+- Wiek jest twardym markerem wariantu: sprzeczne `5/10/12/15/18 Year` obniza wynik ponizej progu pewnego trafienia, niezaleznie od zgodnosci marki.
+- Model podstawowy: `gemini-2.5-flash-lite`; zapasowy: `gemini-2.5-flash`.
+- Przy przeciazeniu Worker przechodzi od razu do modelu zapasowego, bez dwoch dlugich prob tego samego modelu.
 - `429` nie uruchamia fallbacku i pozostaje komunikatem o limicie dostawcy.
-- Health pokazuje `scanner_ai_ready`, `scanner_primary_model` i `scanner_fallback_model`.
+- Health pokazuje `scanner_ai_ready`, `scanner_primary_model`, `scanner_fallback_model` i `scanner_mobile_foreground`.
 - Test regresyjny: `node scripts/scanner-provider-fallback.mjs`.
 
 ## Aktualizacja 2026-08-05 - kuracja kategorii i filtrow
@@ -334,6 +336,16 @@ node scripts/test_spirit_taxonomy.mjs
 - Artykuly startowe maja osobny `issue_key`, wiec nie blokuja automatycznego wydania.
 - Health pokazuje `news_current_release`, `news_article_count` i `news_last_run`.
 - Przyciski dodania, zmiany i usuniecia lokalnego zdjecia sa wewnatrz ramki butelki przy jej dolnych rogach.
-- Cache PWA: `bourbon-hunters-v112`. Migracja D1 nie jest wymagana.
+- Cache PWA: `bourbon-hunters-v114`. Migracja D1 nie jest wymagana.
+
+## Aktualizacja 2026-08-05 - startowy feed Polecanych
+
+- `Polecane` ma 10 startowych butelek z istniejacymi assetami oraz 32 zroznicowane opinie, srednio 3,2 komentarza na butelke.
+- Oceny startowe maja 3-5 gwiazdek, z przewaga ocen 4 i 5.
+- Kafel agreguje kilka znacznikow osob, a szczegoly pokazuja wszystkie komentarze przypisane do butelki.
+- Prawdziwe komentarze z Workera sa wyswietlane przed trescia startowa; dane startowe nie tworza fikcyjnych kont w D1 i nie zmieniaja prawdziwej sredniej spolecznosci.
+- Four Roses zastapiono Bushmills 12 Year Old Single Malt z oficjalnym, przezroczystym assetem oraz czterema opiniami.
+- Test: `node scripts/starter-recommendations-regression.mjs`.
+- Cache PWA: `bourbon-hunters-v114`.
 
 
