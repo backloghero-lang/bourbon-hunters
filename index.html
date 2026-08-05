@@ -226,6 +226,15 @@
   .profile-ico svg{width:24px;height:24px}
   .profile-row .chev{font-size:25px;color:#E2B070;line-height:1}
   .admin-report{padding:0 14px 110px}
+  .admin-system{margin:0 0 16px;padding:14px;border:1px solid rgba(226,176,112,.28);background:linear-gradient(180deg,rgba(20,17,12,.94),rgba(8,7,5,.96));box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+  .admin-system h3{margin:0 0 12px;font:700 18px Georgia,serif;color:#f4d399}
+  .admin-system-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .admin-system-item{min-width:0;padding:9px;border:1px solid rgba(226,176,112,.14);background:rgba(0,0,0,.22)}
+  .admin-system-item.wide{grid-column:1/-1}
+  .admin-system-item span{display:block;margin-bottom:5px;color:#a99675;font-size:9px;text-transform:uppercase}
+  .admin-system-item strong{display:block;color:#f3dfb5;font-size:12px;line-height:1.35;overflow-wrap:anywhere}
+  .admin-system-item strong.ok{color:#78d490}
+  .admin-system-item strong.bad{color:#ee8575}
   .admin-periods{display:flex;gap:8px;margin:12px 0 16px}
   .admin-periods button{flex:1;border:1px solid rgba(226,176,112,.35);background:#0d0b08;color:#e9c88d;padding:10px 8px;cursor:pointer}
   .admin-periods button.on{background:#17351f;border-color:#4b9c62;color:#d9f0dc}
@@ -710,6 +719,7 @@
       <h2>Raporty</h2>
     </div>
     <div class="admin-report">
+      <div class="admin-system" id="adminSystemHealth" aria-live="polite"><div class="empty">Sprawdzanie stanu systemu...</div></div>
       <div class="admin-periods"><button type="button" data-report-days="7">7 dni</button><button class="on" type="button" data-report-days="30">30 dni</button><button type="button" data-report-days="90">90 dni</button></div>
       <button class="btn btn-alt" id="refreshNewsBtn" type="button" style="width:100%;margin:0 0 14px">Pobierz 3 najnowsze artykuły</button>
       <div id="adminReportBody" aria-live="polite"><div class="empty">Ładowanie raportu...</div></div>
@@ -1879,6 +1889,32 @@ function renderAdminReport(data){
     '<div class="admin-moderation"><h3>'+esc(authText("Catalog moderation","Moderacja katalogu"))+'</h3><div id="adminModerationBody"><div class="empty">'+esc(authText("Loading queue...","Ładowanie kolejki..."))+'</div></div></div>';
   loadAdminModeration();
 }
+function renderAdminSystemHealth(data){
+  const box=document.getElementById("adminSystemHealth");
+  if(!box) return;
+  const status=function(value){ return value?authText("Ready","Gotowe"):authText("Unavailable","Niedostepne"); };
+  const rows=[
+    {label:authText("Scanner version","Wersja skanera"),value:data.scan_orchestrator_version||"-",wide:true},
+    {label:authText("Primary model","Model podstawowy"),value:data.scanner_primary_model||"-"},
+    {label:authText("Fallback model","Model zapasowy"),value:data.scanner_fallback_model||"-"},
+    {label:authText("Scanner AI","AI skanera"),value:status(data.scanner_ai_ready),state:!!data.scanner_ai_ready},
+    {label:authText("Model discovery","Wykrywanie modeli"),value:data.scanner_model_discovery?authText("Active","Aktywne"):authText("Inactive","Nieaktywne"),state:!!data.scanner_model_discovery},
+    {label:authText("Image foreground","Separacja butelki"),value:status(data.scanner_mobile_foreground),state:!!data.scanner_mobile_foreground},
+    {label:authText("Scanner mode","Tryb skanera"),value:data.scan_mode||"-"}
+  ];
+  box.innerHTML='<h3>'+esc(authText("System status","Stan systemu"))+'</h3><div class="admin-system-grid">'+rows.map(function(row){
+    const stateClass=row.state===true?' ok':row.state===false?' bad':'';
+    return '<div class="admin-system-item'+(row.wide?' wide':'')+'"><span>'+esc(row.label)+'</span><strong class="'+stateClass.trim()+'">'+esc(row.value)+'</strong></div>';
+  }).join("")+'</div>';
+}
+function loadAdminSystemHealth(){
+  const box=document.getElementById("adminSystemHealth");
+  if(!box||!AUTH_IS_ADMIN) return;
+  box.innerHTML='<div class="empty">'+esc(authText("Checking system status...","Sprawdzanie stanu systemu..."))+'</div>';
+  bhApi("/admin/health",{method:"GET"}).then(renderAdminSystemHealth).catch(function(err){
+    box.innerHTML='<div class="empty">'+esc(authText("System status unavailable: ","Stan systemu niedostepny: ")+String(err&&err.error||"error"))+'</div>';
+  });
+}
 function loadAdminModeration(){
   const box=document.getElementById("adminModerationBody");
   if(!box||!AUTH_IS_ADMIN) return;
@@ -1927,6 +1963,7 @@ function loadAdminReport(days){
   adminReportDays=Number(days)||30;
   document.querySelectorAll("[data-report-days]").forEach(function(button){ button.classList.toggle("on",Number(button.getAttribute("data-report-days"))===adminReportDays); });
   const box=document.getElementById("adminReportBody");
+  loadAdminSystemHealth();
   if(box) box.innerHTML='<div class="empty">'+esc(authText("Loading report...","Ładowanie raportu..."))+'</div>';
   bhApi("/admin/reports/summary?days="+adminReportDays,{method:"GET"}).then(renderAdminReport).catch(function(err){
     if(box) box.innerHTML='<div class="empty">'+esc(authText("Report unavailable: ","Raport niedostępny: ")+String(err&&err.error||"error"))+'</div>';
