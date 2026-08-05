@@ -2,6 +2,19 @@
 
 Aktualizacja: 2026-07-05.
 
+## Aktualizacja 2026-08-05 - audyt oraz auth hardening
+
+- Pelny audyt jest w `pliki-md/AUDYT-KODU-2026-08-05.md`.
+- Punkt powrotu przed zmianami auth: tag `audit-backup-2026-08-05-pre-auth-hardening`, commit `d024fe9`.
+- Migracja `agent/d1-migration-v69-auth-hardening.sql` dodaje `email_verified_at`, role D1, tokeny potwierdzenia e-mail i jednorazowe zadania laczenia Google.
+- Nowa rejestracja lokalna nie wydaje sesji przed potwierdzeniem e-mail. Link jest wazny 24 godziny.
+- Administrator jest rozpoznawany tylko przez aktywny rekord `user_roles`. `ADMIN_EMAILS` i domyslny adres supportu nie nadaja juz uprawnien.
+- Google nie laczy kont po samym e-mailu. Przy kolizji wymaga zalogowania haslem i jawnego laczenia z `Moj profil`.
+- Usuniecie konta wymaga aktualnego hasla albo swiezej, maksymalnie 10-minutowej sesji Google.
+- Oczekiwany health: `auth_version: auth-verified-email-roles-google-v4` i `auth_security_schema: true`.
+- Kolejnosc wdrozenia jest obowiazkowa: backup D1 -> migracja v69 -> jawne nadanie roli admin -> usuniecie starych sesji admina -> GitHub/PWA -> Worker.
+- Z README usunieto sekcje `Popular 200`; sam katalog i testy skanera nie zostaly w tej paczce zmienione.
+
 ## Najnowszy handoff
 
 Najnowszy kontekst dla kolejnego etapu jest w `pliki-md/HANDOFF-BH-1.1.md`.
@@ -152,7 +165,7 @@ Uzyj go jako pierwszego dokumentu przy starcie watku `Przekaz Bourbon Hunter 1.1
 - Migracja `agent/d1-migration-v66-telemetry-reports.sql` dodaje `scanner_runs`, `service_usage_events` i rezerwowa tabele `telemetry_events`.
 - Skaner nadaje kazdej probie `scan_id`, zapisuje wynik, czasy, pewnosc i tokeny Gemini bez zdjecia, surowego OCR, tekstu etykiety, emaila i IP.
 - Potwierdzenie pierwszej lub drugiej propozycji oraz anulowanie wraca do Workera przez `/telemetry/scan-choice`.
-- Administrator ma w profilu widok `Raporty`; endpointy `/admin/reports/*` sa chronione przez `ADMIN_EMAILS` lub `SUPPORT_EMAIL`.
+- Administrator ma w profilu widok `Raporty`. Historycznie role wyliczano z `ADMIN_EMAILS`/`SUPPORT_EMAIL`; od migracji v69 endpointy `/admin/reports/*` wymagaja aktywnej roli D1 `user_roles.admin`.
 - Surowa telemetria operacyjna ma domyslnie 90 dni retencji i jest czyszczona przez ten sam dzienny Cron.
 - Ogolna analityka produktowa pozostaje wylaczona. Szczegoly: `pliki-md/TELEMETRY.md`.
 - Cache PWA: `bourbon-hunters-v91`.

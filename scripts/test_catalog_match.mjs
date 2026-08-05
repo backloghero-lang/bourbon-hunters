@@ -150,10 +150,8 @@ const results = [
   assertMatch("Bulleit Bourbon Bottled in Bond 100 proof", "bulleit-bottled-in-bond-111-22"),
   assertMatch("Glenmorangie Triple Cask Reserve single malt scotch", "olcc-13148b"),
   assertMatch("Bulleit American Single Malt Whiskey 90 proof", "olcc-11838b"),
-  assertMatch("Jefferson's Bourbon Blend of Straight Bourbon Whiskey 82.3 proof", "jeffersons-very-small-batch-bourbon-whiskey-copy"),
-  assertConfirmationSet("Jefferson's Bourbon Blend of Straight Bourbon Whiskey 82.3 proof", [
-    "jeffersons-very-small-batch-bourbon-whiskey-copy"
-  ]),
+  assertMatch("Jefferson's Bourbon Blend of Straight Bourbon Whiskey 82.3 proof", "jefferson-s-blend-of-straight-bourbon-whiskeys"),
+  assertConfirmationSet("Jefferson's Bourbon Blend of Straight Bourbon Whiskey 82.3 proof", []),
   assertConfirmationSet("Bulleit Bourbon Bottled in Bond 100 proof", ["bulleit-bottled-in-bond-111-22"]),
   assertConfirmationSet("Booker's 2025-02 By The Pond Batch", []),
   assertSelectionPolicy("Maximum two results at or above 90%",[0.96,0.92,0.91],["candidate-1","candidate-2"]),

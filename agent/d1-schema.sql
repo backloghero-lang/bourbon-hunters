@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS users (
   age_gate_country TEXT,
   age_gate_min INTEGER,
   age_verified_at TEXT,
+  email_verified_at TEXT,
   created_at TEXT NOT NULL,
   updated_at TEXT NOT NULL
 );
@@ -116,6 +117,52 @@ CREATE TABLE IF NOT EXISTS auth_identities (
 );
 
 CREATE INDEX IF NOT EXISTS idx_auth_identities_user ON auth_identities(user_id);
+
+CREATE TABLE IF NOT EXISTS user_roles (
+  user_id TEXT NOT NULL,
+  role TEXT NOT NULL CHECK (role IN ('admin','moderator')),
+  granted_at TEXT NOT NULL,
+  granted_by TEXT,
+  revoked_at TEXT,
+  note TEXT,
+  PRIMARY KEY (user_id, role),
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE INDEX IF NOT EXISTS idx_user_roles_active ON user_roles(role, revoked_at);
+
+CREATE TABLE IF NOT EXISTS email_verification_tokens (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL,
+  token_hash TEXT NOT NULL UNIQUE,
+  created_at TEXT NOT NULL,
+  expires_at TEXT NOT NULL,
+  used_at TEXT,
+  ip TEXT,
+  user_agent TEXT,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE INDEX IF NOT EXISTS idx_email_verification_user ON email_verification_tokens(user_id);
+CREATE INDEX IF NOT EXISTS idx_email_verification_hash ON email_verification_tokens(token_hash);
+CREATE INDEX IF NOT EXISTS idx_email_verification_expires ON email_verification_tokens(expires_at);
+
+CREATE TABLE IF NOT EXISTS auth_link_requests (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL,
+  session_id TEXT NOT NULL,
+  provider TEXT NOT NULL,
+  nonce_hash TEXT NOT NULL UNIQUE,
+  return_url TEXT NOT NULL,
+  created_at TEXT NOT NULL,
+  expires_at TEXT NOT NULL,
+  used_at TEXT,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (session_id) REFERENCES sessions(id) ON DELETE CASCADE
+);
+
+CREATE INDEX IF NOT EXISTS idx_auth_link_user ON auth_link_requests(user_id, provider);
+CREATE INDEX IF NOT EXISTS idx_auth_link_expires ON auth_link_requests(expires_at);
 
 CREATE TABLE IF NOT EXISTS bottle_submissions (
   id TEXT PRIMARY KEY,

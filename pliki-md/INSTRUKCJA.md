@@ -2,6 +2,45 @@
 
 ## Aktualna zasada deployu - 2026-07-06
 
+## Bezpieczne wdrozenie auth v69 - wykonaj przed kolejnym Workerem
+
+1. W Cloudflare otworz `D1 -> bourbon-hunters-db -> Backups` i utworz/recznie zachowaj punkt odtworzenia przed migracja.
+2. W konsoli D1 wykonaj caly plik `agent/d1-migration-v69-auth-hardening.sql`.
+3. Nadaj role administratora istniejacemu kontu, podstawiajac prawidlowy e-mail:
+
+```sql
+INSERT INTO user_roles (user_id, role, granted_at, granted_by, note)
+SELECT id, 'admin', datetime('now'), 'migration-v69', 'Initial administrator'
+FROM users
+WHERE email = 'YOUR_ADMIN_EMAIL'
+ON CONFLICT(user_id, role) DO UPDATE SET revoked_at = NULL;
+```
+
+4. Sprawdz wynik. Zapytanie musi zwrocic dokladnie Twoje konto i role `admin`:
+
+```sql
+SELECT u.email, r.role, r.granted_at, r.revoked_at
+FROM user_roles r
+JOIN users u ON u.id = r.user_id
+WHERE r.role = 'admin';
+```
+
+5. Uniewaznij dotychczasowe sesje administratora:
+
+```sql
+DELETE FROM sessions
+WHERE user_id IN (
+  SELECT user_id FROM user_roles WHERE role = 'admin' AND revoked_at IS NULL
+);
+```
+
+6. Uruchom `WYSLIJ-NA-GITHUB.bat`, zaczekaj na zielone Actions i odswiez PWA do cache `bourbon-hunters-v115`.
+7. Teraz wklej i zdeployuj aktualny `agent/worker.js`.
+8. Health musi pokazac `auth_version: auth-verified-email-roles-google-v4` oraz `auth_security_schema: true`.
+9. Zaloguj sie ponownie i sprawdz, czy `Profil -> Raporty` jest widoczny.
+
+Nie deployuj nowego Workera przed migracja, nadaniem roli i publikacja frontendu. Stary Worker jest zgodny z nowym frontendem na czas tej krotkiej zmiany, ale nowy proces potwierdzenia e-mail wymaga juz aktualnego frontendu.
+
 Jesli zmieniasz tylko frontend, assety, dokumentacje albo `sw.js`:
 
 1. Uruchom `WYSLIJ-NA-GITHUB.bat`.
@@ -26,7 +65,7 @@ Aktualny oczekiwany stan Workera:
 ```json
 {
   "ok": true,
-  "auth_version": "auth-pbkdf2-100000-google-v3",
+  "auth_version": "auth-verified-email-roles-google-v4",
   "scan_orchestrator_version": "visual-only-catalog-v8-mobile-foreground",
   "scan_mode": "visual_only",
   "scan_ocr_enabled": false,
@@ -47,6 +86,7 @@ Aktualny oczekiwany stan Workera:
   "profile_schema": true,
   "recommendations_schema": true,
   "identity_schema": true,
+  "auth_security_schema": true,
   "catalog_schema": true,
   "catalog_data_schema": true,
   "catalog_moderation_schema": true,
@@ -82,7 +122,7 @@ Cykl zycia zdjec katalogowych wymaga:
 4. W D1 uruchom `agent/d1-migration-v68-whisky-news.sql`.
 5. Dopiero potem wklej i zdeployuj aktualny `agent/worker.js`.
 6. W Workerze pozostaw jeden dzienny Cron Trigger, np. `0 3 * * *`. Agent tworzy wydania poniedzialkowe i czwartkowe, a w pozostale dni automatycznie uzupelnia nieudane lub niepelne wydanie do trzech artykulow.
-7. Wyslij frontend na GitHub i odswiez PWA do cache `bourbon-hunters-v114`.
+7. Wyslij frontend na GitHub i odswiez PWA do cache `bourbon-hunters-v115`.
 8. Sprawdz pelny health: `https://bourbon-hunters.darekmaslyk.workers.dev/auth/health`.
 
 Kolejnosc jest wazna: migracje D1 -> Worker -> GitHub/PWA. Bez v67 user nie moze zatwierdzic assetu, a bez v68 feed newsow pozostanie pusty.
@@ -226,7 +266,7 @@ Ta zmiana dotyczy GitHub Pages. Nie wymaga podmiany Workera, migracji D1 ani zmi
 5. Sprawdź na Home kafel Whisky z liczbą pozycji.
 6. Wejdź w Whisky i sprawdź filtry Scotch, Irish, Japanese, Rye i pozostałe.
 
-Aktualny cache: `bourbon-hunters-v114`.
+Aktualny cache: `bourbon-hunters-v115`.
 
 ## Wdrozenie katalogu Popular 200 - 2026-08-04
 

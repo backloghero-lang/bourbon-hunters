@@ -152,8 +152,18 @@ Ten plik trzyma stale ustalenia, zeby nie ginely w dlugich watkach.
 - Google login dziala przez Cloudflare Worker, nie bezposrednio z frontu.
 - Front kieruje na `/auth/google/start`, Worker wymienia `code` na token Google po stronie serwera i wraca do PWA z tokenem sesji Bourbon Hunters w URL hash.
 - D1 ma tabele `auth_identities`, ktora laczy `provider + provider_user_id` z `user_id`, zeby kolejne logowania Google aktualizowaly ta sama osobe.
-- Jesli email z Google istnieje juz jako konto email/password, Worker linkuje Google do istniejacego konta zamiast tworzyc duplikat.
-- Health Workera powinien pokazywac `auth_version: auth-pbkdf2-100000-google-v3`, `identity_schema: true` i `google_ready: true` po konfiguracji sekretow Google.
+- Historyczna decyzja o automatycznym laczeniu po e-mailu zostala wycofana 2026-08-05 ze wzgledow bezpieczenstwa.
+- Health Workera powinien pokazywac aktualna wersje auth, `identity_schema: true` i `google_ready: true` po konfiguracji sekretow Google.
+
+## 2026-08-05 - weryfikacja e-mail, role i jawne laczenie Google
+
+- Rola administratora jest przechowywana w `user_roles`, nie jest wyliczana z adresu e-mail ani `SUPPORT_EMAIL`.
+- Nowe konto lokalne pozostaje nieaktywne do klikniecia jednorazowego linku e-mail waznego 24 godziny.
+- Zweryfikowany profil Google tworzy nowe konto tylko wtedy, gdy adres nie nalezy do istniejacego uzytkownika.
+- Kolizja z kontem haslowym zwraca `google_account_exists_unlinked`. Uzytkownik loguje sie haslem i jawnie uruchamia laczenie Google w profilu.
+- Laczenie Google ma podpisany state oraz jednorazowy, 10-minutowy rekord `auth_link_requests` zwiazany z aktywna sesja.
+- Usuniecie konta wymaga ponownego podania hasla albo swiezej sesji Google.
+- Wymagana migracja: `agent/d1-migration-v69-auth-hardening.sql`.
 
 ## 2026-07-11 - Scanner OCR + visual orchestrator
 

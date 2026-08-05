@@ -1,8 +1,17 @@
 # Bourbon Hunters 1.1 - handoff do kolejnego etapu
 
-Aktualizacja: 2026-08-04.
+Aktualizacja: 2026-08-05.
 
 Ten plik ma byc pierwszym kontekstem dla nowego watku Codexa, np. `Przekaz Bourbon Hunter 1.1`.
+
+## Stan nadrzedny 2026-08-05 - auth hardening
+
+- Audyt: `pliki-md/AUDYT-KODU-2026-08-05.md`.
+- Backup kodu: tag `audit-backup-2026-08-05-pre-auth-hardening` na `d024fe9`.
+- Przed nowym Workerem trzeba wykonac `agent/d1-migration-v69-auth-hardening.sql`, nadac role admina w `user_roles` i usunac stare sesje administratora zgodnie z `pliki-md/INSTRUKCJA.md`.
+- Oczekiwany health: `auth_version: auth-verified-email-roles-google-v4`, `auth_security_schema: true`.
+- Nowe konta lokalne wymagaja potwierdzenia e-mail. Google nie laczy juz kont automatycznie po samym adresie.
+- Aktualne szczegoly wdrozenia i bezpieczenstwa sa w `pliki-md/HANDOFF.md`; starsze bloki nizej sa historia projektu.
 
 ## Stan nadrzedny 2026-07-27
 
@@ -72,7 +81,7 @@ pliki-md/BUGS.md
 - GitHub ma ostatni commit `b178510`; lokalny branch jest jeden commit do przodu.
 - Lokalny, jeszcze niewypchniety commit: `23b69fb Split scanner models and report quota limits`.
 - Front/PWA po wypchnieciu bedzie na cache `bourbon-hunters-v85`.
-- Worker auth zwraca `auth-pbkdf2-100000-google-v3` i `pbkdf2_iterations: 100000`.
+- Historyczny Worker auth zwracal `auth-pbkdf2-100000-google-v3`; po v69 oczekiwane jest `auth-verified-email-roles-google-v4`.
 - Lokalny Worker oczekujacy na deploy ma scanner `ocr-visual-fusion-catalog-10k-v4-split-models`.
 - D1 jest podpiete jako binding `DB`.
 - Tabela resetu hasla `password_reset_tokens` jest obecna.
@@ -224,11 +233,12 @@ Priorytet 5: dokumentacja i biznes
 ```json
 {
   "ok": true,
-  "auth_version": "auth-pbkdf2-100000-v2",
+  "auth_version": "auth-verified-email-roles-google-v4",
   "pbkdf2_iterations": 100000,
   "d1": true,
   "schema": true,
   "reset_schema": true,
+  "auth_security_schema": true,
   "email_ready": true
 }
 ```

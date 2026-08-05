@@ -28,7 +28,7 @@ const NEWS_AGENT_VERSION = "whisky-news-google-grounded-v2-release-recovery";
 const LOCAL_IMAGE_PIPELINE_VERSION = "local-bottle-cutout-v2-quality-gated";
 const NEWS_RETENTION_DAYS = 30;
 const CATALOG_SYSTEM_USER_ID = "catalog-system";
-const AUTH_VERSION = "auth-pbkdf2-100000-google-v3";
+const AUTH_VERSION = "auth-verified-email-roles-google-v4";
 const PBKDF2_ITERATIONS = 100000;
 const PROFILE_BADGE_IDS = ["glass","bottle","barrel","seal","hat","star","distillery","notes","opener","horseshoe"];
 
@@ -230,7 +230,16 @@ async function hashPassword(password, saltHex){
   const bits=await crypto.subtle.deriveBits({name:"PBKDF2",salt:salt,iterations:PBKDF2_ITERATIONS,hash:"SHA-256"}, key, 256);
   return hex(bits);
 }
-function publicUser(row){ return row ? {id:row.id,email:row.email,username:row.username,created_at:row.created_at} : null; }
+function publicUser(row){
+  return row ? {
+    id:row.id,
+    email:row.email,
+    username:row.username,
+    created_at:row.created_at,
+    email_verified:!!row.email_verified_at,
+    auth_method:row.password_algo==="google-oauth2"?"google":"password"
+  } : null;
+}
 function cleanEmail(v){ return String(v||"").trim().toLowerCase(); }
 function cleanUsername(v){ return String(v||"").trim().replace(/\s+/g," ").slice(0,40); }
 function cleanProfileBadge(v){ v=String(v||"").trim(); return PROFILE_BADGE_IDS.indexOf(v)>=0 ? v : "glass"; }
@@ -279,10 +288,13 @@ function redirectWithHash(returnUrl, params){
 }
 function assetUrl(env, path){ return appUrl(env)+String(path||"").replace(/^\/+/,""); }
 function supportEmail(env){ return String(env.SUPPORT_EMAIL||"support@bourbonhunters.app").trim(); }
-function isAdminUser(env, user){
-  if(!user || !user.email) return false;
-  const configured=String(env.ADMIN_EMAILS||"").split(",").concat([supportEmail(env)]).map(cleanEmail).filter(Boolean);
-  return configured.indexOf(cleanEmail(user.email))>=0;
+function isAdminUser(env, user){ return !!(user && Number(user.is_admin)===1); }
+function constantTimeHexEqual(a,b){
+  a=String(a||""); b=String(b||"");
+  const length=Math.max(a.length,b.length);
+  let diff=a.length^b.length;
+  for(let i=0;i<length;i++) diff|=(a.charCodeAt(i%Math.max(1,a.length))||0)^(b.charCodeAt(i%Math.max(1,b.length))||0);
+  return diff===0;
 }
 function htmlEscape(s){
   return String(s||"").replace(/[&<>"']/g,function(c){
@@ -315,6 +327,16 @@ async function sendWelcomeEmail(env, user){
     subject:"Welcome to Bourbon Hunters",
     text:"Welcome to Bourbon Hunters, "+(user.username||"Hunter")+". Your account is ready. Open "+appUrl(env),
     html:'<div style="margin:0;background:#080604;padding:24px 12px;font-family:Arial,sans-serif;color:#f6e1bc"><div style="max-width:560px;margin:0 auto;background:#100a06;border:1px solid rgba(226,176,112,.28);border-radius:18px;overflow:hidden"><img src="'+header+'" alt="Bourbon Hunters" style="display:block;width:100%;max-height:142px;object-fit:cover"><div style="padding:24px"><h1 style="margin:0 0 12px;color:#e2b070;font-size:26px;line-height:1.1">Welcome to Bourbon Hunters</h1><p style="margin:0 0 14px;line-height:1.55">Hi '+name+', your hunter profile is ready.</p><p style="margin:0 0 20px;line-height:1.55;color:#d8c4a4">You can now sync your wishlist, collection, ratings and scans across devices.</p><p style="margin:0"><a href="'+openUrl+'" style="display:inline-block;background:#e2b070;color:#1b1008;padding:12px 18px;border-radius:12px;text-decoration:none;font-weight:700">Open Bourbon Hunters</a></p></div><div style="padding:0 24px 20px;text-align:center"><img src="'+footer+'" alt="" style="width:142px;max-width:44%;height:auto;opacity:.72;border-radius:12px"><p style="margin:12px 0 0;color:#9f8b69;font-size:12px;line-height:1.45">Drink responsibly. 18+.</p></div></div></div>'
+  });
+}
+async function sendEmailVerification(env, user, verifyUrl){
+  const name=htmlEscape(user.username||"Hunter");
+  const header=htmlEscape(assetUrl(env,"design/figma-assets/home-pack-v2/home-header-v3.jpg"));
+  return sendEmail(env,{
+    to:user.email,
+    subject:"Confirm your Bourbon Hunters email",
+    text:"Confirm your Bourbon Hunters email address: "+verifyUrl+" The link expires in 24 hours.",
+    html:'<div style="margin:0;background:#080604;padding:24px 12px;font-family:Arial,sans-serif;color:#f6e1bc"><div style="max-width:560px;margin:0 auto;background:#100a06;border:1px solid rgba(226,176,112,.28);border-radius:18px;overflow:hidden"><img src="'+header+'" alt="Bourbon Hunters" style="display:block;width:100%;max-height:142px;object-fit:cover"><div style="padding:24px"><h1 style="margin:0 0 12px;color:#e2b070;font-size:26px;line-height:1.1">Confirm your email</h1><p style="margin:0 0 18px;line-height:1.55">Hi '+name+', confirm this address to activate your Bourbon Hunters account.</p><p style="margin:0 0 18px"><a href="'+htmlEscape(verifyUrl)+'" style="display:inline-block;background:#174d2d;color:#fff;padding:12px 18px;border-radius:12px;text-decoration:none;font-weight:700">Confirm email</a></p><p style="margin:0;color:#c9b493;font-size:12px;line-height:1.5">The link expires in 24 hours. If this was not you, ignore this email.</p></div></div></div>'
   });
 }
 async function sendPasswordResetEmail(env, user, resetUrl){
@@ -386,6 +408,22 @@ async function tableColumns(env, name){
   const out={};
   (rows.results||[]).forEach(function(row){ if(row.name) out[String(row.name)]=true; });
   return out;
+}
+async function authSecuritySchemaReady(env){
+  if(!env.DB) return false;
+  const cols=await userColumns(env);
+  return !!(cols.email_verified_at && await tableExists(env,"user_roles") && await tableExists(env,"email_verification_tokens") && await tableExists(env,"auth_link_requests"));
+}
+async function userHasRole(env, userId, role){
+  if(!userId || !(await tableExists(env,"user_roles"))) return false;
+  const row=await env.DB.prepare("SELECT 1 AS allowed FROM user_roles WHERE user_id=? AND role=? AND revoked_at IS NULL LIMIT 1")
+    .bind(String(userId),String(role)).first();
+  return !!row;
+}
+async function attachRoleFlags(env, row){
+  if(!row) return row;
+  row.is_admin=(await userHasRole(env,row.id,"admin"))?1:0;
+  return row;
 }
 async function catalogDataSchemaReady(env){
   if(!(await tableExists(env,"catalog_asset_receipts"))) return false;
@@ -808,8 +846,14 @@ async function adminCatalogModerationDecision(env, request, admin, moderationId,
 }
 async function ensureCatalogSystemUser(env){
   const now=new Date().toISOString();
-  await env.DB.prepare("INSERT OR IGNORE INTO users (id,email,username,password_hash,password_salt,password_algo,birth_date,age_gate_country,age_gate_min,age_verified_at,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)")
-    .bind(CATALOG_SYSTEM_USER_ID,"catalog-system@bourbon-hunters.invalid","catalog_system","disabled","disabled","disabled",null,"system",18,now,now,now).run();
+  const cols=await userColumns(env);
+  if(cols.email_verified_at){
+    await env.DB.prepare("INSERT OR IGNORE INTO users (id,email,username,password_hash,password_salt,password_algo,birth_date,age_gate_country,age_gate_min,age_verified_at,email_verified_at,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)")
+      .bind(CATALOG_SYSTEM_USER_ID,"catalog-system@bourbon-hunters.invalid","catalog_system","disabled","disabled","disabled",null,"system",18,now,now,now,now).run();
+  }else{
+    await env.DB.prepare("INSERT OR IGNORE INTO users (id,email,username,password_hash,password_salt,password_algo,birth_date,age_gate_country,age_gate_min,age_verified_at,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)")
+      .bind(CATALOG_SYSTEM_USER_ID,"catalog-system@bourbon-hunters.invalid","catalog_system","disabled","disabled","disabled",null,"system",18,now,now,now).run();
+  }
 }
 async function permanentCatalogImage(env, row){
   const sourceKey=String(row.image_key||row.processed_key||"");
@@ -922,14 +966,45 @@ async function createSession(env, request, userId){
     .bind(crypto.randomUUID(), userId, tokenHash, now.toISOString(), expires.toISOString(), request.headers.get("User-Agent")||"", request.headers.get("CF-Connecting-IP")||"").run();
   return token;
 }
+async function createEmailVerification(env, request, user){
+  const now=new Date();
+  const expires=new Date(now.getTime()+1000*60*60*24);
+  const rawToken=randHex(32);
+  const tokenHash=await sha256Hex(rawToken);
+  await env.DB.prepare("DELETE FROM email_verification_tokens WHERE user_id=? OR expires_at<? OR used_at IS NOT NULL")
+    .bind(user.id,now.toISOString()).run();
+  await env.DB.prepare("INSERT INTO email_verification_tokens (id,user_id,token_hash,created_at,expires_at,ip,user_agent) VALUES (?,?,?,?,?,?,?)")
+    .bind(crypto.randomUUID(),user.id,tokenHash,now.toISOString(),expires.toISOString(),request.headers.get("CF-Connecting-IP")||"",request.headers.get("User-Agent")||"").run();
+  const verifyUrl=appUrl(env)+"?verify_email="+encodeURIComponent(rawToken);
+  const mail=await sendEmailVerification(env,user,verifyUrl);
+  return {sent:!!mail.sent,expires_at:expires.toISOString()};
+}
 async function authUser(env, request){
   const h=request.headers.get("Authorization")||"";
   const m=h.match(/^Bearer\s+(.+)$/i);
   if(!m || !env.DB) return null;
   const tokenHash=await sha256Hex(m[1].trim());
-  const row=await env.DB.prepare("SELECT users.id,users.email,users.username,users.created_at,sessions.id AS session_id FROM sessions JOIN users ON users.id=sessions.user_id WHERE sessions.token_hash=? AND sessions.expires_at>?")
-    .bind(tokenHash, new Date().toISOString()).first();
-  return row || null;
+  const hasRoles=await tableExists(env,"user_roles");
+  const sql=hasRoles
+    ? "SELECT users.id,users.email,users.username,users.password_hash,users.password_salt,users.password_algo,users.email_verified_at,users.age_verified_at,users.created_at,sessions.id AS session_id,sessions.created_at AS session_created_at,EXISTS(SELECT 1 FROM user_roles ur WHERE ur.user_id=users.id AND ur.role='admin' AND ur.revoked_at IS NULL) AS is_admin FROM sessions JOIN users ON users.id=sessions.user_id WHERE sessions.token_hash=? AND sessions.expires_at>?"
+    : "SELECT users.id,users.email,users.username,users.password_hash,users.password_salt,users.password_algo,users.created_at,sessions.id AS session_id,sessions.created_at AS session_created_at,0 AS is_admin FROM sessions JOIN users ON users.id=sessions.user_id WHERE sessions.token_hash=? AND sessions.expires_at>?";
+  const row=await env.DB.prepare(sql).bind(tokenHash,new Date().toISOString()).first();
+  return row||null;
+}
+async function accountDeletionReauth(user, body){
+  if(!user) return {ok:false,error:"reauth_required"};
+  if(user.password_algo==="google-oauth2"){
+    const sessionAge=Date.now()-Date.parse(String(user.session_created_at||""));
+    return Number.isFinite(sessionAge) && sessionAge>=0 && sessionAge<=1000*60*10
+      ? {ok:true}
+      : {ok:false,error:"google_reauth_required"};
+  }
+  const password=String(body&&body.password||"");
+  if(!password || password.length>128) return {ok:false,error:"password_reauth_required"};
+  const hash=await hashPassword(password,user.password_salt);
+  return constantTimeHexEqual(hash,user.password_hash)
+    ? {ok:true}
+    : {ok:false,error:"password_reauth_failed"};
 }
 async function bootstrapFor(env, userId){
   const bottles=await env.DB.prepare("SELECT bottle_id,list_type FROM user_bottles WHERE user_id=?").bind(userId).all();
@@ -1052,8 +1127,51 @@ async function googleExchange(request, env, code){
   if(!userRes.ok || !userData.sub) throw {error:"google_user_failed",detail:String(userData.error_description||userData.error||userRes.status).slice(0,180)};
   return userData;
 }
+function googleAuthorizationUrl(request, env, state){
+  const googleUrl=new URL("https://accounts.google.com/o/oauth2/v2/auth");
+  googleUrl.searchParams.set("client_id",String(env.GOOGLE_CLIENT_ID));
+  googleUrl.searchParams.set("redirect_uri",googleRedirectUri(env,request));
+  googleUrl.searchParams.set("response_type","code");
+  googleUrl.searchParams.set("scope","openid email profile");
+  googleUrl.searchParams.set("state",state);
+  googleUrl.searchParams.set("prompt","select_account");
+  return googleUrl.toString();
+}
+async function createGoogleLinkRequest(env, request, user, returnUrl){
+  if(!(await authSecuritySchemaReady(env))) throw {error:"schema_auth_security_missing"};
+  const now=new Date();
+  const expires=new Date(now.getTime()+1000*60*10);
+  const id=crypto.randomUUID();
+  const nonce=randHex(24);
+  const nonceHash=await sha256Hex(nonce);
+  await env.DB.prepare("DELETE FROM auth_link_requests WHERE user_id=? OR expires_at<? OR used_at IS NOT NULL")
+    .bind(user.id,now.toISOString()).run();
+  await env.DB.prepare("INSERT INTO auth_link_requests (id,user_id,session_id,provider,nonce_hash,return_url,created_at,expires_at) VALUES (?,?,?,?,?,?,?,?)")
+    .bind(id,user.id,user.session_id,"google",nonceHash,returnUrl,now.toISOString(),expires.toISOString()).run();
+  const state=await makeGoogleState(env,{mode:"link",link_id:id,nonce:nonce,return_url:returnUrl,iat:Date.now()});
+  return googleAuthorizationUrl(request,env,state);
+}
+async function completeGoogleLink(env, state, googleUser){
+  if(!(await authSecuritySchemaReady(env))) throw {error:"schema_auth_security_missing"};
+  const providerId=String(googleUser.sub||"").trim();
+  const email=cleanEmail(googleUser.email);
+  if(!providerId || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) throw {error:"bad_google_profile"};
+  if(googleUser.email_verified===false || googleUser.email_verified==="false") throw {error:"google_email_unverified"};
+  const now=new Date().toISOString();
+  const link=await env.DB.prepare("SELECT alr.*,u.email AS user_email FROM auth_link_requests alr JOIN users u ON u.id=alr.user_id JOIN sessions s ON s.id=alr.session_id AND s.user_id=alr.user_id WHERE alr.id=? AND alr.provider='google' AND alr.used_at IS NULL AND alr.expires_at>? AND s.expires_at>?")
+    .bind(String(state.link_id||""),now,now).first();
+  if(!link || !constantTimeHexEqual(await sha256Hex(String(state.nonce||"")),link.nonce_hash)) throw {error:"google_link_expired"};
+  if(cleanEmail(link.user_email)!==email) throw {error:"google_link_email_mismatch"};
+  const existing=await env.DB.prepare("SELECT user_id FROM auth_identities WHERE provider='google' AND provider_user_id=?").bind(providerId).first();
+  if(existing && existing.user_id!==link.user_id) throw {error:"google_identity_in_use"};
+  await env.DB.prepare("INSERT INTO auth_identities (provider,provider_user_id,user_id,email,created_at,updated_at) VALUES ('google',?,?,?,?,?) ON CONFLICT(provider,provider_user_id) DO UPDATE SET email=excluded.email,updated_at=excluded.updated_at")
+    .bind(providerId,link.user_id,email,now,now).run();
+  await env.DB.prepare("UPDATE users SET email_verified_at=COALESCE(email_verified_at,?),updated_at=? WHERE id=?").bind(now,now,link.user_id).run();
+  await env.DB.prepare("UPDATE auth_link_requests SET used_at=? WHERE id=?").bind(now,link.id).run();
+  return {ok:true,user_id:link.user_id};
+}
 async function googleUserLogin(env, request, googleUser){
-  if(!(await tableExists(env,"auth_identities"))) throw {error:"schema_google_missing"};
+  if(!(await authSecuritySchemaReady(env))) throw {error:"schema_auth_security_missing"};
   const provider="google";
   const providerId=String(googleUser.sub||"").trim();
   const email=cleanEmail(googleUser.email);
@@ -1064,23 +1182,23 @@ async function googleUserLogin(env, request, googleUser){
     .bind(provider,providerId).first();
   let created=false;
   if(!row){
-    row=await env.DB.prepare("SELECT * FROM users WHERE email=?").bind(email).first();
-    if(!row){
-      const id=crypto.randomUUID();
-      const salt=randHex(16);
-      const hash=await sha256Hex("google:"+providerId+":"+randHex(16));
-      const username=await availableUsername(env,googleUser.name||email,email);
-      await env.DB.prepare("INSERT INTO users (id,email,username,password_hash,password_salt,password_algo,birth_date,age_gate_country,age_gate_min,age_verified_at,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)")
-        .bind(id,email,username,hash,salt,"google-oauth2",null,"google",ageGateMin(env),now,now,now).run();
-      row=await env.DB.prepare("SELECT * FROM users WHERE id=?").bind(id).first();
-      created=true;
-    }
+    const emailOwner=await env.DB.prepare("SELECT id FROM users WHERE email=?").bind(email).first();
+    if(emailOwner) throw {error:"google_account_exists_unlinked"};
+    const id=crypto.randomUUID();
+    const salt=randHex(16);
+    const hash=await sha256Hex("google:"+providerId+":"+randHex(16));
+    const username=await availableUsername(env,googleUser.name||email,email);
+    await env.DB.prepare("INSERT INTO users (id,email,username,password_hash,password_salt,password_algo,birth_date,age_gate_country,age_gate_min,age_verified_at,email_verified_at,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)")
+      .bind(id,email,username,hash,salt,"google-oauth2",null,"google",ageGateMin(env),now,now,now,now).run();
+    row=await env.DB.prepare("SELECT * FROM users WHERE id=?").bind(id).first();
+    created=true;
     await env.DB.prepare("INSERT INTO auth_identities (provider,provider_user_id,user_id,email,created_at,updated_at) VALUES (?,?,?,?,?,?) ON CONFLICT(provider,provider_user_id) DO UPDATE SET user_id=excluded.user_id,email=excluded.email,updated_at=excluded.updated_at")
       .bind(provider,providerId,row.id,email,now,now).run();
   } else if(row.email!==email){
     await env.DB.prepare("UPDATE auth_identities SET email=?,updated_at=? WHERE provider=? AND provider_user_id=?")
       .bind(email,now,provider,providerId).run();
   }
+  await attachRoleFlags(env,row);
   const token=await createSession(env,request,row.id);
   if(created) sendWelcomeEmail(env,{email:row.email,username:row.username}).catch(function(){});
   return {token:token,user:publicUser(row),bootstrap:await bootstrapFor(env,row.id),profile:await profileFor(env,row.id),admin:isAdminUser(env,row),created:created};
@@ -1395,7 +1513,7 @@ async function handleApi(request, env, cors){
   const url=new URL(request.url);
   const path=url.pathname.replace(/\/+$/,"");
   if(path==="/auth/health" && request.method==="GET"){
-    let schema=false, reset_schema=false, profile_schema=false, recommendations_schema=false, identity_schema=false, catalog_schema=false, catalog_data_schema=false, catalog_moderation_schema=false, telemetry_schema=false, news_schema=false, news_article_count=0, news_last_run=null, detail="";
+    let schema=false, reset_schema=false, profile_schema=false, recommendations_schema=false, identity_schema=false, auth_security_schema=false, catalog_schema=false, catalog_data_schema=false, catalog_moderation_schema=false, telemetry_schema=false, news_schema=false, news_article_count=0, news_last_run=null, detail="";
     if(env.DB){
       try{
         await env.DB.prepare("SELECT id FROM users LIMIT 1").first();
@@ -1410,6 +1528,8 @@ async function handleApi(request, env, cors){
         if(schema && reset_schema && profile_schema && !recommendations_schema) detail="bottle_recommendations table is missing";
         identity_schema=await tableExists(env,"auth_identities");
         if(schema && reset_schema && profile_schema && recommendations_schema && !identity_schema) detail="auth_identities table is missing";
+        auth_security_schema=await authSecuritySchemaReady(env);
+        if(schema && identity_schema && !auth_security_schema) detail="auth hardening migration v69 is missing";
         catalog_schema=(await tableExists(env,"bottle_submissions")) && (await tableExists(env,"catalog_bottles"));
         if(schema && reset_schema && profile_schema && recommendations_schema && identity_schema && !catalog_schema) detail="catalog submission tables are missing";
         catalog_data_schema=catalog_schema && await catalogDataSchemaReady(env);
@@ -1429,20 +1549,13 @@ async function handleApi(request, env, cors){
       }
       catch(e){ detail=String(e&&e.message?e.message:e).slice(0,220); }
     }
-    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_mode:"visual_only",scan_ocr_enabled:false,scanner_ai_ready:!!env.GEMINI_API_KEY,scanner_primary_model:env.IDENT_MODEL||"gemini-2.5-flash-lite",scanner_fallback_model:env.IDENT_FALLBACK_MODEL||env.MODEL||"gemini-2.5-flash",scanner_mobile_foreground:!!env.IMAGES,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_moderation_version:CATALOG_MODERATION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,news_agent_version:NEWS_AGENT_VERSION,news_schedule:"Monday and Thursday releases with daily recovery via UTC cron",news_target_per_release:3,news_current_release:newsReleaseSlot(new Date()),news_article_count:news_article_count,news_last_run:news_last_run,local_image_pipeline_version:LOCAL_IMAGE_PIPELINE_VERSION,news_retention_days:NEWS_RETENTION_DAYS,starter_news_count:STARTER_NEWS.length,news_auth_required:true,catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,catalog_moderation_schema:catalog_moderation_schema,telemetry_schema:telemetry_schema,news_schema:news_schema,news_agent_ready:news_schema&&!!env.GEMINI_API_KEY,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),local_image_cutout_ready:!!env.IMAGES,cutout_quality_ready:!!(env.IMAGES&&env.GEMINI_API_KEY),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
+    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_mode:"visual_only",scan_ocr_enabled:false,scanner_ai_ready:!!env.GEMINI_API_KEY,scanner_primary_model:env.IDENT_MODEL||"gemini-2.5-flash-lite",scanner_fallback_model:env.IDENT_FALLBACK_MODEL||env.MODEL||"gemini-2.5-flash",scanner_mobile_foreground:!!env.IMAGES,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_moderation_version:CATALOG_MODERATION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,news_agent_version:NEWS_AGENT_VERSION,news_schedule:"Monday and Thursday releases with daily recovery via UTC cron",news_target_per_release:3,news_current_release:newsReleaseSlot(new Date()),news_article_count:news_article_count,news_last_run:news_last_run,local_image_pipeline_version:LOCAL_IMAGE_PIPELINE_VERSION,news_retention_days:NEWS_RETENTION_DAYS,starter_news_count:STARTER_NEWS.length,news_auth_required:true,catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,auth_security_schema:auth_security_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,catalog_moderation_schema:catalog_moderation_schema,telemetry_schema:telemetry_schema,news_schema:news_schema,news_agent_ready:news_schema&&!!env.GEMINI_API_KEY,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),local_image_cutout_ready:!!env.IMAGES,cutout_quality_ready:!!(env.IMAGES&&env.GEMINI_API_KEY),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
   }
   if(path==="/auth/google/start" && request.method==="GET"){
     const returnUrl=allowedReturnUrl(env,url.searchParams.get("return")||appUrl(env));
     if(!googleReady(env)) return redirectWithHash(returnUrl,{google_error:"google_not_configured"});
     const state=await makeGoogleState(env,{return_url:returnUrl,iat:Date.now(),nonce:randHex(8)});
-    const googleUrl=new URL("https://accounts.google.com/o/oauth2/v2/auth");
-    googleUrl.searchParams.set("client_id",String(env.GOOGLE_CLIENT_ID));
-    googleUrl.searchParams.set("redirect_uri",googleRedirectUri(env,request));
-    googleUrl.searchParams.set("response_type","code");
-    googleUrl.searchParams.set("scope","openid email profile");
-    googleUrl.searchParams.set("state",state);
-    googleUrl.searchParams.set("prompt","select_account");
-    return Response.redirect(googleUrl.toString(),302);
+    return Response.redirect(googleAuthorizationUrl(request,env,state),302);
   }
   if(path==="/auth/google/callback" && request.method==="GET"){
     const fallback=appUrl(env);
@@ -1454,6 +1567,10 @@ async function handleApi(request, env, cors){
     if(!env.DB) return redirectWithHash(returnUrl,{google_error:"d1_missing"});
     try{
       const googleUser=await googleExchange(request,env,String(url.searchParams.get("code")||""));
+      if(state.mode==="link"){
+        await completeGoogleLink(env,state,googleUser);
+        return redirectWithHash(returnUrl,{google_link:"ok"});
+      }
       const data=await googleUserLogin(env,request,googleUser);
       return redirectWithHash(returnUrl,{google_token:data.token,google_login:"ok",google_new:data.created?1:0});
     }catch(e){
@@ -1540,6 +1657,8 @@ async function handleApi(request, env, cors){
     if(password.length<8) return J({error:"weak_password"},400,cors);
     if(!birthDate) return J({error:"age_required",min_age:minAge},400,cors);
     if(!isOldEnough(birthDate,minAge)) return J({error:"age_restricted",min_age:minAge},403,cors);
+    if(!(await authSecuritySchemaReady(env))) return J({error:"schema_auth_security_missing",message:"Run D1 migration v69 before enabling registration."},501,cors);
+    if(!mailConfigured(env)) return J({error:"registration_email_unavailable"},503,cors);
     const emailExists=await env.DB.prepare("SELECT id FROM users WHERE email=?").bind(email).first();
     if(emailExists) return J({error:"email_exists"},409,cors);
     const usernameExists=await env.DB.prepare("SELECT id FROM users WHERE username=?").bind(username).first();
@@ -1550,11 +1669,45 @@ async function handleApi(request, env, cors){
     const hash=await hashPassword(password,salt);
     const now=new Date().toISOString();
     const id=crypto.randomUUID();
-    await env.DB.prepare("INSERT INTO users (id,email,username,password_hash,password_salt,password_algo,birth_date,age_gate_country,age_gate_min,age_verified_at,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)")
-      .bind(id,email,username,hash,salt,"pbkdf2-sha256-"+PBKDF2_ITERATIONS,birthDate,ageCountry,minAge,now,now,now).run();
-    const token=await createSession(env,request,id);
-    const mail=await sendWelcomeEmail(env,{email:email,username:username}).catch(function(e){ return {sent:false,detail:String(e&&e.message?e.message:e).slice(0,160)}; });
-    return J({token:token,user:{id:id,email:email,username:username,created_at:now},bootstrap:{wishlist:[],collection:[],ratings:{}},profile:await profileFor(env,id),admin:false,email_ready:!!mail.sent},200,cors);
+    await env.DB.prepare("INSERT INTO users (id,email,username,password_hash,password_salt,password_algo,birth_date,age_gate_country,age_gate_min,age_verified_at,email_verified_at,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)")
+      .bind(id,email,username,hash,salt,"pbkdf2-sha256-"+PBKDF2_ITERATIONS,birthDate,ageCountry,minAge,now,null,now,now).run();
+    const mail=await createEmailVerification(env,request,{id:id,email:email,username:username}).catch(function(){ return {sent:false}; });
+    if(!mail.sent){
+      await env.DB.prepare("DELETE FROM users WHERE id=?").bind(id).run();
+      return J({error:"verification_delivery_failed"},503,cors);
+    }
+    return J({ok:true,verification_required:true,email_ready:!!mail.sent},202,cors);
+  }
+  if(path==="/auth/email-verification/resend" && request.method==="POST"){
+    if(!(await authSecuritySchemaReady(env))) return J({error:"schema_auth_security_missing"},501,cors);
+    const body=await readBody(request);
+    const email=cleanEmail(body.email);
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return J({error:"bad_email"},400,cors);
+    const row=await env.DB.prepare("SELECT id,email,username,email_verified_at FROM users WHERE email=?").bind(email).first();
+    let sent=false;
+    if(row && !row.email_verified_at && mailConfigured(env)){
+      const mail=await createEmailVerification(env,request,row).catch(function(){ return {sent:false}; });
+      sent=!!mail.sent;
+    }
+    return J({ok:true,email_ready:sent},200,cors);
+  }
+  if(path==="/auth/email-verification/confirm" && request.method==="POST"){
+    if(!(await authSecuritySchemaReady(env))) return J({error:"schema_auth_security_missing"},501,cors);
+    const body=await readBody(request);
+    const token=String(body.token||"").trim();
+    if(!/^[a-f0-9]{64}$/i.test(token)) return J({error:"verification_token_invalid"},400,cors);
+    const tokenHash=await sha256Hex(token);
+    const now=new Date().toISOString();
+    let row=await env.DB.prepare("SELECT evt.id AS verification_id,u.* FROM email_verification_tokens evt JOIN users u ON u.id=evt.user_id WHERE evt.token_hash=? AND evt.expires_at>? AND evt.used_at IS NULL")
+      .bind(tokenHash,now).first();
+    if(!row) return J({error:"verification_token_invalid"},400,cors);
+    await env.DB.prepare("UPDATE users SET email_verified_at=?,updated_at=? WHERE id=?").bind(now,now,row.id).run();
+    await env.DB.prepare("UPDATE email_verification_tokens SET used_at=? WHERE id=?").bind(now,row.verification_id).run();
+    row.email_verified_at=now;
+    await attachRoleFlags(env,row);
+    const sessionToken=await createSession(env,request,row.id);
+    sendWelcomeEmail(env,row).catch(function(){});
+    return J({token:sessionToken,user:publicUser(row),bootstrap:await bootstrapFor(env,row.id),profile:await profileFor(env,row.id),admin:isAdminUser(env,row)},200,cors);
   }
   if(path==="/auth/password-reset" && request.method==="POST"){
     const body=await readBody(request);
@@ -1604,7 +1757,9 @@ async function handleApi(request, env, cors){
     const row=await env.DB.prepare("SELECT * FROM users WHERE email=?").bind(email).first();
     if(!row) return J({error:"bad_login"},401,cors);
     const hash=await hashPassword(password,row.password_salt);
-    if(hash!==row.password_hash) return J({error:"bad_login"},401,cors);
+    if(!constantTimeHexEqual(hash,row.password_hash)) return J({error:"bad_login"},401,cors);
+    if((await authSecuritySchemaReady(env)) && !row.email_verified_at) return J({error:"email_not_verified"},403,cors);
+    await attachRoleFlags(env,row);
     const token=await createSession(env,request,row.id);
     return J({token:token,user:publicUser(row),bootstrap:await bootstrapFor(env,row.id),profile:await profileFor(env,row.id),admin:isAdminUser(env,row)},200,cors);
   }
@@ -1614,9 +1769,22 @@ async function handleApi(request, env, cors){
     await env.DB.prepare("DELETE FROM sessions WHERE id=?").bind(user.session_id).run();
     return J({ok:true},200,cors);
   }
+  if(path==="/me/auth/google/link" && request.method==="POST"){
+    if(!googleReady(env)) return J({error:"google_not_configured"},503,cors);
+    const body=await readBody(request);
+    const returnUrl=allowedReturnUrl(env,body.return_url||appUrl(env));
+    try{
+      const googleUrl=await createGoogleLinkRequest(env,request,user,returnUrl);
+      return J({ok:true,url:googleUrl},200,cors);
+    }catch(e){
+      return J({error:String(e&&e.error||"google_link_failed")},400,cors);
+    }
+  }
   if(path==="/me/account" && request.method==="DELETE"){
     const body=await readBody(request);
     if(String(body.confirm||"")!=="DELETE") return J({error:"delete_confirmation_required"},400,cors);
+    const reauth=await accountDeletionReauth(user,body);
+    if(!reauth.ok) return J({error:reauth.error},403,cors);
     const result=await deleteAccountAndData(env,user);
     return J(result,result.status||200,cors);
   }

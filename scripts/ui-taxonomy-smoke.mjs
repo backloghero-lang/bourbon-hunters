@@ -30,9 +30,10 @@ await page.waitForFunction(()=>typeof DB!=="undefined" && DB.length>=250);
 
 const homeCategories=await page.locator("#catGrid .cat").count();
 if(homeCategories!==6) throw new Error(`Expected 6 home categories, got ${homeCategories}`);
-const whiskyHomeCount=Number(await page.locator('.cat[data-family="whisky"] .cnt').innerText());
+const categoryCounters=await page.locator("#catGrid .cat .cnt").count();
+if(categoryCounters!==0) throw new Error(`Home categories should not expose counts, got ${categoryCounters}`);
 const whiskyMetaCount=await page.evaluate(()=>Number(BROWSE_META.families.whisky)||0);
-if(whiskyHomeCount!==whiskyMetaCount) throw new Error(`Whisky Home/meta count mismatch: ${whiskyHomeCount}/${whiskyMetaCount}`);
+if(whiskyMetaCount<1) throw new Error("Whisky metadata count should remain available for internal filtering");
 await page.locator("#catGrid").scrollIntoViewIfNeeded();
 await page.screenshot({path:path.join(output,"whisky-home-categories-mobile.png")});
 
@@ -43,15 +44,13 @@ await page.waitForSelector('[data-explore-style="scotch"]');
 const homeCounterAudit=await page.evaluate(()=>[...document.querySelectorAll("#catGrid .cat")].map((tile)=>{
   const family=tile.dataset.family||"";
   const style=tile.dataset.style||"";
-  const shown=Number(tile.querySelector(".cnt")?.textContent||0);
+  const hasCounter=!!tile.querySelector(".cnt");
   const actual=family==="whisky"
     ? DB.filter((bottle)=>bottleFamily(bottle)==="whisky").length
     : DB.filter((bottle)=>bottleFamily(bottle)==="bourbon"&&styleMatch(bottle,style)).length;
-  return {family,style,shown,actual};
+  return {family,style,hasCounter,actual};
 }));
-if(homeCounterAudit.some((item)=>item.shown!==item.actual)){
-  throw new Error(`Home category counters differ from filtered data: ${JSON.stringify(homeCounterAudit)}`);
-}
+if(homeCounterAudit.some((item)=>item.hasCounter)) throw new Error(`Home category counts leaked into UI: ${JSON.stringify(homeCounterAudit)}`);
 
 const lockedState=await page.evaluate(()=>({
   title:document.getElementById("exploreTitle")?.textContent,
@@ -107,4 +106,4 @@ if(!listFilterState.recommendationFamilies.includes("bourbon") || !listFilterSta
 await browser.close();
 
 if(errors.length) throw new Error(errors.join("\n"));
-console.log(JSON.stringify({ok:true,homeCategories,whiskyHomeCount,homeCounterAudit,lockedState,mobileDimensions,listFilterState},null,2));
+console.log(JSON.stringify({ok:true,homeCategories,categoryCounters,whiskyMetaCount,homeCounterAudit,lockedState,mobileDimensions,listFilterState},null,2));

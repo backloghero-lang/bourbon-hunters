@@ -726,6 +726,7 @@
     <div class="profile-menu">
       <button class="profile-row" type="button" data-open-view="badge-picker"><span class="profile-ico"><span class="profile-badge" id="profileRowBadge"></span></span><span data-i18n="changeBadge">Zmień znacznik</span><span class="chev">&rsaquo;</span></button>
       <button class="profile-row" type="button" data-profile-action="profile-settings"><span class="profile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.9l.1.1a2 2 0 01-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.9-.3 1.7 1.7 0 00-1 1.6V21a2 2 0 01-4 0v-.1a1.7 1.7 0 00-1-1.6 1.7 1.7 0 00-1.9.3l-.1.1A2 2 0 014.2 17l.1-.1A1.7 1.7 0 004.6 15a1.7 1.7 0 00-1.6-1H3a2 2 0 010-4h.1a1.7 1.7 0 001.6-1 1.7 1.7 0 00-.3-1.9l-.1-.1A2 2 0 017 4.2l.1.1A1.7 1.7 0 009 4.6 1.7 1.7 0 0010 3V3a2 2 0 014 0v.1a1.7 1.7 0 001 1.6 1.7 1.7 0 001.9-.3l.1-.1A2 2 0 0119.8 7l-.1.1a1.7 1.7 0 00-.3 1.9 1.7 1.7 0 001.6 1h.1a2 2 0 010 4H21a1.7 1.7 0 00-1.6 1z"/></svg></span><span data-i18n="profileSettings">Ustawienia profilu</span><span class="chev">&rsaquo;</span></button>
+      <button class="profile-row" type="button" data-profile-action="link-google" data-auth-user><span class="profile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 007.1.1l2-2a5 5 0 00-7.1-7.1l-1.1 1.1"/><path d="M14 11a5 5 0 00-7.1-.1l-2 2A5 5 0 0012 20l1.1-1.1"/></svg></span><span data-i18n="linkGoogle">Połącz konto Google</span><span class="chev">&rsaquo;</span></button>
       <button class="profile-row" type="button" data-profile-action="taste-profile"><span class="profile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3h10v4a5 5 0 01-10 0V3z"/><path d="M12 12v8M8 20h8"/><path d="M9 6h6"/></svg></span><span data-i18n="tasteProfile">Preferencje smaku</span><span class="chev">&rsaquo;</span></button>
       <button class="profile-row" type="button" data-profile-action="data-export"><span class="profile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg></span><span data-i18n="dataExport">Eksport danych</span><span class="chev">&rsaquo;</span></button>
       <button class="profile-row" type="button" data-profile-action="delete-profile"><span class="profile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16"/><path d="M10 11v6M14 11v6"/><path d="M6 7l1 14h10l1-14"/><path d="M9 7V4h6v3"/></svg></span><span data-i18n="deleteProfile">Usuń profil</span><span class="chev">&rsaquo;</span></button>
@@ -1155,7 +1156,8 @@ Object.assign(I18N.pl,{
   myProfileTab:"M\u00f3j profil", profileBadgeCopy:"Ten znacznik b\u0119dzie widoczny przy Twoich komentarzach i poleceniach.",
   changeBadge:"Zmie\u0144 znacznik", chooseBadgeTitle:"Wybierz znacznik", badgePickerCopy:"Znacznik pojawi si\u0119 przy komentarzach i poleceniach.",
   saveProfileBadge:"Zapisz profil", skipForNow:"Pomi\u0144 na razie", profileSaved:"Profil zapisany.", premiumBadgeNote:"Wi\u0119cej znacznik\u00f3w odblokujesz w planie Pro.",
-  profileSettings:"Ustawienia profilu", tasteProfile:"Preferencje smaku", dataExport:"Eksport danych", deleteProfile:"Usu\u0144 konto",
+  profileSettings:"Ustawienia profilu", linkGoogle:"Po\u0142\u0105cz konto Google", googleLinkOk:"Konto Google zosta\u0142o bezpiecznie po\u0142\u0105czone.", tasteProfile:"Preferencje smaku", dataExport:"Eksport danych", deleteProfile:"Usu\u0144 konto",
+  verifyEmailSent:"Sprawd\u017a skrzynk\u0119 i potwierd\u017a adres e-mail, aby aktywowa\u0107 konto.", verifyEmailOk:"Adres e-mail potwierdzony. Konto jest aktywne.", deletePasswordPrompt:"Podaj aktualne has\u0142o, aby usun\u0105\u0107 konto.", deleteReauth:"Dla bezpiecze\u0144stwa zaloguj si\u0119 ponownie i powt\u00f3rz usuwanie konta.",
   deleteAccountConfirm:"Usun\u0105\u0107 konto i wszystkie dane osobowe? Zaakceptowane materia\u0142y katalogowe pozostan\u0105 w bazie bez powi\u0105zania z profilem.", deleteAccountDone:"Konto i dane osobowe zosta\u0142y usuni\u0119te.", deleteAccountError:"Nie uda\u0142o si\u0119 usun\u0105\u0107 konta.",
   featuredAllTitle:"Polecane przez \u0142owc\u00f3w", recEmptyTitle:"Brak polece\u0144", recEmptyBody:"Dodaj komentarz i ocen\u0119 w szczeg\u00f3\u0142ach butelki, a trafi tutaj jako polecenie.",
   addRecommendation:"Dodaj komentarz", recommendationPlaceholder:"Napisz kr\u00f3tko, dlaczego polecasz t\u0119 butelk\u0119...",
@@ -1194,7 +1196,8 @@ Object.assign(I18N.en,{
   myProfileTab:"My profile", profileBadgeCopy:"This marker will appear next to your comments and recommendations.",
   changeBadge:"Change marker", chooseBadgeTitle:"Choose marker", badgePickerCopy:"The marker will appear next to comments and recommendations.",
   saveProfileBadge:"Save profile", skipForNow:"Skip for now", profileSaved:"Profile saved.", premiumBadgeNote:"Unlock more markers with Pro.",
-  profileSettings:"Profile settings", tasteProfile:"Taste preferences", dataExport:"Data export", deleteProfile:"Delete account",
+  profileSettings:"Profile settings", linkGoogle:"Link Google account", googleLinkOk:"Google account linked securely.", tasteProfile:"Taste preferences", dataExport:"Data export", deleteProfile:"Delete account",
+  verifyEmailSent:"Check your inbox and confirm the email address to activate the account.", verifyEmailOk:"Email confirmed. Your account is active.", deletePasswordPrompt:"Enter your current password to delete the account.", deleteReauth:"For security, sign in again and repeat account deletion.",
   deleteAccountConfirm:"Delete your account and all personal data? Accepted catalog assets will remain in the shared catalog without a profile link.", deleteAccountDone:"Your account and personal data were deleted.", deleteAccountError:"The account could not be deleted.",
   featuredAllTitle:"Recommended by hunters", recEmptyTitle:"No recommendations yet", recEmptyBody:"Add a comment and rating in bottle details, and it will appear here as a recommendation.",
   addRecommendation:"Add comment", recommendationPlaceholder:"Write briefly why you recommend this bottle...",
@@ -1973,7 +1976,13 @@ function clearDeletedAccountLocalData(){
 function deleteProfileAccount(){
   if(!AUTH_TOKEN || !AUTH_USER){ showView("signin"); return; }
   if(!window.confirm(t("deleteAccountConfirm"))) return;
-  bhApi("/me/account",{method:"DELETE",body:JSON.stringify({confirm:"DELETE"})}).then(function(){
+  const body={confirm:"DELETE"};
+  if(AUTH_USER.auth_method!=="google"){
+    const password=window.prompt(t("deletePasswordPrompt"));
+    if(password===null) return;
+    body.password=password;
+  }
+  bhApi("/me/account",{method:"DELETE",body:JSON.stringify(body)}).then(function(){
     clearDeletedAccountLocalData();
     saveAuth(null);
     AGE_GATE_RUNTIME_OK=false;
@@ -1981,7 +1990,13 @@ function deleteProfileAccount(){
     renderHome(); renderCollection("wishlist"); renderProfile();
     showView("profile");
     showAgeGateIfNeeded();
-  }).catch(function(){ toast(t("deleteAccountError")); });
+  }).catch(function(err){
+    if(err && ["password_reauth_required","password_reauth_failed","google_reauth_required","reauth_required"].indexOf(err.error)>=0){
+      toast(t("deleteReauth"));
+      return;
+    }
+    toast(t("deleteAccountError"));
+  });
 }
 function syncProfile(){
   if(!AUTH_TOKEN) return Promise.resolve();
@@ -2105,6 +2120,11 @@ function authErrorMessage(err){
   if(code==="schema_reset_missing") return authText("D1 password reset migration is missing. Run the latest migration.","Brakuje migracji resetu has\u0142a w D1. Uruchom najnowsz\u0105 migracj\u0119.");
   if(code==="reset_token_invalid") return authText("This reset link is invalid or expired.","Ten link resetuj\u0105cy jest nieprawid\u0142owy albo wygas\u0142.");
   if(code==="reset_not_configured") return authText("Password reset email will work after an email provider is connected.","Reset has\u0142a zadzia\u0142a po podpi\u0119ciu dostawcy email.");
+  if(code==="schema_auth_security_missing") return authText("D1 auth hardening migration v69 is missing.","Brakuje migracji bezpiecze\u0144stwa auth v69 w D1.");
+  if(code==="registration_email_unavailable") return authText("Registration is temporarily unavailable because email delivery is not ready.","Rejestracja jest chwilowo niedost\u0119pna, poniewa\u017c wysy\u0142ka e-mail nie jest gotowa.");
+  if(code==="verification_delivery_failed") return authText("We could not send the verification email. Try again in a moment.","Nie uda\u0142o si\u0119 wys\u0142a\u0107 wiadomo\u015bci potwierdzaj\u0105cej. Spr\u00f3buj ponownie za chwil\u0119.");
+  if(code==="email_not_verified") return authText("Confirm your email before signing in.","Potwierd\u017a adres e-mail przed zalogowaniem.");
+  if(code==="verification_token_invalid") return authText("The verification link is invalid or expired.","Link potwierdzaj\u0105cy jest nieprawid\u0142owy albo wygas\u0142.");
   if(code==="d1_missing") return authText("Cloudflare D1 is not connected to the Worker yet.","Cloudflare D1 nie jest jeszcze podpięte do Workera.");
   if(code==="user_exists") return authText("This email or username is already taken.","Ten email albo username jest już zajęty.");
   if(code==="weak_password") return authText("Password must have at least 8 characters.","Hasło musi mieć minimum 8 znaków.");
@@ -2124,6 +2144,12 @@ function submitAuth(kind,form){
   const btn=form.querySelector("button[type=submit]");
   if(btn) btn.disabled=true;
   bhApi(kind==="register"?"/auth/register":"/auth/login",{method:"POST",body:JSON.stringify(body)}).then(function(data){
+    if(kind==="register" && data.verification_required){
+      toast(t("verifyEmailSent"));
+      showView("signin");
+      form.reset();
+      return;
+    }
     saveAuth(data);
     return syncBootstrap(true).then(function(){
       toast(kind==="register" ? authText("Account created and synced.","Konto utworzone i zsynchronizowane.") : authText("Signed in and synced.","Zalogowano i zsynchronizowano."));
@@ -2150,22 +2176,29 @@ function googleAuthErrorText(code){
   if(code==="google_not_configured") return authText("Google sign-in is not configured on the Worker yet.","Logowanie Google nie jest jeszcze skonfigurowane w Workerze.");
   if(code==="schema_google_missing") return authText("D1 Google auth migration is missing.","Brakuje migracji D1 dla logowania Google.");
   if(code==="google_email_unverified") return authText("Google email is not verified.","Email Google nie jest zweryfikowany.");
+  if(code==="schema_auth_security_missing") return authText("D1 auth hardening migration v69 is missing.","Brakuje migracji bezpiecze\u0144stwa auth v69 w D1.");
+  if(code==="google_account_exists_unlinked") return authText("This email already has a password account. Sign in with your password and link Google from My profile.","Ten e-mail ma ju\u017c konto z has\u0142em. Zaloguj si\u0119 has\u0142em i po\u0142\u0105cz Google w Moim profilu.");
+  if(code==="google_link_email_mismatch") return authText("Choose the Google account with the same email address.","Wybierz konto Google z takim samym adresem e-mail.");
+  if(code==="google_identity_in_use") return authText("This Google account is already linked to another profile.","To konto Google jest ju\u017c po\u0142\u0105czone z innym profilem.");
+  if(code==="google_link_expired") return authText("The Google linking request expired. Start again from My profile.","Pro\u015bba o po\u0142\u0105czenie Google wygas\u0142a. Zacznij ponownie z Mojego profilu.");
   if(code==="d1_missing") return authText("Cloudflare D1 is not connected to the Worker yet.","Cloudflare D1 nie jest jeszcze podpięte do Workera.");
   return t("googleAuthFail");
 }
 function cleanGoogleAuthHash(params){
-  ["google_token","google_login","google_new","google_error"].forEach(function(k){ params.delete(k); });
+  ["google_token","google_login","google_new","google_error","google_link"].forEach(function(k){ params.delete(k); });
   const hash=params.toString();
   try{ history.replaceState(null,"",location.pathname+location.search+(hash?"#"+hash:"")); }catch(e){}
 }
 function handleGoogleAuthFromUrl(){
   let params=null;
   try{ params=new URLSearchParams(String(location.hash||"").replace(/^#/,"")); }catch(e){ return; }
-  if(!params || (!params.get("google_token") && !params.get("google_error"))) return;
+  if(!params || (!params.get("google_token") && !params.get("google_error") && !params.get("google_link"))) return;
   const token=params.get("google_token")||"";
   const error=params.get("google_error")||"";
+  const linked=params.get("google_link")||"";
   cleanGoogleAuthHash(params);
   if(error){ toast(googleAuthErrorText(error)); return; }
+  if(linked==="ok"){ toast(t("googleLinkOk")); showView("hunter-profile"); return; }
   if(!token){ toast(t("googleAuthFail")); return; }
   AUTH_TOKEN=token;
   AGE_GATE_RUNTIME_OK=true;
@@ -2177,6 +2210,31 @@ function handleGoogleAuthFromUrl(){
     saveAuth(null);
     toast(authErrorMessage(err));
   });
+}
+function startGoogleLink(){
+  if(!AUTH_TOKEN || !AUTH_USER){ showView("signin"); return; }
+  toast(t("googleAuthStarting"));
+  bhApi("/me/auth/google/link",{method:"POST",body:JSON.stringify({return_url:googleReturnUrl()})}).then(function(data){
+    if(!data.url) throw {error:"google_link_failed"};
+    location.href=data.url;
+  }).catch(function(err){ toast(googleAuthErrorText(err&&err.error)); });
+}
+function handleEmailVerificationFromUrl(){
+  let url=null;
+  try{ url=new URL(location.href); }catch(e){ return; }
+  const token=url.searchParams.get("verify_email")||"";
+  if(!token) return;
+  url.searchParams.delete("verify_email");
+  try{ history.replaceState(null,"",url.pathname+(url.searchParams.toString()?"?"+url.searchParams.toString():"")+url.hash); }catch(e){}
+  bhApi("/auth/email-verification/confirm",{method:"POST",body:JSON.stringify({token:token})}).then(function(data){
+    saveAuth(data);
+    AGE_GATE_RUNTIME_OK=true;
+    toast(t("verifyEmailOk"));
+    showView("profile");
+    const gate=document.getElementById("ageGate");
+    if(gate) gate.classList.remove("show");
+    if(window.BH_START_INTRO) window.BH_START_INTRO();
+  }).catch(function(err){ toast(authErrorMessage(err)); });
 }
 function submitPasswordReset(form){
   const fd=new FormData(form);
@@ -3349,6 +3407,7 @@ document.addEventListener("click",function(e){
   const profileAction=e.target.closest("[data-profile-action]");
   if(profileAction){
     if(profileAction.getAttribute("data-profile-action")==="delete-profile"){ e.preventDefault(); deleteProfileAccount(); return; }
+    if(profileAction.getAttribute("data-profile-action")==="link-google"){ e.preventDefault(); startGoogleLink(); return; }
     toast(t("inProgress")); return;
   }
   const newsAuth=e.target.closest("[data-news-auth]");
@@ -3496,6 +3555,7 @@ if(birthInput){
 }
 setupAgeGate();
 handleGoogleAuthFromUrl();
+handleEmailVerificationFromUrl();
 showAgeGateIfNeeded();
 renderProfile();
 renderHunterProfile();
