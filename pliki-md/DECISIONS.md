@@ -245,3 +245,12 @@ Ten plik trzyma stale ustalenia, zeby nie ginely w dlugich watkach.
 - Jeden dzienny Cron wykonuje cleanup codziennie, a pobieranie maksymalnie 3 nowych artykulow tylko w poniedzialek i czwartek.
 - Artykuly sa usuwane 30 dni po `created_at`. Canonical URL jest unikalny, wiec ten sam artykul nie wraca jako duplikat.
 - Operacyjny opis, endpointy i diagnostyka znajduja sie w `pliki-md/NEWS.md`.
+
+## 2026-08-05 - Etap 2 audytu: kontekstowe renderowanie i prywatny health
+
+- Dynamiczny tekst i atrybuty korzystaja z jednego kodowania obejmujacego `&`, `<`, `>`, cudzyslow i apostrof.
+- URL nie jest zwyklym tekstem: linki dopuszczaja tylko HTTP(S), obrazy maja oddzielna allowliste, a OAuth moze przekierowac tylko do originu Workera.
+- CSP w wersji statycznej GitHub Pages blokuje `script-src-attr`, `object-src`, `frame-src` i obce formularze. Docelowa ekstrakcja inline JS pozostaje osobnym zadaniem architektonicznym.
+- `/auth/health` jest minimalny. Pelna diagnostyka `/admin/health` wymaga aktywnej sesji i roli D1 `admin`.
+- Surowe wyjatki nie sa czescia publicznego kontraktu API; klient dostaje bezpieczny kod i `request_id`.
+- Test `security-xss-regression.mjs` jest obowiazkowa lokalna regresja tej granicy.

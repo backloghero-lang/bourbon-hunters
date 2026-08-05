@@ -11,9 +11,20 @@ Aktualizacja: 2026-07-05.
 - Administrator jest rozpoznawany tylko przez aktywny rekord `user_roles`. `ADMIN_EMAILS` i domyslny adres supportu nie nadaja juz uprawnien.
 - Google nie laczy kont po samym e-mailu. Przy kolizji wymaga zalogowania haslem i jawnego laczenia z `Moj profil`.
 - Usuniecie konta wymaga aktualnego hasla albo swiezej, maksymalnie 10-minutowej sesji Google.
-- Oczekiwany health: `auth_version: auth-verified-email-roles-google-v4` i `auth_security_schema: true`.
+- Publiczny health pokazuje `auth_version: auth-verified-email-roles-google-v4`; pelne `auth_security_schema` jest tylko w `/admin/health`.
 - Kolejnosc wdrozenia jest obowiazkowa: backup D1 -> migracja v69 -> jawne nadanie roli admin -> usuniecie starych sesji admina -> GitHub/PWA -> Worker.
 - Z README usunieto sekcje `Popular 200`; sam katalog i testy skanera nie zostaly w tej paczce zmienione.
+
+## Aktualizacja 2026-08-05 - Etap 2, XSS i granica API
+
+- `esc()` koduje teraz takze cudzyslow i apostrof, wiec dane dynamiczne nie moga zamknac atrybutu HTML.
+- Linki newsow, sklepow, zrodel AI i przekierowan Google przechodza przez allowlisty protokolow i originu Workera.
+- Obrazy dopuszczaja tylko HTTP(S), `blob:` oraz ograniczone bitmapowe `data:image`; SVG i `javascript:` sa odrzucane.
+- CSP blokuje pluginy, ramki, obce formularze i wszystkie inline event handlery, np. wstrzykniete `onerror`.
+- Publiczny `/auth/health` zwraca tylko stan, wersje auth/security i czas. Pelna diagnostyka jest w `/admin/health` i wymaga roli administratora.
+- Nieobsluzony blad API zwraca `request_id`, a szczegoly zostaja w logach Workera.
+- PWA cache: `bourbon-hunters-v116`. Test `scripts/security-xss-regression.mjs` oraz komplet testow domenowych i 6 testow UI przechodza.
+- Generator browse deduplikuje wspolne ID przed liczeniem rodzin; aktualny stan to 257 bourbonow i 491 whisky.
 
 ## Najnowszy handoff
 

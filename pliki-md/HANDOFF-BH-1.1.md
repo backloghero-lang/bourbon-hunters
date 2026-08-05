@@ -9,7 +9,7 @@ Ten plik ma byc pierwszym kontekstem dla nowego watku Codexa, np. `Przekaz Bourb
 - Audyt: `pliki-md/AUDYT-KODU-2026-08-05.md`.
 - Backup kodu: tag `audit-backup-2026-08-05-pre-auth-hardening` na `d024fe9`.
 - Przed nowym Workerem trzeba wykonac `agent/d1-migration-v69-auth-hardening.sql`, nadac role admina w `user_roles` i usunac stare sesje administratora zgodnie z `pliki-md/INSTRUKCJA.md`.
-- Oczekiwany health: `auth_version: auth-verified-email-roles-google-v4`, `auth_security_schema: true`.
+- Oczekiwany publiczny health: `auth_version: auth-verified-email-roles-google-v4`; pelne `auth_security_schema` wymaga administratora w `/admin/health`.
 - Nowe konta lokalne wymagaja potwierdzenia e-mail. Google nie laczy juz kont automatycznie po samym adresie.
 - Aktualne szczegoly wdrozenia i bezpieczenstwa sa w `pliki-md/HANDOFF.md`; starsze bloki nizej sa historia projektu.
 
@@ -85,7 +85,7 @@ pliki-md/BUGS.md
 - Lokalny Worker oczekujacy na deploy ma scanner `ocr-visual-fusion-catalog-10k-v4-split-models`.
 - D1 jest podpiete jako binding `DB`.
 - Tabela resetu hasla `password_reset_tokens` jest obecna.
-- `email_ready` w `/auth/health` jest `true`, czyli Resend/MAIL_FROM sa skonfigurowane.
+- `email_ready` sprawdza administrator przez `/admin/health`; publiczny `/auth/health` nie ujawnia konfiguracji poczty.
 - Rejestracja email/password dziala po stronie Workera i zapisuje konto w Cloudflare D1.
 - Google Sign-In jest podpiety do Workera i D1.
 - Katalog zbudowany ze zrodla 10k ma po deduplikacji i filtrze dostepnosci 9406 rekordow TTB/OLCC i lokalnych.

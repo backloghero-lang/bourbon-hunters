@@ -2,16 +2,16 @@
   "version": "browse-whisky-v1",
   "taxonomy_version": "spirit-taxonomy-v3-curated-visible-catalog",
   "source_version": 4,
-  "updated": "2026-08-05T18:36:03.909Z",
-  "count": 749,
+  "updated": "2026-08-05T21:13:22.648Z",
+  "count": 748,
   "source_count": 1058,
   "families": {
-    "bourbon": 258,
+    "bourbon": 257,
     "whisky": 491
   },
   "bourbon": {
     "standard": 177,
-    "small": 16,
+    "small": 15,
     "wheated": 17,
     "bib": 11,
     "proof": 20,

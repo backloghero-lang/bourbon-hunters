@@ -29,6 +29,7 @@ const LOCAL_IMAGE_PIPELINE_VERSION = "local-bottle-cutout-v2-quality-gated";
 const NEWS_RETENTION_DAYS = 30;
 const CATALOG_SYSTEM_USER_ID = "catalog-system";
 const AUTH_VERSION = "auth-verified-email-roles-google-v4";
+const SECURITY_VERSION = "xss-url-health-hardening-v1";
 const PBKDF2_ITERATIONS = 100000;
 const PROFILE_BADGE_IDS = ["glass","bottle","barrel","seal","hat","star","distillery","notes","opener","horseshoe"];
 
@@ -192,7 +193,15 @@ async function getDB(env, request){
 }
 
 function langName(l){ return l==="en"?"in English":l==="es"?"en espanol":"po polsku"; }
-function J(o,s,c){ return new Response(JSON.stringify(o),{status:s,headers:Object.assign({"Content-Type":"application/json"},c)}); }
+const API_SECURITY_HEADERS={
+  "Cache-Control":"no-store",
+  "Cross-Origin-Resource-Policy":"cross-origin",
+  "Permissions-Policy":"camera=(), microphone=(), geolocation=()",
+  "Referrer-Policy":"no-referrer",
+  "X-Content-Type-Options":"nosniff"
+};
+function responseHeaders(extra){ return Object.assign({},API_SECURITY_HEADERS,extra||{}); }
+function J(o,s,c){ return new Response(JSON.stringify(o),{status:s,headers:responseHeaders(Object.assign({},c,{"Content-Type":"application/json"}))}); }
 function sleep(ms){ return new Promise(function(r){ setTimeout(r,ms); }); }
 function norm(s){ return (s||"").toString().toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g," ").replace(/\s+/g," ").trim(); }
 function toks(s){ return norm(s).split(" ").filter(function(w){ return w.length>=3 || /^[0-9]+$/.test(w); }); }
@@ -376,7 +385,7 @@ function corsOrigin(value){
   try{ return new URL(value).origin; }catch(e){ return value.replace(/\/+$/,""); }
 }
 function apiCors(env, request){
-  const raw=String(env.ALLOW_ORIGIN||"*").trim();
+  const raw=String(env.ALLOW_ORIGIN||appUrl(env)).trim();
   let allow="*";
   if(raw && raw!=="*"){
     const requestOrigin=request&&request.headers ? request.headers.get("Origin")||"" : "";
@@ -1506,13 +1515,18 @@ async function createLocalBottleCutout(env, request, body){
     return {ok:true,image:"data:image/webp;base64,"+encodeBase64(processed),mime:"image/webp",width:960,height:1280,quality_checked:quality.checked,pipeline_version:LOCAL_IMAGE_PIPELINE_VERSION};
   }catch(e){
     await recordServiceUsage(env,null,user&&user.id,{provider:"cloudflare",stage:"local_image_cutout",model:"cloudflare-images",status:500,attempts:1,duration_ms:Date.now()-started}).catch(function(){});
-    return {error:"image_cutout_failed",detail:String(e&&e.message?e.message:e).slice(0,120),status:502};
+    return {error:"image_cutout_failed",retry:true,status:502};
   }
 }
 async function handleApi(request, env, cors){
   const url=new URL(request.url);
   const path=url.pathname.replace(/\/+$/,"");
   if(path==="/auth/health" && request.method==="GET"){
+    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,security_version:SECURITY_VERSION,time:new Date().toISOString()},200,cors);
+  }
+  if(path==="/admin/health" && request.method==="GET"){
+    const healthUser=await authUser(env,request);
+    if(!isAdminUser(env,healthUser)) return J({error:"forbidden"},403,cors);
     let schema=false, reset_schema=false, profile_schema=false, recommendations_schema=false, identity_schema=false, auth_security_schema=false, catalog_schema=false, catalog_data_schema=false, catalog_moderation_schema=false, telemetry_schema=false, news_schema=false, news_article_count=0, news_last_run=null, detail="";
     if(env.DB){
       try{
@@ -1549,7 +1563,7 @@ async function handleApi(request, env, cors){
       }
       catch(e){ detail=String(e&&e.message?e.message:e).slice(0,220); }
     }
-    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_mode:"visual_only",scan_ocr_enabled:false,scanner_ai_ready:!!env.GEMINI_API_KEY,scanner_primary_model:env.IDENT_MODEL||"gemini-2.5-flash-lite",scanner_fallback_model:env.IDENT_FALLBACK_MODEL||env.MODEL||"gemini-2.5-flash",scanner_mobile_foreground:!!env.IMAGES,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_moderation_version:CATALOG_MODERATION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,news_agent_version:NEWS_AGENT_VERSION,news_schedule:"Monday and Thursday releases with daily recovery via UTC cron",news_target_per_release:3,news_current_release:newsReleaseSlot(new Date()),news_article_count:news_article_count,news_last_run:news_last_run,local_image_pipeline_version:LOCAL_IMAGE_PIPELINE_VERSION,news_retention_days:NEWS_RETENTION_DAYS,starter_news_count:STARTER_NEWS.length,news_auth_required:true,catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,auth_security_schema:auth_security_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,catalog_moderation_schema:catalog_moderation_schema,telemetry_schema:telemetry_schema,news_schema:news_schema,news_agent_ready:news_schema&&!!env.GEMINI_API_KEY,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),local_image_cutout_ready:!!env.IMAGES,cutout_quality_ready:!!(env.IMAGES&&env.GEMINI_API_KEY),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
+    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,security_version:SECURITY_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_mode:"visual_only",scan_ocr_enabled:false,scanner_ai_ready:!!env.GEMINI_API_KEY,scanner_primary_model:env.IDENT_MODEL||"gemini-2.5-flash-lite",scanner_fallback_model:env.IDENT_FALLBACK_MODEL||env.MODEL||"gemini-2.5-flash",scanner_mobile_foreground:!!env.IMAGES,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_moderation_version:CATALOG_MODERATION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,news_agent_version:NEWS_AGENT_VERSION,news_schedule:"Monday and Thursday releases with daily recovery via UTC cron",news_target_per_release:3,news_current_release:newsReleaseSlot(new Date()),news_article_count:news_article_count,news_last_run:news_last_run,local_image_pipeline_version:LOCAL_IMAGE_PIPELINE_VERSION,news_retention_days:NEWS_RETENTION_DAYS,starter_news_count:STARTER_NEWS.length,news_auth_required:true,catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,auth_security_schema:auth_security_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,catalog_moderation_schema:catalog_moderation_schema,telemetry_schema:telemetry_schema,news_schema:news_schema,news_agent_ready:news_schema&&!!env.GEMINI_API_KEY,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),local_image_cutout_ready:!!env.IMAGES,cutout_quality_ready:!!(env.IMAGES&&env.GEMINI_API_KEY),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
   }
   if(path==="/auth/google/start" && request.method==="GET"){
     const returnUrl=allowedReturnUrl(env,url.searchParams.get("return")||appUrl(env));
@@ -1603,7 +1617,7 @@ async function handleApi(request, env, cors){
     if(!imageKey) return J({error:"image_not_found"},404,cors);
     const object=await env.BOTTLE_IMAGES.get(imageKey);
     if(!object) return J({error:"image_not_found"},404,cors);
-    const headers=new Headers(cors);
+    const headers=new Headers(responseHeaders(cors));
     object.writeHttpMetadata(headers);
     headers.set("Content-Type",headers.get("Content-Type")||"image/webp");
     headers.set("Cache-Control","public, max-age=86400");
@@ -1816,7 +1830,7 @@ async function handleApi(request, env, cors){
     if(!row || !row.review_image_key || !env.BOTTLE_IMAGES) return J({error:"image_not_found"},404,cors);
     const object=await env.BOTTLE_IMAGES.get(row.review_image_key);
     if(!object) return J({error:"image_not_found"},404,cors);
-    return new Response(object.body,{headers:Object.assign({},cors,{"Content-Type":object.httpMetadata&&object.httpMetadata.contentType||"image/webp","Cache-Control":"private, no-store"})});
+    return new Response(object.body,{headers:responseHeaders(Object.assign({},cors,{"Content-Type":object.httpMetadata&&object.httpMetadata.contentType||"image/webp","Cache-Control":"private, no-store"}))});
   }
   const moderationDecisionMatch=path.match(/^\/admin\/catalog\/moderation\/([^/]+)$/);
   if(moderationDecisionMatch && request.method==="POST"){
@@ -2205,11 +2219,15 @@ async function callGemini(env, payload, stage){
 export default {
   async fetch(request, env, executionCtx){
     const cors=apiCors(env, request);
-    if(request.method==="OPTIONS") return new Response(null,{headers:cors});
+    if(request.method==="OPTIONS") return new Response(null,{headers:responseHeaders(Object.assign({},cors,{"Access-Control-Max-Age":"600"}))});
     const path=new URL(request.url).pathname;
     if(path.indexOf("/auth/")===0 || path.indexOf("/me")===0 || path.indexOf("/ratings")===0 || path.indexOf("/recommendations")===0 || path.indexOf("/catalog/")===0 || path.indexOf("/telemetry/")===0 || path.indexOf("/admin/")===0 || path==="/news"){
       try{ return await handleApi(request, env, cors); }
-      catch(e){ return J({error:"server_error",detail:String(e&&e.message?e.message:e).slice(0,240)},500,cors); }
+      catch(e){
+        const requestId=randHex(8);
+        console.error("Bourbon Hunters API error",requestId,e);
+        return J({error:"server_error",request_id:requestId},500,cors);
+      }
     }
     if(request.method!=="POST") return J({error:"POST only"},405,cors);
 
@@ -2307,7 +2325,7 @@ export default {
           }
         }catch(e){
           result.catalog_asset_missing=true;
-          result.preview_error=String(e&&e.message?e.message:e).slice(0,120);
+          result.preview_error="image_cutout_failed";
           recordServiceUsage(env,scanId,scanUser&&scanUser.id,{provider:"cloudflare",stage:"image_cutout",model:"cloudflare-images",status:500,attempts:1,duration_ms:Date.now()-cutoutStarted}).catch(function(){});
         }
       }
@@ -2344,7 +2362,7 @@ export default {
       if(visual&&visual.err){
         const quotaExhausted=visual.err.status===429;
         const providerError=visual.err.status===0?"network":([408,504].includes(visual.err.status)?"timeout":(visual.err.status===503?"overloaded":"unavailable"));
-        return scanResponse({error:quotaExhausted?"quota_exhausted":"upstream",status:visual.err.status,provider_error:providerError,detail:visual.err.detail||"agent_error",retry:!quotaExhausted},quotaExhausted?429:(visual.err.status===0?502:503),quotaExhausted?"quota_exhausted":"upstream_error",{error_code:quotaExhausted?"gemini_quota":"visual_agent_"+providerError});
+        return scanResponse({error:quotaExhausted?"quota_exhausted":"upstream",status:visual.err.status,provider_error:providerError,retry:!quotaExhausted},quotaExhausted?429:(visual.err.status===0?502:503),quotaExhausted?"quota_exhausted":"upstream_error",{error_code:quotaExhausted?"gemini_quota":"visual_agent_"+providerError});
       }
       const idj=compactVision((visual&&visual.data)||{});
       bottleName=String(idj.name||"").trim();
@@ -2401,7 +2419,7 @@ export default {
             scanPreviewImage="data:image/webp;base64,"+encodeBase64(cutout);
           }catch(e){
             telemetryUsage.push({provider:"cloudflare",stage:"scan_candidate_cutout",model:"cloudflare-images",status:500,attempts:1,duration_ms:Date.now()-cutoutStarted});
-            return scanResponse({error:"image_cutout_failed",retry:true,detail:String(e&&e.message?e.message:e).slice(0,120)},200,"cutout_failed",{error_code:"image_cutout_failed",candidates:candidates});
+            return scanResponse({error:"image_cutout_failed",retry:true},200,"cutout_failed",{error_code:"image_cutout_failed",candidates:candidates});
           }
         }
         const selected=candidates[0];
@@ -2441,10 +2459,10 @@ export default {
     const ga=await callGemini(env, analyzePayload,"expanded_analysis");
     if(ga.usage) telemetryUsage.push(ga.usage);
     if(ga.err) return ga.err.status===429
-      ? scanResponse({error:"quota_exhausted",status:429,detail:ga.err.detail,retry:false},429,"quota_exhausted",{error_code:"gemini_quota"})
-      : scanResponse({error:"upstream",status:ga.err.status,detail:ga.err.detail,retry:true},503,"upstream_error",{error_code:"analysis_failed"});
+      ? scanResponse({error:"quota_exhausted",status:429,retry:false},429,"quota_exhausted",{error_code:"gemini_quota"})
+      : scanResponse({error:"upstream",status:ga.err.status,retry:true},503,"upstream_error",{error_code:"analysis_failed"});
     const ra=parseJson(ga.txt);
-    if(!ra) return scanResponse({error:"parse",raw:(ga.txt||"").slice(0,200)},502,"error",{error_code:"analysis_parse"});
+    if(!ra) return scanResponse({error:"parse"},502,"error",{error_code:"analysis_parse"});
     if((!ra.links||!ra.links.length) && ga.sources.length) ra.links=ga.sources;
     if(hit){ ra.source="baza"; ra.image=hit.image||""; if(ra.price==null) ra.price=(hit.price_str||hit.price_pln); if(ra.quality==null) ra.quality=hit.quality; if(ra.value==null) ra.value=hit.value; }
     else { ra.source="net"; ra.isNew=true; ra.image=""; }

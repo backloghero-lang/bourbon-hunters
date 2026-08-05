@@ -2,6 +2,8 @@
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; script-src 'self' 'unsafe-inline'; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob:; connect-src 'self' https://bourbon-hunters.darekmaslyk.workers.dev; frame-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#100c08">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1428,7 +1430,7 @@ function localBottleImage(b){
 }
 function bottleImage(b,small){ return localBottleImage(b)||officialBottleImage(b,small); }
 function bottleImageHtml(b,small,alt){
-  const src=bottleImage(b,small);
+  const src=safeImageSrc(bottleImage(b,small),"");
   return src
     ? '<img src="'+esc(src)+'" alt="'+esc(alt||b&&b.name||"")+'" data-bottle-image="1" data-mystery-size="'+(small?"small":"large")+'" loading="'+(small?"lazy":"eager")+'" decoding="async">'
     : mysteryBottleHtml(!!small);
@@ -1893,14 +1895,16 @@ function loadAdminModeration(){
     }).join("");
     items.forEach(function(item){
       if(!item.has_image||!item.image_url) return;
-      fetch(item.image_url,{headers:{Authorization:"Bearer "+AUTH_TOKEN}}).then(function(response){
+      const imageUrl=safeWorkerUrl(item.image_url);
+      if(!imageUrl) return;
+      fetch(imageUrl,{headers:{Authorization:"Bearer "+AUTH_TOKEN}}).then(function(response){
         if(!response.ok) throw new Error("image");
         return response.blob();
       }).then(function(blob){
         const host=box.querySelector('[data-moderation-image="'+item.id+'"]');
         if(!host) return;
         const url=URL.createObjectURL(blob);
-        host.innerHTML='<img src="'+esc(url)+'" alt="'+esc(item.bottle_name||"")+'">';
+        host.innerHTML='<img src="'+esc(safeImageSrc(url,""))+'" alt="'+esc(item.bottle_name||"")+'">';
       }).catch(function(){});
     });
   }).catch(function(err){
@@ -2168,8 +2172,9 @@ function googleReturnUrl(){
 }
 function startGoogleAuth(){
   toast(t("googleAuthStarting"));
-  const url=WORKER_URL+"/auth/google/start?return="+encodeURIComponent(googleReturnUrl());
-  location.href=url;
+  const url=safeWorkerUrl(WORKER_URL+"/auth/google/start?return="+encodeURIComponent(googleReturnUrl()));
+  if(url) location.href=url;
+  else toast(t("googleAuthFail"));
 }
 function googleAuthErrorText(code){
   code=String(code||"");
@@ -2215,8 +2220,9 @@ function startGoogleLink(){
   if(!AUTH_TOKEN || !AUTH_USER){ showView("signin"); return; }
   toast(t("googleAuthStarting"));
   bhApi("/me/auth/google/link",{method:"POST",body:JSON.stringify({return_url:googleReturnUrl()})}).then(function(data){
-    if(!data.url) throw {error:"google_link_failed"};
-    location.href=data.url;
+    const url=safeWorkerUrl(data.url);
+    if(!url) throw {error:"google_link_failed"};
+    location.href=url;
   }).catch(function(err){ toast(googleAuthErrorText(err&&err.error)); });
 }
 function handleEmailVerificationFromUrl(){
@@ -2674,7 +2680,43 @@ function featCard(b, kick, rec){
 function isAgentCutout(b){ return !!(b && (localBottleImage(b) || b.source==="community_catalog" || b.source==="catalog_preview" || b.source==="scan_preview" || b.has_image===true)); }
 function mysteryBottleHtml(small){ return '<div class="mystery-bottle'+(small?' small':'')+'" aria-label="Brak zdjecia"><span>?</span></div>'; }
 function t(k){ return (I18N[lang]&&I18N[lang][k])||I18N.pl[k]||k; }
-function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function esc(s){
+  return String(s==null?"":s).replace(/[&<>"']/g,function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];
+  });
+}
+function safeHttpUrl(value, fallback){
+  const raw=String(value||"").trim();
+  if(!raw) return fallback||"";
+  try{
+    const parsed=new URL(raw,location.href);
+    if(parsed.protocol!=="https:" && parsed.protocol!=="http:") return fallback||"";
+    return parsed.href;
+  }catch(e){ return fallback||""; }
+}
+function safeWorkerUrl(value){
+  const raw=safeHttpUrl(value,"");
+  if(!raw) return "";
+  try{
+    const parsed=new URL(raw,location.href);
+    const worker=new URL(WORKER_URL,location.href);
+    return parsed.origin===worker.origin ? parsed.href : "";
+  }catch(e){ return ""; }
+}
+function safeImageSrc(value, fallback){
+  const raw=String(value||"").trim();
+  if(!raw) return fallback||"";
+  if(/^data:image\/(?:png|jpe?g|webp|gif);base64,[a-z0-9+/=\s]+$/i.test(raw)) return raw;
+  try{
+    const parsed=new URL(raw,location.href);
+    if(parsed.protocol==="https:" || parsed.protocol==="http:" || parsed.protocol==="blob:") return parsed.href;
+  }catch(e){}
+  return fallback||"";
+}
+function safeCssImageSrc(value){
+  const raw=safeImageSrc(value,"");
+  return raw.replace(/["'()\\\r\n\t ]/g,function(c){ return encodeURIComponent(c); });
+}
 function starStr(n){ n=Math.max(0,Math.min(5,Math.round(n||0))); return "★★★★★".slice(0,n)+"☆☆☆☆☆".slice(0,5-n); }
 
 const AGE_GATE_KEY="bh_age_gate_ok_v2";
@@ -3029,13 +3071,22 @@ function newsDateLabel(value){
 }
 function newsCardHtml(item){
   const excerpt=lang==="pl" ? (item.excerpt_pl||item.excerpt_en||"") : (item.excerpt_en||item.excerpt_pl||"");
-  const image=String(item.image_url||"design/figma-assets/home-pack-v2/home-header-v3.jpg");
+  const fallbackImage="design/figma-assets/home-pack-v2/home-header-v3.jpg";
+  const image=safeImageSrc(item.image_url,fallbackImage);
+  const href=safeHttpUrl(item.url,"#");
   const date=newsDateLabel(item.published_at);
-  return '<a class="news-card" href="'+esc(item.url||"#")+'" target="_blank" rel="noopener noreferrer" data-external-article="'+esc(item.url||"")+'" aria-label="'+esc((item.title||"")+" - "+t("readArticle"))+'">'+
-    '<img src="'+esc(image)+'" alt="" loading="lazy" onerror="this.onerror=null;this.src=\'design/figma-assets/home-pack-v2/home-header-v3.jpg\'">'+
+  return '<a class="news-card" href="'+esc(href)+'" target="_blank" rel="noopener noreferrer" data-external-article="'+esc(href==="#"?"":href)+'" aria-label="'+esc((item.title||"")+" - "+t("readArticle"))+'">'+
+    '<img src="'+esc(image)+'" alt="" loading="lazy" data-image-fallback="'+esc(fallbackImage)+'">'+
     '<div class="news-card-body"><div class="news-card-meta"><span>'+esc(item.source_name||"Whisky")+'</span>'+(date?'<span>'+esc(date)+'</span>':'')+'</div>'+
     '<h4>'+esc(item.title||"")+'</h4><p>'+esc(excerpt)+'</p></div></a>';
 }
+document.addEventListener("error",function(event){
+  const image=event.target;
+  if(!image || image.tagName!=="IMG" || !image.hasAttribute("data-image-fallback")) return;
+  const fallback=safeImageSrc(image.getAttribute("data-image-fallback"),"");
+  image.removeAttribute("data-image-fallback");
+  if(fallback) image.src=fallback;
+},true);
 function openNewsAuthModal(){
   const modal=document.getElementById("newsAuthModal");
   if(!modal) return;
@@ -3066,9 +3117,10 @@ function rememberExternalReturn(){
   }catch(e){}
 }
 function openExternalArticle(url){
+  const safe=safeHttpUrl(url,"");
+  if(!safe) return false;
   let parsed;
-  try{ parsed=new URL(String(url||""),location.href); }catch(e){ return false; }
-  if(parsed.protocol!=="https:" && parsed.protocol!=="http:") return false;
+  try{ parsed=new URL(safe,location.href); }catch(e){ return false; }
   rememberExternalReturn();
   externalArticleOpenedAt=Date.now();
   const absolute=parsed.href;
@@ -3162,8 +3214,8 @@ function renderHome(){
     : '<div class="rec-empty"><b>'+esc(t("recEmptyTitle"))+'</b><span>'+esc(t("recEmptyBody"))+'</span></div>';
   // Kategorie na Home: style bourbona oraz osobna rodzina Whisky.
   document.getElementById("catGrid").innerHTML = HOME_CATEGORIES.map(function(s){
-    const attr=s.family ? ' data-family="'+s.family+'"' : ' data-style="'+s.key+'"';
-    return '<div class="cat"'+attr+' title="'+esc(s.label)+'" aria-label="'+esc(s.label)+'" style="--cat-icon:url(&quot;'+esc(s.icon)+'&quot;)"><div class="ic" aria-hidden="true"></div></div>';
+    const attr=s.family ? ' data-family="'+esc(s.family)+'"' : ' data-style="'+esc(s.key)+'"';
+    return '<div class="cat"'+attr+' title="'+esc(s.label)+'" aria-label="'+esc(s.label)+'" style="--cat-icon:url(&quot;'+esc(safeCssImageSrc(s.icon))+'&quot;)"><div class="ic" aria-hidden="true"></div></div>';
   }).join("");
   // recently added (ostatnie z bazy) — styl jak "Polecane"
   const recent = DYNAMIC_RECENT.length ? DYNAMIC_RECENT.slice(0,12) : DB.slice(-12).reverse();
@@ -3587,6 +3639,7 @@ function openDetail(id, keepReturn, skipRecommendationFetch){
   const statusBadge = b.status==="sold_out" || b.available===false
     ? '<span class="badge net">'+t("statusSold")+'</span>'
     : '<span class="badge db">'+t("statusAvail")+'</span>';
+  const shopUrl=safeHttpUrl(b.url,"");
   document.getElementById("detailBody").innerHTML =
     '<div style="display:flex;justify-content:flex-start;align-items:center;margin-bottom:8px">'+statusBadge+'</div>'+
     '<div class="dhead">'+esc(b.name)+'</div>'+
@@ -3594,7 +3647,7 @@ function openDetail(id, keepReturn, skipRecommendationFetch){
     (origin?'<div class="dorigin">'+origin+'</div>':'')+pic+localBottlePhotoNote(b)+
     ratingPanel(b)+generalInfoBlock(b)+tastingBlock(b)+
     (b.mashbill?'<div class="sec-t">'+t("mashbill")+'</div><p class="desc">'+esc(localizedMashbill(b.mashbill))+'</p>':'')+
-    (b.url?'<div class="links" style="margin-top:14px"><a href="'+esc(b.url)+'" target="_blank" rel="noopener">'+t("viewShop")+'</a></div>':'')+
+    (shopUrl?'<div class="links" style="margin-top:14px"><a href="'+esc(shopUrl)+'" target="_blank" rel="noopener noreferrer">'+t("viewShop")+'</a></div>':'')+
     recommendationBlock(b);
   showView("detail");
   if(!keepReturn) fetchCommunityRatings([id]);
@@ -3635,7 +3688,7 @@ function processLocalBottlePhoto(file,id){
     pendingLocalBottleImageData=String(data.image);
     const preview=document.getElementById("localPhotoPreview");
     const accept=document.getElementById("localPhotoAccept");
-    if(preview) preview.innerHTML='<img src="'+esc(pendingLocalBottleImageData)+'" alt="'+esc(t("localPhotoReady"))+'">';
+    if(preview) preview.innerHTML='<img src="'+esc(safeImageSrc(pendingLocalBottleImageData,""))+'" alt="'+esc(t("localPhotoReady"))+'">';
     if(accept) accept.disabled=false;
   }).catch(function(err){
     const message=err&&err.error==="local_cutout_limit"
@@ -3735,7 +3788,7 @@ function renderCatalogPreview(data){
   const preview=document.getElementById("catalogPreview");
   const actions=document.getElementById("catalogPreviewActions");
   if(data.preview_ready && data.preview_data_url){
-    preview.innerHTML='<img src="'+esc(data.preview_data_url)+'" alt="'+esc((currentScanResult&&currentScanResult.name)||"")+'">';
+    preview.innerHTML='<img src="'+esc(safeImageSrc(data.preview_data_url,""))+'" alt="'+esc((currentScanResult&&currentScanResult.name)||"")+'">';
     actions.innerHTML='<p class="catalog-license-note">'+esc(t("catalogLicenseNote"))+'</p>'+
       '<button class="btn btn-bottle" type="button" data-catalog-decision="accept">'+esc(t("acceptImage"))+'</button>'+
       '<button class="btn btn-alt" type="button" data-catalog-decision="retry">'+esc(t("retakeImage"))+'</button>'+
@@ -4069,11 +4122,11 @@ function renderScan(res, mode){
     if(descs.length) body+='<div class="sec-t">'+t("descT")+'</div>'+descs.map(function(d){return '<p class="desc">'+esc(d)+'</p>';}).join("");
     if(hist.length) body+='<div class="sec-t">'+t("historyT")+'</div>'+hist.map(function(d){return '<p class="desc">'+esc(d)+'</p>';}).join("");
     const links=res.links||res.sources||[];
-    if(links.length) body+='<div class="sec-t">'+t("linksT")+'</div><div class="links">'+links.slice(0,6).map(function(s){const u=esc(s.url||s);const tt=esc(s.title||s.url||s);return u?'<a href="'+u+'" target="_blank">'+tt+'</a>':tt;}).join("<br>")+'</div>';
+    if(links.length) body+='<div class="sec-t">'+t("linksT")+'</div><div class="links">'+links.slice(0,6).map(function(s){const raw=s&&typeof s==="object"?(s.url||""):s;const u=safeHttpUrl(raw,"");const tt=esc(s&&typeof s==="object"?(s.title||s.url||""):s);return u?'<a href="'+esc(u)+'" target="_blank" rel="noopener noreferrer">'+tt+'</a>':tt;}).join("<br>")+'</div>';
   } else {
     if(res.mashbill) body+='<div class="sec-t">'+t("mashbill")+'</div><p class="desc">'+esc(localizedMashbill(res.mashbill))+'</p>';
     const links=res.sources||[];
-    if(links.length) body+='<div class="sec-t">'+t("sourcesT")+'</div><div class="links">'+links.slice(0,5).map(function(s){const u=esc(s.url||s);const tt=esc(s.title||s.url||s);return u?'<a href="'+u+'" target="_blank">'+tt+'</a>':tt;}).join("<br>")+'</div>';
+    if(links.length) body+='<div class="sec-t">'+t("sourcesT")+'</div><div class="links">'+links.slice(0,5).map(function(s){const raw=s&&typeof s==="object"?(s.url||""):s;const u=safeHttpUrl(raw,"");const tt=esc(s&&typeof s==="object"?(s.title||s.url||""):s);return u?'<a href="'+esc(u)+'" target="_blank" rel="noopener noreferrer">'+tt+'</a>':tt;}).join("<br>")+'</div>';
   }
   const catalogAction=res.catalog_preview_pending
     ? '<p class="catalog-license-note" style="margin-top:14px">'+esc(t("catalogLicenseNote"))+'</p><button class="btn btn-bottle" type="button" data-catalog-decision="accept" style="width:100%;margin-top:10px">'+esc(t("acceptImage"))+'</button><button class="btn btn-alt" type="button" data-catalog-decision="retry" style="width:100%;margin-top:10px">'+esc(t("retakeImage"))+'</button>'

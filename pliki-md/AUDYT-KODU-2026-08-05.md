@@ -20,6 +20,15 @@ Najważniejszy problem nie dotyczy SQL Injection. Zapytania D1 są w większośc
 | Testy i CI/CD | 3/10 | Są wartościowe testy domenowe, ale nie są uruchamiane w CI |
 | Gotowość Google Play | 3/10 | Brakuje kompletnej moderacji UGC, dokumentów i kontroli wieku przy Google login |
 
+## Status realizacji 5 sierpnia 2026
+
+- Etap 0 zakonczony: zapisano punkt Time Travel D1 oraz tag kodu `audit-backup-2026-08-05-pre-auth-hardening`.
+- Etap 1 zakonczony i wdrozony: weryfikacja e-mail, role D1, bezpieczne laczenie Google, reautoryzacja usuwania konta i uniewaznienie sesji administratorow.
+- Etap 2 zaimplementowany lokalnie: pelne kodowanie atrybutow, allowlista URL i obrazow, CSP, naglowki API, minimalny publiczny health i bezpieczne identyfikatory bledow.
+- `scripts/security-xss-regression.mjs`, testy auth, testy katalogu i skanera oraz 6 testow Playwright przechodza.
+- P1-1 jest naprawione. P1-4 zostalo naprawione w czesci dotyczacej health i surowych wyjatkow; optymalizacja publicznych odczytow ocen pozostaje otwarta.
+- P1-2, P1-3 i P1-5 pozostaja kolejnymi priorytetami planu naprawczego.
+
 ## Znaleziska krytyczne
 
 ### P0-1. Możliwe przejęcie konta administratora
@@ -172,12 +181,12 @@ Przed publikacją potrzebne są: poprawny formularz Data Safety, publiczna polit
 
 Uruchomiono lokalne skrypty domenowe i testy UI dostępne w repozytorium.
 
-- Większość testów domenowych przeszła.
-- [`scripts/test_catalog_match.mjs`](../scripts/test_catalog_match.mjs#L153) oczekuje usuniętego identyfikatora Jefferson's zamiast aktualnego rekordu kanonicznego.
-- [`scripts/ui-taxonomy-smoke.mjs`](../scripts/ui-taxonomy-smoke.mjs#L33) oczekuje licznika `.cnt`, który został celowo usunięty z UI.
-- Łącznie dwa testy są nieaktualne i nie przechodzą.
+- Wszystkie uruchomione testy domenowe przeszły.
+- Naprawiono oczekiwanie kanonicznego rekordu Jefferson's w `scripts/test_catalog_match.mjs`.
+- `scripts/ui-taxonomy-smoke.mjs` poprawnie potwierdza brak widocznych liczników kategorii.
+- Dodano `scripts/security-xss-regression.mjs`, który sprawdza kodowanie atrybutów, URL, obrazy, OAuth, CSP i bezpieczne błędy Workera.
 - Regresja skanera używa głównie syntetycznych etykiet. Wynik około 99,8% nie mierzy zdjęć z telefonu zawierających rękę, tło, refleksy, perspektywę i słabe światło.
-- Żaden test nie jest obowiązkową bramką przed wdrożeniem.
+- Testy nadal nie są obowiązkową bramką GitHub Actions; ich włączenie do CI pozostaje otwartym zadaniem.
 
 ## Mocne strony
 

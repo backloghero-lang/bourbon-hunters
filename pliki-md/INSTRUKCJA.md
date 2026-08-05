@@ -2,9 +2,23 @@
 
 ## Aktualna zasada deployu - 2026-07-06
 
+## Wdrozenie Etapu 2 audytu - XSS i granica API
+
+Ta paczka nie wymaga migracji D1.
+
+1. Uruchom `WYSLIJ-NA-GITHUB.bat` i poczekaj na zielone GitHub Actions.
+2. Odswiez PWA do cache `bourbon-hunters-v116`.
+3. W Cloudflare wklej i zdeployuj aktualny `agent/worker.js`.
+4. Publiczny `GET /auth/health` ma zwrocic tylko `ok`, `worker`, `auth_version`, `security_version` i `time`.
+5. Oczekiwana wartosc: `security_version: xss-url-health-hardening-v1`.
+6. Pelny health zostal przeniesiony do `GET /admin/health` i wymaga naglowka `Authorization: Bearer <token administratora>`.
+7. Po wdrozeniu sprawdz logowanie Google, `Profil -> Raporty`, newsy oraz jeden skan z telefonu.
+
+Publiczny health celowo nie pokazuje juz bindingow, schematow D1, modeli ani konfiguracji uslug.
+
 ## Bezpieczne wdrozenie auth v69 - wykonaj przed kolejnym Workerem
 
-1. W Cloudflare otworz `D1 -> bourbon-hunters-db -> Backups` i utworz/recznie zachowaj punkt odtworzenia przed migracja.
+1. D1 Time Travel dziala automatycznie. Przed migracja zapisz punkt UTC poleceniem `SELECT datetime('now') AS restore_point_utc;`.
 2. W konsoli D1 wykonaj caly plik `agent/d1-migration-v69-auth-hardening.sql`.
 3. Nadaj role administratora istniejacemu kontu, podstawiajac prawidlowy e-mail:
 
@@ -34,9 +48,9 @@ WHERE user_id IN (
 );
 ```
 
-6. Uruchom `WYSLIJ-NA-GITHUB.bat`, zaczekaj na zielone Actions i odswiez PWA do cache `bourbon-hunters-v115`.
+6. Uruchom `WYSLIJ-NA-GITHUB.bat`, zaczekaj na zielone Actions i odswiez PWA do cache `bourbon-hunters-v116`.
 7. Teraz wklej i zdeployuj aktualny `agent/worker.js`.
-8. Health musi pokazac `auth_version: auth-verified-email-roles-google-v4` oraz `auth_security_schema: true`.
+8. Publiczny health musi pokazac `auth_version: auth-verified-email-roles-google-v4`; `auth_security_schema` jest dostepne tylko w administracyjnym `/admin/health`.
 9. Zaloguj sie ponownie i sprawdz, czy `Profil -> Raporty` jest widoczny.
 
 Nie deployuj nowego Workera przed migracja, nadaniem roli i publikacja frontendu. Stary Worker jest zgodny z nowym frontendem na czas tej krotkiej zmiany, ale nowy proces potwierdzenia e-mail wymaga juz aktualnego frontendu.
@@ -60,12 +74,23 @@ Katalog 10k wymaga, aby repo bylo na GitHubie przed deployem Workera. Jesli w Cl
 `https://raw.githubusercontent.com/backloghero-lang/bourbon-hunters/main/db/catalog/scan-index.json`.
 Pozostawiona stara wartosc `DB_URL` nadpisze nowy domyslny adres z kodu Workera.
 
-Aktualny oczekiwany stan Workera:
+Aktualny oczekiwany publiczny stan Workera:
 
 ```json
 {
   "ok": true,
   "auth_version": "auth-verified-email-roles-google-v4",
+  "security_version": "xss-url-health-hardening-v1"
+}
+```
+
+Pelny stan ponizej jest dostepny tylko dla administratora przez `/admin/health`:
+
+```json
+{
+  "ok": true,
+  "auth_version": "auth-verified-email-roles-google-v4",
+  "security_version": "xss-url-health-hardening-v1",
   "scan_orchestrator_version": "visual-only-catalog-v8-mobile-foreground",
   "scan_mode": "visual_only",
   "scan_ocr_enabled": false,
@@ -122,8 +147,8 @@ Cykl zycia zdjec katalogowych wymaga:
 4. W D1 uruchom `agent/d1-migration-v68-whisky-news.sql`.
 5. Dopiero potem wklej i zdeployuj aktualny `agent/worker.js`.
 6. W Workerze pozostaw jeden dzienny Cron Trigger, np. `0 3 * * *`. Agent tworzy wydania poniedzialkowe i czwartkowe, a w pozostale dni automatycznie uzupelnia nieudane lub niepelne wydanie do trzech artykulow.
-7. Wyslij frontend na GitHub i odswiez PWA do cache `bourbon-hunters-v115`.
-8. Sprawdz pelny health: `https://bourbon-hunters.darekmaslyk.workers.dev/auth/health`.
+7. Wyslij frontend na GitHub i odswiez PWA do cache `bourbon-hunters-v116`.
+8. Sprawdz publiczny health pod `https://bourbon-hunters.darekmaslyk.workers.dev/auth/health`; pelna diagnostyka jest w `/admin/health`.
 
 Kolejnosc jest wazna: migracje D1 -> Worker -> GitHub/PWA. Bez v67 user nie moze zatwierdzic assetu, a bez v68 feed newsow pozostanie pusty.
 
@@ -266,7 +291,7 @@ Ta zmiana dotyczy GitHub Pages. Nie wymaga podmiany Workera, migracji D1 ani zmi
 5. Sprawdź na Home kafel Whisky z liczbą pozycji.
 6. Wejdź w Whisky i sprawdź filtry Scotch, Irish, Japanese, Rye i pozostałe.
 
-Aktualny cache: `bourbon-hunters-v115`.
+Aktualny cache: `bourbon-hunters-v116`.
 
 ## Wdrozenie katalogu Popular 200 - 2026-08-04
 

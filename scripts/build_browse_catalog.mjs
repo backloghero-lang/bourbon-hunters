@@ -57,10 +57,11 @@ for (const record of whiskyById.values()) {
 }
 const whisky = [...whiskyByProduct.values()];
 
-const catalogCounts = taxonomy.counts([
-  ...baseRecords.filter((bottle) => taxonomy.family(bottle) === "bourbon"),
+const browsableRecords = [...new Map([
+  ...baseRecords.filter((bottle) => ["bourbon", "whisky"].includes(taxonomy.family(bottle)) && taxonomy.isVisibleBottle(bottle)),
   ...whisky
-]);
+].map((record) => [record.id, record])).values()];
+const catalogCounts = taxonomy.counts(browsableRecords);
 const browseCounts = taxonomy.counts(whisky);
 const updated = new Date().toISOString();
 const common = {
