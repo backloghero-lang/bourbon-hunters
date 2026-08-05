@@ -7,7 +7,7 @@
 //   3b) tryb "analyze"-> rozbudowany opis + historia destylarni z linkami (Gemini + Google Search), fakty z bazy jako grunt.
 //
 // SEKRETY: GEMINI_API_KEY (wymagany), DEV_KEY (opcjonalny)
-// ZMIENNE: MODEL, IDENT_MODEL, CUTOUT_QA_MODEL, NEWS_MODEL, TEMP_RATE, TEMP_ANALYZE, THINK_ANALYZE, MAX_RATE, MAX_ANALYZE, DAILY_LIMIT, LOCAL_CUTOUT_DAILY_LIMIT, LOCAL_CUTOUT_IP_DAILY_LIMIT, ALLOW_ORIGIN, PROMPT_URL, DB_URL, APP_URL, GOOGLE_REDIRECT_URI
+// ZMIENNE: MODEL, IDENT_MODEL, IDENT_FALLBACK_MODEL, CUTOUT_QA_MODEL, NEWS_MODEL, TEMP_RATE, TEMP_ANALYZE, THINK_ANALYZE, MAX_RATE, MAX_ANALYZE, DAILY_LIMIT, LOCAL_CUTOUT_DAILY_LIMIT, LOCAL_CUTOUT_IP_DAILY_LIMIT, ALLOW_ORIGIN, PROMPT_URL, DB_URL, APP_URL, GOOGLE_REDIRECT_URI
 // SEKRETY OAuth: GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, opcjonalnie GOOGLE_STATE_SECRET
 // KV: DS_KV (limit + zapis nowosci). Klucze nowosci: "new:<id>".
 // D1: DB (konta, sesje, wishlist, kolekcja, oceny).
@@ -18,8 +18,8 @@ const DEFAULT_DB_URL = "https://raw.githubusercontent.com/" + REPO + "/main/db/c
 const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters. Krotko, z jajem, ale rzeczowo. quality=jakosc 1-5, value=jakosc/cena 1-5 (5 swietna i tania, 1 slaba i droga). Pisz {{LANG}}. Zwroc tylko JSON.";
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
 const MULTI_CANDIDATE_CONFIDENCE = 0.9;
-const SCAN_ORCHESTRATOR_VERSION = "visual-only-catalog-v6-mobile-label-view";
-const SCAN_CATALOG_VERSION = "popular-200-2026-v1";
+const SCAN_ORCHESTRATOR_VERSION = "visual-only-catalog-v7-resilient-fallback";
+const SCAN_CATALOG_VERSION = "popular-200-curated-v2-no-flavors";
 const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v6-highres-cutout";
 const CATALOG_MODERATION_VERSION = "catalog-moderation-orchestrator-admin-v1";
 const CATALOG_LICENSE_VERSION = "catalog-license-2026-07-18-v1";
@@ -168,6 +168,7 @@ async function getDB(env, request){
     merged.bottles.forEach(function(bottle,index){ if(bottle&&bottle.id) byId[bottle.id]=index; });
     rows.forEach(function(row){
       const bottle=publicCatalogBottle(row,request);
+      if(!catalogBottleVisible(bottle)) return;
       bottle.aliases=Array.isArray(bottle.aliases)?bottle.aliases:[];
       bottle.catalog_status="published";
       bottle.community_catalog=true;
@@ -498,6 +499,17 @@ function cleanCatalogBottle(value){
   if(!Number.isFinite(out.price_value)) out.price_value=null;
   return out;
 }
+function catalogBottleVisible(bottle){
+  const b=bottle&&typeof bottle==="object"?bottle:{};
+  const text=norm([b.name,(b.aliases||[]).join(" "),b.type,b.category,b.region].join(" "));
+  const barrelDerived=/\b(?:finished?|finishing|casks?|barrel (?:finish|finished|aged)|secondary barrel|staves?|wood finish|oak finish)\b/.test(text);
+  const flavored=!barrelDerived && (/\b(?:flavou?red|infused|infusion|liqueur|whisk(?:e)?y cream|natural flavou?r)\b/.test(text) ||
+    /\b(?:apple|cider|honey|peach|pineapple|orange|mandarin|blackberry|black cherry|cherry|blueberry|strawberry|watermelon|banana|huckleberry|mango|lemon|lime|coconut|peanut butter|salted caramel|brown sugar|maple|vanilla|chocolate|mocha|coffee|s ?mores|cinnamon|eggnog|pumpkin spice|praline|pecan|cookie|marshmallow)\b/.test(text) ||
+    /\b(?:fireball|sinfire|skrewball|southern comfort|howler head|ballotin|bird dog|sheep dog|red stag)\b/.test(text));
+  if(flavored) return false;
+  if(/\b(?:australia|austria|belgium|denmark|england|finland|france|germany|iceland|india|israel|italy|mexico|netherlands|new zealand|norway|south africa|spain|sweden|switzerland|taiwan|wales)\b/.test(text)) return false;
+  return true;
+}
 function publicCatalogBottle(row, request){
   const data=safeJson(row&&row.bottle_data,{});
   data.id=row.bottle_id;
@@ -616,6 +628,7 @@ async function createBottlePreview(env, request, user, body){
   const bottle=cleanCatalogBottle(body&&body.bottle_data);
   bottle.id=cleanCatalogId((body&&body.bottle_id)||bottle.id);
   if(!bottle.id || !bottle.name) return {error:"bad_bottle",status:400};
+  if(!catalogBottleVisible(bottle)) return {error:"catalog_product_hidden",status:400};
   if(!catalogPriceAllowed(bottle)) return {error:"price_limit",status:400};
   const today=new Date(); today.setUTCHours(0,0,0,0);
   const count=await env.DB.prepare("SELECT COUNT(*) AS count FROM bottle_submissions WHERE user_id=? AND created_at>=?").bind(user.id,today.toISOString()).first();
@@ -1385,7 +1398,7 @@ async function handleApi(request, env, cors){
       }
       catch(e){ detail=String(e&&e.message?e.message:e).slice(0,220); }
     }
-    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_mode:"visual_only",scan_ocr_enabled:false,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_moderation_version:CATALOG_MODERATION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,news_agent_version:NEWS_AGENT_VERSION,local_image_pipeline_version:LOCAL_IMAGE_PIPELINE_VERSION,news_schedule:"Monday and Thursday via daily UTC cron",news_retention_days:NEWS_RETENTION_DAYS,starter_news_count:STARTER_NEWS.length,news_auth_required:true,catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,catalog_moderation_schema:catalog_moderation_schema,telemetry_schema:telemetry_schema,news_schema:news_schema,news_agent_ready:news_schema&&!!env.GEMINI_API_KEY,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),local_image_cutout_ready:!!env.IMAGES,cutout_quality_ready:!!(env.IMAGES&&env.GEMINI_API_KEY),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
+    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_mode:"visual_only",scan_ocr_enabled:false,scanner_ai_ready:!!env.GEMINI_API_KEY,scanner_primary_model:env.IDENT_MODEL||env.MODEL||"gemini-2.5-flash",scanner_fallback_model:env.IDENT_FALLBACK_MODEL||"gemini-2.5-flash-lite",scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_moderation_version:CATALOG_MODERATION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,news_agent_version:NEWS_AGENT_VERSION,local_image_pipeline_version:LOCAL_IMAGE_PIPELINE_VERSION,news_schedule:"Monday and Thursday via daily UTC cron",news_retention_days:NEWS_RETENTION_DAYS,starter_news_count:STARTER_NEWS.length,news_auth_required:true,catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,catalog_moderation_schema:catalog_moderation_schema,telemetry_schema:telemetry_schema,news_schema:news_schema,news_agent_ready:news_schema&&!!env.GEMINI_API_KEY,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),local_image_cutout_ready:!!env.IMAGES,cutout_quality_ready:!!(env.IMAGES&&env.GEMINI_API_KEY),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
   }
   if(path==="/auth/google/start" && request.method==="GET"){
     const returnUrl=allowedReturnUrl(env,url.searchParams.get("return")||appUrl(env));
@@ -1432,7 +1445,7 @@ async function handleApi(request, env, cors){
     if(!(await tableExists(env,"catalog_bottles"))) return J({bottles:[],catalog_ready:false},200,cors);
     const limit=Math.max(1,Math.min(50,Number(url.searchParams.get("limit")||24)));
     const rows=await env.DB.prepare("SELECT * FROM catalog_bottles WHERE status='published' ORDER BY created_at DESC LIMIT ?").bind(limit).all();
-    return J({bottles:(rows.results||[]).map(function(row){ return publicCatalogBottle(row,request); }),catalog_ready:true},200,cors);
+    return J({bottles:(rows.results||[]).map(function(row){ return publicCatalogBottle(row,request); }).filter(catalogBottleVisible),catalog_ready:true},200,cors);
   }
   if(path.indexOf("/catalog/image/")===0 && request.method==="GET"){
     if(!(await tableExists(env,"catalog_bottles")) || !env.BOTTLE_IMAGES) return J({error:"image_not_found"},404,cors);
@@ -1930,26 +1943,44 @@ async function callVisualAgent(env, mime, image){
 }
 
 async function callGemini(env, payload, stage){
-  const model = payload.__model || env.MODEL || "gemini-2.5-flash";
-  delete payload.__model;
-  const url = "https://generativelanguage.googleapis.com/v1beta/models/"+model+":generateContent?key="+env.GEMINI_API_KEY;
+  const primaryModel = payload.__model || env.MODEL || "gemini-2.5-flash";
+  const fallbackModel = (stage==="visual_identification" || stage==="bottle_cutout_qa")
+    ? (env.IDENT_FALLBACK_MODEL||"gemini-2.5-flash-lite")
+    : "";
+  const models=[primaryModel];
+  if(fallbackModel && fallbackModel!==primaryModel) models.push(fallbackModel);
+  const requestPayload=Object.assign({},payload);
+  delete requestPayload.__model;
   const started=Date.now();
-  let r=null, st=0, dt="brak odpowiedzi", attempts=0;
-  for(let a=0;a<3;a++){
-    attempts=a+1;
-    let rr; try{ rr=await fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)}); }
-    catch(e){ st=0; dt="network"; await sleep(700*(a+1)); continue; }
-    if(rr.ok){ r=rr; break; }
-    st=rr.status; dt=(await rr.text()).slice(0,400);
-    if(st===503||st===429||st===500){ await sleep(900*(a+1)); continue; }
-    break;
+  let r=null, st=0, dt="brak odpowiedzi", attempts=0, usedModel=primaryModel;
+  if(!env.GEMINI_API_KEY){
+    return {err:{status:401,detail:"gemini_missing"},usage:geminiUsage(null,{stage:stage,model:primaryModel,status:401,attempts:0,duration_ms:0})};
   }
-  if(!r) return { err:{status:st,detail:dt},usage:geminiUsage(null,{stage:stage,model:model,status:st,attempts:attempts,duration_ms:Date.now()-started}) };
+  outer: for(let m=0;m<models.length;m++){
+    usedModel=models[m];
+    const url="https://generativelanguage.googleapis.com/v1beta/models/"+usedModel+":generateContent?key="+env.GEMINI_API_KEY;
+    for(let a=0;a<2;a++){
+      attempts++;
+      let rr;
+      try{ rr=await fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(requestPayload)}); }
+      catch(e){ st=0; dt="network"; }
+      if(rr&&rr.ok){ r=rr; break outer; }
+      if(rr){ st=rr.status; dt=(await rr.text()).slice(0,400); }
+      const retryable=st===0||st===408||st===500||st===502||st===503||st===504;
+      if(st===429 || !retryable) break outer;
+      const hasNextAttempt=a<1 || m<models.length-1;
+      if(hasNextAttempt){
+        const backoff=Math.min(8000,1200*Math.pow(2,attempts-1));
+        await sleep(backoff+Math.floor(Math.random()*500));
+      }
+    }
+  }
+  if(!r) return { err:{status:st,detail:dt},usage:geminiUsage(null,{stage:stage,model:usedModel,status:st,attempts:attempts,duration_ms:Date.now()-started}) };
   const data=await r.json();
   let txt=""; try{ txt=data.candidates[0].content.parts.map(function(p){return p.text||"";}).join("").trim(); }catch(e){}
   let sources=[];
   try{ sources=(data.candidates[0].groundingMetadata.groundingChunks||[]).filter(function(c){return c.web;}).slice(0,6).map(function(c){return {title:c.web.title||c.web.uri,url:c.web.uri};}); }catch(e){}
-  return { txt:txt, sources:sources,usage:geminiUsage(data,{stage:stage,model:model,status:200,attempts:attempts,duration_ms:Date.now()-started}) };
+  return { txt:txt, sources:sources,usage:geminiUsage(data,{stage:stage,model:usedModel,status:200,attempts:attempts,duration_ms:Date.now()-started}),fallback_used:usedModel!==primaryModel };
 }
 
 export default {

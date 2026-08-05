@@ -1,7 +1,10 @@
 import fs from "node:fs";
 import path from "node:path";
+import { createRequire } from "node:module";
 import { buildCatalogTokenIndex, catalogProductDisplayName, dedupeCatalogRecords } from "./catalog_identity.mjs";
 
+const require = createRequire(import.meta.url);
+const taxonomy = require("../spirit-taxonomy.js");
 const root = path.resolve(import.meta.dirname, "..");
 const manifestPath = path.join(root, "db", "catalog", "popular-200.json");
 const catalogPath = path.join(root, "db", "catalog", "bottles.json");
@@ -267,8 +270,8 @@ function main() {
   const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
   const catalog = JSON.parse(fs.readFileSync(catalogPath, "utf8"));
   const scan = JSON.parse(fs.readFileSync(scanPath, "utf8"));
-  const sourceRecords = Array.isArray(catalog.bottles) ? catalog.bottles : [];
-  const sourceScan = Array.isArray(scan.bottles) ? scan.bottles : [];
+  const sourceRecords = (Array.isArray(catalog.bottles) ? catalog.bottles : []).filter(taxonomy.isVisibleBottle);
+  const sourceScan = (Array.isArray(scan.bottles) ? scan.bottles : []).filter(taxonomy.isVisibleBottle);
   const sourceById = new Map(sourceRecords.map((record) => [record.id, record]));
   const scanById = new Map(sourceScan.map((record) => [record.id, record]));
   const combinedExisting = sourceScan.map((record) => ({ ...sourceById.get(record.id), ...record }));
@@ -276,7 +279,7 @@ function main() {
     ...manifest.bourbon.map((item) => ({ item, family: "bourbon" })),
     ...manifest.whisky.map((item) => ({ item, family: "whisky" }))
   ];
-  const curated = manifestRows.map(({ item, family }) => curatedRecord(item, family));
+  const curated = manifestRows.map(({ item, family }) => curatedRecord(item, family)).filter(taxonomy.isVisibleBottle);
   const curatedKeys = curated.map(recordKeys);
   const candidateMatches = curated.map(() => []);
 

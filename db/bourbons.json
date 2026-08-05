@@ -1,5 +1,5 @@
 {
-  "count": 285,
+  "count": 269,
   "source": "woodencork.com/products.json (filtered to priority bourbon brands)",
   "updated": "2026-07-27T16:02:09.581Z",
   "version": 8,
@@ -286,37 +286,6 @@
       "image_source": "assets/bourbons/bardstown-bourbon-chateau-de-laubade.webp"
     },
     {
-      "abv": 36,
-      "category": "Standard",
-      "desc": "AN EXQUISITE HIGH-RYE BOURBON WITH EXTRAORDINARY FLAVOR. OUR ORIGIN BOURBON WHISKEY IS A 36% HIGH-RYE MASHBILL WHICH SHOWCASES THE BEST OF CLASSIC BOURBON WITH A BURST OF RYE SPICE. PERFECT AS A UNIQUE POUR OR THE FOUNDATION FOR A PREMIUM CRAFT COCKTAIL.",
-      "distillery": "Bardstown Bourbon Company",
-      "id": "bardstown-bourbon-co-origin-series-kentucky-straight-bourbon",
-      "image": "assets/bourbons/clean/bardstown-bourbon-co-origin-series-kentucky-straight-bourbon.webp",
-      "mashbill": null,
-      "name": "Bardstown Bourbon Co. Origin Series Kentucky Straight",
-      "notes": null,
-      "price": 64.99,
-      "price_pln": null,
-      "price_str": "$64.99",
-      "proof": null,
-      "quality": null,
-      "region": "USA",
-      "source": "woodencork",
-      "status": "available",
-      "type": "Bourbon Kentucky Straight",
-      "url": "https://woodencork.com/products/bardstown-bourbon-co-origin-series-kentucky-straight-bourbon",
-      "value": null,
-      "aliases": [
-        "Bardstown Bourbon Co. Origin Series Kentucky Straight",
-        "Bardstown Bourbon Co. Origin Series Kentucky Straight Bourbon"
-      ],
-      "source_refs": [
-        "woodencork"
-      ],
-      "image_quality": "single-bottle-transparent-v3-no-watermarks",
-      "image_source": "assets/bourbons/bardstown-bourbon-co-origin-series-kentucky-straight-bourbon.webp"
-    },
-    {
       "abv": 43,
       "category": "Standard",
       "desc": "Bardstown Bourbon Collaborative Series Amrut Blended Whiskey Discover the exquisite blend of tradition and innovation with the Bardstown Bourbon Collaborative Series Amrut Blended Whiskey . This exceptional whiskey is a masterpiece, combining Straight Rye Whiskey finished in Amrut Indian Malt Whiskey barrels with a selection of carefully chosen straight bourbon whiskeys. Unique Blend Composition 43% Indiana 9-year: A robust base with 45% Corn, 51% Rye, and 4% Malted Barley. 20% Indiana 8-year: Adds complexity with 95% Rye and 5% Malted Barley. 17% Kentucky 14-year: Rich character from 75%â¦",
@@ -557,68 +526,6 @@
       ],
       "image_quality": "single-bottle-transparent-v3-no-watermarks",
       "image_source": "assets/bourbons/bardstown-bourbon-company-fusion-series-3.webp"
-    },
-    {
-      "abv": 20,
-      "category": "Bottled-in-Bond",
-      "desc": "Honoring tradition and authenticity, our Origin Series Wheated Bottled-in-Bond 6-year expression presents the best locally-sourced Kentucky corn and wheat grains. This expression features 20% wheat in the mash bill, creating a modern expression of beautifully balanced bourbon. TASTING NOTES Baked peach with cream meets cocoa with hints of lemon, an indulgent, smooth mouthfeel of stone fruit and toffee leads to an alluring and enduring finish.",
-      "distillery": "Bardstown Bourbon Company",
-      "id": "bardstown-bourbon-company-origin-series-bottled-in-bond-straight-bourbon",
-      "image": "assets/bourbons/clean/bardstown-bourbon-company-origin-series-bottled-in-bond-straight-bourbon.webp",
-      "mashbill": null,
-      "name": "Bardstown Bourbon Company Origin Series Bottled in Bond Straight",
-      "notes": null,
-      "price": 59.99,
-      "price_pln": null,
-      "price_str": "$59.99",
-      "proof": null,
-      "quality": null,
-      "region": "USA",
-      "source": "woodencork",
-      "status": "available",
-      "type": "Bourbon pszeniczny (wheated)",
-      "url": "https://woodencork.com/products/bardstown-bourbon-company-origin-series-bottled-in-bond-straight-bourbon",
-      "value": null,
-      "aliases": [
-        "Bardstown Bourbon Company Origin Series Bottled in Bond Straight",
-        "Bardstown Bourbon Company Origin Series Bottled in Bond Straight Bourbon"
-      ],
-      "source_refs": [
-        "woodencork"
-      ],
-      "image_quality": "single-bottle-transparent-v3-no-watermarks",
-      "image_source": "assets/bourbons/bardstown-bourbon-company-origin-series-bottled-in-bond-straight-bourbon.webp"
-    },
-    {
-      "abv": 39,
-      "category": "Standard",
-      "desc": "Bardstown Bourbon Company Origin Series Wheated Bourbon Discover the Bardstown Bourbon Company Origin Series Wheated Bourbon , a masterpiece that honors tradition while embracing innovation. This exceptional bourbon features a unique 39% wheated mashbill, making it a standout choice for bourbon enthusiasts. Presented at a robust 106 proof, this bourbon offers an explosion of flavors that are both bold and elegant. Tasting Notes Nose: Experience the inviting aroma of ripe apricot and lemon, layered with hints of leather and crème brûlée. Palate: A bold blend of oak and pastry creates a rich,â¦",
-      "distillery": "Bardstown Bourbon Company",
-      "id": "bardstown-bourbon-company-origin-series-bottled-in-bond-straight-bourbon-copy",
-      "image": "assets/bourbons/clean/bardstown-bourbon-company-origin-series-bottled-in-bond-straight-bourbon-copy.webp",
-      "mashbill": null,
-      "name": "Bardstown Bourbon Company Origin Series Wheated",
-      "notes": null,
-      "price": 54.99,
-      "price_pln": null,
-      "price_str": "$54.99",
-      "proof": 106,
-      "quality": null,
-      "region": "USA",
-      "source": "woodencork",
-      "status": "available",
-      "type": "Bourbon pszeniczny (wheated)",
-      "url": "https://woodencork.com/products/bardstown-bourbon-company-origin-series-bottled-in-bond-straight-bourbon-copy",
-      "value": null,
-      "aliases": [
-        "Bardstown Bourbon Company Origin Series Wheated",
-        "Bardstown Bourbon Company Origin Series Wheated Bourbon"
-      ],
-      "source_refs": [
-        "woodencork"
-      ],
-      "image_quality": "single-bottle-transparent-v3-no-watermarks",
-      "image_source": "assets/bourbons/bardstown-bourbon-company-origin-series-bottled-in-bond-straight-bourbon-copy.webp"
     },
     {
       "abv": null,
@@ -1053,38 +960,6 @@
       ],
       "image_quality": "mystery-fallback",
       "image_source": "assets/bourbons/beer-barrel-bourbon-new-holland-artisan-spirits.jpg"
-    },
-    {
-      "abv": null,
-      "category": "Standard",
-      "desc": "Ten wyjątkowy bourbon zachwyca ciepłymi nutami wanilii, karmelu i delikatnego dębu. Zrównoważony smak ukazuje nuty przypraw i owocowych akcentów, przechodząc w długie, satynowe wykończenie. Idealny do degustacji lub w eleganckim koktajlu.",
-      "distillery": "Bird Dog",
-      "dw_id": "34437",
-      "id": "bird-dog-year-small-batch-bourbon",
-      "image": "",
-      "mashbill": null,
-      "name": "Bird Dog &-year Small Batch",
-      "notes": null,
-      "price": 240,
-      "price_pln": "240 zł",
-      "price_str": "240 zł",
-      "proof": null,
-      "quality": null,
-      "region": "USA",
-      "source": "domwhisky",
-      "status": "available",
-      "type": "Bourbon",
-      "url": "https://sklep-domwhisky.pl/product-eng-34437-Bird-Dog-year-Small-Batch-Bourbon-44-0-75l.html",
-      "value": null,
-      "aliases": [
-        "Bird Dog &-year Small Batch",
-        "Bird Dog &-year Small Batch Bourbon"
-      ],
-      "source_refs": [
-        "domwhisky"
-      ],
-      "image_quality": "mystery-fallback",
-      "image_source": "assets/bourbons/bird-dog-year-small-batch-bourbon.jpg"
     },
     {
       "abv": null,
@@ -2517,37 +2392,6 @@
       "image_source": "assets/bourbons/few-bourbon.jpg"
     },
     {
-      "abv": null,
-      "category": "Standard",
-      "desc": "Spółkę FEW Spirits założył w 2011 roku Paul Hletko, z wykształcenia prawnik specjalizujący się w prawie patentowym. ",
-      "distillery": "Few Bourbon",
-      "dw_id": "33159",
-      "id": "few-bourbon-cold-brew-coffee",
-      "image": "",
-      "mashbill": null,
-      "name": "Few Bourbon Cold Brew Coffee",
-      "notes": null,
-      "price": 289,
-      "price_pln": "289 zł",
-      "price_str": "289 zł",
-      "proof": null,
-      "quality": null,
-      "region": "USA",
-      "source": "domwhisky",
-      "status": "available",
-      "type": "Bourbon",
-      "url": "https://sklep-domwhisky.pl/product-eng-33159-Few-Bourbon-Cold-Brew-Coffee-46-5-0-7l.html",
-      "value": null,
-      "aliases": [
-        "Few Bourbon Cold Brew Coffee"
-      ],
-      "source_refs": [
-        "domwhisky"
-      ],
-      "image_quality": "mystery-fallback",
-      "image_source": "assets/bourbons/few-bourbon-cold-brew-coffee.jpg"
-    },
-    {
       "abv": 40,
       "category": "Standard",
       "desc": "Four Roses Yellow Label is the accessible entry into the brand's unique 10-recipe production system — a blend of all 10 Four Roses bourbon recipes (two mashbills crossed with five yeast strains) creating the most approachable and floral expression in the lineup, with hints of corn and vanilla, a combination of mint and spice, and a long, soft, mellow finish at 80 proof. The 10-recipe system is Four Roses' defining production distinction — where most bourbon producers use one or two mashbills and one yeast strain, Four Roses maintains ten distinct recipe combinations that each produceâ¦",
@@ -3838,37 +3682,6 @@
       "image_source": "assets/bourbons/jeffersons-tropics-finished-in-singapore-bourbon-750ml.webp"
     },
     {
-      "abv": 15,
-      "category": "Mała partia",
-      "desc": "Jefferson's Very Small Batch is a balanced, approachable bourbon — blended from up to four Kentucky straight bourbons of varying ages for a complex, consistent flavor profile. The meticulous blending of different aged bourbons gives Jefferson's a rich yet smooth character that suits both seasoned bourbon drinkers and newcomers. Excellent neat, on the rocks, or in cocktails. Tasting Notes Aroma: Vanilla, caramel, oak Palate: Smooth and balanced — spice, fruit, touch of sweetness Finish: Long and warm Specs Brand: Jefferson's Style: Very Small Batch Kentucky Straight Bourbon ABV: 41.15% Size:â¦",
-      "distillery": "Jefferson's (Castle Brands)",
-      "id": "jeffersons-very-small-batch-bourbon",
-      "image": "assets/bourbons/clean/jeffersons-very-small-batch-bourbon.webp",
-      "mashbill": null,
-      "name": "Jeffersons Very Small Batch",
-      "notes": null,
-      "price": 44.99,
-      "price_pln": null,
-      "price_str": "$44.99",
-      "proof": null,
-      "quality": null,
-      "region": "Kentucky",
-      "source": "woodencork",
-      "status": "available",
-      "type": "Bourbon Kentucky Straight",
-      "url": "https://woodencork.com/products/jeffersons-very-small-batch-bourbon",
-      "value": null,
-      "aliases": [
-        "Jeffersons Very Small Batch",
-        "Jeffersons Very Small Batch Bourbon Whiskey"
-      ],
-      "source_refs": [
-        "woodencork"
-      ],
-      "image_quality": "single-bottle-transparent-v3-no-watermarks",
-      "image_source": "assets/bourbons/jeffersons-very-small-batch-bourbon.webp"
-    },
-    {
       "abv": 41.15,
       "aliases": [
         "Jefferson’s",
@@ -4157,37 +3970,6 @@
     {
       "abv": null,
       "category": "Standard",
-      "desc": "Jim Beam Apple debiutował w sierpniu 2015 roku jako kolejna propozycja największego producenta bourbonów w kategorii „Flavored Whiskey Drink”.",
-      "distillery": "Jim Beam Distillery",
-      "dw_id": "23766",
-      "id": "jim-beam-apple",
-      "image": "",
-      "mashbill": null,
-      "name": "Jim Beam Apple",
-      "notes": null,
-      "price": 89,
-      "price_pln": "89 zł",
-      "price_str": "89 zł",
-      "proof": null,
-      "quality": null,
-      "region": "USA",
-      "source": "domwhisky",
-      "status": "available",
-      "type": "Bourbon",
-      "url": "https://sklep-domwhisky.pl/product-eng-23766-Jim-Beam-Apple-32-5-0-7l.html",
-      "value": null,
-      "aliases": [
-        "Jim Beam Apple"
-      ],
-      "source_refs": [
-        "domwhisky"
-      ],
-      "image_quality": "mystery-fallback",
-      "image_source": "assets/bourbons/jim-beam-apple.jpg"
-    },
-    {
-      "abv": null,
-      "category": "Standard",
       "desc": "Jim Beam Black 7-letni to bourbon oferujący bogate nuty wanilii, karmelu i dębu. Gładki, wyrazisty i doskonały zarówno do degustacji solo, jak i klasycznych koktajli.",
       "distillery": "Jim Beam Distillery",
       "dw_id": "35618",
@@ -4250,37 +4032,6 @@
     {
       "abv": null,
       "category": "Standard",
-      "desc": "Jim Beam Honey debiutował na początku 2012 roku, trzy lata po niezwykle udanym debiucie marki Red Stag, bourbona Jim Beam „przyprawionego” smakiem czarnej wiśni. ",
-      "distillery": "Jim Beam Distillery",
-      "dw_id": "29204",
-      "id": "jim-beam-honey",
-      "image": "",
-      "mashbill": null,
-      "name": "Jim Beam Honey",
-      "notes": null,
-      "price": 89,
-      "price_pln": "89 zł",
-      "price_str": "89 zł",
-      "proof": null,
-      "quality": null,
-      "region": "USA",
-      "source": "domwhisky",
-      "status": "available",
-      "type": "Bourbon",
-      "url": "https://sklep-domwhisky.pl/product-eng-29204-Jim-Beam-Honey-32-5-0-7l.html",
-      "value": null,
-      "aliases": [
-        "Jim Beam Honey"
-      ],
-      "source_refs": [
-        "domwhisky"
-      ],
-      "image_quality": "mystery-fallback",
-      "image_source": "assets/bourbons/jim-beam-honey.jpg"
-    },
-    {
-      "abv": null,
-      "category": "Standard",
       "desc": "Jim Beam Kentucky Dram to whiskey, którą możemy zaklasyfikować według własnego upodobania – hybryda, krzyżówka, fuzja – to zaledwie parę przykładów. ",
       "distillery": "Jim Beam Distillery",
       "dw_id": "12226",
@@ -4307,99 +4058,6 @@
         "domwhisky"
       ],
       "image_quality": "mystery-fallback"
-    },
-    {
-      "abv": null,
-      "category": "Standard",
-      "desc": "Zanurz się w harmonii aromatów wanilii i soczystej pomarańczy, które otulają zmysły przy każdym łyku. Gładka tekstura z subtelnym, dębowym akcentem sprawia, że jest to wyjątkowa propozycja dla koneserów. Idealny wybór na wyjątkowe chwile.",
-      "distillery": "Jim Beam Distillery",
-      "dw_id": "35619",
-      "id": "jim-beam-orange",
-      "image": "",
-      "mashbill": null,
-      "name": "Jim Beam Orange",
-      "notes": null,
-      "price": 85,
-      "price_pln": "85 zł",
-      "price_str": "85 zł",
-      "proof": null,
-      "quality": null,
-      "region": "USA",
-      "source": "domwhisky",
-      "status": "available",
-      "type": "Bourbon",
-      "url": "https://sklep-domwhisky.pl/product-eng-35619-Jim-Beam-Orange-32-5-0-7l.html",
-      "value": null,
-      "aliases": [
-        "Jim Beam Orange"
-      ],
-      "source_refs": [
-        "domwhisky"
-      ],
-      "image_quality": "mystery-fallback",
-      "image_source": "assets/bourbons/jim-beam-orange.jpg"
-    },
-    {
-      "abv": null,
-      "category": "Standard",
-      "desc": "Jim Beam Peach debiutował w sierpniu 2019 roku w Stanach i na początku 2021 w Europie.",
-      "distillery": "Jim Beam Distillery",
-      "dw_id": "23932",
-      "id": "jim-beam-peach",
-      "image": "",
-      "mashbill": null,
-      "name": "Jim Beam Peach",
-      "notes": null,
-      "price": 89,
-      "price_pln": "89 zł",
-      "price_str": "89 zł",
-      "proof": null,
-      "quality": null,
-      "region": "USA",
-      "source": "domwhisky",
-      "status": "available",
-      "type": "Bourbon",
-      "url": "https://sklep-domwhisky.pl/product-eng-23932-Jim-Beam-Peach-32-5-0-7l.html",
-      "value": null,
-      "aliases": [
-        "Jim Beam Peach"
-      ],
-      "source_refs": [
-        "domwhisky"
-      ],
-      "image_quality": "mystery-fallback",
-      "image_source": "assets/bourbons/jim-beam-peach.jpg"
-    },
-    {
-      "abv": null,
-      "category": "Standard",
-      "desc": null,
-      "distillery": "Jim Beam Distillery",
-      "dw_id": "36643",
-      "id": "jim-beam-pineapple",
-      "image": "",
-      "mashbill": null,
-      "name": "Jim Beam Pineapple",
-      "notes": null,
-      "price": 89,
-      "price_pln": "89 zł",
-      "price_str": "89 zł",
-      "proof": null,
-      "quality": null,
-      "region": "USA",
-      "source": "domwhisky",
-      "status": "available",
-      "type": "Bourbon",
-      "url": "https://sklep-domwhisky.pl/product-eng-36643-Jim-Beam-Pineapple-32-5-0-7l.html",
-      "value": null,
-      "aliases": [
-        "Jim Beam Pineapple"
-      ],
-      "source_refs": [
-        "domwhisky"
-      ],
-      "image_quality": "mystery-fallback",
-      "image_source": "assets/bourbons/jim-beam-pineapple.jpg"
     },
     {
       "abv": null,
@@ -4657,37 +4315,6 @@
       ],
       "image_quality": "single-bottle-transparent-v3-no-watermarks",
       "image_source": "assets/bourbons/knob-creek-quarter-oak.webp"
-    },
-    {
-      "abv": null,
-      "category": "Standard",
-      "desc": "Knob Creek Smoked Maple is Knob Creek's Kentucky Straight Bourbon blended with natural smoked maple flavors — Booker Noe's sixth-generation instinct for big bourbon flavor applied to a flavored whiskey format, producing a full-bodied expression with smoked hickory and maple wood aroma, inviting maple notes that lift to smoke, and the rich vanilla and caramel finish of the Knob Creek base bourbon. Smoked Maple starts from the same Knob Creek foundation — deeply charred white oak barrels, the patience and care of small-batch production, and Booker Noe's pre-Prohibition philosophy of strengthâ¦",
-      "distillery": "Jim Beam Distillery",
-      "id": "knob-creek-smoked-maple-bourbon",
-      "image": "",
-      "mashbill": null,
-      "name": "Knob Creek Smoked Maple",
-      "notes": null,
-      "price": 47.99,
-      "price_pln": null,
-      "price_str": "$47.99",
-      "proof": null,
-      "quality": null,
-      "region": "Kentucky",
-      "source": "woodencork",
-      "status": "available",
-      "type": "Bourbon Kentucky Straight",
-      "url": "https://woodencork.com/products/knob-creek-smoked-maple-bourbon",
-      "value": null,
-      "aliases": [
-        "Knob Creek Smoked Maple",
-        "Knob Creek Smoked Maple Kentucky Straight Bourbon Whiskey"
-      ],
-      "source_refs": [
-        "woodencork"
-      ],
-      "image_quality": "mystery-fallback",
-      "image_source": "assets/bourbons/knob-creek-smoked-maple-bourbon.webp"
     },
     {
       "abv": null,
@@ -6742,70 +6369,6 @@
     {
       "abv": null,
       "category": "Standard",
-      "desc": "Ole Smoky Mango Habanero Whiskey to kreatywna whiskey o połączeniu słodkiego smaku mango z ostrym akcentem papryczki habanero. ",
-      "distillery": "Ole Smoky",
-      "dw_id": "36205",
-      "id": "ole-smoky-mango-habanero-whiskey",
-      "image": "",
-      "mashbill": null,
-      "name": "Ole Smoky Mango Habanero",
-      "notes": null,
-      "price": 139,
-      "price_pln": "139 zł",
-      "price_str": "139 zł",
-      "proof": null,
-      "quality": null,
-      "region": "USA",
-      "source": "domwhisky",
-      "status": "available",
-      "type": "Bourbon",
-      "url": "https://sklep-domwhisky.pl/product-eng-36205-Ole-Smoky-Mango-Habanero-Whiskey-35-0-7l.html",
-      "value": null,
-      "aliases": [
-        "Ole Smoky Mango Habanero",
-        "Ole Smoky Mango Habanero Whiskey"
-      ],
-      "source_refs": [
-        "domwhisky"
-      ],
-      "image_quality": "mystery-fallback",
-      "image_source": "assets/bourbons/ole-smoky-mango-habanero-whiskey.jpg"
-    },
-    {
-      "abv": null,
-      "category": "Standard",
-      "desc": "Ole Smoky Peanut Butter Whiskey to aromatyzowana whiskey z USA o wyraźnym smaku masła orzechowego, połączonym z gładką bazą whiskey. ",
-      "distillery": "Ole Smoky",
-      "dw_id": "36206",
-      "id": "ole-smoky-peanut-butter-whiskey",
-      "image": "",
-      "mashbill": null,
-      "name": "Ole Smoky Peanut Butter",
-      "notes": null,
-      "price": 139,
-      "price_pln": "139 zł",
-      "price_str": "139 zł",
-      "proof": null,
-      "quality": null,
-      "region": "USA",
-      "source": "domwhisky",
-      "status": "available",
-      "type": "Bourbon",
-      "url": "https://sklep-domwhisky.pl/product-eng-36206-Ole-Smoky-Peanut-Butter-Whiskey-30-0-7l.html",
-      "value": null,
-      "aliases": [
-        "Ole Smoky Peanut Butter",
-        "Ole Smoky Peanut Butter Whiskey"
-      ],
-      "source_refs": [
-        "domwhisky"
-      ],
-      "image_quality": "mystery-fallback",
-      "image_source": "assets/bourbons/ole-smoky-peanut-butter-whiskey.jpg"
-    },
-    {
-      "abv": null,
-      "category": "Standard",
       "desc": "Ole Smoky Salty Caramel Whiskey to armatyzowana whiskey z Tennessee o intensywnym, deserowym profilu smakowym, łącząca słodycz karmelu z delikatną nutą soli morskiej. ",
       "distillery": "Ole Smoky",
       "dw_id": "36207",
@@ -8006,37 +7569,6 @@
       "image_source": "assets/bourbons/wild-turkey-8-year-old-101-proof.webp"
     },
     {
-      "abv": 35.5,
-      "category": "Standard",
-      "desc": "Wild Turkey American Honey is a honey-infused whiskey liqueur — Wild Turkey bourbon blended with real honey for a smooth, sweet, easy-drinking spirit. American Honey pairs the Wild Turkey bourbon base with natural honey, producing a balanced liqueur with honey, gentle spice, and a touch of lemon zest. It is softer and sweeter than straight bourbon, designed for easy sipping and simple serves. It is excellent chilled, over ice, or as a shot, and adds a honeyed note to cocktails. Tasting Notes Nose: Honey with baked bread and corn. Palate: Smooth and balanced — honey, gentle spice, and lemonâ¦",
-      "distillery": "Wild Turkey Distillery",
-      "id": "wild-turkey-american-honey-bourbon",
-      "image": "assets/bourbons/clean/wild-turkey-american-honey-bourbon.webp",
-      "mashbill": null,
-      "name": "Wild Turkey American Honey",
-      "notes": null,
-      "price": 24.99,
-      "price_pln": null,
-      "price_str": "$24.99",
-      "proof": 71,
-      "quality": null,
-      "region": "Kentucky",
-      "source": "woodencork",
-      "status": "available",
-      "type": "Bourbon Kentucky Straight",
-      "url": "https://woodencork.com/products/wild-turkey-american-honey-bourbon",
-      "value": null,
-      "aliases": [
-        "Wild Turkey American Honey",
-        "Wild Turkey American Honey Bourbon"
-      ],
-      "source_refs": [
-        "woodencork"
-      ],
-      "image_quality": "single-bottle-transparent-v3-no-watermarks",
-      "image_source": "assets/bourbons/wild-turkey-american-honey-bourbon.webp"
-    },
-    {
       "abv": 40.5,
       "category": "Standard",
       "desc": "Wild Turkey Bourbon (formerly Wild Turkey 81) is a Kentucky Straight Bourbon aged in American white oak barrels with the deepest No. 4 alligator char, under Master Distiller Eddie Russell. The entry point to the Wild Turkey range, this is the distillery's high-rye mashbill at an approachable, mixable strength. The deep No. 4 char gives it Wild Turkey's signature vanilla, caramel, and oak character in a smoother, more versatile format than the higher-proof 101. Tasting Notes Nose: Vanilla, caramel, and light oak Palate: Smooth and balanced — caramel, sweet corn, and gentle spice Finish:â¦",
@@ -8638,36 +8170,6 @@
       "image_quality": "mystery-fallback"
     },
     {
-      "abv": 45.2,
-      "category": "Standard",
-      "desc": "Woodford Reserve Masters Collection Cherry Wood Smoked Barley — the 12th release in the Masters Collection: a Kentucky Straight Bourbon Whiskey where a portion of the malted barley is smoked over cherry wood before mashing, introducing a distinctly sweet, fruity, and aromatic smoke character into the bourbon that has no equivalent in mainstream American whiskey production. Peat smoke defines Islay Scotch. Cherry wood smoke defines this expression. The difference is significant: peat smoke is heavy, medicinal, and savory — the product of burning ancient compressed organic matter. Cherry woodâ¦",
-      "distillery": "Woodford Reserve Distillery",
-      "id": "woodford-reserve-masters-cherry-wood-smoked-barley",
-      "image": "assets/bourbons/clean/woodford-reserve-masters-cherry-wood-smoked-barley.webp",
-      "mashbill": "Klasyczny",
-      "name": "Woodford Reserve Master's Cherry Wood Smoked Barley",
-      "notes": "Suszone owoce, dab, kakao, przyprawy",
-      "price": 499.99,
-      "price_pln": "200-260 zl",
-      "price_str": "$499.99",
-      "proof": 90.4,
-      "quality": 4,
-      "region": "Kentucky",
-      "source": "woodencork+curated",
-      "status": "available",
-      "type": "Bourbon Kentucky Straight",
-      "url": "https://woodencork.com/products/woodford-reserve-masters-cherry-wood-smoked-barley",
-      "value": 4,
-      "aliases": [
-        "Woodford Reserve Master's Cherry Wood Smoked Barley"
-      ],
-      "source_refs": [
-        "woodencork+curated"
-      ],
-      "image_quality": "single-bottle-transparent-v3-no-watermarks",
-      "image_source": "assets/bourbons/woodford-reserve-masters-cherry-wood-smoked-barley.webp"
-    },
-    {
       "abv": 72,
       "category": "Standard",
       "desc": "Woodford Reserve Masters Collection Batch Proof 123.2 — the 2019 annual release of the Batch Proof series, the second vintage of the program that launched in 2018: Woodford Reserve Kentucky Straight Bourbon bottled at 123.2 proof without dilution, 32.8 proof points above the standard 90.4. The Batch Proof series was first released in 2018 under Master Distiller Chris Morris as an expression of one of Woodford's five flavor sources — maturation — explored through the lens of proof. The concept: the same bourbon, the same production, the same barrels, but bottled at the batch's natural proofâ¦",
@@ -9072,5 +8574,6 @@
       "image_quality": "mystery-fallback",
       "image_source": "assets/bourbons/yellowstone-select-kentucky-straight-bourbon.jpg"
     }
-  ]
+  ],
+  "taxonomy_version": "spirit-taxonomy-v3-curated-visible-catalog"
 }

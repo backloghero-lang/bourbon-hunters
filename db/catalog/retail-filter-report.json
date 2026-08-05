@@ -1,11 +1,11 @@
 {
   "version": 3,
-  "updated": "2026-08-04T16:55:07.211Z",
+  "updated": "2026-08-05T18:36:03.279Z",
   "policy": "retail-relevance-2026-v3-quality-first",
   "max_usd": 500,
   "max_pln": 1500,
   "before": 9004,
-  "after": 1127,
+  "after": 1050,
   "removed": 7976,
   "quality_removed": 7976,
   "reasons": {

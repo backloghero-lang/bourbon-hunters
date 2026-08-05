@@ -283,11 +283,11 @@ Uwaga: wczeĹ›niejsze prĂłby MCP Figma wpadaĹ‚y w limit planu Starter, wi
 - Bourbon: Classic, Small Batch, Single Barrel, Bottled in Bond, Barrel Proof, Wheated, Limited.
 - Whisky: Scotch, Irish, Japanese, Rye, American Single Malt, Tennessee, Canadian, Corn & Wheat, American Whiskey, World Whisky, Pozostałe.
 - Ten sam podział działa w Odkrywaj, Kolekcji, Wishlist i Polecanych.
-- `db/catalog/browse-whisky.json` zawiera 5837 rekordów i ładuje się dopiero po wejściu w Whisky.
+- `db/catalog/browse-whisky.json` zawiera 491 widocznych rekordów i ładuje się dopiero po wejściu w Whisky.
 - Klasyfikator: `spirit-taxonomy.js`.
 - Generator: `scripts/build_browse_catalog.mjs`.
 - Asset kafla: `design/figma-assets/home-pack-v2/whisky-world.png`.
-- Cache PWA: `bourbon-hunters-v93`.
+- Cache PWA: `bourbon-hunters-v111`.
 
 Po każdej przebudowie głównego katalogu uruchom:
 
@@ -303,5 +303,28 @@ node scripts/test_spirit_taxonomy.mjs
 - OCR domyslnie dziedziczy `OCR_MODEL`, potem `IDENT_MODEL`, a nastepnie `MODEL`. Przy obecnej konfiguracji uzywa `gemini-2.5-flash`.
 - Testy regresyjne obejmuja rozdzielone dowody dla `Jack Daniel's Bonded` i `Knob Creek 9`.
 - Wersja Workera po wdrozeniu: `ocr-visual-fusion-catalog-10k-v11-split-label-evidence`.
+
+## Aktualizacja 2026-08-05 - odpornosc skanera na 503
+
+- Aktualny skaner pozostaje w trybie `visual_only`; OCR jest wylaczony.
+- Wersja Workera: `visual-only-catalog-v7-resilient-fallback`.
+- Model podstawowy: `gemini-2.5-flash`.
+- Po dwoch odpowiedziach `503`, `5xx`, `408` albo bledzie transportu Worker automatycznie probuje `gemini-2.5-flash-lite`.
+- Retry uzywa wykladniczego opoznienia z jitterem, zamiast trzech szybkich ponowien.
+- `429` nie uruchamia fallbacku i pozostaje komunikatem o limicie dostawcy.
+- Health pokazuje `scanner_ai_ready`, `scanner_primary_model` i `scanner_fallback_model`.
+- Test regresyjny: `node scripts/scanner-provider-fallback.mjs`.
+
+## Aktualizacja 2026-08-05 - kuracja kategorii i filtrow
+
+- Z aplikacji i indeksu skanera usunieto whiskey smakowe, likiery whiskey oraz warianty infused/cream.
+- Regula obejmuje wszystkie rozpoznane smaki owocowe, deserowe i korzenne, nie tylko Apple i Honey.
+- Finisze wynikajace z beczki lub drewna pozostaja w katalogu.
+- Ukryte sa grupy `Flavored Whiskey`, `World Whisky` i `Other Whisky`.
+- Filtry nie pokazuja opcji `Wszystkie` ani liczby rekordow.
+- Na Home kafel `Whisky` jest pierwszy w karuzeli kategorii, bezposrednio przed `Barrel Proof`; kafle kategorii nie pokazuja licznikow.
+- Przelaczniki `Bourbon / Whisky` oraz `Lista zyczen / Moja kolekcja` sa wizualnie oddzielone od podkategorii.
+- Odtworzenie danych: `node scripts/prune_hidden_spirits.mjs`, potem `node scripts/sync_popular_200.mjs` i `node scripts/build_browse_catalog.mjs`.
+- Test: `node scripts/test_catalog_visibility.mjs`.
 
 

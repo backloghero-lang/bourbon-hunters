@@ -22,11 +22,10 @@
     { key: "tennessee", label: "Tennessee" },
     { key: "canadian", label: "Canadian" },
     { key: "corn_wheat", label: "Corn & Wheat" },
-    { key: "flavored", label: "Flavored Whiskey" },
-    { key: "american_other", label: "American Whiskey" },
-    { key: "world", label: "World Whisky" },
-    { key: "other_whisky", label: "Other Whisky" }
+    { key: "american_other", label: "American Whiskey" }
   ];
+
+  const HIDDEN_WHISKY_STYLES = new Set(["flavored", "world", "other_whisky"]);
 
   const US_REGIONS = new Set([
     "usa", "american", "united states", "alabama", "alaska", "arizona", "arkansas",
@@ -72,6 +71,18 @@
     };
   }
 
+  function isFlavoredVariant(bottle) {
+    const f = fields(bottle);
+    const text = `${f.name} ${f.aliases} ${f.type} ${f.category}`;
+    const barrelDerived = /\b(?:finished?|finishing|cask(?:s)?|barrel (?:finish|finished|aged)|secondary barrel|stave(?:s)?|wood finish|oak finish)\b/.test(text);
+    if (barrelDerived) return false;
+    const explicit = /\b(?:flavou?red|flavou?r infused|infused|infusion|liqueur|whisk(?:e)?y cream|cream whisk(?:e)?y|natural flavou?r|with flavou?r)\b/.test(text);
+    const namedFlavor = /\b(?:apple|apple pie|cider|honey|peach|pineapple|orange|mandarin|blackberry|black cherry|cherry|blueberry|strawberry|watermelon|banana|huckleberry|mango|mango habanero|lemon|lime|coconut|peanut butter|salted caramel|caramel cream|butter brown sugar|brown sugar|maple|smoked maple|vanilla|chocolate|mocha|coffee|espresso|s ?mores|cinnamon|eggnog|pumpkin spice|praline|pecan|cookie|marshmallow|mint chocolate)\b/.test(text);
+    const flavoredBrand = /\b(?:fireball|sinfire|skrewball|southern comfort|howler head|ballotin|bird dog|sheep dog|ram s point|dirty monkey|red stag)\b/.test(text);
+    const lowStrengthWhiskey = Number(bottle&&bottle.abv)>0 && Number(bottle.abv)<40 && /\b(?:whisk(?:e)?y|bourbon)\b/.test(text) && !/\bstraight bourbon\b/.test(text);
+    return explicit || namedFlavor || flavoredBrand || lowStrengthWhiskey;
+  }
+
   function isBourbon(bottle) {
     const f = fields(bottle);
     if (f.family === "bourbon") return true;
@@ -86,9 +97,7 @@
       (/\b(?:gin|vodka|rum|tequila|mezcal|moonshine)\b/.test(name) &&
         !/\bbourbon\b/.test(name) &&
         !/\b(?:finished|finish|cask|barrel)\b/.test(name));
-    const flavored =
-      /\b(?:apple|honey|peach|pineapple|orange|blackberry|black cherry|peanut butter|salted caramel|vanilla|chocolate|s ?mores|cinnamon)\b/.test(name) &&
-      !/\b(?:finished|finish|cask|barrel)\b/.test(name);
+    const flavored = isFlavoredVariant(bottle);
     if (explicitOther || flavored || (/\bblend(?:ed)?\b/.test(name) && /\bbourbon\b/.test(name) && /\brye\b/.test(name))) return false;
     if (/\bbourbon|bourbn|brbn\b/.test(declaration)) return true;
 
@@ -113,7 +122,7 @@
     if (/\b(straight rye|rye whisk(?:e)?y|rye bib|blended rye|rye|old overholt|rittenhouse|sagamore|sazerac|pikesville|whistlepig|templeton)\b/.test(text)) return "rye";
     if (/\btennessee\b|\bjack daniel(?:s| s)?\b|\bgeorge dickel\b|\bnearest green\b|\buncle nearest\b/.test(all)) return "tennessee";
     if (/\b(?:paul john)\b/.test(all)) return "world";
-    if (/\b(?:apple|honey|peach|pineapple|orange|blackberry|black cherry|blueberry|strawberry|watermelon|banana|huckleberry|peanut butter|salted caramel|brown sugar|vanilla|chocolate|s ?mores|cinnamon|cream|fireball|sinfire|skrewball|southern comfort|howler head|ballotin)\b/.test(text) && !/\b(?:finished|finish|cask|barrel)\b/.test(text)) return "flavored";
+    if (isFlavoredVariant(bottle)) return "flavored";
     if (US_REGIONS.has(f.region) || /\b(american|domestic whiskey)\b/.test(`${f.type} ${f.region}`)) return "american_other";
     if (WORLD_REGIONS.has(f.region)) return "world";
     return "other_whisky";
@@ -153,6 +162,10 @@
     return name === "whisky" ? WHISKY_STYLES.slice() : BOURBON_STYLES.slice();
   }
 
+  function isVisibleBottle(bottle) {
+    return family(bottle) !== "whisky" || !HIDDEN_WHISKY_STYLES.has(whiskyStyle(bottle));
+  }
+
   function styleLabel(key) {
     const item = BOURBON_STYLES.concat(WHISKY_STYLES).find(function(entry) {
       return entry.key === key;
@@ -173,15 +186,17 @@
   }
 
   return {
-    version: "spirit-taxonomy-v2",
+    version: "spirit-taxonomy-v3-curated-visible-catalog",
     BOURBON_STYLES,
     WHISKY_STYLES,
     normalize,
     family,
     whiskyStyle,
+    isFlavoredVariant,
     styleKeys,
     primaryStyle,
     stylesForFamily,
+    isVisibleBottle,
     styleLabel,
     counts
   };

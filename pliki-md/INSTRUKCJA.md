@@ -269,15 +269,18 @@ Ta zmiana wymaga aktualizacji GitHub Pages i Workera. Nie wymaga migracji D1 ani
 4. Kliknij `Deploy`.
 5. Otworz `https://bourbon-hunters.darekmaslyk.workers.dev/auth/health`.
 6. Sprawdz, czy `scan_orchestrator_version` ma wartosc:
-   `visual-only-catalog-v6-mobile-label-view`.
-   `scan_catalog_version` ma byc `ttb-olcc-quality-catalog-v9-canonical-products`.
+   `visual-only-catalog-v7-resilient-fallback`.
+   `scan_catalog_version` ma byc `popular-200-curated-v2-no-flavors`.
    `catalog_submission_version` ma byc `community-catalog-images-v6-highres-cutout`.
    Dodatkowo `scan_mode` ma byc `visual_only`, a `scan_ocr_enabled` ma byc `false`.
+   `scanner_ai_ready` ma byc `true`, `scanner_primary_model` ma wskazywac `gemini-2.5-flash`, a `scanner_fallback_model` ma wskazywac `gemini-2.5-flash-lite`.
 7. Na telefonie otworz `test-index.html`, kliknij `Wyczysc cache/PWA`, a potem `Odswiez build`.
 8. Zeskanuj z telefonu `Jack Daniel's Bonded`, `Jim Beam Double Oak` i `Bushmills Original`, trzymajac jedna z butelek za szyjke. Skan nadal liczy sie jako jedno uzycie, mimo automatycznego zblizenia etykiety.
 9. Nie dodawaj zmiennej `OCR_MODEL`; skaner jej nie uzywa.
 10. Sprawdz pojedynczy wynik bez assetu: aplikacja ma przejsc bezposrednio do szczegolow i pokazac wycieta butelke oraz przycisk uzupelnienia katalogu.
 
 Skaner przechodzi bezposrednio z loadera do szczegolow najlepszego pewnego dopasowania. Jesli rekord nie ma gotowego assetu, Worker najpierw przygotowuje wyciecie butelki; przy blednym wycieciu aplikacja prosi o nowe zdjecie. Taki wynik ma przycisk uzupelnienia katalogu. Rekord z gotowym assetem nie pokazuje przycisku katalogu. Publikacja nowego assetu nadal przechodzi przez zgode usera i moderacje.
+
+Przy odpowiedzi `503` z Gemini Worker wykonuje retry z wykladniczym opoznieniem i automatycznie przechodzi na `gemini-2.5-flash-lite`. Odpowiedz `429` nadal oznacza prawdziwy limit i nie jest maskowana modelem zapasowym. Opcjonalna zmienna `IDENT_FALLBACK_MODEL` pozwala zmienic model zapasowy bez edycji kodu.
 
 Stare identyfikatory z kolekcji, wishlist i ocen sa automatycznie przenoszone na produkty kanoniczne. Nie wykonuj recznych aktualizacji D1.

@@ -1,19 +1,19 @@
 {
   "version": "browse-whisky-v1",
-  "taxonomy_version": "spirit-taxonomy-v2",
+  "taxonomy_version": "spirit-taxonomy-v3-curated-visible-catalog",
   "source_version": 4,
-  "updated": "2026-08-04T16:55:07.415Z",
-  "count": 819,
-  "source_count": 1135,
+  "updated": "2026-08-05T18:36:03.909Z",
+  "count": 749,
+  "source_count": 1058,
   "families": {
-    "bourbon": 267,
-    "whisky": 552
+    "bourbon": 258,
+    "whisky": 491
   },
   "bourbon": {
-    "standard": 182,
-    "small": 18,
-    "wheated": 19,
-    "bib": 12,
+    "standard": 177,
+    "small": 16,
+    "wheated": 17,
+    "bib": 11,
     "proof": 20,
     "single": 23,
     "limited": 10
@@ -22,14 +22,11 @@
     "rye": 124,
     "american_malt": 21,
     "tennessee": 27,
-    "flavored": 54,
     "corn_wheat": 15,
     "irish": 22,
     "scotch": 172,
     "japanese": 26,
     "canadian": 3,
-    "american_other": 86,
-    "other_whisky": 1,
-    "world": 1
+    "american_other": 81
   }
 }

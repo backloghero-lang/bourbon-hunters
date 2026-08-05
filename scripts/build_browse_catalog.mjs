@@ -20,7 +20,7 @@ const baseRecords = Array.isArray(base.bottles) ? base.bottles : [];
 const manualRecords = Array.isArray(manual.bottles) ? manual.bottles : [];
 const whiskyById = new Map();
 [...baseRecords, ...manualRecords, ...all]
-  .filter((bottle) => taxonomy.family(bottle) === "whisky")
+  .filter((bottle) => taxonomy.family(bottle) === "whisky" && taxonomy.isVisibleBottle(bottle))
   .forEach((bottle) => whiskyById.set(bottle.id, {
     id: bottle.id,
     name: bottle.name,

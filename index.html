@@ -140,7 +140,9 @@
   .filter-stack{margin:0 0 16px}
   .filter-stack .chips{margin-bottom:8px}
   .filter-stack .chips:last-child{margin-bottom:0}
-  .filter-stack .filter-family-row{padding-bottom:3px}
+  .filter-stack .filter-family-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;margin:0 0 10px;padding:4px;border:1px solid rgba(226,176,112,.34);border-radius:10px;background:linear-gradient(90deg,rgba(80,28,18,.46),rgba(7,54,38,.4));box-shadow:inset 0 1px 0 rgba(255,231,188,.06)}
+  .filter-family-row .family-chip{width:100%;border-radius:7px;border-color:transparent;background:rgba(0,0,0,.18);color:#D9C29C;text-transform:uppercase;font-size:11px;letter-spacing:.8px;padding:10px 14px}
+  .filter-family-row .family-chip.on{background:linear-gradient(180deg,#E6BC70,#B56B35);border-color:#F1D399;color:#241208;box-shadow:0 5px 14px rgba(0,0,0,.28)}
   .filter-stack .filter-style-row{padding-top:1px}
   .browse-title{font-family:var(--serif);font-size:24px;line-height:1.1;color:#F6E1BC;margin:0 0 14px}
   .browse-loading{display:flex;align-items:center;justify-content:center;min-height:180px;color:var(--muted);font-size:13px;text-align:center}
@@ -186,6 +188,9 @@
   .tabs::-webkit-scrollbar{display:none}
   .tab{flex:none;border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:999px;padding:9px 13px;font-size:13px;font-weight:800;cursor:pointer;white-space:nowrap}
   .tab.on{background:var(--amber);border-color:var(--amber);color:#241708}
+  #collectionTabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;margin:4px 0 18px;padding:4px;border:1px solid rgba(226,176,112,.34);border-radius:10px;background:linear-gradient(90deg,rgba(80,28,18,.46),rgba(7,54,38,.4));box-shadow:inset 0 1px 0 rgba(255,231,188,.06)}
+  #collectionTabs .tab{width:100%;border-radius:7px;border-color:transparent;background:rgba(0,0,0,.18);color:#D9C29C;text-transform:uppercase;font-size:11px;letter-spacing:.65px;padding:10px 8px}
+  #collectionTabs .tab.on{background:linear-gradient(180deg,#E6BC70,#B56B35);border-color:#F1D399;color:#241208;box-shadow:0 5px 14px rgba(0,0,0,.28)}
   .collection-style-chips{margin-top:-7px;margin-bottom:15px}
   .home-empty{flex:0 0 92%;scroll-snap-align:start;min-height:152px;display:grid;place-items:center;text-align:center;color:var(--muted);font-size:14px;line-height:1.55;border:1px dashed rgba(226,176,112,.28);border-radius:18px;background:rgba(0,0,0,.18);padding:22px}
   .profile-hero{margin:0 -16px 20px;padding:0 16px 18px;border-bottom:1px solid rgba(226,176,112,.18);text-align:center}
@@ -1039,7 +1044,7 @@ const I18N = {
     valLbl:"Jakość / Cena", quality:"Jakość", price:"Cena (orient.)", distillery:"Destylarnia", region:"Region", mashbill:"Mash bill", abv:"Moc",
     descT:"Opis", infoT:"Informacje ogólne", historyT:"Historia", linksT:"Linki", notesT:"Profil smaku", sourcesT:"Źródła", fromDb:"Z bazy", fromNet:"Nowość — z sieci", category:"Kategoria",
     notBottle:"Hunter nie widzi tu butelki whisky. Zrób wyraźne zdjęcie etykiety i spróbuj jeszcze raz.",
-    errGeneric:"Coś poszło nie tak. Spróbuj ponownie za chwilę.", errRetry:"Hunter jest chwilowo przeciążony. Daj mu sekundę i kliknij jeszcze raz.", errQuota:"Dzienny limit skanera AI został wykorzystany. Limit Gemini odnowi się następnego dnia rano.", errScanLimit:"Wykorzystałeś dzisiejszy limit bezpłatnych skanów.",
+    errGeneric:"Coś poszło nie tak. Spróbuj ponownie za chwilę.", errRetry:"Usługa rozpoznawania obrazu chwilowo nie odpowiedziała. Spróbuj ponownie za moment.", errProviderBusy:"Gemini zwrócił błąd przeciążenia. Hunter spróbował także modelu zapasowego, ale oba są chwilowo niedostępne.", errNetwork:"Nie udało się połączyć z Workerem. Sprawdź połączenie i spróbuj ponownie.", errConfig:"Skaner AI wymaga sprawdzenia konfiguracji Workera.", errQuota:"Dzienny limit skanera AI został wykorzystany. Limit Gemini odnowi się następnego dnia rano.", errScanLimit:"Wykorzystałeś dzisiejszy limit bezpłatnych skanów.",
     vibe:"Vibe-coded z Claude · projekt weekendowy", explore_t:"Odkrywaj",
     navHome:"Start", navExplore:"Odkrywaj", navScan:"Skanuj", navColl:"Kolekcja", navProfile:"Profil", homeCollection:"Moja kolekcja",
     collTitle:"Twoja kolekcja", collSoon:"Wkrótce: zapis zeskanowanych butelek, ulubione i notatki. Budujemy to w kolejnym etapie.",
@@ -1061,7 +1066,7 @@ const I18N = {
     valLbl:"Quality / Price", quality:"Quality", price:"Price (approx.)", distillery:"Distillery", region:"Region", mashbill:"Mash bill", abv:"ABV",
     descT:"Description", infoT:"General info", historyT:"History", linksT:"Links", notesT:"Tasting notes", sourcesT:"Sources", fromDb:"From database", fromNet:"New — from the web", category:"Category",
     notBottle:"Hunter sees no whisky bottle here. Take a clear photo of the label and try again.",
-    errGeneric:"Something went wrong. Please try again shortly.", errRetry:"Hunter is briefly overloaded. Give it a second and tap again.", errQuota:"The daily AI scanner quota has been used. Gemini's quota will reset the following morning.", errScanLimit:"You have used today's free scan allowance.",
+    errGeneric:"Something went wrong. Please try again shortly.", errRetry:"The image recognition service did not respond. Try again in a moment.", errProviderBusy:"Gemini reported overload. Hunter also tried the fallback model, but both are temporarily unavailable.", errNetwork:"The app could not reach the Worker. Check your connection and try again.", errConfig:"The AI scanner Worker configuration needs attention.", errQuota:"The daily AI scanner quota has been used. Gemini's quota will reset the following morning.", errScanLimit:"You have used today's free scan allowance.",
     vibe:"Vibe-coded with Claude · a weekend project", explore_t:"Explore",
     navHome:"Home", navExplore:"Explore", navScan:"Scan", navColl:"Collection", navProfile:"Profile", homeCollection:"My collection",
     collTitle:"Your collection", collSoon:"Coming soon: save scanned bottles, favourites and notes. We build this in the next stage.",
@@ -1195,9 +1200,15 @@ const BOURBON_STYLES = [
 ];
 const WHISKY_STYLES = SPIRITS.WHISKY_STYLES.map(function(style){ return {key:style.key,label:style.label}; });
 const STYLES = BOURBON_STYLES.concat(WHISKY_STYLES);
-const HOME_CATEGORIES = BOURBON_STYLES.filter(function(style){ return !!style.icon && style.key!=="standard" && style.key!=="wheated"; }).concat([
+const HOME_BOURBON_CATEGORIES = BOURBON_STYLES.filter(function(style){
+  return !!style.icon && style.key!=="standard" && style.key!=="wheated";
+});
+const HOME_CATEGORIES = [
   {key:"whisky",label:"Whisky",family:"whisky",icon:"design/figma-assets/home-pack-v2/whisky-world.png"}
-]);
+].concat(
+  HOME_BOURBON_CATEGORIES.filter(function(style){ return style.key==="proof"; }),
+  HOME_BOURBON_CATEGORIES.filter(function(style){ return style.key!=="proof"; })
+);
 function bottleFamily(b){ return SPIRITS.family(b); }
 function bottleStyleKeys(b){ return SPIRITS.styleKeys(b); }
 function categoryKey(b){ return SPIRITS.primaryStyle(b); }
@@ -1226,18 +1237,16 @@ function styleChipHtml(prefix, counts, active, styles){
   active=active||[];
   styles=styles||STYLES;
   const keys=styles.map(function(s){ return s.key; }).filter(function(k){ return (counts&&counts[k])>0; });
-  let html='<button class="chip style-chip'+(!active.length?' on':'')+'" data-'+prefix+'-style-all="1">'+t("all")+'</button>';
-  html+=keys.map(function(k){
+  return keys.map(function(k){
     const on=active.indexOf(k)>=0;
-    return '<button class="chip style-chip'+(on?' on':'')+'" data-'+prefix+'-style="'+esc(k)+'">'+esc(styleLabel(k))+' '+counts[k]+'</button>';
+    return '<button class="chip style-chip'+(on?' on':'')+'" data-'+prefix+'-style="'+esc(k)+'">'+esc(styleLabel(k))+'</button>';
   }).join("");
-  return html;
 }
 function familyChipHtml(prefix, active, counts){
   counts=counts||{};
-  let html='<div class="chips filter-family-row"><button class="chip'+(active==="all"?' on':'')+'" data-'+prefix+'-family="all">'+t("all")+'</button>';
-  if(counts.bourbon) html+='<button class="chip'+(active==="bourbon"?' on':'')+'" data-'+prefix+'-family="bourbon">'+t("familyBourbon")+' '+counts.bourbon+'</button>';
-  if(counts.whisky) html+='<button class="chip'+(active==="whisky"?' on':'')+'" data-'+prefix+'-family="whisky">'+t("familyWhisky")+' '+counts.whisky+'</button>';
+  let html='<div class="chips filter-family-row">';
+  if(counts.bourbon) html+='<button class="chip family-chip'+(active==="bourbon"?' on':'')+'" data-'+prefix+'-family="bourbon">'+t("familyBourbon")+'</button>';
+  if(counts.whisky) html+='<button class="chip family-chip'+(active==="whisky"?' on':'')+'" data-'+prefix+'-family="whisky">'+t("familyWhisky")+'</button>';
   return html+'</div>';
 }
 function bottleFilterState(list, family, active){
@@ -2600,7 +2609,7 @@ function prepareBottleDataset(list){
     }
     normalizeTasting(copy);
     return copy;
-  }).filter(function(b){ return b.id && b.name; });
+  }).filter(function(b){ return b.id && b.name && SPIRITS.isVisibleBottle(b); });
 }
 function applyProfiles(list, profileData){
   const profiles=(profileData&&profileData.profiles)||{};
@@ -2617,7 +2626,7 @@ function mergeBrowseCatalog(list){
   const byId={};
   DB.forEach(function(b){ byId[b.id]=b; });
   (list||[]).forEach(function(item){
-    if(!item || !item.id || !item.name || bottleFamily(item)!=="whisky") return;
+    if(!item || !item.id || !item.name || bottleFamily(item)!=="whisky" || !SPIRITS.isVisibleBottle(item)) return;
     const copy=normalizeTasting(Object.assign({},item));
     if(byId[copy.id]) Object.assign(byId[copy.id],copy);
     else { DB.push(copy); byId[copy.id]=copy; }
@@ -2867,7 +2876,7 @@ function mergeDynamicCatalog(list){
     b.image=String(b.image||"");
     if(!Array.isArray(b.description)) normalizeTasting(b);
     return b;
-  }).filter(function(b){ return b.id && b.name; });
+  }).filter(function(b){ return b.id && b.name && SPIRITS.isVisibleBottle(b); });
   DYNAMIC_RECENT.forEach(function(b){
     const i=DB.findIndex(function(local){ return local.id===b.id; });
     if(i>=0) DB[i]=Object.assign({},DB[i],b);
@@ -3025,11 +3034,8 @@ function renderHome(){
     : '<div class="rec-empty"><b>'+esc(t("recEmptyTitle"))+'</b><span>'+esc(t("recEmptyBody"))+'</span></div>';
   // Kategorie na Home: style bourbona oraz osobna rodzina Whisky.
   document.getElementById("catGrid").innerHTML = HOME_CATEGORIES.map(function(s){
-    const n = s.family==="whisky"
-      ? (whiskyCatalogLoaded ? DB.filter(function(b){ return bottleFamily(b)==="whisky"; }).length : Number(BROWSE_META.families.whisky)||0)
-      : DB.filter(function(b){ return bottleFamily(b)==="bourbon" && styleMatch(b,s.key); }).length;
     const attr=s.family ? ' data-family="'+s.family+'"' : ' data-style="'+s.key+'"';
-    return '<div class="cat"'+attr+' title="'+esc(s.label)+'" aria-label="'+esc(s.label)+' '+n+'" style="--cat-icon:url(&quot;'+esc(s.icon)+'&quot;)"><div class="ic" aria-hidden="true"></div><div class="cnt">'+n+'</div></div>';
+    return '<div class="cat"'+attr+' title="'+esc(s.label)+'" aria-label="'+esc(s.label)+'" style="--cat-icon:url(&quot;'+esc(s.icon)+'&quot;)"><div class="ic" aria-hidden="true"></div></div>';
   }).join("");
   // recently added (ostatnie z bazy) — styl jak "Polecane"
   const recent = DYNAMIC_RECENT.length ? DYNAMIC_RECENT.slice(0,12) : DB.slice(-12).reverse();
@@ -3139,7 +3145,7 @@ function renderExplore(){
   chips += '<button class="chip'+(curDist==="all"?' on':'')+'" data-dist="all">'+t("allDist")+'</button>' +
     dl.map(function(d){
       const short=d.name.replace(/ Distillery.*$/,"");
-      return '<button class="chip'+(d.name===curDist?' on':'')+'" data-dist="'+esc(d.name)+'">'+esc(short)+' '+d.count+'</button>';
+      return '<button class="chip'+(d.name===curDist?' on':'')+'" data-dist="'+esc(d.name)+'">'+esc(short)+'</button>';
     }).join("");
   document.getElementById("exploreChips").innerHTML = chips;
   const q = (document.getElementById("exploreSearchInput").value||"").toLowerCase().trim();
@@ -3196,7 +3202,8 @@ document.addEventListener("click",function(e){
   if(ctab){ renderCollection(ctab.getAttribute("data-ctab")); return; }
   const exploreFamilyEl=e.target.closest("[data-explore-family]");
   if(exploreFamilyEl){
-    exploreFamily=exploreFamilyEl.getAttribute("data-explore-family")||"all";
+    const nextFamily=exploreFamilyEl.getAttribute("data-explore-family")||"all";
+    exploreFamily=exploreFamily===nextFamily ? "all" : nextFamily;
     exploreLockedFamily="";
     exploreStyles=[];
     renderN=RENDER_LIMIT;
@@ -3210,7 +3217,8 @@ document.addEventListener("click",function(e){
   if(exploreStyle){ toggleValue(exploreStyles,exploreStyle.getAttribute("data-explore-style")); renderN=RENDER_LIMIT; renderExplore(); return; }
   const collFamilyEl=e.target.closest("[data-coll-family]");
   if(collFamilyEl){
-    collectionFamilies[collectionTab]=collFamilyEl.getAttribute("data-coll-family")||"all";
+    const nextFamily=collFamilyEl.getAttribute("data-coll-family")||"all";
+    collectionFamilies[collectionTab]=collectionFamilies[collectionTab]===nextFamily ? "all" : nextFamily;
     collectionStyles[collectionTab]=[];
     renderCollection(collectionTab);
     if(collectionFamilies[collectionTab]==="whisky" && !whiskyCatalogLoaded) ensureWhiskyCatalog().catch(function(){});
@@ -3221,7 +3229,7 @@ document.addEventListener("click",function(e){
   const collStyle=e.target.closest("[data-coll-style]");
   if(collStyle){ toggleValue(collectionStyles[collectionTab],collStyle.getAttribute("data-coll-style")); renderCollection(collectionTab); return; }
   const recFamilyEl=e.target.closest("[data-rec-family]");
-  if(recFamilyEl){ recommendationFamily=recFamilyEl.getAttribute("data-rec-family")||"all"; recommendationStyles=[]; renderRecommendationsView(); return; }
+  if(recFamilyEl){ const nextFamily=recFamilyEl.getAttribute("data-rec-family")||"all"; recommendationFamily=recommendationFamily===nextFamily?"all":nextFamily; recommendationStyles=[]; renderRecommendationsView(); return; }
   const recAll=e.target.closest("[data-rec-style-all]");
   if(recAll){ recommendationStyles=[]; renderRecommendationsView(); return; }
   const recStyle=e.target.closest("[data-rec-style]");
@@ -3872,6 +3880,8 @@ function scan(mode,confirmedId){
     if(data.error==="not_bottle"){ showErr(t("notBottle")); return; }
     if(data.limited){ showErr(t("errScanLimit")); return; }
     if(data.error==="quota_exhausted"){ showErr(t("errQuota")); return; }
+    if(data.error==="upstream" && Number(data.status)===503){ showErr(t("errProviderBusy")); return; }
+    if(data.error==="upstream" && (Number(data.status)===400 || Number(data.status)===401 || Number(data.status)===403)){ showErr(t("errConfig")); return; }
     if(data.error==="low_image_quality"){ showErr(lang==="pl"?"Zdjęcie jest zbyt ciemne, prześwietlone albo nieostre. Zrób je ponownie z etykietą na środku.":"The photo is too dark, overexposed or blurry. Retake it with the label centered."); return; }
     if(data.needsPro || data.error==="low_confidence"){ renderLowConfidence(data); return; }
     if(data.retry){ showErr(t("errRetry")); return; }
@@ -3900,7 +3910,7 @@ function scan(mode,confirmedId){
       catalogRetakePending=false;
       setTimeout(startCatalogSubmission,350);
     }
-  }).catch(function(){ stopLoading(); showErr(t("errGeneric")); });
+  }).catch(function(){ stopLoading(); showErr(t("errNetwork")); });
 }
 goRate.addEventListener("click",function(){ scan("rate"); });
 function renderScan(res, mode){
