@@ -2160,6 +2160,10 @@ function authErrorMessage(err){
   if(code==="bad_username") return authText("Username must have at least 2 characters.","Username musi mie\u0107 minimum 2 znaki.");
   if(code==="email_exists") return authText("This email already has an account. Sign in instead.","Ten email ma ju\u017c konto. Zaloguj si\u0119.");
   if(code==="username_exists") return authText("This username is taken. Pick one of the suggestions.","Ten username jest zaj\u0119ty. Wybierz jedn\u0105 z podpowiedzi.");
+  if(code==="registration_unavailable") return authText("This account cannot be created with these details. Sign in or use different details.","Nie mo\u017cna utworzy\u0107 konta z tymi danymi. Zaloguj si\u0119 albo u\u017cyj innych danych.");
+  if(code==="too_many_requests") return authText("Too many attempts. Wait a moment and try again.","Zbyt wiele pr\u00f3b. Odczekaj chwil\u0119 i spr\u00f3buj ponownie.");
+  if(code==="auth_rate_schema_missing") return authText("D1 auth rate migration v71 is missing.","Brakuje migracji limit\u00f3w logowania v71 w D1.");
+  if(code==="body_too_large") return authText("The submitted form is too large.","Wys\u0142any formularz jest zbyt du\u017cy.");
   if(code==="age_required") return authText("Date of birth is required.","Data urodzenia jest wymagana.");
   if(code==="age_restricted") return authText("You must be at least "+(err.min_age||18)+" to create an account.","Musisz mie\u0107 minimum "+(err.min_age||18)+" lat, aby utworzy\u0107 konto.");
   if(code==="schema_age_missing") return authText("D1 age-gate migration is missing. Run the latest migration.","Brakuje migracji age-gate w D1. Uruchom najnowsz\u0105 migracj\u0119.");

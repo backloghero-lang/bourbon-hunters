@@ -1,111 +1,65 @@
 # Bourbon Hunters - newsy i agent artykulow
 
-Ten dokument opisuje aktualny feed artykulow widoczny na Home oraz w `Profil -> Artykuly`.
+Feed jest widoczny na ekranie glownym oraz w `Profil -> Artykuly`. Dostep wymaga zalogowania.
 
-## Jak to dziala
+## Harmonogram
 
-1. Front pobiera publiczny endpoint `GET /news`.
-2. Jezeli tabela jest pusta i seed nie byl jeszcze wykonany, Worker zapisuje 6 zweryfikowanych artykulow startowych.
-3. Jeden dzienny Cron uruchamia czyszczenie danych.
-4. W poniedzialek i czwartek ten sam Cron uruchamia agenta newsow.
-5. Agent znajduje do 3 nowych artykulow i zapisuje tylko poprawne, unikalne pozycje.
-6. Artykul znika 30 dni po `created_at`, czyli 30 dni po pojawieniu sie w aplikacji.
+- Jeden Cron uruchamia Workera codziennie o `03:00 UTC` (`0 3 * * *`).
+- Nowe wydania powstaja w poniedzialek i czwartek.
+- Kazde wydanie ma maksymalnie 3 artykuly.
+- Codzienne uruchomienie odzyskuje niedokonczone wydanie, wiec awaria w poniedzialek lub czwartek nie blokuje feedu do nastepnego tygodnia.
+- Artykul jest usuwany 30 dni po dodaniu do aplikacji.
 
-Nie tworzymy drugiego Cron Triggera. Warunek dnia tygodnia znajduje sie w `scheduled()` Workera.
+## Dozwolone zrodla
 
-## Zrodla
-
-Dozwolona lista:
+Agent korzysta wylacznie z redakcji branzowych:
 
 - Whisky Advocate
 - Whisky Magazine
 - The Whiskey Wash
-- Distiller
+- Breaking Bourbon
 
-Agent uzywa Gemini z Google Search, a Worker ponownie sprawdza host, canonical URL, tytul, date i dostepna miniaturke na stronie zrodlowej. Wpis bez prawdziwego URL artykulu nie jest publikowany.
+Konkurencyjne aplikacje, w tym Distiller, nie sa dozwolonym zrodlem. Worker odrzuca ich adresy i usuwa wczesniejsze wpisy Distiller podczas czyszczenia feedu.
 
-## Dane przechowywane w D1
+## Jak dziala agent
 
-Migracja: `agent/d1-migration-v68-whisky-news.sql`.
+1. Worker pobiera strony dzialow redakcyjnych bezposrednio ze zrodel.
+2. Z HTML/RSS wyciaga adresy artykulow z allowlisty.
+3. Pobiera metadane artykulu i sprawdza canonical URL, zrodlo, tytul oraz date.
+4. Odrzuca duplikaty juz zapisane w D1.
+5. Gemini moze uporzadkowac kandydatow i przygotowac krotkie streszczenia PL/EN.
+6. Gdy Gemini ma limit `429` albo jest niedostepne, Worker nadal publikuje zweryfikowane artykuly, uzywajac bezpiecznego streszczenia awaryjnego. AI nie jest juz potrzebne do znalezienia linku.
 
-Tabela `news_articles` przechowuje:
+W D1 zapisujemy wylacznie metadane, krotkie streszczenie i link do wydawcy. Nie kopiujemy pelnej tresci artykulu.
 
-- canonical URL i source URL;
-- nazwe zrodla;
-- tytul;
-- krotkie streszczenie PL i EN;
-- zewnetrzny URL miniatury;
-- date publikacji zrodla;
-- `created_at` i `updated_at`;
-- status publikacji.
+## Tabele i endpointy
 
-Tabela `news_agent_runs` przechowuje historie uruchomien, liczbe kandydatow, liczbe dodanych artykulow i ewentualny blad.
+Migracja `agent/d1-migration-v68-whisky-news.sql` tworzy:
 
-Pelna tresc artykulu oraz plik miniatury nie sa kopiowane do D1 ani R2. Aplikacja prowadzi czytelnika do oryginalnego wydawcy.
+- `news_articles` - opublikowane metadane artykulow;
+- `news_agent_runs` - historia przebiegow, liczba kandydatow, publikacji i bledy.
 
-## Seed startowy
+Endpointy:
 
-Stala `STARTER_NEWS` w `agent/worker.js` zawiera 6 prawdziwych artykulow startowych. Seed:
+- `GET /news` - feed dla zalogowanego uzytkownika;
+- `POST /admin/news/refresh` - reczne pobranie biezacego wydania przez administratora.
 
-- uruchamia sie przy pierwszym `GET /news`, jezeli feed jest pusty;
-- wykonuje pobranie metadanych rownolegle;
-- ma statyczne tytuly i streszczenia awaryjne, gdy wydawca chwilowo nie odpowiada;
-- zapisuje marker `starter-news-v1` w `news_agent_runs`;
-- nie odtwarza wygaslych wpisow po 30 dniach.
+## Wersja i diagnostyka
 
-## Harmonogram i retencja
-
-Zalecany Cron:
+Aktualna wersja agenta:
 
 ```text
-0 3 * * *
+whisky-news-source-first-v3-quota-fallback
 ```
 
-To codziennie o 03:00 UTC. Worker:
+Po wdrozeniu:
 
-- codziennie uruchamia `cleanupNews()`;
-- w poniedzialek i czwartek uruchamia `refreshWhiskyNews()`;
-- usuwa artykuly starsze niz 30 dni;
-- zachowuje marker seeda;
-- usuwa stare techniczne logi uruchomien po 180 dniach.
+1. Otworz `Profil -> Raporty`.
+2. Sprawdz `news_schema: true` i wersje agenta.
+3. Kliknij `Pobierz 3 najnowsze artykuly`, aby ponowic nieudane wydanie.
+4. W `news_agent_runs` oczekuj `status = completed` i `articles_added > 0`.
 
-## Endpointy
-
-### Publiczny feed
-
-```http
-GET /news
-```
-
-Odpowiedz zawiera `articles`, `news_ready` i `agent_version`.
-
-### Reczne odswiezenie
-
-```http
-POST /admin/news/refresh
-Authorization: Bearer <session-token>
-```
-
-Endpoint wymaga konta administratora. W aplikacji odpowiada mu przycisk `Pobierz 3 najnowsze artykuly` w `Profil -> Raporty`.
-
-## Wdrozenie
-
-1. W D1 uruchom `agent/d1-migration-v68-whisky-news.sql`, jezeli nie byla jeszcze wykonana.
-2. Upewnij sie, ze Worker ma `DB` i `GEMINI_API_KEY`.
-3. Zdeployuj aktualny `agent/worker.js`.
-4. Pozostaw jeden dzienny Cron Trigger.
-5. Otworz `/auth/health`.
-6. Sprawdz:
-
-```text
-news_schema: true
-news_agent_ready: true
-news_agent_version: whisky-news-google-grounded-v1
-news_retention_days: 30
-starter_news_count: 6
-```
-
-7. Otworz aplikacje. Pierwsze `GET /news` powinno uzupelnic pusty feed.
+`news_agent_ready` zalezy od schematu D1. Brak Gemini nie blokuje publikacji, poniewaz dziala tryb awaryjny.
 
 ## Testy
 
@@ -114,34 +68,4 @@ node scripts/news-agent-regression.mjs
 node scripts/ui-news-scroll-smoke.mjs
 ```
 
-Pierwszy test sprawdza allowliste, canonical URL, 6 wpisow startowych i 30-dniowa retencje. Drugi sprawdza Home, ekran artykulow i przewijanie rozpoczete bezposrednio na karcie.
-
-## Diagnostyka
-
-### Sekcja istnieje, ale jest pusta
-
-- Sprawdz `news_schema` w `/auth/health`.
-- Sprawdz, czy migracja v68 zostala wykonana na tej samej bazie D1, ktora jest podpieta jako `DB`.
-- Otworz `GET /news` bezposrednio.
-- Sprawdz logi Workera i ostatni rekord `news_agent_runs`.
-
-### Agent nie dodaje nowych wpisow
-
-- Sprawdz `news_agent_ready`.
-- Upewnij sie, ze `GEMINI_API_KEY` jest sekretem Workera `bourbon-hunters`.
-- Ten sam canonical URL nie zostanie dodany drugi raz.
-- Brak nowych artykulow w pojedynczym przebiegu jest poprawnym wynikiem.
-
-### Telefon pokazuje stary feed lub pusty ekran
-
-- Otworz `test-index.html`.
-- Uzyj `Wyczysc cache/PWA`, a potem `Odswiez build`.
-- Sprawdz, czy aktywny Service Worker ma cache `bourbon-hunters-v101`.
-
-## Zasady dalszego rozwoju
-
-- Nie publikujemy linku spoza allowlisty bez osobnej decyzji.
-- Nie zapisujemy pelnej tresci cudzego artykulu.
-- Nie generujemy fikcyjnego newsa ani fikcyjnego URL.
-- Zmiana retencji wymaga aktualizacji `NEWS_RETENTION_DAYS`, health, tego dokumentu i testu regresji.
-- Zmiana harmonogramu wymaga aktualizacji Workera oraz dokumentacji Cron, ale nie wymaga nowej tabeli D1.
+Test regresji potwierdza allowliste, blokade Distiller, odkrywanie linkow ze stron zrodlowych, 6 wpisow startowych i 30-dniowa retencje.

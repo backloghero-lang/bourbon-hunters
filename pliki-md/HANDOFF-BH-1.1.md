@@ -9,7 +9,7 @@ Ten plik ma byc pierwszym kontekstem dla nowego watku Codexa, np. `Przekaz Bourb
 - Audyt: `pliki-md/AUDYT-KODU-2026-08-05.md`.
 - Backup kodu: tag `audit-backup-2026-08-05-pre-auth-hardening` na `d024fe9`.
 - Przed nowym Workerem trzeba wykonac `agent/d1-migration-v69-auth-hardening.sql`, nadac role admina w `user_roles` i usunac stare sesje administratora zgodnie z `pliki-md/INSTRUKCJA.md`.
-- Oczekiwany publiczny health: `auth_version: auth-verified-email-roles-google-v4`; pelne `auth_security_schema` wymaga administratora w `/admin/health`.
+- Oczekiwany publiczny health: `auth_version: auth-rate-limited-pbkdf2-600k-v5` i `auth_protection_version: d1-auth-throttling-v1`; pelna diagnostyka wymaga administratora w `/admin/health`.
 - Nowe konta lokalne wymagaja potwierdzenia e-mail. Google nie laczy juz kont automatycznie po samym adresie.
 - Aktualne szczegoly wdrozenia i bezpieczenstwa sa w `pliki-md/HANDOFF.md`; starsze bloki nizej sa historia projektu.
 
@@ -22,7 +22,7 @@ Ten plik ma byc pierwszym kontekstem dla nowego watku Codexa, np. `Przekaz Bourb
 - Reczne rekordy popularnych produktow uzupelniaja brakujace rodziny Bushmills oraz kanoniczne warianty Jack Daniel's i Jim Beam; ich zrodlo to `db/catalog/manual-popular-whisky.json`.
 - Brakujacy asset butelki jest przygotowywany podczas loadera. Po skanie aplikacja otwiera od razu szczegoly, bez posredniego ekranu potwierdzenia.
 - Przed aktualnym deployem Workera trzeba uruchomic `agent/d1-migration-v68-whisky-news.sql`.
-- Health ma pokazac `news_schema: true`, `news_agent_ready: true`, `local_image_cutout_ready: true` i `news_agent_version: whisky-news-google-grounded-v1`.
+- Health ma pokazac `news_schema: true`, `news_agent_ready: true`, `local_image_cutout_ready: true` i `news_agent_version: whisky-news-source-first-v3-quota-fallback`.
 - Publiczne newsy sa widoczne na Home oraz w `Profil -> Artykuly`. Jeden dzienny Cron uruchamia agenta tylko w poniedzialki i czwartki.
 - Pierwszy odczyt pustego feedu dodaje jednorazowo 6 artykulow startowych. Kazdy wpis znika po 30 dniach od pojawienia sie w aplikacji.
 - Lokalna fotografia produktu bez assetu jest najpierw wycinana przez Cloudflare Images i wymaga potwierdzenia. Surowy plik nie jest przechowywany w chmurze.
@@ -234,7 +234,7 @@ Priorytet 5: dokumentacja i biznes
 ```json
 {
   "ok": true,
-  "auth_version": "auth-verified-email-roles-google-v4",
+  "auth_version": "auth-rate-limited-pbkdf2-600k-v5",
   "pbkdf2_iterations": 100000,
   "d1": true,
   "schema": true,

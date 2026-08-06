@@ -11,7 +11,7 @@ Aktualizacja: 2026-07-05.
 - Administrator jest rozpoznawany tylko przez aktywny rekord `user_roles`. `ADMIN_EMAILS` i domyslny adres supportu nie nadaja juz uprawnien.
 - Google nie laczy kont po samym e-mailu. Przy kolizji wymaga zalogowania haslem i jawnego laczenia z `Moj profil`.
 - Usuniecie konta wymaga aktualnego hasla albo swiezej, maksymalnie 10-minutowej sesji Google.
-- Publiczny health pokazuje `auth_version: auth-verified-email-roles-google-v4`; pelne `auth_security_schema` jest tylko w `/admin/health`.
+- Publiczny health pokazuje `auth_version: auth-rate-limited-pbkdf2-600k-v5` i `auth_protection_version: d1-auth-throttling-v1`; pelna diagnostyka jest tylko w `/admin/health`.
 - Kolejnosc wdrozenia jest obowiazkowa: backup D1 -> migracja v69 -> jawne nadanie roli admin -> usuniecie starych sesji admina -> GitHub/PWA -> Worker.
 - Z README usunieto sekcje `Popular 200`; sam katalog i testy skanera nie zostaly w tej paczce zmienione.
 
@@ -72,7 +72,7 @@ Uzyj go jako pierwszego dokumentu przy starcie watku `Przekaz Bourbon Hunter 1.1
 
 - Karuzele na Home maja `touch-action: pan-y` i blokade osi dopiero po rozpoznaniu wyraznego gestu poziomego. Pionowy scroll dziala po rozpoczeciu gestu bezposrednio na karcie.
 - Endpoint `GET /news` zwraca feed dla zalogowanych uzytkownikow Home i widoku `Profil -> Artykuly`.
-- Agent newsow korzysta z Gemini z Google Search, ale akceptuje artykuly tylko z bialej listy: Whisky Advocate, Whisky Magazine, The Whiskey Wash i Distiller.
+- Agent newsow pobiera linki bezposrednio z redakcji: Whisky Advocate, Whisky Magazine, The Whiskey Wash i Breaking Bourbon. Konkurencyjne aplikacje, w tym Distiller, sa blokowane. Gemini tylko porzadkuje kandydatow i streszcza; jego limit nie blokuje publikacji.
 - Tytul, canonical URL, data i miniatura sa dodatkowo sprawdzane na stronie zrodlowej. Duplikaty canonical URL nie sa publikowane, a agent nigdy nie tworzy wpisu bez prawdziwego artykulu.
 - Dzienny Cron pozostaje jeden. W poniedzialek i czwartek Worker dodaje maksymalnie 3 nowe artykuly; w pozostale dni wykonuje tylko dotychczasowe czyszczenie.
 - Administrator moze uruchomic pobranie recznie przyciskiem `Pobierz 3 najnowsze artykuly` w `Profil -> Raporty`.
@@ -377,10 +377,18 @@ node scripts/test_spirit_taxonomy.mjs
 
 ## Aktualizacja 2026-08-05 - odzyskiwanie wydan newsow i przyciski zdjec
 
-- Agent newsow ma wersje `whisky-news-google-grounded-v2-release-recovery`.
+- Historyczna wersja agenta newsow w tym etapie to `whisky-news-google-grounded-v2-release-recovery`; zostala zastapiona przez source-first v3.
 - Poniedzialek i czwartek otwieraja osobne wydanie po trzy artykuly. Dzienny Cron ponawia nieudane wydanie w kolejnych dniach i uzupelnia je do trzech pozycji.
 - Artykuly startowe maja osobny `issue_key`, wiec nie blokuja automatycznego wydania.
 - Health pokazuje `news_current_release`, `news_article_count` i `news_last_run`.
+
+## Aktualizacja 2026-08-06 - Etap 4 audytu i source-first news
+
+- Migracja `agent/d1-migration-v71-auth-rate-limits.sql` dodaje atomowe limity auth per aktor i IP. Musi wejsc przed Workerem.
+- Auth: limit JSON 16 KB, hasla 8-128 znakow, PBKDF2-SHA256 600 000 i rehash starszych kont po poprawnym logowaniu.
+- Wersja auth: `auth-rate-limited-pbkdf2-600k-v5`; wersja ochrony: `d1-auth-throttling-v1`.
+- Wersja newsow: `whisky-news-source-first-v3-quota-fallback`.
+- Agent nie uzywa juz Google Search do odkrywania URL. Pobiera dzialy dozwolonych redakcji i dziala takze przy `429` Gemini.
 - Przyciski dodania, zmiany i usuniecia lokalnego zdjecia sa wewnatrz ramki butelki przy jej dolnych rogach.
 - Cache PWA: `bourbon-hunters-v114`. Migracja D1 nie jest wymagana.
 

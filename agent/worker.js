@@ -24,14 +24,17 @@ const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v6-highres-cutout";
 const CATALOG_MODERATION_VERSION = "catalog-moderation-orchestrator-admin-v1";
 const CATALOG_LICENSE_VERSION = "catalog-license-2026-07-18-v1";
 const TELEMETRY_VERSION = "scanner-telemetry-v1";
-const NEWS_AGENT_VERSION = "whisky-news-google-grounded-v2-release-recovery";
+const NEWS_AGENT_VERSION = "whisky-news-source-first-v3-quota-fallback";
 const LOCAL_IMAGE_PIPELINE_VERSION = "local-bottle-cutout-v2-quality-gated";
 const NEWS_RETENTION_DAYS = 30;
 const CATALOG_SYSTEM_USER_ID = "catalog-system";
-const AUTH_VERSION = "auth-verified-email-roles-google-v4";
+const AUTH_VERSION = "auth-rate-limited-pbkdf2-600k-v5";
 const SECURITY_VERSION = "xss-url-health-hardening-v1";
 const SCANNER_BUDGET_VERSION = "d1-atomic-cost-budgets-v1";
-const PBKDF2_ITERATIONS = 100000;
+const AUTH_PROTECTION_VERSION = "d1-auth-throttling-v1";
+const PBKDF2_ITERATIONS = 600000;
+const LEGACY_PBKDF2_ITERATIONS = 100000;
+const AUTH_BODY_MAX_BYTES = 16384;
 const PROFILE_BADGE_IDS = ["glass","bottle","barrel","seal","hat","star","distillery","notes","opener","horseshoe"];
 
 let _p = { t:null, at:0 }, _db = { d:null, at:0 }, _communityDb = { d:null, at:0 };
@@ -235,11 +238,16 @@ async function hmacHex(secret, message){
   const key=await crypto.subtle.importKey("raw", encText(secret), {name:"HMAC",hash:"SHA-256"}, false, ["sign"]);
   return hex(await crypto.subtle.sign("HMAC", key, encText(message)));
 }
-async function hashPassword(password, saltHex){
+async function hashPassword(password, saltHex, iterations){
   const salt=new Uint8Array((saltHex.match(/.{1,2}/g)||[]).map(function(x){ return parseInt(x,16); }));
   const key=await crypto.subtle.importKey("raw", encText(password), "PBKDF2", false, ["deriveBits"]);
-  const bits=await crypto.subtle.deriveBits({name:"PBKDF2",salt:salt,iterations:PBKDF2_ITERATIONS,hash:"SHA-256"}, key, 256);
+  const workFactor=Math.max(LEGACY_PBKDF2_ITERATIONS,Math.min(2000000,Number(iterations)||PBKDF2_ITERATIONS));
+  const bits=await crypto.subtle.deriveBits({name:"PBKDF2",salt:salt,iterations:workFactor,hash:"SHA-256"}, key, 256);
   return hex(bits);
+}
+function passwordIterations(algo){
+  const match=String(algo||"").match(/pbkdf2-sha256-(\d+)/i);
+  return match ? Math.max(LEGACY_PBKDF2_ITERATIONS,Number(match[1])||LEGACY_PBKDF2_ITERATIONS) : LEGACY_PBKDF2_ITERATIONS;
 }
 function publicUser(row){
   return row ? {
@@ -381,6 +389,19 @@ function usernameBase(username,email){
   return base;
 }
 async function readBody(request){ try{ return await request.json(); }catch(e){ return {}; } }
+async function readLimitedJson(request, maxBytes){
+  const limit=Math.max(1024,Number(maxBytes)||AUTH_BODY_MAX_BYTES);
+  const declared=Number(request.headers.get("Content-Length")||0);
+  if(declared>limit) return {ok:false,error:"body_too_large",status:413};
+  let text="";
+  try{ text=await request.text(); }catch(e){ return {ok:false,error:"bad_json",status:400}; }
+  if(encText(text).byteLength>limit) return {ok:false,error:"body_too_large",status:413};
+  try{
+    const body=JSON.parse(text||"{}");
+    if(!body || Array.isArray(body) || typeof body!=="object") return {ok:false,error:"bad_json",status:400};
+    return {ok:true,body:body};
+  }catch(e){ return {ok:false,error:"bad_json",status:400}; }
+}
 function corsOrigin(value){
   value=String(value||"").trim();
   if(!value || value==="*") return value||"*";
@@ -424,6 +445,43 @@ async function authSecuritySchemaReady(env){
   if(!env.DB) return false;
   const cols=await userColumns(env);
   return !!(cols.email_verified_at && await tableExists(env,"user_roles") && await tableExists(env,"email_verification_tokens") && await tableExists(env,"auth_link_requests"));
+}
+async function authRateSchemaReady(env){
+  return !!(env.DB && await tableExists(env,"auth_rate_events"));
+}
+function authRateRule(operation){
+  const rules={
+    login:{window:15*60,actor:10,ip:50},
+    register:{window:60*60,actor:3,ip:10},
+    password_reset:{window:60*60,actor:3,ip:10},
+    verification_resend:{window:60*60,actor:3,ip:10},
+    email_confirm:{window:15*60,actor:10,ip:50},
+    password_update:{window:15*60,actor:10,ip:30}
+  };
+  return rules[operation]||null;
+}
+async function consumeAuthRate(env, request, operation, actorValue){
+  const rule=authRateRule(operation);
+  if(!rule) return {allowed:false,error:"auth_rate_operation_invalid"};
+  if(!(await authRateSchemaReady(env))) return {allowed:false,error:"auth_rate_schema_missing"};
+  const nowMs=Date.now();
+  const windowStart=Math.floor(nowMs/(rule.window*1000))*rule.window;
+  const windowKey=String(windowStart);
+  const ip=String(request.headers.get("CF-Connecting-IP")||"unknown").slice(0,100);
+  const actorHash=(await sha256Hex("auth-rate-actor:"+operation+":"+String(actorValue||"unknown").toLowerCase().slice(0,260))).slice(0,40);
+  const ipHash=(await sha256Hex("auth-rate-ip:"+ip)).slice(0,40);
+  const now=new Date(nowMs).toISOString();
+  const insert=await env.DB.prepare("INSERT INTO auth_rate_events (id,window_key,actor_hash,ip_hash,operation,created_at) SELECT ?,?,?,?,?,? WHERE (SELECT COUNT(*) FROM auth_rate_events WHERE window_key=? AND operation=? AND actor_hash=?)<? AND (SELECT COUNT(*) FROM auth_rate_events WHERE window_key=? AND operation=? AND ip_hash=?)<?")
+    .bind(crypto.randomUUID(),windowKey,actorHash,ipHash,operation,now,windowKey,operation,actorHash,rule.actor,windowKey,operation,ipHash,rule.ip).run();
+  const allowed=Number(insert&&insert.meta&&insert.meta.changes||0)>0;
+  return {
+    allowed:allowed,error:allowed?null:"auth_rate_limited",
+    retry_after:allowed?0:Math.max(1,windowStart+rule.window-Math.floor(nowMs/1000))
+  };
+}
+function authRateResponse(rate,cors){
+  if(rate&&rate.error==="auth_rate_schema_missing") return J({error:"auth_rate_schema_missing"},503,cors);
+  return J({error:"too_many_requests",retry_after:Number(rate&&rate.retry_after)||60},429,Object.assign({},cors,{"Retry-After":String(Number(rate&&rate.retry_after)||60)}));
 }
 async function userHasRole(env, userId, role){
   if(!userId || !(await tableExists(env,"user_roles"))) return false;
@@ -497,6 +555,12 @@ async function cleanupScannerBudgets(env){
   if(!(await scannerBudgetSchemaReady(env))) return {deleted:0};
   const cutoff=new Date(Date.now()-8*86400000).toISOString();
   const result=await env.DB.prepare("DELETE FROM scanner_budget_events WHERE created_at<?").bind(cutoff).run();
+  return {deleted:Number(result&&result.meta&&result.meta.changes||0)};
+}
+async function cleanupAuthRates(env){
+  if(!(await authRateSchemaReady(env))) return {deleted:0};
+  const cutoff=new Date(Date.now()-2*86400000).toISOString();
+  const result=await env.DB.prepare("DELETE FROM auth_rate_events WHERE created_at<?").bind(cutoff).run();
   return {deleted:Number(result&&result.meta&&result.meta.changes||0)};
 }
 async function newsSchemaReady(env){
@@ -1068,7 +1132,7 @@ async function accountDeletionReauth(user, body){
   }
   const password=String(body&&body.password||"");
   if(!password || password.length>128) return {ok:false,error:"password_reauth_required"};
-  const hash=await hashPassword(password,user.password_salt);
+  const hash=await hashPassword(password,user.password_salt,passwordIterations(user.password_algo));
   return constantTimeHexEqual(hash,user.password_hash)
     ? {ok:true}
     : {ok:false,error:"password_reauth_failed"};
@@ -1295,8 +1359,15 @@ const NEWS_SOURCES={
   "whiskyadvocate.com":"Whisky Advocate",
   "whiskymag.com":"Whisky Magazine",
   "thewhiskeywash.com":"The Whiskey Wash",
-  "distiller.com":"Distiller"
+  "breakingbourbon.com":"Breaking Bourbon"
 };
+const NEWS_DISCOVERY_PAGES=[
+  "https://whiskyadvocate.com/",
+  "https://whiskyadvocate.com/Tag/Whisky%20News%20and%20Spirit%20Updates",
+  "https://whiskymag.com/articles/",
+  "https://thewhiskeywash.com/category/whiskey-news/",
+  "https://breakingbourbon.com/"
+];
 const STARTER_NEWS=[
   {
     url:"https://www.whiskymag.com/articles/tormore-the-pearl-of-speyside-shines-with-core-range-launch/",
@@ -1334,11 +1405,11 @@ const STARTER_NEWS=[
     category:"bourbon",published_at:"2026-04-09T00:00:00Z"
   },
   {
-    url:"https://distiller.com/articles/how-to-get-in-to-bourbon-bourbon-beginner-s-guide",
-    title:"How to get in to bourbon - a practical beginner's guide",
-    excerpt_pl:"Praktyczne wprowadzenie do bourbona: podstawowe zasady produkcji, sposob degustacji i najczestsze profile smakowe. Tekst podpowiada tez niedrogie, szeroko dostepne butelki na start.",
-    excerpt_en:"A practical introduction to bourbon covering production rules, tasting technique and common flavour profiles. It also suggests approachable, widely available bottles for beginners.",
-    category:"bourbon",published_at:"2025-05-30T00:00:00Z"
+    url:"https://breakingbourbon.com/article/lost-lanterns-fifty-nifty-bourbon-the-story-behind-americas-first-50-state-blend",
+    title:"Lost Lantern's Fifty Nifty Bourbon - The Story Behind America's First 50 State Blend",
+    excerpt_pl:"Lost Lantern polaczyl bourbony pochodzace z destylarni ze wszystkich 50 stanow. Material pokazuje, jak ambitny projekt kupazowania zamieniono w spojna butelke zamiast kolekcjonerskiego eksperymentu.",
+    excerpt_en:"Lost Lantern combined bourbon sourced from distilleries across all 50 states. The story explains how the ambitious blending project became a cohesive whiskey rather than a novelty release.",
+    category:"bourbon",published_at:"2026-07-01T00:00:00Z"
   }
 ];
 function newsSourceForUrl(value){
@@ -1460,22 +1531,111 @@ async function seedStarterNews(env){
 async function cleanupNews(env){
   if(!(await newsSchemaReady(env))) return {deleted:0};
   const cutoff=new Date(Date.now()-NEWS_RETENTION_DAYS*86400000).toISOString();
+  await env.DB.prepare("DELETE FROM news_articles WHERE source_name='Distiller' OR canonical_url LIKE 'https://distiller.com/%' OR canonical_url LIKE 'https://www.distiller.com/%'").run();
   const result=await env.DB.prepare("DELETE FROM news_articles WHERE created_at<?").bind(cutoff).run();
   await env.DB.prepare("DELETE FROM news_agent_runs WHERE started_at<? AND issue_key<>?").bind(new Date(Date.now()-180*86400000).toISOString(),"starter-news-v1").run();
   return {deleted:Number(result.meta&&result.meta.changes||0),cutoff:cutoff};
 }
 async function newsFeed(env, limit){
   if(!(await newsSchemaReady(env))) return {articles:[],news_ready:false};
-  const rows=await env.DB.prepare("SELECT * FROM news_articles WHERE status='published' ORDER BY COALESCE(article_published_at,created_at) DESC,created_at DESC LIMIT ?")
+  const rows=await env.DB.prepare("SELECT * FROM news_articles WHERE status='published' AND source_name IN ('Whisky Advocate','Whisky Magazine','The Whiskey Wash','Breaking Bourbon') ORDER BY COALESCE(article_published_at,created_at) DESC,created_at DESC LIMIT ?")
     .bind(Math.max(1,Math.min(30,Number(limit)||12))).all();
   return {articles:(rows.results||[]).map(publicNewsArticle),news_ready:true,agent_version:NEWS_AGENT_VERSION};
 }
+function newsLinkLooksEditorial(value){
+  const canonical=canonicalNewsUrl(value);
+  if(!canonical) return false;
+  const url=new URL(canonical);
+  const path=url.pathname.toLowerCase();
+  if(path==="/" || /\.(?:jpg|jpeg|png|webp|gif|svg|pdf)$/i.test(path)) return false;
+  if(/\/(?:about|contact|advertise|privacy|terms|subscribe|newsletter|search|tag|category)(?:\/|$)/i.test(path)) return false;
+  const host=url.hostname;
+  if(host==="whiskymag.com") return /^\/articles\/[^/]+/.test(path);
+  if(host==="thewhiskeywash.com") return path.indexOf("/category/")!==0 && path.split("/").filter(Boolean).length>=1;
+  if(host==="breakingbourbon.com") return /^\/(?:article|news)\//.test(path);
+  return path.split("/").filter(Boolean).length>=1;
+}
+function newsLinksFromIndex(html, baseUrl){
+  const found=[];
+  const seen={};
+  const add=function(raw){
+    let absolute="";
+    try{ absolute=new URL(decodeNewsText(raw),baseUrl).toString(); }catch(e){ return; }
+    const canonical=canonicalNewsUrl(absolute);
+    if(!canonical || seen[canonical] || !newsLinkLooksEditorial(canonical)) return;
+    seen[canonical]=true; found.push(canonical);
+  };
+  const source=String(html||"");
+  let match;
+  const anchor=/<a\b[^>]*\bhref=["']([^"']+)["'][^>]*>/gi;
+  while((match=anchor.exec(source)) && found.length<30) add(match[1]);
+  const xmlLink=/<link\b[^>]*>([^<]+)<\/link>/gi;
+  while((match=xmlLink.exec(source)) && found.length<30) add(match[1]);
+  return found;
+}
+async function fetchNewsDiscoveryPage(value){
+  const controller=new AbortController();
+  const timeout=setTimeout(function(){ controller.abort(); },8000);
+  try{
+    const response=await fetch(value,{headers:{Accept:"text/html,application/xhtml+xml,application/rss+xml,application/xml"},signal:controller.signal});
+    if(!response.ok) return [];
+    return newsLinksFromIndex((await response.text()).slice(0,700000),value);
+  }catch(e){ return []; }
+  finally{ clearTimeout(timeout); }
+}
+async function discoverNewsMetadata(priorUrls){
+  const prior={};
+  (priorUrls||[]).forEach(function(url){ const canonical=canonicalNewsUrl(url); if(canonical) prior[canonical]=true; });
+  const pages=await Promise.all(NEWS_DISCOVERY_PAGES.map(fetchNewsDiscoveryPage));
+  const links=[];
+  const seen={};
+  pages.forEach(function(items){
+    (items||[]).forEach(function(url){ if(!prior[url] && !seen[url] && links.length<32){ seen[url]=true; links.push(url); } });
+  });
+  const metadata=await Promise.all(links.map(function(url){ return fetchNewsMetadata(url).catch(function(){ return null; }); }));
+  return metadata.filter(function(item){ return !!(item&&item.title&&item.canonical_url); }).sort(function(a,b){
+    return Date.parse(b.published_at||0)-Date.parse(a.published_at||0);
+  });
+}
+function newsCategoryFromMetadata(item){
+  const text=norm((item&&item.title||"")+" "+(item&&item.description||""));
+  if(/bourbon|kentucky|american whiskey|tennessee/.test(text)) return "bourbon";
+  if(/scotch|scotland|speyside|islay|highland/.test(text)) return "scotch";
+  if(/irish|ireland/.test(text)) return "irish";
+  if(/japan|japanese/.test(text)) return "japanese";
+  if(/industry|tariff|market|sales|merger|acquisition/.test(text)) return "industry";
+  return "world";
+}
+function newsFallbackExcerpt(item, langCode){
+  const title=decodeNewsText(item&&item.title||"").slice(0,220);
+  const description=decodeNewsText(item&&item.description||"").slice(0,360);
+  if(langCode==="pl") return ("Nowy material redakcji "+String(item&&item.source_name||"whisky")+": "+title+". Pelny kontekst i szczegoly znajduja sie w artykule zrodlowym.").slice(0,520);
+  return (description || ("A new article from "+String(item&&item.source_name||"a whisky publication")+" about "+title+".")).slice(0,520);
+}
+async function summarizeNewsCandidates(env, candidates){
+  if(!env.GEMINI_API_KEY || !candidates.length) return {ok:false,error:"gemini_unavailable",items:[]};
+  const compact=candidates.slice(0,12).map(function(item){
+    return {url:item.canonical_url,source:item.source_name,title:item.title,description:item.description,published_at:item.published_at};
+  });
+  const prompt=[
+    "Select the 3 most useful and recent whisky articles from this verified editorial list.",
+    "Do not add URLs and do not invent facts. Return concise factual summaries in Polish and English.",
+    "Return ONLY JSON: {\"articles\":[{\"url\":\"\",\"excerpt_pl\":\"\",\"excerpt_en\":\"\",\"category\":\"bourbon|scotch|irish|japanese|world|industry\"}]}",
+    JSON.stringify(compact)
+  ].join("\n");
+  const result=await callGemini(env,{__model:env.NEWS_MODEL||"gemini-3.6-flash",contents:[{role:"user",parts:[{text:prompt}]}],generationConfig:{temperature:0.15,maxOutputTokens:2200}},"whisky_news");
+  if(result.usage) await recordServiceUsage(env,null,null,result.usage).catch(function(){});
+  if(result.err) return {ok:false,error:"news_agent_"+String(result.err.status||"upstream"),items:[]};
+  const parsed=parseJson(result.txt)||{};
+  const items=Array.isArray(parsed.articles)?parsed.articles:[];
+  return {ok:items.length>0,error:items.length?null:"news_agent_empty",items:items};
+}
 async function refreshWhiskyNews(env, reason, scheduledAt){
   if(!(await newsSchemaReady(env))) return {ok:false,error:"news_schema_missing"};
-  if(!env.GEMINI_API_KEY) return {ok:false,error:"gemini_missing"};
   const issueKey=newsReleaseSlot(new Date(scheduledAt||Date.now()));
   const existing=await env.DB.prepare("SELECT COUNT(*) AS count FROM news_articles WHERE issue_key=? AND status='published'").bind(issueKey).first();
-  if(Number(existing&&existing.count)>=3) return {ok:true,status:"skipped",reason:"issue_complete",issue_key:issueKey,added:0};
+  const existingCount=Number(existing&&existing.count)||0;
+  if(existingCount>=3) return {ok:true,status:"skipped",reason:"issue_complete",issue_key:issueKey,added:0};
   const recentRun=await env.DB.prepare("SELECT status,started_at FROM news_agent_runs WHERE issue_key=? ORDER BY started_at DESC LIMIT 1").bind(issueKey).first();
   if(recentRun && recentRun.status==="running" && Date.now()-Date.parse(recentRun.started_at)<30*60*1000){
     return {ok:true,status:"skipped",reason:"already_running",issue_key:issueKey,added:0};
@@ -1485,50 +1645,50 @@ async function refreshWhiskyNews(env, reason, scheduledAt){
   await env.DB.prepare("INSERT INTO news_agent_runs (id,issue_key,status,candidates_found,articles_added,detail,started_at) VALUES (?,?,?,?,?,?,?)")
     .bind(runId,issueKey,"running",0,0,String(reason||"scheduled").slice(0,80),startedAt).run();
   try{
-    const priorRows=await env.DB.prepare("SELECT canonical_url FROM news_articles WHERE status='published' ORDER BY created_at DESC LIMIT 60").all();
+    const priorRows=await env.DB.prepare("SELECT canonical_url FROM news_articles WHERE status='published' ORDER BY created_at DESC LIMIT 120").all();
     const priorUrls=(priorRows.results||[]).map(function(row){ return row.canonical_url; }).filter(Boolean);
-    const prompt=[
-      "Find the newest useful whisky industry or culture articles published by these sources only:",
-      "whiskyadvocate.com, whiskymag.com, thewhiskeywash.com, distiller.com.",
-      "Today is "+issueKey+". Return up to 12 real article pages, not home pages, category pages, ads, shops or press-release indexes.",
-      "Prefer articles from the last 14 days and a useful mix of bourbon, Scotch, Irish, Japanese and world whisky.",
-      "Do not return any of these URLs already used by the app: "+priorUrls.join(", "),
-      "For each article write a factual 1-2 sentence summary in Polish and English. Do not invent facts.",
-      "Return ONLY JSON: {\"articles\":[{\"title\":\"\",\"url\":\"https://...\",\"excerpt_pl\":\"\",\"excerpt_en\":\"\",\"category\":\"bourbon|scotch|irish|japanese|world|industry\",\"published_at\":\"ISO date or empty\"}]}."
-    ].join("\n");
-    const result=await callGemini(env,{
-      __model:env.NEWS_MODEL||"gemini-3.6-flash",
-      contents:[{role:"user",parts:[{text:prompt}]}],
-      tools:[{google_search:{}}],
-      generationConfig:{temperature:0.2,maxOutputTokens:3000}
-    },"whisky_news");
-    if(result.usage) await recordServiceUsage(env,null,null,result.usage).catch(function(){});
-    if(result.err) throw new Error("news_agent_"+String(result.err.status||"upstream"));
-    const parsed=parseJson(result.txt)||{};
-    const candidates=Array.isArray(parsed.articles)?parsed.articles.slice(0,12):[];
-    let added=0, invalidUrl=0, metadataRejected=0, duplicates=0, incomplete=0;
-    for(const candidate of candidates){
-      if(added>=3) break;
-      const submittedUrl=canonicalNewsUrl(candidate&&candidate.url);
-      if(!submittedUrl){ invalidUrl++; continue; }
-      let metadata=null;
-      try{ metadata=await fetchNewsMetadata(submittedUrl); }catch(e){ metadata=null; }
-      if(!metadata || !metadata.title){ metadataRejected++; continue; }
+    const candidates=await discoverNewsMetadata(priorUrls);
+    if(!candidates.length) throw new Error("source_discovery_empty");
+    const ai=await summarizeNewsCandidates(env,candidates);
+    const byUrl={};
+    candidates.forEach(function(item){ byUrl[item.canonical_url]=item; });
+    const selected=[];
+    const selectedUrls={};
+    (ai.items||[]).forEach(function(item){
+      const url=canonicalNewsUrl(item&&item.url);
+      if(url && byUrl[url] && !selectedUrls[url]){
+        selectedUrls[url]=true;
+        selected.push({metadata:byUrl[url],summary:item});
+      }
+    });
+    candidates.forEach(function(item){
+      if(!selectedUrls[item.canonical_url]){
+        selectedUrls[item.canonical_url]=true;
+        selected.push({metadata:item,summary:null});
+      }
+    });
+    let added=0, duplicates=0;
+    const target=Math.max(0,3-existingCount);
+    for(const candidate of selected){
+      if(added>=target) break;
+      const metadata=candidate.metadata;
       const duplicate=await env.DB.prepare("SELECT id FROM news_articles WHERE canonical_url=?").bind(metadata.canonical_url).first();
       if(duplicate){ duplicates++; continue; }
-      const excerptPl=decodeNewsText(candidate.excerpt_pl||metadata.description).slice(0,520);
-      const excerptEn=decodeNewsText(candidate.excerpt_en||metadata.description).slice(0,520);
-      if(!excerptPl || !excerptEn){ incomplete++; continue; }
+      const summary=candidate.summary||{};
+      const excerptPl=decodeNewsText(summary.excerpt_pl||newsFallbackExcerpt(metadata,"pl")).slice(0,520);
+      const excerptEn=decodeNewsText(summary.excerpt_en||newsFallbackExcerpt(metadata,"en")).slice(0,520);
+      const category=String(summary.category||newsCategoryFromMetadata(metadata)).slice(0,40);
       const now=new Date().toISOString();
       await env.DB.prepare("INSERT INTO news_articles (id,canonical_url,source_url,source_name,title,excerpt_pl,excerpt_en,image_url,category,article_published_at,issue_key,status,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)")
-        .bind(crypto.randomUUID(),metadata.canonical_url,metadata.source_url,metadata.source_name,metadata.title,excerptPl,excerptEn,metadata.image_url||null,String(candidate.category||"whisky").slice(0,40),metadata.published_at||String(candidate.published_at||"").slice(0,80)||null,issueKey,"published",now,now).run();
+        .bind(crypto.randomUUID(),metadata.canonical_url,metadata.source_url,metadata.source_name,metadata.title,excerptPl,excerptEn,metadata.image_url||null,category,metadata.published_at||null,issueKey,"published",now,now).run();
       added++;
     }
     const completedAt=new Date().toISOString();
-    const detail=JSON.stringify({validation:"completed",invalid_url:invalidUrl,metadata_rejected:metadataRejected,duplicates:duplicates,incomplete:incomplete});
-    await env.DB.prepare("UPDATE news_agent_runs SET status='completed',candidates_found=?,articles_added=?,detail=?,completed_at=? WHERE id=?")
-      .bind(candidates.length,added,detail,completedAt,runId).run();
-    return {ok:true,status:"completed",issue_key:issueKey,candidates:candidates.length,added:added};
+    const status=added>0?"completed":"failed";
+    const detail=JSON.stringify({discovery:"editorial_sources",ai:ai.ok?"summarized":ai.error,fallback_used:!ai.ok,candidates:candidates.length,duplicates:duplicates});
+    await env.DB.prepare("UPDATE news_agent_runs SET status=?,candidates_found=?,articles_added=?,detail=?,completed_at=? WHERE id=?")
+      .bind(status,candidates.length,added,detail,completedAt,runId).run();
+    return {ok:added>0,status:status,issue_key:issueKey,candidates:candidates.length,added:added,ai_fallback:!ai.ok,error:added?null:"no_new_articles"};
   }catch(e){
     const completedAt=new Date().toISOString();
     const detail=String(e&&e.message?e.message:e).slice(0,300);
@@ -1566,12 +1726,12 @@ async function handleApi(request, env, cors){
   const url=new URL(request.url);
   const path=url.pathname.replace(/\/+$/,"");
   if(path==="/auth/health" && request.method==="GET"){
-    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,security_version:SECURITY_VERSION,time:new Date().toISOString()},200,cors);
+    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,security_version:SECURITY_VERSION,auth_protection_version:AUTH_PROTECTION_VERSION,time:new Date().toISOString()},200,cors);
   }
   if(path==="/admin/health" && request.method==="GET"){
     const healthUser=await authUser(env,request);
     if(!isAdminUser(env,healthUser)) return J({error:"forbidden"},403,cors);
-    let schema=false, reset_schema=false, profile_schema=false, recommendations_schema=false, identity_schema=false, auth_security_schema=false, catalog_schema=false, catalog_data_schema=false, catalog_moderation_schema=false, telemetry_schema=false, scanner_budget_schema=false, news_schema=false, news_article_count=0, news_last_run=null, detail="";
+    let schema=false, reset_schema=false, profile_schema=false, recommendations_schema=false, identity_schema=false, auth_security_schema=false, auth_rate_schema=false, catalog_schema=false, catalog_data_schema=false, catalog_moderation_schema=false, telemetry_schema=false, scanner_budget_schema=false, news_schema=false, news_article_count=0, news_last_run=null, detail="";
     if(env.DB){
       try{
         await env.DB.prepare("SELECT id FROM users LIMIT 1").first();
@@ -1588,6 +1748,8 @@ async function handleApi(request, env, cors){
         if(schema && reset_schema && profile_schema && recommendations_schema && !identity_schema) detail="auth_identities table is missing";
         auth_security_schema=await authSecuritySchemaReady(env);
         if(schema && identity_schema && !auth_security_schema) detail="auth hardening migration v69 is missing";
+        auth_rate_schema=await authRateSchemaReady(env);
+        if(schema && auth_security_schema && !auth_rate_schema) detail="auth rate migration v71 is missing";
         catalog_schema=(await tableExists(env,"bottle_submissions")) && (await tableExists(env,"catalog_bottles"));
         if(schema && reset_schema && profile_schema && recommendations_schema && identity_schema && !catalog_schema) detail="catalog submission tables are missing";
         catalog_data_schema=catalog_schema && await catalogDataSchemaReady(env);
@@ -1609,7 +1771,7 @@ async function handleApi(request, env, cors){
       }
       catch(e){ detail=String(e&&e.message?e.message:e).slice(0,220); }
     }
-    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,security_version:SECURITY_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_mode:"visual_only",scan_ocr_enabled:false,scanner_ai_ready:!!env.GEMINI_API_KEY,scanner_primary_model:env.IDENT_MODEL||"gemini-3.5-flash-lite",scanner_fallback_model:env.IDENT_FALLBACK_MODEL||"gemini-3.6-flash",scanner_model_discovery:true,scanner_mobile_foreground:!!env.IMAGES,scanner_budget_version:SCANNER_BUDGET_VERSION,scanner_budget_schema:scanner_budget_schema,scanner_identify_daily_limit:scannerBudgetLimits(env,"identify").actor,scanner_cutout_daily_limit:scannerBudgetLimits(env,"cutout").actor,scanner_analysis_daily_limit:scannerBudgetLimits(env,"analysis").actor,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_moderation_version:CATALOG_MODERATION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,news_agent_version:NEWS_AGENT_VERSION,news_schedule:"Monday and Thursday releases with daily recovery via UTC cron",news_target_per_release:3,news_current_release:newsReleaseSlot(new Date()),news_article_count:news_article_count,news_last_run:news_last_run,local_image_pipeline_version:LOCAL_IMAGE_PIPELINE_VERSION,news_retention_days:NEWS_RETENTION_DAYS,starter_news_count:STARTER_NEWS.length,news_auth_required:true,catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,auth_security_schema:auth_security_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,catalog_moderation_schema:catalog_moderation_schema,telemetry_schema:telemetry_schema,news_schema:news_schema,news_agent_ready:news_schema&&!!env.GEMINI_API_KEY,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),local_image_cutout_ready:!!env.IMAGES,cutout_quality_ready:!!(env.IMAGES&&env.GEMINI_API_KEY),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
+    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,security_version:SECURITY_VERSION,auth_protection_version:AUTH_PROTECTION_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_mode:"visual_only",scan_ocr_enabled:false,scanner_ai_ready:!!env.GEMINI_API_KEY,scanner_primary_model:env.IDENT_MODEL||"gemini-3.5-flash-lite",scanner_fallback_model:env.IDENT_FALLBACK_MODEL||"gemini-3.6-flash",scanner_model_discovery:true,scanner_mobile_foreground:!!env.IMAGES,scanner_budget_version:SCANNER_BUDGET_VERSION,scanner_budget_schema:scanner_budget_schema,scanner_identify_daily_limit:scannerBudgetLimits(env,"identify").actor,scanner_cutout_daily_limit:scannerBudgetLimits(env,"cutout").actor,scanner_analysis_daily_limit:scannerBudgetLimits(env,"analysis").actor,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_moderation_version:CATALOG_MODERATION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,news_agent_version:NEWS_AGENT_VERSION,news_schedule:"Monday and Thursday releases with daily recovery via UTC cron",news_target_per_release:3,news_current_release:newsReleaseSlot(new Date()),news_article_count:news_article_count,news_last_run:news_last_run,local_image_pipeline_version:LOCAL_IMAGE_PIPELINE_VERSION,news_retention_days:NEWS_RETENTION_DAYS,starter_news_count:STARTER_NEWS.length,news_auth_required:true,catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,auth_security_schema:auth_security_schema,auth_rate_schema:auth_rate_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,catalog_moderation_schema:catalog_moderation_schema,telemetry_schema:telemetry_schema,news_schema:news_schema,news_agent_ready:news_schema,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),local_image_cutout_ready:!!env.IMAGES,cutout_quality_ready:!!(env.IMAGES&&env.GEMINI_API_KEY),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
   }
   if(path==="/auth/google/start" && request.method==="GET"){
     const returnUrl=allowedReturnUrl(env,url.searchParams.get("return")||appUrl(env));
@@ -1705,7 +1867,9 @@ async function handleApi(request, env, cors){
     return J({ok:true,outcome:outcome},200,cors);
   }
   if(path==="/auth/register" && request.method==="POST"){
-    const body=await readBody(request);
+    const parsedBody=await readLimitedJson(request,AUTH_BODY_MAX_BYTES);
+    if(!parsedBody.ok) return J({error:parsedBody.error},parsedBody.status,cors);
+    const body=parsedBody.body;
     const email=cleanEmail(body.email);
     const username=cleanUsername(body.username);
     const password=String(body.password||"");
@@ -1714,15 +1878,17 @@ async function handleApi(request, env, cors){
     const ageCountry=String(body.age_gate_country||body.country||"global").trim().slice(0,24)||"global";
     if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return J({error:"bad_email"},400,cors);
     if(!/^[a-zA-Z0-9_.-]{2,40}$/.test(username)) return J({error:"bad_username"},400,cors);
-    if(password.length<8) return J({error:"weak_password"},400,cors);
+    const rate=await consumeAuthRate(env,request,"register",email||username||"invalid");
+    if(!rate.allowed) return authRateResponse(rate,cors);
+    if(password.length<8 || password.length>128) return J({error:"weak_password"},400,cors);
     if(!birthDate) return J({error:"age_required",min_age:minAge},400,cors);
     if(!isOldEnough(birthDate,minAge)) return J({error:"age_restricted",min_age:minAge},403,cors);
     if(!(await authSecuritySchemaReady(env))) return J({error:"schema_auth_security_missing",message:"Run D1 migration v69 before enabling registration."},501,cors);
     if(!mailConfigured(env)) return J({error:"registration_email_unavailable"},503,cors);
     const emailExists=await env.DB.prepare("SELECT id FROM users WHERE email=?").bind(email).first();
-    if(emailExists) return J({error:"email_exists"},409,cors);
+    if(emailExists) return J({error:"registration_unavailable"},409,cors);
     const usernameExists=await env.DB.prepare("SELECT id FROM users WHERE username=?").bind(username).first();
-    if(usernameExists) return J({error:"username_exists",suggestions:await suggestUsernames(env,username,email)},409,cors);
+    if(usernameExists) return J({error:"registration_unavailable"},409,cors);
     const cols=await userColumns(env);
     if(!cols.birth_date || !cols.age_verified_at) return J({error:"schema_age_missing",message:"Run the latest D1 migration for age-gate columns."},501,cors);
     const salt=randHex(16);
@@ -1740,22 +1906,30 @@ async function handleApi(request, env, cors){
   }
   if(path==="/auth/email-verification/resend" && request.method==="POST"){
     if(!(await authSecuritySchemaReady(env))) return J({error:"schema_auth_security_missing"},501,cors);
-    const body=await readBody(request);
+    const parsedBody=await readLimitedJson(request,AUTH_BODY_MAX_BYTES);
+    if(!parsedBody.ok) return J({error:parsedBody.error},parsedBody.status,cors);
+    const body=parsedBody.body;
     const email=cleanEmail(body.email);
     if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return J({error:"bad_email"},400,cors);
+    const rate=await consumeAuthRate(env,request,"verification_resend",email);
+    if(!rate.allowed) return authRateResponse(rate,cors);
     const row=await env.DB.prepare("SELECT id,email,username,email_verified_at FROM users WHERE email=?").bind(email).first();
     let sent=false;
     if(row && !row.email_verified_at && mailConfigured(env)){
       const mail=await createEmailVerification(env,request,row).catch(function(){ return {sent:false}; });
       sent=!!mail.sent;
     }
-    return J({ok:true,email_ready:sent},200,cors);
+    return J({ok:true,email_ready:mailConfigured(env)},200,cors);
   }
   if(path==="/auth/email-verification/confirm" && request.method==="POST"){
     if(!(await authSecuritySchemaReady(env))) return J({error:"schema_auth_security_missing"},501,cors);
-    const body=await readBody(request);
+    const parsedBody=await readLimitedJson(request,AUTH_BODY_MAX_BYTES);
+    if(!parsedBody.ok) return J({error:parsedBody.error},parsedBody.status,cors);
+    const body=parsedBody.body;
     const token=String(body.token||"").trim();
     if(!/^[a-f0-9]{64}$/i.test(token)) return J({error:"verification_token_invalid"},400,cors);
+    const rate=await consumeAuthRate(env,request,"email_confirm",token.slice(0,16));
+    if(!rate.allowed) return authRateResponse(rate,cors);
     const tokenHash=await sha256Hex(token);
     const now=new Date().toISOString();
     let row=await env.DB.prepare("SELECT evt.id AS verification_id,u.* FROM email_verification_tokens evt JOIN users u ON u.id=evt.user_id WHERE evt.token_hash=? AND evt.expires_at>? AND evt.used_at IS NULL")
@@ -1770,9 +1944,13 @@ async function handleApi(request, env, cors){
     return J({token:sessionToken,user:publicUser(row),bootstrap:await bootstrapFor(env,row.id),profile:await profileFor(env,row.id),admin:isAdminUser(env,row)},200,cors);
   }
   if(path==="/auth/password-reset" && request.method==="POST"){
-    const body=await readBody(request);
+    const parsedBody=await readLimitedJson(request,AUTH_BODY_MAX_BYTES);
+    if(!parsedBody.ok) return J({error:parsedBody.error},parsedBody.status,cors);
+    const body=parsedBody.body;
     const email=cleanEmail(body.email);
     if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return J({error:"bad_email"},400,cors);
+    const rate=await consumeAuthRate(env,request,"password_reset",email);
+    if(!rate.allowed) return authRateResponse(rate,cors);
     if(!(await tableExists(env,"password_reset_tokens"))) return J({ok:true,email_ready:false,reset_ready:false,message:"Password reset migration is not applied yet."},200,cors);
     const row=await env.DB.prepare("SELECT id,email,username FROM users WHERE email=?").bind(email).first();
     let sent=false;
@@ -1788,15 +1966,19 @@ async function handleApi(request, env, cors){
       const mail=await sendPasswordResetEmail(env,row,resetUrl).catch(function(e){ return {sent:false,detail:String(e&&e.message?e.message:e).slice(0,160)}; });
       sent=!!mail.sent;
     }
-    return J({ok:true,email_ready:sent,reset_ready:true},200,cors);
+    return J({ok:true,email_ready:mailConfigured(env),reset_ready:true},200,cors);
   }
   if(path==="/auth/password-update" && request.method==="POST"){
     if(!(await tableExists(env,"password_reset_tokens"))) return J({error:"schema_reset_missing"},501,cors);
-    const body=await readBody(request);
+    const parsedBody=await readLimitedJson(request,AUTH_BODY_MAX_BYTES);
+    if(!parsedBody.ok) return J({error:parsedBody.error},parsedBody.status,cors);
+    const body=parsedBody.body;
     const token=String(body.token||"").trim();
     const password=String(body.password||"");
-    if(password.length<8) return J({error:"weak_password"},400,cors);
+    if(password.length<8 || password.length>128) return J({error:"weak_password"},400,cors);
     if(!/^[a-f0-9]{64}$/i.test(token)) return J({error:"reset_token_invalid"},400,cors);
+    const rate=await consumeAuthRate(env,request,"password_update",token.slice(0,16));
+    if(!rate.allowed) return authRateResponse(rate,cors);
     const tokenHash=await sha256Hex(token);
     const now=new Date().toISOString();
     const row=await env.DB.prepare("SELECT prt.id,prt.user_id FROM password_reset_tokens prt WHERE prt.token_hash=? AND prt.expires_at>? AND prt.used_at IS NULL")
@@ -1811,14 +1993,31 @@ async function handleApi(request, env, cors){
     return J({ok:true},200,cors);
   }
   if(path==="/auth/login" && request.method==="POST"){
-    const body=await readBody(request);
+    const parsedBody=await readLimitedJson(request,AUTH_BODY_MAX_BYTES);
+    if(!parsedBody.ok) return J({error:parsedBody.error},parsedBody.status,cors);
+    const body=parsedBody.body;
     const email=cleanEmail(body.email);
     const password=String(body.password||"");
+    const rate=await consumeAuthRate(env,request,"login",email||"invalid");
+    if(!rate.allowed) return authRateResponse(rate,cors);
+    if(password.length<8 || password.length>128) return J({error:"bad_login"},401,cors);
     const row=await env.DB.prepare("SELECT * FROM users WHERE email=?").bind(email).first();
-    if(!row) return J({error:"bad_login"},401,cors);
-    const hash=await hashPassword(password,row.password_salt);
+    if(!row){
+      await hashPassword(password,"00000000000000000000000000000000",PBKDF2_ITERATIONS);
+      return J({error:"bad_login"},401,cors);
+    }
+    const storedIterations=passwordIterations(row.password_algo);
+    const hash=await hashPassword(password,row.password_salt,storedIterations);
     if(!constantTimeHexEqual(hash,row.password_hash)) return J({error:"bad_login"},401,cors);
     if((await authSecuritySchemaReady(env)) && !row.email_verified_at) return J({error:"email_not_verified"},403,cors);
+    if(storedIterations<PBKDF2_ITERATIONS){
+      const upgradedSalt=randHex(16);
+      const upgradedHash=await hashPassword(password,upgradedSalt,PBKDF2_ITERATIONS);
+      const upgradedAt=new Date().toISOString();
+      await env.DB.prepare("UPDATE users SET password_hash=?,password_salt=?,password_algo=?,updated_at=? WHERE id=?")
+        .bind(upgradedHash,upgradedSalt,"pbkdf2-sha256-"+PBKDF2_ITERATIONS,upgradedAt,row.id).run();
+      row.password_hash=upgradedHash; row.password_salt=upgradedSalt; row.password_algo="pbkdf2-sha256-"+PBKDF2_ITERATIONS;
+    }
     await attachRoleFlags(env,row);
     const token=await createSession(env,request,row.id);
     return J({token:token,user:publicUser(row),bootstrap:await bootstrapFor(env,row.id),profile:await profileFor(env,row.id),admin:isAdminUser(env,row)},200,cors);
@@ -2579,7 +2778,7 @@ export default {
     return scanResponse({result:ra, mode:mode, remaining:remainingQuota, owner:owner, matched:hit?hit.id:null, confidence:overallConfidence, agents:agentTrace},200,"analyzed",{matched_bottle_id:hit&&hit.id});
   },
   async scheduled(controller, env, ctx){
-    const tasks=[cleanupStaleCatalogSubmissions(env,200),cleanupTelemetry(env),cleanupScannerBudgets(env),cleanupNews(env)];
+    const tasks=[cleanupStaleCatalogSubmissions(env,200),cleanupTelemetry(env),cleanupScannerBudgets(env),cleanupAuthRates(env),cleanupNews(env)];
     tasks.push(seedStarterNews(env).then(function(){ return refreshWhiskyNews(env,"scheduled",controller.scheduledTime); }));
     ctx.waitUntil(Promise.all(tasks));
   }

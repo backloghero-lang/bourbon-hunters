@@ -28,6 +28,9 @@ await page.route("**/news?*",async(route)=>{
   newsAuthHeader=route.request().headers().authorization||"";
   await route.fulfill({status:200,contentType:"application/json",body:JSON.stringify({articles,news_ready:true})});
 });
+await page.route("**/catalog/recent?*",(route)=>route.fulfill({status:200,contentType:"application/json",body:JSON.stringify({bottles:[],catalog_ready:true})}));
+await page.route("**/recommendations?*",(route)=>route.fulfill({status:200,contentType:"application/json",body:JSON.stringify({recommendations:[],recommendations_ready:true})}));
+await page.route("**/ratings?*",(route)=>route.fulfill({status:200,contentType:"application/json",body:JSON.stringify({ratings:{}})}));
 await page.goto(target,{waitUntil:"domcontentloaded"});
 await page.evaluate(()=>{
   AGE_GATE_RUNTIME_OK=true;

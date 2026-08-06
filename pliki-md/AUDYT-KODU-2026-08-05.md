@@ -25,10 +25,11 @@ Najważniejszy problem nie dotyczy SQL Injection. Zapytania D1 są w większośc
 - Etap 0 zakonczony: zapisano punkt Time Travel D1 oraz tag kodu `audit-backup-2026-08-05-pre-auth-hardening`.
 - Etap 1 zakonczony i wdrozony: weryfikacja e-mail, role D1, bezpieczne laczenie Google, reautoryzacja usuwania konta i uniewaznienie sesji administratorow.
 - Etap 2 zakonczony i wdrozony: pelne kodowanie atrybutow, allowlista URL i obrazow, CSP, naglowki API, minimalny publiczny health i bezpieczne identyfikatory bledow.
-- Etap 3 zaimplementowany lokalnie: atomowe budzety D1 obejmuja rozpoznanie, potwierdzenie wymagajace wyciecia, lokalne zdjecie, dodanie assetu do katalogu i analize AI. Admin jest rozpoznawany wylacznie przez role D1.
+- Etap 3 wdrozony: atomowe budzety D1 obejmuja rozpoznanie, potwierdzenie wymagajace wyciecia, lokalne zdjecie, dodanie assetu do katalogu i analize AI. Admin jest rozpoznawany wylacznie przez role D1.
+- Etap 4 zaimplementowany lokalnie: limity auth per konto i IP, limit 16 KB dla JSON, hasla 8-128 znakow, PBKDF2-SHA256 600 000 iteracji i automatyczna migracja starszego skrotu po poprawnym logowaniu. Wymaga migracji D1 v71 przed wdrozeniem Workera.
 - `scripts/security-xss-regression.mjs`, testy auth, testy katalogu i skanera oraz 6 testow Playwright przechodza.
 - P1-1 jest naprawione. P1-4 zostalo naprawione w czesci dotyczacej health i surowych wyjatkow; optymalizacja publicznych odczytow ocen pozostaje otwarta.
-- P1-2 jest naprawione w kodzie i czeka na migracje v70 oraz wdrozenie. P1-3 i P1-5 pozostaja kolejnymi priorytetami planu naprawczego.
+- P1-2 jest naprawione i wdrozone. P1-3 jest naprawione lokalnie i czeka na migracje v71 oraz wdrozenie. Z priorytetow P1 pozostaja: optymalizacja ocen z P1-4 oraz moderacja UGC z P1-5.
 
 ## Znaleziska krytyczne
 
@@ -71,6 +72,8 @@ Limity oparte o KV są realizowane jako odczyt, a następnie zapis. KV nie zapew
 **Naprawa:** każda kosztowna operacja musi zużywać osobny budżet serwerowy. Użyć Cloudflare Rate Limiting, Durable Object albo atomowego licznika D1. Dla gościa łączyć limit IP, urządzenia i krótkiego tokenu wyzwania. Administrator powinien być rozpoznawany przez rolę, nie `DEV_KEY`.
 
 ### P1-3. Brak ochrony logowania, rejestracji i resetu hasła
+
+**Status 6 sierpnia 2026:** naprawione lokalnie w Etapie 4; do wdrozenia pozostaje migracja D1 v71 i aktualny Worker.
 
 Endpointy w [`agent/worker.js`](../agent/worker.js#L1530) nie mają skutecznego rate limitu, maksymalnego rozmiaru ciała ani ograniczenia długości hasła. Umożliwia to credential stuffing, spam resetem i kosztowy atak CPU na PBKDF2.
 

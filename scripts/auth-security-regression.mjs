@@ -7,6 +7,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const worker = readFileSync(resolve(root, "agent/worker.js"), "utf8");
 const schema = readFileSync(resolve(root, "agent/d1-schema.sql"), "utf8");
 const migration = readFileSync(resolve(root, "agent/d1-migration-v69-auth-hardening.sql"), "utf8");
+const rateMigration = readFileSync(resolve(root, "agent/d1-migration-v71-auth-rate-limits.sql"), "utf8");
 const frontend = readFileSync(resolve(root, "index.html"), "utf8");
 const readme = readFileSync(resolve(root, "README.md"), "utf8");
 
@@ -36,13 +37,27 @@ assert.match(worker, /auth_link_requests/);
 assert.match(worker, /email_not_verified/);
 assert.match(worker, /accountDeletionReauth/);
 assert.match(worker, /constantTimeHexEqual\(hash,row\.password_hash\)/);
-assert.match(worker, /auth-verified-email-roles-google-v4/);
+assert.match(worker, /auth-rate-limited-pbkdf2-600k-v5/);
+assert.match(worker, /d1-auth-throttling-v1/);
+assert.match(worker, /const PBKDF2_ITERATIONS = 600000/);
+assert.match(worker, /const LEGACY_PBKDF2_ITERATIONS = 100000/);
+assert.match(worker, /readLimitedJson\(request,AUTH_BODY_MAX_BYTES\)/);
+assert.match(worker, /consumeAuthRate\(env,request,"login"/);
+assert.match(worker, /consumeAuthRate\(env,request,"register"/);
+assert.match(worker, /consumeAuthRate\(env,request,"password_reset"/);
+assert.match(worker, /passwordIterations\(row\.password_algo\)/);
+assert.match(worker, /registration_unavailable/);
 
 for (const sql of [schema, migration]) {
   assert.match(sql, /email_verified_at/);
   assert.match(sql, /CREATE TABLE IF NOT EXISTS user_roles/);
   assert.match(sql, /CREATE TABLE IF NOT EXISTS email_verification_tokens/);
   assert.match(sql, /CREATE TABLE IF NOT EXISTS auth_link_requests/);
+}
+for (const sql of [schema, rateMigration]) {
+  assert.match(sql, /CREATE TABLE IF NOT EXISTS auth_rate_events/);
+  assert.match(sql, /idx_auth_rate_actor/);
+  assert.match(sql, /idx_auth_rate_ip/);
 }
 
 assert.match(frontend, /handleEmailVerificationFromUrl/);
@@ -52,13 +67,16 @@ assert.doesNotMatch(readme, /^## Popular 200$/m);
 
 console.log(JSON.stringify({
   ok: true,
-  auth_version: "auth-verified-email-roles-google-v4",
+  auth_version: "auth-rate-limited-pbkdf2-600k-v5",
   checks: [
     "database_roles_only",
     "verified_email_before_session",
     "no_implicit_google_email_link",
     "one_time_explicit_google_link",
     "account_deletion_reauth",
+    "auth_rate_limits",
+    "bounded_auth_json",
+    "pbkdf2_rehash_on_login",
     "popular_200_removed_from_readme"
   ]
 }, null, 2));

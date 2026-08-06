@@ -239,7 +239,7 @@ Ten plik trzyma stale ustalenia, zeby nie ginely w dlugich watkach.
 ## 2026-07-27 - Feed newsow i retencja
 
 - Home oraz `Profil -> Artykuly` korzystaja z jednego publicznego feedu `GET /news`.
-- Agent moze publikowac tylko artykuly z allowlisty: Whisky Advocate, Whisky Magazine, The Whiskey Wash i Distiller.
+- Agent moze publikowac tylko artykuly z allowlisty: Whisky Advocate, Whisky Magazine, The Whiskey Wash i Breaking Bourbon. Konkurencyjne aplikacje, w tym Distiller, sa wykluczone.
 - W D1 zapisujemy metadane, krotkie streszczenia PL/EN i zewnetrzny URL miniatury. Nie kopiujemy pelnej tresci ani pliku obrazu wydawcy.
 - Pierwszy pusty feed jest jednorazowo uzupelniany 6 zweryfikowanymi artykulami. Marker `starter-news-v1` zapobiega ponownemu seedowaniu po ich wygasnieciu.
 - Jeden dzienny Cron wykonuje cleanup codziennie, a pobieranie maksymalnie 3 nowych artykulow tylko w poniedzialek i czwartek.
@@ -264,3 +264,11 @@ Ten plik trzyma stale ustalenia, zeby nie ginely w dlugich watkach.
 - `DEV_KEY` nie daje juz uprawnien ani obejscia limitu.
 - Zdarzenia zawieraja tylko hashe aktora i IP, a dzienny Cron usuwa dane starsze niz 8 dni.
 - Test: `scripts/scanner-budget-regression.mjs`.
+
+## 2026-08-06 - Etap 4 audytu i odporny agent newsow
+
+- Auth ma atomowy limit D1 per konto lub token i IP, limit 16 KB dla JSON oraz hasla 8-128 znakow.
+- Nowe hasla uzywaja PBKDF2-SHA256 600 000 iteracji. Starszy hash jest podnoszony po poprawnym logowaniu bez resetowania hasla uzytkownika.
+- Migracja `v71` musi zostac wykonana przed wdrozeniem Workera.
+- Agent newsow odkrywa linki bezposrednio na stronach redakcji. Gemini sluzy tylko do selekcji i streszczenia, a blad lub limit AI nie blokuje publikacji.
+- Dozwolone zrodla to Whisky Advocate, Whisky Magazine, The Whiskey Wash i Breaking Bourbon. Konkurencyjne aplikacje, w tym Distiller, sa blokowane.

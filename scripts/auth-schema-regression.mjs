@@ -6,12 +6,13 @@ import { DatabaseSync } from "node:sqlite";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const migration = readFileSync(resolve(root, "agent/d1-migration-v69-auth-hardening.sql"), "utf8");
+const rateMigration = readFileSync(resolve(root, "agent/d1-migration-v71-auth-rate-limits.sql"), "utf8");
 const canonicalSchema = readFileSync(resolve(root, "agent/d1-schema.sql"), "utf8");
 
 const canonical = new DatabaseSync(":memory:");
 canonical.exec("PRAGMA foreign_keys = ON");
 canonical.exec(canonicalSchema);
-for (const table of ["users","user_roles","email_verification_tokens","auth_link_requests"]) {
+for (const table of ["users","user_roles","email_verification_tokens","auth_link_requests","auth_rate_events"]) {
   assert.equal(canonical.prepare("SELECT COUNT(*) AS count FROM sqlite_master WHERE type='table' AND name=?").get(table).count,1);
 }
 canonical.close();
@@ -47,6 +48,7 @@ db.exec(`
   INSERT INTO sessions VALUES ('session-1','user-1','token','2026-01-01T00:00:00Z','2099-01-01T00:00:00Z','','');
 `);
 db.exec(migration);
+db.exec(rateMigration);
 
 const migrated = db.prepare("SELECT email_verified_at FROM users WHERE id='user-1'").get();
 assert.equal(migrated.email_verified_at,"2026-01-01T00:00:00Z");
@@ -62,6 +64,7 @@ assert.equal(db.prepare("SELECT role FROM user_roles WHERE user_id='user-1'").ge
 
 db.exec("DELETE FROM sessions WHERE user_id IN (SELECT user_id FROM user_roles WHERE role='admin' AND revoked_at IS NULL)");
 assert.equal(db.prepare("SELECT COUNT(*) AS count FROM sessions").get().count,0);
+assert.equal(db.prepare("SELECT COUNT(*) AS count FROM sqlite_master WHERE type='table' AND name='auth_rate_events'").get().count,1);
 db.close();
 
-console.log(JSON.stringify({ok:true,migration:"v69",backfill:true,implicit_admin:false,explicit_admin:true,admin_sessions_revoked:true},null,2));
+console.log(JSON.stringify({ok:true,migrations:["v69","v71"],backfill:true,implicit_admin:false,explicit_admin:true,admin_sessions_revoked:true,auth_rate_schema:true},null,2));

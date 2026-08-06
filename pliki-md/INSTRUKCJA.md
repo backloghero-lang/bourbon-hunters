@@ -2,6 +2,33 @@
 
 ## Aktualna zasada deployu - 2026-07-06
 
+## Wdrozenie Etapu 4 audytu i naprawionych newsow
+
+Ta paczka wymaga migracji D1 v71 przed podmiana Workera. Newsy nie wymagaja nowej migracji.
+
+1. W Cloudflare D1 utworz punkt Time Travel lub zapisz aktualny restore point.
+2. W konsoli `bourbon-hunters-db` wykonaj caly plik `agent/d1-migration-v71-auth-rate-limits.sql`.
+3. Sprawdz migracje:
+
+```sql
+SELECT name FROM sqlite_master WHERE type='table' AND name='auth_rate_events';
+```
+
+4. Uruchom `WYSLIJ-NA-GITHUB.bat`.
+5. W Cloudflare podmien i wdroz `agent/worker.js`.
+6. Otworz `/auth/health` i sprawdz:
+
+```text
+auth_version: auth-rate-limited-pbkdf2-600k-v5
+auth_protection_version: d1-auth-throttling-v1
+```
+
+7. Zaloguj sie oraz wykonaj jeden test resetu hasla. Pierwsze poprawne logowanie konta lokalnego automatycznie podniesie jego hash ze 100 000 do 600 000 iteracji.
+8. Wejdz w `Profil -> Raporty` i kliknij `Pobierz 3 najnowsze artykuly`, aby naprawiony agent uzupelnil biezace wydanie.
+9. Oczekiwana wersja newsow: `whisky-news-source-first-v3-quota-fallback`.
+
+Worker celowo odrzuci operacje auth z bledem `auth_rate_schema_missing`, jesli zostanie wdrozony przed migracja v71.
+
 ## Wdrozenie Etapu 3 audytu - atomowe limity skanera
 
 Ta paczka wymaga migracji D1 v70, publikacji GitHub Pages i podmiany Workera. Zachowaj te kolejnosc.
@@ -74,7 +101,7 @@ WHERE user_id IN (
 
 6. Uruchom `WYSLIJ-NA-GITHUB.bat`, zaczekaj na zielone Actions i odswiez PWA do cache `bourbon-hunters-v116`.
 7. Teraz wklej i zdeployuj aktualny `agent/worker.js`.
-8. Publiczny health musi pokazac `auth_version: auth-verified-email-roles-google-v4`; `auth_security_schema` jest dostepne tylko w administracyjnym `/admin/health`.
+8. Publiczny health musi pokazac `auth_version: auth-rate-limited-pbkdf2-600k-v5`; pelna diagnostyka jest dostepna tylko w administracyjnym `/admin/health`.
 9. Zaloguj sie ponownie i sprawdz, czy `Profil -> Raporty` jest widoczny.
 
 Nie deployuj nowego Workera przed migracja, nadaniem roli i publikacja frontendu. Stary Worker jest zgodny z nowym frontendem na czas tej krotkiej zmiany, ale nowy proces potwierdzenia e-mail wymaga juz aktualnego frontendu.
@@ -103,7 +130,7 @@ Aktualny oczekiwany publiczny stan Workera:
 ```json
 {
   "ok": true,
-  "auth_version": "auth-verified-email-roles-google-v4",
+  "auth_version": "auth-rate-limited-pbkdf2-600k-v5",
   "security_version": "xss-url-health-hardening-v1"
 }
 ```
@@ -113,7 +140,7 @@ Pelny stan ponizej jest dostepny tylko dla administratora przez `/admin/health`:
 ```json
 {
   "ok": true,
-  "auth_version": "auth-verified-email-roles-google-v4",
+  "auth_version": "auth-rate-limited-pbkdf2-600k-v5",
   "security_version": "xss-url-health-hardening-v1",
   "scan_orchestrator_version": "visual-only-catalog-v8-mobile-foreground",
   "scan_mode": "visual_only",
@@ -122,7 +149,7 @@ Pelny stan ponizej jest dostepny tylko dla administratora przez `/admin/health`:
   "catalog_submission_version": "community-catalog-images-v6-highres-cutout",
   "catalog_moderation_version": "catalog-moderation-orchestrator-admin-v1",
   "catalog_license_version": "catalog-license-2026-07-18-v1",
-  "news_agent_version": "whisky-news-google-grounded-v2-release-recovery",
+  "news_agent_version": "whisky-news-source-first-v3-quota-fallback",
   "news_target_per_release": 3,
   "news_article_count": 6,
   "local_image_pipeline_version": "local-bottle-cutout-v2-quality-gated",
@@ -340,7 +367,7 @@ Ta paczka wymaga migracji D1, Workera i GitHub Pages.
 3. W Workerze `bourbon-hunters` zastap kod aktualnym `agent/worker.js` i kliknij `Deploy`.
 4. Nie tworz drugiego Cron Triggera. Istniejacy dzienny Cron wystarczy; Worker sam sprawdza poniedzialek i czwartek.
 5. Otworz `https://bourbon-hunters.darekmaslyk.workers.dev/auth/health`.
-6. Sprawdz `news_schema: true`, `news_agent_ready: true`, `local_image_cutout_ready: true` oraz `news_agent_version: whisky-news-google-grounded-v2-release-recovery`. Pola `news_article_count` i `news_last_run` pokazuja stan feedu oraz wynik ostatniego przebiegu.
+6. Sprawdz `news_schema: true`, `news_agent_ready: true`, `local_image_cutout_ready: true` oraz `news_agent_version: whisky-news-source-first-v3-quota-fallback`. Pola `news_article_count` i `news_last_run` pokazuja stan feedu oraz wynik ostatniego przebiegu.
 7. Uruchom `WYSLIJ-NA-GITHUB.bat` i poczekaj na zielone GitHub Actions.
 8. Na telefonie otworz `test-index.html`, kliknij `Wyczysc cache/PWA`, a potem `Odswiez build`.
 9. Aby nie czekac do dnia publikacji, wejdz jako admin w `Profil -> Raporty` i kliknij `Pobierz 3 najnowsze artykuly`.
