@@ -256,3 +256,12 @@ Priorytet 5: dokumentacja i biznes
 - Po przebudowie katalogu uruchomić generator browse i test taksonomii.
 - Frontend wdraża się przez GitHub Pages; Worker i D1 bez zmian.
 - Cache PWA: `bourbon-hunters-v93`.
+
+## Aktualizacja 2026-08-06 - atomowe budzety skanera
+
+- Przed wdrozeniem Workera wykonac cala migracje `agent/d1-migration-v70-scanner-budgets.sql` w D1.
+- Budzety `identify`, `cutout` i `analysis` sa naliczane atomowo w D1 dla konta lub goscia oraz osobno dla zahashowanego IP.
+- Domyslne limity zwyklego konta to `5 / 10 / 3` dziennie. Aktywna rola D1 `admin` omija limity.
+- `confirmed_id` i dawny `DEV_KEY` nie omijaja juz kosztow. Brak migracji v70 blokuje kosztowne operacje zwyklego usera bezpiecznym bledem.
+- Stan wdrozenia widac w `Profil -> Raporty -> Stan systemu`: wersja `d1-atomic-cost-budgets-v1`, schemat `Gotowe`.
+- Cache PWA po tej paczce: `bourbon-hunters-v118`.

@@ -43,7 +43,12 @@ await page.evaluate(()=>{
     scanner_ai_ready:true,
     scanner_model_discovery:true,
     scanner_mobile_foreground:true,
-    scan_mode:"visual_only"
+    scan_mode:"visual_only",
+    scanner_budget_version:"d1-atomic-cost-budgets-v1",
+    scanner_budget_schema:true,
+    scanner_identify_daily_limit:5,
+    scanner_cutout_daily_limit:10,
+    scanner_analysis_daily_limit:3
   });
   document.querySelectorAll(".view").forEach((view)=>view.classList.remove("active"));
   document.getElementById("view-admin-reports").classList.add("active");
@@ -64,5 +69,6 @@ await browser.close();
 if(errors.length) throw new Error(errors.join("\n"));
 if(metrics!==8) throw new Error("Expected 8 admin metrics, got "+metrics);
 if(!systemHealth.includes("visual-only-catalog-v9-model-resolver")) throw new Error("Scanner version missing from system health");
+if(!systemHealth.includes("d1-atomic-cost-budgets-v1")) throw new Error("Scanner budget status missing from system health");
 if(dimensions.scrollWidth>dimensions.width+1) throw new Error("Mobile horizontal overflow: "+JSON.stringify(dimensions));
 console.log(JSON.stringify({ok:true,metrics,moderation,systemHealth,dimensions},null,2));

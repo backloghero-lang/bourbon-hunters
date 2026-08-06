@@ -6,8 +6,8 @@
 //   3a) tryb "rate"   -> user potwierdza najlepszy wynik z katalogu.
 //   3b) tryb "analyze"-> rozbudowany opis + historia destylarni z linkami (Gemini + Google Search), fakty z bazy jako grunt.
 //
-// SEKRETY: GEMINI_API_KEY (wymagany), DEV_KEY (opcjonalny)
-// ZMIENNE: MODEL, IDENT_MODEL, IDENT_FALLBACK_MODEL, CUTOUT_QA_MODEL, NEWS_MODEL, TEMP_RATE, TEMP_ANALYZE, THINK_ANALYZE, MAX_RATE, MAX_ANALYZE, DAILY_LIMIT, LOCAL_CUTOUT_DAILY_LIMIT, LOCAL_CUTOUT_IP_DAILY_LIMIT, ALLOW_ORIGIN, PROMPT_URL, DB_URL, APP_URL, GOOGLE_REDIRECT_URI
+// SEKRETY: GEMINI_API_KEY (wymagany)
+// ZMIENNE: MODEL, IDENT_MODEL, IDENT_FALLBACK_MODEL, CUTOUT_QA_MODEL, NEWS_MODEL, TEMP_RATE, TEMP_ANALYZE, THINK_ANALYZE, MAX_RATE, MAX_ANALYZE, DAILY_LIMIT, SCAN_IP_DAILY_LIMIT, LOCAL_CUTOUT_DAILY_LIMIT, LOCAL_CUTOUT_IP_DAILY_LIMIT, ANALYZE_DAILY_LIMIT, ANALYZE_IP_DAILY_LIMIT, ALLOW_ORIGIN, PROMPT_URL, DB_URL, APP_URL, GOOGLE_REDIRECT_URI
 // SEKRETY OAuth: GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, opcjonalnie GOOGLE_STATE_SECRET
 // KV: DS_KV (limit + zapis nowosci). Klucze nowosci: "new:<id>".
 // D1: DB (konta, sesje, wishlist, kolekcja, oceny).
@@ -30,6 +30,7 @@ const NEWS_RETENTION_DAYS = 30;
 const CATALOG_SYSTEM_USER_ID = "catalog-system";
 const AUTH_VERSION = "auth-verified-email-roles-google-v4";
 const SECURITY_VERSION = "xss-url-health-hardening-v1";
+const SCANNER_BUDGET_VERSION = "d1-atomic-cost-budgets-v1";
 const PBKDF2_ITERATIONS = 100000;
 const PROFILE_BADGE_IDS = ["glass","bottle","barrel","seal","hat","star","distillery","notes","opener","horseshoe"];
 
@@ -447,6 +448,57 @@ async function catalogModerationSchemaReady(env){
 async function telemetrySchemaReady(env){
   return !!(env.DB && await tableExists(env,"telemetry_events") && await tableExists(env,"scanner_runs") && await tableExists(env,"service_usage_events"));
 }
+async function scannerBudgetSchemaReady(env){
+  return !!(env.DB && await tableExists(env,"scanner_budget_events"));
+}
+function scannerBudgetLimits(env, operation){
+  let actorLimit=5, ipLimit=100;
+  if(operation==="cutout"){
+    actorLimit=Number(env.LOCAL_CUTOUT_DAILY_LIMIT)||10;
+    ipLimit=Number(env.LOCAL_CUTOUT_IP_DAILY_LIMIT)||Math.max(40,actorLimit*4);
+  }else if(operation==="analysis"){
+    actorLimit=Number(env.ANALYZE_DAILY_LIMIT)||3;
+    ipLimit=Number(env.ANALYZE_IP_DAILY_LIMIT)||Math.max(30,actorLimit*10);
+  }else{
+    actorLimit=Number(env.DAILY_LIMIT)||5;
+    ipLimit=Number(env.SCAN_IP_DAILY_LIMIT)||Math.max(100,actorLimit*10);
+  }
+  actorLimit=Math.max(1,Math.min(500,Math.floor(actorLimit)));
+  ipLimit=Math.max(actorLimit,Math.min(5000,Math.floor(ipLimit)));
+  return {actor:actorLimit,ip:ipLimit};
+}
+async function consumeScannerBudget(env, request, user, deviceHash, operation){
+  if(isAdminUser(env,user)) return {allowed:true,owner:true,remaining:null,limit:null,operation:operation};
+  if(["identify","cutout","analysis"].indexOf(operation)<0) return {allowed:false,error:"budget_operation_invalid",operation:operation};
+  if(!(await scannerBudgetSchemaReady(env))) return {allowed:false,error:"scanner_budget_schema_missing",operation:operation};
+  const ip=String(request.headers.get("CF-Connecting-IP")||"unknown").slice(0,80);
+  const actorType=user&&user.id?"user":"guest";
+  const actorSeed=user&&user.id ? "user:"+user.id : (deviceHash ? "device:"+deviceHash : "ip:"+ip);
+  const actorHash=(await sha256Hex("scanner-budget-actor:"+actorSeed)).slice(0,40);
+  const ipHash=(await sha256Hex("scanner-budget-ip:"+ip)).slice(0,40);
+  const periodKey=new Date().toISOString().slice(0,10);
+  const now=new Date().toISOString();
+  const limits=scannerBudgetLimits(env,operation);
+  const insert=await env.DB.prepare("INSERT INTO scanner_budget_events (id,period_key,actor_type,actor_hash,ip_hash,operation,units,created_at) SELECT ?,?,?,?,?,?,1,? WHERE (SELECT COALESCE(SUM(units),0) FROM scanner_budget_events WHERE period_key=? AND operation=? AND actor_hash=?)<? AND (SELECT COALESCE(SUM(units),0) FROM scanner_budget_events WHERE period_key=? AND operation=? AND ip_hash=?)<?")
+    .bind(crypto.randomUUID(),periodKey,actorType,actorHash,ipHash,operation,now,periodKey,operation,actorHash,limits.actor,periodKey,operation,ipHash,limits.ip).run();
+  const usage=await env.DB.prepare("SELECT COALESCE(SUM(CASE WHEN actor_hash=? THEN units ELSE 0 END),0) AS actor_used,COALESCE(SUM(CASE WHEN ip_hash=? THEN units ELSE 0 END),0) AS ip_used FROM scanner_budget_events WHERE period_key=? AND operation=? AND (actor_hash=? OR ip_hash=?)")
+    .bind(actorHash,ipHash,periodKey,operation,actorHash,ipHash).first();
+  const actorUsed=Number(usage&&usage.actor_used)||0;
+  const ipUsed=Number(usage&&usage.ip_used)||0;
+  const allowed=Number(insert&&insert.meta&&insert.meta.changes||0)>0;
+  return {
+    allowed:allowed,owner:false,operation:operation,limit:limits.actor,
+    remaining:Math.max(0,limits.actor-actorUsed),
+    reason:allowed?null:(actorUsed>=limits.actor?"actor_limit":"ip_limit"),
+    ip_remaining:Math.max(0,limits.ip-ipUsed)
+  };
+}
+async function cleanupScannerBudgets(env){
+  if(!(await scannerBudgetSchemaReady(env))) return {deleted:0};
+  const cutoff=new Date(Date.now()-8*86400000).toISOString();
+  const result=await env.DB.prepare("DELETE FROM scanner_budget_events WHERE created_at<?").bind(cutoff).run();
+  return {deleted:Number(result&&result.meta&&result.meta.changes||0)};
+}
 async function newsSchemaReady(env){
   return !!(env.DB && await tableExists(env,"news_articles") && await tableExists(env,"news_agent_runs"));
 }
@@ -697,6 +749,11 @@ async function createBottlePreview(env, request, user, body){
   const image=String((body&&body.image)||"");
   const mime=["image/jpeg","image/png","image/webp"].includes(body&&body.mime)?body.mime:"image/jpeg";
   if(!image || image.length<100 || image.length>8000000) return {error:"bad_image",status:400};
+  if(env.BOTTLE_IMAGES && env.IMAGES){
+    const deviceHash=await telemetryDeviceHash(body&&body.device_id);
+    const budget=await consumeScannerBudget(env,request,user,deviceHash,"cutout");
+    if(!budget.allowed) return {error:budget.error||"catalog_cutout_limit",limit:budget.limit||0,remaining:budget.remaining||0,reason:budget.reason||null,status:budget.error?503:429};
+  }
   const id=crypto.randomUUID();
   const now=new Date().toISOString();
   const originalKey="catalog/tmp/"+id+"/source";
@@ -1485,23 +1542,9 @@ async function createLocalBottleCutout(env, request, body){
   const mime=["image/jpeg","image/png","image/webp"].includes(body&&body.mime)?body.mime:"image/jpeg";
   if(!image || image.length<100 || image.length>8000000) return {error:"bad_image",status:400};
   const user=await authUser(env,request);
-  const owner=isAdminUser(env,user);
-  const device=String(body&&body.device_id||"anonymous").slice(0,180);
-  const ip=String(request.headers.get("CF-Connecting-IP")||"unknown").slice(0,80);
-  const actorValue=user&&user.id ? "user:"+user.id : "device:"+device;
-  const actorHash=(await sha256Hex("local-cutout:"+actorValue)).slice(0,32);
-  const ipHash=(await sha256Hex("local-cutout-ip:"+ip)).slice(0,32);
-  const dailyLimit=Math.max(1,Math.min(100,Number(env.LOCAL_CUTOUT_DAILY_LIMIT)||10));
-  const quotaKey="local-cutout:"+actorHash+":"+new Date().toISOString().slice(0,10);
-  const ipDailyLimit=Math.max(dailyLimit,Math.min(500,Number(env.LOCAL_CUTOUT_IP_DAILY_LIMIT)||40));
-  const ipQuotaKey="local-cutout-ip:"+ipHash+":"+new Date().toISOString().slice(0,10);
-  if(!owner && env.DS_KV){
-    const used=Number(await env.DS_KV.get(quotaKey))||0;
-    const ipUsed=Number(await env.DS_KV.get(ipQuotaKey))||0;
-    if(used>=dailyLimit || ipUsed>=ipDailyLimit) return {error:"local_cutout_limit",limit:dailyLimit,status:429};
-    await env.DS_KV.put(quotaKey,String(used+1),{expirationTtl:90000});
-    await env.DS_KV.put(ipQuotaKey,String(ipUsed+1),{expirationTtl:90000});
-  }
+  const deviceHash=await telemetryDeviceHash(body&&body.device_id);
+  const budget=await consumeScannerBudget(env,request,user,deviceHash,"cutout");
+  if(!budget.allowed) return {error:budget.error||"local_cutout_limit",limit:budget.limit||0,remaining:budget.remaining||0,reason:budget.reason||null,status:budget.error?503:429};
   const started=Date.now();
   try{
     const processed=await transformBottleCutout(env,mime,image);
@@ -1528,7 +1571,7 @@ async function handleApi(request, env, cors){
   if(path==="/admin/health" && request.method==="GET"){
     const healthUser=await authUser(env,request);
     if(!isAdminUser(env,healthUser)) return J({error:"forbidden"},403,cors);
-    let schema=false, reset_schema=false, profile_schema=false, recommendations_schema=false, identity_schema=false, auth_security_schema=false, catalog_schema=false, catalog_data_schema=false, catalog_moderation_schema=false, telemetry_schema=false, news_schema=false, news_article_count=0, news_last_run=null, detail="";
+    let schema=false, reset_schema=false, profile_schema=false, recommendations_schema=false, identity_schema=false, auth_security_schema=false, catalog_schema=false, catalog_data_schema=false, catalog_moderation_schema=false, telemetry_schema=false, scanner_budget_schema=false, news_schema=false, news_article_count=0, news_last_run=null, detail="";
     if(env.DB){
       try{
         await env.DB.prepare("SELECT id FROM users LIMIT 1").first();
@@ -1553,6 +1596,8 @@ async function handleApi(request, env, cors){
         if(schema && catalog_data_schema && !catalog_moderation_schema) detail="catalog moderation migration v67 is missing";
         telemetry_schema=await telemetrySchemaReady(env);
         if(schema && catalog_data_schema && catalog_moderation_schema && !telemetry_schema) detail="telemetry migration v66 is missing";
+        scanner_budget_schema=await scannerBudgetSchemaReady(env);
+        if(schema && telemetry_schema && !scanner_budget_schema) detail="scanner budget migration v70 is missing";
         news_schema=await newsSchemaReady(env);
         if(schema && telemetry_schema && !news_schema) detail="whisky news migration v68 is missing";
         if(news_schema){
@@ -1564,7 +1609,7 @@ async function handleApi(request, env, cors){
       }
       catch(e){ detail=String(e&&e.message?e.message:e).slice(0,220); }
     }
-    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,security_version:SECURITY_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_mode:"visual_only",scan_ocr_enabled:false,scanner_ai_ready:!!env.GEMINI_API_KEY,scanner_primary_model:env.IDENT_MODEL||"gemini-3.5-flash-lite",scanner_fallback_model:env.IDENT_FALLBACK_MODEL||"gemini-3.6-flash",scanner_model_discovery:true,scanner_mobile_foreground:!!env.IMAGES,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_moderation_version:CATALOG_MODERATION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,news_agent_version:NEWS_AGENT_VERSION,news_schedule:"Monday and Thursday releases with daily recovery via UTC cron",news_target_per_release:3,news_current_release:newsReleaseSlot(new Date()),news_article_count:news_article_count,news_last_run:news_last_run,local_image_pipeline_version:LOCAL_IMAGE_PIPELINE_VERSION,news_retention_days:NEWS_RETENTION_DAYS,starter_news_count:STARTER_NEWS.length,news_auth_required:true,catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,auth_security_schema:auth_security_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,catalog_moderation_schema:catalog_moderation_schema,telemetry_schema:telemetry_schema,news_schema:news_schema,news_agent_ready:news_schema&&!!env.GEMINI_API_KEY,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),local_image_cutout_ready:!!env.IMAGES,cutout_quality_ready:!!(env.IMAGES&&env.GEMINI_API_KEY),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
+    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,security_version:SECURITY_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_mode:"visual_only",scan_ocr_enabled:false,scanner_ai_ready:!!env.GEMINI_API_KEY,scanner_primary_model:env.IDENT_MODEL||"gemini-3.5-flash-lite",scanner_fallback_model:env.IDENT_FALLBACK_MODEL||"gemini-3.6-flash",scanner_model_discovery:true,scanner_mobile_foreground:!!env.IMAGES,scanner_budget_version:SCANNER_BUDGET_VERSION,scanner_budget_schema:scanner_budget_schema,scanner_identify_daily_limit:scannerBudgetLimits(env,"identify").actor,scanner_cutout_daily_limit:scannerBudgetLimits(env,"cutout").actor,scanner_analysis_daily_limit:scannerBudgetLimits(env,"analysis").actor,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_moderation_version:CATALOG_MODERATION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,news_agent_version:NEWS_AGENT_VERSION,news_schedule:"Monday and Thursday releases with daily recovery via UTC cron",news_target_per_release:3,news_current_release:newsReleaseSlot(new Date()),news_article_count:news_article_count,news_last_run:news_last_run,local_image_pipeline_version:LOCAL_IMAGE_PIPELINE_VERSION,news_retention_days:NEWS_RETENTION_DAYS,starter_news_count:STARTER_NEWS.length,news_auth_required:true,catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,auth_security_schema:auth_security_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,catalog_moderation_schema:catalog_moderation_schema,telemetry_schema:telemetry_schema,news_schema:news_schema,news_agent_ready:news_schema&&!!env.GEMINI_API_KEY,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),local_image_cutout_ready:!!env.IMAGES,cutout_quality_ready:!!(env.IMAGES&&env.GEMINI_API_KEY),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
   }
   if(path==="/auth/google/start" && request.method==="GET"){
     const returnUrl=allowedReturnUrl(env,url.searchParams.get("return")||appUrl(env));
@@ -2307,7 +2352,7 @@ export default {
     }
 
     const scanUser=await authUser(env,request);
-    const owner=!!((env.DEV_KEY && body.dev && body.dev.toString()===env.DEV_KEY) || isAdminUser(env,scanUser));
+    const owner=isAdminUser(env,scanUser);
     const scanId=crypto.randomUUID();
     const scanStartedAt=new Date().toISOString();
     const scanStartedMs=Date.now();
@@ -2334,18 +2379,14 @@ export default {
       else trackScan(outcome,extra);
       return J(payload,status,cors);
     }
-    const LIMIT=parseInt(env.DAILY_LIMIT||"30",10);
-    const ip=request.headers.get("CF-Connecting-IP")||"anon";
-    const quotaActor=scanUser&&scanUser.id ? "user:"+scanUser.id : (deviceHash ? "device:"+deviceHash : "ip:"+ip);
-    const key="q:"+quotaActor+":"+new Date().toISOString().slice(0,10);
-    let used=0;
     let remainingQuota=null;
-    const confirmationOnly=mode==="rate"&&!!confirmedId;
-    if(!owner && !confirmationOnly && env.DS_KV && LIMIT>0){
-      used=parseInt((await env.DS_KV.get(key))||"0",10);
-      if(used>=LIMIT) return scanResponse({limited:true,remaining:0,limit:LIMIT},200,"limited",{error_code:"daily_limit"});
-      await env.DS_KV.put(key,String(used+1),{expirationTtl:90000});
-      remainingQuota=Math.max(0,LIMIT-(used+1));
+    if(!confirmedId){
+      const identifyBudget=await consumeScannerBudget(env,request,scanUser,deviceHash,"identify");
+      if(!identifyBudget.allowed){
+        if(identifyBudget.error) return scanResponse({error:identifyBudget.error,retry:false},503,"budget_error",{error_code:identifyBudget.error});
+        return scanResponse({limited:true,remaining:0,limit:identifyBudget.limit,budget:"identify",reason:identifyBudget.reason},200,"limited",{error_code:"daily_limit"});
+      }
+      remainingQuota=identifyBudget.remaining;
     }
 
     const db=await getDB(env,request);
@@ -2356,6 +2397,11 @@ export default {
       if(!hit) return scanResponse({error:"confirmed_bottle_not_found"},404,"error",{error_code:"confirmed_bottle_not_found"});
       const result=Object.assign({},hit);
       if(!result.image){
+        const cutoutBudget=await consumeScannerBudget(env,request,scanUser,deviceHash,"cutout");
+        if(!cutoutBudget.allowed){
+          if(cutoutBudget.error) return scanResponse({error:cutoutBudget.error,retry:false},503,"budget_error",{error_code:cutoutBudget.error});
+          return scanResponse({limited:true,remaining:0,limit:cutoutBudget.limit,budget:"cutout",reason:cutoutBudget.reason},200,"limited",{error_code:"cutout_limit"});
+        }
         const cutoutStarted=Date.now();
         try{
           const cutout=await transformBottleCutout(env,mime,image);
@@ -2460,6 +2506,11 @@ export default {
         const needsScanPreview=candidates.some(function(candidate){ return !(candidate&&candidate.result&&candidate.result.image); });
         if(needsScanPreview){
           if(!env.IMAGES) return scanResponse({error:"image_pipeline_unavailable",retry:true},200,"cutout_failed",{error_code:"image_pipeline_unavailable",candidates:candidates});
+          const cutoutBudget=await consumeScannerBudget(env,request,scanUser,deviceHash,"cutout");
+          if(!cutoutBudget.allowed){
+            if(cutoutBudget.error) return scanResponse({error:cutoutBudget.error,retry:false},503,"budget_error",{error_code:cutoutBudget.error,candidates:candidates});
+            return scanResponse({limited:true,remaining:0,limit:cutoutBudget.limit,budget:"cutout",reason:cutoutBudget.reason},200,"limited",{error_code:"cutout_limit",candidates:candidates});
+          }
           const cutoutStarted=Date.now();
           try{
             const cutout=await transformBottleCutout(env,mime,image);
@@ -2500,6 +2551,11 @@ export default {
 
     // =================== TRYB ANALYZE ===================
     if(!confidentHit) return lowConfidenceResponse(mode);
+    const analysisBudget=await consumeScannerBudget(env,request,scanUser,deviceHash,"analysis");
+    if(!analysisBudget.allowed){
+      if(analysisBudget.error) return scanResponse({error:analysisBudget.error,retry:false},503,"budget_error",{error_code:analysisBudget.error});
+      return scanResponse({limited:true,remaining:0,limit:analysisBudget.limit,budget:"analysis",reason:analysisBudget.reason},200,"limited",{error_code:"analysis_limit"});
+    }
     const system=(await getPrompt(env)).replace(/\{\{\s*LANG\s*\}\}/g, langName(lang));
     const profileSchema="{\"en\":{\"general\":\"one short factual sentence\",\"nose\":\"one short tasting sentence\",\"taste\":\"one short tasting sentence\",\"finish\":\"one short tasting sentence\"},\"pl\":{\"general\":\"jedno krotkie zdanie informacyjne\",\"nose\":\"jedno krotkie zdanie degustacyjne\",\"taste\":\"jedno krotkie zdanie degustacyjne\",\"finish\":\"jedno krotkie zdanie degustacyjne\"}}";
     let ctx="Butelka rozpoznana ze zdjecia: \""+bottleName+"\".";
@@ -2523,7 +2579,7 @@ export default {
     return scanResponse({result:ra, mode:mode, remaining:remainingQuota, owner:owner, matched:hit?hit.id:null, confidence:overallConfidence, agents:agentTrace},200,"analyzed",{matched_bottle_id:hit&&hit.id});
   },
   async scheduled(controller, env, ctx){
-    const tasks=[cleanupStaleCatalogSubmissions(env,200),cleanupTelemetry(env),cleanupNews(env)];
+    const tasks=[cleanupStaleCatalogSubmissions(env,200),cleanupTelemetry(env),cleanupScannerBudgets(env),cleanupNews(env)];
     tasks.push(seedStarterNews(env).then(function(){ return refreshWhiskyNews(env,"scheduled",controller.scheduledTime); }));
     ctx.waitUntil(Promise.all(tasks));
   }

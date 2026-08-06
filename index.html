@@ -1188,6 +1188,7 @@ Object.assign(I18N.pl,{
   newsAuthTitle:"Newsy dla zalogowanych \u0142owc\u00f3w", newsAuthCopy:"Zaloguj si\u0119 albo za\u0142\u00f3\u017c konto, aby czyta\u0107 cotygodniowy wyb\u00f3r artyku\u0142\u00f3w o whisky.",
   localPhotoPreviewTitle:"Podgl\u0105d zdj\u0119cia", localPhotoProcessing:"Wycinam i centruj\u0119 butelk\u0119...", localPhotoProcessingCopy:"Surowe zdj\u0119cie nie zostanie zapisane w chmurze.",
   localPhotoReady:"Tak b\u0119dzie wygl\u0105da\u0107 butelka w aplikacji.", useLocalPhoto:"U\u017cyj zdj\u0119cia", cancel:"Anuluj", localPhotoLimit:"Dzisiejszy limit obr\u00f3bki zdj\u0119\u0107 zosta\u0142 wykorzystany.",
+  scannerBudgetUnavailable:"Bud\u017cet skanera nie jest jeszcze gotowy. Administrator musi wykona\u0107 migracj\u0119 D1 v70.",
   localPhotoQualityError:"Poka\u017c ca\u0142\u0105 butelk\u0119 od korka do dna. Nie trzymaj jej za szyjk\u0119 i usu\u0144 d\u0142onie oraz inne przedmioty z kadru."
 });
 Object.assign(I18N.en,{
@@ -1228,6 +1229,7 @@ Object.assign(I18N.en,{
   newsAuthTitle:"News for signed-in hunters", newsAuthCopy:"Sign in or create an account to read the weekly selection of whisky articles.",
   localPhotoPreviewTitle:"Photo preview", localPhotoProcessing:"Cutting out and centering the bottle...", localPhotoProcessingCopy:"The original photo will not be stored in the cloud.",
   localPhotoReady:"This is how the bottle will look in the app.", useLocalPhoto:"Use photo", cancel:"Cancel", localPhotoLimit:"Today's photo processing limit has been reached.",
+  scannerBudgetUnavailable:"The scanner budget is not ready yet. An administrator must run D1 migration v70.",
   localPhotoQualityError:"Show the whole bottle from cap to base. Do not hold the neck, and keep hands and other objects outside the frame."
 });
 Object.assign(I18N.pl,{
@@ -1900,7 +1902,10 @@ function renderAdminSystemHealth(data){
     {label:authText("Scanner AI","AI skanera"),value:status(data.scanner_ai_ready),state:!!data.scanner_ai_ready},
     {label:authText("Model discovery","Wykrywanie modeli"),value:data.scanner_model_discovery?authText("Active","Aktywne"):authText("Inactive","Nieaktywne"),state:!!data.scanner_model_discovery},
     {label:authText("Image foreground","Separacja butelki"),value:status(data.scanner_mobile_foreground),state:!!data.scanner_mobile_foreground},
-    {label:authText("Scanner mode","Tryb skanera"),value:data.scan_mode||"-"}
+    {label:authText("Scanner mode","Tryb skanera"),value:data.scan_mode||"-"},
+    {label:authText("Cost budget","Budzet kosztow"),value:data.scanner_budget_version||"-",wide:true},
+    {label:authText("Budget schema","Schemat budzetu"),value:status(data.scanner_budget_schema),state:!!data.scanner_budget_schema},
+    {label:authText("Daily limits","Limity dzienne"),value:[data.scanner_identify_daily_limit,data.scanner_cutout_daily_limit,data.scanner_analysis_daily_limit].map(function(value){ return value==null?"-":value; }).join(" / ")}
   ];
   box.innerHTML='<h3>'+esc(authText("System status","Stan systemu"))+'</h3><div class="admin-system-grid">'+rows.map(function(row){
     const stateClass=row.state===true?' ok':row.state===false?' bad':'';
@@ -3728,9 +3733,8 @@ function processLocalBottlePhoto(file,id){
     if(preview) preview.innerHTML='<img src="'+esc(safeImageSrc(pendingLocalBottleImageData,""))+'" alt="'+esc(t("localPhotoReady"))+'">';
     if(accept) accept.disabled=false;
   }).catch(function(err){
-    const message=err&&err.error==="local_cutout_limit"
-      ? t("localPhotoLimit")
-      : (err&&err.error==="cutout_quality"?t("localPhotoQualityError"):t("localBottlePhotoError"));
+    const fallback=err&&err.error==="cutout_quality"?t("localPhotoQualityError"):t("localBottlePhotoError");
+    const message=scannerBudgetErrorMessage(err,fallback);
     renderLocalPhotoState(t("localBottlePhotoError"),message);
   }).then(function(){ localBottleImageBusy=false; });
 }
@@ -3801,6 +3805,12 @@ function scanSuccessMessage(){
     : ["Found a match.","Bottle identified.","Got it.","Confident match.","Match confirmed."];
   return messages[Math.floor(Math.random()*messages.length)];
 }
+function scannerBudgetErrorMessage(err,fallback){
+  const code=err&&err.error||"";
+  if(code==="local_cutout_limit" || code==="catalog_cutout_limit") return t("localPhotoLimit");
+  if(code==="scanner_budget_schema_missing") return t("scannerBudgetUnavailable");
+  return fallback;
+}
 function catalogBottlePayload(res){
   res=res||{};
   return {
@@ -3845,9 +3855,10 @@ function startCatalogSubmission(){
   })}).then(function(data){
     catalogSubmissionId=data.submission_id||"";
     renderCatalogPreview(data);
-  }).catch(function(){
+  }).catch(function(err){
     catalogSubmissionId="";
-    document.getElementById("catalogPreview").innerHTML='<div class="catalog-preview-state"><b>'+esc(t("catalogError"))+'</b>'+esc(t("catalogNoPreviewCopy"))+'</div>';
+    const message=scannerBudgetErrorMessage(err,t("catalogNoPreviewCopy"));
+    document.getElementById("catalogPreview").innerHTML='<div class="catalog-preview-state"><b>'+esc(t("catalogError"))+'</b>'+esc(message)+'</div>';
     document.getElementById("catalogPreviewActions").innerHTML='<button class="btn" type="button" data-catalog-decision="retry_local">'+esc(t("retakeImage"))+'</button>';
   });
 }
@@ -4081,12 +4092,12 @@ function prepareConfirmedCandidateAsset(result, mode){
       result.catalog_asset_missing=true;
     }
     renderScan(result,mode);
-  }).catch(function(){
+  }).catch(function(err){
     catalogSubmissionId="";
     result.catalog_preview_failed=true;
     result.catalog_asset_missing=true;
     renderScan(result,mode);
-    toast(t("catalogError"));
+    toast(scannerBudgetErrorMessage(err,t("catalogError")));
   });
 }
 function scan(mode,confirmedId){
@@ -4101,6 +4112,7 @@ function scan(mode,confirmedId){
     stopLoading();
     if(data.error==="not_bottle"){ showErr(t("notBottle")); return; }
     if(data.limited){ showErr(t("errScanLimit")); return; }
+    if(data.error==="scanner_budget_schema_missing"){ showErr(t("scannerBudgetUnavailable")); return; }
     if(data.error==="quota_exhausted"){ showErr(t("errQuota")); return; }
     if(data.error==="upstream" && data.provider_error==="timeout"){ showErr(t("errProviderTimeout")); return; }
     if(data.error==="upstream" && data.provider_error==="network"){ showErr(t("errProviderNetwork")); return; }

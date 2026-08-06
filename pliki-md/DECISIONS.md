@@ -254,3 +254,13 @@ Ten plik trzyma stale ustalenia, zeby nie ginely w dlugich watkach.
 - `/auth/health` jest minimalny. Pelna diagnostyka `/admin/health` wymaga aktywnej sesji i roli D1 `admin`.
 - Surowe wyjatki nie sa czescia publicznego kontraktu API; klient dostaje bezpieczny kod i `request_id`.
 - Test `security-xss-regression.mjs` jest obowiazkowa lokalna regresja tej granicy.
+
+## 2026-08-06 - Etap 3 audytu: atomowe budzety kosztow skanera
+
+- KV nie jest licznikiem kosztownych operacji. Migracja v70 dodaje `scanner_budget_events`, a dopuszczenie kosztu odbywa sie jednym warunkowym INSERT-em D1.
+- Budzety `identify`, `cutout` i `analysis` sa rozdzielone. Wycinanie ma wspolny budzet niezaleznie od tego, czy uruchomil je skan, potwierdzenie, lokalne zdjecie czy dodanie assetu do katalogu.
+- Limit aktora jest laczony z wyzszym limitem hasha IP. Rotacja `device_id` nie resetuje limitu IP.
+- Domysl zwyklego usera/goscia: 5 rozpoznan, 10 wyciec i 3 analizy na UTC day. Rola D1 `admin` ma nielimitowany dostep.
+- `DEV_KEY` nie daje juz uprawnien ani obejscia limitu.
+- Zdarzenia zawieraja tylko hashe aktora i IP, a dzienny Cron usuwa dane starsze niz 8 dni.
+- Test: `scripts/scanner-budget-regression.mjs`.

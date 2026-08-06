@@ -24,10 +24,11 @@ Najważniejszy problem nie dotyczy SQL Injection. Zapytania D1 są w większośc
 
 - Etap 0 zakonczony: zapisano punkt Time Travel D1 oraz tag kodu `audit-backup-2026-08-05-pre-auth-hardening`.
 - Etap 1 zakonczony i wdrozony: weryfikacja e-mail, role D1, bezpieczne laczenie Google, reautoryzacja usuwania konta i uniewaznienie sesji administratorow.
-- Etap 2 zaimplementowany lokalnie: pelne kodowanie atrybutow, allowlista URL i obrazow, CSP, naglowki API, minimalny publiczny health i bezpieczne identyfikatory bledow.
+- Etap 2 zakonczony i wdrozony: pelne kodowanie atrybutow, allowlista URL i obrazow, CSP, naglowki API, minimalny publiczny health i bezpieczne identyfikatory bledow.
+- Etap 3 zaimplementowany lokalnie: atomowe budzety D1 obejmuja rozpoznanie, potwierdzenie wymagajace wyciecia, lokalne zdjecie, dodanie assetu do katalogu i analize AI. Admin jest rozpoznawany wylacznie przez role D1.
 - `scripts/security-xss-regression.mjs`, testy auth, testy katalogu i skanera oraz 6 testow Playwright przechodza.
 - P1-1 jest naprawione. P1-4 zostalo naprawione w czesci dotyczacej health i surowych wyjatkow; optymalizacja publicznych odczytow ocen pozostaje otwarta.
-- P1-2, P1-3 i P1-5 pozostaja kolejnymi priorytetami planu naprawczego.
+- P1-2 jest naprawione w kodzie i czeka na migracje v70 oraz wdrozenie. P1-3 i P1-5 pozostaja kolejnymi priorytetami planu naprawczego.
 
 ## Znaleziska krytyczne
 

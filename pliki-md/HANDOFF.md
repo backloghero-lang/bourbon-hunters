@@ -352,6 +352,17 @@ node scripts/test_spirit_taxonomy.mjs
 - Zmiana nie wymaga migracji D1. Po publikacji GitHub trzeba podmienic i wdrozyc `agent/worker.js` w Cloudflare.
 - Test `scripts/scanner-provider-fallback.mjs` obejmuje niedostepna liste modeli, filtrowanie starego modelu i przejscie po `404`.
 
+## Aktualizacja 2026-08-06 - atomowe budzety kosztow skanera
+
+- Wymagana migracja: `agent/d1-migration-v70-scanner-budgets.sql` przed deployem Workera.
+- Wersja budzetu: `d1-atomic-cost-budgets-v1`; stan i limity sa widoczne w `Profil -> Raporty -> Stan systemu`.
+- Zwykly user/gosc ma domyslnie 5 rozpoznan, 10 wyciec i 3 analizy AI dziennie. Admin z roli D1 jest bez limitu.
+- Warunkowy INSERT D1 sprawdza atomowo limit aktora i IP. Zmiana `device_id` nie omija limitu IP.
+- Wspolny budzet `cutout` obejmuje skan bez assetu, potwierdzenie, lokalne zdjecie i tworzenie podgladu katalogowego.
+- Usunieto obejscie przez `confirmed_id` oraz `DEV_KEY`.
+- Testy: `scripts/scanner-budget-regression.mjs` i `scripts/scanner-regression.mjs`.
+- Cache PWA: `bourbon-hunters-v118`.
+
 ## Aktualizacja 2026-08-05 - kuracja kategorii i filtrow
 
 - Z aplikacji i indeksu skanera usunieto whiskey smakowe, likiery whiskey oraz warianty infused/cream.

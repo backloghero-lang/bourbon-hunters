@@ -2,6 +2,30 @@
 
 ## Aktualna zasada deployu - 2026-07-06
 
+## Wdrozenie Etapu 3 audytu - atomowe limity skanera
+
+Ta paczka wymaga migracji D1 v70, publikacji GitHub Pages i podmiany Workera. Zachowaj te kolejnosc.
+
+1. W D1 zapisz punkt Time Travel poleceniem `SELECT datetime('now') AS restore_point_utc;`.
+2. W konsoli `bourbon-hunters-db` wykonaj caly plik `agent/d1-migration-v70-scanner-budgets.sql`.
+3. Sprawdz migracje:
+
+```sql
+SELECT name FROM sqlite_master WHERE type='table' AND name='scanner_budget_events';
+```
+
+Wynik ma zawierac jeden wiersz `scanner_budget_events`.
+
+4. Uruchom `WYSLIJ-NA-GITHUB.bat` i poczekaj na zielone GitHub Actions.
+5. W Cloudflare podmien caly `agent/worker.js` i kliknij `Deploy`.
+6. Zaloguj sie jako administrator i wejdz w `Profil -> Raporty -> Stan systemu`.
+7. Sprawdz: `Budzet kosztow: d1-atomic-cost-budgets-v1`, `Schemat budzetu: Gotowe` oraz limity `5 / 10 / 3`.
+8. W PWA odswiez build do cache `bourbon-hunters-v118`.
+
+Domyslne limity zwyklego konta i goscia to 5 rozpoznan, 10 operacji wycinania oraz 3 analizy AI dziennie. Limit IP jest wyzszy i chroni przed obchodzeniem limitu przez zmiane `device_id`. Konto z aktywna rola D1 `admin` nie zuzywa budzetu. Jesli w Cloudflare istnieje zmienna `DAILY_LIMIT`, ustaw ja na `5`, bo nadpisuje wartosc domyslna.
+
+Nowy Worker celowo zwraca `scanner_budget_schema_missing` zwyklemu userowi, jezeli zostanie wdrozony przed migracja v70. Administrator nadal moze wtedy wejsc do Raportow i zobaczyc brakujacy schemat.
+
 ## Wdrozenie Etapu 2 audytu - XSS i granica API
 
 Ta paczka nie wymaga migracji D1.

@@ -169,6 +169,41 @@ const imagePipeline={
     };
   }
 };
+function createBudgetDb(){
+  const events=[];
+  return {
+    prepare(sql){
+      let args=[];
+      return {
+        bind(...values){ args=values; return this; },
+        async first(){
+          if(sql.includes("sqlite_master")) return args[0]==="scanner_budget_events"?{name:"scanner_budget_events"}:null;
+          if(sql.startsWith("SELECT COALESCE(SUM(CASE WHEN actor_hash=")){
+            const [actorHash,ipHash,periodKey,operation]=args;
+            return {
+              actor_used:events.filter((row)=>row.periodKey===periodKey&&row.operation===operation&&row.actorHash===actorHash).length,
+              ip_used:events.filter((row)=>row.periodKey===periodKey&&row.operation===operation&&row.ipHash===ipHash).length
+            };
+          }
+          return null;
+        },
+        async run(){
+          if(sql.startsWith("INSERT INTO scanner_budget_events")){
+            const id=args[0],periodKey=args[1],actorType=args[2],actorHash=args[3],ipHash=args[4],operation=args[5],createdAt=args[6];
+            const actorLimit=args[10],ipLimit=args[14];
+            const actorUsed=events.filter((row)=>row.periodKey===periodKey&&row.operation===operation&&row.actorHash===actorHash).length;
+            const ipUsed=events.filter((row)=>row.periodKey===periodKey&&row.operation===operation&&row.ipHash===ipHash).length;
+            if(actorUsed>=Number(actorLimit)||ipUsed>=Number(ipLimit)) return {meta:{changes:0}};
+            events.push({id,periodKey,actorType,actorHash,ipHash,operation,createdAt});
+            return {meta:{changes:1}};
+          }
+          return {meta:{changes:0}};
+        }
+      };
+    }
+  };
+}
+const budgetDb=createBudgetDb();
 const initialRequest=new Request("https://bourbon-hunters.darekmaslyk.workers.dev/",{
   method:"POST",
   headers:{"Content-Type":"application/json","Origin":"https://backloghero-lang.github.io"},
@@ -180,7 +215,7 @@ const initialRequest=new Request("https://bourbon-hunters.darekmaslyk.workers.de
     device_id:"scanner-regression"
   })
 });
-const initialResponse=await context.__worker.fetch(initialRequest,{IMAGES:imagePipeline,GEMINI_API_KEY:"test"},{waitUntil(){}});
+const initialResponse=await context.__worker.fetch(initialRequest,{DB:budgetDb,IMAGES:imagePipeline,GEMINI_API_KEY:"test"},{waitUntil(){}});
 const initial=await initialResponse.json();
 assert(initialResponse.status===200,`Initial cutout returned ${initialResponse.status}: ${JSON.stringify(initial)}`);
 assert(initial.matched==="bulleit-bottled-in-bond-111-22",`Initial scan matched ${initial.matched||"nothing"}`);
@@ -199,7 +234,7 @@ const confirmationRequest=new Request("https://bourbon-hunters.darekmaslyk.worke
     device_id:"scanner-regression"
   })
 });
-const confirmationResponse=await context.__worker.fetch(confirmationRequest,{IMAGES:imagePipeline},{waitUntil(){}});
+const confirmationResponse=await context.__worker.fetch(confirmationRequest,{DB:budgetDb,IMAGES:imagePipeline},{waitUntil(){}});
 const confirmation=await confirmationResponse.json();
 assert(confirmationResponse.status===200,`Confirmed cutout returned ${confirmationResponse.status}: ${JSON.stringify(confirmation)}`);
 assert(confirmation.matched==="bulleit-bottled-in-bond-111-22",`Confirmed cutout matched ${confirmation.matched||"nothing"}`);
