@@ -1918,6 +1918,9 @@ function renderAdminSystemHealth(data){
   const status=function(value){ return value?authText("Ready","Gotowe"):authText("Unavailable","Niedostepne"); };
   const rows=[
     {label:authText("Scanner version","Wersja skanera"),value:data.scan_orchestrator_version||"-",wide:true},
+    {label:authText("Scan catalog","Katalog skanera"),value:data.scan_catalog_version||"-",wide:true},
+    {label:authText("Private bottles","Prywatne butelki"),value:data.private_bottle_version||"-",wide:true},
+    {label:authText("Private bottle schema","Schemat prywatnych butelek"),value:status(data.private_bottle_schema),state:!!data.private_bottle_schema},
     {label:authText("Primary model","Model podstawowy"),value:data.scanner_primary_model||"-"},
     {label:authText("Fallback model","Model zapasowy"),value:data.scanner_fallback_model||"-"},
     {label:authText("Scanner AI","AI skanera"),value:status(data.scanner_ai_ready),state:!!data.scanner_ai_ready},
