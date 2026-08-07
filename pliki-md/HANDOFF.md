@@ -392,6 +392,22 @@ node scripts/test_spirit_taxonomy.mjs
 - Przyciski dodania, zmiany i usuniecia lokalnego zdjecia sa wewnatrz ramki butelki przy jej dolnych rogach.
 - Cache PWA: `bourbon-hunters-v114`. Migracja D1 nie jest wymagana.
 
+## Aktualizacja 2026-08-07 - demo 200 i prywatne butelki
+
+- Publiczny frontend laduje `db/catalog/demo-200.json` zamiast pelnego katalogu.
+- Worker skanera pobiera `db/catalog/demo-scan-index.json`; indeks zawiera 200 rekordow demo. Brak zdjecia daje widok mystery, ale nie zmienia rekordu w prywatne zgloszenie.
+- Brak pewnego trafienia pokazuje pytanie o dodanie prywatnej butelki. Dopiero po zgodzie niezalogowany user widzi bramke logowania z informacja, ze funkcja jest dostepna w planie Free.
+- Prywatne rekordy sa przechowywane w `user_private_bottles`, sa przypisane do `user_id`, widoczne tylko w kolekcji wlasciciela i edytowalne w szczegolach.
+- Prywatne rekordy nie trafiaja do Odkrywaj, wspolnego katalogu, rekomendacji ani indeksu skanera.
+- Migracja: `agent/d1-migration-v72-private-bottles.sql`.
+- Worker health: `private_bottle_version: owner-only-private-bottles-v1`, `scan_catalog_version: demo-200-v1`, `private_bottle_schema: true`.
+- Generator: `scripts/build_demo_catalog.mjs`; raport i manifest zrodel znajduja sie w `db/catalog/demo-build-report.json` i `db/catalog/demo-image-manifest.json`.
+- Obrazy demo: 81/200 rekordow ma zweryfikowany lokalny obraz; 35 nowych packshotow pobrano z oficjalnych stron marek, a 46 pochodzi z istniejacych assetow repozytorium. Brak pewnego obrazu pozostaje mystery zamiast losowego dopasowania.
+- Pochodzenie nowych plikow zapisuje `db/catalog/demo-image-overrides.json`. Rejestr odrzuconych wariantow znajduje sie w `db/catalog/demo-image-review.json`; generator i fetcher nie uzywaja tych pozycji ponownie.
+- Oficjalna strona jest zrodlem pochodzenia, ale nie stanowi automatycznie licencji na redystrybucje. Przed publicznym materialem innym niz ograniczone demo trzeba potwierdzic zgody wlascicieli marek.
+- Testy: `scripts/private-bottle-schema-regression.mjs` oraz `scripts/ui-private-bottle-flow-smoke.mjs`.
+- Cache PWA: `bourbon-hunters-v120`.
+
 ## Aktualizacja 2026-08-05 - startowy feed Polecanych
 
 - `Polecane` ma 10 startowych butelek z istniejacymi assetami oraz 32 zroznicowane opinie, srednio 3,2 komentarza na butelke.

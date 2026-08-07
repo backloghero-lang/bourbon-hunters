@@ -404,3 +404,27 @@ Worker pobiera z Gemini liste modeli dostepnych dla aktualnego klucza i przechow
 Po tej aktualizacji nie wykonuj migracji D1 ani nie zmieniaj sekretu `GEMINI_API_KEY`. Wymagana jest jedynie publikacja `agent/worker.js` w Cloudflare. Test lokalny: `node scripts/scanner-provider-fallback.mjs`.
 
 Stare identyfikatory z kolekcji, wishlist i ocen sa automatycznie przenoszone na produkty kanoniczne. Nie wykonuj recznych aktualizacji D1.
+
+## Wdrozenie prywatnych butelek i katalogu demo 200 - 2026-08-07
+
+Ta paczka wymaga migracji D1, GitHub Pages i aktualizacji Workera. Kolejnosc ma znaczenie.
+
+1. W Cloudflare otworz D1 `bourbon-hunters-db` -> Console.
+2. Wklej i wykonaj caly plik `agent/d1-migration-v72-private-bottles.sql`.
+3. Uruchom `WYSLIJ-NA-GITHUB.bat` i poczekaj na zielone GitHub Actions. GitHub musi byc przed Workerem, bo Worker pobiera stamtad `db/catalog/demo-scan-index.json`.
+4. W Cloudflare zastap kod Workera zawartoscia `agent/worker.js` i kliknij `Deploy`.
+5. Otworz `https://bourbon-hunters.darekmaslyk.workers.dev/auth/health`, a w aplikacji jako admin wejdz w `Profil -> Raporty`.
+6. Sprawdz: `private_bottle_version: owner-only-private-bottles-v1`, `scan_catalog_version: demo-200-v1` i `private_bottle_schema: true`.
+
+### Zdjecia katalogu demo
+
+- `assets/bourbons/demo-200/` zawiera nowe, recznie zweryfikowane obrazy z oficjalnych stron producentow.
+- `db/catalog/demo-image-overrides.json` zapisuje adres strony produktu, adres obrazu i status weryfikacji licencji.
+- `db/catalog/demo-image-review.json` blokuje bledne warianty, zestawy prezentowe i obrazy bez butelki.
+- Aktualny wynik: 81 z 200 rekordow ma obraz; pozostale swiadomie korzystaja z grafiki mystery.
+- Nie traktuj adresu oficjalnej strony jako licencji. Przed szersza publikacja uzyskaj zgode na redystrybucje packshotow.
+7. Na telefonie otworz `test-index.html`, wybierz `Wyczysc cache/PWA`, a potem `Odswiez build`. Aktualny cache to `bourbon-hunters-v120`.
+8. Test zalogowanego usera: zeskanuj butelke spoza demo, wybierz dodanie, uzupelnij nazwe i zapisz. Rekord ma pojawic sie w `Moja kolekcja`, ale nie w `Odkrywaj`.
+9. Test goscia: zeskanuj butelke spoza demo i wybierz dodanie. Aplikacja ma pokazac informacje o darmowym koncie oraz przyciski logowania i rejestracji.
+
+Nie uruchamiaj ponownie migracji v69-v71. Dla tej paczki nowa jest tylko migracja v72.

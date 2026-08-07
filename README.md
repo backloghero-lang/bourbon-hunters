@@ -28,7 +28,11 @@ Bourbon Hunters powstało dla osób, które lubią odkrywać bourbon, whisky i i
 
 ## Skaner etykiet
 
-Skaner analizuje zdjęcie przedniej etykiety i porównuje je z katalogiem produktów. Następnie pokazuje najlepiej dopasowaną butelkę lub maksymalnie dwie prawdopodobne propozycje, a użytkownik potwierdza właściwy wariant.
+Wersja demonstracyjna korzysta z kuratorskiego katalogu 200 butelek. Gdy skaner znajduje pewne dopasowanie, pokazuje kartę produktu. Rekord bez gotowego zdjęcia otrzymuje widok mystery, ale nadal może zostać rozpoznany.
+
+Jeżeli butelki nie ma w bazie, aplikacja pyta, czy użytkownik chce dodać ją do swojej kolekcji. Funkcja jest dostępna już w darmowym planie po zalogowaniu. Taki wpis pozostaje prywatny, należy wyłącznie do konta użytkownika i nie trafia do publicznego katalogu, rekomendacji ani wyników skanera innych osób. Właściciel może uzupełnić kluczowe dane i później je edytować.
+
+Skaner analizuje zdjęcie przedniej etykiety i porównuje je z katalogiem produktów. Niepewne lub niejednoznaczne odczyty nie są przedstawiane jako pewne trafienie i wymagają ponownego zdjęcia.
 
 Po potwierdzeniu aplikacja prezentuje między innymi:
 

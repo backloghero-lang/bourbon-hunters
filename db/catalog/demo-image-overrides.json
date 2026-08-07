@@ -1,0 +1,286 @@
+{
+  "version": "official-demo-images-v1",
+  "updated": "2026-08-07T19:56:08.432Z",
+  "items": {
+    "wild-turkey-rare-breed-101-23": {
+      "image": "assets/bourbons/demo-200/wild-turkey-rare-breed-101-23.webp",
+      "source_page": "https://www.wildturkeybourbon.com/products/rare-breed/",
+      "source_url": "https://www.wildturkeybourbon.com/app/uploads/2022/07/WildTurkeyBorbonBottle-scaled.webp",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:39:29.802Z"
+    },
+    "popular-bulleit-bourbon": {
+      "image": "assets/bourbons/demo-200/popular-bulleit-bourbon.webp",
+      "source_page": "https://www.bulleit.com/en-gb/whiskeys/bulleit-bourbon",
+      "source_url": "https://images.ctfassets.net/awz4vj3h97d6/5kAcTq3PMSt24Yis9e7Cmi/f0af05bc8061697cc003a239048ce238/bulleit-bourbon.jpg?fm=webp&w=1200&q=85",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:39:23.700Z"
+    },
+    "popular-four-roses-small-batch": {
+      "image": "assets/bourbons/demo-200/popular-four-roses-small-batch.png",
+      "source_page": "https://www.fourrosesbourbon.com/bourbon/small-batch",
+      "source_url": "https://four-roses.files.svdcdn.com/production/images/bourbons/Web_Small-batch_2023-06-14-135007_iiyg.png?dm=1757960464",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:39:28.881Z"
+    },
+    "olcc-3982b": {
+      "image": "assets/bourbons/demo-200/olcc-3982b.webp",
+      "source_page": "https://www.jimbeam.com/bourbons/jim-beam-double-oak",
+      "source_url": "https://www.jimbeam.com/sites/default/files/styles/original/public/2025-04/jim-beam-bourbon-double-oak-whiskey_0.webp?itok=-lHuqWvO",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:39:41.557Z"
+    },
+    "olcc-6947b": {
+      "image": "assets/bourbons/demo-200/olcc-6947b.webp",
+      "source_page": "https://www.jimbeam.com/bourbons/jim-beam-devils-cut",
+      "source_url": "https://www.jimbeam.com/sites/default/files/styles/original/public/2025-07/jim-beam-bottle-bourbon-whiskey-devils-cut.jpg.webp?itok=qYyxjNcZ",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:39:42.705Z"
+    },
+    "jim-beam-single-barrel": {
+      "image": "assets/bourbons/demo-200/jim-beam-single-barrel.webp",
+      "source_page": "https://www.jimbeam.com/bourbons/jim-beam-single-barrel",
+      "source_url": "https://www.jimbeam.com/sites/default/files/styles/original/public/2024-06/jim-beam-bourbon-bottle-whiskey-single-barrel-ambient.jpg.webp?itok=VfMNOPvo",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:39:43.219Z"
+    },
+    "redwood-empire-pipe-dream-141-01": {
+      "image": "assets/bourbons/demo-200/redwood-empire-pipe-dream-141-01.png",
+      "source_page": "https://redwoodempirewhiskey.com/whiskey/pipe-dream-bourbon/",
+      "source_url": "https://redwoodempirewhiskey.com/wp-content/uploads/2024/04/PipeDream-Bourbon-Whiskey-RedwoodEmpire-366x1536.png",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:40:39.804Z"
+    },
+    "popular-coopers-craft-barrel-reserve-100-proof": {
+      "image": "assets/bourbons/demo-200/popular-coopers-craft-barrel-reserve-100-proof.webp",
+      "source_page": "https://www.cooperscraft.com/bourbon/barrel-reserve/",
+      "source_url": "https://www.cooperscraft.com/wp-content/uploads/2020/11/100p-bottle.png",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:41:08.241Z"
+    },
+    "olcc-0356b": {
+      "image": "assets/bourbons/demo-200/olcc-0356b.webp",
+      "source_page": "https://www.johnniewalker.com/en-hk/our-whisky/core-range/johnnie-walker-red-label",
+      "source_url": "https://images.ctfassets.net/waruwpig3jxu/7BAYWajVKS9kI3XREDkpfh/554b9597fb8d6376840740ae35980092/red-750ml_producthero_halffront_desktop.webp?w=1200&q=85&fm=webp",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:41:33.964Z"
+    },
+    "olcc-0357b": {
+      "image": "assets/bourbons/demo-200/olcc-0357b.webp",
+      "source_page": "https://www.johnniewalker.com/en-hk/our-whisky/core-range/johnnie-walker-black-label",
+      "source_url": "https://images.ctfassets.net/waruwpig3jxu/rYk8WxpJ1ellZvibRckWT/0e8df23f16b39c6d986faf6f68af8fee/black-750ml_producthero_lifestyle-01_desktop.webp?w=1200&q=85&fm=webp",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:41:35.746Z"
+    },
+    "johnnie-walker-double-black-151-5k": {
+      "image": "assets/bourbons/demo-200/johnnie-walker-double-black-151-5k.webp",
+      "source_page": "https://www.johnniewalker.com/en-hk/our-whisky/core-range/johnnie-walker-double-black",
+      "source_url": "https://images.ctfassets.net/waruwpig3jxu/2KL8hhvxPn9bpLV8gKjV1z/67d422d6e03122816ee7d3ee91f8749f/producthero_halffront_desktop.webp?w=1200&q=85&fm=webp",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:41:37.560Z"
+    },
+    "popular-johnnie-walker-green-label-15-year": {
+      "image": "assets/bourbons/demo-200/popular-johnnie-walker-green-label-15-year.webp",
+      "source_page": "https://www.johnniewalker.com/en-hk/our-whisky/core-range/johnnie-walker-green-label",
+      "source_url": "https://images.ctfassets.net/waruwpig3jxu/2FimeF3LI1PbHRVWUkG6OC/34412ee55d8a5954c21b02dba3fffa8e/producthero_fullfront_desktop_700ml.webp?w=1200&q=85&fm=webp",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:41:38.938Z"
+    },
+    "olcc-2209b": {
+      "image": "assets/bourbons/demo-200/olcc-2209b.webp",
+      "source_page": "https://www.johnniewalker.com/en-hk/our-whisky/core-range/johnnie-walker-blue-label",
+      "source_url": "https://images.ctfassets.net/waruwpig3jxu/3RFFcZIRhkQkbU4sHocZcd/03869d6751da65f04a3fe76d3dfddad1/JW_Blue_LabelBottle_HalfFront_1440x1440.webp?w=1200&q=85&fm=webp",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:41:44.587Z"
+    },
+    "olcc-0346b": {
+      "image": "assets/bourbons/demo-200/olcc-0346b.jpg",
+      "source_page": "https://cutty-sark.com/products/cutty-sark-original",
+      "source_url": "https://cutty-sark.com/m_enhance/170?style_name=product_media_full&filename=cutty-sark-original-00&ext=jpg&h=700&w=680&rule=680w",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:41:51.172Z"
+    },
+    "popular-glenmorangie-the-original-12-year": {
+      "image": "assets/bourbons/demo-200/popular-glenmorangie-the-original-12-year.webp",
+      "source_page": "https://www.glenmorangie.com/en-us/products/the-original-12-years-old",
+      "source_url": "https://www.glenmorangie.com/cdn/shop/files/Glenmorangie_OG12_bottle.png?v=1720433389",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:42:04.013Z"
+    },
+    "popular-glenmorangie-quinta-ruban-14-year": {
+      "image": "assets/bourbons/demo-200/popular-glenmorangie-quinta-ruban-14-year.webp",
+      "source_page": "https://www.glenmorangie.com/en-us/products/the-quinta-ruban",
+      "source_url": "https://www.glenmorangie.com/cdn/shop/files/Glenmorangie_Quinta_Ruban_bottle.png?v=1712754078",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:42:06.647Z"
+    },
+    "popular-ardbeg-uigeadail": {
+      "image": "assets/bourbons/demo-200/popular-ardbeg-uigeadail.webp",
+      "source_page": "https://www.ardbeg.com/en-int/products/ardbeg-uigeadail",
+      "source_url": "https://www.ardbeg.com/cdn/shop/files/Ardbeg-Uig-Bottle.png?v=1770979454&width=1080",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:42:09.324Z"
+    },
+    "popular-laphroaig-quarter-cask": {
+      "image": "assets/bourbons/demo-200/popular-laphroaig-quarter-cask.webp",
+      "source_page": "https://www.laphroaig.com/whiskies/laphroaig-quarter-cask-single-malt-scotch-whisky",
+      "source_url": "https://www.laphroaig.com/sites/default/files/styles/original/public/2024-07/Quarter_Casks_Front.png.webp?itok=NXbXGg1_",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:42:11.269Z"
+    },
+    "popular-lagavulin-16-year": {
+      "image": "assets/bourbons/demo-200/popular-lagavulin-16-year.webp",
+      "source_page": "https://www.malts.com/en-nl/products/lagavulin-16-year-old-single-malt-scotch-whisky-70cl",
+      "source_url": "https://images.ctfassets.net/glsfy1cpffmh/7E0xed5qcC54Aqs44Whv3n/90103c98c160d7194cd8900cf8af81ad/lagavulin-16yo-70cl-ne-malts-front-grip-digital-render.png?fm=webp&q=85&fit=fill&w=1200",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:42:34.284Z"
+    },
+    "popular-tullamore-d-e-w-original": {
+      "image": "assets/bourbons/demo-200/popular-tullamore-d-e-w-original.png",
+      "source_page": "https://www.tullamoredew.com/cs-cz/our-whiskey-range/tullamore-original/",
+      "source_url": "https://www.tullamoredew.com/assets/TD-Original-New-Bottle-700ml.png",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:42:59.389Z"
+    },
+    "popular-tullamore-d-e-w-12-year-special-reserve": {
+      "image": "assets/bourbons/demo-200/popular-tullamore-d-e-w-12-year-special-reserve.png",
+      "source_page": "https://www.tullamoredew.com/bg-bg/our-whiskey-range/12-year-old-special-reserve/",
+      "source_url": "https://www.tullamoredew.com/assets/TD-12YO-New-Bottle-700ml.png",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:43:00.366Z"
+    },
+    "olcc-3824b": {
+      "image": "assets/bourbons/demo-200/olcc-3824b.webp",
+      "source_page": "https://house.suntory.com/toki-whisky/suntory-whisky-toki",
+      "source_url": "https://house.suntory.com/sites/default/files/styles/original/public/2024-11/toki-whisky-house-of-suntory.png.webp?itok=uZW4GlIB",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:43:09.648Z"
+    },
+    "popular-hibiki-japanese-harmony": {
+      "image": "assets/bourbons/demo-200/popular-hibiki-japanese-harmony.webp",
+      "source_page": "https://house.suntory.com/hibiki-whisky/hibiki-japanese-harmony",
+      "source_url": "https://house.suntory.com/sites/default/files/styles/original/public/2024-11/hibiki-harmony-house-of-suntory.png.webp?itok=WB7CEKPS",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:43:10.459Z"
+    },
+    "popular-yamazaki-12-year": {
+      "image": "assets/bourbons/demo-200/popular-yamazaki-12-year.webp",
+      "source_page": "https://house.suntory.com/yamazaki-whisky/yamazaki-12-years-old",
+      "source_url": "https://house.suntory.com/sites/default/files/styles/original/public/2024-11/yamazaki-12-years-house-of-suntory.png.webp?itok=WxqMyu2T",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:43:11.450Z"
+    },
+    "jack-daniel-s-bonded-119-43": {
+      "image": "assets/bourbons/demo-200/jack-daniel-s-bonded-119-43.webp",
+      "source_page": "https://www.jackdaniels.com/whiskey/jack-daniels-bonded-tennessee-whiskey",
+      "source_url": "https://live-jd24-backend.pantheonsite.io/sites/default/files/2026-04/JD%20Bonded%20SE%20Bottle.png",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:43:27.519Z"
+    },
+    "jack-daniel-s-single-barrel-select-140-43": {
+      "image": "assets/bourbons/demo-200/jack-daniel-s-single-barrel-select-140-43.webp",
+      "source_page": "https://www.jackdaniels.com/whiskey/jack-daniels-single-barrel-select-tennessee-whiskey",
+      "source_url": "https://live-jd24-backend.pantheonsite.io/sites/default/files/2026-04/JD%20SBS%20SE%20Bottle.png",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:43:29.287Z"
+    },
+    "olcc-8636b": {
+      "image": "assets/bourbons/demo-200/olcc-8636b.png",
+      "source_page": "https://evanwilliams.com/bottled-in-bond-bourbon?cta=bottled-in-bond",
+      "source_url": "https://evanwilliams.com/images/bottles/ew-bottleinbond.png?ver=2",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:49:58.436Z"
+    },
+    "popular-bardstown-bourbon-company-origin-series-bourbon": {
+      "image": "assets/bourbons/demo-200/popular-bardstown-bourbon-company-origin-series-bourbon.png",
+      "source_page": "https://www.bardstownbourbon.com/products/origin-series-bourbon/",
+      "source_url": "https://www.bardstownbourbon.com/wp-content/uploads/2022/12/BBCo_Core_Line_750ml_-KYS_Bourbon-scaled-1.png",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:50:59.090Z"
+    },
+    "popular-bardstown-bourbon-company-origin-high-wheat": {
+      "image": "assets/bourbons/demo-200/popular-bardstown-bourbon-company-origin-high-wheat.png",
+      "source_page": "https://www.bardstownbourbon.com/products/high-wheat/",
+      "source_url": "https://www.bardstownbourbon.com/wp-content/uploads/2026/06/BBCo_Core_Line_750ml_-High_Wheat_Bourbon-scaled-1.png",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:51:01.653Z"
+    },
+    "olcc-13003b": {
+      "image": "assets/bourbons/demo-200/olcc-13003b.png",
+      "source_page": "https://www.bardstownbourbon.com/products/origin-series-wheated-bottled-in-bond/",
+      "source_url": "https://www.bardstownbourbon.com/wp-content/uploads/2022/12/BBCo_Core_Line_750ml_-BiB_Bourbon-scaled-1.png",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:51:04.130Z"
+    },
+    "popular-laphroaig-10-year": {
+      "image": "assets/bourbons/demo-200/popular-laphroaig-10-year.webp",
+      "source_page": "https://www.laphroaig.com/de-de/whiskies/laphroaig-10-cask-strength-batch-12",
+      "source_url": "https://www.laphroaig.com/sites/default/files/2023-05/laph_remind_me.webp",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:53:18.329Z"
+    },
+    "popular-teeling-small-batch": {
+      "image": "assets/bourbons/demo-200/popular-teeling-small-batch.jpg",
+      "source_page": "https://www.teelingwhiskey.com/teeling-whiskeys/small-batch-whiskey/",
+      "source_url": "https://d1mp96cehvcx4f.cloudfront.net/wp-content/uploads/2023/10/06184524/FY24_Teeling_Small_Batch_Mob_06_11-1.jpg",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:53:47.140Z"
+    },
+    "popular-teeling-single-malt": {
+      "image": "assets/bourbons/demo-200/popular-teeling-single-malt.jpg",
+      "source_page": "https://www.teelingwhiskey.com/teeling-whiskeys/single-malt-irish-whiskey/",
+      "source_url": "https://d1mp96cehvcx4f.cloudfront.net/wp-content/uploads/2023/10/06190643/FY24_Teeling_Single_Malt_Mob_06_11.jpg",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:53:47.749Z"
+    },
+    "popular-mars-iwai-tradition": {
+      "image": "assets/bourbons/demo-200/popular-mars-iwai-tradition.webp",
+      "source_page": "https://www.hombo.co.jp/product/iwai-tradition/",
+      "source_url": "https://www.hombo.co.jp/hombo-mars/wp-content/uploads/2010/06/4976881520455.webp",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:54:21.746Z"
+    },
+    "popular-hatozaki-finest": {
+      "image": "assets/bourbons/demo-200/popular-hatozaki-finest.webp",
+      "source_page": "https://hatozakiwhisky.com/products/hatozaki-finest-blended",
+      "source_url": "https://hatozakiwhisky.com/cdn/shop/files/Finest-Blended-EU-UK.png?v=1750255786\\u0026width=900",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "fetched_at": "2026-08-07T19:54:31.990Z"
+    }
+  }
+}

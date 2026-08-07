@@ -1,5 +1,5 @@
 /* Bourbon Hunters service worker - network-first dla aktualizacji aplikacji i bazy. */
-const CACHE = "bourbon-hunters-v119";
+const CACHE = "bourbon-hunters-v120";
 const ASSETS = [
   "./",
   "./index.html",
@@ -56,6 +56,7 @@ const ASSETS = [
   "./assets/bourbons/cutouts-test/yellowstone-select-kentucky-straight-bourbon.png",
   "./assets/bourbons/cutouts-test/michters-bourbon.png",
   "./db/bourbons.json",
+  "./db/catalog/demo-200.json",
   "./db/profiles-runtime.json",
   "./db/catalog/browse-meta.json",
   "./icons/icon-192.png",

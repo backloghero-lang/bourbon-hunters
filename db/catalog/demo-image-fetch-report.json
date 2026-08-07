@@ -1,0 +1,668 @@
+{
+  "version": "official-demo-images-v1",
+  "started_at": "2026-08-07T19:49:52.560Z",
+  "requested": 105,
+  "downloaded": [
+    {
+      "id": "olcc-8636b",
+      "name": "Evan Williams Bottled in Bond",
+      "image": "assets/bourbons/demo-200/olcc-8636b.png",
+      "source_page": "https://evanwilliams.com/bottled-in-bond-bourbon?cta=bottled-in-bond",
+      "source_url": "https://evanwilliams.com/images/bottles/ew-bottleinbond.png?ver=2",
+      "bytes": 334856,
+      "score": 22,
+      "dimensions": {
+        "width": 305,
+        "height": 944
+      }
+    },
+    {
+      "id": "popular-angel-s-envy-port-finish",
+      "name": "Angel's Envy Port Finish",
+      "image": "assets/bourbons/demo-200/popular-angel-s-envy-port-finish.png",
+      "source_page": "https://www.angelsenvy.com/us/en/product/angels-envy-port-syrup-5oz/",
+      "source_url": "https://d3cqmwe6z7cbal.cloudfront.net/wp-content/uploads/sites/2/2026/04/21075410/FY26_AngelsEnvy_Nav_SignatureSeries.png",
+      "bytes": 169234,
+      "score": 14,
+      "dimensions": {
+        "width": 320,
+        "height": 480
+      }
+    },
+    {
+      "id": "olcc-12554b",
+      "name": "Angel's Envy Triple Oak",
+      "image": "assets/bourbons/demo-200/olcc-12554b.png",
+      "source_page": "https://www.angelsenvy.com/us/en/product/angels-envy-angel-wing-lapel-pin/",
+      "source_url": "https://d3cqmwe6z7cbal.cloudfront.net/wp-content/uploads/sites/2/2026/04/21075410/FY26_AngelsEnvy_Nav_SignatureSeries.png",
+      "bytes": 169234,
+      "score": 14,
+      "dimensions": {
+        "width": 320,
+        "height": 480
+      }
+    },
+    {
+      "id": "popular-bardstown-bourbon-company-origin-series-bourbon",
+      "name": "Bardstown Bourbon Company Origin Series",
+      "image": "assets/bourbons/demo-200/popular-bardstown-bourbon-company-origin-series-bourbon.png",
+      "source_page": "https://www.bardstownbourbon.com/products/origin-series-bourbon/",
+      "source_url": "https://www.bardstownbourbon.com/wp-content/uploads/2022/12/BBCo_Core_Line_750ml_-KYS_Bourbon-scaled-1.png",
+      "bytes": 638704,
+      "score": 6,
+      "dimensions": {
+        "width": 822,
+        "height": 2560
+      }
+    },
+    {
+      "id": "popular-bardstown-bourbon-company-origin-high-wheat",
+      "name": "Bardstown Bourbon Company Origin High Wheat",
+      "image": "assets/bourbons/demo-200/popular-bardstown-bourbon-company-origin-high-wheat.png",
+      "source_page": "https://www.bardstownbourbon.com/products/high-wheat/",
+      "source_url": "https://www.bardstownbourbon.com/wp-content/uploads/2026/06/BBCo_Core_Line_750ml_-High_Wheat_Bourbon-scaled-1.png",
+      "bytes": 663548,
+      "score": 14,
+      "dimensions": {
+        "width": 822,
+        "height": 2560
+      }
+    },
+    {
+      "id": "olcc-13003b",
+      "name": "Bardstown Bourbon Company Origin Bottled in Bond",
+      "image": "assets/bourbons/demo-200/olcc-13003b.png",
+      "source_page": "https://www.bardstownbourbon.com/products/origin-series-wheated-bottled-in-bond/",
+      "source_url": "https://www.bardstownbourbon.com/wp-content/uploads/2022/12/BBCo_Core_Line_750ml_-BiB_Bourbon-scaled-1.png",
+      "bytes": 683570,
+      "score": 6,
+      "dimensions": {
+        "width": 822,
+        "height": 2560
+      }
+    },
+    {
+      "id": "popular-horse-soldier-premium-bourbon",
+      "name": "Horse Soldier Premium",
+      "image": "assets/bourbons/demo-200/popular-horse-soldier-premium-bourbon.jpg",
+      "source_page": "https://horsesoldierbourbon.com/products/horse-soldier-logo-t-shirt",
+      "source_url": "https://d111ai8eht49ae.cloudfront.net/background_image_3612b131308af92cca667b224da57a18.jpeg",
+      "bytes": 809822,
+      "score": 14,
+      "dimensions": {
+        "height": 1951,
+        "width": 2000
+      }
+    },
+    {
+      "id": "olcc-12874b",
+      "name": "Horse Soldier Small Batch",
+      "image": "assets/bourbons/demo-200/olcc-12874b.jpg",
+      "source_page": "https://horsesoldierbourbon.com/products/horse-soldier-logo-t-shirt",
+      "source_url": "https://d111ai8eht49ae.cloudfront.net/background_image_3612b131308af92cca667b224da57a18.jpeg",
+      "bytes": 809822,
+      "score": 14,
+      "dimensions": {
+        "height": 1951,
+        "width": 2000
+      }
+    },
+    {
+      "id": "popular-dewar-s-12-year",
+      "name": "Dewar's 12 Year",
+      "image": "assets/bourbons/demo-200/popular-dewar-s-12-year.png",
+      "source_page": "https://www.dewars.com/dewars-whiskies/dewars-12-year-old-whisky/",
+      "source_url": "https://d3hz9tll4wdybl.cloudfront.net/wp-content/uploads/sites/5/2025/03/05060948/FY25_Global_Dewars_IWC_Best-Blended-Scotch-12-Year-Old_GOLD_Dewars-12-Years-Old-89.06-Pts_CMYK.png",
+      "bytes": 203888,
+      "score": 22,
+      "dimensions": {
+        "width": 398,
+        "height": 400
+      }
+    },
+    {
+      "id": "popular-laphroaig-10-year",
+      "name": "Laphroaig 10 Year",
+      "image": "assets/bourbons/demo-200/popular-laphroaig-10-year.webp",
+      "source_page": "https://www.laphroaig.com/de-de/whiskies/laphroaig-10-cask-strength-batch-12",
+      "source_url": "https://www.laphroaig.com/sites/default/files/2023-05/laph_remind_me.webp",
+      "bytes": 62672,
+      "score": 26,
+      "dimensions": {
+        "width": 586,
+        "height": 585
+      }
+    },
+    {
+      "id": "popular-the-dalmore-12-year",
+      "name": "The Dalmore 12 Year",
+      "image": "assets/bourbons/demo-200/popular-the-dalmore-12-year.png",
+      "source_page": "https://www.thedalmore.com/es-es/nuestras-colecciones/coleccion-principal/the-dalmore-12/",
+      "source_url": "https://www.thedalmore.com/media/r2lnabms/d12_2023_gm_700_bottleandcarton_noshadow_shopify.png?width=960&height=1200&v=1db189b134b6fb0",
+      "bytes": 853407,
+      "score": 26,
+      "dimensions": {
+        "width": 960,
+        "height": 1200
+      }
+    },
+    {
+      "id": "popular-bruichladdich-the-classic-laddie",
+      "name": "Bruichladdich The Classic Laddie",
+      "image": "assets/bourbons/demo-200/popular-bruichladdich-the-classic-laddie.webp",
+      "source_page": "https://www.bruichladdich.com/products/bruichladdich-the-classic-laddie-sherry-edition",
+      "source_url": "https://www.bruichladdich.com/cdn/shop/files/Bruichladdich_Yellow_Submarine_III_700ml_Bottle-Light_Background_b0cb7131-7d57-4467-8b73-867be7a209bb.png?crop=center&height=1080&v=1779451636&width=1080",
+      "bytes": 48244,
+      "score": 18,
+      "dimensions": {
+        "width": 436,
+        "height": 1080
+      }
+    },
+    {
+      "id": "popular-teeling-small-batch",
+      "name": "Teeling Small Batch",
+      "image": "assets/bourbons/demo-200/popular-teeling-small-batch.jpg",
+      "source_page": "https://www.teelingwhiskey.com/teeling-whiskeys/small-batch-whiskey/",
+      "source_url": "https://d1mp96cehvcx4f.cloudfront.net/wp-content/uploads/2023/10/06184524/FY24_Teeling_Small_Batch_Mob_06_11-1.jpg",
+      "bytes": 39297,
+      "score": 26,
+      "dimensions": {
+        "height": 1066,
+        "width": 750
+      }
+    },
+    {
+      "id": "popular-teeling-single-malt",
+      "name": "Teeling Single Malt",
+      "image": "assets/bourbons/demo-200/popular-teeling-single-malt.jpg",
+      "source_page": "https://www.teelingwhiskey.com/teeling-whiskeys/single-malt-irish-whiskey/",
+      "source_url": "https://d1mp96cehvcx4f.cloudfront.net/wp-content/uploads/2023/10/06190643/FY24_Teeling_Single_Malt_Mob_06_11.jpg",
+      "bytes": 37805,
+      "score": 26,
+      "dimensions": {
+        "height": 1066,
+        "width": 750
+      }
+    },
+    {
+      "id": "popular-mars-iwai-tradition",
+      "name": "Mars Iwai Tradition",
+      "image": "assets/bourbons/demo-200/popular-mars-iwai-tradition.webp",
+      "source_page": "https://www.hombo.co.jp/product/iwai-tradition/",
+      "source_url": "https://www.hombo.co.jp/hombo-mars/wp-content/uploads/2010/06/4976881520455.webp",
+      "bytes": 13936,
+      "score": 9,
+      "dimensions": {
+        "width": 800,
+        "height": 800
+      }
+    },
+    {
+      "id": "popular-hatozaki-finest",
+      "name": "Hatozaki Finest",
+      "image": "assets/bourbons/demo-200/popular-hatozaki-finest.webp",
+      "source_page": "https://hatozakiwhisky.com/products/hatozaki-finest-blended",
+      "source_url": "https://hatozakiwhisky.com/cdn/shop/files/Finest-Blended-EU-UK.png?v=1750255786\\u0026width=900",
+      "bytes": 25036,
+      "score": 9,
+      "dimensions": {
+        "width": 900,
+        "height": 900
+      }
+    }
+  ],
+  "skipped": [
+    {
+      "id": "popular-fighting-cock-103-proof",
+      "name": "Fighting Cock 103 Proof",
+      "reason": "official_domain_missing"
+    },
+    {
+      "id": "popular-j-t-s-brown-bottled-in-bond",
+      "name": "J.T.S. Brown Bottled in Bond",
+      "reason": "official_domain_missing"
+    },
+    {
+      "id": "popular-old-tub-bottled-in-bond",
+      "name": "Old Tub Bottled in Bond",
+      "reason": "official_domain_missing"
+    }
+  ],
+  "failed": [
+    {
+      "id": "olcc-8257b",
+      "name": "Evan Williams 1783 Small Batch",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-old-grand-dad-114",
+      "name": "Old Grand-Dad 114",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-basil-hayden-kentucky-straight-bourbon",
+      "name": "Basil Hayden Kentucky Straight",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-booker-s-bourbon",
+      "name": "Booker's",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "legent-101-02",
+      "name": "Legent",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-larceny-small-batch",
+      "name": "Larceny Small Batch",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "larceny-barrel-proof-101-22",
+      "name": "Larceny Barrel Proof",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "olcc-8573b",
+      "name": "Henry McKenna 10 Year Bottled in Bond",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "elijah-craig-toasted-barrel-101-22",
+      "name": "Elijah Craig Toasted Barrel",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-1792-small-batch",
+      "name": "1792 Small Batch",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-benchmark-old-no-8",
+      "name": "Benchmark Old No. 8",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-benchmark-full-proof",
+      "name": "Benchmark Full Proof",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-benchmark-bonded",
+      "name": "Benchmark Bonded",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-benchmark-single-barrel",
+      "name": "Benchmark Single Barrel",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "weller-antique-107-101-00",
+      "name": "Weller Antique 107",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-weller-12-year",
+      "name": "Weller 12 Year",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "w-l-weller-full-proof-bourbon-single-barrel-select-by-wooden-cork",
+      "name": "Weller Full Proof",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-e-h-taylor-small-batch",
+      "name": "E.H. Taylor Small Batch",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-e-h-taylor-single-barrel",
+      "name": "E.H. Taylor Single Barrel",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "olcc-9157b",
+      "name": "Rabbit Hole Dareringer",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-new-riff-single-barrel-bourbon",
+      "name": "New Riff Single Barrel",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-wilderness-trail-high-rye-bourbon",
+      "name": "Wilderness Trail High Rye",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-wilderness-trail-wheated-bourbon",
+      "name": "Wilderness Trail Wheated",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "penelope-barrel-strength-121-22",
+      "name": "Penelope Barrel Strength",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-penelope-toasted-bourbon",
+      "name": "Penelope Toasted",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-redwood-empire-pipe-dream-cask-strength",
+      "name": "Redwood Empire Pipe Dream Cask Strength",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-smoke-wagon-small-batch-bourbon",
+      "name": "Smoke Wagon Small Batch",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-smoke-wagon-uncut-unfiltered-bourbon",
+      "name": "Smoke Wagon Uncut Unfiltered",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "high-west-131-45",
+      "name": "High West",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-early-times-bottled-in-bond",
+      "name": "Early Times Bottled in Bond",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-bowman-brothers-small-batch-bourbon",
+      "name": "Bowman Brothers Small Batch",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-chivas-regal-12-year",
+      "name": "Chivas Regal 12 Year",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-chivas-regal-18-year",
+      "name": "Chivas Regal 18 Year",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-ballantine-s-finest",
+      "name": "Ballantine's Finest",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-grant-s-triple-wood",
+      "name": "Grant's Triple Wood",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "olcc-0352b",
+      "name": "Dewar's White Label",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-j-b-rare",
+      "name": "J&B Rare",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "olcc-0368b",
+      "name": "The Famous Grouse",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-monkey-shoulder",
+      "name": "Monkey Shoulder",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-glenfiddich-12-year",
+      "name": "Glenfiddich 12 Year",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "olcc-0392b",
+      "name": "Glenfiddich 15 Year Solera",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-glenfiddich-18-year",
+      "name": "Glenfiddich 18 Year",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "olcc-0376b",
+      "name": "The Glenlivet 12 Year",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "olcc-3834b",
+      "name": "The Glenlivet Founder's Reserve",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-the-glenlivet-14-year-cognac-cask-selection",
+      "name": "The Glenlivet 14 Year Cognac Cask Selection",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-the-macallan-12-year-double-cask",
+      "name": "The Macallan 12 Year Double Cask",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-the-macallan-12-year-sherry-oak",
+      "name": "The Macallan 12 Year Sherry Oak",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-the-macallan-15-year-double-cask",
+      "name": "The Macallan 15 Year Double Cask",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-the-balvenie-12-year-doublewood",
+      "name": "The Balvenie 12 Year DoubleWood",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-the-balvenie-14-year-caribbean-cask",
+      "name": "The Balvenie 14 Year Caribbean Cask",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-aberlour-12-year-double-cask",
+      "name": "Aberlour 12 Year Double Cask",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-aberlour-a-bunadh",
+      "name": "Aberlour A'Bunadh",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-ardbeg-10-year",
+      "name": "Ardbeg 10 Year",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "olcc-2211b",
+      "name": "Highland Park 12 Year Viking Honour",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-bowmore-12-year",
+      "name": "Bowmore 12 Year",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-the-glendronach-12-year-original",
+      "name": "The GlenDronach 12 Year Original",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-auchentoshan-three-wood",
+      "name": "Auchentoshan Three Wood",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-jura-10-year",
+      "name": "Jura 10 Year",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-jameson-irish-whiskey",
+      "name": "Jameson Irish",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-jameson-black-barrel",
+      "name": "Jameson Black Barrel",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-jameson-caskmates-stout-edition",
+      "name": "Jameson Caskmates Stout Edition",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "bushmills-original-irish-whiskey",
+      "name": "Bushmills Original",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "bushmills-black-bush-irish-whiskey",
+      "name": "Bushmills Black Bush",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "bushmills-10-year-old-single-malt",
+      "name": "Bushmills 10 Year Old Single Malt",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "bushmills-16-year-old-single-malt",
+      "name": "Bushmills 16 Year Old Single Malt",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-redbreast-12-year",
+      "name": "Redbreast 12 Year",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-redbreast-15-year",
+      "name": "Redbreast 15 Year",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-redbreast-12-year-cask-strength",
+      "name": "Redbreast 12 Year Cask Strength",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-green-spot",
+      "name": "Green Spot",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-yellow-spot-12-year",
+      "name": "Yellow Spot 12 Year",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-powers-gold-label",
+      "name": "Powers Gold Label",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-powers-three-swallow",
+      "name": "Powers Three Swallow",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-proper-no-twelve",
+      "name": "Proper No. Twelve",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-suntory-kakubin",
+      "name": "Suntory Kakubin",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-nikka-from-the-barrel",
+      "name": "Nikka From the Barrel",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "olcc-2619b",
+      "name": "Nikka Coffey Grain",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "olcc-4087b",
+      "name": "Nikka Coffey Malt",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-nikka-days",
+      "name": "Nikka Days",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-nikka-yoichi-single-malt",
+      "name": "Nikka Yoichi Single Malt",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-nikka-miyagikyo-single-malt",
+      "name": "Nikka Miyagikyo Single Malt",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-akashi-white-oak",
+      "name": "Akashi White Oak",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-rittenhouse-rye-bottled-in-bond",
+      "name": "Rittenhouse Rye Bottled in Bond",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "olcc-7658b",
+      "name": "Sazerac Rye",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "high-west-double-rye-122-45",
+      "name": "High West Double Rye",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-whistlepig-piggyback-6-year-rye",
+      "name": "WhistlePig PiggyBack 6 Year Rye",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-canadian-club-1858",
+      "name": "Canadian Club 1858",
+      "reason": "official_product_image_not_resolved"
+    }
+  ],
+  "completed_at": "2026-08-07T19:54:39.586Z",
+  "downloaded_count": 16,
+  "failed_count": 86,
+  "skipped_count": 3
+}

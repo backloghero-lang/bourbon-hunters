@@ -1,0 +1,15 @@
+{
+  "ok": true,
+  "version": "demo-200-v1",
+  "updated": "2026-08-07T19:56:08.535Z",
+  "requested": 200,
+  "public_records": 200,
+  "scanner_records": 200,
+  "missing_images": 119,
+  "resolution_methods": {
+    "ranked_asset_identity": 18,
+    "popular_record": 25,
+    "official_source_override": 35,
+    "unique_asset_identity": 3
+  }
+}

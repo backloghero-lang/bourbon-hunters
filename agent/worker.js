@@ -14,12 +14,12 @@
 
 const REPO = "backloghero-lang/bourbon-hunters";
 const DEFAULT_PROMPT_URL = "https://raw.githubusercontent.com/" + REPO + "/main/agent/prompt.txt";
-const DEFAULT_DB_URL = "https://raw.githubusercontent.com/" + REPO + "/main/db/catalog/scan-index.json";
+const DEFAULT_DB_URL = "https://raw.githubusercontent.com/" + REPO + "/main/db/catalog/demo-scan-index.json";
 const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters. Krotko, z jajem, ale rzeczowo. quality=jakosc 1-5, value=jakosc/cena 1-5 (5 swietna i tania, 1 slaba i droga). Pisz {{LANG}}. Zwroc tylko JSON.";
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
 const MULTI_CANDIDATE_CONFIDENCE = 0.9;
 const SCAN_ORCHESTRATOR_VERSION = "visual-only-catalog-v9-model-resolver";
-const SCAN_CATALOG_VERSION = "popular-200-curated-v2-no-flavors";
+const SCAN_CATALOG_VERSION = "demo-200-v1";
 const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v6-highres-cutout";
 const CATALOG_MODERATION_VERSION = "catalog-moderation-orchestrator-admin-v1";
 const CATALOG_LICENSE_VERSION = "catalog-license-2026-07-18-v1";
@@ -32,6 +32,7 @@ const AUTH_VERSION = "auth-rate-limited-pbkdf2-600k-v5";
 const SECURITY_VERSION = "xss-url-health-hardening-v1";
 const SCANNER_BUDGET_VERSION = "d1-atomic-cost-budgets-v1";
 const AUTH_PROTECTION_VERSION = "d1-auth-throttling-v1";
+const PRIVATE_BOTTLE_VERSION = "owner-only-private-bottles-v1";
 const PBKDF2_ITERATIONS = 600000;
 const LEGACY_PBKDF2_ITERATIONS = 100000;
 const AUTH_BODY_MAX_BYTES = 16384;
@@ -106,7 +107,8 @@ function applyScanCatalogOverrides(db){
   const bottles=db&&db.bottles||[];
   const byId={};
   bottles.forEach(function(bottle){ if(bottle&&bottle.id) byId[bottle.id]=bottle; });
-  SCAN_EXTRA_RECORDS.forEach(function(record){
+  const demoOnly=String(db&&db.version||"").indexOf("demo-200")===0;
+  (demoOnly?[]:SCAN_EXTRA_RECORDS).forEach(function(record){
     if(!record || !record.id || byId[record.id]) return;
     const extraNames=[record.name].concat(Array.isArray(record.aliases)?record.aliases:[]).map(norm).filter(Boolean);
     const existing=bottles.find(function(bottle){
@@ -162,39 +164,9 @@ async function getStaticDB(env){
 }
 async function getDB(env, request){
   const base=await getStaticDB(env);
-  if(!env.DB || !(await tableExists(env,"catalog_bottles"))) return base;
-  const now=Date.now();
-  if(_communityDb.d && now-_communityDb.at<60000) return _communityDb.d;
-  try{
-    const result=await env.DB.prepare("SELECT * FROM catalog_bottles WHERE status='published' ORDER BY updated_at DESC LIMIT 2000").all();
-    const rows=result.results||[];
-    if(!rows.length){ _communityDb={d:base,at:now}; return base; }
-    const merged=Object.assign({},base,{bottles:(base.bottles||[]).map(function(bottle){ return Object.assign({},bottle); })});
-    const byId={};
-    merged.bottles.forEach(function(bottle,index){ if(bottle&&bottle.id) byId[bottle.id]=index; });
-    rows.forEach(function(row){
-      const bottle=publicCatalogBottle(row,request);
-      if(!catalogBottleVisible(bottle)) return;
-      bottle.aliases=Array.isArray(bottle.aliases)?bottle.aliases:[];
-      bottle.catalog_status="published";
-      bottle.community_catalog=true;
-      if(byId[bottle.id]!=null){
-        const current=merged.bottles[byId[bottle.id]];
-        merged.bottles[byId[bottle.id]]=Object.assign({},current,bottle,{
-          aliases:Array.from(new Set((current.aliases||[]).concat(bottle.aliases||[]))),
-          image:bottle.image||current.image||""
-        });
-      }else{
-        byId[bottle.id]=merged.bottles.length;
-        merged.bottles.push(bottle);
-      }
-    });
-    rebuildScanTokenIndex(merged);
-    _communityDb={d:merged,at:now};
-    return merged;
-  }catch(e){
-    return base;
-  }
+  // The public scanner is deliberately image-gated. User-created bottles stay private
+  // and are never merged into recognition results for other accounts.
+  return base;
 }
 
 function langName(l){ return l==="en"?"in English":l==="es"?"en espanol":"po polsku"; }
@@ -1137,10 +1109,66 @@ async function accountDeletionReauth(user, body){
     ? {ok:true}
     : {ok:false,error:"password_reauth_failed"};
 }
+async function privateBottleSchemaReady(env){
+  return !!(env.DB && await tableExists(env,"user_private_bottles"));
+}
+function privateBottleText(value, max){
+  return String(value==null?"":value).replace(/\s+/g," ").trim().slice(0,max);
+}
+function privateBottleNumber(value, min, max){
+  if(value==null || value==="") return null;
+  const number=Number(value);
+  return Number.isFinite(number) && number>=min && number<=max ? Math.round(number*10)/10 : null;
+}
+function privateBottleFromRow(row){
+  if(!row) return null;
+  return {
+    id:row.id,name:row.name,distillery:row.distillery||"",category:row.category||"Other",
+    type:row.type||row.category||"Other",region:row.region||"",abv:row.abv==null?null:Number(row.abv),
+    proof:row.proof==null?null:Number(row.proof),price_range:row.price_range||"",
+    general:row.general_info||"",desc:row.general_info||"",nose:row.nose||"",taste:row.taste||"",
+    finish:row.finish||"",mashbill:row.mashbill||"",image:"",source:"private_user",
+    catalog_status:"private",private:true,owner_only:true,created_at:row.created_at,updated_at:row.updated_at
+  };
+}
+async function privateBottlesFor(env, userId){
+  if(!(await privateBottleSchemaReady(env))) return [];
+  const result=await env.DB.prepare("SELECT * FROM user_private_bottles WHERE user_id=? ORDER BY updated_at DESC LIMIT 300").bind(userId).all();
+  return (result.results||[]).map(privateBottleFromRow).filter(Boolean);
+}
+async function savePrivateBottle(env, user, body){
+  if(!(await privateBottleSchemaReady(env))) return {error:"private_bottle_schema_missing",status:501};
+  const name=privateBottleText(body&&body.name,160);
+  if(name.length<2) return {error:"private_bottle_name_required",status:400};
+  let id=privateBottleText(body&&body.id,180);
+  if(id){
+    const owned=await env.DB.prepare("SELECT id FROM user_private_bottles WHERE id=? AND user_id=?").bind(id,user.id).first();
+    if(!owned) return {error:"private_bottle_not_found",status:404};
+  }else{
+    id="private-"+String(user.id).slice(0,12)+"-"+crypto.randomUUID();
+  }
+  const abv=privateBottleNumber(body&&body.abv,0,96);
+  const proof=privateBottleNumber(body&&body.proof,0,192);
+  if(body&&body.abv!=="" && body&&body.abv!=null && abv==null) return {error:"private_bottle_abv_invalid",status:400};
+  if(body&&body.proof!=="" && body&&body.proof!=null && proof==null) return {error:"private_bottle_proof_invalid",status:400};
+  const now=new Date().toISOString();
+  const values={
+    distillery:privateBottleText(body&&body.distillery,160),category:privateBottleText(body&&body.category,80)||"Other",
+    type:privateBottleText(body&&body.type,100),region:privateBottleText(body&&body.region,100),
+    price_range:privateBottleText(body&&body.price_range,80),general_info:privateBottleText(body&&(body.general_info||body.general||body.desc),1200),
+    nose:privateBottleText(body&&body.nose,500),taste:privateBottleText(body&&body.taste,500),
+    finish:privateBottleText(body&&body.finish,500),mashbill:privateBottleText(body&&body.mashbill,500)
+  };
+  await env.DB.prepare("INSERT INTO user_private_bottles (id,user_id,name,distillery,category,type,region,abv,proof,price_range,general_info,nose,taste,finish,mashbill,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET name=excluded.name,distillery=excluded.distillery,category=excluded.category,type=excluded.type,region=excluded.region,abv=excluded.abv,proof=excluded.proof,price_range=excluded.price_range,general_info=excluded.general_info,nose=excluded.nose,taste=excluded.taste,finish=excluded.finish,mashbill=excluded.mashbill,updated_at=excluded.updated_at")
+    .bind(id,user.id,name,values.distillery,values.category,values.type,values.region,abv,proof,values.price_range,values.general_info,values.nose,values.taste,values.finish,values.mashbill,now,now).run();
+  const row=await env.DB.prepare("SELECT * FROM user_private_bottles WHERE id=? AND user_id=?").bind(id,user.id).first();
+  await upsertBottleList(env,user.id,"collection",id,true,privateBottleFromRow(row));
+  return {ok:true,bottle:privateBottleFromRow(row)};
+}
 async function bootstrapFor(env, userId){
   const bottles=await env.DB.prepare("SELECT bottle_id,list_type FROM user_bottles WHERE user_id=?").bind(userId).all();
   const ratings=await env.DB.prepare("SELECT bottle_id,rating FROM user_ratings WHERE user_id=?").bind(userId).all();
-  const out={wishlist:[],collection:[],ratings:{},recommendations_count:0};
+  const out={wishlist:[],collection:[],ratings:{},recommendations_count:0,private_bottles:await privateBottlesFor(env,userId)};
   (bottles.results||[]).forEach(function(r){
     if(r.list_type==="wishlist") out.wishlist.push(r.bottle_id);
     if(r.list_type==="collection") out.collection.push(r.bottle_id);
@@ -1731,7 +1759,7 @@ async function handleApi(request, env, cors){
   if(path==="/admin/health" && request.method==="GET"){
     const healthUser=await authUser(env,request);
     if(!isAdminUser(env,healthUser)) return J({error:"forbidden"},403,cors);
-    let schema=false, reset_schema=false, profile_schema=false, recommendations_schema=false, identity_schema=false, auth_security_schema=false, auth_rate_schema=false, catalog_schema=false, catalog_data_schema=false, catalog_moderation_schema=false, telemetry_schema=false, scanner_budget_schema=false, news_schema=false, news_article_count=0, news_last_run=null, detail="";
+    let schema=false, reset_schema=false, profile_schema=false, recommendations_schema=false, identity_schema=false, auth_security_schema=false, auth_rate_schema=false, catalog_schema=false, catalog_data_schema=false, catalog_moderation_schema=false, telemetry_schema=false, scanner_budget_schema=false, news_schema=false, private_bottle_schema=false, news_article_count=0, news_last_run=null, detail="";
     if(env.DB){
       try{
         await env.DB.prepare("SELECT id FROM users LIMIT 1").first();
@@ -1762,6 +1790,8 @@ async function handleApi(request, env, cors){
         if(schema && telemetry_schema && !scanner_budget_schema) detail="scanner budget migration v70 is missing";
         news_schema=await newsSchemaReady(env);
         if(schema && telemetry_schema && !news_schema) detail="whisky news migration v68 is missing";
+        private_bottle_schema=await privateBottleSchemaReady(env);
+        if(schema && !private_bottle_schema) detail="private bottle migration v72 is missing";
         if(news_schema){
           const newsCount=await env.DB.prepare("SELECT COUNT(*) AS count FROM news_articles WHERE status='published'").first();
           const lastNewsRun=await env.DB.prepare("SELECT issue_key,status,candidates_found,articles_added,detail,started_at,completed_at FROM news_agent_runs ORDER BY started_at DESC LIMIT 1").first();
@@ -1771,7 +1801,7 @@ async function handleApi(request, env, cors){
       }
       catch(e){ detail=String(e&&e.message?e.message:e).slice(0,220); }
     }
-    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,security_version:SECURITY_VERSION,auth_protection_version:AUTH_PROTECTION_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_mode:"visual_only",scan_ocr_enabled:false,scanner_ai_ready:!!env.GEMINI_API_KEY,scanner_primary_model:env.IDENT_MODEL||"gemini-3.5-flash-lite",scanner_fallback_model:env.IDENT_FALLBACK_MODEL||"gemini-3.6-flash",scanner_model_discovery:true,scanner_mobile_foreground:!!env.IMAGES,scanner_budget_version:SCANNER_BUDGET_VERSION,scanner_budget_schema:scanner_budget_schema,scanner_identify_daily_limit:scannerBudgetLimits(env,"identify").actor,scanner_cutout_daily_limit:scannerBudgetLimits(env,"cutout").actor,scanner_analysis_daily_limit:scannerBudgetLimits(env,"analysis").actor,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_moderation_version:CATALOG_MODERATION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,news_agent_version:NEWS_AGENT_VERSION,news_schedule:"Monday and Thursday releases with daily recovery via UTC cron",news_target_per_release:3,news_current_release:newsReleaseSlot(new Date()),news_article_count:news_article_count,news_last_run:news_last_run,local_image_pipeline_version:LOCAL_IMAGE_PIPELINE_VERSION,news_retention_days:NEWS_RETENTION_DAYS,starter_news_count:STARTER_NEWS.length,news_auth_required:true,catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,auth_security_schema:auth_security_schema,auth_rate_schema:auth_rate_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,catalog_moderation_schema:catalog_moderation_schema,telemetry_schema:telemetry_schema,news_schema:news_schema,news_agent_ready:news_schema,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),local_image_cutout_ready:!!env.IMAGES,cutout_quality_ready:!!(env.IMAGES&&env.GEMINI_API_KEY),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
+    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,security_version:SECURITY_VERSION,auth_protection_version:AUTH_PROTECTION_VERSION,private_bottle_version:PRIVATE_BOTTLE_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_mode:"visual_only",scan_ocr_enabled:false,scanner_ai_ready:!!env.GEMINI_API_KEY,scanner_primary_model:env.IDENT_MODEL||"gemini-3.5-flash-lite",scanner_fallback_model:env.IDENT_FALLBACK_MODEL||"gemini-3.6-flash",scanner_model_discovery:true,scanner_mobile_foreground:!!env.IMAGES,scanner_budget_version:SCANNER_BUDGET_VERSION,scanner_budget_schema:scanner_budget_schema,scanner_identify_daily_limit:scannerBudgetLimits(env,"identify").actor,scanner_cutout_daily_limit:scannerBudgetLimits(env,"cutout").actor,scanner_analysis_daily_limit:scannerBudgetLimits(env,"analysis").actor,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_moderation_version:CATALOG_MODERATION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,news_agent_version:NEWS_AGENT_VERSION,news_schedule:"Monday and Thursday releases with daily recovery via UTC cron",news_target_per_release:3,news_current_release:newsReleaseSlot(new Date()),news_article_count:news_article_count,news_last_run:news_last_run,local_image_pipeline_version:LOCAL_IMAGE_PIPELINE_VERSION,news_retention_days:NEWS_RETENTION_DAYS,starter_news_count:STARTER_NEWS.length,news_auth_required:true,catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,auth_security_schema:auth_security_schema,auth_rate_schema:auth_rate_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,catalog_moderation_schema:catalog_moderation_schema,telemetry_schema:telemetry_schema,news_schema:news_schema,private_bottle_schema:private_bottle_schema,news_agent_ready:news_schema,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),local_image_cutout_ready:!!env.IMAGES,cutout_quality_ready:!!(env.IMAGES&&env.GEMINI_API_KEY),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
   }
   if(path==="/auth/google/start" && request.method==="GET"){
     const returnUrl=allowedReturnUrl(env,url.searchParams.get("return")||appUrl(env));
@@ -2109,6 +2139,24 @@ async function handleApi(request, env, cors){
     await upsertBottleList(env,user.id,"collection",String(body.bottle_id||""),body.active!==false,body.bottle_data||null);
     return J({ok:true},200,cors);
   }
+  if(path==="/me/private-bottles" && request.method==="GET"){
+    if(!(await privateBottleSchemaReady(env))) return J({error:"private_bottle_schema_missing"},501,cors);
+    return J({bottles:await privateBottlesFor(env,user.id)},200,cors);
+  }
+  if(path==="/me/private-bottles" && request.method==="POST"){
+    const result=await savePrivateBottle(env,user,await readBody(request));
+    return J(result,result.status||200,cors);
+  }
+  const privateBottleMatch=path.match(/^\/me\/private-bottles\/([^/]+)$/);
+  if(privateBottleMatch && request.method==="DELETE"){
+    if(!(await privateBottleSchemaReady(env))) return J({error:"private_bottle_schema_missing"},501,cors);
+    const id=decodeURIComponent(privateBottleMatch[1]);
+    const deleted=await env.DB.prepare("DELETE FROM user_private_bottles WHERE id=? AND user_id=?").bind(id,user.id).run();
+    if(Number(deleted&&deleted.meta&&deleted.meta.changes||0)<1) return J({error:"private_bottle_not_found"},404,cors);
+    await env.DB.prepare("DELETE FROM user_bottles WHERE user_id=? AND bottle_id=?").bind(user.id,id).run();
+    await env.DB.prepare("DELETE FROM user_ratings WHERE user_id=? AND bottle_id=?").bind(user.id,id).run();
+    return J({ok:true},200,cors);
+  }
   if(path==="/me/rating" && request.method==="POST"){
     const body=await readBody(request);
     const bottleId=String(body.bottle_id||"");
@@ -2277,7 +2325,7 @@ function scanBottleResult(bottle){
     distillery:bottle.distillery||"",region:bottle.region||"",mashbill:bottle.mashbill||"",
     abv:bottle.abv,proof:bottle.proof,price:(bottle.price_str||bottle.price_pln||bottle.price||null),
     quality:bottle.quality,value:bottle.value,verdict:"",notes:bottle.notes||"",image:bottle.image||"",
-    source:"baza",isNew:false
+    source:"baza",catalog_status:bottle.catalog_status||"",known_catalog:true,isNew:false
   };
 }
 
