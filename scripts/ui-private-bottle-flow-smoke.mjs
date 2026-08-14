@@ -6,6 +6,7 @@ const page=await browser.newPage({viewport:{width:390,height:844},deviceScaleFac
 const errors=[];
 page.on("pageerror",(error)=>errors.push("pageerror: "+error.message));
 page.on("console",(message)=>{ if(message.type()==="error") errors.push("console: "+message.text()); });
+page.on("response",(response)=>{ if(response.status()>=400) errors.push("response "+response.status()+": "+response.url()); });
 await page.route("https://bourbon-hunters.darekmaslyk.workers.dev/**",async(route)=>{
   const pathname=new URL(route.request().url()).pathname;
   let body={};

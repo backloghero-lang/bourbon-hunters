@@ -27,9 +27,11 @@ await page.route("https://bourbon-hunters.darekmaslyk.workers.dev/**",async(rout
   const url=new URL(request.url());
   if(request.method()==="POST" && url.pathname==="/"){
     scannerRequests++;
-    const body=request.postDataJSON();
-    if(body.confirmed_id) confirmedRequests++;
-    if(String(body.recognition_image||"").length>=100) recognitionRequests++;
+    const contentType=request.headers()["content-type"]||"";
+    const postData=request.postData()||"";
+    if(!contentType.includes("multipart/form-data")) throw new Error("Scanner did not use binary multipart transport");
+    if(/name="confirmed_id"\r?\n\r?\n[^\r\n]+/.test(postData)) confirmedRequests++;
+    if(postData.includes('name="recognition_image"')) recognitionRequests++;
     const missing=responseVariant==="missing";
     await route.fulfill({status:200,contentType:"application/json",body:JSON.stringify({
       result:{

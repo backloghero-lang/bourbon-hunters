@@ -1,0 +1,20 @@
+name = "bourbon-hunters"
+main = "agent/worker.js"
+compatibility_date = "2026-07-22"
+
+[vars]
+APP_URL = "https://backloghero-lang.github.io/bourbon-hunters/"
+ALLOW_ORIGIN = "https://backloghero-lang.github.io"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "bourbon-hunters-db"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+
+[[r2_buckets]]
+binding = "BOTTLE_IMAGES"
+bucket_name = "bourbon-hunters-bottles"
+
+# Secrets are configured with `wrangler secret put`, never in this file:
+# GEMINI_API_KEY, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET,
+# GOOGLE_STATE_SECRET, CATALOG_HASH_SECRET, RESEND_API_KEY.

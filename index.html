@@ -2,20 +2,25 @@
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; script-src 'self' 'unsafe-inline'; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob:; connect-src 'self' https://bourbon-hunters.darekmaslyk.workers.dev; frame-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; script-src 'self' 'unsafe-inline'; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob: https:; media-src 'self' blob:; connect-src 'self' https://bourbon-hunters.darekmaslyk.workers.dev; frame-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="no-referrer">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#100c08">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Bourbon Hunters">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Spectral:wght@500;600;700&family=Ultra&display=swap" rel="stylesheet">
 <title>Bourbon Hunters</title>
 <style>
+  @font-face{font-family:Manrope;font-style:normal;font-weight:400;font-display:swap;src:url("assets/fonts/manrope-400.ttf") format("truetype")}
+  @font-face{font-family:Manrope;font-style:normal;font-weight:500;font-display:swap;src:url("assets/fonts/manrope-500.ttf") format("truetype")}
+  @font-face{font-family:Manrope;font-style:normal;font-weight:600;font-display:swap;src:url("assets/fonts/manrope-600.ttf") format("truetype")}
+  @font-face{font-family:Manrope;font-style:normal;font-weight:700;font-display:swap;src:url("assets/fonts/manrope-700.ttf") format("truetype")}
+  @font-face{font-family:Spectral;font-style:normal;font-weight:500;font-display:swap;src:url("assets/fonts/spectral-500.ttf") format("truetype")}
+  @font-face{font-family:Spectral;font-style:normal;font-weight:600;font-display:swap;src:url("assets/fonts/spectral-600.ttf") format("truetype")}
+  @font-face{font-family:Spectral;font-style:normal;font-weight:700;font-display:swap;src:url("assets/fonts/spectral-700.ttf") format("truetype")}
+  @font-face{font-family:Ultra;font-style:normal;font-weight:400;font-display:swap;src:url("assets/fonts/ultra-400.ttf") format("truetype")}
   .private-add-question{margin-top:14px;padding:13px;border:1px solid rgba(58,168,93,.52);background:rgba(7,50,27,.42);border-radius:7px;display:grid;gap:5px}
   .private-add-question b{color:#e8d7aa;font-size:14px}.private-add-question span{color:var(--muted);font-size:12px;line-height:1.5}
   .private-auth-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}.private-auth-actions .btn{width:100%;min-width:0}
@@ -868,14 +873,14 @@
     </div>
     <div class="legal-body">
       <p class="legal-note">Draft placeholder based on standard mobile app disclosure categories. Final policy must match the real backend and Google Play Data Safety form.</p>
-      <h3>Data we collect</h3><p>When accounts are enabled, we may collect email, username, authentication data, profile marker, collection items, wishlist items, ratings, comments, recommendations, scan history, bottle photos and bottle details you choose to upload.</p>
+      <h3>Data we collect</h3><p>When accounts are enabled, we may collect email, username, authentication data, an adulthood-confirmed timestamp, profile marker, collection items, wishlist items, ratings, comments, recommendations, scan history, bottle photos and bottle details you choose to upload. A date of birth entered during registration is used to check eligibility and is not retained after the decision.</p>
       <h3>How we use data</h3><p>We use data to provide account access, sync your collection, recognize bottles, improve scanner results, expand the bottle database, generate app-style reference assets, prevent abuse and support Pro or advertising features when introduced.</p>
       <h3>Photos, camera and AI processing</h3><p>Camera or gallery access is used only when you choose to scan or upload a bottle image. A source photo may be transmitted to hosting, image-processing, OCR or AI providers to recognize the label and prepare a bottle cutout. When a catalog preview is created, the source file and its embedded metadata are deleted from Bourbon Hunters storage. A temporary preview remains until you accept, retry or cancel the submission, for no longer than 24 hours under the configured cleanup process.</p>
       <h3>Scanner diagnostics</h3><p>To operate, secure and improve the scanner, we record pseudonymous technical diagnostics such as a random scan identifier, hashed device identifier, account identifier when signed in, candidate bottle identifiers, confidence scores, the choice confirmed by the user, processing time, model name, status and token counts reported by the AI provider. Diagnostics do not contain the photo, raw OCR text, label text, comments, email or IP address. Raw diagnostic records are retained for up to 90 days by default. General product analytics remains disabled until separately configured and, where required, consented to.</p>
       <h3>Database contributions</h3><p>Accepted catalog assets, product facts and normalized bottle metadata may be retained as part of the shared Bourbon Hunters database. If you delete your account, we remove the account link and personal data, while accepted catalog assets and non-personal product information remain. We retain a minimal non-public receipt of the catalog acceptance, including the document version, timestamp, file hash and a pseudonymous contributor hash, for rights and dispute records.</p>
       <h3>Sharing</h3><p>We do not sell personal data. We may use service providers such as hosting, storage, analytics, authentication or payment providers to operate the app.</p>
       <h3>Security and retention</h3><p>Data is transmitted over HTTPS and should be stored with appropriate protections. Source catalog photos are temporary, working previews remain until a decision is made, accepted catalog assets are retained while they remain useful to the shared catalog, and raw scanner diagnostics are retained for up to 90 days by default. Account and other scan data is retained only as long as needed for the product or legal requirements.</p>
-      <h3>Deletion</h3><p>You can delete your account from My profile. Account credentials, sessions, profile, collection, wishlist, ratings, recommendations and other linked personal data are deleted or anonymized. Accepted shared catalog assets, non-personal bottle information and minimal legal acceptance receipts are not removed with the account.</p>
+      <h3>Your rights and deletion</h3><p>You can export your account data or delete your account from My profile. Account credentials, sessions, profile, collection, wishlist, ratings, recommendations and other linked personal data are deleted or anonymized. Accepted shared catalog assets, non-personal bottle information and minimal legal acceptance receipts are not removed with the account.</p>
       <h3>Contact</h3><p>Before public launch, add the developer/company name, privacy contact email and public policy URL required by app stores.</p>
     </div>
   </section>
@@ -953,7 +958,8 @@
 <script>
 /* ========= KONFIGURACJA ========= */
 const WORKER_URL = "https://bourbon-hunters.darekmaslyk.workers.dev";
-const APP_VERSION = "123";
+const APP_VERSION = "124";
+const API_CONTRACT_VERSION = "bh-api-2026-08-v1";
 const DB_URL = "db/catalog/demo-200.json";
 const PROFILES_URL = "db/profiles-runtime.json";
 const WHISKY_BROWSE_URL = "db/catalog/demo-200.json";
@@ -1106,6 +1112,7 @@ const RENDER_LIMIT = 60; /* ile kart renderujemy na raz (wydajnosc przy tysiacac
 let AUTH_TOKEN=(function(){ try{ return localStorage.getItem(AUTH_TOKEN_KEY)||""; }catch(e){ return ""; } })();
 let AUTH_USER=(function(){ try{ return JSON.parse(localStorage.getItem(AUTH_USER_KEY)||"null"); }catch(e){ return null; } })();
 let AUTH_IS_ADMIN=(function(){ try{ return localStorage.getItem(AUTH_ADMIN_KEY)==="1"; }catch(e){ return false; } })();
+try{ localStorage.removeItem("bh_dev"); }catch(e){}
 const DEVICE_ID=(function(){
   try{
     let value=localStorage.getItem(DEVICE_ID_KEY)||"";
@@ -1984,6 +1991,12 @@ function loadAdminSystemHealth(){
   renderAdminSystemHealth({});
   bhApi("/admin/health",{method:"GET"}).catch(function(){});
 }
+function base64ToBlob(base64,mime){
+  const binary=atob(String(base64||""));
+  const bytes=new Uint8Array(binary.length);
+  for(let i=0;i<binary.length;i++) bytes[i]=binary.charCodeAt(i);
+  return new Blob([bytes],{type:mime||"image/jpeg"});
+}
 function loadAdminModeration(){
   const box=document.getElementById("adminModerationBody");
   if(!box||!AUTH_IS_ADMIN) return;
@@ -2135,6 +2148,21 @@ function deleteProfileAccount(){
     }
     toast(t("deleteAccountError"));
   });
+}
+function exportProfileData(){
+  if(!AUTH_TOKEN || !AUTH_USER){ showView("signin"); return; }
+  bhApi("/me/export",{method:"GET"}).then(function(data){
+    const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+    const url=URL.createObjectURL(blob);
+    const link=document.createElement("a");
+    link.href=url;
+    link.download="bourbon-hunters-data-"+new Date().toISOString().slice(0,10)+".json";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(function(){ URL.revokeObjectURL(url); },1000);
+    toast(authText("Your data export is ready.","Eksport danych jest gotowy."));
+  }).catch(function(){ toast(authText("Data export failed.","Nie udało się wyeksportować danych.")); });
 }
 function syncProfile(){
   if(!AUTH_TOKEN) return Promise.resolve();
@@ -2346,10 +2374,10 @@ function handleGoogleAuthFromUrl(){
   if(linked==="ok"){ toast(t("googleLinkOk")); showView("hunter-profile"); return; }
   if(!token){ toast(t("googleAuthFail")); return; }
   AUTH_TOKEN=token;
-  AGE_GATE_RUNTIME_OK=true;
   try{ localStorage.setItem(AUTH_TOKEN_KEY,AUTH_TOKEN); }catch(e){}
   syncBootstrap(true).then(function(){
     toast(t("googleAuthOk"));
+    showAgeGateIfNeeded();
     if(pendingPrivateBottleDraft) renderPrivateBottleForm(pendingPrivateBottleDraft); else showView("profile");
   }).catch(function(err){
     saveAuth(null);
@@ -2863,7 +2891,7 @@ const AGE_GATE_KEY="bh_age_gate_ok_v2";
 const AGE_GATE_MIN=18;
 let AGE_GATE_RUNTIME_OK=false;
 function hasAgeGateOk(){
-  if(AUTH_TOKEN && AUTH_USER) return true;
+  if(AUTH_TOKEN && AUTH_USER) return AUTH_USER.age_verified===true;
   if(typeof externalReturnState==="function" && externalReturnState()) return true;
   return AGE_GATE_RUNTIME_OK;
 }
@@ -2888,12 +2916,19 @@ function setupAgeGate(){
   const deny=document.getElementById("ageGateDeny");
   if(!gate||!btn) return;
   btn.addEventListener("click",function(){
-    try{
-      if(AUTH_TOKEN && AUTH_USER) localStorage.setItem(AGE_GATE_KEY,"1");
-      else AGE_GATE_RUNTIME_OK=true;
-    }catch(e){}
-    gate.classList.remove("show");
-    if(window.BH_START_INTRO) window.BH_START_INTRO();
+    const finishAgeGate=function(){
+      gate.classList.remove("show");
+      if(window.BH_START_INTRO) window.BH_START_INTRO();
+    };
+    if(AUTH_TOKEN && AUTH_USER){
+      bhApi("/me/age-confirmation",{method:"POST",body:JSON.stringify({confirm_adult:true})}).then(function(data){
+        saveAuth({token:AUTH_TOKEN,user:data.user,admin:!!data.admin});
+        finishAgeGate();
+      }).catch(function(){ toast(authText("Age confirmation failed.","Nie udało się zapisać potwierdzenia wieku.")); });
+    }else{
+      AGE_GATE_RUNTIME_OK=true;
+      finishAgeGate();
+    }
   });
   if(deny) deny.addEventListener("click",function(){ toast(t("ageGateBlocked")); });
 }
@@ -3211,7 +3246,7 @@ function newsDateLabel(value){
 }
 function newsCardHtml(item){
   const excerpt=lang==="pl" ? (item.excerpt_pl||item.excerpt_en||"") : (item.excerpt_en||item.excerpt_pl||"");
-  const fallbackImage="design/figma-assets/home-pack-v2/home-header-v3.jpg";
+  const fallbackImage="assets/news/editorial-fallback-v1.jpg";
   const image=item.image_url&&item.id ? safeImageSrc(WORKER_URL+"/news/image/"+encodeURIComponent(item.id),fallbackImage) : fallbackImage;
   const href=safeHttpUrl(item.url,"#");
   const date=newsDateLabel(item.published_at);
@@ -3615,6 +3650,7 @@ document.addEventListener("click",function(e){
   if(profileAction){
     if(profileAction.getAttribute("data-profile-action")==="delete-profile"){ e.preventDefault(); deleteProfileAccount(); return; }
     if(profileAction.getAttribute("data-profile-action")==="link-google"){ e.preventDefault(); startGoogleLink(); return; }
+    if(profileAction.getAttribute("data-profile-action")==="data-export"){ e.preventDefault(); exportProfileData(); return; }
     toast(t("inProgress")); return;
   }
   const newsAuth=e.target.closest("[data-news-auth]");
@@ -4294,12 +4330,32 @@ function prepareConfirmedCandidateAsset(result, mode){
 function scan(mode,confirmedId){
   if(!imgData||busy) return; if(!WORKER_URL){ showErr("WORKER_URL?"); return; }
   startLoading(mode);
-  const params=new URLSearchParams(location.search); if(params.get("bhdev")) localStorage.setItem("bh_dev",params.get("bhdev"));
-  const dev=localStorage.getItem("bh_dev")||"";
-  const headers={"Content-Type":"application/json"};
+  const headers={};
   if(AUTH_TOKEN) headers.Authorization="Bearer "+AUTH_TOKEN;
-  fetch(WORKER_URL,{method:"POST",headers:headers,body:JSON.stringify({image:imgData,recognition_image:scanRecognitionImage||"",image_quality:scanImageQuality,mime:imgMime,lang:lang,mode:mode,dev:dev,confirmed_id:confirmedId||"",device_id:DEVICE_ID})})
-  .then(function(r){return r.json();}).then(function(data){
+  const form=new FormData();
+  form.append("image",base64ToBlob(imgData,imgMime),"bottle."+(imgMime==="image/webp"?"webp":imgMime==="image/png"?"png":"jpg"));
+  if(scanRecognitionImage) form.append("recognition_image",base64ToBlob(scanRecognitionImage,"image/webp"),"label.webp");
+  form.append("image_quality",JSON.stringify(scanImageQuality||{}));
+  form.append("lang",lang); form.append("mode",mode); form.append("confirmed_id",confirmedId||""); form.append("device_id",DEVICE_ID);
+  fetch(WORKER_URL,{method:"POST",headers:headers,body:form})
+  .then(function(r){
+    return r.json().catch(function(){ return {error:"invalid_response"}; }).then(function(data){
+      if(r.status===400 && data && data.error==="bad json"){
+        const legacyHeaders={"Content-Type":"application/json"};
+        if(AUTH_TOKEN) legacyHeaders.Authorization="Bearer "+AUTH_TOKEN;
+        return fetch(WORKER_URL,{method:"POST",headers:legacyHeaders,body:JSON.stringify({
+          image:imgData,
+          recognition_image:scanRecognitionImage||"",
+          image_quality:scanImageQuality||{},
+          lang:lang,
+          mode:mode,
+          confirmed_id:confirmedId||"",
+          device_id:DEVICE_ID
+        })}).then(function(legacyResponse){ return legacyResponse.json(); });
+      }
+      return data;
+    });
+  }).then(function(data){
     stopLoading();
     if(data.error==="not_bottle"){ showErr(t("notBottle")); return; }
     if(data.limited){ showErr(t("errScanLimit")); return; }
@@ -4427,8 +4483,11 @@ if("serviceWorker" in navigator){ window.addEventListener("load",function(){ nav
     .bh-intro-frame{width:min(100vw,480px);height:min(100vh,853px);aspect-ratio:9/16;border-radius:32px;box-shadow:0 0 0 1px rgba(220,184,119,.18),0 28px 90px rgba(0,0,0,.75)}
     .bh-skip{left:calc(50% + min(50vw,240px) - 76px);right:auto}
   }
+  @media (prefers-reduced-motion:reduce){
+    #bhIntro, #bhIntro *, #bhIntro *:before, #bhIntro *:after{animation:none!important;transition:none!important}
+  }
 </style>
-<div id="bhIntro" class="is-waiting" aria-hidden="true">
+<div id="bhIntro" class="is-waiting" role="dialog" aria-modal="true" aria-label="Intro Bourbon Hunters">
   <div class="bh-intro-video">
     <div class="bh-intro-frame">
       <video id="bhIntroVideo" src="assets/intro/nowe%20intro.mp4" muted playsinline webkit-playsinline preload="auto"></video>

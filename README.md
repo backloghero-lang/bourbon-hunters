@@ -92,6 +92,14 @@ Wersja Pro jest obecnie w budowie. Zakres funkcji może być rozwijany wraz z ko
 - ustawienia profilu oraz narzędzia ochrony danych;
 - podgląd aktywności użytkownika w jednym miejscu.
 
+## Bezpieczeństwo
+
+Bourbon Hunters ma warstwowe zabezpieczenia konta i danych. Adres e-mail musi zostać potwierdzony, logowanie Google jest łączone z profilem wyłącznie po bezpiecznej autoryzacji, a uprawnienia administratora pochodzą z ról zapisanych w D1. Hasła są chronione przez PBKDF2-SHA256 z 600 000 iteracji, sesje można unieważnić, a operacje logowania, resetu hasła i skanera mają serwerowe limity nadużyć.
+
+Frontend i Worker stosują politykę CSP, allowlistę adresów URL, dokładne reguły CORS, bezpieczne komunikaty błędów i minimalny publiczny endpoint health. Komentarze można zgłaszać, autorów blokować, a administrator otrzymuje kolejkę moderacji i rejestr decyzji. Zdjęcia źródłowe są usuwane po przygotowaniu zaakceptowanego assetu, dane techniczne mają określoną retencję, a usunięcie konta wymaga ponownego potwierdzenia tożsamości.
+
+Repozytorium ma automatyczne testy bezpieczeństwa, testy domenowe i interfejsu, CodeQL oraz kontrolowany manifest Service Workera. Są to techniczne środki ochrony rozwijanego MVP; nie stanowią deklaracji certyfikacji ISO ani formalnej opinii o zgodności z RODO.
+
 ## Film instruktażowy
 
 Film pokazujący prawidłowe wykonanie zdjęcia i pełną drogę butelki od skanowania do kolekcji pojawi się wkrótce.

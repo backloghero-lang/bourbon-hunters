@@ -9,7 +9,9 @@ const checks=[
   [html.includes("put({bottle_id:id,blob:blob,updated_at:"),"local bottle photos are stored as blobs"],
   [html.includes("item.data_url) legacy.push(saveLocalBottleImage"),"legacy base64 records migrate to blobs"],
   [html.includes("c.width=0; c.height=0"),"scanner canvas backing stores are released"],
-  [html.includes("view.width=0; view.height=0"),"recognition canvas backing store is released"]
+  [html.includes("view.width=0; view.height=0"),"recognition canvas backing store is released"],
+  [html.includes('new FormData()')&&html.includes('form.append("image"'),"scanner uploads binary multipart images instead of base64 JSON"],
+  [html.includes('data.error==="bad json"')&&html.includes('legacyHeaders'),"scanner keeps a temporary compatibility retry for the previous Worker contract"]
 ];
 
 for(const [ok,label] of checks){

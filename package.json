@@ -4,8 +4,8 @@
   "private": true,
   "packageManager": "pnpm@10.15.0",
   "scripts": {
-    "check:syntax": "node scripts/worker-syntax-regression.mjs && node scripts/security-xss-regression.mjs && node scripts/generate-sw-manifest.mjs --check && node scripts/service-worker-regression.mjs",
-    "test:security": "node scripts/secret-regression.mjs && node scripts/auth-schema-regression.mjs && node scripts/auth-security-regression.mjs && node scripts/auth-rate-regression.mjs && node scripts/scanner-budget-regression.mjs && node scripts/ratings-performance-regression.mjs && node scripts/comment-moderation-regression.mjs && node scripts/image-memory-regression.mjs && node scripts/private-bottle-schema-regression.mjs",
+    "check:syntax": "node scripts/worker-syntax-regression.mjs && node scripts/security-xss-regression.mjs && node scripts/deployment-contract-regression.mjs && node scripts/generate-sw-manifest.mjs --check && node scripts/service-worker-regression.mjs",
+    "test:security": "node scripts/secret-regression.mjs && node scripts/auth-schema-regression.mjs && node scripts/auth-security-regression.mjs && node scripts/auth-rate-regression.mjs && node scripts/scanner-budget-regression.mjs && node scripts/ratings-performance-regression.mjs && node scripts/comment-moderation-regression.mjs && node scripts/image-memory-regression.mjs && node scripts/private-bottle-schema-regression.mjs && node scripts/privacy-accessibility-regression.mjs",
     "test:domain": "node scripts/news-agent-regression.mjs && node scripts/starter-recommendations-regression.mjs && node scripts/test_catalog_visibility.mjs && node scripts/test_spirit_taxonomy.mjs && node scripts/scanner-provider-fallback.mjs && node scripts/scanner-regression.mjs",
     "test:ui": "node scripts/ui-smoke.mjs && node scripts/ui-detail-profile-smoke.mjs && node scripts/ui-news-scroll-smoke.mjs && node scripts/ui-private-bottle-flow-smoke.mjs && node scripts/ui-scanner-confirm-smoke.mjs && node scripts/ui-local-photo-smoke.mjs && node scripts/ui-taxonomy-smoke.mjs",
     "test": "pnpm run check:syntax && pnpm run test:security && pnpm run test:domain"

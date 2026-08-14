@@ -78,7 +78,7 @@ await page.locator("#homeNewsList .news-card img").nth(1).evaluate((image)=>{
   });
 });
 const fallbackSrc=await page.locator("#homeNewsList .news-card img").nth(1).getAttribute("src");
-if(!fallbackSrc || !fallbackSrc.includes("design/figma-assets/home-pack-v2/home-header-v3.jpg")) throw new Error("Broken news thumbnail did not use the local fallback: "+fallbackSrc);
+if(!fallbackSrc || !fallbackSrc.includes("assets/news/editorial-fallback-v1.jpg")) throw new Error("Broken news thumbnail did not use the local fallback: "+fallbackSrc);
 
 const diagnostics=await page.evaluate(()=>{
   const scroller=document.getElementById("featuredRow");

@@ -6,7 +6,7 @@ if(!source.includes('const newsUser=await authUser(env,request)') || !source.inc
   throw new Error("News endpoint must require an authenticated user");
 }
 source=source.replace("export default {","globalThis.__workerDefault={");
-source+="\nglobalThis.__newsTest={canonicalNewsUrl,newsSourceForUrl,newsMetaValue,newsCanonicalFromHtml,newsReleaseSlot,newsLinksFromIndex,safeRemoteNewsImage,STARTER_NEWS,NEWS_DISCOVERY_PAGES,NEWS_RETENTION_DAYS,NEWS_AGENT_VERSION};\n";
+source+="\nglobalThis.__newsTest={canonicalNewsUrl,newsSourceForUrl,newsMetaValue,newsCanonicalFromHtml,newsReleaseSlot,newsLinksFromIndex,safeRemoteNewsImage,newsImageLooksGeneric,newsThumbnailKey,STARTER_NEWS,NEWS_DISCOVERY_PAGES,NEWS_RETENTION_DAYS,NEWS_AGENT_VERSION};\n";
 const context={URL,console,globalThis:null};
 context.globalThis=context;
 vm.runInNewContext(source,context,{filename:"worker.js"});
@@ -19,14 +19,19 @@ if(api.newsSourceForUrl("https://thewhiskeywash.com/story")!=="The Whiskey Wash"
 if(api.newsSourceForUrl("https://distiller.com/articles/example")) throw new Error("Competing application source was accepted");
 if(api.newsSourceForUrl("https://breakingbourbon.com/article/example")!=="Breaking Bourbon") throw new Error("Breaking Bourbon source mapping failed");
 if(api.NEWS_DISCOVERY_PAGES.some((url)=>url.includes("distiller.com"))) throw new Error("Competing application is present in discovery pages");
-if(api.NEWS_AGENT_VERSION!=="whisky-news-source-first-v4-cached-thumbnails") throw new Error("Unexpected news agent version");
+if(api.NEWS_AGENT_VERSION!=="whisky-news-source-first-v5-r2-thumbnail-backfill") throw new Error("Unexpected news agent version");
 if(api.safeRemoteNewsImage("http://cdn.example.test/image.jpg")) throw new Error("Insecure news image URL was accepted");
 if(api.safeRemoteNewsImage("https://127.0.0.1/image.jpg")) throw new Error("Local news image URL was accepted");
 if(api.safeRemoteNewsImage("https://100.64.0.1/image.jpg")) throw new Error("Carrier-grade private news image URL was accepted");
 if(api.safeRemoteNewsImage("https://[fd00::1]/image.jpg")) throw new Error("Private IPv6 news image URL was accepted");
 if(api.safeRemoteNewsImage("https://cdn.example.test/image.jpg")!=="https://cdn.example.test/image.jpg") throw new Error("Valid news image URL was rejected");
+if(!api.newsImageLooksGeneric("https://cdn.example.test/site-logo.png")) throw new Error("Generic logo thumbnail was accepted");
+if(api.newsImageLooksGeneric("https://cdn.example.test/articles/new-release.jpg")) throw new Error("Article thumbnail was rejected as generic");
+if(api.newsThumbnailKey("abc")!=="news/thumbnails/v2/abc") throw new Error("Versioned thumbnail key is incorrect");
 if(!source.includes('news/thumbnails/')) throw new Error("News thumbnails are not cached in R2");
 if(!source.includes('path.match(/^\\/news\\/image\\/([^/]+)$/)')) throw new Error("News thumbnail proxy route is missing");
+if(!source.includes("backfillNewsThumbnails(env,24)")) throw new Error("Scheduled thumbnail backfill is missing");
+if(!source.includes("assets/news/editorial-fallback-v1.jpg")) throw new Error("Neutral editorial fallback is missing");
 
 const links=api.newsLinksFromIndex(`
   <a href="/articles/new-release/">valid</a>

@@ -287,7 +287,7 @@ Spokojnie, prowadzę Cię za rękę. Cała zabawa to 4 etapy: **klucz → Worker
 ### 2b. Dodaj klucz jako sekret
 1. Wróć do strony Workera → zakładka **Settings** → **Variables and Secrets**.
 2. **Add** → typ **Secret** → nazwa: `GEMINI_API_KEY`, wartość: Twój klucz `AIza...` → **Save and deploy**.
-3. (Opcjonalnie, Twoje obejście limitu) Dodaj drugi sekret `DEV_KEY` z dowolnym hasłem, np. `dariusz123`.
+3. Uprawnienia administratora nadaje się wyłącznie rolą `admin` w D1. Nie używaj sekretów w adresie URL ani po stronie przeglądarki.
 
 ### 2c. (Opcjonalnie) Limit zapytań na osobę
 Żeby ktoś nie „przepalił" Twojego darmowego limitu Gemini:
@@ -338,8 +338,7 @@ Na stronie Workera zobaczysz adres typu **`https://bourbon-hunters.twojnick.work
 1. Otwórz adres GitHub Pages **na telefonie**.
 2. Menu przeglądarki → **„Dodaj do ekranu głównego"** → na pulpicie pojawi się ikona 🥃.
 3. Zrób zdjęcie dowolnej butelki whisky → **Oceń butelkę**.
-4. Tryb bez limitu (dla Ciebie): otwórz raz adres z `?bhdev=TwojeHaslo` (to samo co `DEV_KEY`), np.
-   `https://backloghero-lang.github.io/bourbon-hunters/?bhdev=dariusz123` — zapamięta się w telefonie.
+4. Konto z aktywną rolą `admin` w D1 otrzymuje uprawnienia administracyjne po zalogowaniu. Limity i wyjątki są rozstrzygane przez Worker na podstawie tej roli.
 
 ## 🔧 Strojenie (zmienne w Cloudflare, bez ruszania kodu)
 

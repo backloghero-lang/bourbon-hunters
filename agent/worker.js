@@ -24,7 +24,8 @@ const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v6-highres-cutout";
 const CATALOG_MODERATION_VERSION = "catalog-moderation-orchestrator-admin-v1";
 const CATALOG_LICENSE_VERSION = "catalog-license-2026-07-18-v1";
 const TELEMETRY_VERSION = "scanner-telemetry-v1";
-const NEWS_AGENT_VERSION = "whisky-news-source-first-v4-cached-thumbnails";
+const NEWS_AGENT_VERSION = "whisky-news-source-first-v5-r2-thumbnail-backfill";
+const NEWS_THUMBNAIL_VERSION = "v2";
 const LOCAL_IMAGE_PIPELINE_VERSION = "local-bottle-cutout-v2-quality-gated";
 const NEWS_RETENTION_DAYS = 30;
 const CATALOG_SYSTEM_USER_ID = "catalog-system";
@@ -34,6 +35,7 @@ const SCANNER_BUDGET_VERSION = "d1-atomic-cost-budgets-v1";
 const AUTH_PROTECTION_VERSION = "d1-auth-throttling-v1";
 const PRIVATE_BOTTLE_VERSION = "owner-only-private-bottles-v1";
 const UGC_MODERATION_VERSION = "comment-reports-blocks-admin-v1";
+const API_CONTRACT_VERSION = "bh-api-2026-08-v1";
 const PBKDF2_ITERATIONS = 600000;
 const LEGACY_PBKDF2_ITERATIONS = 100000;
 const AUTH_BODY_MAX_BYTES = 16384;
@@ -41,6 +43,8 @@ const PROFILE_BADGE_IDS = ["glass","bottle","barrel","seal","hat","star","distil
 
 let _p = { t:null, at:0 }, _db = { d:null, at:0 }, _communityDb = { d:null, at:0 };
 let _geminiModels = { names:null, at:0 };
+const _schemaCache=new Map();
+const SCHEMA_CACHE_TTL_MS=60000;
 const SCAN_RECORD_OVERRIDES={
   "jeffersons-very-small-batch-bourbon-whiskey-copy":{aliases:["Jefferson's Bourbon","Jefferson's Blend of Straight Bourbon Whiskey"],abv:41.15},
   "jack-daniel-s-bonded-119-43":{
@@ -211,6 +215,11 @@ async function hmacHex(secret, message){
   const key=await crypto.subtle.importKey("raw", encText(secret), {name:"HMAC",hash:"SHA-256"}, false, ["sign"]);
   return hex(await crypto.subtle.sign("HMAC", key, encText(message)));
 }
+async function contributorHashFor(env, userId){
+  const secret=String(env.CATALOG_HASH_SECRET||env.GOOGLE_STATE_SECRET||env.GOOGLE_CLIENT_SECRET||"");
+  if(!secret) throw new Error("catalog_hash_secret_missing");
+  return hmacHex(secret,"catalog-contributor:"+String(userId||""));
+}
 async function hashPassword(password, saltHex, iterations){
   const salt=new Uint8Array((saltHex.match(/.{1,2}/g)||[]).map(function(x){ return parseInt(x,16); }));
   const key=await crypto.subtle.importKey("raw", encText(password), "PBKDF2", false, ["deriveBits"]);
@@ -229,6 +238,7 @@ function publicUser(row){
     username:row.username,
     created_at:row.created_at,
     email_verified:!!row.email_verified_at,
+    age_verified:!!row.age_verified_at,
     auth_method:row.password_algo==="google-oauth2"?"google":"password"
   } : null;
 }
@@ -247,9 +257,12 @@ function googleRedirectUri(env, request){
 function allowedReturnUrl(env, raw){
   let fallback=appUrl(env);
   try{
-    const candidate=new URL(String(raw||fallback), fallback);
-    const allowed=[new URL(appUrl(env)).origin,"https://backloghero-lang.github.io","http://localhost","http://127.0.0.1"];
-    if(allowed.indexOf(candidate.origin)>=0) return candidate.toString();
+    const base=new URL(fallback);
+    const candidate=new URL(String(raw||fallback),fallback);
+    if(candidate.origin===base.origin && candidate.pathname===base.pathname && !candidate.username && !candidate.password){
+      candidate.hash="";
+      return candidate.toString();
+    }
   }catch(e){}
   return fallback;
 }
@@ -262,7 +275,7 @@ async function readGoogleState(env, state){
   const parts=String(state||"").split(".");
   if(parts.length!==2) return null;
   const expected=await hmacHex(String(env.GOOGLE_STATE_SECRET||env.GOOGLE_CLIENT_SECRET||""), parts[0]);
-  if(expected!==parts[1]) return null;
+  if(!constantTimeHexEqual(expected,parts[1])) return null;
   try{
     const data=JSON.parse(b64urlDecode(parts[0]));
     if(!data || Date.now()-Number(data.iat||0)>1000*60*10) return null;
@@ -382,37 +395,50 @@ function corsOrigin(value){
 }
 function apiCors(env, request){
   const raw=String(env.ALLOW_ORIGIN||appUrl(env)).trim();
-  let allow="*";
-  if(raw && raw!=="*"){
-    const requestOrigin=request&&request.headers ? request.headers.get("Origin")||"" : "";
-    const allowed=raw.split(",").map(corsOrigin).filter(Boolean);
-    allow=allowed.indexOf(requestOrigin)>=0 ? requestOrigin : (allowed[0]||"*");
-  }
+  const requestOrigin=request&&request.headers ? request.headers.get("Origin")||"" : "";
+  const configured=raw && raw!=="*" ? raw : appUrl(env);
+  const allowed=configured.split(",").map(corsOrigin).filter(function(origin){ return !!origin&&origin!=="*"; });
+  const allow=requestOrigin ? (allowed.indexOf(requestOrigin)>=0?requestOrigin:"") : (allowed[0]||"");
   const headers={
-    "Access-Control-Allow-Origin": allow,
     "Access-Control-Allow-Methods": "GET, POST, DELETE, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type, Authorization"
   };
-  if(allow!=="*") headers.Vary="Origin";
+  if(allow) headers["Access-Control-Allow-Origin"]=allow;
+  headers.Vary="Origin";
   return headers;
 }
 function needDB(env,cors){ if(env.DB) return null; return J({error:"d1_missing",message:"Cloudflare D1 binding DB is not configured."},501,cors); }
+async function cachedSchema(key, loader){
+  const now=Date.now();
+  const cached=_schemaCache.get(key);
+  if(cached && now-cached.at<SCHEMA_CACHE_TTL_MS) return cached.value;
+  const value=await loader();
+  _schemaCache.set(key,{at:now,value:value});
+  return value;
+}
 async function userColumns(env){
-  const rows=await env.DB.prepare("PRAGMA table_info(users)").all();
-  const out={};
-  (rows.results||[]).forEach(function(r){ if(r.name) out[String(r.name)]=true; });
-  return out;
+  return cachedSchema("columns:users",async function(){
+    const rows=await env.DB.prepare("PRAGMA table_info(users)").all();
+    const out={};
+    (rows.results||[]).forEach(function(r){ if(r.name) out[String(r.name)]=true; });
+    return out;
+  });
 }
 async function tableExists(env, name){
-  const row=await env.DB.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name=?").bind(String(name||"")).first();
-  return !!row;
+  name=String(name||"");
+  return cachedSchema("table:"+name,async function(){
+    const row=await env.DB.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name=?").bind(name).first();
+    return !!row;
+  });
 }
 async function tableColumns(env, name){
   if(!/^[a-z0-9_]+$/i.test(String(name||""))) return {};
-  const rows=await env.DB.prepare("PRAGMA table_info("+name+")").all();
-  const out={};
-  (rows.results||[]).forEach(function(row){ if(row.name) out[String(row.name)]=true; });
-  return out;
+  return cachedSchema("columns:"+name,async function(){
+    const rows=await env.DB.prepare("PRAGMA table_info("+name+")").all();
+    const out={};
+    (rows.results||[]).forEach(function(row){ if(row.name) out[String(row.name)]=true; });
+    return out;
+  });
 }
 async function authSecuritySchemaReady(env){
   if(!env.DB) return false;
@@ -534,6 +560,11 @@ async function cleanupAuthRates(env){
   if(!(await authRateSchemaReady(env))) return {deleted:0};
   const cutoff=new Date(Date.now()-2*86400000).toISOString();
   const result=await env.DB.prepare("DELETE FROM auth_rate_events WHERE created_at<?").bind(cutoff).run();
+  return {deleted:Number(result&&result.meta&&result.meta.changes||0)};
+}
+async function cleanupGoogleOAuthRequests(env){
+  if(!(await tableExists(env,"google_oauth_requests"))) return {deleted:0};
+  const result=await env.DB.prepare("DELETE FROM google_oauth_requests WHERE expires_at<? OR used_at IS NOT NULL").bind(new Date().toISOString()).run();
   return {deleted:Number(result&&result.meta&&result.meta.changes||0)};
 }
 async function newsSchemaReady(env){
@@ -847,8 +878,27 @@ async function publishModeratedAsset(env, row){
   await env.BOTTLE_IMAGES.put(imageKey,bytes,{httpMetadata:{contentType:"image/webp",cacheControl:"public, max-age=31536000, immutable"}});
   return {image_key:imageKey,asset_sha256:assetSha};
 }
+async function startStorageOperation(env, type, entityId, idempotencyKey){
+  if(!(await tableExists(env,"storage_operations"))) throw new Error("storage_operations_schema_missing");
+  const now=new Date().toISOString();
+  const inserted=await env.DB.prepare("INSERT OR IGNORE INTO storage_operations (id,idempotency_key,operation_type,entity_id,status,created_at,updated_at) VALUES (?,?,?,?, 'started',?,?)")
+    .bind(crypto.randomUUID(),idempotencyKey,type,entityId,now,now).run();
+  const row=await env.DB.prepare("SELECT * FROM storage_operations WHERE idempotency_key=?").bind(idempotencyKey).first();
+  if(!row) throw new Error("storage_operation_create_failed");
+  if(Number(inserted&&inserted.meta&&inserted.meta.changes||0)>0) return Object.assign(row,{_acquired:true});
+  if(row.status==="completed") return Object.assign(row,{_acquired:false});
+  const staleBefore=new Date(Date.now()-5*60*1000).toISOString();
+  const acquired=await env.DB.prepare("UPDATE storage_operations SET status='started',last_error=NULL,updated_at=? WHERE id=? AND (status IN ('failed','cleanup_pending') OR updated_at<?)")
+    .bind(now,row.id,staleBefore).run();
+  return Object.assign(row,{_acquired:Number(acquired&&acquired.meta&&acquired.meta.changes||0)>0});
+}
+async function updateStorageOperation(env, id, status, result, error){
+  const now=new Date().toISOString();
+  await env.DB.prepare("UPDATE storage_operations SET status=?,result_json=?,last_error=?,updated_at=?,completed_at=? WHERE id=?")
+    .bind(status,result?JSON.stringify(result).slice(0,4000):null,error?String(error).slice(0,500):null,now,status==="completed"?now:null,id).run();
+}
 async function recordCatalogReceipt(env, user, row, published, acceptedAt){
-  const contributorHash=await sha256Hex("catalog-contributor:"+user.id);
+  const contributorHash=await contributorHashFor(env,user.id);
   const originalDeletedAt=row.original_deleted_at || acceptedAt;
   await env.DB.prepare("INSERT INTO catalog_asset_receipts (id,submission_id,bottle_id,contributor_hash,license_version,accepted_at,asset_sha256,image_key,original_deleted_at,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(submission_id) DO UPDATE SET license_version=excluded.license_version,accepted_at=excluded.accepted_at,asset_sha256=excluded.asset_sha256,image_key=excluded.image_key,original_deleted_at=excluded.original_deleted_at,updated_at=excluded.updated_at")
     .bind(crypto.randomUUID(),row.id,row.bottle_id,contributorHash,CATALOG_LICENSE_VERSION,acceptedAt,published.asset_sha256,published.image_key,originalDeletedAt,acceptedAt,acceptedAt).run();
@@ -922,31 +972,58 @@ async function adminCatalogModerationDecision(env, request, admin, moderationId,
   if(["approve","reject"].indexOf(decision)<0) return {error:"bad_decision",status:400};
   const row=await env.DB.prepare("SELECT mq.*,bs.user_id,bs.original_deleted_at FROM catalog_moderation_queue mq JOIN bottle_submissions bs ON bs.id=mq.submission_id WHERE mq.id=?").bind(moderationId).first();
   if(!row) return {error:"moderation_not_found",status:404};
-  if(row.admin_status!=="pending") return {error:"moderation_already_decided",status:409};
+  const operation=await startStorageOperation(env,"catalog_"+decision,row.id,"catalog-moderation:"+row.id+":"+decision);
+  if(operation&&operation.status==="completed") return safeJson(operation.result_json,{ok:true,status:decision==="approve"?"approved":"rejected"});
+  if(!operation._acquired) return {error:"moderation_operation_in_progress",status:409};
+  if(row.admin_status!=="pending"){
+    if((decision==="approve"&&row.admin_status==="approved")||(decision==="reject"&&row.admin_status==="rejected")){
+      if(row.review_image_key&&env.BOTTLE_IMAGES) await env.BOTTLE_IMAGES.delete(row.review_image_key).catch(function(){});
+      const recovered=decision==="approve"?await env.DB.prepare("SELECT * FROM catalog_bottles WHERE bottle_id=?").bind(row.bottle_id).first():null;
+      const result=decision==="approve"?{ok:true,status:"approved",bottle:publicCatalogBottle(recovered,request)}:{ok:true,status:"rejected"};
+      await updateStorageOperation(env,operation.id,"completed",result,null);
+      return result;
+    }
+    return {error:"moderation_already_decided",status:409};
+  }
   const now=new Date().toISOString();
   const note=String(body&&body.note||"").trim().slice(0,500);
   if(decision==="reject"){
-    if(row.review_image_key&&env.BOTTLE_IMAGES) await env.BOTTLE_IMAGES.delete(row.review_image_key).catch(function(){});
-    await env.DB.prepare("UPDATE catalog_moderation_queue SET admin_status='rejected',admin_user_id=?,admin_note=?,reviewed_at=?,updated_at=? WHERE id=?")
-      .bind(admin.id,note,now,now,row.id).run();
-    await env.DB.prepare("UPDATE bottle_submissions SET status='cancelled',image_choice='admin_rejected',published_key=NULL,updated_at=? WHERE id=?")
-      .bind(now,row.submission_id).run();
-    return {ok:true,status:"rejected"};
+    const result={ok:true,status:"rejected"};
+    try{
+      await env.DB.batch([
+        env.DB.prepare("UPDATE catalog_moderation_queue SET admin_status='rejected',admin_user_id=?,admin_note=?,reviewed_at=?,updated_at=? WHERE id=?").bind(admin.id,note,now,now,row.id),
+        env.DB.prepare("UPDATE bottle_submissions SET status='cancelled',image_choice='admin_rejected',published_key=NULL,updated_at=? WHERE id=?").bind(now,row.submission_id)
+      ]);
+      if(row.review_image_key&&env.BOTTLE_IMAGES) await env.BOTTLE_IMAGES.delete(row.review_image_key);
+      await updateStorageOperation(env,operation.id,"completed",result,null);
+      return result;
+    }catch(error){ await updateStorageOperation(env,operation.id,"cleanup_pending",null,error); throw error; }
   }
   const existing=await env.DB.prepare("SELECT bottle_id FROM catalog_bottles WHERE bottle_id=? AND status='published'").bind(row.bottle_id).first();
   if(existing) return {error:"catalog_entry_locked",status:409,message:"Published records are immutable to community submissions."};
-  const published=await publishModeratedAsset(env,row);
-  await env.DB.prepare("INSERT INTO catalog_bottles (bottle_id,bottle_name,bottle_data,image_submission_id,image_key,asset_sha256,license_version,licensed_at,provenance_submission_id,source_user_id,status,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,'published',?,?)")
-    .bind(row.bottle_id,row.bottle_name,row.bottle_data,row.submission_id,published.image_key,published.asset_sha256,CATALOG_LICENSE_VERSION,now,row.submission_id,row.user_id,now,now).run();
-  await recordCatalogReceipt(env,{id:row.user_id},{id:row.submission_id,bottle_id:row.bottle_id,original_deleted_at:row.original_deleted_at},published,now);
-  await env.DB.prepare("UPDATE catalog_moderation_queue SET admin_status='approved',admin_user_id=?,admin_note=?,reviewed_at=?,updated_at=? WHERE id=?")
-    .bind(admin.id,note,now,now,row.id).run();
-  await env.DB.prepare("UPDATE bottle_submissions SET status='published',image_choice='admin_approved',published_key=?,asset_sha256=?,updated_at=? WHERE id=?")
-    .bind(published.image_key,published.asset_sha256,now,row.submission_id).run();
-  if(row.review_image_key&&env.BOTTLE_IMAGES) await env.BOTTLE_IMAGES.delete(row.review_image_key).catch(function(){});
-  _communityDb={d:null,at:0};
-  const catalogRow=await env.DB.prepare("SELECT * FROM catalog_bottles WHERE bottle_id=?").bind(row.bottle_id).first();
-  return {ok:true,status:"approved",bottle:publicCatalogBottle(catalogRow,request)};
+  let published=null;
+  try{
+    published=await publishModeratedAsset(env,row);
+    await updateStorageOperation(env,operation.id,"asset_staged",{image_key:published.image_key},null);
+    const contributorHash=await contributorHashFor(env,row.user_id);
+    const receiptId=crypto.randomUUID();
+    await env.DB.batch([
+      env.DB.prepare("INSERT INTO catalog_bottles (bottle_id,bottle_name,bottle_data,image_submission_id,image_key,asset_sha256,license_version,licensed_at,provenance_submission_id,source_user_id,status,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,'published',?,?)").bind(row.bottle_id,row.bottle_name,row.bottle_data,row.submission_id,published.image_key,published.asset_sha256,CATALOG_LICENSE_VERSION,now,row.submission_id,row.user_id,now,now),
+      env.DB.prepare("INSERT INTO catalog_asset_receipts (id,submission_id,bottle_id,contributor_hash,license_version,accepted_at,asset_sha256,image_key,original_deleted_at,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(submission_id) DO UPDATE SET license_version=excluded.license_version,accepted_at=excluded.accepted_at,asset_sha256=excluded.asset_sha256,image_key=excluded.image_key,original_deleted_at=excluded.original_deleted_at,updated_at=excluded.updated_at").bind(receiptId,row.submission_id,row.bottle_id,contributorHash,CATALOG_LICENSE_VERSION,now,published.asset_sha256,published.image_key,row.original_deleted_at||now,now,now),
+      env.DB.prepare("UPDATE catalog_moderation_queue SET admin_status='approved',admin_user_id=?,admin_note=?,reviewed_at=?,updated_at=? WHERE id=?").bind(admin.id,note,now,now,row.id),
+      env.DB.prepare("UPDATE bottle_submissions SET status='published',image_choice='admin_approved',published_key=?,asset_sha256=?,updated_at=? WHERE id=?").bind(published.image_key,published.asset_sha256,now,row.submission_id)
+    ]);
+    if(row.review_image_key&&env.BOTTLE_IMAGES) await env.BOTTLE_IMAGES.delete(row.review_image_key).catch(function(){});
+    _communityDb={d:null,at:0};
+    const catalogRow=await env.DB.prepare("SELECT * FROM catalog_bottles WHERE bottle_id=?").bind(row.bottle_id).first();
+    const result={ok:true,status:"approved",bottle:publicCatalogBottle(catalogRow,request)};
+    await updateStorageOperation(env,operation.id,"completed",result,null);
+    return result;
+  }catch(error){
+    if(published&&published.image_key&&env.BOTTLE_IMAGES) await env.BOTTLE_IMAGES.delete(published.image_key).catch(function(){});
+    await updateStorageOperation(env,operation.id,"failed",null,error);
+    throw error;
+  }
 }
 async function ensureCatalogSystemUser(env){
   const now=new Date().toISOString();
@@ -975,7 +1052,8 @@ async function deleteAccountAndData(env, user){
   if(!(await catalogDataSchemaReady(env))) return {error:"schema_catalog_lifecycle_missing",status:501};
   await ensureCatalogSystemUser(env);
   const now=new Date().toISOString();
-  const contributorHash=await sha256Hex("catalog-contributor:"+user.id);
+  const contributorHash=await contributorHashFor(env,user.id);
+  const legacyContributorHash=await sha256Hex("catalog-contributor:"+user.id);
   const rows=await env.DB.prepare("SELECT cb.bottle_id,cb.image_key,cb.asset_sha256,cb.image_submission_id,bs.original_key,bs.processed_key,bs.asset_sha256 AS submission_asset_sha256 FROM catalog_bottles cb LEFT JOIN bottle_submissions bs ON bs.id=cb.image_submission_id WHERE cb.source_user_id=? OR bs.user_id=?")
     .bind(user.id,user.id).all();
   const keepKeys={};
@@ -999,7 +1077,7 @@ async function deleteAccountAndData(env, user){
     }
     if(deleteKeys.length) await deleteR2Keys(env,deleteKeys);
   }
-  await env.DB.prepare("UPDATE catalog_asset_receipts SET account_deleted_at=?,updated_at=? WHERE contributor_hash=?").bind(now,now,contributorHash).run();
+  await env.DB.prepare("UPDATE catalog_asset_receipts SET account_deleted_at=?,updated_at=? WHERE contributor_hash IN (?,?)").bind(now,now,contributorHash,legacyContributorHash).run();
   if(await telemetrySchemaReady(env)){
     await env.DB.prepare("UPDATE scanner_runs SET user_id=NULL,actor_type='deleted' WHERE user_id=?").bind(user.id).run();
     await env.DB.prepare("UPDATE service_usage_events SET user_id=NULL WHERE user_id=?").bind(user.id).run();
@@ -1193,6 +1271,23 @@ async function bootstrapFor(env, userId){
   }
   return out;
 }
+async function exportUserData(env, user){
+  const lists=await env.DB.prepare("SELECT bottle_id,list_type,bottle_name,bottle_data,created_at,updated_at FROM user_bottles WHERE user_id=? ORDER BY created_at").bind(user.id).all();
+  const ratings=await env.DB.prepare("SELECT bottle_id,rating,created_at,updated_at FROM user_ratings WHERE user_id=? ORDER BY created_at").bind(user.id).all();
+  const recommendations=(await tableExists(env,"bottle_recommendations"))
+    ? await env.DB.prepare("SELECT bottle_id,rating,comment,active,created_at,updated_at FROM bottle_recommendations WHERE user_id=? ORDER BY created_at").bind(user.id).all()
+    : {results:[]};
+  return {
+    format:"bourbon-hunters-user-export-v1",
+    exported_at:new Date().toISOString(),
+    account:{email:user.email,username:user.username,created_at:user.created_at,email_verified:!!user.email_verified_at,age_verified:!!user.age_verified_at},
+    profile:await profileFor(env,user.id),
+    bottle_lists:lists.results||[],
+    ratings:ratings.results||[],
+    recommendations:recommendations.results||[],
+    private_bottles:await privateBottlesFor(env,user.id)
+  };
+}
 async function upsertBottleList(env, userId, listType, bottleId, active, data){
   if(!bottleId) return;
   if(!active){
@@ -1350,13 +1445,14 @@ async function adminCommentModerationDecision(env, admin, recommendationId, body
   ]);
   return {ok:true,status:status};
 }
-async function googleExchange(request, env, code){
+async function googleExchange(request, env, code, codeVerifier){
   const body=new URLSearchParams();
   body.set("code",code);
   body.set("client_id",String(env.GOOGLE_CLIENT_ID));
   body.set("client_secret",String(env.GOOGLE_CLIENT_SECRET));
   body.set("redirect_uri",googleRedirectUri(env,request));
   body.set("grant_type","authorization_code");
+  if(codeVerifier) body.set("code_verifier",String(codeVerifier));
   const tokenRes=await fetch("https://oauth2.googleapis.com/token",{
     method:"POST",
     headers:{"Content-Type":"application/x-www-form-urlencoded"},
@@ -1371,15 +1467,45 @@ async function googleExchange(request, env, code){
   if(!userRes.ok || !userData.sub) throw {error:"google_user_failed",detail:String(userData.error_description||userData.error||userRes.status).slice(0,180)};
   return userData;
 }
-function googleAuthorizationUrl(request, env, state){
+function googleAuthorizationUrl(request, env, state, codeChallenge){
   const googleUrl=new URL("https://accounts.google.com/o/oauth2/v2/auth");
   googleUrl.searchParams.set("client_id",String(env.GOOGLE_CLIENT_ID));
   googleUrl.searchParams.set("redirect_uri",googleRedirectUri(env,request));
   googleUrl.searchParams.set("response_type","code");
   googleUrl.searchParams.set("scope","openid email profile");
   googleUrl.searchParams.set("state",state);
+  if(codeChallenge){
+    googleUrl.searchParams.set("code_challenge",codeChallenge);
+    googleUrl.searchParams.set("code_challenge_method","S256");
+  }
   googleUrl.searchParams.set("prompt","select_account");
   return googleUrl.toString();
+}
+async function pkceChallenge(verifier){
+  const digest=await crypto.subtle.digest("SHA-256",encText(verifier));
+  return b64urlEncode(new Uint8Array(digest));
+}
+async function createGoogleOAuthRequest(env, request, mode, returnUrl, extra){
+  if(!(await tableExists(env,"google_oauth_requests"))) throw {error:"schema_google_pkce_missing"};
+  const now=new Date();
+  const expires=new Date(now.getTime()+10*60*1000);
+  const id=crypto.randomUUID();
+  const nonce=randHex(24);
+  const verifier=randHex(32);
+  await env.DB.prepare("DELETE FROM google_oauth_requests WHERE expires_at<? OR used_at IS NOT NULL").bind(now.toISOString()).run();
+  await env.DB.prepare("INSERT INTO google_oauth_requests (id,mode,return_url,nonce_hash,code_verifier,created_at,expires_at) VALUES (?,?,?,?,?,?,?)")
+    .bind(id,mode,returnUrl,await sha256Hex(nonce),verifier,now.toISOString(),expires.toISOString()).run();
+  const state=await makeGoogleState(env,Object.assign({oauth_request_id:id,mode:mode,nonce:nonce,iat:Date.now()},extra||{}));
+  return googleAuthorizationUrl(request,env,state,await pkceChallenge(verifier));
+}
+async function consumeGoogleOAuthRequest(env, state){
+  const now=new Date().toISOString();
+  const row=await env.DB.prepare("SELECT * FROM google_oauth_requests WHERE id=? AND used_at IS NULL AND expires_at>?")
+    .bind(String(state&&state.oauth_request_id||""),now).first();
+  if(!row || !constantTimeHexEqual(await sha256Hex(String(state&&state.nonce||"")),row.nonce_hash)) throw {error:"google_oauth_expired"};
+  const consumed=await env.DB.prepare("UPDATE google_oauth_requests SET used_at=? WHERE id=? AND used_at IS NULL").bind(now,row.id).run();
+  if(Number(consumed&&consumed.meta&&consumed.meta.changes||0)!==1) throw {error:"google_oauth_expired"};
+  return row;
 }
 async function createGoogleLinkRequest(env, request, user, returnUrl){
   if(!(await authSecuritySchemaReady(env))) throw {error:"schema_auth_security_missing"};
@@ -1392,8 +1518,7 @@ async function createGoogleLinkRequest(env, request, user, returnUrl){
     .bind(user.id,now.toISOString()).run();
   await env.DB.prepare("INSERT INTO auth_link_requests (id,user_id,session_id,provider,nonce_hash,return_url,created_at,expires_at) VALUES (?,?,?,?,?,?,?,?)")
     .bind(id,user.id,user.session_id,"google",nonceHash,returnUrl,now.toISOString(),expires.toISOString()).run();
-  const state=await makeGoogleState(env,{mode:"link",link_id:id,nonce:nonce,return_url:returnUrl,iat:Date.now()});
-  return googleAuthorizationUrl(request,env,state);
+  return createGoogleOAuthRequest(env,request,"link",returnUrl,{link_id:id,link_nonce:nonce});
 }
 async function completeGoogleLink(env, state, googleUser){
   if(!(await authSecuritySchemaReady(env))) throw {error:"schema_auth_security_missing"};
@@ -1404,7 +1529,7 @@ async function completeGoogleLink(env, state, googleUser){
   const now=new Date().toISOString();
   const link=await env.DB.prepare("SELECT alr.*,u.email AS user_email FROM auth_link_requests alr JOIN users u ON u.id=alr.user_id JOIN sessions s ON s.id=alr.session_id AND s.user_id=alr.user_id WHERE alr.id=? AND alr.provider='google' AND alr.used_at IS NULL AND alr.expires_at>? AND s.expires_at>?")
     .bind(String(state.link_id||""),now,now).first();
-  if(!link || !constantTimeHexEqual(await sha256Hex(String(state.nonce||"")),link.nonce_hash)) throw {error:"google_link_expired"};
+  if(!link || !constantTimeHexEqual(await sha256Hex(String(state.link_nonce||"")),link.nonce_hash)) throw {error:"google_link_expired"};
   if(cleanEmail(link.user_email)!==email) throw {error:"google_link_email_mismatch"};
   const existing=await env.DB.prepare("SELECT user_id FROM auth_identities WHERE provider='google' AND provider_user_id=?").bind(providerId).first();
   if(existing && existing.user_id!==link.user_id) throw {error:"google_identity_in_use"};
@@ -1433,7 +1558,7 @@ async function googleUserLogin(env, request, googleUser){
     const hash=await sha256Hex("google:"+providerId+":"+randHex(16));
     const username=await availableUsername(env,googleUser.name||email,email);
     await env.DB.prepare("INSERT INTO users (id,email,username,password_hash,password_salt,password_algo,birth_date,age_gate_country,age_gate_min,age_verified_at,email_verified_at,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)")
-      .bind(id,email,username,hash,salt,"google-oauth2",null,"google",ageGateMin(env),now,now,now,now).run();
+      .bind(id,email,username,hash,salt,"google-oauth2",null,"google",ageGateMin(env),null,now,now,now).run();
     row=await env.DB.prepare("SELECT * FROM users WHERE id=?").bind(id).first();
     created=true;
     await env.DB.prepare("INSERT INTO auth_identities (provider,provider_user_id,user_id,email,created_at,updated_at) VALUES (?,?,?,?,?,?) ON CONFLICT(provider,provider_user_id) DO UPDATE SET user_id=excluded.user_id,email=excluded.email,updated_at=excluded.updated_at")
@@ -1586,9 +1711,14 @@ async function fetchNewsMetadata(value){
   if(!canonicalUrl || !newsSourceForUrl(canonicalUrl)) return null;
   const title=newsMetaValue(html,"og:title") || decodeNewsText((html.match(/<title[^>]*>([\s\S]*?)<\/title>/i)||[])[1]);
   const description=newsMetaValue(html,"og:description") || newsMetaValue(html,"description");
-  let imageUrl=newsMetaValue(html,"og:image");
+  let imageUrl=newsMetaValue(html,"og:image:secure_url") || newsMetaValue(html,"og:image") || newsMetaValue(html,"twitter:image");
+  if(!imageUrl){
+    const imageLink=html.match(/<link[^>]+rel=["'][^"']*image_src[^"']*["'][^>]+href=["']([^"']+)["'][^>]*>/i) ||
+      html.match(/<link[^>]+href=["']([^"']+)["'][^>]+rel=["'][^"']*image_src[^"']*["'][^>]*>/i);
+    imageUrl=decodeNewsText(imageLink&&imageLink[1]||"");
+  }
   try{ if(imageUrl) imageUrl=new URL(imageUrl,canonicalUrl).toString(); }catch(e){ imageUrl=""; }
-  if(imageUrl && !/^https:\/\//i.test(imageUrl)) imageUrl="";
+  if(imageUrl && (!/^https:\/\//i.test(imageUrl) || newsImageLooksGeneric(imageUrl))) imageUrl="";
   return {
     canonical_url:canonicalUrl,
     source_url:sourceUrl,
@@ -1633,15 +1763,29 @@ function safeRemoteNewsImage(value){
     return url.toString();
   }catch(e){ return ""; }
 }
+function newsImageLooksGeneric(value){
+  try{
+    const path=(new URL(String(value||""))).pathname.toLowerCase();
+    return /(?:^|[-_/])(logo|favicon|icon|avatar|placeholder|default|site-logo|brandmark)(?:[-_.\/]|$)/.test(path);
+  }catch(e){ return true; }
+}
+function newsThumbnailKey(articleId){
+  return "news/thumbnails/"+NEWS_THUMBNAIL_VERSION+"/"+String(articleId||"").trim().slice(0,80);
+}
 async function fetchRemoteNewsImage(remoteUrl, canonicalUrl, signal){
   let current=remoteUrl;
   for(let redirectCount=0;redirectCount<4;redirectCount++){
-    const response=await fetch(current,{
-      redirect:"manual",
-      signal:signal,
-      headers:{Accept:"image/avif,image/webp,image/png,image/jpeg,image/gif;q=0.8,*/*;q=0.2",Referer:canonicalUrl,"User-Agent":"Mozilla/5.0 Bourbon Hunters News Thumbnail"},
-      cf:{cacheTtl:86400,cacheEverything:true}
-    });
+    let response=null;
+    const headerSets=[
+      {Accept:"image/avif,image/webp,image/png,image/jpeg;q=0.9,*/*;q=0.2",Referer:canonicalUrl,"User-Agent":"Mozilla/5.0 (compatible; BourbonHuntersNews/1.0)"},
+      {Accept:"image/avif,image/webp,image/png,image/jpeg;q=0.9,*/*;q=0.2","User-Agent":"Mozilla/5.0 (compatible; BourbonHuntersNews/1.0)"},
+      {Accept:"image/*"}
+    ];
+    for(const headers of headerSets){
+      response=await fetch(current,{redirect:"manual",signal:signal,headers:headers,cf:{cacheTtl:86400,cacheEverything:true}});
+      if(response.ok || [301,302,303,307,308].indexOf(response.status)>=0) break;
+      if(response.status!==401 && response.status!==403 && response.status!==429) break;
+    }
     if([301,302,303,307,308].indexOf(response.status)<0) return response;
     const location=response.headers.get("Location");
     current=safeRemoteNewsImage(location ? new URL(location,current).toString() : "");
@@ -1649,41 +1793,83 @@ async function fetchRemoteNewsImage(remoteUrl, canonicalUrl, signal){
   }
   return null;
 }
+async function downloadNewsThumbnail(remoteUrl, canonicalUrl){
+  const safeUrl=safeRemoteNewsImage(remoteUrl);
+  if(!safeUrl || newsImageLooksGeneric(safeUrl)) return null;
+  const controller=new AbortController();
+  const timeout=setTimeout(function(){ controller.abort(); },12000);
+  let response;
+  try{ response=await fetchRemoteNewsImage(safeUrl,canonicalUrl,controller.signal); }
+  catch(e){ return null; }
+  finally{ clearTimeout(timeout); }
+  if(!response || !response.ok) return null;
+  const contentType=String(response.headers.get("Content-Type")||"").split(";")[0].trim().toLowerCase();
+  if(["image/jpeg","image/png","image/webp","image/gif","image/avif"].indexOf(contentType)<0) return null;
+  const contentLength=Number(response.headers.get("Content-Length")||0);
+  if(contentLength>4000000) return null;
+  const bytes=new Uint8Array(await response.arrayBuffer());
+  if(bytes.byteLength<4096 || bytes.byteLength>4000000) return null;
+  return {bytes:bytes,contentType:contentType};
+}
+async function ensureNewsThumbnail(env, row){
+  if(!row || !row.id || !env.BOTTLE_IMAGES) return {cached:false,reason:"r2_missing"};
+  const key=newsThumbnailKey(row.id);
+  if(await env.BOTTLE_IMAGES.head(key)) return {cached:true,key:key,existing:true};
+  let canonicalUrl=canonicalNewsUrl(row.canonical_url);
+  let imageUrl=safeRemoteNewsImage(row.image_url);
+  if(!canonicalUrl) return {cached:false,reason:"article_url_missing"};
+  if(!imageUrl || newsImageLooksGeneric(imageUrl)){
+    const metadata=await fetchNewsMetadata(canonicalUrl).catch(function(){ return null; });
+    imageUrl=safeRemoteNewsImage(metadata&&metadata.image_url);
+    if(metadata&&metadata.image_url){
+      await env.DB.prepare("UPDATE news_articles SET image_url=?,updated_at=? WHERE id=?")
+        .bind(metadata.image_url,new Date().toISOString(),row.id).run().catch(function(){});
+    }
+  }
+  const downloaded=await downloadNewsThumbnail(imageUrl,canonicalUrl);
+  if(!downloaded) return {cached:false,reason:"source_image_unavailable"};
+  await env.BOTTLE_IMAGES.put(key,downloaded.bytes,{httpMetadata:{contentType:downloaded.contentType,cacheControl:"public, max-age=2592000, immutable"}});
+  return {cached:true,key:key,contentType:downloaded.contentType};
+}
 async function newsImageResponse(env, articleId, cors){
   articleId=String(articleId||"").trim().slice(0,80);
   if(!articleId || !(await newsSchemaReady(env))) return J({error:"image_not_found"},404,cors);
   const row=await env.DB.prepare("SELECT id,canonical_url,image_url FROM news_articles WHERE id=? AND status='published'").bind(articleId).first();
-  const remoteUrl=safeRemoteNewsImage(row&&row.image_url);
-  if(!row || !remoteUrl) return J({error:"image_not_found"},404,cors);
-  const imageKey="news/thumbnails/"+articleId;
+  if(!row) return J({error:"image_not_found"},404,cors);
+  const imageKey=newsThumbnailKey(articleId);
   if(env.BOTTLE_IMAGES){
     const cached=await env.BOTTLE_IMAGES.get(imageKey);
     if(cached){
       const headers=new Headers(responseHeaders(cors));
       cached.writeHttpMetadata(headers);
       headers.set("Content-Type",headers.get("Content-Type")||"image/jpeg");
-      headers.set("Cache-Control","public, max-age=604800, stale-while-revalidate=86400");
+      headers.set("Cache-Control","public, max-age=2592000, immutable");
       return new Response(cached.body,{headers:headers});
     }
   }
-  const controller=new AbortController();
-  const timeout=setTimeout(function(){ controller.abort(); },10000);
-  let response;
-  try{
-    response=await fetchRemoteNewsImage(remoteUrl,row.canonical_url,controller.signal);
-  }catch(e){ return J({error:"image_unavailable"},404,cors); }
-  finally{ clearTimeout(timeout); }
-  if(!response || !response.ok) return J({error:"image_unavailable"},404,cors);
-  const contentType=String(response.headers.get("Content-Type")||"").split(";")[0].trim().toLowerCase();
-  if(["image/jpeg","image/png","image/webp","image/gif","image/avif"].indexOf(contentType)<0) return J({error:"invalid_image_type"},415,cors);
-  const contentLength=Number(response.headers.get("Content-Length")||0);
-  if(contentLength>4000000) return J({error:"image_too_large"},413,cors);
-  const bytes=new Uint8Array(await response.arrayBuffer());
-  if(!bytes.byteLength || bytes.byteLength>4000000) return J({error:"image_too_large"},413,cors);
-  if(env.BOTTLE_IMAGES){
-    await env.BOTTLE_IMAGES.put(imageKey,bytes,{httpMetadata:{contentType:contentType,cacheControl:"public, max-age=604800"}}).catch(function(){});
+  const repaired=await ensureNewsThumbnail(env,row);
+  if(repaired.cached && env.BOTTLE_IMAGES){
+    const cached=await env.BOTTLE_IMAGES.get(imageKey);
+    if(cached){
+      const headers=new Headers(responseHeaders(cors));
+      cached.writeHttpMetadata(headers);
+      headers.set("Content-Type",headers.get("Content-Type")||"image/jpeg");
+      headers.set("Cache-Control","public, max-age=2592000, immutable");
+      return new Response(cached.body,{headers:headers});
+    }
   }
-  return new Response(bytes,{headers:responseHeaders(Object.assign({},cors,{"Content-Type":contentType,"Cache-Control":"public, max-age=604800, stale-while-revalidate=86400"}))});
+  return Response.redirect(assetUrl(env,"assets/news/editorial-fallback-v1.jpg"),302);
+}
+async function backfillNewsThumbnails(env, limit){
+  if(!(await newsSchemaReady(env)) || !env.BOTTLE_IMAGES) return {checked:0,cached:0};
+  const rows=await env.DB.prepare("SELECT id,canonical_url,image_url FROM news_articles WHERE status='published' ORDER BY created_at DESC LIMIT ?")
+    .bind(Math.max(1,Math.min(30,Number(limit)||12))).all();
+  let cached=0;
+  for(const row of (rows.results||[])){
+    const result=await ensureNewsThumbnail(env,row).catch(function(){ return {cached:false}; });
+    if(result.cached) cached++;
+  }
+  return {checked:(rows.results||[]).length,cached:cached};
 }
 async function seedStarterNews(env){
   if(!(await newsSchemaReady(env))) return {seeded:0,ready:false};
@@ -1701,9 +1887,13 @@ async function seedStarterNews(env){
     const meta=metadata[index];
     const canonicalUrl=(meta&&meta.canonical_url)||canonicalNewsUrl(article.url);
     if(!canonicalUrl) continue;
+    const articleId=crypto.randomUUID();
     const result=await env.DB.prepare("INSERT OR IGNORE INTO news_articles (id,canonical_url,source_url,source_name,title,excerpt_pl,excerpt_en,image_url,category,article_published_at,issue_key,status,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)")
-      .bind(crypto.randomUUID(),canonicalUrl,(meta&&meta.source_url)||canonicalUrl,(meta&&meta.source_name)||newsSourceForUrl(canonicalUrl),(meta&&meta.title)||article.title,article.excerpt_pl,article.excerpt_en,(meta&&meta.image_url)||null,article.category,article.published_at,articleIssueKey,"published",now,now).run();
+      .bind(articleId,canonicalUrl,(meta&&meta.source_url)||canonicalUrl,(meta&&meta.source_name)||newsSourceForUrl(canonicalUrl),(meta&&meta.title)||article.title,article.excerpt_pl,article.excerpt_en,(meta&&meta.image_url)||null,article.category,article.published_at,articleIssueKey,"published",now,now).run();
     seeded+=Number(result.meta&&result.meta.changes||0);
+    if(Number(result.meta&&result.meta.changes||0)>0){
+      await ensureNewsThumbnail(env,{id:articleId,canonical_url:canonicalUrl,image_url:(meta&&meta.image_url)||""}).catch(function(){});
+    }
   }
   await env.DB.prepare("INSERT INTO news_agent_runs (id,issue_key,status,candidates_found,articles_added,detail,started_at,completed_at) VALUES (?,?,?,?,?,?,?,?)")
     .bind(crypto.randomUUID(),issueKey,"completed",STARTER_NEWS.length,seeded,"one-time starter feed",now,new Date().toISOString()).run();
@@ -1860,8 +2050,10 @@ async function refreshWhiskyNews(env, reason, scheduledAt){
       const excerptEn=decodeNewsText(summary.excerpt_en||newsFallbackExcerpt(metadata,"en")).slice(0,520);
       const category=String(summary.category||newsCategoryFromMetadata(metadata)).slice(0,40);
       const now=new Date().toISOString();
+      const articleId=crypto.randomUUID();
       await env.DB.prepare("INSERT INTO news_articles (id,canonical_url,source_url,source_name,title,excerpt_pl,excerpt_en,image_url,category,article_published_at,issue_key,status,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)")
-        .bind(crypto.randomUUID(),metadata.canonical_url,metadata.source_url,metadata.source_name,metadata.title,excerptPl,excerptEn,metadata.image_url||null,category,metadata.published_at||null,issueKey,"published",now,now).run();
+        .bind(articleId,metadata.canonical_url,metadata.source_url,metadata.source_name,metadata.title,excerptPl,excerptEn,metadata.image_url||null,category,metadata.published_at||null,issueKey,"published",now,now).run();
+      await ensureNewsThumbnail(env,{id:articleId,canonical_url:metadata.canonical_url,image_url:metadata.image_url||""}).catch(function(){});
       added++;
     }
     const completedAt=new Date().toISOString();
@@ -1907,7 +2099,7 @@ async function handleApi(request, env, cors){
   const url=new URL(request.url);
   const path=url.pathname.replace(/\/+$/,"");
   if(path==="/auth/health" && request.method==="GET"){
-    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,security_version:SECURITY_VERSION,auth_protection_version:AUTH_PROTECTION_VERSION,time:new Date().toISOString()},200,cors);
+    return J({ok:true,worker:"bourbon-hunters",api_contract_version:API_CONTRACT_VERSION,auth_version:AUTH_VERSION,security_version:SECURITY_VERSION,auth_protection_version:AUTH_PROTECTION_VERSION,time:new Date().toISOString()},200,cors);
   }
   if(path==="/admin/health" && request.method==="GET"){
     const healthUser=await authUser(env,request);
@@ -1961,20 +2153,24 @@ async function handleApi(request, env, cors){
   if(path==="/auth/google/start" && request.method==="GET"){
     const returnUrl=allowedReturnUrl(env,url.searchParams.get("return")||appUrl(env));
     if(!googleReady(env)) return redirectWithHash(returnUrl,{google_error:"google_not_configured"});
-    const state=await makeGoogleState(env,{return_url:returnUrl,iat:Date.now(),nonce:randHex(8)});
-    return Response.redirect(googleAuthorizationUrl(request,env,state),302);
+    if(!env.DB) return redirectWithHash(returnUrl,{google_error:"d1_missing"});
+    try{
+      return Response.redirect(await createGoogleOAuthRequest(env,request,"login",returnUrl),302);
+    }catch(e){ return redirectWithHash(returnUrl,{google_error:String(e&&e.error||"google_start_failed")}); }
   }
   if(path==="/auth/google/callback" && request.method==="GET"){
     const fallback=appUrl(env);
     const state=await readGoogleState(env,url.searchParams.get("state")||"");
-    const returnUrl=allowedReturnUrl(env,state&&state.return_url || fallback);
+    let oauthRequest=null;
+    try{ if(state) oauthRequest=await consumeGoogleOAuthRequest(env,state); }catch(e){ return redirectWithHash(fallback,{google_error:String(e&&e.error||"google_oauth_expired")}); }
+    const returnUrl=allowedReturnUrl(env,oauthRequest&&oauthRequest.return_url || fallback);
     if(url.searchParams.get("error")) return redirectWithHash(returnUrl,{google_error:url.searchParams.get("error")});
-    if(!state) return redirectWithHash(returnUrl,{google_error:"bad_state"});
+    if(!state || !oauthRequest) return redirectWithHash(returnUrl,{google_error:"bad_state"});
     if(!googleReady(env)) return redirectWithHash(returnUrl,{google_error:"google_not_configured"});
     if(!env.DB) return redirectWithHash(returnUrl,{google_error:"d1_missing"});
     try{
-      const googleUser=await googleExchange(request,env,String(url.searchParams.get("code")||""));
-      if(state.mode==="link"){
+      const googleUser=await googleExchange(request,env,String(url.searchParams.get("code")||""),oauthRequest.code_verifier);
+      if(oauthRequest.mode==="link"){
         await completeGoogleLink(env,state,googleUser);
         return redirectWithHash(returnUrl,{google_link:"ok"});
       }
@@ -2084,7 +2280,7 @@ async function handleApi(request, env, cors){
     const now=new Date().toISOString();
     const id=crypto.randomUUID();
     await env.DB.prepare("INSERT INTO users (id,email,username,password_hash,password_salt,password_algo,birth_date,age_gate_country,age_gate_min,age_verified_at,email_verified_at,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)")
-      .bind(id,email,username,hash,salt,"pbkdf2-sha256-"+PBKDF2_ITERATIONS,birthDate,ageCountry,minAge,now,null,now,now).run();
+      .bind(id,email,username,hash,salt,"pbkdf2-sha256-"+PBKDF2_ITERATIONS,null,ageCountry,minAge,now,null,now,now).run();
     const mail=await createEmailVerification(env,request,{id:id,email:email,username:username}).catch(function(){ return {sent:false}; });
     if(!mail.sent){
       await env.DB.prepare("DELETE FROM users WHERE id=?").bind(id).run();
@@ -2234,6 +2430,18 @@ async function handleApi(request, env, cors){
     if(!reauth.ok) return J({error:reauth.error},403,cors);
     const result=await deleteAccountAndData(env,user);
     return J(result,result.status||200,cors);
+  }
+  if(path==="/me/age-confirmation" && request.method==="POST"){
+    const body=await readBody(request);
+    if(body.confirm_adult!==true) return J({error:"age_confirmation_required"},400,cors);
+    const now=new Date().toISOString();
+    await env.DB.prepare("UPDATE users SET age_verified_at=?,birth_date=NULL,age_gate_country='global',age_gate_min=?,updated_at=? WHERE id=?")
+      .bind(now,ageGateMin(env),now,user.id).run();
+    user.age_verified_at=now;
+    return J({ok:true,user:publicUser(user),admin:isAdminUser(env,user)},200,cors);
+  }
+  if(path==="/me/export" && request.method==="GET"){
+    return J(await exportUserData(env,user),200,Object.assign({},cors,{"Cache-Control":"private, no-store","Content-Disposition":"attachment; filename=bourbon-hunters-data.json"}));
   }
   if(path==="/me" && request.method==="GET") return J({user:publicUser(user),admin:isAdminUser(env,user)},200,cors);
   if(path==="/me/profile" && request.method==="GET") return J({profile:await profileFor(env,user.id)},200,cors);
@@ -2755,16 +2963,38 @@ export default {
     }
     if(request.method!=="POST") return J({error:"POST only"},405,cors);
 
-    let body; try{ body=await request.json(); }catch(e){ return J({error:"bad json"},400,cors); }
-    const image=(body.image||"").toString();
-    const recognitionImage=(body.recognition_image||"").toString();
-    const mime=["image/jpeg","image/png","image/webp"].includes(body.mime)?body.mime:"image/jpeg";
+    let body,image="",recognitionImage="",mime="image/jpeg",imageBytes=0,recognitionBytes=0;
+    const requestType=String(request.headers.get("Content-Type")||"").toLowerCase();
+    if(requestType.indexOf("multipart/form-data")>=0){
+      let form; try{ form=await request.formData(); }catch(e){ return J({error:"bad form"},400,cors); }
+      const imageFile=form.get("image");
+      const recognitionFile=form.get("recognition_image");
+      if(!imageFile || typeof imageFile.arrayBuffer!=="function") return J({error:"no image"},400,cors);
+      imageBytes=Number(imageFile.size)||0;
+      recognitionBytes=recognitionFile&&typeof recognitionFile.arrayBuffer==="function"?(Number(recognitionFile.size)||0):0;
+      if(imageBytes>6000000 || recognitionBytes>4500000) return J({error:"image too large"},413,cors);
+      image=encodeBase64(new Uint8Array(await imageFile.arrayBuffer()));
+      if(recognitionBytes) recognitionImage=encodeBase64(new Uint8Array(await recognitionFile.arrayBuffer()));
+      mime=["image/jpeg","image/png","image/webp"].includes(imageFile.type)?imageFile.type:"image/jpeg";
+      body={
+        image_quality:safeJson(String(form.get("image_quality")||""),null),
+        lang:String(form.get("lang")||""),mode:String(form.get("mode")||""),
+        confirmed_id:String(form.get("confirmed_id")||""),device_id:String(form.get("device_id")||"")
+      };
+    }else{
+      try{ body=await request.json(); }catch(e){ return J({error:"bad json"},400,cors); }
+      image=(body.image||"").toString();
+      recognitionImage=(body.recognition_image||"").toString();
+      mime=["image/jpeg","image/png","image/webp"].includes(body.mime)?body.mime:"image/jpeg";
+      imageBytes=Math.floor(image.length*0.75);
+      recognitionBytes=Math.floor(recognitionImage.length*0.75);
+    }
     const lang=["pl","en","es"].includes(body.lang)?body.lang:"pl";
     const mode=body.mode==="analyze"?"analyze":"rate";
     const confirmedId=String(body.confirmed_id||"").trim().slice(0,180);
     if(!image||image.length<100) return J({error:"no image"},400,cors);
-    if(image.length>8000000) return J({error:"image too large"},413,cors);
-    if(recognitionImage.length>6000000) return J({error:"recognition image too large"},413,cors);
+    if(imageBytes>6000000) return J({error:"image too large"},413,cors);
+    if(recognitionBytes>4500000) return J({error:"recognition image too large"},413,cors);
     const imageQuality=body.image_quality&&typeof body.image_quality==="object" ? body.image_quality : null;
     if(imageQuality && imageQuality.acceptable===false){
       const brightness=Number(imageQuality.brightness);
@@ -2793,7 +3023,7 @@ export default {
         suggested_bottle_id:extra.suggested_bottle_id||(candidates[0]&&candidates[0].id)||null,
         candidates:candidates.map(function(candidate){ return {id:candidate.id,confidence:Number(candidate.confidence)||0}; }),candidate_count:candidates.length,
         confidence:overallConfidence,visual_confidence:visionConfidence,ocr_confidence:ocrConfidence,db_confidence:dbConfidence,min_confidence:minConfidence,
-        input_bytes:Math.floor(image.length*0.75),duration_ms:Date.now()-scanStartedMs,started_at:scanStartedAt,completed_at:new Date().toISOString(),usage:telemetryUsage
+        input_bytes:imageBytes,duration_ms:Date.now()-scanStartedMs,started_at:scanStartedAt,completed_at:new Date().toISOString(),usage:telemetryUsage
       }).catch(function(){});
       if(outcome!=="candidates_presented" && executionCtx&&executionCtx.waitUntil) executionCtx.waitUntil(task);
       return task;
@@ -3004,8 +3234,8 @@ export default {
     return scanResponse({result:ra, mode:mode, remaining:remainingQuota, owner:owner, matched:hit?hit.id:null, confidence:overallConfidence, agents:agentTrace},200,"analyzed",{matched_bottle_id:hit&&hit.id});
   },
   async scheduled(controller, env, ctx){
-    const tasks=[cleanupStaleCatalogSubmissions(env,200),cleanupTelemetry(env),cleanupScannerBudgets(env),cleanupAuthRates(env),cleanupNews(env)];
-    tasks.push(seedStarterNews(env).then(function(){ return refreshWhiskyNews(env,"scheduled",controller.scheduledTime); }));
+    const tasks=[cleanupStaleCatalogSubmissions(env,200),cleanupTelemetry(env),cleanupScannerBudgets(env),cleanupAuthRates(env),cleanupGoogleOAuthRequests(env),cleanupNews(env)];
+    tasks.push(seedStarterNews(env).then(function(){ return refreshWhiskyNews(env,"scheduled",controller.scheduledTime); }).then(function(){ return backfillNewsThumbnails(env,24); }));
     ctx.waitUntil(Promise.all(tasks));
   }
 }

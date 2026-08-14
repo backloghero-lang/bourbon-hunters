@@ -1,0 +1,14 @@
+{
+  "schema_version": 75,
+  "latest": "d1-migration-v75-data-minimization.sql",
+  "required_for_worker": [
+    "d1-migration-v69-auth-hardening.sql",
+    "d1-migration-v70-scanner-budgets.sql",
+    "d1-migration-v71-auth-rate-limits.sql",
+    "d1-migration-v72-private-bottles.sql",
+    "d1-migration-v73-rating-performance.sql",
+    "d1-migration-v74-comment-moderation.sql",
+    "d1-migration-v75-data-minimization.sql"
+  ],
+  "notes": "Apply migrations in numerical order before deploying the Worker that requires them."
+}

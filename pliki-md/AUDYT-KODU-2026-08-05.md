@@ -24,6 +24,20 @@ Najważniejszy problem nie dotyczy SQL Injection. Zapytania D1 są w większośc
 
 ### Aktualizacja 14 sierpnia 2026
 
+#### Zamknięcie techniczne audytu
+
+- P2-1 zamknięte: usunięto `DEV_KEY`/`bhdev` z klienta i dokumentacji, a stary wpis jest kasowany z `localStorage`.
+- P2-2 zamknięte: CORS dopuszcza wyłącznie skonfigurowane originy; fonty są hostowane lokalnie, a CSP nie łączy się z Google Fonts.
+- P2-3 istotnie ograniczone: OAuth ma dokładny adres powrotu, jednorazowy rekord ważny 10 minut i PKCE S256. Token sesji jest natychmiast usuwany z fragmentu URL; docelowe cookie `HttpOnly` wymaga wspólnej domeny aplikacji i API.
+- P2-4 zamknięte dla głównego skanera: lokalne zdjęcia są Blobami, Object URL są zwalniane, a skaner wysyła obrazy binarnie przez multipart zamiast JSON/base64.
+- P2-6 zamknięte: agregaty ocen są grupowe, a kontrole schematu mają cache per instancję Workera.
+- P2-7 ograniczone i kontrolowane: dodano wersję kontraktu API, rejestr migracji i `wrangler.toml.example`. Automatyczny deploy Workera pozostaje wyłączony do czasu bezpiecznego skonfigurowania identyfikatorów i sekretów Cloudflare.
+- P2-8 pozostaje świadomie przyjętym długiem architektonicznym. Monolity są objęte testami kontraktowymi; podział będzie wykonywany domenami, bez jednorazowego przepisywania działającego MVP.
+- P2-10 zamknięte dla publikacji katalogu: moderacja D1/R2 ma klucz idempotencji, dziennik stanu, atomowy pakiet D1 i kompensacyjne usuwanie osieroconego assetu.
+- Prywatność: działa eksport JSON, data urodzenia jest odrzucana po sprawdzeniu 18+, konto Google wymaga osobnego potwierdzenia wieku, a hash autora assetu używa HMAC.
+- WCAG: przywrócono skalowanie strony, dodano `prefers-reduced-motion` i usunięto `aria-hidden` z aktywnego intro.
+- Pozostałe wymagania RODO, ISO 27001 i Google Play są czynnościami organizacyjnymi właściciela, opisanymi w `BEZPIECZENSTWO-OPERACYJNE.md`; kod nie może sam nadać certyfikacji ani zastąpić przeglądu prawnego.
+
 - P1-4 zakonczone: odczyty ocen sa grupowane, ograniczone do 90 ID i otrzymaly krotki cache HTTP; migracja v73 dodaje indeks D1.
 - P1-5 zakonczone implementacyjnie: zglaszanie komentarza, blokowanie autora, kolejka administracyjna i log decyzji sa gotowe; produkcja wymaga migracji v74.
 - P2-4 ograniczone: frontend zapisuje lokalne zdjecia jako `Blob`, uzywa Object URL i zwalnia URL oraz backing store canvasow. Transport skanera nadal korzysta z base64 JSON i pozostaje kandydatem do pozniejszej migracji na upload binarny.
