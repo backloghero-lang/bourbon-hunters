@@ -28,14 +28,11 @@ Bourbon Hunters powstało dla osób, które lubią odkrywać bourbon, whisky i i
 
 ## Skaner etykiet
 
-Wersja demonstracyjna korzysta z kuratorskiego katalogu 200 butelek. Gdy skaner znajduje pewne dopasowanie, pokazuje kartę produktu. Rekord bez gotowego zdjęcia otrzymuje widok mystery, ale nadal może zostać rozpoznany.
-
-Jeżeli butelki nie ma w bazie, aplikacja pyta, czy użytkownik chce dodać ją do swojej kolekcji. Funkcja jest dostępna już w darmowym planie po zalogowaniu. Taki wpis pozostaje prywatny, należy wyłącznie do konta użytkownika i nie trafia do publicznego katalogu, rekomendacji ani wyników skanera innych osób. Właściciel może uzupełnić kluczowe dane i później je edytować.
-
+Wersja demonstracyjna korzysta z katalogu 200 butelek.
+Aplikacja jest dostępna już w darmowym planie po zalogowaniu. 
 Skaner analizuje zdjęcie przedniej etykiety i porównuje je z katalogiem produktów. Niepewne lub niejednoznaczne odczyty nie są przedstawiane jako pewne trafienie i wymagają ponownego zdjęcia.
 
 Po potwierdzeniu aplikacja prezentuje między innymi:
-
 - nazwę i rodzaj alkoholu;
 - destylarnię oraz region pochodzenia;
 - moc wyrażoną jako ABV i proof;
@@ -43,7 +40,7 @@ Po potwierdzeniu aplikacja prezentuje między innymi:
 - opis ogólny, nos, smak i finisz;
 - ocenę społeczności oraz własną ocenę użytkownika.
 
-Jeżeli produkt nie ma jeszcze zdjęcia, aplikacja może przygotować wycięty i wycentrowany obraz butelki na podstawie fotografii użytkownika. Wynik jest pokazywany do akceptacji przed zapisaniem.
+Ważne: Jeżeli produkt nie ma jeszcze zdjęcia, aplikacja może przygotować wycięty i wycentrowany obraz butelki na podstawie fotografii użytkownika. Wynik jest pokazywany do akceptacji przed zapisaniem.
 
 ## Kolekcja i lista życzeń
 
@@ -64,7 +61,7 @@ Starsze materiały są automatycznie usuwane po miesiącu, a mechanizm wykrywani
 
 ## Trzech agentów AI
 
-Bourbon Hunters wykorzystuje wyspecjalizowanych agentów, z których każdy odpowiada za inny obszar aplikacji.
+Bourbon Hunters wykorzystuje wyspecjalizowanych agentów AI, z których każdy odpowiada za inny obszar aplikacji.
 
 ### 1. Agent skanera
 
