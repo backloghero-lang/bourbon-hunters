@@ -19,7 +19,7 @@ if(api.newsSourceForUrl("https://thewhiskeywash.com/story")!=="The Whiskey Wash"
 if(api.newsSourceForUrl("https://distiller.com/articles/example")) throw new Error("Competing application source was accepted");
 if(api.newsSourceForUrl("https://breakingbourbon.com/article/example")!=="Breaking Bourbon") throw new Error("Breaking Bourbon source mapping failed");
 if(api.NEWS_DISCOVERY_PAGES.some((url)=>url.includes("distiller.com"))) throw new Error("Competing application is present in discovery pages");
-if(api.NEWS_AGENT_VERSION!=="whisky-news-source-first-v5-r2-thumbnail-backfill") throw new Error("Unexpected news agent version");
+if(api.NEWS_AGENT_VERSION!=="whisky-news-source-first-v6-r2-source-fallback") throw new Error("Unexpected news agent version");
 if(api.safeRemoteNewsImage("http://cdn.example.test/image.jpg")) throw new Error("Insecure news image URL was accepted");
 if(api.safeRemoteNewsImage("https://127.0.0.1/image.jpg")) throw new Error("Local news image URL was accepted");
 if(api.safeRemoteNewsImage("https://100.64.0.1/image.jpg")) throw new Error("Carrier-grade private news image URL was accepted");
@@ -31,6 +31,7 @@ if(api.newsThumbnailKey("abc")!=="news/thumbnails/v2/abc") throw new Error("Vers
 if(!source.includes('news/thumbnails/')) throw new Error("News thumbnails are not cached in R2");
 if(!source.includes('path.match(/^\\/news\\/image\\/([^/]+)$/)')) throw new Error("News thumbnail proxy route is missing");
 if(!source.includes("backfillNewsThumbnails(env,24)")) throw new Error("Scheduled thumbnail backfill is missing");
+if(!source.includes("repaired.source_url||row.image_url")) throw new Error("Direct article image fallback is missing");
 if(!source.includes("assets/news/editorial-fallback-v1.jpg")) throw new Error("Neutral editorial fallback is missing");
 
 const links=api.newsLinksFromIndex(`

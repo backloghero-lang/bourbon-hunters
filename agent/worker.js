@@ -24,7 +24,7 @@ const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v6-highres-cutout";
 const CATALOG_MODERATION_VERSION = "catalog-moderation-orchestrator-admin-v1";
 const CATALOG_LICENSE_VERSION = "catalog-license-2026-07-18-v1";
 const TELEMETRY_VERSION = "scanner-telemetry-v1";
-const NEWS_AGENT_VERSION = "whisky-news-source-first-v5-r2-thumbnail-backfill";
+const NEWS_AGENT_VERSION = "whisky-news-source-first-v6-r2-source-fallback";
 const NEWS_THUMBNAIL_VERSION = "v2";
 const LOCAL_IMAGE_PIPELINE_VERSION = "local-bottle-cutout-v2-quality-gated";
 const NEWS_RETENTION_DAYS = 30;
@@ -1827,7 +1827,7 @@ async function ensureNewsThumbnail(env, row){
     }
   }
   const downloaded=await downloadNewsThumbnail(imageUrl,canonicalUrl);
-  if(!downloaded) return {cached:false,reason:"source_image_unavailable"};
+  if(!downloaded) return {cached:false,reason:"source_image_unavailable",source_url:imageUrl};
   await env.BOTTLE_IMAGES.put(key,downloaded.bytes,{httpMetadata:{contentType:downloaded.contentType,cacheControl:"public, max-age=2592000, immutable"}});
   return {cached:true,key:key,contentType:downloaded.contentType};
 }
@@ -1858,6 +1858,8 @@ async function newsImageResponse(env, articleId, cors){
       return new Response(cached.body,{headers:headers});
     }
   }
+  const sourceImage=safeRemoteNewsImage(repaired.source_url||row.image_url);
+  if(sourceImage && !newsImageLooksGeneric(sourceImage)) return Response.redirect(sourceImage,302);
   return Response.redirect(assetUrl(env,"assets/news/editorial-fallback-v1.jpg"),302);
 }
 async function backfillNewsThumbnails(env, limit){

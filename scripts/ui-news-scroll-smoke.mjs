@@ -10,6 +10,7 @@ const articles=Array.from({length:4},(_,index)=>({
   source_name:"Whisky Advocate",
   published_at:"2026-07-"+String(20+index).padStart(2,"0")+"T10:00:00Z"
 }));
+articles[2].image_url="";
 
 const browser=await chromium.launch(browserLaunchOptions());
 const page=await browser.newPage({viewport:{width:390,height:844},deviceScaleFactor:1,hasTouch:true});
@@ -62,6 +63,8 @@ await page.locator("#homeNewsList .news-card").first().waitFor();
 if(newsAuthHeader!=="Bearer news-smoke-token") throw new Error("News request is missing authentication: "+newsAuthHeader);
 const thumbnailSrc=await page.locator("#homeNewsList .news-card img").first().getAttribute("src");
 if(!thumbnailSrc || !thumbnailSrc.includes("/news/image/news-0")) throw new Error("News thumbnail does not use the Worker proxy: "+thumbnailSrc);
+const emptyMetadataThumbnailSrc=await page.locator("#homeNewsList .news-card img").nth(2).getAttribute("src");
+if(!emptyMetadataThumbnailSrc || !emptyMetadataThumbnailSrc.includes("/news/image/news-2")) throw new Error("Article without stored image metadata skipped thumbnail repair: "+emptyMetadataThumbnailSrc);
 await page.locator("#homeNewsList .news-card img").first().evaluate((image)=>{
   if(image.complete && image.naturalWidth>0) return;
   return new Promise((resolve,reject)=>{

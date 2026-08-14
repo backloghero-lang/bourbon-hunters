@@ -958,7 +958,7 @@
 <script>
 /* ========= KONFIGURACJA ========= */
 const WORKER_URL = "https://bourbon-hunters.darekmaslyk.workers.dev";
-const APP_VERSION = "124";
+const APP_VERSION = "125";
 const API_CONTRACT_VERSION = "bh-api-2026-08-v1";
 const DB_URL = "db/catalog/demo-200.json";
 const PROFILES_URL = "db/profiles-runtime.json";
@@ -3247,7 +3247,7 @@ function newsDateLabel(value){
 function newsCardHtml(item){
   const excerpt=lang==="pl" ? (item.excerpt_pl||item.excerpt_en||"") : (item.excerpt_en||item.excerpt_pl||"");
   const fallbackImage="assets/news/editorial-fallback-v1.jpg";
-  const image=item.image_url&&item.id ? safeImageSrc(WORKER_URL+"/news/image/"+encodeURIComponent(item.id),fallbackImage) : fallbackImage;
+  const image=item.id ? safeImageSrc(WORKER_URL+"/news/image/"+encodeURIComponent(item.id),fallbackImage) : fallbackImage;
   const href=safeHttpUrl(item.url,"#");
   const date=newsDateLabel(item.published_at);
   return '<a class="news-card" href="'+esc(href)+'" target="_blank" rel="noopener noreferrer" data-external-article="'+esc(href==="#"?"":href)+'" aria-label="'+esc((item.title||"")+" - "+t("readArticle"))+'">'+
