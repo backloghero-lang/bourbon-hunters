@@ -53,6 +53,7 @@ await page.waitForTimeout(500);
 const metrics=await page.locator(".admin-metric").count();
 const moderation=await page.locator("#adminModerationBody").innerText();
 const systemHealth=await page.locator("#adminSystemHealth").innerText();
+const technicalTables=await page.locator("#adminReportBody .admin-table").count();
 const dimensions=await page.evaluate(()=>({
   width:document.documentElement.clientWidth,
   scrollWidth:document.documentElement.scrollWidth,
@@ -63,7 +64,8 @@ await browser.close();
 
 if(errors.length) throw new Error(errors.join("\n"));
 if(metrics!==8) throw new Error("Expected 8 admin metrics, got "+metrics);
-if(!systemHealth.includes("visual-only-catalog-v9-model-resolver")) throw new Error("Scanner version missing from system health");
-if(!systemHealth.includes("d1-atomic-cost-budgets-v1")) throw new Error("Scanner budget status missing from system health");
+if(!systemHealth.includes("v123")) throw new Error("Application version missing from system health");
+if(/gemini|visual-only|model resolver/i.test(systemHealth)) throw new Error("Technical model details remain visible in system health");
+if(technicalTables!==0) throw new Error("Scanner outcome or model tables remain visible");
 if(dimensions.scrollWidth>dimensions.width+1) throw new Error("Mobile horizontal overflow: "+JSON.stringify(dimensions));
-console.log(JSON.stringify({ok:true,metrics,moderation,systemHealth,dimensions},null,2));
+console.log(JSON.stringify({ok:true,metrics,moderation,systemHealth,technicalTables,dimensions},null,2));

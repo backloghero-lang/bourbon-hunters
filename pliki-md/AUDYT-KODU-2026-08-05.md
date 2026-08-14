@@ -27,6 +27,7 @@ Najważniejszy problem nie dotyczy SQL Injection. Zapytania D1 są w większośc
 - P1-4 zakonczone: odczyty ocen sa grupowane, ograniczone do 90 ID i otrzymaly krotki cache HTTP; migracja v73 dodaje indeks D1.
 - P1-5 zakonczone implementacyjnie: zglaszanie komentarza, blokowanie autora, kolejka administracyjna i log decyzji sa gotowe; produkcja wymaga migracji v74.
 - P2-4 ograniczone: frontend zapisuje lokalne zdjecia jako `Blob`, uzywa Object URL i zwalnia URL oraz backing store canvasow. Transport skanera nadal korzysta z base64 JSON i pozostaje kandydatem do pozniejszej migracji na upload binarny.
+- P2-5 zakonczone: Service Worker korzysta z generowanego manifestu 9 plikow powloki, toleruje pojedynczy brak assetu, oddziela cache runtime, usuwa wpisy po 30 dniach i utrzymuje maksymalnie 80 pozycji. `test-index.html` nie trafia juz do artefaktu Pages.
 - P2-9 zakonczone: repo ma `package.json`, lockfile, bramke testow UI/domenowych/bezpieczenstwa, CodeQL i akcje przypiete do pelnych SHA.
 - Dodano testy regresji wydajnosci ocen, moderacji komentarzy, sekretow, skladni Workera i pamieci obrazow.
 

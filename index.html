@@ -953,6 +953,7 @@
 <script>
 /* ========= KONFIGURACJA ========= */
 const WORKER_URL = "https://bourbon-hunters.darekmaslyk.workers.dev";
+const APP_VERSION = "123";
 const DB_URL = "db/catalog/demo-200.json";
 const PROFILES_URL = "db/profiles-runtime.json";
 const WHISKY_BROWSE_URL = "db/catalog/demo-200.json";
@@ -1953,7 +1954,6 @@ function renderAdminReport(data){
   const scanner=(data&&data.scanner)||{};
   const activity=(data&&data.activity)||{};
   const usage=(data&&data.service_usage)||[];
-  const outcomes=(data&&data.outcomes)||[];
   const metrics=[
     [authText("Scans","Skany"),scanner.scans],[authText("Unique users","Unikalni userzy"),scanner.users],
     [authText("Top choice accepted","Akceptacja 1. wyboru"),scanner.top_choice_acceptance_proxy==null?"-":scanner.top_choice_acceptance_proxy+"%"],
@@ -1961,12 +1961,7 @@ function renderAdminReport(data){
     [authText("Average response","Średni czas"),reportNumber(scanner.avg_duration_ms," ms")],[authText("AI tokens","Tokeny AI"),usage.reduce(function(sum,row){ return sum+(Number(row.total_tokens)||0); },0)],
     [authText("All accounts","Wszystkie konta"),activity.users_total],[authText("New catalog items","Nowe w katalogu"),activity.catalog_additions]
   ];
-  const outcomeRows=outcomes.map(function(row){ return '<tr><td>'+esc(row.outcome||"-")+'</td><td>'+reportNumber(row.count)+'</td></tr>'; }).join("");
-  const usageRows=usage.map(function(row){ return '<tr><td>'+esc((row.stage||"-")+" / "+(row.model||"-"))+'</td><td>'+reportNumber(row.calls)+'</td><td>'+reportNumber(row.total_tokens)+'</td><td>'+reportNumber(row.avg_duration_ms," ms")+'</td></tr>'; }).join("");
   box.innerHTML='<div class="admin-metrics">'+metrics.map(function(metric){ return '<div class="admin-metric"><span>'+esc(metric[0])+'</span><strong>'+esc(reportNumber(metric[1]))+'</strong></div>'; }).join("")+'</div>'+
-    '<table class="admin-table"><thead><tr><th>'+esc(authText("Scanner outcome","Wynik skanera"))+'</th><th>'+esc(authText("Count","Liczba"))+'</th></tr></thead><tbody>'+(outcomeRows||'<tr><td colspan="2">-</td></tr>')+'</tbody></table>'+
-    '<table class="admin-table"><thead><tr><th>'+esc(authText("Service / model","Usługa / model"))+'</th><th>'+esc(authText("Calls","Wywołania"))+'</th><th>'+esc(authText("Tokens","Tokeny"))+'</th><th>'+esc(authText("Time","Czas"))+'</th></tr></thead><tbody>'+(usageRows||'<tr><td colspan="4">-</td></tr>')+'</tbody></table>'+
-    '<p class="admin-note">'+esc(authText("Top-choice acceptance is a user-confirmation proxy, not laboratory accuracy.","Akceptacja pierwszego wyboru jest wskaźnikiem opartym na decyzji użytkownika, a nie laboratoryjnym pomiarem trafności."))+'</p>'+
     '<div class="admin-moderation"><h3>'+esc(authText("Comment moderation","Moderacja komentarzy"))+'</h3><div id="adminCommentModerationBody"><div class="empty">'+esc(authText("Loading reports...","Ładowanie zgłoszeń..."))+'</div></div></div>'+
     '<div class="admin-moderation"><h3>'+esc(authText("Catalog moderation","Moderacja katalogu"))+'</h3><div id="adminModerationBody"><div class="empty">'+esc(authText("Loading queue...","Ładowanie kolejki..."))+'</div></div></div>';
   loadAdminCommentModeration();
@@ -1975,23 +1970,8 @@ function renderAdminReport(data){
 function renderAdminSystemHealth(data){
   const box=document.getElementById("adminSystemHealth");
   if(!box) return;
-  const status=function(value){ return value?authText("Ready","Gotowe"):authText("Unavailable","Niedostepne"); };
   const rows=[
-    {label:authText("Scanner version","Wersja skanera"),value:data.scan_orchestrator_version||"-",wide:true},
-    {label:authText("Scan catalog","Katalog skanera"),value:data.scan_catalog_version||"-",wide:true},
-    {label:authText("Private bottles","Prywatne butelki"),value:data.private_bottle_version||"-",wide:true},
-    {label:authText("Private bottle schema","Schemat prywatnych butelek"),value:status(data.private_bottle_schema),state:!!data.private_bottle_schema},
-    {label:authText("Comment moderation","Moderacja komentarzy"),value:data.ugc_moderation_version||"-",wide:true},
-    {label:authText("Comment moderation schema","Schemat moderacji komentarzy"),value:status(data.ugc_moderation_schema),state:!!data.ugc_moderation_schema},
-    {label:authText("Primary model","Model podstawowy"),value:data.scanner_primary_model||"-"},
-    {label:authText("Fallback model","Model zapasowy"),value:data.scanner_fallback_model||"-"},
-    {label:authText("Scanner AI","AI skanera"),value:status(data.scanner_ai_ready),state:!!data.scanner_ai_ready},
-    {label:authText("Model discovery","Wykrywanie modeli"),value:data.scanner_model_discovery?authText("Active","Aktywne"):authText("Inactive","Nieaktywne"),state:!!data.scanner_model_discovery},
-    {label:authText("Image foreground","Separacja butelki"),value:status(data.scanner_mobile_foreground),state:!!data.scanner_mobile_foreground},
-    {label:authText("Scanner mode","Tryb skanera"),value:data.scan_mode||"-"},
-    {label:authText("Cost budget","Budzet kosztow"),value:data.scanner_budget_version||"-",wide:true},
-    {label:authText("Budget schema","Schemat budzetu"),value:status(data.scanner_budget_schema),state:!!data.scanner_budget_schema},
-    {label:authText("Daily limits","Limity dzienne"),value:[data.scanner_identify_daily_limit,data.scanner_cutout_daily_limit,data.scanner_analysis_daily_limit].map(function(value){ return value==null?"-":value; }).join(" / ")}
+    {label:authText("Application version","Wersja aplikacji"),value:"v"+APP_VERSION,wide:true,state:true}
   ];
   box.innerHTML='<h3>'+esc(authText("System status","Stan systemu"))+'</h3><div class="admin-system-grid">'+rows.map(function(row){
     const stateClass=row.state===true?' ok':row.state===false?' bad':'';
@@ -2001,10 +1981,8 @@ function renderAdminSystemHealth(data){
 function loadAdminSystemHealth(){
   const box=document.getElementById("adminSystemHealth");
   if(!box||!AUTH_IS_ADMIN) return;
-  box.innerHTML='<div class="empty">'+esc(authText("Checking system status...","Sprawdzanie stanu systemu..."))+'</div>';
-  bhApi("/admin/health",{method:"GET"}).then(renderAdminSystemHealth).catch(function(err){
-    box.innerHTML='<div class="empty">'+esc(authText("System status unavailable: ","Stan systemu niedostepny: ")+String(err&&err.error||"error"))+'</div>';
-  });
+  renderAdminSystemHealth({});
+  bhApi("/admin/health",{method:"GET"}).catch(function(){});
 }
 function loadAdminModeration(){
   const box=document.getElementById("adminModerationBody");

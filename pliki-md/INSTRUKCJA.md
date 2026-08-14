@@ -37,17 +37,14 @@ WHERE name='moderation_status';
 
 5. Uruchom `WYSLIJ-NA-GITHUB.bat`. W GitHub Actions musza przejsc kolejno joby `quality`, `codeql`, `build` i `deploy`.
 6. W Cloudflare podmien caly `agent/worker.js` i kliknij `Deploy`.
-7. Zaloguj sie jako administrator, wejdz w `Profil -> Raporty` i sprawdz:
-
-```text
-ugc_moderation_version: comment-reports-blocks-admin-v1
-ugc_moderation_schema: true
-```
+7. Zaloguj sie jako administrator i wejdz w `Profil -> Raporty`. W sekcji `Stan systemu` powinna byc widoczna tylko `Wersja aplikacji: v123`; techniczne dane Workera pozostaja dostepne w API, ale nie sa pokazywane w interfejsie.
 
 8. Test koncowy: dodaj komentarz z drugiego konta, zglos go z pierwszego, a potem ukryj lub przywroc w `Profil -> Raporty`.
-9. Odswiez PWA. Nowy cache frontendu to `bourbon-hunters-v122`.
+9. Odswiez PWA. Widoczna wersja aplikacji to `v123`; cache jest rozdzielony na `bourbon-hunters-shell-v123` i `bourbon-hunters-runtime-v123`.
 
 Pakiet grupuje odczyty ocen w jednym zapytaniu D1, dodaje zglaszanie i blokowanie komentarzy, kolejke administratora, obowiazkowe testy i CodeQL w GitHub Actions oraz ogranicza kopie obrazow w pamieci telefonu. Miniatury newsow sa pobierane przez Worker i zapisywane w R2, dlatego nie zaleza juz od blokowania hotlinkow przez serwisy zrodlowe. Ta poprawka miniaturek nie wymaga dodatkowej migracji D1.
+
+Zmiana `v123` upraszcza widok Raportow i zamyka punkt P2-5 audytu: produkcyjny Service Worker ma lekki generowany manifest, odporny install oraz ograniczony cache runtime. Ta czesc wymaga tylko publikacji GitHub Pages, bez migracji D1 i bez ponownej podmiany Workera.
 
 ## Aktualna zasada deployu - 2026-07-06
 

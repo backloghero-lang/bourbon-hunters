@@ -9,8 +9,9 @@ Aktualizacja: 2026-07-05.
 - GitHub Actions ma obowiazkowe testy bezpieczenstwa, domenowe i UI oraz analize CodeQL. Build i deploy nie rusza, jesli bramka jakosci nie przejdzie.
 - Zdjecia lokalne sa przechowywane jako `Blob`, podglady korzystaja z Object URL, stare URL i canvasy sa zwalniane. Istniejace rekordy base64 migruja automatycznie przy odczycie.
 - Miniatury newsow sa serwowane przez `/news/image/:id`, walidowane, zapisywane w R2 i maja lokalny fallback w aplikacji. Wersja agenta: `whisky-news-source-first-v4-cached-thumbnails`.
-- PWA cache: `bourbon-hunters-v122`.
-- Kolejnosc wdrozenia: backup D1 -> v73 -> v74 -> GitHub -> Worker -> kontrola `ugc_moderation_schema: true` w Raportach.
+- Raporty pokazuja w `Stan systemu` tylko numer wersji aplikacji. Szczegoly modeli i tabela wynikow skanera sa ukryte; dane pozostaja w API administratora.
+- PWA: wersja `v123`; osobne cache `bourbon-hunters-shell-v123` i `bourbon-hunters-runtime-v123`. Manifest rdzenia jest generowany, runtime ma limit 80 wpisow i 30 dni.
+- Migracje `v73` i `v74` oraz Worker zostaly juz wdrozone. Zmiana PWA `v123` wymaga tylko publikacji GitHub Pages i kontroli numeru wersji w `Profil -> Raporty`.
 
 ## Aktualizacja 2026-08-05 - audyt oraz auth hardening
 

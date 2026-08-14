@@ -1,111 +1,128 @@
-/* Bourbon Hunters service worker - network-first dla aktualizacji aplikacji i bazy. */
-const CACHE = "bourbon-hunters-v122";
-const ASSETS = [
-  "./",
-  "./index.html",
-  "./spirit-taxonomy.js",
-  "./test-index.html",
-  "./manifest.json",
-  "./assets/intro/nowe intro.mp4",
-  "./design/figma-assets/home-pack-v2/app-background-v3.jpg",
-  "./design/figma-assets/home-pack-v2/home-header-v3.jpg",
-  "./design/figma-assets/home-pack-v2/card-background-v1.jpg",
-  "./assets/brand/profile-herringbone-burnt-v1.webp",
-  "./design/figma-assets/scanner-pack-v1/scan-screen-bg.png",
-  "./assets/detail/bottle-detail-bg.png",
-  "./assets/brand/age-gate.png",
-  "./assets/brand/email-premium-footer.png",
-  "./assets/profile-badges/glass.png",
-  "./assets/profile-badges/bottle.png",
-  "./assets/profile-badges/barrel.png",
-  "./assets/profile-badges/seal.png",
-  "./assets/profile-badges/hat.png",
-  "./assets/profile-badges/star.png",
-  "./assets/profile-badges/distillery.png",
-  "./assets/profile-badges/notes.png",
-  "./assets/profile-badges/opener.png",
-  "./assets/profile-badges/horseshoe.png",
-  "./design/figma-assets/home-pack-v2/collection-add.png",
-  "./design/figma-assets/home-pack-v2/wishlist-barrel.png",
-  "./design/figma-assets/home-pack-v2/rolling-barrel.png",
-  "./design/figma-assets/home-pack-v2/small-batch.png",
-  "./design/figma-assets/home-pack-v2/single-barrel.png",
-  "./design/figma-assets/home-pack-v2/bottled-in-bond.png",
-  "./design/figma-assets/home-pack-v2/barrel-proof.png",
-  "./design/figma-assets/home-pack-v2/rye-whiskey.png",
-  "./design/figma-assets/home-pack-v2/limited-edition.png",
-  "./design/figma-assets/home-pack-v2/whisky-world.png",
-  "./assets/bourbons/cutouts-test/buffalo-trace-bourbon-1.png",
-  "./assets/bourbons/cutouts-test/blantons-original-single-barrel-bourbon-whiskey-700ml.png",
-  "./assets/bourbons/cutouts-test/eagle-rare-10-year-kentucky-straight-bourbon-whiskey-700ml.png",
-  "./assets/bourbons/cutouts-test/w-l-weller-700ml-12-year-bourbon.png",
-  "./assets/bourbons/cutouts-test/woodford-reserve-bourbon.png",
-  "./assets/bourbons/cutouts-test/woodford-reserve-double-oaked-bourbon.png",
-  "./assets/bourbons/cutouts-test/jim-beam-white-label.png",
-  "./assets/bourbons/cutouts-test/knob-creek-kentucky-straight-bourbon.png",
-  "./assets/bourbons/cutouts-test/knob-creek-bourbon-12-year.png",
-  "./assets/bourbons/cutouts-test/makers-mark-101-proof-bourbon-whisky.png",
-  "./assets/bourbons/cutouts-test/basil-hayden-s-kentucky-straight-bourbon.png",
-  "./assets/bourbons/cutouts-test/russels-reserve-10-year-bourbon.png",
-  "./assets/bourbons/cutouts-test/austin-nichols-wild-turkey-kentucky-straight-bourbon-whiskey-70cl.png",
-  "./assets/bourbons/cutouts-test/four-roses.png",
-  "./assets/bourbons/cutouts-test/elijah-craig-small-batch-bourbon.png",
-  "./assets/bourbons/cutouts-test/old-forester-1897-bottled-in-bond.png",
-  "./assets/bourbons/cutouts-test/old-forester-1910-old-fine-whiskey-bourbon-whiskey.png",
-  "./assets/bourbons/cutouts-test/1792-single-barrel-kentucky-straight-bourbon.png",
-  "./assets/bourbons/cutouts-test/yellowstone-select-kentucky-straight-bourbon.png",
-  "./assets/bourbons/cutouts-test/michters-bourbon.png",
-  "./db/bourbons.json",
-  "./db/catalog/demo-200.json",
-  "./db/catalog/dedupe-redirects.json",
-  "./db/profiles-runtime.json",
-  "./db/catalog/browse-meta.json",
-  "./icons/icon-192.png",
-  "./icons/icon-512.png"
-];
+/* Bourbon Hunters service worker - lekka powloka i ograniczony cache runtime. */
+importScripts("./sw-assets.generated.js");
 
-self.addEventListener("install", function(e){
+const SW_MANIFEST=self.BH_SW_MANIFEST||{version:"0",core:[]};
+const SHELL_CACHE="bourbon-hunters-shell-v"+SW_MANIFEST.version;
+const RUNTIME_CACHE="bourbon-hunters-runtime-v"+SW_MANIFEST.version;
+const ACTIVE_CACHES=[SHELL_CACHE,RUNTIME_CACHE];
+const CORE_ASSETS=Array.isArray(SW_MANIFEST.core)?SW_MANIFEST.core:[];
+const RUNTIME_MAX_ENTRIES=80;
+const RUNTIME_MAX_AGE_MS=30*24*60*60*1000;
+const CACHE_TIME_HEADER="x-bh-cached-at";
+
+async function cacheCoreAssets(){
+  const cache=await caches.open(SHELL_CACHE);
+  await Promise.allSettled(CORE_ASSETS.map(async function(path){
+    const request=new Request(path,{cache:"reload"});
+    const response=await fetch(request);
+    if(!response.ok) throw new Error("core_asset_"+response.status);
+    await cache.put(request,response);
+  }));
+}
+
+self.addEventListener("install",function(event){
   self.skipWaiting();
-  e.waitUntil(caches.open(CACHE).then(function(c){ return c.addAll(ASSETS); }));
+  event.waitUntil(cacheCoreAssets());
 });
 
-self.addEventListener("activate", function(e){
-  e.waitUntil(
+self.addEventListener("activate",function(event){
+  event.waitUntil(
     caches.keys().then(function(keys){
-      return Promise.all(keys.filter(function(k){ return k!==CACHE; }).map(function(k){ return caches.delete(k); }));
+      return Promise.all(keys.filter(function(key){
+        return key.indexOf("bourbon-hunters-")===0&&ACTIVE_CACHES.indexOf(key)<0;
+      }).map(function(key){ return caches.delete(key); }));
     }).then(function(){ return self.clients.claim(); })
   );
 });
 
-function shouldNetworkFirst(url){
-  return url.endsWith("/") || url.indexOf("/index.html")!==-1 || url.indexOf("/test-index.html")!==-1 || url.indexOf("/spirit-taxonomy.js")!==-1 || url.indexOf("/db/bourbons.json")!==-1 || url.indexOf("/db/profiles-runtime.json")!==-1 || url.indexOf("/db/catalog/browse-")!==-1 || url.indexOf("/sw.js")!==-1;
+function cacheableResponse(response){
+  return !!(response&&response.status===200&&response.type==="basic");
 }
 
-self.addEventListener("fetch", function(e){
-  const req = e.request;
-  if (req.method !== "GET" || req.url.indexOf("workers.dev") !== -1 || req.url.indexOf("/api/") !== -1) return;
+function stampedResponse(response){
+  const headers=new Headers(response.headers);
+  headers.set(CACHE_TIME_HEADER,String(Date.now()));
+  return new Response(response.body,{status:response.status,statusText:response.statusText,headers:headers});
+}
 
-  if (shouldNetworkFirst(req.url)){
-    e.respondWith(
-      fetch(req).then(function(res){
-        if (res && res.status===200 && res.type==="basic"){
-          const copy=res.clone(); caches.open(CACHE).then(function(c){ c.put(req, copy); });
-        }
-        return res;
-      }).catch(function(){ return caches.match(req); })
-    );
-    return;
+async function pruneRuntimeCache(){
+  const cache=await caches.open(RUNTIME_CACHE);
+  const requests=await cache.keys();
+  const now=Date.now();
+  const live=[];
+  for(const request of requests){
+    const response=await cache.match(request);
+    const cachedAt=Number(response&&response.headers.get(CACHE_TIME_HEADER))||0;
+    if(!cachedAt||now-cachedAt>RUNTIME_MAX_AGE_MS){
+      await cache.delete(request);
+    }else{
+      live.push({request:request,cachedAt:cachedAt});
+    }
   }
+  if(live.length>RUNTIME_MAX_ENTRIES){
+    live.sort(function(a,b){ return a.cachedAt-b.cachedAt; });
+    await Promise.all(live.slice(0,live.length-RUNTIME_MAX_ENTRIES).map(function(entry){ return cache.delete(entry.request); }));
+  }
+}
 
-  e.respondWith(
-    caches.match(req).then(function(hit){
-      if(hit) return hit;
-      return fetch(req).then(function(res){
-        if (res && res.status===200 && res.type==="basic"){
-          const copy=res.clone(); caches.open(CACHE).then(function(c){ c.put(req, copy); });
-        }
-        return res;
-      });
-    })
-  );
+async function putRuntime(request,response){
+  if(!cacheableResponse(response)) return;
+  const cache=await caches.open(RUNTIME_CACHE);
+  await cache.put(request,stampedResponse(response.clone()));
+  await pruneRuntimeCache();
+}
+
+async function runtimeMatch(request){
+  const cache=await caches.open(RUNTIME_CACHE);
+  const response=await cache.match(request);
+  if(!response) return null;
+  const cachedAt=Number(response.headers.get(CACHE_TIME_HEADER))||0;
+  if(!cachedAt||Date.now()-cachedAt>RUNTIME_MAX_AGE_MS){
+    await cache.delete(request);
+    return null;
+  }
+  return response;
+}
+
+function shouldNetworkFirst(request,url){
+  return request.mode==="navigate" || url.pathname.endsWith("/index.html") || url.pathname.endsWith("/spirit-taxonomy.js") || url.pathname.indexOf("/db/")!==-1;
+}
+
+function shouldStoreRuntime(request){
+  return request.destination!=="video"&&request.destination!=="audio";
+}
+
+async function networkFirst(request,event){
+  try{
+    const response=await fetch(request);
+    if(shouldStoreRuntime(request)) event.waitUntil(putRuntime(request,response).catch(function(){}));
+    return response;
+  }catch(error){
+    const runtime=await runtimeMatch(request);
+    if(runtime) return runtime;
+    const shell=await caches.open(SHELL_CACHE);
+    const exact=await shell.match(request);
+    if(exact) return exact;
+    if(request.mode==="navigate") return (await shell.match("./index.html"))||(await shell.match("./"));
+    throw error;
+  }
+}
+
+async function cacheFirst(request,event){
+  const shell=await caches.open(SHELL_CACHE);
+  const shellHit=await shell.match(request);
+  if(shellHit) return shellHit;
+  const runtime=await runtimeMatch(request);
+  if(runtime) return runtime;
+  const response=await fetch(request);
+  if(shouldStoreRuntime(request)) event.waitUntil(putRuntime(request,response).catch(function(){}));
+  return response;
+}
+
+self.addEventListener("fetch",function(event){
+  const request=event.request;
+  if(request.method!=="GET") return;
+  const url=new URL(request.url);
+  if(url.origin!==self.location.origin || url.pathname.indexOf("/api/")!==-1) return;
+  event.respondWith(shouldNetworkFirst(request,url)?networkFirst(request,event):cacheFirst(request,event));
 });
