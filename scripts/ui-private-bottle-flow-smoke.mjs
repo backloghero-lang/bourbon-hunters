@@ -35,8 +35,10 @@ await page.evaluate(()=>{
 });
 await page.locator("[data-private-add-start]").click();
 await page.locator(".private-auth-gate").waitFor();
-const gateText=await page.locator(".private-auth-gate").innerText();
-if(!gateText.includes("darmowe konto")) throw new Error("Free-account gate is missing");
+const gateActions=await page.locator(".private-auth-gate [data-private-auth]").evaluateAll((buttons)=>buttons.map((button)=>button.getAttribute("data-private-auth")).sort());
+if(gateActions.join(",")!=="register,signin" || await page.locator(".private-auth-gate [data-scan-retry]").count()!==1){
+  throw new Error("Free-account gate is missing required actions: "+JSON.stringify(gateActions));
+}
 
 await page.evaluate(()=>{
   saveAuth({token:"test-token",user:{id:"user-test",email:"test@example.com",username:"tester"}});
