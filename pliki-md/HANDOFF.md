@@ -429,4 +429,16 @@ node scripts/test_spirit_taxonomy.mjs
 - Test: `node scripts/starter-recommendations-regression.mjs`.
 - Cache PWA: `bourbon-hunters-v114`.
 
+## Aktualizacja 2026-08-14 - instalowalna wersja Android
+
+- Dodano projekt Capacitor 8 w katalogu `android` oraz konfiguracje `capacitor.config.json`.
+- Pakiet aplikacji: `pl.bourbonhunters.app`, wersja demonstracyjna `0.1.0-demo` (`versionCode 1`).
+- Wrapper laduje aktualna produkcyjna wersje `https://backloghero-lang.github.io/bourbon-hunters/`, dlatego poprawki webowe nie wymagaja ponownego budowania APK.
+- Aplikacja wymaga internetu, dziala pionowo, blokuje cleartext HTTP i nie pozwala Androidowi wykonywac backupu danych aplikacji.
+- Ikona i splash zostaly wygenerowane z `icons/icon-512.png`.
+- Android Studio 2026.1.3.7, SDK i JDK 21 sa zainstalowane lokalnie. Build wykonuje Gradle z JDK 21.
+- Gotowy lokalny plik: `artifacts/Bourbon-Hunters-demo-v0.1.0.apk` (debug signed, 4 419 482 B).
+- SHA-256 APK: `78A77ECC292732A264C24D188A5A6062C59D71248231EB83F5D3A0C3A34DD455`.
+- Instrukcja instalacji i kolejnego builda: `pliki-md/ANDROID-APK.md`.
+
 

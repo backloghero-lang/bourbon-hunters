@@ -104,6 +104,19 @@ Repozytorium ma automatyczne testy bezpieczeństwa, testy domenowe i interfejsu,
 
 Film pokazujący prawidłowe wykonanie zdjęcia i pełną drogę butelki od skanowania do kolekcji pojawi się wkrótce.
 
+## Aplikacja Android
+
+Projekt zawiera wrapper Android oparty na Capacitorze. Wersja demonstracyjna korzysta z aktualnie wdrożonej aplikacji internetowej, dlatego zachowuje ten sam katalog, konta i funkcje bez potrzeby budowania nowego APK po każdej zmianie interfejsu.
+
+- identyfikator aplikacji: `pl.bourbonhunters.app`;
+- minimalna wersja systemu: Android 7.0;
+- orientacja: pionowa;
+- połączenia nieszyfrowane HTTP są zablokowane;
+- kopia danych aplikacji przez system Android jest wyłączona;
+- gotowy APK demonstracyjny powstaje jako podpisany build debug.
+
+Instrukcja budowania i instalacji znajduje się w pliku [`pliki-md/ANDROID-APK.md`](pliki-md/ANDROID-APK.md).
+
 ## Wypróbuj Bourbon Hunters
 
 | | |

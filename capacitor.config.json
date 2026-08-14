@@ -1,0 +1,13 @@
+{
+  "appId": "pl.bourbonhunters.app",
+  "appName": "Bourbon Hunters",
+  "webDir": "mobile-shell",
+  "server": {
+    "url": "https://backloghero-lang.github.io/bourbon-hunters/",
+    "cleartext": false
+  },
+  "android": {
+    "allowMixedContent": false,
+    "backgroundColor": "#100c08"
+  }
+}

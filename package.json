@@ -4,6 +4,8 @@
   "private": true,
   "packageManager": "pnpm@10.15.0",
   "scripts": {
+    "android:sync": "cap sync android",
+    "android:open": "cap open android",
     "check:syntax": "node scripts/worker-syntax-regression.mjs && node scripts/security-xss-regression.mjs && node scripts/deployment-contract-regression.mjs && node scripts/generate-sw-manifest.mjs --check && node scripts/service-worker-regression.mjs",
     "test:security": "node scripts/secret-regression.mjs && node scripts/auth-schema-regression.mjs && node scripts/auth-security-regression.mjs && node scripts/auth-rate-regression.mjs && node scripts/scanner-budget-regression.mjs && node scripts/ratings-performance-regression.mjs && node scripts/comment-moderation-regression.mjs && node scripts/image-memory-regression.mjs && node scripts/private-bottle-schema-regression.mjs && node scripts/privacy-accessibility-regression.mjs",
     "test:domain": "node scripts/news-agent-regression.mjs && node scripts/starter-recommendations-regression.mjs && node scripts/test_catalog_visibility.mjs && node scripts/test_spirit_taxonomy.mjs && node scripts/scanner-provider-fallback.mjs && node scripts/scanner-regression.mjs",
@@ -11,6 +13,9 @@
     "test": "pnpm run check:syntax && pnpm run test:security && pnpm run test:domain"
   },
   "devDependencies": {
+    "@capacitor/android": "8.5.0",
+    "@capacitor/cli": "8.5.0",
+    "@capacitor/core": "8.5.0",
     "playwright": "1.61.1"
   }
 }
