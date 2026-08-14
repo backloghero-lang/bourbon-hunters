@@ -324,6 +324,9 @@
   .comment-text{margin:6px 0 0;color:#D8C4A4;font-size:13px;line-height:1.48;white-space:pre-wrap}
   .comment-text.clamped{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;white-space:normal}
   .comment-more{margin-top:6px;border:0;background:transparent;color:#E2B070;font-weight:900;font-size:12px;padding:0;cursor:pointer}
+  .comment-tools{display:flex;gap:12px;flex-wrap:wrap;margin-top:9px}
+  .comment-tools button{border:0;background:transparent;color:#A99572;font-size:10px;font-weight:850;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+  .comment-tools button:hover,.comment-tools button:focus-visible{color:#E2B070}
   .catalog-modal{position:fixed;inset:0;z-index:90;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.72);padding:14px}
   .catalog-modal.show{display:flex}
   .catalog-sheet{width:min(520px,100%);max-height:calc(100dvh - 28px);overflow:auto;border:1px solid rgba(226,176,112,.34);border-radius:20px;background:linear-gradient(180deg,#1C1610,#080604);box-shadow:0 24px 80px rgba(0,0,0,.76)}
@@ -954,6 +957,8 @@ const DB_URL = "db/catalog/demo-200.json";
 const PROFILES_URL = "db/profiles-runtime.json";
 const WHISKY_BROWSE_URL = "db/catalog/demo-200.json";
 const BROWSE_META_URL = "db/catalog/browse-meta.json";
+const LEGACY_REDIRECTS_URL = "db/bourbons.json";
+const DEDUPE_REDIRECTS_URL = "db/catalog/dedupe-redirects.json";
 const AUTH_TOKEN_KEY = "bh_auth_token";
 const AUTH_USER_KEY = "bh_auth_user";
 const AUTH_ADMIN_KEY = "bh_auth_admin";
@@ -1226,6 +1231,7 @@ Object.assign(I18N.en,{
   recommendationNeedLogin:"Sign in to add a recommendation.", recommendationNeedRating:"Add your star rating first.",
   recommendationNeedText:"Add a short comment.", recommendationSaved:"Recommendation saved.", commentsTitle:"Hunter comments",
   showComments:"Show comments", hideText:"Collapse", moreText:"More", recommendedBy:"Recommended by",
+  reportComment:"Report", blockUser:"Block user", reportCommentConfirm:"Report this comment for moderation?", blockUserConfirm:"Block this user and hide each other's comments?", reportSent:"Comment reported.", userBlocked:"User blocked.", moderationUnavailable:"Comment moderation is not ready yet.",
   catalogPreviewTitle:"Bottle preview", catalogProcessing:"Cutting the bottle from the photo...", catalogProcessingCopy:"The image agent is preparing a clean preview for the app.",
   acceptImage:"Accept and add", retakeImage:"Take another photo", saveWithoutImage:"Save without photo", addToCatalog:"Complete and add to catalog", addToCollection:"Add to collection", catalogLicenseNote:"By accepting, you allow Bourbon Hunters to keep and use the finished catalog asset. The original photo and working files will be deleted.",
   catalogNoPreview:"The bottle cutout could not be prepared.", catalogNoPreviewCopy:"Take another photo or save the bottle data without an image.", catalogSaved:"Bottle saved and added to Recently added.", catalogLogin:"Sign in to add a bottle to the catalog.", catalogError:"The bottle could not be saved.", catalogHit:"Found a match",
@@ -1246,7 +1252,8 @@ Object.assign(I18N.pl,{
   familyWhisky:"Whisky",
   whiskyBrowseTitle:"Whisky",
   bourbonBrowseTitle:"Bourbon",
-  loadingWhisky:"Ładuję katalog whisky..."
+  loadingWhisky:"Ładuję katalog whisky...",
+  reportComment:"Zgłoś",blockUser:"Zablokuj użytkownika",reportCommentConfirm:"Zgłosić ten komentarz do moderacji?",blockUserConfirm:"Zablokować użytkownika i ukryć wzajemne komentarze?",reportSent:"Komentarz został zgłoszony.",userBlocked:"Użytkownik został zablokowany.",moderationUnavailable:"Moderacja komentarzy nie jest jeszcze gotowa."
 });
 Object.assign(I18N.en,{
   searchPh:"Search whisky or distillery...",
@@ -1454,6 +1461,26 @@ function localBottleImage(b){
   const id=canonicalBottleId(b&&b.id);
   return id&&LOCAL_BOTTLE_IMAGES[id] ? String(LOCAL_BOTTLE_IMAGES[id]) : "";
 }
+function revokeLocalBottleImage(id){
+  const src=LOCAL_BOTTLE_IMAGES[id];
+  if(src&&String(src).indexOf("blob:")===0) URL.revokeObjectURL(src);
+  delete LOCAL_BOTTLE_IMAGES[id];
+}
+function dataUrlToBlob(dataUrl){
+  return new Promise(function(resolve,reject){
+    try{
+      const value=String(dataUrl||"");
+      const comma=value.indexOf(",");
+      if(comma<0) throw new Error("invalid-data-url");
+      const meta=value.slice(0,comma);
+      const mime=(meta.match(/^data:([^;,]+)/i)||[])[1]||"application/octet-stream";
+      const binary=/;base64/i.test(meta) ? atob(value.slice(comma+1)) : decodeURIComponent(value.slice(comma+1));
+      const bytes=new Uint8Array(binary.length);
+      for(let i=0;i<binary.length;i++) bytes[i]=binary.charCodeAt(i);
+      resolve(new Blob([bytes],{type:mime}));
+    }catch(error){ reject(error); }
+  });
+}
 function bottleImage(b,small){ return localBottleImage(b)||officialBottleImage(b,small); }
 function bottleImageHtml(b,small,alt){
   const src=safeImageSrc(bottleImage(b,small),"");
@@ -1478,24 +1505,32 @@ function loadLocalBottleImages(){
     return new Promise(function(resolve,reject){
       const request=db.transaction("images","readonly").objectStore("images").getAll();
       request.onsuccess=function(){
-        LOCAL_BOTTLE_IMAGES={};
+        Object.keys(LOCAL_BOTTLE_IMAGES).forEach(revokeLocalBottleImage);
+        const legacy=[];
         (request.result||[]).forEach(function(item){
-          if(item&&item.bottle_id&&item.data_url) LOCAL_BOTTLE_IMAGES[canonicalBottleId(item.bottle_id)]=item.data_url;
+          if(!item||!item.bottle_id) return;
+          const id=canonicalBottleId(item.bottle_id);
+          if(item.blob instanceof Blob){ LOCAL_BOTTLE_IMAGES[id]=URL.createObjectURL(item.blob); return; }
+          if(item.data_url) legacy.push(saveLocalBottleImage(id,item.data_url));
         });
         db.close();
-        resolve(LOCAL_BOTTLE_IMAGES);
+        Promise.all(legacy).then(function(){ resolve(LOCAL_BOTTLE_IMAGES); }).catch(function(){ resolve(LOCAL_BOTTLE_IMAGES); });
       };
       request.onerror=function(){ db.close(); reject(request.error||new Error("indexeddb-read")); };
     });
   }).catch(function(){ LOCAL_BOTTLE_IMAGES={}; return LOCAL_BOTTLE_IMAGES; });
 }
-function saveLocalBottleImage(id,dataUrl){
+function saveLocalBottleImage(id,data){
   id=canonicalBottleId(id);
-  return openLocalBottleImageDb().then(function(db){
-    return new Promise(function(resolve,reject){
-      const request=db.transaction("images","readwrite").objectStore("images").put({bottle_id:id,data_url:dataUrl,updated_at:new Date().toISOString()});
-      request.onsuccess=function(){ db.close(); LOCAL_BOTTLE_IMAGES[id]=dataUrl; resolve(); };
-      request.onerror=function(){ db.close(); reject(request.error||new Error("indexeddb-write")); };
+  const blobPromise=data instanceof Blob ? Promise.resolve(data) : dataUrlToBlob(String(data||""));
+  return blobPromise.then(function(blob){
+    if(!blob||!/^image\//i.test(blob.type||"")) throw new Error("invalid-image-blob");
+    return openLocalBottleImageDb().then(function(db){
+      return new Promise(function(resolve,reject){
+        const request=db.transaction("images","readwrite").objectStore("images").put({bottle_id:id,blob:blob,updated_at:new Date().toISOString()});
+        request.onsuccess=function(){ db.close(); revokeLocalBottleImage(id); LOCAL_BOTTLE_IMAGES[id]=URL.createObjectURL(blob); resolve(); };
+        request.onerror=function(){ db.close(); reject(request.error||new Error("indexeddb-write")); };
+      });
     });
   });
 }
@@ -1504,11 +1539,12 @@ function removeLocalBottleImage(id){
   return openLocalBottleImageDb().then(function(db){
     return new Promise(function(resolve,reject){
       const request=db.transaction("images","readwrite").objectStore("images").delete(id);
-      request.onsuccess=function(){ db.close(); delete LOCAL_BOTTLE_IMAGES[id]; resolve(); };
+      request.onsuccess=function(){ db.close(); revokeLocalBottleImage(id); resolve(); };
       request.onerror=function(){ db.close(); reject(request.error||new Error("indexeddb-delete")); };
     });
   });
 }
+window.addEventListener("pagehide",function(){ Object.keys(LOCAL_BOTTLE_IMAGES).forEach(revokeLocalBottleImage); });
 function wlHas(id){ return WL.indexOf(canonicalBottleId(id))>=0; }
 function wlSave(){ try{ localStorage.setItem("bh_wishlist",JSON.stringify(WL)); }catch(e){} }
 function wlToggle(id){ id=canonicalBottleId(id); const i=WL.indexOf(id); if(i>=0){ WL.splice(i,1); wlSave(); return false; } WL.push(id); wlSave(); return true; }
@@ -1585,6 +1621,7 @@ function normalizeRecommendation(r){
     badge:badgeMeta(r.badge||"glass").id,
     rating:Number(r.rating)||0,
     comment:String(r.comment||""),
+    is_own:!!r.is_own,
     created_at:String(r.created_at||""),
     updated_at:String(r.updated_at||"")
   };
@@ -1673,13 +1710,16 @@ function commentCardsHtml(list){
       '<div><div class="comment-meta"><b>'+esc(c.username||"Hunter")+'</b>'+(c.rating?'<span class="comment-stars">'+starStr(c.rating)+'</span>':'')+(dateLabel(c.updated_at||c.created_at)?'<span>'+esc(dateLabel(c.updated_at||c.created_at))+'</span>':'')+'</div>'+
       '<div class="comment-text'+(needsMore?' clamped':'')+'" data-comment-text="'+i+'">'+esc(c.comment)+'</div>'+
       (needsMore?'<button class="comment-more" type="button" data-comment-toggle="'+i+'">'+esc(t("moreText"))+'</button>':'')+
+      (AUTH_TOKEN&&!c.is_own&&c.id&&c.id.indexOf("demo-")!==0?'<div class="comment-tools"><button type="button" data-report-comment="'+esc(c.id)+'">'+esc(t("reportComment"))+'</button><button type="button" data-block-recommendation="'+esc(c.id)+'">'+esc(t("blockUser"))+'</button></div>':'')+
       '</div></div>';
   }).join("");
 }
 function fetchRecommendations(bottleId){
   if(!WORKER_URL) return Promise.resolve();
   const qs=bottleId ? "?bottle_id="+encodeURIComponent(bottleId) : "?limit=80";
-  return fetch(WORKER_URL+"/recommendations"+qs,{cache:"no-store"})
+  const headers={};
+  if(AUTH_TOKEN) headers.Authorization="Bearer "+AUTH_TOKEN;
+  return fetch(WORKER_URL+"/recommendations"+qs,{cache:"no-store",headers:headers})
     .then(function(r){ return r.ok ? r.json() : {}; })
     .then(function(data){
       const list=(data.recommendations||[]).map(normalizeRecommendation);
@@ -1687,6 +1727,24 @@ function fetchRecommendations(bottleId){
       else RECS=list;
       if(DB.length){ renderHome(); renderRecommendationsView(); }
     }).catch(function(){});
+}
+function reportComment(id){
+  if(!AUTH_TOKEN){ closeCommentsModal(); showView("signin"); return; }
+  if(!window.confirm(t("reportCommentConfirm"))) return;
+  bhApi("/me/recommendation/report",{method:"POST",body:JSON.stringify({recommendation_id:id,reason:"inappropriate"})}).then(function(){
+    toast(t("reportSent"));
+    const bottleId=currentDetailId;
+    return fetchRecommendations(bottleId).then(function(){ if(bottleId) openCommentsModal(bottleId); });
+  }).catch(function(err){ toast(err&&err.error==="ugc_moderation_schema_missing"?t("moderationUnavailable"):authErrorMessage(err)); });
+}
+function blockCommentUser(recommendationId){
+  if(!AUTH_TOKEN){ closeCommentsModal(); showView("signin"); return; }
+  if(!window.confirm(t("blockUserConfirm"))) return;
+  bhApi("/me/user-block",{method:"POST",body:JSON.stringify({recommendation_id:recommendationId})}).then(function(){
+    toast(t("userBlocked"));
+    const bottleId=currentDetailId;
+    return Promise.all([fetchRecommendations(),bottleId?fetchRecommendations(bottleId):Promise.resolve()]).then(function(){ if(bottleId) openCommentsModal(bottleId); });
+  }).catch(function(err){ toast(err&&err.error==="ugc_moderation_schema_missing"?t("moderationUnavailable"):authErrorMessage(err)); });
 }
 function recommendationBlock(b){
   const id=bottleActionId(b);
@@ -1909,7 +1967,9 @@ function renderAdminReport(data){
     '<table class="admin-table"><thead><tr><th>'+esc(authText("Scanner outcome","Wynik skanera"))+'</th><th>'+esc(authText("Count","Liczba"))+'</th></tr></thead><tbody>'+(outcomeRows||'<tr><td colspan="2">-</td></tr>')+'</tbody></table>'+
     '<table class="admin-table"><thead><tr><th>'+esc(authText("Service / model","Usługa / model"))+'</th><th>'+esc(authText("Calls","Wywołania"))+'</th><th>'+esc(authText("Tokens","Tokeny"))+'</th><th>'+esc(authText("Time","Czas"))+'</th></tr></thead><tbody>'+(usageRows||'<tr><td colspan="4">-</td></tr>')+'</tbody></table>'+
     '<p class="admin-note">'+esc(authText("Top-choice acceptance is a user-confirmation proxy, not laboratory accuracy.","Akceptacja pierwszego wyboru jest wskaźnikiem opartym na decyzji użytkownika, a nie laboratoryjnym pomiarem trafności."))+'</p>'+
+    '<div class="admin-moderation"><h3>'+esc(authText("Comment moderation","Moderacja komentarzy"))+'</h3><div id="adminCommentModerationBody"><div class="empty">'+esc(authText("Loading reports...","Ładowanie zgłoszeń..."))+'</div></div></div>'+
     '<div class="admin-moderation"><h3>'+esc(authText("Catalog moderation","Moderacja katalogu"))+'</h3><div id="adminModerationBody"><div class="empty">'+esc(authText("Loading queue...","Ładowanie kolejki..."))+'</div></div></div>';
+  loadAdminCommentModeration();
   loadAdminModeration();
 }
 function renderAdminSystemHealth(data){
@@ -1921,6 +1981,8 @@ function renderAdminSystemHealth(data){
     {label:authText("Scan catalog","Katalog skanera"),value:data.scan_catalog_version||"-",wide:true},
     {label:authText("Private bottles","Prywatne butelki"),value:data.private_bottle_version||"-",wide:true},
     {label:authText("Private bottle schema","Schemat prywatnych butelek"),value:status(data.private_bottle_schema),state:!!data.private_bottle_schema},
+    {label:authText("Comment moderation","Moderacja komentarzy"),value:data.ugc_moderation_version||"-",wide:true},
+    {label:authText("Comment moderation schema","Schemat moderacji komentarzy"),value:status(data.ugc_moderation_schema),state:!!data.ugc_moderation_schema},
     {label:authText("Primary model","Model podstawowy"),value:data.scanner_primary_model||"-"},
     {label:authText("Fallback model","Model zapasowy"),value:data.scanner_fallback_model||"-"},
     {label:authText("Scanner AI","AI skanera"),value:status(data.scanner_ai_ready),state:!!data.scanner_ai_ready},
@@ -1974,6 +2036,34 @@ function loadAdminModeration(){
     });
   }).catch(function(err){
     box.innerHTML='<div class="empty">'+esc(authText("Moderation unavailable: ","Moderacja niedostępna: ")+String(err&&err.error||"error"))+'</div>';
+  });
+}
+function loadAdminCommentModeration(){
+  const box=document.getElementById("adminCommentModerationBody");
+  if(!box||!AUTH_IS_ADMIN) return;
+  bhApi("/admin/comments/moderation?limit=50",{method:"GET"}).then(function(data){
+    const items=(data&&data.items)||[];
+    if(!items.length){ box.innerHTML='<div class="empty">'+esc(authText("No reported comments.","Brak zgłoszonych komentarzy."))+'</div>'; return; }
+    box.innerHTML=items.map(function(item){
+      return '<article class="moderation-item" data-comment-moderation-id="'+esc(item.id)+'">'+
+        '<div class="moderation-image" aria-hidden="true"><span class="profile-badge" style="'+badgeStyle("notes")+'"></span></div>'+
+        '<div><strong>'+esc(item.username||"Hunter")+' · '+esc(item.bottle_name||item.bottle_id)+'</strong>'+
+        '<small>'+esc(item.comment||"")+'<br>'+esc(authText("Reports: ","Zgłoszenia: ")+String(Number(item.report_count)||0)+" · "+String(item.reasons||""))+'</small>'+
+        '<div class="moderation-actions"><button class="btn" type="button" data-comment-moderation="dismiss">'+esc(authText("Dismiss","Odrzuć zgłoszenie"))+'</button><button class="btn btn-alt" type="button" data-comment-moderation="hide">'+esc(authText("Hide","Ukryj"))+'</button><button class="btn btn-alt" type="button" data-comment-moderation="remove">'+esc(authText("Remove","Usuń"))+'</button></div></div></article>';
+    }).join("");
+  }).catch(function(err){
+    box.innerHTML='<div class="empty">'+esc(authText("Comment moderation unavailable: ","Moderacja komentarzy niedostępna: ")+String(err&&err.error||"error"))+'</div>';
+  });
+}
+function decideCommentModeration(id,action){
+  const card=document.querySelector('[data-comment-moderation-id="'+id+'"]');
+  if(card) card.querySelectorAll("button").forEach(function(button){ button.disabled=true; });
+  bhApi("/admin/comments/moderation/"+encodeURIComponent(id),{method:"POST",body:JSON.stringify({action:action})}).then(function(){
+    toast(authText("Moderation decision saved.","Decyzja moderacyjna zapisana."));
+    loadAdminCommentModeration();
+  }).catch(function(err){
+    toast(String(err&&err.error||"error"));
+    if(card) card.querySelectorAll("button").forEach(function(button){ button.disabled=false; });
   });
 }
 function decideCatalogModeration(id,decision){
@@ -2124,9 +2214,9 @@ function fetchCommunityRatings(ids){
   if(!WORKER_URL) return Promise.resolve();
   ids=uniqueList(ids||[]).slice(0,150);
   const chunks=[];
-  while(ids.length) chunks.push(ids.splice(0,35));
+  while(ids.length) chunks.push(ids.splice(0,90));
   return Promise.all(chunks.map(function(chunk){
-    return fetch(WORKER_URL+"/ratings?ids="+encodeURIComponent(chunk.join(",")),{cache:"no-store"})
+    return fetch(WORKER_URL+"/ratings?ids="+encodeURIComponent(chunk.join(",")))
       .then(function(r){ return r.ok ? r.json() : {}; })
       .then(function(data){ mergeCommunityRatings(data.ratings||{}); })
       .catch(function(){});
@@ -3144,7 +3234,7 @@ function newsDateLabel(value){
 function newsCardHtml(item){
   const excerpt=lang==="pl" ? (item.excerpt_pl||item.excerpt_en||"") : (item.excerpt_en||item.excerpt_pl||"");
   const fallbackImage="design/figma-assets/home-pack-v2/home-header-v3.jpg";
-  const image=safeImageSrc(item.image_url,fallbackImage);
+  const image=item.image_url&&item.id ? safeImageSrc(WORKER_URL+"/news/image/"+encodeURIComponent(item.id),fallbackImage) : fallbackImage;
   const href=safeHttpUrl(item.url,"#");
   const date=newsDateLabel(item.published_at);
   return '<a class="news-card" href="'+esc(href)+'" target="_blank" rel="noopener noreferrer" data-external-article="'+esc(href==="#"?"":href)+'" aria-label="'+esc((item.title||"")+" - "+t("readArticle"))+'">'+
@@ -3261,10 +3351,12 @@ Promise.all([
   fetch(DB_URL).then(function(r){return r.json();}),
   fetch(PROFILES_URL).then(function(r){ return r.ok ? r.json() : {profiles:{}}; }).catch(function(){ return {profiles:{}}; }),
   fetch(BROWSE_META_URL).then(function(r){ return r.ok ? r.json() : {}; }).catch(function(){ return {}; }),
+  fetch(LEGACY_REDIRECTS_URL).then(function(r){ return r.ok ? r.json() : {id_redirects:{}}; }).catch(function(){ return {id_redirects:{}}; }),
+  fetch(DEDUPE_REDIRECTS_URL).then(function(r){ return r.ok ? r.json() : {redirects:{}}; }).catch(function(){ return {redirects:{}}; }),
   loadLocalBottleImages()
 ]).then(function(res){
   BROWSE_META=res[2]||BROWSE_META;
-  ID_REDIRECTS=res[0].id_redirects||{};
+  ID_REDIRECTS=Object.assign({},res[3]&&res[3].id_redirects||{},res[4]&&res[4].redirects||{},res[0].id_redirects||{});
   DB=applyProfiles(prepareBottleDataset(res[0].bottles||[]), res[1]);
   whiskyCatalogLoaded=true;
   normalizeStoredBottleState();
@@ -3576,6 +3668,13 @@ document.addEventListener("click",function(e){
     if(card) decideCatalogModeration(card.getAttribute("data-moderation-id"),moderationDecision.getAttribute("data-moderation-decision"));
     return;
   }
+  const commentModeration=e.target.closest("[data-comment-moderation]");
+  if(commentModeration){
+    e.preventDefault();
+    const card=commentModeration.closest("[data-comment-moderation-id]");
+    if(card) decideCommentModeration(card.getAttribute("data-comment-moderation-id"),commentModeration.getAttribute("data-comment-moderation"));
+    return;
+  }
   const valueEl=e.target.closest("[data-value-score]");
   if(valueEl){ e.stopPropagation(); toast((lang==="pl"?"Stosunek ceny do jakosci":"Quality-to-price ratio")+": "+valueEl.getAttribute("data-value-score")+"/5"); return; }
   const ur=e.target.closest("[data-ur]");
@@ -3596,6 +3695,10 @@ document.addEventListener("click",function(e){
   if(recommendBtn){ e.preventDefault(); e.stopPropagation(); submitRecommendation(recommendBtn.getAttribute("data-recommend-bottle")); return; }
   const commentsBtn=e.target.closest("[data-open-comments]");
   if(commentsBtn){ e.preventDefault(); e.stopPropagation(); openCommentsModal(commentsBtn.getAttribute("data-open-comments")); return; }
+  const reportCommentButton=e.target.closest("[data-report-comment]");
+  if(reportCommentButton){ e.preventDefault(); e.stopPropagation(); reportComment(reportCommentButton.getAttribute("data-report-comment")); return; }
+  const blockUserButton=e.target.closest("[data-block-recommendation]");
+  if(blockUserButton){ e.preventDefault(); e.stopPropagation(); blockCommentUser(blockUserButton.getAttribute("data-block-recommendation")); return; }
   const commentToggle=e.target.closest("[data-comment-toggle]");
   if(commentToggle){
     e.preventDefault();
@@ -3845,7 +3948,7 @@ if(localPhotoModal) localPhotoModal.addEventListener("click",function(event){
   if(event.target===localPhotoModal) closeLocalPhotoModal(true);
 });
 /* ================= SKANER ================= */
-let imgData=null, scanRecognitionImage=null, scanImageQuality=null, imgMime="image/jpeg", busy=false, loadTimer=null;
+let imgData=null, scanRecognitionImage=null, scanImageQuality=null, imgMime="image/jpeg", busy=false, loadTimer=null, scanPreviewUrl="";
 let currentScanResult=null, currentScanMode="rate", catalogSubmissionId="", catalogRetakePending=false;
 const shot=document.getElementById("shot"), fileInput=document.getElementById("file"), galleryInput=document.getElementById("galleryFile");
 const scanPreview=document.getElementById("scanPreview");
@@ -3860,6 +3963,7 @@ function resetShot(){
   imgData=null; scanRecognitionImage=null; scanImageQuality=null; imgMime="image/jpeg"; currentScanResult=null; currentScanMode="rate"; goRate.disabled=true;
   document.getElementById("appRoot").classList.remove("has-scan-result");
   document.getElementById("view-scan").classList.remove("is-confirming");
+  if(scanPreviewUrl){ URL.revokeObjectURL(scanPreviewUrl); scanPreviewUrl=""; }
   if(scanPreview) scanPreview.removeAttribute("src");
   shot.classList.remove("has-shot","is-loading");
   if(retakeQuick) retakeQuick.classList.remove("has-shot");
@@ -3977,18 +4081,12 @@ function cancelCatalogFlow(reset){
   if(id && AUTH_TOKEN) bhApi("/me/catalog/submission/confirm",{method:"POST",body:JSON.stringify({submission_id:id,decision:"cancel"})}).catch(function(){});
   if(reset) resetShot();
 }
-function setShotPreview(src){
+function setShotPreview(src,ownedObjectUrl){
   if(!scanPreview) return;
+  if(scanPreviewUrl){ URL.revokeObjectURL(scanPreviewUrl); scanPreviewUrl=""; }
+  if(ownedObjectUrl) scanPreviewUrl=src;
   scanPreview.src=src;
   shot.classList.add("has-shot");
-}
-function readLocalPreview(file){
-  return new Promise(function(resolve,reject){
-    const reader=new FileReader();
-    reader.onload=function(){ resolve(String(reader.result||"")); };
-    reader.onerror=function(){ reject(new Error("preview")); };
-    reader.readAsDataURL(file);
-  });
 }
 function handlePickedFile(e){
   const input=e.target;
@@ -3999,18 +4097,19 @@ function handlePickedFile(e){
   goRate.disabled=true;
   document.getElementById("err").style.display="none";
   document.getElementById("scanResult").innerHTML="";
-  readLocalPreview(f).then(function(src){ if(src) setShotPreview(src); }).catch(function(){});
+  setShotPreview(URL.createObjectURL(f),true);
   compress(f).then(function(res){
     imgData=res.b64; scanRecognitionImage=res.recognitionB64||null; scanImageQuality=res.quality||null; imgMime=res.mime;
     shot.classList.add("has-shot");
     shot.classList.remove("is-loading");
     if(retakeQuick) retakeQuick.classList.add("has-shot");
-    setShotPreview("data:"+res.mime+";base64,"+res.b64);
+    if(res.previewBlob) setShotPreview(URL.createObjectURL(res.previewBlob),true);
     goRate.disabled=false;
     document.getElementById("scanResult").innerHTML=""; document.getElementById("err").style.display="none";
     shouldAutoRate=true;
   }).catch(function(){
     imgData=null; scanRecognitionImage=null; scanImageQuality=null; imgMime="image/jpeg"; goRate.disabled=true;
+    if(scanPreviewUrl){ URL.revokeObjectURL(scanPreviewUrl); scanPreviewUrl=""; }
     if(scanPreview) scanPreview.removeAttribute("src");
     shot.classList.remove("has-shot");
     if(retakeQuick) retakeQuick.classList.remove("has-shot");
@@ -4033,7 +4132,7 @@ function compress(file){ return new Promise(function(resolve,reject){
     sample.width=Math.max(1,Math.round(canvas.width*scale));
     sample.height=Math.max(1,Math.round(canvas.height*scale));
     const sctx=sample.getContext("2d",{willReadFrequently:true});
-    if(!sctx) return null;
+    if(!sctx){ sample.width=0; sample.height=0; return null; }
     sctx.drawImage(canvas,0,0,sample.width,sample.height);
     const pixels=sctx.getImageData(0,0,sample.width,sample.height).data;
     let sum=0,sumSq=0,edges=0,count=0;
@@ -4050,7 +4149,9 @@ function compress(file){ return new Promise(function(resolve,reject){
     const contrast=count?Math.sqrt(Math.max(0,sumSq/count-brightness*brightness)):0;
     const sharpness=count?edges/(count*2):0;
     const acceptable=brightness>=28&&brightness<=238&&contrast>=12&&sharpness>=2;
-    return {brightness:Math.round(brightness),contrast:Math.round(contrast*10)/10,sharpness:Math.round(sharpness*10)/10,acceptable:acceptable};
+    const result={brightness:Math.round(brightness),contrast:Math.round(contrast*10)/10,sharpness:Math.round(sharpness*10)/10,acceptable:acceptable};
+    sample.width=0; sample.height=0;
+    return result;
   }
   function drawImageToCanvas(source,w,h,cleanup){
     try{
@@ -4058,10 +4159,20 @@ function compress(file){ return new Promise(function(resolve,reject){
       const c=document.createElement("canvas"); c.width=w; c.height=h;
       const ctx=c.getContext("2d"); if(!ctx){ throw new Error("no-canvas"); }
       ctx.drawImage(source,0,0,w,h);
-      const d=c.toDataURL("image/jpeg",0.88);
+      const quality=imageQuality(c);
       const recognition=recognitionComposite(c);
-      if(cleanup) cleanup();
-      resolve({b64:d.split(",")[1],recognitionB64:recognition,mime:"image/jpeg",quality:imageQuality(c)});
+      c.toBlob(function(blob){
+        if(!blob){ if(cleanup) cleanup(); c.width=0; c.height=0; reject(new Error("encode")); return; }
+        const reader=new FileReader();
+        reader.onload=function(){
+          const data=String(reader.result||"");
+          if(cleanup) cleanup();
+          c.width=0; c.height=0;
+          resolve({b64:data.split(",")[1]||"",recognitionB64:recognition,mime:"image/jpeg",quality:quality,previewBlob:blob});
+        };
+        reader.onerror=function(){ if(cleanup) cleanup(); c.width=0; c.height=0; reject(new Error("encode")); };
+        reader.readAsDataURL(blob);
+      },"image/jpeg",0.88);
     }catch(err){ if(cleanup) cleanup(); reject(err); }
   }
   function drawContained(ctx,source,sx,sy,sw,sh,dx,dy,dw,dh){
@@ -4076,9 +4187,11 @@ function compress(file){ return new Promise(function(resolve,reject){
     view.width=Math.max(1,Math.round(source.width*scale));
     view.height=Math.max(1,Math.round(source.height*scale));
     const ctx=view.getContext("2d");
-    if(!ctx) return "";
+    if(!ctx){ view.width=0; view.height=0; return ""; }
     ctx.drawImage(source,0,0,source.width,source.height,0,0,view.width,view.height);
-    return view.toDataURL("image/jpeg",0.84).split(",")[1]||"";
+    const result=view.toDataURL("image/jpeg",0.84).split(",")[1]||"";
+    view.width=0; view.height=0;
+    return result;
   }
   function fallbackImage(){
     const img=new Image(), url=URL.createObjectURL(file);

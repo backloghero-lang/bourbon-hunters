@@ -22,7 +22,7 @@ Ten plik ma byc pierwszym kontekstem dla nowego watku Codexa, np. `Przekaz Bourb
 - Reczne rekordy popularnych produktow uzupelniaja brakujace rodziny Bushmills oraz kanoniczne warianty Jack Daniel's i Jim Beam; ich zrodlo to `db/catalog/manual-popular-whisky.json`.
 - Brakujacy asset butelki jest przygotowywany podczas loadera. Po skanie aplikacja otwiera od razu szczegoly, bez posredniego ekranu potwierdzenia.
 - Przed aktualnym deployem Workera trzeba uruchomic `agent/d1-migration-v68-whisky-news.sql`.
-- Health ma pokazac `news_schema: true`, `news_agent_ready: true`, `local_image_cutout_ready: true` i `news_agent_version: whisky-news-source-first-v3-quota-fallback`.
+- Health ma pokazac `news_schema: true`, `news_agent_ready: true`, `local_image_cutout_ready: true` i `news_agent_version: whisky-news-source-first-v4-cached-thumbnails`.
 - Publiczne newsy sa widoczne na Home oraz w `Profil -> Artykuly`. Jeden dzienny Cron uruchamia agenta tylko w poniedzialki i czwartki.
 - Pierwszy odczyt pustego feedu dodaje jednorazowo 6 artykulow startowych. Kazdy wpis znika po 30 dniach od pojawienia sie w aplikacji.
 - Lokalna fotografia produktu bez assetu jest najpierw wycinana przez Cloudflare Images i wymaga potwierdzenia. Surowy plik nie jest przechowywany w chmurze.

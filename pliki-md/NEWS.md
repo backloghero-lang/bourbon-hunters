@@ -42,6 +42,7 @@ Migracja `agent/d1-migration-v68-whisky-news.sql` tworzy:
 Endpointy:
 
 - `GET /news` - feed dla zalogowanego uzytkownika;
+- `GET /news/image/:id` - bezpieczne proxy miniatury z tygodniowym cache w R2 i fallbackiem po stronie aplikacji;
 - `POST /admin/news/refresh` - reczne pobranie biezacego wydania przez administratora.
 
 ## Wersja i diagnostyka
@@ -49,7 +50,7 @@ Endpointy:
 Aktualna wersja agenta:
 
 ```text
-whisky-news-source-first-v3-quota-fallback
+whisky-news-source-first-v4-cached-thumbnails
 ```
 
 Po wdrozeniu:

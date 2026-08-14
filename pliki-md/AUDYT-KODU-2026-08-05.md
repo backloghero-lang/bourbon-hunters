@@ -22,14 +22,22 @@ Najważniejszy problem nie dotyczy SQL Injection. Zapytania D1 są w większośc
 
 ## Status realizacji 5 sierpnia 2026
 
+### Aktualizacja 14 sierpnia 2026
+
+- P1-4 zakonczone: odczyty ocen sa grupowane, ograniczone do 90 ID i otrzymaly krotki cache HTTP; migracja v73 dodaje indeks D1.
+- P1-5 zakonczone implementacyjnie: zglaszanie komentarza, blokowanie autora, kolejka administracyjna i log decyzji sa gotowe; produkcja wymaga migracji v74.
+- P2-4 ograniczone: frontend zapisuje lokalne zdjecia jako `Blob`, uzywa Object URL i zwalnia URL oraz backing store canvasow. Transport skanera nadal korzysta z base64 JSON i pozostaje kandydatem do pozniejszej migracji na upload binarny.
+- P2-9 zakonczone: repo ma `package.json`, lockfile, bramke testow UI/domenowych/bezpieczenstwa, CodeQL i akcje przypiete do pelnych SHA.
+- Dodano testy regresji wydajnosci ocen, moderacji komentarzy, sekretow, skladni Workera i pamieci obrazow.
+
 - Etap 0 zakonczony: zapisano punkt Time Travel D1 oraz tag kodu `audit-backup-2026-08-05-pre-auth-hardening`.
 - Etap 1 zakonczony i wdrozony: weryfikacja e-mail, role D1, bezpieczne laczenie Google, reautoryzacja usuwania konta i uniewaznienie sesji administratorow.
 - Etap 2 zakonczony i wdrozony: pelne kodowanie atrybutow, allowlista URL i obrazow, CSP, naglowki API, minimalny publiczny health i bezpieczne identyfikatory bledow.
 - Etap 3 wdrozony: atomowe budzety D1 obejmuja rozpoznanie, potwierdzenie wymagajace wyciecia, lokalne zdjecie, dodanie assetu do katalogu i analize AI. Admin jest rozpoznawany wylacznie przez role D1.
 - Etap 4 zaimplementowany lokalnie: limity auth per konto i IP, limit 16 KB dla JSON, hasla 8-128 znakow, PBKDF2-SHA256 600 000 iteracji i automatyczna migracja starszego skrotu po poprawnym logowaniu. Wymaga migracji D1 v71 przed wdrozeniem Workera.
 - `scripts/security-xss-regression.mjs`, testy auth, testy katalogu i skanera oraz 6 testow Playwright przechodza.
-- P1-1 jest naprawione. P1-4 zostalo naprawione w czesci dotyczacej health i surowych wyjatkow; optymalizacja publicznych odczytow ocen pozostaje otwarta.
-- P1-2 jest naprawione i wdrozone. P1-3 jest naprawione lokalnie i czeka na migracje v71 oraz wdrozenie. Z priorytetow P1 pozostaja: optymalizacja ocen z P1-4 oraz moderacja UGC z P1-5.
+- P1-1 jest naprawione. P1-4 i P1-5 sa zakonczone implementacyjnie; wymagaja wdrozenia migracji v73/v74 oraz aktualnego Workera.
+- P1-2 jest naprawione i wdrozone. P1-3 jest naprawione lokalnie i czeka na migracje v71 oraz wdrozenie.
 
 ## Znaleziska krytyczne
 
@@ -190,7 +198,7 @@ Uruchomiono lokalne skrypty domenowe i testy UI dostępne w repozytorium.
 - `scripts/ui-taxonomy-smoke.mjs` poprawnie potwierdza brak widocznych liczników kategorii.
 - Dodano `scripts/security-xss-regression.mjs`, który sprawdza kodowanie atrybutów, URL, obrazy, OAuth, CSP i bezpieczne błędy Workera.
 - Regresja skanera używa głównie syntetycznych etykiet. Wynik około 99,8% nie mierzy zdjęć z telefonu zawierających rękę, tło, refleksy, perspektywę i słabe światło.
-- Testy nadal nie są obowiązkową bramką GitHub Actions; ich włączenie do CI pozostaje otwartym zadaniem.
+- Testy sa obowiazkowa bramka GitHub Actions. Build Pages czeka na komplet testow oraz analize CodeQL.
 
 ## Mocne strony
 

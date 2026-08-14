@@ -1,11 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
-import { createRequire } from "node:module";
+import { chromium,browserLaunchOptions } from "./playwright-runtime.mjs";
 
-const modules=process.env.CODEX_NODE_MODULES||"C:/Users/masly/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/.pnpm/playwright@1.61.1/node_modules";
-const require=createRequire(modules.replace(/\\/g,"/")+"/scanner-smoke-entry.js");
-const { chromium }=require("playwright");
-const chrome=process.env.CHROME_PATH||"C:/Program Files/Google/Chrome/Application/chrome.exe";
 const target=process.env.BH_SMOKE_URL||"http://127.0.0.1:8765/index.html";
 const bottleId="eagle-rare-10-year-kentucky-straight-bourbon-whiskey-700ml";
 const assetPath=path.resolve(import.meta.dirname,"..","assets","bourbons","clean","eagle-rare-10-year-kentucky-straight-bourbon-whiskey-700ml.webp");
@@ -15,7 +11,7 @@ let scannerRequests=0;
 let confirmedRequests=0;
 let recognitionRequests=0;
 
-const browser=await chromium.launch({headless:true,executablePath:chrome});
+const browser=await chromium.launch(browserLaunchOptions());
 const page=await browser.newPage({viewport:{width:390,height:844},deviceScaleFactor:1,locale:"pl-PL"});
 const errors=[];
 page.on("pageerror",(error)=>errors.push("pageerror: "+error.message));

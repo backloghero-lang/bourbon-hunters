@@ -24,7 +24,7 @@ const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v6-highres-cutout";
 const CATALOG_MODERATION_VERSION = "catalog-moderation-orchestrator-admin-v1";
 const CATALOG_LICENSE_VERSION = "catalog-license-2026-07-18-v1";
 const TELEMETRY_VERSION = "scanner-telemetry-v1";
-const NEWS_AGENT_VERSION = "whisky-news-source-first-v3-quota-fallback";
+const NEWS_AGENT_VERSION = "whisky-news-source-first-v4-cached-thumbnails";
 const LOCAL_IMAGE_PIPELINE_VERSION = "local-bottle-cutout-v2-quality-gated";
 const NEWS_RETENTION_DAYS = 30;
 const CATALOG_SYSTEM_USER_ID = "catalog-system";
@@ -33,6 +33,7 @@ const SECURITY_VERSION = "xss-url-health-hardening-v1";
 const SCANNER_BUDGET_VERSION = "d1-atomic-cost-budgets-v1";
 const AUTH_PROTECTION_VERSION = "d1-auth-throttling-v1";
 const PRIVATE_BOTTLE_VERSION = "owner-only-private-bottles-v1";
+const UGC_MODERATION_VERSION = "comment-reports-blocks-admin-v1";
 const PBKDF2_ITERATIONS = 600000;
 const LEGACY_PBKDF2_ITERATIONS = 100000;
 const AUTH_BODY_MAX_BYTES = 16384;
@@ -1112,6 +1113,18 @@ async function accountDeletionReauth(user, body){
 async function privateBottleSchemaReady(env){
   return !!(env.DB && await tableExists(env,"user_private_bottles"));
 }
+let ugcModerationSchemaCache={checkedAt:0,ready:false};
+async function ugcModerationSchemaReady(env){
+  const now=Date.now();
+  if(now-ugcModerationSchemaCache.checkedAt<30000) return ugcModerationSchemaCache.ready;
+  let ready=false;
+  if(env.DB && await tableExists(env,"comment_reports") && await tableExists(env,"user_blocks") && await tableExists(env,"comment_moderation_actions")){
+    const columns=await tableColumns(env,"bottle_recommendations");
+    ready=!!columns.moderation_status;
+  }
+  ugcModerationSchemaCache={checkedAt:now,ready:ready};
+  return ready;
+}
 function privateBottleText(value, max){
   return String(value==null?"":value).replace(/\s+/g," ").trim().slice(0,max);
 }
@@ -1204,7 +1217,7 @@ function cleanBottleIds(value){
   const seen={};
   return raw.map(function(id){ return String(id||"").trim().slice(0,180); })
     .filter(function(id){ if(!id || seen[id]) return false; seen[id]=1; return true; })
-    .slice(0,150);
+    .slice(0,90);
 }
 async function ratingAggregateFor(env, bottleId){
   bottleId=String(bottleId||"").trim();
@@ -1215,35 +1228,48 @@ async function ratingAggregateFor(env, bottleId){
   return {avg:avg,count:count};
 }
 async function ratingAggregatesFor(env, ids){
+  const cleanIds=cleanBottleIds(ids);
   const out={};
-  for(const id of cleanBottleIds(ids)){
-    out[id]=await ratingAggregateFor(env,id);
-  }
+  cleanIds.forEach(function(id){ out[id]={avg:null,count:0}; });
+  if(!cleanIds.length) return out;
+  const placeholders=cleanIds.map(function(){ return "?"; }).join(",");
+  const rows=await env.DB.prepare("SELECT bottle_id, COUNT(*) AS count, AVG(rating) AS avg FROM user_ratings WHERE bottle_id IN ("+placeholders+") GROUP BY bottle_id").bind(...cleanIds).all();
+  (rows.results||[]).forEach(function(row){
+    const count=Number(row&&row.count)||0;
+    out[row.bottle_id]={avg:count?Math.round((Number(row.avg)||0)*10)/10:null,count:count};
+  });
   return out;
 }
 function cleanRecommendationComment(v){
   return String(v||"").replace(/\s+/g," ").trim().slice(0,700);
 }
-async function recommendationsFor(env, bottleId, limit){
+async function recommendationsFor(env, bottleId, limit, viewerId){
   if(!(await tableExists(env,"bottle_recommendations"))) return {ready:false,recommendations:[]};
   const hasProfiles=await tableExists(env,"user_profiles");
+  const moderated=await ugcModerationSchemaReady(env);
   limit=Math.max(1,Math.min(100,Number(limit)||40));
   const selectProfile=hasProfiles ? "COALESCE(up.badge,'glass') AS badge" : "'glass' AS badge";
   const joinProfile=hasProfiles ? " LEFT JOIN user_profiles up ON up.user_id=br.user_id" : "";
-  const base="SELECT br.id,br.user_id,br.bottle_id,br.bottle_name,br.rating,br.comment,br.created_at,br.updated_at,u.username,"+selectProfile+" FROM bottle_recommendations br JOIN users u ON u.id=br.user_id"+joinProfile+" WHERE br.active=1";
+  const moderationFilter=moderated ? " AND br.moderation_status='active'" : "";
+  const blockFilter=moderated&&viewerId ? " AND NOT EXISTS (SELECT 1 FROM user_blocks ub WHERE (ub.blocker_user_id=? AND ub.blocked_user_id=br.user_id) OR (ub.blocker_user_id=br.user_id AND ub.blocked_user_id=?))" : "";
+  const base="SELECT br.id,br.user_id,br.bottle_id,br.bottle_name,br.rating,br.comment,br.created_at,br.updated_at,u.username,"+selectProfile+" FROM bottle_recommendations br JOIN users u ON u.id=br.user_id"+joinProfile+" WHERE br.active=1"+moderationFilter+blockFilter;
   const sql=bottleId ? base+" AND br.bottle_id=? ORDER BY br.updated_at DESC LIMIT ?" : base+" ORDER BY br.updated_at DESC LIMIT ?";
   const stmt=env.DB.prepare(sql);
-  const rows=bottleId ? await stmt.bind(String(bottleId||"").slice(0,180),limit).all() : await stmt.bind(limit).all();
+  const bindings=[];
+  if(moderated&&viewerId) bindings.push(viewerId,viewerId);
+  if(bottleId) bindings.push(String(bottleId||"").slice(0,180));
+  bindings.push(limit);
+  const rows=await stmt.bind(...bindings).all();
   return {ready:true,recommendations:(rows.results||[]).map(function(r){
     return {
       id:r.id,
-      user_id:r.user_id,
       bottle_id:r.bottle_id,
       bottle_name:r.bottle_name,
       username:r.username,
       badge:cleanProfileBadge(r.badge),
       rating:Number(r.rating)||0,
       comment:r.comment||"",
+      is_own:!!(viewerId&&r.user_id===viewerId),
       created_at:r.created_at,
       updated_at:r.updated_at
     };
@@ -1258,12 +1284,71 @@ async function upsertRecommendation(env, user, body){
   const bottleName=String((body&&body.bottle_name)||"").trim().slice(0,180);
   const now=new Date().toISOString();
   const id=crypto.randomUUID();
-  await env.DB.prepare("INSERT INTO bottle_recommendations (id,user_id,bottle_id,bottle_name,rating,comment,active,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?) ON CONFLICT(user_id,bottle_id) DO UPDATE SET bottle_name=excluded.bottle_name,rating=excluded.rating,comment=excluded.comment,active=1,updated_at=excluded.updated_at")
-    .bind(id,user.id,bottleId,bottleName,rating,comment,1,now,now).run();
+  const moderated=await ugcModerationSchemaReady(env);
+  if(moderated){
+    const existing=await env.DB.prepare("SELECT moderation_status FROM bottle_recommendations WHERE user_id=? AND bottle_id=?").bind(user.id,bottleId).first();
+    if(existing&&["hidden","removed"].indexOf(existing.moderation_status)>=0) return {error:"recommendation_moderated"};
+    await env.DB.prepare("INSERT INTO bottle_recommendations (id,user_id,bottle_id,bottle_name,rating,comment,active,moderation_status,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?) ON CONFLICT(user_id,bottle_id) DO UPDATE SET bottle_name=excluded.bottle_name,rating=excluded.rating,comment=excluded.comment,active=1,moderation_status='active',updated_at=excluded.updated_at")
+      .bind(id,user.id,bottleId,bottleName,rating,comment,1,"active",now,now).run();
+  }else{
+    await env.DB.prepare("INSERT INTO bottle_recommendations (id,user_id,bottle_id,bottle_name,rating,comment,active,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?) ON CONFLICT(user_id,bottle_id) DO UPDATE SET bottle_name=excluded.bottle_name,rating=excluded.rating,comment=excluded.comment,active=1,updated_at=excluded.updated_at")
+      .bind(id,user.id,bottleId,bottleName,rating,comment,1,now,now).run();
+  }
   await upsertRating(env,user.id,bottleId,rating);
-  const recs=await recommendationsFor(env,bottleId,20);
-  const mine=(recs.recommendations||[]).filter(function(r){ return r.user_id===user.id; })[0] || null;
+  const recs=await recommendationsFor(env,bottleId,20,user.id);
+  const mine=(recs.recommendations||[]).filter(function(r){ return r.is_own; })[0] || null;
   return mine;
+}
+async function reportRecommendation(env, user, body){
+  if(!(await ugcModerationSchemaReady(env))) return {error:"ugc_moderation_schema_missing",status:501};
+  const recommendationId=String(body&&body.recommendation_id||"").trim().slice(0,80);
+  const reason=String(body&&body.reason||"inappropriate").trim().slice(0,40);
+  const detail=String(body&&body.detail||"").replace(/\s+/g," ").trim().slice(0,500);
+  if(!recommendationId || ["spam","abuse","inappropriate","copyright","other"].indexOf(reason)<0) return {error:"bad_report",status:400};
+  const recommendation=await env.DB.prepare("SELECT id,user_id FROM bottle_recommendations WHERE id=?").bind(recommendationId).first();
+  if(!recommendation) return {error:"recommendation_not_found",status:404};
+  if(recommendation.user_id===user.id) return {error:"cannot_report_own_comment",status:400};
+  const since=new Date(Date.now()-86400000).toISOString();
+  const count=await env.DB.prepare("SELECT COUNT(*) AS count FROM comment_reports WHERE reporter_user_id=? AND created_at>=?").bind(user.id,since).first();
+  if(Number(count&&count.count)>=20) return {error:"report_rate_limited",status:429};
+  const now=new Date().toISOString();
+  await env.DB.prepare("INSERT INTO comment_reports (id,recommendation_id,reporter_user_id,reason,detail,status,created_at) VALUES (?,?,?,?,?,'pending',?) ON CONFLICT(recommendation_id,reporter_user_id) DO UPDATE SET reason=excluded.reason,detail=excluded.detail,status='pending',created_at=excluded.created_at,resolved_at=NULL,resolved_by=NULL")
+    .bind(crypto.randomUUID(),recommendationId,user.id,reason,detail,now).run();
+  await env.DB.prepare("UPDATE bottle_recommendations SET moderation_status='reported' WHERE id=? AND moderation_status='active'").bind(recommendationId).run();
+  return {ok:true};
+}
+async function blockRecommendationUser(env, user, body){
+  if(!(await ugcModerationSchemaReady(env))) return {error:"ugc_moderation_schema_missing",status:501};
+  const recommendationId=String(body&&body.recommendation_id||"").trim().slice(0,80);
+  if(!recommendationId) return {error:"bad_block",status:400};
+  const recommendation=await env.DB.prepare("SELECT user_id FROM bottle_recommendations WHERE id=?").bind(recommendationId).first();
+  if(!recommendation) return {error:"recommendation_not_found",status:404};
+  const blockedUserId=String(recommendation.user_id||"");
+  if(!blockedUserId || blockedUserId===user.id) return {error:"bad_block",status:400};
+  const count=await env.DB.prepare("SELECT COUNT(*) AS count FROM user_blocks WHERE blocker_user_id=?").bind(user.id).first();
+  if(Number(count&&count.count)>=1000) return {error:"block_limit",status:409};
+  await env.DB.prepare("INSERT OR IGNORE INTO user_blocks (blocker_user_id,blocked_user_id,created_at) VALUES (?,?,?)").bind(user.id,blockedUserId,new Date().toISOString()).run();
+  return {ok:true};
+}
+async function adminCommentModerationList(env, limit){
+  limit=Math.max(1,Math.min(100,Number(limit)||40));
+  const rows=await env.DB.prepare("SELECT br.id,br.user_id,br.bottle_id,br.bottle_name,br.rating,br.comment,br.moderation_status,br.updated_at,u.username,COUNT(cr.id) AS report_count,MIN(cr.created_at) AS first_reported_at,GROUP_CONCAT(DISTINCT cr.reason) AS reasons FROM bottle_recommendations br JOIN users u ON u.id=br.user_id JOIN comment_reports cr ON cr.recommendation_id=br.id AND cr.status='pending' GROUP BY br.id ORDER BY report_count DESC,first_reported_at ASC LIMIT ?").bind(limit).all();
+  return {items:rows.results||[]};
+}
+async function adminCommentModerationDecision(env, admin, recommendationId, body){
+  const action=String(body&&body.action||"").trim();
+  const note=String(body&&body.note||"").replace(/\s+/g," ").trim().slice(0,500);
+  if(["dismiss","hide","remove"].indexOf(action)<0) return {error:"bad_moderation_action",status:400};
+  const recommendation=await env.DB.prepare("SELECT id FROM bottle_recommendations WHERE id=?").bind(recommendationId).first();
+  if(!recommendation) return {error:"recommendation_not_found",status:404};
+  const now=new Date().toISOString();
+  const status=action==="dismiss"?"active":action==="hide"?"hidden":"removed";
+  await env.DB.batch([
+    env.DB.prepare("UPDATE bottle_recommendations SET active=?,moderation_status=?,updated_at=? WHERE id=?").bind(action==="dismiss"?1:0,status,now,recommendationId),
+    env.DB.prepare("UPDATE comment_reports SET status=?,resolved_at=?,resolved_by=? WHERE recommendation_id=? AND status='pending'").bind(action==="dismiss"?"dismissed":"actioned",now,admin.id,recommendationId),
+    env.DB.prepare("INSERT INTO comment_moderation_actions (id,recommendation_id,admin_user_id,action,note,created_at) VALUES (?,?,?,?,?,?)").bind(crypto.randomUUID(),recommendationId,admin.id,action,note,now)
+  ]);
+  return {ok:true,status:status};
 }
 async function googleExchange(request, env, code){
   const body=new URLSearchParams();
@@ -1532,6 +1617,74 @@ function publicNewsArticle(row){
     category:row.category||"whisky",published_at:row.article_published_at||row.created_at
   };
 }
+function safeRemoteNewsImage(value){
+  try{
+    const url=new URL(String(value||""));
+    const host=url.hostname.toLowerCase();
+    if(url.protocol!=="https:" || url.username || url.password) return "";
+    if(host==="localhost" || host.endsWith(".local") || host==="[::1]" || /^\[(?:fc|fd|fe[89ab])/i.test(host)) return "";
+    const ipv4=host.match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/);
+    if(ipv4){
+      const octets=ipv4.slice(1).map(Number);
+      if(octets.some(function(part){ return part>255; })) return "";
+      const first=octets[0], second=octets[1];
+      if(first===0 || first===10 || first===127 || first>=224 || (first===100&&second>=64&&second<=127) || (first===169&&second===254) || (first===172&&second>=16&&second<=31) || (first===192&&second===168) || (first===198&&(second===18||second===19))) return "";
+    }
+    return url.toString();
+  }catch(e){ return ""; }
+}
+async function fetchRemoteNewsImage(remoteUrl, canonicalUrl, signal){
+  let current=remoteUrl;
+  for(let redirectCount=0;redirectCount<4;redirectCount++){
+    const response=await fetch(current,{
+      redirect:"manual",
+      signal:signal,
+      headers:{Accept:"image/avif,image/webp,image/png,image/jpeg,image/gif;q=0.8,*/*;q=0.2",Referer:canonicalUrl,"User-Agent":"Mozilla/5.0 Bourbon Hunters News Thumbnail"},
+      cf:{cacheTtl:86400,cacheEverything:true}
+    });
+    if([301,302,303,307,308].indexOf(response.status)<0) return response;
+    const location=response.headers.get("Location");
+    current=safeRemoteNewsImage(location ? new URL(location,current).toString() : "");
+    if(!current) return null;
+  }
+  return null;
+}
+async function newsImageResponse(env, articleId, cors){
+  articleId=String(articleId||"").trim().slice(0,80);
+  if(!articleId || !(await newsSchemaReady(env))) return J({error:"image_not_found"},404,cors);
+  const row=await env.DB.prepare("SELECT id,canonical_url,image_url FROM news_articles WHERE id=? AND status='published'").bind(articleId).first();
+  const remoteUrl=safeRemoteNewsImage(row&&row.image_url);
+  if(!row || !remoteUrl) return J({error:"image_not_found"},404,cors);
+  const imageKey="news/thumbnails/"+articleId;
+  if(env.BOTTLE_IMAGES){
+    const cached=await env.BOTTLE_IMAGES.get(imageKey);
+    if(cached){
+      const headers=new Headers(responseHeaders(cors));
+      cached.writeHttpMetadata(headers);
+      headers.set("Content-Type",headers.get("Content-Type")||"image/jpeg");
+      headers.set("Cache-Control","public, max-age=604800, stale-while-revalidate=86400");
+      return new Response(cached.body,{headers:headers});
+    }
+  }
+  const controller=new AbortController();
+  const timeout=setTimeout(function(){ controller.abort(); },10000);
+  let response;
+  try{
+    response=await fetchRemoteNewsImage(remoteUrl,row.canonical_url,controller.signal);
+  }catch(e){ return J({error:"image_unavailable"},404,cors); }
+  finally{ clearTimeout(timeout); }
+  if(!response || !response.ok) return J({error:"image_unavailable"},404,cors);
+  const contentType=String(response.headers.get("Content-Type")||"").split(";")[0].trim().toLowerCase();
+  if(["image/jpeg","image/png","image/webp","image/gif","image/avif"].indexOf(contentType)<0) return J({error:"invalid_image_type"},415,cors);
+  const contentLength=Number(response.headers.get("Content-Length")||0);
+  if(contentLength>4000000) return J({error:"image_too_large"},413,cors);
+  const bytes=new Uint8Array(await response.arrayBuffer());
+  if(!bytes.byteLength || bytes.byteLength>4000000) return J({error:"image_too_large"},413,cors);
+  if(env.BOTTLE_IMAGES){
+    await env.BOTTLE_IMAGES.put(imageKey,bytes,{httpMetadata:{contentType:contentType,cacheControl:"public, max-age=604800"}}).catch(function(){});
+  }
+  return new Response(bytes,{headers:responseHeaders(Object.assign({},cors,{"Content-Type":contentType,"Cache-Control":"public, max-age=604800, stale-while-revalidate=86400"}))});
+}
 async function seedStarterNews(env){
   if(!(await newsSchemaReady(env))) return {seeded:0,ready:false};
   const issueKey="starter-news-v1";
@@ -1759,7 +1912,7 @@ async function handleApi(request, env, cors){
   if(path==="/admin/health" && request.method==="GET"){
     const healthUser=await authUser(env,request);
     if(!isAdminUser(env,healthUser)) return J({error:"forbidden"},403,cors);
-    let schema=false, reset_schema=false, profile_schema=false, recommendations_schema=false, identity_schema=false, auth_security_schema=false, auth_rate_schema=false, catalog_schema=false, catalog_data_schema=false, catalog_moderation_schema=false, telemetry_schema=false, scanner_budget_schema=false, news_schema=false, private_bottle_schema=false, news_article_count=0, news_last_run=null, detail="";
+    let schema=false, reset_schema=false, profile_schema=false, recommendations_schema=false, identity_schema=false, auth_security_schema=false, auth_rate_schema=false, catalog_schema=false, catalog_data_schema=false, catalog_moderation_schema=false, telemetry_schema=false, scanner_budget_schema=false, news_schema=false, private_bottle_schema=false, ugc_moderation_schema=false, news_article_count=0, news_last_run=null, detail="";
     if(env.DB){
       try{
         await env.DB.prepare("SELECT id FROM users LIMIT 1").first();
@@ -1792,6 +1945,8 @@ async function handleApi(request, env, cors){
         if(schema && telemetry_schema && !news_schema) detail="whisky news migration v68 is missing";
         private_bottle_schema=await privateBottleSchemaReady(env);
         if(schema && !private_bottle_schema) detail="private bottle migration v72 is missing";
+        ugc_moderation_schema=await ugcModerationSchemaReady(env);
+        if(schema && !ugc_moderation_schema) detail="comment moderation migration v74 is missing";
         if(news_schema){
           const newsCount=await env.DB.prepare("SELECT COUNT(*) AS count FROM news_articles WHERE status='published'").first();
           const lastNewsRun=await env.DB.prepare("SELECT issue_key,status,candidates_found,articles_added,detail,started_at,completed_at FROM news_agent_runs ORDER BY started_at DESC LIMIT 1").first();
@@ -1801,7 +1956,7 @@ async function handleApi(request, env, cors){
       }
       catch(e){ detail=String(e&&e.message?e.message:e).slice(0,220); }
     }
-    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,security_version:SECURITY_VERSION,auth_protection_version:AUTH_PROTECTION_VERSION,private_bottle_version:PRIVATE_BOTTLE_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_mode:"visual_only",scan_ocr_enabled:false,scanner_ai_ready:!!env.GEMINI_API_KEY,scanner_primary_model:env.IDENT_MODEL||"gemini-3.5-flash-lite",scanner_fallback_model:env.IDENT_FALLBACK_MODEL||"gemini-3.6-flash",scanner_model_discovery:true,scanner_mobile_foreground:!!env.IMAGES,scanner_budget_version:SCANNER_BUDGET_VERSION,scanner_budget_schema:scanner_budget_schema,scanner_identify_daily_limit:scannerBudgetLimits(env,"identify").actor,scanner_cutout_daily_limit:scannerBudgetLimits(env,"cutout").actor,scanner_analysis_daily_limit:scannerBudgetLimits(env,"analysis").actor,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_moderation_version:CATALOG_MODERATION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,news_agent_version:NEWS_AGENT_VERSION,news_schedule:"Monday and Thursday releases with daily recovery via UTC cron",news_target_per_release:3,news_current_release:newsReleaseSlot(new Date()),news_article_count:news_article_count,news_last_run:news_last_run,local_image_pipeline_version:LOCAL_IMAGE_PIPELINE_VERSION,news_retention_days:NEWS_RETENTION_DAYS,starter_news_count:STARTER_NEWS.length,news_auth_required:true,catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,auth_security_schema:auth_security_schema,auth_rate_schema:auth_rate_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,catalog_moderation_schema:catalog_moderation_schema,telemetry_schema:telemetry_schema,news_schema:news_schema,private_bottle_schema:private_bottle_schema,news_agent_ready:news_schema,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),local_image_cutout_ready:!!env.IMAGES,cutout_quality_ready:!!(env.IMAGES&&env.GEMINI_API_KEY),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
+    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,security_version:SECURITY_VERSION,auth_protection_version:AUTH_PROTECTION_VERSION,private_bottle_version:PRIVATE_BOTTLE_VERSION,ugc_moderation_version:UGC_MODERATION_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_mode:"visual_only",scan_ocr_enabled:false,scanner_ai_ready:!!env.GEMINI_API_KEY,scanner_primary_model:env.IDENT_MODEL||"gemini-3.5-flash-lite",scanner_fallback_model:env.IDENT_FALLBACK_MODEL||"gemini-3.6-flash",scanner_model_discovery:true,scanner_mobile_foreground:!!env.IMAGES,scanner_budget_version:SCANNER_BUDGET_VERSION,scanner_budget_schema:scanner_budget_schema,scanner_identify_daily_limit:scannerBudgetLimits(env,"identify").actor,scanner_cutout_daily_limit:scannerBudgetLimits(env,"cutout").actor,scanner_analysis_daily_limit:scannerBudgetLimits(env,"analysis").actor,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_moderation_version:CATALOG_MODERATION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,news_agent_version:NEWS_AGENT_VERSION,news_schedule:"Monday and Thursday releases with daily recovery via UTC cron",news_target_per_release:3,news_current_release:newsReleaseSlot(new Date()),news_article_count:news_article_count,news_last_run:news_last_run,local_image_pipeline_version:LOCAL_IMAGE_PIPELINE_VERSION,news_retention_days:NEWS_RETENTION_DAYS,starter_news_count:STARTER_NEWS.length,news_auth_required:true,catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,auth_security_schema:auth_security_schema,auth_rate_schema:auth_rate_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,catalog_moderation_schema:catalog_moderation_schema,telemetry_schema:telemetry_schema,news_schema:news_schema,private_bottle_schema:private_bottle_schema,ugc_moderation_schema:ugc_moderation_schema,news_agent_ready:news_schema,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),local_image_cutout_ready:!!env.IMAGES,cutout_quality_ready:!!(env.IMAGES&&env.GEMINI_API_KEY),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
   }
   if(path==="/auth/google/start" && request.method==="GET"){
     const returnUrl=allowedReturnUrl(env,url.searchParams.get("return")||appUrl(env));
@@ -1830,6 +1985,8 @@ async function handleApi(request, env, cors){
     }
   }
   const dbErr=needDB(env,cors); if(dbErr) return dbErr;
+  const newsImageMatch=path.match(/^\/news\/image\/([^/]+)$/);
+  if(newsImageMatch && request.method==="GET") return newsImageResponse(env,decodeURIComponent(newsImageMatch[1]),cors);
   if(path==="/news" && request.method==="GET"){
     const newsUser=await authUser(env,request);
     if(!newsUser) return J({error:"unauthorized"},401,cors);
@@ -1864,11 +2021,12 @@ async function handleApi(request, env, cors){
   }
   if(path==="/ratings" && request.method==="GET"){
     const ids=cleanBottleIds(url.searchParams.get("ids")||"");
-    return J({ratings:await ratingAggregatesFor(env,ids)},200,cors);
+    return J({ratings:await ratingAggregatesFor(env,ids)},200,Object.assign({},cors,{"Cache-Control":"public, max-age=30, stale-while-revalidate=60"}));
   }
   if(path==="/recommendations" && request.method==="GET"){
     const bottleId=String(url.searchParams.get("bottle_id")||"").trim();
-    const data=await recommendationsFor(env,bottleId,Number(url.searchParams.get("limit")||40));
+    const recommendationViewer=await authUser(env,request);
+    const data=await recommendationsFor(env,bottleId,Number(url.searchParams.get("limit")||40),recommendationViewer&&recommendationViewer.id);
     return J({recommendations:data.recommendations,recommendations_ready:data.ready},200,cors);
   }
   if(path==="/telemetry/scan-choice" && request.method==="POST"){
@@ -2098,6 +2256,18 @@ async function handleApi(request, env, cors){
     if(!(await catalogModerationSchemaReady(env))) return J({error:"schema_catalog_moderation_missing"},501,cors);
     return J(await adminCatalogModerationList(env,request),200,cors);
   }
+  if(path==="/admin/comments/moderation" && request.method==="GET"){
+    if(!isAdminUser(env,user)) return J({error:"forbidden"},403,cors);
+    if(!(await ugcModerationSchemaReady(env))) return J({error:"ugc_moderation_schema_missing"},501,cors);
+    return J(await adminCommentModerationList(env,url.searchParams.get("limit")),200,cors);
+  }
+  const commentModerationMatch=path.match(/^\/admin\/comments\/moderation\/([^/]+)$/);
+  if(commentModerationMatch && request.method==="POST"){
+    if(!isAdminUser(env,user)) return J({error:"forbidden"},403,cors);
+    if(!(await ugcModerationSchemaReady(env))) return J({error:"ugc_moderation_schema_missing"},501,cors);
+    const result=await adminCommentModerationDecision(env,user,decodeURIComponent(commentModerationMatch[1]),await readBody(request));
+    return J(result,result.status||200,cors);
+  }
   const moderationImageMatch=path.match(/^\/admin\/catalog\/moderation\/([^/]+)\/image$/);
   if(moderationImageMatch && request.method==="GET"){
     if(!isAdminUser(env,user)) return J({error:"forbidden"},403,cors);
@@ -2169,6 +2339,14 @@ async function handleApi(request, env, cors){
     if(!rec) return J({error:"schema_recommendations_missing",message:"Run the latest D1 migration for bottle recommendations."},501,cors);
     if(rec.error) return J({error:rec.error},400,cors);
     return J({ok:true,recommendation:rec,rating_aggregate:await ratingAggregateFor(env,body.bottle_id)},200,cors);
+  }
+  if(path==="/me/recommendation/report" && request.method==="POST"){
+    const result=await reportRecommendation(env,user,await readBody(request));
+    return J(result,result.status||200,cors);
+  }
+  if(path==="/me/user-block" && request.method==="POST"){
+    const result=await blockRecommendationUser(env,user,await readBody(request));
+    return J(result,result.status||200,cors);
   }
   if(path==="/me/scan" && request.method==="POST"){
     const body=await readBody(request);
@@ -2567,7 +2745,7 @@ export default {
     const cors=apiCors(env, request);
     if(request.method==="OPTIONS") return new Response(null,{headers:responseHeaders(Object.assign({},cors,{"Access-Control-Max-Age":"600"}))});
     const path=new URL(request.url).pathname;
-    if(path.indexOf("/auth/")===0 || path.indexOf("/me")===0 || path.indexOf("/ratings")===0 || path.indexOf("/recommendations")===0 || path.indexOf("/catalog/")===0 || path.indexOf("/telemetry/")===0 || path.indexOf("/admin/")===0 || path==="/news"){
+    if(path.indexOf("/auth/")===0 || path.indexOf("/me")===0 || path.indexOf("/ratings")===0 || path.indexOf("/recommendations")===0 || path.indexOf("/catalog/")===0 || path.indexOf("/telemetry/")===0 || path.indexOf("/admin/")===0 || path.indexOf("/news")===0){
       try{ return await handleApi(request, env, cors); }
       catch(e){
         const requestId=randHex(8);

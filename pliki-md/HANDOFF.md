@@ -2,6 +2,16 @@
 
 Aktualizacja: 2026-07-05.
 
+## Aktualizacja 2026-08-14 - kolejne cztery punkty audytu
+
+- Oceny sa pobierane grupowo przez `IN (...) GROUP BY`, maksymalnie po 90 ID, z krotkim cache HTTP. Migracja `v73` dodaje indeks po `bottle_id`.
+- Komentarze maja zglaszanie, blokowanie autora, status moderacji, kolejke administratora oraz dziennik decyzji. Migracja `v74` jest wymagana i powinna byc wykonana tylko raz.
+- GitHub Actions ma obowiazkowe testy bezpieczenstwa, domenowe i UI oraz analize CodeQL. Build i deploy nie rusza, jesli bramka jakosci nie przejdzie.
+- Zdjecia lokalne sa przechowywane jako `Blob`, podglady korzystaja z Object URL, stare URL i canvasy sa zwalniane. Istniejace rekordy base64 migruja automatycznie przy odczycie.
+- Miniatury newsow sa serwowane przez `/news/image/:id`, walidowane, zapisywane w R2 i maja lokalny fallback w aplikacji. Wersja agenta: `whisky-news-source-first-v4-cached-thumbnails`.
+- PWA cache: `bourbon-hunters-v122`.
+- Kolejnosc wdrozenia: backup D1 -> v73 -> v74 -> GitHub -> Worker -> kontrola `ugc_moderation_schema: true` w Raportach.
+
 ## Aktualizacja 2026-08-05 - audyt oraz auth hardening
 
 - Pelny audyt jest w `pliki-md/AUDYT-KODU-2026-08-05.md`.
@@ -387,7 +397,7 @@ node scripts/test_spirit_taxonomy.mjs
 - Migracja `agent/d1-migration-v71-auth-rate-limits.sql` dodaje atomowe limity auth per aktor i IP. Musi wejsc przed Workerem.
 - Auth: limit JSON 16 KB, hasla 8-128 znakow, PBKDF2-SHA256 600 000 i rehash starszych kont po poprawnym logowaniu.
 - Wersja auth: `auth-rate-limited-pbkdf2-600k-v5`; wersja ochrony: `d1-auth-throttling-v1`.
-- Wersja newsow: `whisky-news-source-first-v3-quota-fallback`.
+- Wersja newsow po poprawce miniaturek: `whisky-news-source-first-v4-cached-thumbnails`.
 - Agent nie uzywa juz Google Search do odkrywania URL. Pobiera dzialy dozwolonych redakcji i dziala takze przy `429` Gemini.
 - Przyciski dodania, zmiany i usuniecia lokalnego zdjecia sa wewnatrz ramki butelki przy jej dolnych rogach.
 - Cache PWA: `bourbon-hunters-v114`. Migracja D1 nie jest wymagana.

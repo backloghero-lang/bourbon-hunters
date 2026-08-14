@@ -1,25 +1,22 @@
-import { createRequire } from "node:module";
-
-const modules=process.env.CODEX_NODE_MODULES||"C:/Users/masly/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/.pnpm/playwright@1.61.1/node_modules";
-const require=createRequire(modules.replace(/\\/g,"/")+"/smoke-entry.js");
-const { chromium }=require("playwright");
-const chrome=process.env.CHROME_PATH||"C:/Program Files/Google/Chrome/Application/chrome.exe";
+import { chromium,browserLaunchOptions } from "./playwright-runtime.mjs";
 const target=process.env.BH_SMOKE_URL||"http://127.0.0.1:8765/index.html";
 const articles=Array.from({length:4},(_,index)=>({
   id:"news-"+index,
   title:"Whisky article "+(index+1),
   excerpt_pl:"Krotkie podsumowanie najwazniejszych informacji.",
   excerpt_en:"A concise summary of the most useful information.",
-  image_url:"",
+  image_url:"https://cdn.example.test/whisky-"+index+".jpg",
   url:"https://whiskyadvocate.com/News",
   source_name:"Whisky Advocate",
   published_at:"2026-07-"+String(20+index).padStart(2,"0")+"T10:00:00Z"
 }));
 
-const browser=await chromium.launch({headless:true,executablePath:chrome});
+const browser=await chromium.launch(browserLaunchOptions());
 const page=await browser.newPage({viewport:{width:390,height:844},deviceScaleFactor:1,hasTouch:true});
 const errors=[];
 let newsAuthHeader="";
+let thumbnailRequests=0;
+const thumbnailPixel=Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=","base64");
 page.on("pageerror",(error)=>errors.push("pageerror: "+error.message));
 page.on("console",(message)=>{
   if(message.type()==="error"&&!message.text().includes("Failed to load resource")) errors.push("console: "+message.text());
@@ -27,6 +24,14 @@ page.on("console",(message)=>{
 await page.route("**/news?*",async(route)=>{
   newsAuthHeader=route.request().headers().authorization||"";
   await route.fulfill({status:200,contentType:"application/json",body:JSON.stringify({articles,news_ready:true})});
+});
+await page.route("**/news/image/*",async(route)=>{
+  thumbnailRequests++;
+  if(route.request().url().endsWith("/news-1")){
+    await route.fulfill({status:404,contentType:"application/json",body:'{"error":"image_unavailable"}'});
+    return;
+  }
+  await route.fulfill({status:200,contentType:"image/png",body:thumbnailPixel});
 });
 await page.route("**/catalog/recent?*",(route)=>route.fulfill({status:200,contentType:"application/json",body:JSON.stringify({bottles:[],catalog_ready:true})}));
 await page.route("**/recommendations?*",(route)=>route.fulfill({status:200,contentType:"application/json",body:JSON.stringify({recommendations:[],recommendations_ready:true})}));
@@ -55,6 +60,25 @@ await page.evaluate(()=>{
 });
 await page.locator("#homeNewsList .news-card").first().waitFor();
 if(newsAuthHeader!=="Bearer news-smoke-token") throw new Error("News request is missing authentication: "+newsAuthHeader);
+const thumbnailSrc=await page.locator("#homeNewsList .news-card img").first().getAttribute("src");
+if(!thumbnailSrc || !thumbnailSrc.includes("/news/image/news-0")) throw new Error("News thumbnail does not use the Worker proxy: "+thumbnailSrc);
+await page.locator("#homeNewsList .news-card img").first().evaluate((image)=>{
+  if(image.complete && image.naturalWidth>0) return;
+  return new Promise((resolve,reject)=>{
+    image.addEventListener("load",resolve,{once:true});
+    image.addEventListener("error",()=>reject(new Error("Thumbnail failed to load")),{once:true});
+  });
+});
+if(thumbnailRequests<1) throw new Error("Worker thumbnail proxy was not requested");
+await page.locator("#homeNewsList .news-card img").nth(1).evaluate((image)=>{
+  if(image.complete && image.naturalWidth>0) return;
+  return new Promise((resolve,reject)=>{
+    image.addEventListener("load",resolve,{once:true});
+    image.addEventListener("error",()=>reject(new Error("Fallback thumbnail failed to load")),{once:true});
+  });
+});
+const fallbackSrc=await page.locator("#homeNewsList .news-card img").nth(1).getAttribute("src");
+if(!fallbackSrc || !fallbackSrc.includes("design/figma-assets/home-pack-v2/home-header-v3.jpg")) throw new Error("Broken news thumbnail did not use the local fallback: "+fallbackSrc);
 
 const diagnostics=await page.evaluate(()=>{
   const scroller=document.getElementById("featuredRow");

@@ -1,5 +1,54 @@
 # 🛠️ Bourbon Hunters — instrukcja uruchomienia (krok po kroku)
 
+## Wdrozenie pakietu audytowego: wydajnosc, moderacja, CI i pamiec obrazow - 2026-08-14
+
+Ta paczka wymaga dwoch migracji D1. Zachowaj kolejnosc: backup -> v73 -> v74 -> GitHub -> Worker.
+
+1. W Cloudflare otworz `D1 -> bourbon-hunters-db -> Console` i zapisz punkt odtworzenia:
+
+```sql
+SELECT datetime('now') AS restore_point_utc;
+```
+
+2. Wykonaj caly plik `agent/d1-migration-v73-rating-performance.sql`.
+3. Wykonaj caly plik `agent/d1-migration-v74-comment-moderation.sql`. Migracje v74 uruchom tylko raz, poniewaz dodaje kolumne `moderation_status`.
+4. Sprawdz schemat jednym zapytaniem:
+
+```sql
+SELECT name
+FROM sqlite_master
+WHERE type IN ('table','index')
+  AND name IN (
+    'idx_user_ratings_bottle',
+    'comment_reports',
+    'user_blocks',
+    'comment_moderation_actions'
+  )
+ORDER BY name;
+```
+
+Wynik ma zawierac cztery wiersze. Nastepnie sprawdz kolumne:
+
+```sql
+SELECT name, type, notnull, dflt_value
+FROM pragma_table_info('bottle_recommendations')
+WHERE name='moderation_status';
+```
+
+5. Uruchom `WYSLIJ-NA-GITHUB.bat`. W GitHub Actions musza przejsc kolejno joby `quality`, `codeql`, `build` i `deploy`.
+6. W Cloudflare podmien caly `agent/worker.js` i kliknij `Deploy`.
+7. Zaloguj sie jako administrator, wejdz w `Profil -> Raporty` i sprawdz:
+
+```text
+ugc_moderation_version: comment-reports-blocks-admin-v1
+ugc_moderation_schema: true
+```
+
+8. Test koncowy: dodaj komentarz z drugiego konta, zglos go z pierwszego, a potem ukryj lub przywroc w `Profil -> Raporty`.
+9. Odswiez PWA. Nowy cache frontendu to `bourbon-hunters-v122`.
+
+Pakiet grupuje odczyty ocen w jednym zapytaniu D1, dodaje zglaszanie i blokowanie komentarzy, kolejke administratora, obowiazkowe testy i CodeQL w GitHub Actions oraz ogranicza kopie obrazow w pamieci telefonu. Miniatury newsow sa pobierane przez Worker i zapisywane w R2, dlatego nie zaleza juz od blokowania hotlinkow przez serwisy zrodlowe. Ta poprawka miniaturek nie wymaga dodatkowej migracji D1.
+
 ## Aktualna zasada deployu - 2026-07-06
 
 ## Wdrozenie Etapu 4 audytu i naprawionych newsow
@@ -25,7 +74,7 @@ auth_protection_version: d1-auth-throttling-v1
 
 7. Zaloguj sie oraz wykonaj jeden test resetu hasla. Pierwsze poprawne logowanie konta lokalnego automatycznie podniesie jego hash ze 100 000 do 600 000 iteracji.
 8. Wejdz w `Profil -> Raporty` i kliknij `Pobierz 3 najnowsze artykuly`, aby naprawiony agent uzupelnil biezace wydanie.
-9. Oczekiwana wersja newsow: `whisky-news-source-first-v3-quota-fallback`.
+9. Oczekiwana wersja newsow: `whisky-news-source-first-v4-cached-thumbnails`.
 
 Worker celowo odrzuci operacje auth z bledem `auth_rate_schema_missing`, jesli zostanie wdrozony przed migracja v71.
 
@@ -149,7 +198,7 @@ Pelny stan ponizej jest dostepny tylko dla administratora przez `/admin/health`:
   "catalog_submission_version": "community-catalog-images-v6-highres-cutout",
   "catalog_moderation_version": "catalog-moderation-orchestrator-admin-v1",
   "catalog_license_version": "catalog-license-2026-07-18-v1",
-  "news_agent_version": "whisky-news-source-first-v3-quota-fallback",
+  "news_agent_version": "whisky-news-source-first-v4-cached-thumbnails",
   "news_target_per_release": 3,
   "news_article_count": 6,
   "local_image_pipeline_version": "local-bottle-cutout-v2-quality-gated",
@@ -367,7 +416,7 @@ Ta paczka wymaga migracji D1, Workera i GitHub Pages.
 3. W Workerze `bourbon-hunters` zastap kod aktualnym `agent/worker.js` i kliknij `Deploy`.
 4. Nie tworz drugiego Cron Triggera. Istniejacy dzienny Cron wystarczy; Worker sam sprawdza poniedzialek i czwartek.
 5. Otworz `https://bourbon-hunters.darekmaslyk.workers.dev/auth/health`.
-6. Sprawdz `news_schema: true`, `news_agent_ready: true`, `local_image_cutout_ready: true` oraz `news_agent_version: whisky-news-source-first-v3-quota-fallback`. Pola `news_article_count` i `news_last_run` pokazuja stan feedu oraz wynik ostatniego przebiegu.
+6. Sprawdz `news_schema: true`, `news_agent_ready: true`, `local_image_cutout_ready: true` oraz `news_agent_version: whisky-news-source-first-v4-cached-thumbnails`. Pola `news_article_count` i `news_last_run` pokazuja stan feedu oraz wynik ostatniego przebiegu.
 7. Uruchom `WYSLIJ-NA-GITHUB.bat` i poczekaj na zielone GitHub Actions.
 8. Na telefonie otworz `test-index.html`, kliknij `Wyczysc cache/PWA`, a potem `Odswiez build`.
 9. Aby nie czekac do dnia publikacji, wejdz jako admin w `Profil -> Raporty` i kliknij `Pobierz 3 najnowsze artykuly`.

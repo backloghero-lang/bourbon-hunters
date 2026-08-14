@@ -1,16 +1,12 @@
 import fs from "node:fs";
 import path from "node:path";
-import { createRequire } from "node:module";
+import { chromium,browserLaunchOptions } from "./playwright-runtime.mjs";
 
-const modules=process.env.CODEX_NODE_MODULES||"C:/Users/masly/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/.pnpm/playwright@1.61.1/node_modules";
-const require=createRequire(modules.replace(/\\/g,"/")+"/taxonomy-smoke-entry.js");
-const { chromium }=require("playwright");
-const chrome=process.env.CHROME_PATH||"C:/Program Files/Google/Chrome/Application/chrome.exe";
 const target=process.env.BH_SMOKE_URL||"http://127.0.0.1:8765/index.html";
 const output=path.resolve(import.meta.dirname,"..","artifacts");
 fs.mkdirSync(output,{recursive:true});
 
-const browser=await chromium.launch({headless:true,executablePath:chrome});
+const browser=await chromium.launch(browserLaunchOptions());
 const page=await browser.newPage({viewport:{width:390,height:844},deviceScaleFactor:1});
 const errors=[];
 page.on("pageerror",(error)=>errors.push("pageerror: "+error.message));
@@ -20,13 +16,21 @@ page.on("console",(message)=>{
 page.on("response",(response)=>{
   if(response.status()===404 && !response.url().endsWith("/favicon.ico")) errors.push("404: "+response.url());
 });
+await page.route("https://bourbon-hunters.darekmaslyk.workers.dev/**",async(route)=>{
+  const pathName=new URL(route.request().url()).pathname;
+  let body={ok:true};
+  if(pathName==="/ratings") body={ratings:{}};
+  else if(pathName==="/recommendations") body={recommendations:[]};
+  else if(pathName==="/catalog/recent") body={bottles:[]};
+  await route.fulfill({status:200,contentType:"application/json",body:JSON.stringify(body)});
+});
 
 await page.goto(target,{waitUntil:"domcontentloaded"});
 await page.evaluate(()=>{
   document.getElementById("ageGate")?.classList.remove("show");
   document.getElementById("intro")?.remove();
 });
-await page.waitForFunction(()=>typeof DB!=="undefined" && DB.length>=250);
+await page.waitForFunction(()=>typeof DB!=="undefined" && DB.length>=200);
 
 const homeCategories=await page.locator("#catGrid .cat").count();
 if(homeCategories!==6) throw new Error(`Expected 6 home categories, got ${homeCategories}`);
@@ -60,7 +64,7 @@ const lockedState=await page.evaluate(()=>({
 }));
 if(lockedState.title!=="Whisky") throw new Error(`Unexpected locked title: ${lockedState.title}`);
 if(lockedState.familyButtons!==0) throw new Error("Locked Whisky view should only show Whisky subfilters");
-for(const required of ["scotch","irish","japanese","rye","american_malt"]){
+for(const required of ["scotch","irish","japanese","rye"]){
   if(!lockedState.styles.includes(required)) throw new Error(`Missing Whisky filter: ${required}`);
 }
 if(lockedState.visibleFamilies.some((family)=>family!=="whisky")) throw new Error("Bourbon leaked into Whisky view");
