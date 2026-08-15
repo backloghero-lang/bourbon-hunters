@@ -451,5 +451,6 @@ node scripts/test_spirit_taxonomy.mjs
 - Kolejność wdrożenia: zielony GitHub Pages, migracja D1 v76, podmiana Workera.
 - Publiczny APK został zastąpiony buildem release podpisanym trwałym kluczem `Bourbon Hunters Demo`; klucz pozostaje poza repozytorium w `Documents\Bourbon-Hunters-Signing`.
 - Kolejne podpisane wydanie buduje `scripts/build-android-release.ps1`. Aktualny APK ma SHA-256 `9813BB8B8257EC840DE8370180365FFF35F4A74BD5D5862A923ABBB4F9C9196A`.
+- Worker pobiera APK z `cache: no-store` i wersjonowanym parametrem URL, aby po podmianie natywnego pliku nie zwracać wcześniejszego wydania z cache.
 
 

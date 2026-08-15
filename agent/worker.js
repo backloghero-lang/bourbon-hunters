@@ -37,7 +37,7 @@ const PRIVATE_BOTTLE_VERSION = "owner-only-private-bottles-v1";
 const UGC_MODERATION_VERSION = "comment-reports-blocks-admin-v1";
 const API_CONTRACT_VERSION = "bh-api-2026-08-v1";
 const APK_ARTIFACT_VERSION = "0.1.0";
-const APK_DOWNLOAD_URL = "https://backloghero-lang.github.io/bourbon-hunters/downloads/Bourbon-Hunters-demo.apk";
+const APK_DOWNLOAD_URL = "https://backloghero-lang.github.io/bourbon-hunters/downloads/Bourbon-Hunters-demo.apk?release=0.1.0-signed";
 const PBKDF2_ITERATIONS = 600000;
 const LEGACY_PBKDF2_ITERATIONS = 100000;
 const AUTH_BODY_MAX_BYTES = 16384;
@@ -2232,7 +2232,7 @@ async function handleApi(request, env, cors, executionCtx){
     }catch(e){ return redirectWithHash(returnUrl,{google_error:String(e&&e.error||"google_start_failed")}); }
   }
   if(path==="/downloads/android" && request.method==="GET"){
-    const apk=await fetch(APK_DOWNLOAD_URL,{cf:{cacheEverything:true,cacheTtl:3600}});
+    const apk=await fetch(APK_DOWNLOAD_URL,{cache:"no-store"});
     if(!apk.ok) return J({error:"apk_unavailable"},503,cors);
     const source=cleanDownloadSource(url.searchParams.get("source"));
     const tracking=recordApkDownload(env,source).catch(function(){ return false; });
