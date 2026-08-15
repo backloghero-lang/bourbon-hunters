@@ -30,6 +30,12 @@
     .download svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:2}
     .meta{display:flex;justify-content:center;gap:12px;margin-top:14px;color:#978b76;font-size:11px}
     .note{margin:18px 0 0;padding-top:15px;border-top:1px solid rgba(201,138,58,.24);font-size:11px;color:#8f856f}
+    .install-help{margin-top:22px;padding-top:20px;border-top:1px solid rgba(201,138,58,.24);text-align:left}
+    .install-help h2{margin:0 0 8px;color:#f6d99c;font:700 19px Georgia,serif;text-align:center}
+    .install-help p{margin:0 auto 14px;color:#cfc1a5;font-size:12px;text-align:center}
+    .install-help img{display:block;width:100%;height:auto;border:1px solid rgba(201,138,58,.42);background:#000}
+    .install-steps{margin:14px 0 0;padding-left:22px;color:#cfc1a5;font-size:12px;line-height:1.55}
+    .install-steps strong{color:#f1c169}
   </style>
 </head>
 <body>
@@ -45,6 +51,15 @@
       </a>
       <div class="meta"><span>Android 7.0+</span><span id="apkSize">48 MB</span><span>v0.1.3</span></div>
       <p class="note">Plik demonstracyjny jest instalowany poza Google Play. Android może poprosić o zgodę na instalację z tego źródła.</p>
+      <section class="install-help" aria-labelledby="installHelpTitle">
+        <h2 id="installHelpTitle">Instalacja wersji demonstracyjnej</h2>
+        <p>Komunikat Play Protect pojawia się, ponieważ demo nie jest jeszcze publikowane w Google Play.</p>
+        <img src="assets/linkedin/instalacja-apk-play-protect.png" alt="Instrukcja: wybierz Więcej szczegółów, a następnie Zainstaluj mimo to">
+        <ol class="install-steps">
+          <li>Wybierz <strong>Więcej szczegółów</strong>.</li>
+          <li>Wybierz <strong>Zainstaluj mimo to</strong>.</li>
+        </ol>
+      </section>
     </section>
   </main>
   <script src="download.js"></script>

@@ -96,6 +96,7 @@ jobs:
           cp -R assets/bourbons _site/assets/
           cp -R assets/news _site/assets/
           cp -R assets/fonts _site/assets/
+          cp -R assets/linkedin _site/assets/
           if [ -d assets/profile-badges ]; then
             cp -R assets/profile-badges _site/assets/
           else

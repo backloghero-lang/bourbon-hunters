@@ -25,3 +25,33 @@ Nie wklejaj jako głównego odnośnika surowego pliku `.apk`. Strona pobierania 
 `https://backloghero-lang.github.io/bourbon-hunters/download.html?source=linkedin`
 
 Dodaj informację, że jest to demonstracyjny APK instalowany poza Google Play i przeznaczony dla pełnoletnich użytkowników.
+
+## Projekt na profilu LinkedIn
+
+**Nazwa projektu:** `Bourbon Hunters - mobilne MVP z agentami AI`
+
+**Opis:**
+
+`Bourbon Hunters to rozwijane przeze mnie mobilne MVP dla miłośników whisky i bourbonu. Aplikacja rozpoznaje butelki na podstawie zdjęcia etykiety, prezentuje dane produktu, umożliwia budowanie kolekcji i listy życzeń, wystawianie ocen oraz dodawanie recenzji. Zawiera logowanie Google, synchronizację danych, prywatne butelki użytkownika, cyklicznie aktualizowaną sekcję newsów i panel raportowy. W projekcie wykorzystuję agentów AI do identyfikacji butelek, obróbki zdjęć oraz wyszukiwania branżowych publikacji. Frontend działa jako PWA i podpisana aplikacja Android oparta na Capacitorze, a backend wykorzystuje Cloudflare Workers, D1, R2 i Images. Demo APK jest dostępne do pobrania z publicznej strony projektu.`
+
+**Umiejętności (maksymalnie 5):**
+
+- `JavaScript`
+- `Android Development`
+- `Cloudflare Workers`
+- `Artificial Intelligence (AI)`
+- `Progressive Web Apps (PWA)`
+
+**Multimedia:**
+
+1. Link do demo: `https://backloghero-lang.github.io/bourbon-hunters/download.html?source=linkedin`
+2. Grafika instalacji: `assets/linkedin/instalacja-apk-play-protect.png`
+3. Repozytorium: `https://github.com/backloghero-lang/bourbon-hunters`
+
+**Dodatkowe informacje:**
+
+- `Pracuję obecnie nad tym projektem`: zaznacz.
+- `Data rozpoczęcia`: czerwiec 2026.
+- `Data zakończenia`: pozostaw puste.
+- `Współautorzy`: pozostaw puste, jeżeli projekt prowadzisz samodzielnie.
+- `Związane z`: wybierz aktualne stanowisko tylko wtedy, gdy projekt powstaje w jego ramach; w przeciwnym razie pozostaw bez powiązania.
