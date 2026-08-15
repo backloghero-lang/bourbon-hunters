@@ -26,6 +26,13 @@ await page.route("**/news?*",async(route)=>{
   newsAuthHeader=route.request().headers().authorization||"";
   await route.fulfill({status:200,contentType:"application/json",body:JSON.stringify({articles,news_ready:true})});
 });
+await page.route("https://cdn.example.test/**",async(route)=>{
+  if(route.request().url().includes("whisky-1.jpg")){
+    await route.fulfill({status:404,contentType:"text/plain",body:"missing"});
+    return;
+  }
+  await route.fulfill({status:200,contentType:"image/png",body:thumbnailPixel});
+});
 await page.route("**/news/image/*",async(route)=>{
   thumbnailRequests++;
   if(route.request().url().endsWith("/news-1")){
@@ -62,7 +69,7 @@ await page.evaluate(()=>{
 await page.locator("#homeNewsList .news-card").first().waitFor();
 if(newsAuthHeader!=="Bearer news-smoke-token") throw new Error("News request is missing authentication: "+newsAuthHeader);
 const thumbnailSrc=await page.locator("#homeNewsList .news-card img").first().getAttribute("src");
-if(!thumbnailSrc || !thumbnailSrc.includes("/news/image/news-0")) throw new Error("News thumbnail does not use the Worker proxy: "+thumbnailSrc);
+if(thumbnailSrc!==articles[0].image_url) throw new Error("News thumbnail does not prefer the article image: "+thumbnailSrc);
 const emptyMetadataThumbnailSrc=await page.locator("#homeNewsList .news-card img").nth(2).getAttribute("src");
 if(!emptyMetadataThumbnailSrc || !emptyMetadataThumbnailSrc.includes("/news/image/news-2")) throw new Error("Article without stored image metadata skipped thumbnail repair: "+emptyMetadataThumbnailSrc);
 await page.locator("#homeNewsList .news-card img").first().evaluate((image)=>{
@@ -72,7 +79,6 @@ await page.locator("#homeNewsList .news-card img").first().evaluate((image)=>{
     image.addEventListener("error",()=>reject(new Error("Thumbnail failed to load")),{once:true});
   });
 });
-if(thumbnailRequests<1) throw new Error("Worker thumbnail proxy was not requested");
 await page.locator("#homeNewsList .news-card img").nth(1).evaluate((image)=>{
   if(image.complete && image.naturalWidth>0) return;
   return new Promise((resolve,reject)=>{
@@ -82,6 +88,7 @@ await page.locator("#homeNewsList .news-card img").nth(1).evaluate((image)=>{
 });
 const fallbackSrc=await page.locator("#homeNewsList .news-card img").nth(1).getAttribute("src");
 if(!fallbackSrc || !fallbackSrc.includes("assets/news/editorial-fallback-v1.jpg")) throw new Error("Broken news thumbnail did not use the local fallback: "+fallbackSrc);
+if(thumbnailRequests<2) throw new Error("Worker thumbnail proxy was not used for missing or broken source images");
 
 const diagnostics=await page.evaluate(()=>{
   const scroller=document.getElementById("featuredRow");

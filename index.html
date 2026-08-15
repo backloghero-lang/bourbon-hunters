@@ -958,7 +958,7 @@
 <script>
 /* ========= KONFIGURACJA ========= */
 const WORKER_URL = "https://bourbon-hunters.darekmaslyk.workers.dev";
-const APP_VERSION = "125";
+const APP_VERSION = "126";
 const API_CONTRACT_VERSION = "bh-api-2026-08-v1";
 const DB_URL = "db/catalog/demo-200.json";
 const PROFILES_URL = "db/profiles-runtime.json";
@@ -3247,17 +3247,22 @@ function newsDateLabel(value){
 function newsCardHtml(item){
   const excerpt=lang==="pl" ? (item.excerpt_pl||item.excerpt_en||"") : (item.excerpt_en||item.excerpt_pl||"");
   const fallbackImage="assets/news/editorial-fallback-v1.jpg";
-  const image=item.id ? safeImageSrc(WORKER_URL+"/news/image/"+encodeURIComponent(item.id),fallbackImage) : fallbackImage;
+  const proxyImage=item.id ? safeImageSrc(WORKER_URL+"/news/image/"+encodeURIComponent(item.id),"") : "";
+  const sourceImage=safeImageSrc(item.image_url,"");
+  const image=sourceImage||proxyImage||fallbackImage;
   const href=safeHttpUrl(item.url,"#");
   const date=newsDateLabel(item.published_at);
   return '<a class="news-card" href="'+esc(href)+'" target="_blank" rel="noopener noreferrer" data-external-article="'+esc(href==="#"?"":href)+'" aria-label="'+esc((item.title||"")+" - "+t("readArticle"))+'">'+
-    '<img src="'+esc(image)+'" alt="" loading="lazy" data-image-fallback="'+esc(fallbackImage)+'">'+
+    '<img src="'+esc(image)+'" alt="" loading="lazy" referrerpolicy="no-referrer" data-image-proxy="'+esc(sourceImage&&proxyImage?proxyImage:"")+'" data-image-fallback="'+esc(fallbackImage)+'">'+
     '<div class="news-card-body"><div class="news-card-meta"><span>'+esc(item.source_name||"Whisky")+'</span>'+(date?'<span>'+esc(date)+'</span>':'')+'</div>'+
     '<h4>'+esc(item.title||"")+'</h4><p>'+esc(excerpt)+'</p></div></a>';
 }
 document.addEventListener("error",function(event){
   const image=event.target;
   if(!image || image.tagName!=="IMG" || !image.hasAttribute("data-image-fallback")) return;
+  const proxy=safeImageSrc(image.getAttribute("data-image-proxy"),"");
+  image.removeAttribute("data-image-proxy");
+  if(proxy){ image.src=proxy; return; }
   const fallback=safeImageSrc(image.getAttribute("data-image-fallback"),"");
   image.removeAttribute("data-image-fallback");
   if(fallback) image.src=fallback;
