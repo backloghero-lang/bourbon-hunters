@@ -17,13 +17,21 @@ if (!(Test-Path -LiteralPath $keystore) -or !$credentials) {
 $password = ((Get-Content -LiteralPath $credentials.FullName -Encoding UTF8 | Where-Object { $_ -like "Store password:*" }) -replace "^Store password:\s*", "")
 if (!$password) { throw "Nie znaleziono hasła magazynu kluczy." }
 
-$javaHome = "C:\Program Files\Android\Android Studio\jbr"
+$javaCandidates = @(
+  "C:\Program Files\Eclipse Adoptium\jdk-21.0.12.8-hotspot",
+  "$env:USERPROFILE\.jdks\jbr-21.0.11",
+  "C:\Program Files\Android\Android Studio\jbr"
+)
+$javaHome = $javaCandidates | Where-Object {
+  Test-Path -LiteralPath (Join-Path $_ "bin\java.exe")
+} | Select-Object -First 1
+if (!$javaHome) { throw "Nie znaleziono JDK do zbudowania aplikacji." }
 $buildTools = Join-Path $env:LOCALAPPDATA "Android\Sdk\build-tools\36.0.0"
 $zipalign = Join-Path $buildTools "zipalign.exe"
 $apksigner = Join-Path $buildTools "apksigner.bat"
 $unsigned = Join-Path $android "app\build\outputs\apk\release\app-release-unsigned.apk"
-$aligned = Join-Path $artifacts "Bourbon-Hunters-demo-v0.1.0-aligned.apk"
-$signed = Join-Path $artifacts "Bourbon-Hunters-demo-v0.1.0-release.apk"
+$aligned = Join-Path $artifacts "Bourbon-Hunters-demo-v0.1.1-aligned.apk"
+$signed = Join-Path $artifacts "Bourbon-Hunters-demo-v0.1.1-release.apk"
 $publicApk = Join-Path $downloads "Bourbon-Hunters-demo.apk"
 
 $env:JAVA_HOME = $javaHome

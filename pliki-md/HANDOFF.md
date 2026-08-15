@@ -432,13 +432,13 @@ node scripts/test_spirit_taxonomy.mjs
 ## Aktualizacja 2026-08-14 - instalowalna wersja Android
 
 - Dodano projekt Capacitor 8 w katalogu `android` oraz konfiguracje `capacitor.config.json`.
-- Pakiet aplikacji: `pl.bourbonhunters.app`, wersja demonstracyjna `0.1.0-demo` (`versionCode 1`).
+- Pakiet aplikacji: `pl.bourbonhunters.app`, wersja demonstracyjna `0.1.1-demo` (`versionCode 2`).
 - Wrapper laduje aktualna produkcyjna wersje `https://backloghero-lang.github.io/bourbon-hunters/`, dlatego poprawki webowe nie wymagaja ponownego budowania APK.
 - Aplikacja wymaga internetu, dziala pionowo, blokuje cleartext HTTP i nie pozwala Androidowi wykonywac backupu danych aplikacji.
-- Ikona i splash zostaly wygenerowane z `icons/icon-512.png`.
+- Ikona launchera jest generowana z `assets/brand/android-launcher-source.png` przez `scripts/generate-android-launcher-icons.py`; splash pozostaje niezalezny.
 - Android Studio 2026.1.3.7, SDK i JDK 21 sa zainstalowane lokalnie. Build wykonuje Gradle z JDK 21.
-- Gotowy lokalny plik: `artifacts/Bourbon-Hunters-demo-v0.1.0.apk` (debug signed, 4 419 482 B).
-- SHA-256 APK: `78A77ECC292732A264C24D188A5A6062C59D71248231EB83F5D3A0C3A34DD455`.
+- Gotowy lokalny plik: `artifacts/Bourbon-Hunters-demo-v0.1.1-release.apk` (release signed, 4 021 409 B).
+- SHA-256 APK: `2B9DF08B281D60B3889CDD96B345AFEAB39BCC5A8B55F0235A4D48566BF7E5A4`.
 - Instrukcja instalacji i kolejnego builda: `pliki-md/ANDROID-APK.md`.
 
 ## Aktualizacja 2026-08-15 - publiczne demo APK i licznik pobrań
@@ -450,7 +450,7 @@ node scripts/test_spirit_taxonomy.mjs
 - Wymagana migracja: `agent/d1-migration-v76-apk-downloads.sql`.
 - Kolejność wdrożenia: zielony GitHub Pages, migracja D1 v76, podmiana Workera.
 - Publiczny APK został zastąpiony buildem release podpisanym trwałym kluczem `Bourbon Hunters Demo`; klucz pozostaje poza repozytorium w `Documents\Bourbon-Hunters-Signing`.
-- Kolejne podpisane wydanie buduje `scripts/build-android-release.ps1`. Aktualny APK ma SHA-256 `9813BB8B8257EC840DE8370180365FFF35F4A74BD5D5862A923ABBB4F9C9196A`.
+- Kolejne podpisane wydanie buduje `scripts/build-android-release.ps1`. Aktualny APK ma SHA-256 `2B9DF08B281D60B3889CDD96B345AFEAB39BCC5A8B55F0235A4D48566BF7E5A4`.
 - Worker pobiera APK z `cache: no-store` i wersjonowanym parametrem URL, aby po podmianie natywnego pliku nie zwracać wcześniejszego wydania z cache.
 
 
