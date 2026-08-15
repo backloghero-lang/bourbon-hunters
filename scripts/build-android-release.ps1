@@ -30,8 +30,8 @@ $buildTools = Join-Path $env:LOCALAPPDATA "Android\Sdk\build-tools\36.0.0"
 $zipalign = Join-Path $buildTools "zipalign.exe"
 $apksigner = Join-Path $buildTools "apksigner.bat"
 $unsigned = Join-Path $android "app\build\outputs\apk\release\app-release-unsigned.apk"
-$aligned = Join-Path $artifacts "Bourbon-Hunters-demo-v0.1.1-aligned.apk"
-$signed = Join-Path $artifacts "Bourbon-Hunters-demo-v0.1.1-release.apk"
+$aligned = Join-Path $artifacts "Bourbon-Hunters-demo-v0.1.2-aligned.apk"
+$signed = Join-Path $artifacts "Bourbon-Hunters-demo-v0.1.2-release.apk"
 $publicApk = Join-Path $downloads "Bourbon-Hunters-demo.apk"
 
 $env:JAVA_HOME = $javaHome

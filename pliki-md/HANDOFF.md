@@ -432,13 +432,13 @@ node scripts/test_spirit_taxonomy.mjs
 ## Aktualizacja 2026-08-14 - instalowalna wersja Android
 
 - Dodano projekt Capacitor 8 w katalogu `android` oraz konfiguracje `capacitor.config.json`.
-- Pakiet aplikacji: `pl.bourbonhunters.app`, wersja demonstracyjna `0.1.1-demo` (`versionCode 2`).
+- Pakiet aplikacji: `pl.bourbonhunters.app`, wersja demonstracyjna `0.1.2-demo` (`versionCode 3`).
 - Wrapper laduje aktualna produkcyjna wersje `https://backloghero-lang.github.io/bourbon-hunters/`, dlatego poprawki webowe nie wymagaja ponownego budowania APK.
 - Aplikacja wymaga internetu, dziala pionowo, blokuje cleartext HTTP i nie pozwala Androidowi wykonywac backupu danych aplikacji.
 - Ikona launchera jest generowana z `assets/brand/android-launcher-source.png` przez `scripts/generate-android-launcher-icons.py`; splash pozostaje niezalezny.
 - Android Studio 2026.1.3.7, SDK i JDK 21 sa zainstalowane lokalnie. Build wykonuje Gradle z JDK 21.
-- Gotowy lokalny plik: `artifacts/Bourbon-Hunters-demo-v0.1.1-release.apk` (release signed, 4 021 409 B).
-- SHA-256 APK: `2B9DF08B281D60B3889CDD96B345AFEAB39BCC5A8B55F0235A4D48566BF7E5A4`.
+- Gotowy lokalny plik: `artifacts/Bourbon-Hunters-demo-v0.1.2-release.apk` (release signed, 3 775 649 B).
+- SHA-256 APK: `3A64E020CD0AC4BDA1F853FA5EBD3BD35E94DDC285F4F080BA39FD6A37C9D94A`.
 - Instrukcja instalacji i kolejnego builda: `pliki-md/ANDROID-APK.md`.
 
 ## Aktualizacja 2026-08-15 - publiczne demo APK i licznik pobrań
@@ -450,7 +450,16 @@ node scripts/test_spirit_taxonomy.mjs
 - Wymagana migracja: `agent/d1-migration-v76-apk-downloads.sql`.
 - Kolejność wdrożenia: zielony GitHub Pages, migracja D1 v76, podmiana Workera.
 - Publiczny APK został zastąpiony buildem release podpisanym trwałym kluczem `Bourbon Hunters Demo`; klucz pozostaje poza repozytorium w `Documents\Bourbon-Hunters-Signing`.
-- Kolejne podpisane wydanie buduje `scripts/build-android-release.ps1`. Aktualny APK ma SHA-256 `2B9DF08B281D60B3889CDD96B345AFEAB39BCC5A8B55F0235A4D48566BF7E5A4`.
+- Kolejne podpisane wydanie buduje `scripts/build-android-release.ps1`. Aktualny APK ma SHA-256 `3A64E020CD0AC4BDA1F853FA5EBD3BD35E94DDC285F4F080BA39FD6A37C9D94A`.
 - Worker pobiera APK z `cache: no-store` i wersjonowanym parametrem URL, aby po podmianie natywnego pliku nie zwracać wcześniejszego wydania z cache.
+
+## Aktualizacja 2026-08-15 - bramka wieku i intro w Androidzie
+
+- Film intro nie uruchamia sie juz podczas oczekiwania na potwierdzenie wieku.
+- Po potwierdzeniu najpierw pojawia sie czarna warstwa przygotowania, a film jest ujawniany dopiero po rozpoczeciu odtwarzania od ustawionego momentu.
+- Natywna nakladka odtwarzania WebView jest ukryta; usunieto tez ponowne `video.load()`, ktore resetowalo przygotowany film.
+- Czarna oslona startowa jest renderowana przed aplikacja i znika dopiero po pokazaniu bramki wieku albo przygotowaniu intro. Natywny splash Androida jest rowniez czarny, bez osobnego znaku przed bramka wieku.
+- Natywne zasoby splash odtwarza `python scripts/generate-android-splash.py`.
+- Test regresji: `node scripts/intro-age-gate-regression.mjs`.
 
 

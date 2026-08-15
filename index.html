@@ -536,6 +536,7 @@
   .app.is-scan.has-scan-result .topbar{display:none}
   .name{font-size:21px;font-weight:800;font-family:var(--serif);margin:0 0 2px}
   .scan-view.is-confirming .hero{display:none}
+  .boot-cover{position:fixed;inset:0;z-index:9997;background:#000;pointer-events:none}
   .age-gate{position:fixed;inset:0;z-index:9998;display:none;place-items:center;padding:12px;background:#000;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
   .age-gate.show{display:grid}
   .age-card{position:relative;width:min(430px,calc(100vw - 24px));height:min(calc((100vw - 24px) * 1.77),calc(100dvh - 24px),760px);border:0;border-radius:0;background:#000 url("assets/brand/age-gate.png") center top/100% auto no-repeat;box-shadow:0 26px 90px rgba(0,0,0,.82);overflow:hidden}
@@ -598,6 +599,7 @@
 </style>
 </head>
 <body>
+<div class="boot-cover" id="bhBootCover" aria-hidden="true"></div>
 <div class="app is-home" id="appRoot">
   <div class="topbar">
     <div class="tb-brandC">
@@ -958,7 +960,7 @@
 <script>
 /* ========= KONFIGURACJA ========= */
 const WORKER_URL = "https://bourbon-hunters.darekmaslyk.workers.dev";
-const APP_VERSION = "128";
+const APP_VERSION = "129";
 const API_CONTRACT_VERSION = "bh-api-2026-08-v1";
 const DB_URL = "db/catalog/demo-200.json";
 const PROFILES_URL = "db/profiles-runtime.json";
@@ -2891,6 +2893,10 @@ function starStr(n){ n=Math.max(0,Math.min(5,Math.round(n||0))); return "★★�
 const AGE_GATE_KEY="bh_age_gate_ok_v2";
 const AGE_GATE_MIN=18;
 let AGE_GATE_RUNTIME_OK=false;
+function hideBootCover(){
+  const cover=document.getElementById("bhBootCover");
+  if(cover&&cover.parentNode) cover.parentNode.removeChild(cover);
+}
 function hasAgeGateOk(){
   if(AUTH_TOKEN && AUTH_USER) return AUTH_USER.age_verified===true;
   if(typeof externalReturnState==="function" && externalReturnState()) return true;
@@ -2908,7 +2914,11 @@ function isAdultBirthDate(value,minAge){
 function showAgeGateIfNeeded(){
   const ok=hasAgeGateOk();
   const gate=document.getElementById("ageGate");
-  if(!ok && gate){ gate.classList.add("show"); return true; }
+  if(!ok && gate){
+    gate.classList.add("show");
+    hideBootCover();
+    return true;
+  }
   return false;
 }
 function setupAgeGate(){
@@ -2918,8 +2928,8 @@ function setupAgeGate(){
   if(!gate||!btn) return;
   btn.addEventListener("click",function(){
     const finishAgeGate=function(){
-      gate.classList.remove("show");
       if(window.BH_START_INTRO) window.BH_START_INTRO();
+      gate.classList.remove("show");
     };
     if(AUTH_TOKEN && AUTH_USER){
       bhApi("/me/age-confirmation",{method:"POST",body:JSON.stringify({confirm_adult:true})}).then(function(data){
@@ -4482,7 +4492,9 @@ if("serviceWorker" in navigator){ window.addEventListener("load",function(){ nav
   #bhIntro.is-fading{opacity:0;transition:opacity .55s ease}
   .bh-intro-video{position:absolute;inset:0;background:#000;overflow:hidden;display:grid;place-items:center}
   .bh-intro-frame{position:relative;width:100%;height:100%;overflow:hidden;background:#000}
-  .bh-intro-video video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000}
+  .bh-intro-video video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000;opacity:0;pointer-events:none;transition:opacity .12s linear}
+  #bhIntro.is-playing .bh-intro-video video{opacity:1}
+  .bh-intro-video video::-webkit-media-controls,.bh-intro-video video::-webkit-media-controls-panel,.bh-intro-video video::-webkit-media-controls-start-playback-button{display:none!important;-webkit-appearance:none}
   .bh-star-mask{position:absolute;right:0;bottom:0;width:min(30vw,150px);height:min(20vh,150px);pointer-events:none;background:radial-gradient(ellipse at 82% 82%,#030101 0%,#030101 34%,rgba(3,1,1,.98) 48%,rgba(3,1,1,.70) 62%,rgba(3,1,1,0) 82%);filter:blur(1px);z-index:2}
   .bh-skip{position:absolute;right:16px;top:calc(env(safe-area-inset-top) + 14px);z-index:3;border:1px solid rgba(220,184,119,.35);background:rgba(0,0,0,.46);color:#e8cd93;border-radius:999px;padding:9px 13px;font-size:12px;font-weight:800;letter-spacing:.4px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);cursor:pointer}
   @media (min-width:700px){
@@ -4496,7 +4508,7 @@ if("serviceWorker" in navigator){ window.addEventListener("load",function(){ nav
 <div id="bhIntro" class="is-waiting" role="dialog" aria-modal="true" aria-label="Intro Bourbon Hunters">
   <div class="bh-intro-video">
     <div class="bh-intro-frame">
-      <video id="bhIntroVideo" src="assets/intro/nowe%20intro.mp4" muted playsinline webkit-playsinline preload="auto"></video>
+      <video id="bhIntroVideo" src="assets/intro/nowe%20intro.mp4" muted playsinline webkit-playsinline preload="auto" disablepictureinpicture controlslist="nodownload noplaybackrate nofullscreen" tabindex="-1"></video>
       <div class="bh-star-mask"></div>
     </div>
     <button class="bh-skip" id="bhIntroSkip" type="button">Pomiń</button>
@@ -4548,15 +4560,24 @@ if("serviceWorker" in navigator){ window.addEventListener("load",function(){ nav
   var introStart=5.85;
   var done=false;
   var started=false;
-  function finish(){ if(done) return; done=true; intro.classList.add("is-fading"); setTimeout(function(){ if(intro&&intro.parentNode) intro.parentNode.removeChild(intro); },620); }
+  function finish(){ if(done) return; done=true; hideBootCover(); intro.classList.add("is-fading"); setTimeout(function(){ if(intro&&intro.parentNode) intro.parentNode.removeChild(intro); },620); }
   try{
     var externalState=JSON.parse(sessionStorage.getItem("bh_external_return_v1")||"null");
-    if(externalState&&Date.now()-Number(externalState.at||0)<15*60*1000){ intro.remove(); return; }
+    if(externalState&&Date.now()-Number(externalState.at||0)<15*60*1000){ hideBootCover(); intro.remove(); return; }
   }catch(e){}
   if(skip) skip.addEventListener("click",function(e){ e.preventDefault(); e.stopPropagation(); finish(); });
   if(video){
     video.muted=true;
+    video.controls=false;
+    video.playsInline=true;
+    function revealWhenReady(){
+      if(!started || done || video.readyState<1) return;
+      if(video.duration && video.duration>introStart+0.5 && video.currentTime<introStart-.2) return;
+      intro.classList.remove("is-preparing");
+      intro.classList.add("is-playing");
+    }
     function playIntro(){
+      if(!started || done) return;
       try{
         if(video.duration && video.duration>introStart+0.5 && video.currentTime<introStart-.15) video.currentTime=introStart;
       }catch(e){}
@@ -4564,13 +4585,12 @@ if("serviceWorker" in navigator){ window.addEventListener("load",function(){ nav
       if(play && play.catch) play.catch(function(){});
     }
     video.addEventListener("loadedmetadata",function(){
-      if(video.duration && video.duration>introStart+0.5){
-        try{ video.currentTime=introStart; }catch(e){ playIntro(); }
-      } else {
-        playIntro();
-      }
-    },{once:true});
-    video.addEventListener("seeked",playIntro,{once:true});
+      if(!started || done) return;
+      playIntro();
+    });
+    video.addEventListener("seeked",function(){ playIntro(); revealWhenReady(); });
+    video.addEventListener("playing",revealWhenReady);
+    video.addEventListener("timeupdate",revealWhenReady);
     video.addEventListener("ended",finish);
     video.addEventListener("error",function(){ setTimeout(finish,650); });
   }
@@ -4578,9 +4598,12 @@ if("serviceWorker" in navigator){ window.addEventListener("load",function(){ nav
     if(started || done) return;
     started=true;
     intro.classList.remove("is-waiting");
+    intro.classList.add("is-preparing");
+    hideBootCover();
     if(video){
-      video.load();
-      setTimeout(function(){ if(!done && video.readyState>=1 && video.paused) playIntro(); },900);
+      playIntro();
+      setTimeout(function(){ if(!done && video.paused) playIntro(); },500);
+      setTimeout(function(){ if(!done && video.paused) playIntro(); },1200);
     } else {
       setTimeout(finish,650);
     }

@@ -4,7 +4,7 @@
 
 Lokalny podpisany build release tworzy plik:
 
-`artifacts/Bourbon-Hunters-demo-v0.1.1-release.apk`
+`artifacts/Bourbon-Hunters-demo-v0.1.2-release.apk`
 
 Publiczny plik demonstracyjny ma stały adres i jest publikowany razem z GitHub Pages:
 
@@ -55,8 +55,8 @@ pnpm run android:sync
 ## Parametry wydania demonstracyjnego
 
 - package: `pl.bourbonhunters.app`
-- versionName: `0.1.1-demo`
-- versionCode: `2`
+- versionName: `0.1.2-demo`
+- versionCode: `3`
 - minSdk: `24`
 - targetSdk: `35`
 - ikona launchera: `assets/brand/android-launcher-source.png`, generowana dla ikon klasycznych i adaptacyjnych przez `scripts/generate-android-launcher-icons.py`
@@ -66,6 +66,6 @@ Certyfikat release:
 - właściciel: `Bourbon Hunters Demo`;
 - algorytm: RSA 3072;
 - SHA-256: `97c009fa1791aae8db1abab2321844e6090e44dc0534528a3289cba04451931d`;
-- SHA-256 aktualnego APK: `2B9DF08B281D60B3889CDD96B345AFEAB39BCC5A8B55F0235A4D48566BF7E5A4`.
+- SHA-256 aktualnego APK: `3A64E020CD0AC4BDA1F853FA5EBD3BD35E94DDC285F4F080BA39FD6A37C9D94A`.
 
 Jeżeli na urządzeniu była wcześniej zainstalowana wersja debug, trzeba ją raz odinstalować przed instalacją release. Następne wydania podpisane tym kluczem będą mogły aktualizować aplikację.

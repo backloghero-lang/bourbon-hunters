@@ -14,7 +14,7 @@ assert.match(migration,/CREATE TABLE IF NOT EXISTS app_download_stats/);
 assert.match(worker,/path==="\/downloads\/android"/);
 assert.match(worker,/INSERT INTO app_download_stats/);
 assert.match(worker,/Content-Disposition/);
-assert.match(worker,/Bourbon-Hunters-demo\.apk\?release=0\.1\.1-launcher-icon/);
+assert.match(worker,/Bourbon-Hunters-demo\.apk\?release=0\.1\.2-clean-launch/);
 assert.match(worker,/fetch\(APK_DOWNLOAD_URL,\{cache:"no-store"\}\)/);
 assert.match(workflow,/cp downloads\/Bourbon-Hunters-demo\.apk _site\/downloads\//);
 assert.match(page,/bourbon-hunters\.darekmaslyk\.workers\.dev\/downloads\/android\?source=download-page/);
