@@ -24,8 +24,8 @@ const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v6-highres-cutout";
 const CATALOG_MODERATION_VERSION = "catalog-moderation-orchestrator-admin-v1";
 const CATALOG_LICENSE_VERSION = "catalog-license-2026-07-18-v1";
 const TELEMETRY_VERSION = "scanner-telemetry-v1";
-const NEWS_AGENT_VERSION = "whisky-news-source-first-v6-r2-source-fallback";
-const NEWS_THUMBNAIL_VERSION = "v2";
+const NEWS_AGENT_VERSION = "whisky-news-source-first-v7-discovery-images";
+const NEWS_THUMBNAIL_VERSION = "v3";
 const LOCAL_IMAGE_PIPELINE_VERSION = "local-bottle-cutout-v2-quality-gated";
 const NEWS_RETENTION_DAYS = 30;
 const CATALOG_SYSTEM_USER_ID = "catalog-system";
@@ -1864,14 +1864,23 @@ async function newsImageResponse(env, articleId, cors){
 }
 async function backfillNewsThumbnails(env, limit){
   if(!(await newsSchemaReady(env)) || !env.BOTTLE_IMAGES) return {checked:0,cached:0};
+  const discoveryImages=await discoverNewsImageMap();
   const rows=await env.DB.prepare("SELECT id,canonical_url,image_url FROM news_articles WHERE status='published' ORDER BY created_at DESC LIMIT ?")
     .bind(Math.max(1,Math.min(30,Number(limit)||12))).all();
-  let cached=0;
+  let cached=0, repaired=0;
   for(const row of (rows.results||[])){
+    const discovered=discoveryImages[canonicalNewsUrl(row.canonical_url)]||"";
+    if(discovered && discovered!==row.image_url){
+      await env.BOTTLE_IMAGES.delete(newsThumbnailKey(row.id)).catch(function(){});
+      await env.DB.prepare("UPDATE news_articles SET image_url=?,updated_at=? WHERE id=?")
+        .bind(discovered,new Date().toISOString(),row.id).run();
+      row.image_url=discovered;
+      repaired++;
+    }
     const result=await ensureNewsThumbnail(env,row).catch(function(){ return {cached:false}; });
     if(result.cached) cached++;
   }
-  return {checked:(rows.results||[]).length,cached:cached};
+  return {checked:(rows.results||[]).length,cached:cached,repaired:repaired};
 }
 async function seedStarterNews(env){
   if(!(await newsSchemaReady(env))) return {seeded:0,ready:false};
@@ -1946,26 +1955,66 @@ function newsLinksFromIndex(html, baseUrl){
   while((match=xmlLink.exec(source)) && found.length<30) add(match[1]);
   return found;
 }
+function newsImageMapFromIndex(html, baseUrl){
+  const source=String(html||"");
+  const images={};
+  const add=function(rawUrl, rawImage){
+    let articleUrl="", imageUrl="";
+    try{
+      articleUrl=canonicalNewsUrl(new URL(decodeNewsText(rawUrl),baseUrl).toString());
+      imageUrl=safeRemoteNewsImage(new URL(decodeNewsText(rawImage),baseUrl).toString());
+    }catch(e){ return; }
+    if(!articleUrl || !newsLinkLooksEditorial(articleUrl) || !imageUrl || newsImageLooksGeneric(imageUrl)) return;
+    if(!images[articleUrl]) images[articleUrl]=imageUrl;
+  };
+  let match;
+  const linkedImage=/<a\b[^>]*\bhref=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi;
+  while((match=linkedImage.exec(source))){
+    const image=(match[2].match(/<img\b[^>]*\b(?:src|data-src)=["']([^"']+)["'][^>]*>/i)||[])[1];
+    if(image) add(match[1],image);
+  }
+  const styledBlock=/<(?:div|article|li)\b[^>]*\bstyle=(?:"([^"]*)"|'([^']*)')[^>]*>/gi;
+  while((match=styledBlock.exec(source))){
+    const style=match[1]||match[2]||"";
+    const image=(style.match(/background-image\s*:\s*url\(\s*['"]?([^'")]+)['"]?\s*\)/i)||[])[1];
+    if(!image) continue;
+    const nearby=source.slice(styledBlock.lastIndex,styledBlock.lastIndex+1400);
+    const href=(nearby.match(/<a\b[^>]*\bhref=["']([^"']+)["'][^>]*>/i)||[])[1];
+    if(href) add(href,image);
+  }
+  return images;
+}
 async function fetchNewsDiscoveryPage(value){
   const controller=new AbortController();
   const timeout=setTimeout(function(){ controller.abort(); },8000);
   try{
     const response=await fetch(value,{headers:{Accept:"text/html,application/xhtml+xml,application/rss+xml,application/xml"},signal:controller.signal});
-    if(!response.ok) return [];
-    return newsLinksFromIndex((await response.text()).slice(0,700000),value);
-  }catch(e){ return []; }
+    if(!response.ok) return {links:[],images:{}};
+    const html=(await response.text()).slice(0,700000);
+    return {links:newsLinksFromIndex(html,value),images:newsImageMapFromIndex(html,value)};
+  }catch(e){ return {links:[],images:{}}; }
   finally{ clearTimeout(timeout); }
+}
+async function discoverNewsImageMap(){
+  const pages=await Promise.all(NEWS_DISCOVERY_PAGES.map(fetchNewsDiscoveryPage));
+  const images={};
+  pages.forEach(function(page){ Object.assign(images,page&&page.images||{}); });
+  return images;
 }
 async function discoverNewsMetadata(priorUrls){
   const prior={};
   (priorUrls||[]).forEach(function(url){ const canonical=canonicalNewsUrl(url); if(canonical) prior[canonical]=true; });
   const pages=await Promise.all(NEWS_DISCOVERY_PAGES.map(fetchNewsDiscoveryPage));
-  const links=[];
+  const links=[], discoveryImages={};
   const seen={};
-  pages.forEach(function(items){
-    (items||[]).forEach(function(url){ if(!prior[url] && !seen[url] && links.length<32){ seen[url]=true; links.push(url); } });
+  pages.forEach(function(page){
+    Object.assign(discoveryImages,page&&page.images||{});
+    (page&&page.links||[]).forEach(function(url){ if(!prior[url] && !seen[url] && links.length<32){ seen[url]=true; links.push(url); } });
   });
   const metadata=await Promise.all(links.map(function(url){ return fetchNewsMetadata(url).catch(function(){ return null; }); }));
+  metadata.forEach(function(item){
+    if(item&&item.canonical_url&&discoveryImages[item.canonical_url]) item.image_url=discoveryImages[item.canonical_url];
+  });
   return metadata.filter(function(item){ return !!(item&&item.title&&item.canonical_url); }).sort(function(a,b){
     return Date.parse(b.published_at||0)-Date.parse(a.published_at||0);
   });
@@ -2507,6 +2556,9 @@ async function handleApi(request, env, cors){
   if(path==="/admin/news/refresh" && request.method==="POST"){
     if(!isAdminUser(env,user)) return J({error:"forbidden"},403,cors);
     const result=await refreshWhiskyNews(env,"manual_admin");
+    const thumbnailBackfill=await backfillNewsThumbnails(env,30);
+    result.thumbnail_backfill=thumbnailBackfill;
+    if(result.ok===false && thumbnailBackfill.repaired>0) result.ok=true;
     return J(result,result.ok===false?502:200,cors);
   }
   if(path==="/me/wishlist" && request.method==="POST"){
@@ -3237,7 +3289,7 @@ export default {
   },
   async scheduled(controller, env, ctx){
     const tasks=[cleanupStaleCatalogSubmissions(env,200),cleanupTelemetry(env),cleanupScannerBudgets(env),cleanupAuthRates(env),cleanupGoogleOAuthRequests(env),cleanupNews(env)];
-    tasks.push(seedStarterNews(env).then(function(){ return refreshWhiskyNews(env,"scheduled",controller.scheduledTime); }).then(function(){ return backfillNewsThumbnails(env,24); }));
+    tasks.push(seedStarterNews(env).then(function(){ return refreshWhiskyNews(env,"scheduled",controller.scheduledTime); }).then(function(){ return backfillNewsThumbnails(env,30); }));
     ctx.waitUntil(Promise.all(tasks));
   }
 }
