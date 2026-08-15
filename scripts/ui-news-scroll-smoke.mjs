@@ -35,7 +35,7 @@ await page.route("https://cdn.example.test/**",async(route)=>{
 });
 await page.route("**/news/image/*",async(route)=>{
   thumbnailRequests++;
-  if(route.request().url().endsWith("/news-1")){
+  if(new URL(route.request().url()).pathname.endsWith("/news-1")){
     await route.fulfill({status:404,contentType:"application/json",body:'{"error":"image_unavailable"}'});
     return;
   }
