@@ -2,9 +2,9 @@
 
 ## Gotowy plik demonstracyjny
 
-Lokalny build tworzy plik:
+Lokalny podpisany build release tworzy plik:
 
-`artifacts/Bourbon-Hunters-demo-v0.1.0.apk`
+`artifacts/Bourbon-Hunters-demo-v0.1.0-release.apk`
 
 Publiczny plik demonstracyjny ma stały adres i jest publikowany razem z GitHub Pages:
 
@@ -12,7 +12,9 @@ Publiczny plik demonstracyjny ma stały adres i jest publikowany razem z GitHub 
 
 Linki widoczne w README i na stronie pobierania przechodzą przez Worker, który anonimowo zlicza rozpoczęte pobrania. Wynik jest widoczny dla administratora w `Profil -> Raporty`.
 
-Jest to APK podpisany kluczem debug, przeznaczony do testów i prezentacji MVP. Nie jest to paczka do publikacji w Google Play.
+Jest to APK release podpisany trwałym kluczem Bourbon Hunters, przeznaczony do testów i prezentacji MVP poza Google Play.
+
+Klucz i dane podpisu są przechowywane wyłącznie lokalnie w `Documents\Bourbon-Hunters-Signing`. Nie wolno ich usuwać ani dodawać do repozytorium. Każda kolejna aktualizacja APK musi używać tego samego klucza.
 
 ## Instalacja na telefonie
 
@@ -26,7 +28,17 @@ Aplikacja demonstracyjna wymaga połączenia z internetem, ponieważ otwiera akt
 
 Zmiany webowe pojawiają się w zainstalowanej aplikacji bez ponownej instalacji. Nowy APK jest potrzebny dopiero po zmianie natywnej konfiguracji Androida.
 
-## Budowanie w Android Studio
+## Budowanie kolejnej wersji release
+
+W katalogu projektu uruchom:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/build-android-release.ps1
+```
+
+Skrypt buduje release, wykonuje `zipalign`, podpisuje APK tym samym kluczem, sprawdza podpis i podmienia `downloads/Bourbon-Hunters-demo.apk`.
+
+## Build debug w Android Studio
 
 1. Otwórz katalog `android` w Android Studio.
 2. Ustaw Gradle JDK na JDK 21.
@@ -48,4 +60,11 @@ pnpm run android:sync
 - minSdk: `24`
 - targetSdk: `35`
 
-Do publicznej dystrybucji poza testami należy utworzyć własny trwały klucz podpisujący i zbudować wydanie release. Klucza prywatnego nie wolno dodawać do repozytorium.
+Certyfikat release:
+
+- właściciel: `Bourbon Hunters Demo`;
+- algorytm: RSA 3072;
+- SHA-256: `97c009fa1791aae8db1abab2321844e6090e44dc0534528a3289cba04451931d`;
+- SHA-256 aktualnego APK: `9813BB8B8257EC840DE8370180365FFF35F4A74BD5D5862A923ABBB4F9C9196A`.
+
+Jeżeli na urządzeniu była wcześniej zainstalowana wersja debug, trzeba ją raz odinstalować przed instalacją release. Następne wydania podpisane tym kluczem będą mogły aktualizować aplikację.

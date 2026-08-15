@@ -114,7 +114,7 @@ Projekt zawiera wrapper Android oparty na Capacitorze. Wersja demonstracyjna kor
 - orientacja: pionowa;
 - połączenia nieszyfrowane HTTP są zablokowane;
 - kopia danych aplikacji przez system Android jest wyłączona;
-- gotowy APK demonstracyjny powstaje jako podpisany build debug.
+- gotowy APK demonstracyjny jest podpisanym buildem release, a klucz podpisu pozostaje poza repozytorium.
 
 Instrukcja budowania i instalacji znajduje się w pliku [`pliki-md/ANDROID-APK.md`](pliki-md/ANDROID-APK.md).
 

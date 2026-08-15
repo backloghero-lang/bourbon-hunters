@@ -449,5 +449,7 @@ node scripts/test_spirit_taxonomy.mjs
 - Administrator widzi wskaźnik `Rozpoczęte pobrania APK` dla zakresu 7, 30 lub 90 dni w `Profil -> Raporty`.
 - Wymagana migracja: `agent/d1-migration-v76-apk-downloads.sql`.
 - Kolejność wdrożenia: zielony GitHub Pages, migracja D1 v76, podmiana Workera.
+- Publiczny APK został zastąpiony buildem release podpisanym trwałym kluczem `Bourbon Hunters Demo`; klucz pozostaje poza repozytorium w `Documents\Bourbon-Hunters-Signing`.
+- Kolejne podpisane wydanie buduje `scripts/build-android-release.ps1`. Aktualny APK ma SHA-256 `9813BB8B8257EC840DE8370180365FFF35F4A74BD5D5862A923ABBB4F9C9196A`.
 
 
