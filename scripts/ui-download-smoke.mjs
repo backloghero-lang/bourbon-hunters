@@ -19,12 +19,16 @@ const state=await page.evaluate(()=>(
   }
 ));
 if(process.env.BH_DOWNLOAD_SMOKE_SCREENSHOT) await page.screenshot({path:process.env.BH_DOWNLOAD_SMOKE_SCREENSHOT,fullPage:true});
-await browser.close();
 
 if(errors.length) throw new Error(errors.join("\n"));
 if(state.title!=="Bourbon Hunters"||state.button!=="Pobierz APK") throw new Error("Download call to action is missing");
 if(!state.href.includes("/downloads/android?source=download-page")) throw new Error("Tracked APK URL is missing");
 if(state.imageWidth<300) throw new Error("Brand image did not load");
 if(state.scrollWidth>state.width+1) throw new Error("Mobile horizontal overflow: "+JSON.stringify(state));
+
+await page.goto(target+"?source=linkedin",{waitUntil:"networkidle"});
+const linkedinHref=await page.locator(".download").getAttribute("href");
+if(!linkedinHref?.includes("/downloads/android?source=linkedin")) throw new Error("LinkedIn download attribution is missing");
+await browser.close();
 
 console.log(JSON.stringify({ok:true,state},null,2));

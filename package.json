@@ -4,16 +4,20 @@
   "private": true,
   "packageManager": "pnpm@10.15.0",
   "scripts": {
-    "android:sync": "cap sync android",
+    "mobile:bundle": "node scripts/build-mobile-shell.mjs",
+    "android:prepare": "pnpm run mobile:bundle && cap sync android",
+    "android:sync": "pnpm run android:prepare",
     "android:open": "cap open android",
-    "check:syntax": "node scripts/worker-syntax-regression.mjs && node scripts/security-xss-regression.mjs && node scripts/deployment-contract-regression.mjs && node scripts/intro-age-gate-regression.mjs && node scripts/generate-sw-manifest.mjs --check && node scripts/service-worker-regression.mjs",
+    "check:syntax": "node scripts/worker-syntax-regression.mjs && node scripts/security-xss-regression.mjs && node scripts/deployment-contract-regression.mjs && node scripts/native-android-regression.mjs && node scripts/intro-age-gate-regression.mjs && node scripts/generate-sw-manifest.mjs --check && node scripts/service-worker-regression.mjs",
     "test:security": "node scripts/secret-regression.mjs && node scripts/auth-schema-regression.mjs && node scripts/auth-security-regression.mjs && node scripts/auth-rate-regression.mjs && node scripts/scanner-budget-regression.mjs && node scripts/ratings-performance-regression.mjs && node scripts/comment-moderation-regression.mjs && node scripts/image-memory-regression.mjs && node scripts/private-bottle-schema-regression.mjs && node scripts/privacy-accessibility-regression.mjs",
     "test:domain": "node scripts/news-agent-regression.mjs && node scripts/apk-download-regression.mjs && node scripts/starter-recommendations-regression.mjs && node scripts/test_catalog_visibility.mjs && node scripts/test_spirit_taxonomy.mjs && node scripts/scanner-provider-fallback.mjs && node scripts/scanner-regression.mjs",
-    "test:ui": "node scripts/ui-smoke.mjs && node scripts/ui-download-smoke.mjs && node scripts/ui-detail-profile-smoke.mjs && node scripts/ui-news-scroll-smoke.mjs && node scripts/ui-private-bottle-flow-smoke.mjs && node scripts/ui-scanner-confirm-smoke.mjs && node scripts/ui-local-photo-smoke.mjs && node scripts/ui-taxonomy-smoke.mjs",
+    "test:ui": "pnpm run mobile:bundle && node scripts/ui-smoke.mjs && node scripts/ui-download-smoke.mjs && node scripts/ui-detail-profile-smoke.mjs && node scripts/ui-news-scroll-smoke.mjs && node scripts/ui-private-bottle-flow-smoke.mjs && node scripts/ui-scanner-confirm-smoke.mjs && node scripts/ui-local-photo-smoke.mjs && node scripts/ui-taxonomy-smoke.mjs && node scripts/ui-mobile-bundle-smoke.mjs",
     "test": "pnpm run check:syntax && pnpm run test:security && pnpm run test:domain"
   },
   "devDependencies": {
     "@capacitor/android": "8.5.0",
+    "@capacitor/app": "^8.1.1",
+    "@capacitor/browser": "^8.0.4",
     "@capacitor/cli": "8.5.0",
     "@capacitor/core": "8.5.0",
     "playwright": "1.61.1"

@@ -36,8 +36,8 @@ const AUTH_PROTECTION_VERSION = "d1-auth-throttling-v1";
 const PRIVATE_BOTTLE_VERSION = "owner-only-private-bottles-v1";
 const UGC_MODERATION_VERSION = "comment-reports-blocks-admin-v1";
 const API_CONTRACT_VERSION = "bh-api-2026-08-v1";
-const APK_ARTIFACT_VERSION = "0.1.2";
-const APK_DOWNLOAD_URL = "https://backloghero-lang.github.io/bourbon-hunters/downloads/Bourbon-Hunters-demo.apk?release=0.1.2-clean-launch";
+const APK_ARTIFACT_VERSION = "0.1.3";
+const APK_DOWNLOAD_URL = "https://backloghero-lang.github.io/bourbon-hunters/downloads/Bourbon-Hunters-demo.apk?release=0.1.3-linkedin-demo";
 const PBKDF2_ITERATIONS = 600000;
 const LEGACY_PBKDF2_ITERATIONS = 100000;
 const AUTH_BODY_MAX_BYTES = 16384;
@@ -261,6 +261,11 @@ function allowedReturnUrl(env, raw){
   try{
     const base=new URL(fallback);
     const candidate=new URL(String(raw||fallback),fallback);
+    if(candidate.protocol==="bourbonhunters:" && candidate.hostname==="auth" && candidate.pathname==="/google" && !candidate.username && !candidate.password){
+      candidate.search="";
+      candidate.hash="";
+      return candidate.toString();
+    }
     if(candidate.origin===base.origin && candidate.pathname===base.pathname && !candidate.username && !candidate.password){
       candidate.hash="";
       return candidate.toString();
@@ -291,7 +296,7 @@ function redirectWithHash(returnUrl, params){
     if(params[k]!=null) hash.set(k,String(params[k]));
   });
   u.hash=hash.toString();
-  return Response.redirect(u.toString(),302);
+  return new Response(null,{status:302,headers:{Location:u.toString(),"Cache-Control":"no-store"}});
 }
 function assetUrl(env, path){ return appUrl(env)+String(path||"").replace(/^\/+/,""); }
 function supportEmail(env){ return String(env.SUPPORT_EMAIL||"support@bourbonhunters.app").trim(); }
@@ -400,6 +405,7 @@ function apiCors(env, request){
   const requestOrigin=request&&request.headers ? request.headers.get("Origin")||"" : "";
   const configured=raw && raw!=="*" ? raw : appUrl(env);
   const allowed=configured.split(",").map(corsOrigin).filter(function(origin){ return !!origin&&origin!=="*"; });
+  ["https://localhost","capacitor://localhost"].forEach(function(origin){ if(allowed.indexOf(origin)<0) allowed.push(origin); });
   const allow=requestOrigin ? (allowed.indexOf(requestOrigin)>=0?requestOrigin:"") : (allowed[0]||"");
   const headers={
     "Access-Control-Allow-Methods": "GET, POST, DELETE, OPTIONS",

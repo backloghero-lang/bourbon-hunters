@@ -107,16 +107,19 @@ Film pokazujący prawidłowe wykonanie zdjęcia i pełną drogę butelki od skan
 
 ## Aplikacja Android
 
-Projekt zawiera wrapper Android oparty na Capacitorze. Wersja demonstracyjna korzysta z aktualnie wdrożonej aplikacji internetowej, dlatego zachowuje ten sam katalog, konta i funkcje bez potrzeby budowania nowego APK po każdej zmianie interfejsu.
+Projekt zawiera aplikację Android opartą na Capacitorze. Interfejs, katalog demonstracyjny i assety są pakowane bezpośrednio do podpisanego APK, natomiast konta, skaner, newsy i synchronizacja korzystają z bezpiecznego API Cloudflare. Dzięki temu aplikacja nie jest zdalną stroną otwartą w opakowaniu Androida i nie pokazuje pasków przeglądarki po logowaniu.
 
 - identyfikator aplikacji: `pl.bourbonhunters.app`;
 - minimalna wersja systemu: Android 7.0;
 - orientacja: pionowa;
+- lokalny interfejs bez zależności od `server.url`;
+- natywny powrót z logowania Google i obsługa przycisku Wstecz;
+- pełnoekranowy tryb Androida oraz zewnętrzne artykuły otwierane bez restartowania aplikacji;
 - połączenia nieszyfrowane HTTP są zablokowane;
 - kopia danych aplikacji przez system Android jest wyłączona;
 - gotowy APK demonstracyjny jest podpisanym buildem release, a klucz podpisu pozostaje poza repozytorium.
 
-Instrukcja budowania i instalacji znajduje się w pliku [`pliki-md/ANDROID-APK.md`](pliki-md/ANDROID-APK.md).
+Instrukcja budowania i instalacji znajduje się w pliku [`pliki-md/ANDROID-APK.md`](pliki-md/ANDROID-APK.md), a publikacji demo w [`pliki-md/LINKEDIN-APK.md`](pliki-md/LINKEDIN-APK.md).
 
 ## Wypróbuj Bourbon Hunters
 
@@ -125,7 +128,7 @@ Instrukcja budowania i instalacji znajduje się w pliku [`pliki-md/ANDROID-APK.m
 | Aplikacja | [backloghero-lang.github.io/bourbon-hunters](https://backloghero-lang.github.io/bourbon-hunters/) |
 | Wersja testowa | [test-index.html](https://backloghero-lang.github.io/bourbon-hunters/test-index.html) |
 | Demo Android | [Pobierz aktualny plik APK](https://bourbon-hunters.darekmaslyk.workers.dev/downloads/android?source=readme) |
-| Strona pobierania pod LinkedIn | [download.html](https://backloghero-lang.github.io/bourbon-hunters/download.html) |
+| Strona pobierania pod LinkedIn | [Pobierz demo](https://backloghero-lang.github.io/bourbon-hunters/download.html?source=linkedin) |
 | Instrukcja wdrożenia | [`pliki-md/INSTRUKCJA.md`](pliki-md/INSTRUKCJA.md) |
 | Aktualny dokument przekazania | [`pliki-md/HANDOFF.md`](pliki-md/HANDOFF.md) |
 

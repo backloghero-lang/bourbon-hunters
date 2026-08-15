@@ -1,4 +1,5 @@
 artifacts/
+mobile-dist/
 node_modules/
 .codex-awake.pid
 *.jks

@@ -30,13 +30,26 @@ $buildTools = Join-Path $env:LOCALAPPDATA "Android\Sdk\build-tools\36.0.0"
 $zipalign = Join-Path $buildTools "zipalign.exe"
 $apksigner = Join-Path $buildTools "apksigner.bat"
 $unsigned = Join-Path $android "app\build\outputs\apk\release\app-release-unsigned.apk"
-$aligned = Join-Path $artifacts "Bourbon-Hunters-demo-v0.1.2-aligned.apk"
-$signed = Join-Path $artifacts "Bourbon-Hunters-demo-v0.1.2-release.apk"
+$aligned = Join-Path $artifacts "Bourbon-Hunters-demo-v0.1.3-aligned.apk"
+$signed = Join-Path $artifacts "Bourbon-Hunters-demo-v0.1.3-release.apk"
 $publicApk = Join-Path $downloads "Bourbon-Hunters-demo.apk"
+$pnpm = "C:\Users\masly\.cache\codex-runtimes\codex-primary-runtime\dependencies\bin\fallback\pnpm.cmd"
+$runtimeBin = "C:\Users\masly\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin"
 
 $env:JAVA_HOME = $javaHome
-$env:PATH = "$javaHome\bin;$env:PATH"
+$env:CI = "true"
+$env:PATH = "$javaHome\bin;$runtimeBin;$env:PATH"
 New-Item -ItemType Directory -Force -Path $artifacts, $downloads | Out-Null
+
+Push-Location $root
+try {
+  & $pnpm run mobile:bundle
+  if ($LASTEXITCODE) { throw "Przygotowanie lokalnej zawartosci APK nie powiodlo sie." }
+  & .\node_modules\.bin\cap.CMD sync android
+  if ($LASTEXITCODE) { throw "Synchronizacja Capacitor nie powiodla sie." }
+} finally {
+  Pop-Location
+}
 
 Push-Location $android
 try {

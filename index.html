@@ -960,7 +960,7 @@
 <script>
 /* ========= KONFIGURACJA ========= */
 const WORKER_URL = "https://bourbon-hunters.darekmaslyk.workers.dev";
-const APP_VERSION = "129";
+const APP_VERSION = "130";
 const API_CONTRACT_VERSION = "bh-api-2026-08-v1";
 const DB_URL = "db/catalog/demo-200.json";
 const PROFILES_URL = "db/profiles-runtime.json";
@@ -2339,12 +2339,20 @@ function submitAuth(kind,form){
   });
 }
 function googleReturnUrl(){
+  if(window.BH_NATIVE && window.BH_NATIVE.isNative) return "bourbonhunters://auth/google";
   return location.origin + location.pathname + location.search;
+}
+function openGoogleAuthUrl(url){
+  if(window.BH_NATIVE && window.BH_NATIVE.isNative){
+    return window.BH_NATIVE.openAuth(url);
+  }
+  location.href=url;
+  return Promise.resolve();
 }
 function startGoogleAuth(){
   toast(t("googleAuthStarting"));
   const url=safeWorkerUrl(WORKER_URL+"/auth/google/start?return="+encodeURIComponent(googleReturnUrl()));
-  if(url) location.href=url;
+  if(url) openGoogleAuthUrl(url).catch(function(){ toast(t("googleAuthFail")); });
   else toast(t("googleAuthFail"));
 }
 function googleAuthErrorText(code){
@@ -2360,19 +2368,27 @@ function googleAuthErrorText(code){
   if(code==="d1_missing") return authText("Cloudflare D1 is not connected to the Worker yet.","Cloudflare D1 nie jest jeszcze podpięte do Workera.");
   return t("googleAuthFail");
 }
-function cleanGoogleAuthHash(params){
+function cleanGoogleAuthHash(params,sourceUrl){
   ["google_token","google_login","google_new","google_error","google_link"].forEach(function(k){ params.delete(k); });
+  if(sourceUrl) return;
   const hash=params.toString();
   try{ history.replaceState(null,"",location.pathname+location.search+(hash?"#"+hash:"")); }catch(e){}
 }
-function handleGoogleAuthFromUrl(){
+function handleGoogleAuthFromUrl(sourceUrl){
   let params=null;
-  try{ params=new URLSearchParams(String(location.hash||"").replace(/^#/,"")); }catch(e){ return; }
+  try{
+    const parsed=new URL(sourceUrl||location.href);
+    params=new URLSearchParams(String(parsed.hash||"").replace(/^#/,""));
+    parsed.searchParams.forEach(function(value,key){ if(!params.has(key)) params.set(key,value); });
+  }catch(e){ return; }
   if(!params || (!params.get("google_token") && !params.get("google_error") && !params.get("google_link"))) return;
   const token=params.get("google_token")||"";
   const error=params.get("google_error")||"";
   const linked=params.get("google_link")||"";
-  cleanGoogleAuthHash(params);
+  cleanGoogleAuthHash(params,sourceUrl);
+  AGE_GATE_RUNTIME_OK=true;
+  const gate=document.getElementById("ageGate");
+  if(gate) gate.classList.remove("show");
   if(error){ toast(googleAuthErrorText(error)); return; }
   if(linked==="ok"){ toast(t("googleLinkOk")); showView("hunter-profile"); return; }
   if(!token){ toast(t("googleAuthFail")); return; }
@@ -2393,8 +2409,15 @@ function startGoogleLink(){
   bhApi("/me/auth/google/link",{method:"POST",body:JSON.stringify({return_url:googleReturnUrl()})}).then(function(data){
     const url=safeWorkerUrl(data.url);
     if(!url) throw {error:"google_link_failed"};
-    location.href=url;
+    return openGoogleAuthUrl(url);
   }).catch(function(err){ toast(googleAuthErrorText(err&&err.error)); });
+}
+window.BH_HANDLE_APP_URL=function(url){
+  if(/^bourbonhunters:\/\/auth\/google(?:[?#]|$)/i.test(String(url||""))) handleGoogleAuthFromUrl(url);
+};
+if(window.BH_NATIVE && window.BH_NATIVE.takePendingUrl){
+  const pendingNativeUrl=window.BH_NATIVE.takePendingUrl();
+  if(pendingNativeUrl) setTimeout(function(){ window.BH_HANDLE_APP_URL(pendingNativeUrl); },0);
 }
 function handleEmailVerificationFromUrl(){
   let url=null;
@@ -3037,6 +3060,25 @@ function showView(name){
   if(name!=="detail") currentView=name;
   window.scrollTo({top:0,behavior:"instant"});
 }
+window.BH_HANDLE_NATIVE_BACK=function(){
+  const commentModal=document.getElementById("commentModal");
+  if(commentModal&&commentModal.classList.contains("show")){ closeCommentsModal(); return true; }
+  const photoModal=document.getElementById("localPhotoModal");
+  if(photoModal&&photoModal.classList.contains("show")){ closeLocalPhotoModal(true); return true; }
+  const authModal=document.getElementById("newsAuthModal");
+  if(authModal&&authModal.classList.contains("show")){ closeNewsAuthModal(); return true; }
+  const active=document.querySelector(".view.active");
+  const name=active ? active.id.replace(/^view-/,"") : "home";
+  if(name==="home") return false;
+  if(name==="detail"){ showView(detailReturnView||"explore"); return true; }
+  if(name==="badge-picker"){ showView("hunter-profile"); return true; }
+  if(name==="terms" || name==="privacy"){ showView(legalReturnView||"profile"); return true; }
+  if(name==="hunter-profile" || name==="articles" || name==="admin-reports" || name==="register" || name==="signin" || name==="reset" || name==="reset-confirm"){
+    showView("profile"); return true;
+  }
+  showView("home");
+  return true;
+};
 function renderCollection(tab){
   collectionTab=tab||collectionTab||"wishlist";
   if(collectionTab==="hunted") collectionTab="wishlist";
@@ -3315,6 +3357,10 @@ function openExternalArticle(url){
   rememberExternalReturn();
   externalArticleOpenedAt=Date.now();
   const absolute=parsed.href;
+  if(window.BH_NATIVE && window.BH_NATIVE.isNative){
+    window.BH_NATIVE.openExternal(absolute).catch(function(){ toast(t("errGeneric")); });
+    return true;
+  }
   if(/Android/i.test(navigator.userAgent||"")){
     const intent="intent://"+parsed.host+parsed.pathname+parsed.search+parsed.hash+
       "#Intent;scheme="+parsed.protocol.replace(":","")+
@@ -4453,7 +4499,7 @@ function renderScan(res, mode){
   document.getElementById("scanResult").scrollIntoView({behavior:"smooth",block:"start"});
 }
 applyLang();
-if("serviceWorker" in navigator){ window.addEventListener("load",function(){ navigator.serviceWorker.register("sw.js").catch(function(){}); }); }
+if(!(window.BH_NATIVE&&window.BH_NATIVE.isNative) && "serviceWorker" in navigator){ window.addEventListener("load",function(){ navigator.serviceWorker.register("sw.js").catch(function(){}); }); }
 </script>
 
 <style>

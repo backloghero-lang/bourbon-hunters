@@ -462,4 +462,14 @@ node scripts/test_spirit_taxonomy.mjs
 - Natywne zasoby splash odtwarza `python scripts/generate-android-splash.py`.
 - Test regresji: `node scripts/intro-age-gate-regression.mjs`.
 
+## Aktualizacja 2026-08-15 - stabilne demo Android v0.1.3
+
+- Usunięto `server.url`; interfejs, katalog demo i assety są pakowane lokalnie do `mobile-dist` przed każdym buildem.
+- Google OAuth wraca do aplikacji przez `bourbonhunters://auth/google`, a zewnętrzne artykuły korzystają z Capacitor Browser.
+- Dodano natywną obsługę przycisku Wstecz i pełnoekranowy tryb systemowy.
+- Wydanie: `0.1.3-demo`, `versionCode 4`, rozmiar 50 657 253 B.
+- SHA-256: `8B6E59E61D50036D89D824B13ADD2053E0E77AB353C94A3845980222420036AF`.
+- Link LinkedIn: `https://backloghero-lang.github.io/bourbon-hunters/download.html?source=linkedin`.
+- Instrukcja: `pliki-md/LINKEDIN-APK.md`.
+
 

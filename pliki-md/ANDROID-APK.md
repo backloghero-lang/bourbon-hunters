@@ -4,7 +4,7 @@
 
 Lokalny podpisany build release tworzy plik:
 
-`artifacts/Bourbon-Hunters-demo-v0.1.2-release.apk`
+`artifacts/Bourbon-Hunters-demo-v0.1.3-release.apk`
 
 Publiczny plik demonstracyjny ma stały adres i jest publikowany razem z GitHub Pages:
 
@@ -24,9 +24,9 @@ Klucz i dane podpisu są przechowywane wyłącznie lokalnie w `Documents\Bourbon
 4. Wybierz `Zainstaluj`.
 5. Po instalacji wyłącz zgodę na instalowanie z nieznanych źródeł, jeżeli nie jest już potrzebna.
 
-Aplikacja demonstracyjna wymaga połączenia z internetem, ponieważ otwiera aktualne wydanie produkcyjne Bourbon Hunters.
+Aplikacja demonstracyjna ma interfejs i katalog zapisane wewnątrz APK. Połączenie z internetem jest potrzebne do logowania, synchronizacji konta, skanera, newsów i pozostałych funkcji serwerowych.
 
-Zmiany webowe pojawiają się w zainstalowanej aplikacji bez ponownej instalacji. Nowy APK jest potrzebny dopiero po zmianie natywnej konfiguracji Androida.
+Każda zmiana interfejsu przeznaczona dla wersji Android wymaga ponownego uruchomienia skryptu release i instalacji nowszego APK. Skrypt automatycznie buduje lokalną paczkę `mobile-dist`, synchronizuje Capacitor, podpisuje wydanie i aktualizuje publiczny plik pobierania.
 
 ## Budowanie kolejnej wersji release
 
@@ -55,8 +55,8 @@ pnpm run android:sync
 ## Parametry wydania demonstracyjnego
 
 - package: `pl.bourbonhunters.app`
-- versionName: `0.1.2-demo`
-- versionCode: `3`
+- versionName: `0.1.3-demo`
+- versionCode: `4`
 - minSdk: `24`
 - targetSdk: `35`
 - ikona launchera: `assets/brand/android-launcher-source.png`, generowana dla ikon klasycznych i adaptacyjnych przez `scripts/generate-android-launcher-icons.py`
@@ -66,6 +66,6 @@ Certyfikat release:
 - właściciel: `Bourbon Hunters Demo`;
 - algorytm: RSA 3072;
 - SHA-256: `97c009fa1791aae8db1abab2321844e6090e44dc0534528a3289cba04451931d`;
-- SHA-256 aktualnego APK: `3A64E020CD0AC4BDA1F853FA5EBD3BD35E94DDC285F4F080BA39FD6A37C9D94A`.
+- SHA-256 aktualnego APK: `8B6E59E61D50036D89D824B13ADD2053E0E77AB353C94A3845980222420036AF`.
 
 Jeżeli na urządzeniu była wcześniej zainstalowana wersja debug, trzeba ją raz odinstalować przed instalacją release. Następne wydania podpisane tym kluczem będą mogły aktualizować aplikację.

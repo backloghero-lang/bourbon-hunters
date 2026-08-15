@@ -3,5 +3,5 @@
     <string name="app_name">Bourbon Hunters</string>
     <string name="title_activity_main">Bourbon Hunters</string>
     <string name="package_name">pl.bourbonhunters.app</string>
-    <string name="custom_url_scheme">pl.bourbonhunters.app</string>
+    <string name="custom_url_scheme">bourbonhunters</string>
 </resources>
