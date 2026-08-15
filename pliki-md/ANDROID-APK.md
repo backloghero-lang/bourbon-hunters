@@ -6,6 +6,12 @@ Lokalny build tworzy plik:
 
 `artifacts/Bourbon-Hunters-demo-v0.1.0.apk`
 
+Publiczny plik demonstracyjny ma stały adres i jest publikowany razem z GitHub Pages:
+
+`https://backloghero-lang.github.io/bourbon-hunters/downloads/Bourbon-Hunters-demo.apk`
+
+Linki widoczne w README i na stronie pobierania przechodzą przez Worker, który anonimowo zlicza rozpoczęte pobrania. Wynik jest widoczny dla administratora w `Profil -> Raporty`.
+
 Jest to APK podpisany kluczem debug, przeznaczony do testów i prezentacji MVP. Nie jest to paczka do publikacji w Google Play.
 
 ## Instalacja na telefonie
@@ -17,6 +23,8 @@ Jest to APK podpisany kluczem debug, przeznaczony do testów i prezentacji MVP. 
 5. Po instalacji wyłącz zgodę na instalowanie z nieznanych źródeł, jeżeli nie jest już potrzebna.
 
 Aplikacja demonstracyjna wymaga połączenia z internetem, ponieważ otwiera aktualne wydanie produkcyjne Bourbon Hunters.
+
+Zmiany webowe pojawiają się w zainstalowanej aplikacji bez ponownej instalacji. Nowy APK jest potrzebny dopiero po zmianie natywnej konfiguracji Androida.
 
 ## Budowanie w Android Studio
 

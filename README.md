@@ -8,6 +8,7 @@
 
 <p align="center">
   <a href="https://backloghero-lang.github.io/bourbon-hunters/"><img src="https://img.shields.io/badge/OTWÓRZ_APLIKACJĘ-C98A3A?style=for-the-badge&logo=googlechrome&logoColor=111111" alt="Otwórz Bourbon Hunters"></a>
+  <a href="https://bourbon-hunters.darekmaslyk.workers.dev/downloads/android?source=readme"><img src="https://img.shields.io/badge/POBIERZ_DEMO-APK-133C2D?style=for-the-badge&logo=android&logoColor=white" alt="Pobierz demo Bourbon Hunters na Androida"></a>
   <img src="https://img.shields.io/badge/PWA-NA_URZĄDZENIA_MOBILNE-133C2D?style=for-the-badge" alt="Mobilna aplikacja PWA">
   <img src="https://img.shields.io/badge/TECHNOLOGIA-AGENCI_AI-7A2D25?style=for-the-badge" alt="Aplikacja wykorzystuje agentów AI">
 </p>
@@ -123,6 +124,8 @@ Instrukcja budowania i instalacji znajduje się w pliku [`pliki-md/ANDROID-APK.m
 |---|---|
 | Aplikacja | [backloghero-lang.github.io/bourbon-hunters](https://backloghero-lang.github.io/bourbon-hunters/) |
 | Wersja testowa | [test-index.html](https://backloghero-lang.github.io/bourbon-hunters/test-index.html) |
+| Demo Android | [Pobierz aktualny plik APK](https://bourbon-hunters.darekmaslyk.workers.dev/downloads/android?source=readme) |
+| Strona pobierania pod LinkedIn | [download.html](https://backloghero-lang.github.io/bourbon-hunters/download.html) |
 | Instrukcja wdrożenia | [`pliki-md/INSTRUKCJA.md`](pliki-md/INSTRUKCJA.md) |
 | Aktualny dokument przekazania | [`pliki-md/HANDOFF.md`](pliki-md/HANDOFF.md) |
 

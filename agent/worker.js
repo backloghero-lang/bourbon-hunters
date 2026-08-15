@@ -36,6 +36,8 @@ const AUTH_PROTECTION_VERSION = "d1-auth-throttling-v1";
 const PRIVATE_BOTTLE_VERSION = "owner-only-private-bottles-v1";
 const UGC_MODERATION_VERSION = "comment-reports-blocks-admin-v1";
 const API_CONTRACT_VERSION = "bh-api-2026-08-v1";
+const APK_ARTIFACT_VERSION = "0.1.0";
+const APK_DOWNLOAD_URL = "https://backloghero-lang.github.io/bourbon-hunters/downloads/Bourbon-Hunters-demo.apk";
 const PBKDF2_ITERATIONS = 600000;
 const LEGACY_PBKDF2_ITERATIONS = 100000;
 const AUTH_BODY_MAX_BYTES = 16384;
@@ -1573,12 +1575,32 @@ async function googleUserLogin(env, request, googleUser){
   return {token:token,user:publicUser(row),bootstrap:await bootstrapFor(env,row.id),profile:await profileFor(env,row.id),admin:isAdminUser(env,row),created:created};
 }
 function reportDays(url){ return [7,30,90].indexOf(Number(url.searchParams.get("days")))>=0 ? Number(url.searchParams.get("days")) : 30; }
+function cleanDownloadSource(value){
+  const source=String(value||"direct").trim().toLowerCase();
+  return /^[a-z0-9-]{1,32}$/.test(source)?source:"direct";
+}
+async function recordApkDownload(env, source){
+  if(!env.DB || !(await tableExists(env,"app_download_stats"))) return false;
+  const now=new Date().toISOString();
+  await env.DB.prepare("INSERT INTO app_download_stats (day,source,artifact_version,downloads,updated_at) VALUES (?,?,?,?,?) ON CONFLICT(day,source,artifact_version) DO UPDATE SET downloads=downloads+1,updated_at=excluded.updated_at")
+    .bind(now.slice(0,10),cleanDownloadSource(source),APK_ARTIFACT_VERSION,1,now).run();
+  return true;
+}
 async function adminReportSummary(env, days){
   const since=new Date(Date.now()-days*86400000).toISOString();
   const scanner=await env.DB.prepare("SELECT COUNT(*) AS scans,COUNT(DISTINCT user_id) AS users,COUNT(DISTINCT device_hash) AS devices,ROUND(AVG(duration_ms),0) AS avg_duration_ms,ROUND(AVG(confidence),3) AS avg_confidence,SUM(CASE WHEN confirmed_at IS NOT NULL THEN 1 ELSE 0 END) AS confirmations,SUM(CASE WHEN outcome='confirmed_top' THEN 1 ELSE 0 END) AS confirmed_top,SUM(CASE WHEN outcome='confirmed_alternate' THEN 1 ELSE 0 END) AS confirmed_alternate,SUM(CASE WHEN outcome='cancelled' THEN 1 ELSE 0 END) AS cancelled,SUM(CASE WHEN outcome='candidates_presented' AND confirmed_at IS NULL THEN 1 ELSE 0 END) AS unconfirmed FROM scanner_runs WHERE created_at>=?").bind(since).first();
   const outcomes=await env.DB.prepare("SELECT outcome,COUNT(*) AS count FROM scanner_runs WHERE created_at>=? GROUP BY outcome ORDER BY count DESC").bind(since).all();
   const usage=await env.DB.prepare("SELECT provider,stage,model,status,COUNT(*) AS calls,SUM(attempts) AS attempts,SUM(prompt_tokens) AS prompt_tokens,SUM(output_tokens) AS output_tokens,SUM(total_tokens) AS total_tokens,SUM(cached_tokens) AS cached_tokens,SUM(thought_tokens) AS thought_tokens,ROUND(AVG(duration_ms),0) AS avg_duration_ms FROM service_usage_events WHERE created_at>=? GROUP BY provider,stage,model,status ORDER BY calls DESC").bind(since).all();
   const activity=await env.DB.prepare("SELECT (SELECT COUNT(*) FROM users) AS users_total,(SELECT COUNT(*) FROM user_ratings WHERE created_at>=?) AS ratings,(SELECT COUNT(*) FROM bottle_recommendations WHERE created_at>=?) AS recommendations,(SELECT COUNT(*) FROM catalog_bottles WHERE created_at>=? AND status='published') AS catalog_additions").bind(since,since,since).first();
+  if(await tableExists(env,"app_download_stats")){
+    const downloadSince=since.slice(0,10);
+    const downloads=await env.DB.prepare("SELECT COALESCE(SUM(CASE WHEN day>=? THEN downloads ELSE 0 END),0) AS period,COALESCE(SUM(downloads),0) AS total FROM app_download_stats").bind(downloadSince).first();
+    activity.apk_downloads=Number(downloads&&downloads.period)||0;
+    activity.apk_downloads_total=Number(downloads&&downloads.total)||0;
+  }else{
+    activity.apk_downloads=0;
+    activity.apk_downloads_total=0;
+  }
   const confirmations=Number(scanner&&scanner.confirmations)||0;
   const top=Number(scanner&&scanner.confirmed_top)||0;
   const alternate=Number(scanner&&scanner.confirmed_alternate)||0;
@@ -2146,7 +2168,7 @@ async function createLocalBottleCutout(env, request, body){
     return {error:"image_cutout_failed",retry:true,status:502};
   }
 }
-async function handleApi(request, env, cors){
+async function handleApi(request, env, cors, executionCtx){
   const url=new URL(request.url);
   const path=url.pathname.replace(/\/+$/,"");
   if(path==="/auth/health" && request.method==="GET"){
@@ -2208,6 +2230,22 @@ async function handleApi(request, env, cors){
     try{
       return Response.redirect(await createGoogleOAuthRequest(env,request,"login",returnUrl),302);
     }catch(e){ return redirectWithHash(returnUrl,{google_error:String(e&&e.error||"google_start_failed")}); }
+  }
+  if(path==="/downloads/android" && request.method==="GET"){
+    const apk=await fetch(APK_DOWNLOAD_URL,{cf:{cacheEverything:true,cacheTtl:3600}});
+    if(!apk.ok) return J({error:"apk_unavailable"},503,cors);
+    const source=cleanDownloadSource(url.searchParams.get("source"));
+    const tracking=recordApkDownload(env,source).catch(function(){ return false; });
+    if(executionCtx&&typeof executionCtx.waitUntil==="function") executionCtx.waitUntil(tracking);
+    else await tracking;
+    const headers=new Headers(responseHeaders(cors));
+    headers.set("Content-Type","application/vnd.android.package-archive");
+    headers.set("Content-Disposition",'attachment; filename="Bourbon-Hunters-demo.apk"');
+    headers.set("Cache-Control","private, no-store");
+    headers.set("X-Content-Type-Options","nosniff");
+    const length=apk.headers.get("Content-Length");
+    if(length) headers.set("Content-Length",length);
+    return new Response(apk.body,{status:200,headers:headers});
   }
   if(path==="/auth/google/callback" && request.method==="GET"){
     const fallback=appUrl(env);
@@ -3007,8 +3045,8 @@ export default {
     const cors=apiCors(env, request);
     if(request.method==="OPTIONS") return new Response(null,{headers:responseHeaders(Object.assign({},cors,{"Access-Control-Max-Age":"600"}))});
     const path=new URL(request.url).pathname;
-    if(path.indexOf("/auth/")===0 || path.indexOf("/me")===0 || path.indexOf("/ratings")===0 || path.indexOf("/recommendations")===0 || path.indexOf("/catalog/")===0 || path.indexOf("/telemetry/")===0 || path.indexOf("/admin/")===0 || path.indexOf("/news")===0){
-      try{ return await handleApi(request, env, cors); }
+    if(path.indexOf("/auth/")===0 || path.indexOf("/me")===0 || path.indexOf("/ratings")===0 || path.indexOf("/recommendations")===0 || path.indexOf("/catalog/")===0 || path.indexOf("/telemetry/")===0 || path.indexOf("/admin/")===0 || path.indexOf("/news")===0 || path.indexOf("/downloads/")===0){
+      try{ return await handleApi(request, env, cors, executionCtx); }
       catch(e){
         const requestId=randHex(8);
         console.error("Bourbon Hunters API error",requestId,e);

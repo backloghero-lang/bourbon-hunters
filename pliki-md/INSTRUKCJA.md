@@ -473,3 +473,13 @@ Ta paczka wymaga migracji D1, GitHub Pages i aktualizacji Workera. Kolejnosc ma 
 9. Test goscia: zeskanuj butelke spoza demo i wybierz dodanie. Aplikacja ma pokazac informacje o darmowym koncie oraz przyciski logowania i rejestracji.
 
 Nie uruchamiaj ponownie migracji v69-v71. Dla tej paczki nowa jest tylko migracja v72.
+
+## Wdrożenie demo APK i licznika pobrań - 2026-08-15
+
+1. Wyślij repozytorium na GitHub i poczekaj na zielony deploy Pages.
+2. W D1 wykonaj cały plik `agent/d1-migration-v76-apk-downloads.sql`.
+3. W Cloudflare podmień i wdroż `agent/worker.js`.
+4. Otwórz `https://backloghero-lang.github.io/bourbon-hunters/download.html` i rozpocznij jedno pobranie.
+5. W aplikacji otwórz `Profil -> Raporty`; licznik `Rozpoczęte pobrania APK` powinien wzrosnąć.
+
+Raport mierzy rozpoczęcia pobrania, ponieważ przeglądarka nie przekazuje serwerowi pewnego potwierdzenia, że zapis całego pliku został ukończony.

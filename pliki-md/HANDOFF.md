@@ -441,4 +441,13 @@ node scripts/test_spirit_taxonomy.mjs
 - SHA-256 APK: `78A77ECC292732A264C24D188A5A6062C59D71248231EB83F5D3A0C3A34DD455`.
 - Instrukcja instalacji i kolejnego builda: `pliki-md/ANDROID-APK.md`.
 
+## Aktualizacja 2026-08-15 - publiczne demo APK i licznik pobrań
+
+- GitHub Pages publikuje stały plik `downloads/Bourbon-Hunters-demo.apk` oraz prostą stronę `download.html` przygotowaną do podpięcia w LinkedIn.
+- README zawiera bezpośredni przycisk pobierania demo Android.
+- Publiczny endpoint Workera `/downloads/android` przesyła APK i zapisuje wyłącznie anonimowy licznik zbiorczy według dnia, źródła oraz wersji pliku.
+- Administrator widzi wskaźnik `Rozpoczęte pobrania APK` dla zakresu 7, 30 lub 90 dni w `Profil -> Raporty`.
+- Wymagana migracja: `agent/d1-migration-v76-apk-downloads.sql`.
+- Kolejność wdrożenia: zielony GitHub Pages, migracja D1 v76, podmiana Workera.
+
 

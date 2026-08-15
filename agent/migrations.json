@@ -1,6 +1,6 @@
 {
-  "schema_version": 75,
-  "latest": "d1-migration-v75-data-minimization.sql",
+  "schema_version": 76,
+  "latest": "d1-migration-v76-apk-downloads.sql",
   "required_for_worker": [
     "d1-migration-v69-auth-hardening.sql",
     "d1-migration-v70-scanner-budgets.sql",
@@ -8,7 +8,8 @@
     "d1-migration-v72-private-bottles.sql",
     "d1-migration-v73-rating-performance.sql",
     "d1-migration-v74-comment-moderation.sql",
-    "d1-migration-v75-data-minimization.sql"
+    "d1-migration-v75-data-minimization.sql",
+    "d1-migration-v76-apk-downloads.sql"
   ],
   "notes": "Apply migrations in numerical order before deploying the Worker that requires them."
 }

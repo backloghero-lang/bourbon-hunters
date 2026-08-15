@@ -958,7 +958,7 @@
 <script>
 /* ========= KONFIGURACJA ========= */
 const WORKER_URL = "https://bourbon-hunters.darekmaslyk.workers.dev";
-const APP_VERSION = "127";
+const APP_VERSION = "128";
 const API_CONTRACT_VERSION = "bh-api-2026-08-v1";
 const DB_URL = "db/catalog/demo-200.json";
 const PROFILES_URL = "db/profiles-runtime.json";
@@ -1966,7 +1966,8 @@ function renderAdminReport(data){
     [authText("Top choice accepted","Akceptacja 1. wyboru"),scanner.top_choice_acceptance_proxy==null?"-":scanner.top_choice_acceptance_proxy+"%"],
     [authText("Alternate selected","Wybrano alternatywę"),scanner.alternate_choice_correction_proxy==null?"-":scanner.alternate_choice_correction_proxy+"%"],
     [authText("Average response","Średni czas"),reportNumber(scanner.avg_duration_ms," ms")],[authText("AI tokens","Tokeny AI"),usage.reduce(function(sum,row){ return sum+(Number(row.total_tokens)||0); },0)],
-    [authText("All accounts","Wszystkie konta"),activity.users_total],[authText("New catalog items","Nowe w katalogu"),activity.catalog_additions]
+    [authText("All accounts","Wszystkie konta"),activity.users_total],[authText("New catalog items","Nowe w katalogu"),activity.catalog_additions],
+    [authText("APK downloads started","Rozpocz\u0119te pobrania APK"),activity.apk_downloads]
   ];
   box.innerHTML='<div class="admin-metrics">'+metrics.map(function(metric){ return '<div class="admin-metric"><span>'+esc(metric[0])+'</span><strong>'+esc(reportNumber(metric[1]))+'</strong></div>'; }).join("")+'</div>'+
     '<div class="admin-moderation"><h3>'+esc(authText("Comment moderation","Moderacja komentarzy"))+'</h3><div id="adminCommentModerationBody"><div class="empty">'+esc(authText("Loading reports...","Ładowanie zgłoszeń..."))+'</div></div></div>'+

@@ -27,7 +27,7 @@ await page.evaluate(()=>{
   AUTH_IS_ADMIN=true;
   renderAdminReport({
     scanner:{scans:12,users:3,top_choice_acceptance_proxy:80,alternate_choice_correction_proxy:20,avg_duration_ms:1400},
-    activity:{users_total:5,catalog_additions:2},
+    activity:{users_total:5,catalog_additions:2,apk_downloads:9},
     outcomes:[{outcome:"candidates_presented",count:12}],
     service_usage:[{stage:"visual_identification",model:"gemini",calls:12,total_tokens:300,avg_duration_ms:500}]
   });
@@ -63,8 +63,8 @@ if(process.env.BH_SMOKE_SCREENSHOT) await page.screenshot({path:process.env.BH_S
 await browser.close();
 
 if(errors.length) throw new Error(errors.join("\n"));
-if(metrics!==8) throw new Error("Expected 8 admin metrics, got "+metrics);
-if(!systemHealth.includes("v127")) throw new Error("Application version missing from system health");
+if(metrics!==9) throw new Error("Expected 9 admin metrics, got "+metrics);
+if(!systemHealth.includes("v128")) throw new Error("Application version missing from system health");
 if(/gemini|visual-only|model resolver/i.test(systemHealth)) throw new Error("Technical model details remain visible in system health");
 if(technicalTables!==0) throw new Error("Scanner outcome or model tables remain visible");
 if(dimensions.scrollWidth>dimensions.width+1) throw new Error("Mobile horizontal overflow: "+JSON.stringify(dimensions));
