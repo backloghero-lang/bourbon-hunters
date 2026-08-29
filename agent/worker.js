@@ -109,6 +109,7 @@ const SCAN_RECORD_OVERRIDES={
   }
 };
 const SCAN_EXTRA_RECORDS=[
+  {id:"the-singleton-malt-masters-selection",name:"The Singleton Malt Master's Selection",aliases:["The Singleton Malt Master's Selection","Singleton Malt Masters Selection","The Singleton of Dufftown Malt Master's Selection","The Singleton Easy and Mellow Malt Master's Selection"],distillery:"Dufftown Distillery",region:"Scotland",type:"Single Malt Scotch Whisky",category:"Scotch",proof:80,abv:40,mashbill:null,price:null,quality:null,value:null,notes:"Orchard fruit, soft malt, vanilla and gentle oak",desc:"A smooth, easy-drinking Singleton single malt selection from Dufftown.",image:"",source:"manual_label_verified",catalog_status:"verified",demoScanner:true},
   {id:"bushmills-original-irish-whiskey",name:"Bushmills Original",aliases:["Bushmills Original","Bushmills Original Irish Whiskey","Bushmills White Label"],distillery:"Old Bushmills Distillery",region:"Ireland",type:"Blended Irish Whiskey",category:"Irish",proof:80,abv:40,mashbill:null,price:null,quality:null,value:null,notes:"Light fruit, vanilla, honey and warm spice",desc:"A smooth blended Irish whiskey combining malt and grain whiskey.",image:"",source:"manual_official",catalog_status:"verified"},
   {id:"bushmills-black-bush-irish-whiskey",name:"Bushmills Black Bush",aliases:["Bushmills Black Bush","Black Bush","Black Bush Irish Whiskey"],distillery:"Old Bushmills Distillery",region:"Ireland",type:"Blended Irish Whiskey",category:"Irish",proof:80,abv:40,mashbill:null,price:null,quality:null,value:null,notes:"Sherry, dried fruit and toasted nuts",desc:"A malt-forward Irish blend matured in Oloroso sherry and bourbon casks.",image:"",source:"manual_official",catalog_status:"verified"},
   {id:"bushmills-10-year-old-single-malt",name:"Bushmills 10 Year Old Single Malt",aliases:["Bushmills 10 Year","Bushmills 10 Year Old","Bushmills 10 Year Single Malt","Bushmills 10 Year Old Single Malt Irish Whiskey"],distillery:"Old Bushmills Distillery",region:"Ireland",type:"Single Malt Irish Whiskey",category:"Irish",proof:80,abv:40,mashbill:null,price:null,quality:null,value:null,notes:"Apple, honey and milk chocolate",desc:"A ten-year-old triple-distilled Irish single malt.",image:"",source:"manual_official",catalog_status:"verified"},
@@ -123,7 +124,7 @@ function applyScanCatalogOverrides(db){
   const byId={};
   bottles.forEach(function(bottle){ if(bottle&&bottle.id) byId[bottle.id]=bottle; });
   const demoOnly=String(db&&db.version||"").indexOf("demo-200")===0;
-  (demoOnly?[]:SCAN_EXTRA_RECORDS).forEach(function(record){
+  (demoOnly?SCAN_EXTRA_RECORDS.filter(function(record){ return record.demoScanner; }):SCAN_EXTRA_RECORDS).forEach(function(record){
     if(!record || !record.id || byId[record.id]) return;
     const extraNames=[record.name].concat(Array.isArray(record.aliases)?record.aliases:[]).map(norm).filter(Boolean);
     const existing=bottles.find(function(bottle){
@@ -309,6 +310,11 @@ function redirectWithHash(returnUrl, params){
 function assetUrl(env, path){ return appUrl(env)+String(path||"").replace(/^\/+/,""); }
 function supportEmail(env){ return String(env.SUPPORT_EMAIL||"support@bourbonhunters.app").trim(); }
 function isAdminUser(env, user){ return !!(user && Number(user.is_admin)===1); }
+function scannerDeveloperAccess(env, user, deviceHash){
+  if(isAdminUser(env,user)) return true;
+  const allowed=String(env.DEV_SCANNER_DEVICE_HASHES||"").split(",").map(function(value){ return value.trim(); }).filter(Boolean);
+  return !!(deviceHash && allowed.indexOf(String(deviceHash))>=0);
+}
 function constantTimeHexEqual(a,b){
   a=String(a||""); b=String(b||"");
   const length=Math.max(a.length,b.length);
@@ -541,7 +547,7 @@ function scannerBudgetLimits(env, operation){
   return {actor:actorLimit,ip:ipLimit};
 }
 async function consumeScannerBudget(env, request, user, deviceHash, operation){
-  if(isAdminUser(env,user)) return {allowed:true,owner:true,remaining:null,limit:null,operation:operation};
+  if(scannerDeveloperAccess(env,user,deviceHash)) return {allowed:true,owner:true,remaining:null,limit:null,operation:operation};
   if(["identify","cutout","analysis"].indexOf(operation)<0) return {allowed:false,error:"budget_operation_invalid",operation:operation};
   if(!(await scannerBudgetSchemaReady(env))) return {allowed:false,error:"scanner_budget_schema_missing",operation:operation};
   const ip=String(request.headers.get("CF-Connecting-IP")||"unknown").slice(0,80);
@@ -2937,7 +2943,7 @@ async function callVisualAgent(env, mime, image, foreground){
   const payload={
     __model: env.IDENT_MODEL||"gemini-3.6-flash",
     contents:[{role:"user",parts:[
-      {text:"Rozpoznaj dokladna nazwe butelki whisky lub bourbona: marka, wariant oraz widoczny wiek lub edycja. Kadr moze byc przekrzywiony, zrobiony w slabym swietle i zawierac dlon trzymajaca szyjke, regaly, monitor, stol lub inne butelki. Najpierw znajdz glowna butelke i ignoruj wszystko poza nia. Dlon albo zasloniety korek nie oznacza braku butelki, jezeli korpus i etykieta sa czytelne. Najwieksza wage nadaj logo marki, nazwie wariantu, liczbie wieku, tekstowi glownej etykiety, kolorowi etykiety, ksztaltowi butelki oraz oznaczeniom proof i ABV. Marka THE SINGLETON nie oznacza wariantu Single Barrel; przepisz widoczna marke doslownie. Polacz dowody z obu obrazow, ale nie wymyslaj niewidocznego wariantu. Zwroc do czterech realnych mozliwych nazw, gdy widoczne cechy pasuja do kilku wariantow. Jesli to nie jest butelka whisky albo nie da sie rozpoznac marki, ustaw name=\"\" i confidence=0."}
+      {text:"Rozpoznaj dokladna nazwe butelki whisky lub bourbona: marka, wariant oraz widoczny wiek lub edycja. Kadr moze byc przekrzywiony, zrobiony w slabym swietle i zawierac dlon trzymajaca szyjke, regaly, monitor, stol lub inne butelki. Najpierw znajdz glowna butelke i ignoruj wszystko poza nia. Dlon albo zasloniety korek nie oznacza braku butelki, jezeli korpus i etykieta sa czytelne. Najwieksza wage nadaj logo marki, nazwie wariantu, liczbie wieku, tekstowi glownej etykiety, kolorowi etykiety, ksztaltowi butelki oraz oznaczeniom proof i ABV. Brak liczby wieku nie oznacza braku rozpoznania: jezeli marka jest czytelna, zawsze zwroc marke i wszystkie widoczne slowa wariantu. Marka THE SINGLETON nie oznacza wariantu Single Barrel; MALT MASTER'S SELECTION jest prawidlowa nazwa wariantu. Polacz dowody z obu obrazow, ale nie wymyslaj niewidocznego wariantu. Zwroc do czterech realnych mozliwych nazw, gdy widoczne cechy pasuja do kilku wariantow. Jesli to nie jest butelka whisky albo nie da sie rozpoznac marki, ustaw name=\"\" i confidence=0."}
     ].concat(imageParts)}],
     generationConfig:{
       maxOutputTokens:260,
@@ -3113,18 +3119,19 @@ export default {
     }
 
     const scanUser=await authUser(env,request);
-    const owner=isAdminUser(env,scanUser);
+    const admin=isAdminUser(env,scanUser);
     const scanId=crypto.randomUUID();
     const scanStartedAt=new Date().toISOString();
     const scanStartedMs=Date.now();
     const deviceHash=await telemetryDeviceHash(body.device_id);
+    const owner=scannerDeveloperAccess(env,scanUser,deviceHash);
     let matched=null, hit=null, bottleName="", visionConfidence=0, ocrConfidence=0, dbConfidence=0, overallConfidence=0, agentTrace=null, confidentHit=false;
     let minConfidence=DEFAULT_MATCH_CONFIDENCE, telemetryUsage=[];
     function trackScan(outcome, extra){
       extra=extra||{};
       const candidates=extra.candidates||[];
       const task=recordScannerRun(env,{
-        id:scanId,user_id:scanUser&&scanUser.id,device_hash:deviceHash,actor_type:owner?"admin":(scanUser?"user":"guest"),mode:mode,
+        id:scanId,user_id:scanUser&&scanUser.id,device_hash:deviceHash,actor_type:admin?"admin":(owner?"developer":(scanUser?"user":"guest")),mode:mode,
         outcome:outcome,error_code:extra.error_code||null,matched_bottle_id:extra.matched_bottle_id||(hit&&hit.id)||null,
         suggested_bottle_id:extra.suggested_bottle_id||(candidates[0]&&candidates[0].id)||null,
         candidates:candidates.map(function(candidate){ return {id:candidate.id,confidence:Number(candidate.confidence)||0}; }),candidate_count:candidates.length,
@@ -3151,7 +3158,7 @@ export default {
     }
 
     const db=await getDB(env,request);
-    minConfidence=clamp01(env.MIN_MATCH_CONFIDENCE||DEFAULT_MATCH_CONFIDENCE) || DEFAULT_MATCH_CONFIDENCE;
+    minConfidence=owner ? 0.25 : (clamp01(env.MIN_MATCH_CONFIDENCE||DEFAULT_MATCH_CONFIDENCE) || DEFAULT_MATCH_CONFIDENCE);
     if(mode==="rate" && confirmedId){
       const resolvedConfirmedId=db&&db.id_redirects&&db.id_redirects[confirmedId]||confirmedId;
       hit=(db.bottles||[]).find(function(bottle){ return bottle&&bottle.id===resolvedConfirmedId&&!bottle.scan_disabled; })||null;

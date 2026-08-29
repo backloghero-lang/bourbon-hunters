@@ -47,12 +47,14 @@ assert(rows.some((row)=>row.operation==="cutout"&&row.count===1),"unexpected cut
 assert(rows.some((row)=>row.operation==="analysis"&&row.count===1),"unexpected analysis event count");
 
 let runtimeSource=worker.replace("export default {","globalThis.__worker={");
-runtimeSource+="\nglobalThis.__budgetTest={consumeScannerBudget};";
+runtimeSource+="\nglobalThis.__budgetTest={consumeScannerBudget,scannerDeveloperAccess};";
 const context={console,fetch:async()=>new Response("",{status:503}),Response,Request,Headers,URL,TextEncoder,TextDecoder,Blob,crypto:webcrypto,atob,btoa,setTimeout,clearTimeout};
 vm.runInNewContext(runtimeSource,context,{filename:"worker.js"});
 const request=new Request("https://example.test/",{headers:{"CF-Connecting-IP":"203.0.113.7"}});
 const adminBudget=await context.__budgetTest.consumeScannerBudget({},request,{id:"admin-1",is_admin:1},null,"identify");
 assert(adminBudget.allowed&&adminBudget.owner&&adminBudget.remaining===null,"D1 admin should bypass the budget");
+const developerBudget=await context.__budgetTest.consumeScannerBudget({DEV_SCANNER_DEVICE_HASHES:"other-device,developer-device"},request,null,"developer-device","identify");
+assert(developerBudget.allowed&&developerBudget.owner&&developerBudget.remaining===null,"configured developer device should bypass the budget");
 const missingSchema=await context.__budgetTest.consumeScannerBudget({},request,null,"device-hash","identify");
 assert(!missingSchema.allowed&&missingSchema.error==="scanner_budget_schema_missing","ordinary actor must fail closed without v70");
 
@@ -64,6 +66,7 @@ console.log(JSON.stringify({
   rotated_device_blocked_by_ip:true,
   independent_budgets:true,
   admin_unlimited:true,
+  developer_device_unlimited:true,
   missing_schema_fails_closed:true,
   rows
 },null,2));

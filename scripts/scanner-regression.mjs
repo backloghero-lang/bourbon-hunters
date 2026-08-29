@@ -135,6 +135,11 @@ const fixtures=[
     label:"The Singleton 15 Year",
     expected:"olcc-4358b",
     vision:{name:"The Singleton 15 Year Old",confidence:.97,candidates:[]}
+  },
+  {
+    label:"The Singleton Malt Master's Selection",
+    expected:"the-singleton-malt-masters-selection",
+    vision:{name:"The Singleton of Dufftown Malt Master's Selection",confidence:.97,candidates:[]}
   }
 ];
 
