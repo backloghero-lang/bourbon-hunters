@@ -481,11 +481,13 @@
   .hero:before{content:"";position:absolute;inset:0;background:url("design/figma-assets/asset-pack-v1/noise-overlay.png") center/cover repeat;opacity:.16;pointer-events:none}
   .hero>*{position:relative;z-index:1}
   .scan-brand{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-  .scan-brand .brand-copy{flex:1;min-width:0;text-align:center}
+  .scan-brand .brand-copy{flex:1;min-width:0;text-align:center;padding:0 44px}
   .hero .kick{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#6FA36A;font-weight:900;margin-bottom:3px}
   .hero h2{margin:0;font-size:18px;font-family:var(--serif);line-height:1.12;color:#F6E6C8;letter-spacing:.4px}
   .hero p{margin:8px auto 14px;font-size:12px;color:#C9B493;line-height:1.45;max-width:320px}
   .scan-round{width:42px;height:42px;border-radius:50%;border:1px solid rgba(184,106,51,.55);background:rgba(8,6,4,.72);display:grid;place-items:center;color:#E2B070;font-size:12px;font-weight:900;box-shadow:0 0 18px rgba(184,106,51,.15)}
+  .scan-help-trigger{position:absolute;top:14px;right:14px;z-index:4;font-family:var(--serif);font-size:19px;line-height:1;cursor:pointer}
+  .scan-help-trigger:focus-visible{outline:2px solid #F1C875;outline-offset:3px}
   .scan-spacer{visibility:hidden}
   .scan-detected{display:inline-flex;align-items:center;justify-content:center;width:206px;height:43px;margin:0 auto -2px;background:url("design/figma-assets/scanner-pack-v1/bottle-detected-badge.png") center/contain no-repeat;color:transparent;opacity:.72;pointer-events:none}
   .shot{width:100%;aspect-ratio:760/980;max-height:54vh;border:1px solid rgba(226,176,112,.48);border-radius:20px;display:grid;place-items:center;cursor:pointer;overflow:hidden;position:relative;background:linear-gradient(180deg,rgba(5,3,2,.08),rgba(3,2,1,.54)),url("assets/detail/bottle-detail-bg.png") center bottom/cover no-repeat;box-shadow:inset 0 0 80px rgba(0,0,0,.52),0 0 18px rgba(218,106,45,.18)}
@@ -536,6 +538,16 @@
   .app.is-scan.has-scan-result .topbar{display:none}
   .name{font-size:21px;font-weight:800;font-family:var(--serif);margin:0 0 2px}
   .scan-view.is-confirming .hero{display:none}
+  .scan-help-link{width:100%;margin-top:10px;border:0;background:transparent;color:#E2B070;font-size:12px;font-weight:850;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+  .scan-help-modal{position:fixed;inset:0;z-index:97;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.76);padding:14px}
+  .scan-help-modal.show{display:flex}
+  .scan-help-sheet{width:min(100%,430px);border:1px solid rgba(226,176,112,.42);border-radius:8px;background:linear-gradient(180deg,rgba(28,19,12,.99),rgba(8,6,5,.99));padding:18px 18px calc(18px + env(safe-area-inset-bottom));box-shadow:0 28px 70px rgba(0,0,0,.72)}
+  .scan-help-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .scan-help-head h3{margin:0;color:#F6E1BC;font-family:var(--serif);font-size:22px;line-height:1.15}
+  .scan-help-head button{width:36px;height:36px;border:0;background:transparent;color:#E2B070;font-size:26px;line-height:1;cursor:pointer}
+  .scan-help-list{display:grid;gap:10px;margin:16px 0 4px;padding:0;list-style:none;color:#D8C4A4;font-size:13px;line-height:1.45}
+  .scan-help-list li{display:grid;grid-template-columns:24px 1fr;align-items:start;gap:9px}
+  .scan-help-list li:before{content:"";width:20px;height:20px;margin-top:1px;border:1px solid rgba(226,176,112,.58);border-radius:50%;background:radial-gradient(circle,rgba(226,176,112,.2),rgba(0,0,0,.2));box-shadow:inset 0 0 0 5px rgba(8,6,4,.72)}
   .boot-cover{position:fixed;inset:0;z-index:9997;background:#000;pointer-events:none}
   .age-gate{position:fixed;inset:0;z-index:9998;display:none;place-items:center;padding:12px;background:#000;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
   .age-gate.show{display:grid}
@@ -675,6 +687,7 @@
       <p data-i18n="heroDesc">Zrób zdjęcie etykiety. Hunter sprawdzi bazę, a gdy trzeba — dopyta sieci.</p>
         </div>
       </div>
+      <button class="scan-round scan-help-trigger" id="scanHelpOpen" type="button" data-scan-help data-i18n-aria="scanHelpLabel" aria-label="Jak zrobić dobre zdjęcie">i</button>
       <div class="scan-detected" aria-hidden="true">Bottle detected</div>
       <div class="shot" id="shot">
         <img id="scanPreview" class="scan-preview" alt="">
@@ -947,6 +960,20 @@
   </div>
 </div>
 
+<div class="scan-help-modal" id="scanHelpModal" aria-hidden="true">
+  <div class="scan-help-sheet" role="dialog" aria-modal="true" aria-labelledby="scanHelpTitle">
+    <div class="scan-help-head">
+      <h3 id="scanHelpTitle" data-i18n="scanHelpTitle">Jak zrobić dobre zdjęcie</h3>
+      <button type="button" id="scanHelpClose" aria-label="Zamknij">&times;</button>
+    </div>
+    <ul class="scan-help-list">
+      <li data-i18n="scanHelpWhole">Ustaw butelkę pionowo i pokaż całą przednią etykietę.</li>
+      <li data-i18n="scanHelpDetails">Nie zasłaniaj marki, wariantu ani oznaczenia wieku.</li>
+      <li data-i18n="scanHelpLight">Zadbaj o ostrość, dobre światło i brak odblasków.</li>
+    </ul>
+  </div>
+</div>
+
 <nav class="nav" id="bottomNav">
   <button data-view="home" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></svg><span data-i18n="navHome">Start</span></button>
   <button data-view="explore"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg><span data-i18n="navExplore">Odkrywaj</span></button>
@@ -960,7 +987,7 @@
 <script>
 /* ========= KONFIGURACJA ========= */
 const WORKER_URL = "https://bourbon-hunters.darekmaslyk.workers.dev";
-const APP_VERSION = "130";
+const APP_VERSION = "131";
 const API_CONTRACT_VERSION = "bh-api-2026-08-v1";
 const DB_URL = "db/catalog/demo-200.json";
 const PROFILES_URL = "db/profiles-runtime.json";
@@ -1142,7 +1169,7 @@ const I18N = {
     catBourbon:"Bourbon", catRye:"Rye", catTenn:"Tennessee", catWheat:"Wheated", catScotch:"Scotch", catWorld:"Świat",
     byDist:"Przeglądaj wg destylarni", allDist:"Wszystkie", distLbl:"Destylarnia", loadMore:"Pokaż więcej", results:"poz.",
     priceK:"Cena", statusAvail:"Dostępny", statusSold:"Niedostępny", viewShop:"Zobacz w sklepie ↗", noResults:"Brak wyników dla tego filtra.",
-    allCat:"Wszystkie", stWheated:"Wheated", stSingle:"Single Barrel", stSmall:"Small Batch", stProof:"Barrel Proof", stBib:"Bottled-in-Bond", stLimited:"Edycja limitowana", aiBtn:"🔎 Analiza AI", aiPlusBtn:"Hunter AI Plus", lowConfTitle:"Nie mam pewnego dopasowania", lowConfBody:"Marka lub wariant nie są wystarczająco czytelne. Zrób wyraźniejsze zdjęcie przedniej etykiety — nie pokażę przypadkowej butelki.", scanRetryPhoto:"Zrób zdjęcie ponownie", scanAgain:"Skanuj ponownie",
+    allCat:"Wszystkie", stWheated:"Wheated", stSingle:"Single Barrel", stSmall:"Small Batch", stProof:"Barrel Proof", stBib:"Bottled-in-Bond", stLimited:"Edycja limitowana", aiBtn:"🔎 Analiza AI", aiPlusBtn:"Hunter AI Plus", lowConfTitle:"Nie mam pewnego rozpoznania", lowConfBody:"Nie odczytałem pewnie marki, wariantu lub wieku. Zrób kolejne zdjęcie przedniej etykiety.", scanRetryPhoto:"Zrób zdjęcie ponownie", scanAgain:"Skanuj ponownie", scanHelpLabel:"Jak zrobić dobre zdjęcie", scanHelpTitle:"Jak zrobić dobre zdjęcie", scanHelpWhole:"Ustaw butelkę pionowo i pokaż całą przednią etykietę.", scanHelpDetails:"Nie zasłaniaj marki, wariantu ani oznaczenia wieku.", scanHelpLight:"Zadbaj o ostrość, dobre światło i brak odblasków.",
     wlAdded:"Dodano do listy życzeń ♥", ownAdded:"Dodano do kolekcji", wlEmpty:"Twoja lista życzeń jest pusta. Dodawaj butelki serduszkiem ♡.", emptyHunted:"Nie masz jeszcze upolowanych butelek.", emptyCollection:"Twoja kolekcja jest pusta.", noseT:"Nos", tasteT:"Smak", finishT:"Finisz", suggestedPrice:"Cena sugerowana", dbQuality:"Ocena społeczności", userQuality:"Twoja ocena",
     wlT:"Lista życzeń", wlD:"Zapisuj bourbony, które chcesz upolować.", huT:"Upolowane", huD:"Oznaczaj butelki, które już zdobyłeś.",
     coT:"Moja kolekcja", coD:"Twoja półka — wszystkie posiadane butelki w jednym miejscu.", registerTab:"Register", signInTab:"Sign In", articlesTab:"Articles", proTab:"Wersja Pro", settingsTab:"Ustawienia", profileName:"Bourbon Hunters", profileCopy:"Zaloguj się, aby później synchronizować kolekcję, skany i notatki między urządzeniami.", proStrip:"Więcej funkcji. Bez reklam.", joinPro:"Join Pro", later:"Later", registerTitle:"Sign up", registerIntro:"Utwórz profil łowcy, aby synchronizować kolekcję.", signInTitle:"Sign in", signInIntro:"Wróć do swojej półki, skanów i notatek degustacyjnych.", signUpBtn:"Sign Up", signInBtn:"Sign In", googleSignUp:"Sign up with Google", googleSignIn:"Sign in with Google", alreadyAccount:"Already have an account?", noAccount:"No account yet?", authConsent:"By proceeding, you agree to our", andText:"and", authPending:"Google Sign-In podłączymy w kolejnym etapie.", googleAuthStarting:"Przekierowanie do Google...", googleAuthOk:"Zalogowano przez Google i zsynchronizowano.", googleAuthFail:"Nie udało się zalogować przez Google.", inProgress:"W budowie", soonTag:"Wkrótce" },
@@ -1164,7 +1191,7 @@ const I18N = {
     catBourbon:"Bourbon", catRye:"Rye", catTenn:"Tennessee", catWheat:"Wheated", catScotch:"Scotch", catWorld:"World",
     byDist:"Browse by distillery", allDist:"All", distLbl:"Distillery", loadMore:"Load more", results:"items",
     priceK:"Price", statusAvail:"In stock", statusSold:"Sold out", viewShop:"View in shop ↗", noResults:"No results for this filter.",
-    allCat:"All", stWheated:"Wheated", stSingle:"Single Barrel", stSmall:"Small Batch", stProof:"Barrel Proof", stBib:"Bottled-in-Bond", stLimited:"Limited Edition", aiBtn:"🔎 AI Analysis", aiPlusBtn:"Hunter AI Plus", lowConfTitle:"No confident match", lowConfBody:"The brand or expression is not clear enough. Take a sharper photo of the front label — I will not show a random bottle.", scanRetryPhoto:"Take another photo", scanAgain:"Scan again",
+    allCat:"All", stWheated:"Wheated", stSingle:"Single Barrel", stSmall:"Small Batch", stProof:"Barrel Proof", stBib:"Bottled-in-Bond", stLimited:"Limited Edition", aiBtn:"🔎 AI Analysis", aiPlusBtn:"Hunter AI Plus", lowConfTitle:"I am not sure what this is", lowConfBody:"I could not confidently read the brand, expression or age. Take another photo of the front label.", scanRetryPhoto:"Take another photo", scanAgain:"Scan again", scanHelpLabel:"How to take a good photo", scanHelpTitle:"How to take a good photo", scanHelpWhole:"Keep the bottle upright and show the entire front label.", scanHelpDetails:"Do not cover the brand, expression or age statement.", scanHelpLight:"Use sharp focus, good light and avoid reflections.",
     wlAdded:"Added to wishlist ♥", ownAdded:"Added to collection", wlEmpty:"Your wishlist is empty. Add bottles with the ♡ heart.", emptyHunted:"No hunted bottles yet.", emptyCollection:"Your collection is empty.", noseT:"Nose", tasteT:"Taste", finishT:"Finish", suggestedPrice:"Suggested price", dbQuality:"Community rating", userQuality:"Your rating",
     wlT:"Wishlist", wlD:"Save the bourbons you want to hunt down.", huT:"Hunted", huD:"Mark the bottles you've already bagged.",
     coT:"My collection", coD:"Your shelf — every bottle you own in one place.", registerTab:"Register", signInTab:"Sign In", articlesTab:"Articles", proTab:"Pro version", settingsTab:"Settings", profileName:"Bourbon Hunters", profileCopy:"Sign in to sync your shelf, scans and tasting notes across devices.", proStrip:"More features. No ads.", joinPro:"Join Pro", later:"Later", registerTitle:"Sign up", registerIntro:"Create your hunter profile to sync your collection.", signInTitle:"Sign in", signInIntro:"Return to your shelf, scans and tasting notes.", signUpBtn:"Sign Up", signInBtn:"Sign In", googleSignUp:"Sign up with Google", googleSignIn:"Sign in with Google", alreadyAccount:"Already have an account?", noAccount:"No account yet?", authConsent:"By proceeding, you agree to our", andText:"and", authPending:"Google Sign-In will be connected in the next stage.", googleAuthStarting:"Redirecting to Google...", googleAuthOk:"Signed in with Google and synced.", googleAuthFail:"Google sign-in failed.", inProgress:"In progress", soonTag:"Soon" }
@@ -2972,6 +2999,7 @@ function applyLang(){
   document.documentElement.lang=lang;
   document.querySelectorAll("[data-i18n]").forEach(function(el){ const k=el.getAttribute("data-i18n"); if(I18N[lang][k]) el.textContent=I18N[lang][k]; });
   document.querySelectorAll("[data-i18n-ph]").forEach(function(el){ const k=el.getAttribute("data-i18n-ph"); if(I18N[lang][k]) el.placeholder=I18N[lang][k]; });
+  document.querySelectorAll("[data-i18n-aria]").forEach(function(el){ const k=el.getAttribute("data-i18n-aria"); if(I18N[lang][k]) el.setAttribute("aria-label",I18N[lang][k]); });
   if(DB.length){ renderHome(); renderExplore(); }
   renderHomeNews(); renderArticles();
 }
@@ -3687,6 +3715,21 @@ document.addEventListener("click",function(e){
   }
   const aiPlusAction=e.target.closest("[data-ai-plus]");
   if(aiPlusAction){ e.preventDefault(); toast(t("inProgress")); return; }
+  const scanHelpAction=e.target.closest("[data-scan-help]");
+  if(scanHelpAction){
+    e.preventDefault();
+    const modal=document.getElementById("scanHelpModal");
+    modal.classList.add("show"); modal.setAttribute("aria-hidden","false");
+    document.getElementById("scanHelpClose").focus();
+    return;
+  }
+  const scanHelpClose=e.target.closest("#scanHelpClose");
+  if(scanHelpClose || e.target.id==="scanHelpModal"){
+    e.preventDefault();
+    const modal=document.getElementById("scanHelpModal");
+    modal.classList.remove("show"); modal.setAttribute("aria-hidden","true");
+    return;
+  }
   const scanRetryAction=e.target.closest("[data-scan-retry]");
   if(scanRetryAction){ e.preventDefault(); storePrivateBottleDraft(null); resetShot(); fileInput.click(); return; }
   const privateAddStart=e.target.closest("[data-private-add-start]");
@@ -4298,13 +4341,20 @@ function renderLowConfidence(data){
   const readConfidence=pct(Math.max(Number(data.visionConfidence)||0,Number(data.ocrConfidence)||0));
   const min=pct(data.minConfidence) || 80;
   const margin=pct(data.agents&&data.agents.orchestrator&&data.agents.orchestrator.candidate_margin);
-  const canAddPrivate=reason==="brand_not_confirmed";
+  const canAddPrivate=reason==="catalog_not_found";
+  const retryOnly=!canAddPrivate;
   let title=t("lowConfTitle"), body=t("lowConfBody"), leftLabel=(lang==="pl"?"Dopasowanie do bazy":"Database match"), leftValue=dbConfidence+"%", rightLabel=(lang==="pl"?"Wymagane":"Required"), rightValue=min+"%";
-  if(reason==="brand_not_confirmed"){
-    title=lang==="pl"?"Etykieta odczytana, ale brak rekordu":"Label read, but no catalog match";
-    body=lang==="pl"?"Agent rozpoznał tekst, lecz nie potwierdził konkretnej butelki w bazie. Zrób wyraźniejsze zdjęcie nazwy i wariantu.":"The agent read the label, but could not confirm a specific catalog bottle. Retake the brand and expression clearly.";
+  if(reason==="catalog_not_found"){
+    title=(lang==="pl"?"Rozpoznano: ":"Recognized: ")+String(data.candidate||"").trim();
+    body=lang==="pl"?"Tej butelki nie ma jeszcze w katalogu. Możesz dodać ją jako prywatną pozycję.":"This bottle is not in the catalog yet. You can add it as a private bottle.";
     leftLabel=lang==="pl"?"Odczyt etykiety":"Label reading"; leftValue=(readConfidence||pct(data.confidence))+"%";
     rightLabel=lang==="pl"?"Dopasowanie do bazy":"Database match"; rightValue=dbConfidence+"%";
+  } else if(reason==="image_quality"){
+    title=lang==="pl"?"Zdjęcie jest nieczytelne":"The photo is unclear";
+    body=lang==="pl"?"Zdjęcie jest zbyt ciemne, prześwietlone albo nieostre. Zrób je ponownie, ustawiając etykietę na środku.":"The photo is too dark, overexposed or blurry. Retake it with the label centered.";
+  } else if(reason==="not_bottle"){
+    title=lang==="pl"?"Nie rozpoznałem butelki":"I could not recognize a bottle";
+    body=t("notBottle");
   } else if(reason==="ambiguous_candidates"){
     title=lang==="pl"?"Mam dwa podobne warianty":"Two similar variants found";
     body=lang==="pl"?"Odczyt jest dobry, ale dwa rekordy pasują prawie tak samo. Pokaż dokładną nazwę wariantu na przedniej etykiecie.":"The label is readable, but two records match almost equally. Show the exact expression on the front label.";
@@ -4313,10 +4363,11 @@ function renderLowConfidence(data){
   }
   document.getElementById("scanResult").innerHTML =
     '<div class="card">'+
-      '<div class="name">'+title+'</div>'+
-      '<p class="desc">'+body+'</p>'+
-      '<div class="row"><div class="pill"><div class="k">'+leftLabel+'</div><div class="v">'+leftValue+'</div></div><div class="pill"><div class="k">'+rightLabel+'</div><div class="v">'+rightValue+'</div></div></div>'+
+      '<div class="name">'+esc(title)+'</div>'+
+      '<p class="desc">'+esc(body)+'</p>'+
+      (!retryOnly?'<div class="row"><div class="pill"><div class="k">'+leftLabel+'</div><div class="v">'+leftValue+'</div></div><div class="pill"><div class="k">'+rightLabel+'</div><div class="v">'+rightValue+'</div></div></div>':'')+
       (canAddPrivate?'<div class="private-add-question"><b>'+esc(authText("Bottle not in the catalog. Add your own?","Nie ma jej w bazie. Chcesz doda\u0107 w\u0142asn\u0105 butelk\u0119?"))+'</b><span>'+esc(authText("It will be private and visible only in your collection.","B\u0119dzie prywatna i widoczna tylko w Twojej kolekcji."))+'</span></div><button class="btn btn-bottle" type="button" data-private-add-start="1" style="width:100%;margin-top:12px">'+esc(authText("Yes, add bottle","Tak, chc\u0119 doda\u0107"))+'</button>':'')+
+      (retryOnly?'<button class="scan-help-link" type="button" data-scan-help>&#9432; '+esc(t("scanHelpLabel"))+'</button>':'')+
       '<button class="btn btn-alt" type="button" data-scan-retry="1" style="width:100%;margin-top:14px">'+t("scanRetryPhoto")+'</button>'+
     '</div>';
   storePrivateBottleDraft(canAddPrivate?{name:String(data.candidate||"").trim()}:null);
@@ -4419,7 +4470,7 @@ function scan(mode,confirmedId){
     });
   }).then(function(data){
     stopLoading();
-    if(data.error==="not_bottle"){ showErr(t("notBottle")); return; }
+    if(data.error==="not_bottle"){ renderLowConfidence({reason:"not_bottle"}); return; }
     if(data.limited){ showErr(t("errScanLimit")); return; }
     if(data.error==="scanner_budget_schema_missing"){ showErr(t("scannerBudgetUnavailable")); return; }
     if(data.error==="quota_exhausted"){ showErr(t("errQuota")); return; }
@@ -4427,7 +4478,7 @@ function scan(mode,confirmedId){
     if(data.error==="upstream" && data.provider_error==="network"){ showErr(t("errProviderNetwork")); return; }
     if(data.error==="upstream" && (data.provider_error==="overloaded" || Number(data.status)===503)){ showErr(t("errProviderBusy")); return; }
     if(data.error==="upstream" && (Number(data.status)===400 || Number(data.status)===401 || Number(data.status)===403)){ showErr(t("errConfig")); return; }
-    if(data.error==="low_image_quality"){ showErr(lang==="pl"?"Zdjęcie jest zbyt ciemne, prześwietlone albo nieostre. Zrób je ponownie z etykietą na środku.":"The photo is too dark, overexposed or blurry. Retake it with the label centered."); return; }
+    if(data.error==="low_image_quality"){ renderLowConfidence({reason:"image_quality"}); return; }
     if(data.needsPro || data.error==="low_confidence"){ renderLowConfidence(data); return; }
     if(data.retry){ showErr(t("errRetry")); return; }
     if(data.error||!data.result){ showErr(t("errGeneric")+(data.error?" ["+data.error+(data.status?" "+data.status:"")+(data.raw?": "+String(data.raw).slice(0,160):"")+"]":"")); return; }

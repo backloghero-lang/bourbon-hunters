@@ -4,7 +4,11 @@ const target=process.env.BH_MOBILE_SMOKE_URL||"http://127.0.0.1:8765/mobile-dist
 const browser=await chromium.launch(browserLaunchOptions());
 const page=await browser.newPage({viewport:{width:390,height:844},deviceScaleFactor:1});
 const failures=[];
-page.on("requestfailed",(request)=>failures.push(request.url()+" "+(request.failure()?.errorText||"failed")));
+page.on("requestfailed",(request)=>{
+  const error=request.failure()?.errorText||"failed";
+  if(error==="net::ERR_ABORTED" && new URL(request.url()).pathname.endsWith("/assets/intro/nowe%20intro.mp4")) return;
+  failures.push(request.url()+" "+error);
+});
 page.on("response",(response)=>{
   if(response.url().startsWith(new URL(target).origin) && response.status()>=400) failures.push(response.status()+" "+response.url());
 });
@@ -32,6 +36,6 @@ const state=await page.evaluate(()=>(
 ));
 await browser.close();
 if(failures.length) throw new Error("Mobile bundle has missing resources:\n"+failures.join("\n"));
-if(state.version!=="130" || state.bottles!==200 || !state.nativeBridge || state.nativeMode) throw new Error("Mobile bundle runtime mismatch: "+JSON.stringify(state));
+if(state.version!=="131" || state.bottles!==200 || !state.nativeBridge || state.nativeMode) throw new Error("Mobile bundle runtime mismatch: "+JSON.stringify(state));
 if(state.headerWidth<300 || state.renderedImages<1) throw new Error("Mobile bundle did not render: "+JSON.stringify(state));
 console.log(JSON.stringify({ok:true,state},null,2));

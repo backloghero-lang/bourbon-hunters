@@ -3230,6 +3230,8 @@ export default {
       confidentHit=!!(hit && matched.brandAnchored && !matched.ambiguous && overallConfidence>=minConfidence);
     }
     function lowConfidenceResponse(modeName){
+      const catalogNotFound=!!(!matched && bottleName && visionConfidence>=Math.max(minConfidence,0.88));
+      const reason=!matched?(catalogNotFound?"catalog_not_found":"recognition_uncertain"):(matched.ambiguous?"ambiguous_candidates":"below_confidence_threshold");
       return scanResponse({
         error:"low_confidence",
         needsPro:true,
@@ -3240,9 +3242,9 @@ export default {
         ocrConfidence:ocrConfidence,
         dbConfidence:dbConfidence,
         minConfidence:minConfidence,
-        reason:!matched?"brand_not_confirmed":matched.ambiguous?"ambiguous_candidates":"below_confidence_threshold",
+        reason:reason,
         agents:agentTrace
-      },200,"low_confidence",{error_code:!matched?"brand_not_confirmed":matched.ambiguous?"ambiguous_candidates":"below_confidence_threshold"});
+      },200,"low_confidence",{error_code:reason});
     }
 
     // =================== TRYB RATE ===================

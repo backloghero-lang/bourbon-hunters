@@ -14,7 +14,9 @@ for(const required of [
   '.transform({width:960,height:1280,fit:"pad"',
   '"bottle_cutout_qa"',
   'preview_error="cutout_quality"',
-  'scan_candidate_cutout'
+  'scan_candidate_cutout',
+  'catalog_not_found',
+  'recognition_uncertain'
 ]){
   if(!workerSource.includes(required)) throw new Error(`Missing image-pipeline guard: ${required}`);
 }

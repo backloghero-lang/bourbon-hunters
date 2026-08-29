@@ -32,8 +32,17 @@ await page.waitForTimeout(5200);
 await page.evaluate(()=>{
   document.getElementById("ageGate").classList.remove("show");
   showView("scan");
-  renderLowConfidence({candidate:"Test Hunter Reserve",reason:"brand_not_confirmed",visionConfidence:.92,dbConfidence:0,minConfidence:.8});
+  renderLowConfidence({candidate:"Test Hunter Reserve",reason:"recognition_uncertain",visionConfidence:.72,dbConfidence:0,minConfidence:.8});
 });
+if(await page.locator("[data-private-add-start]").count()!==0 || await page.locator("[data-scan-retry]").count()!==1 || await page.locator("[data-scan-help]").count()<1){
+  throw new Error("Uncertain recognition must offer photo help and retake only");
+}
+await page.locator(".scan-help-link").click();
+if(!await page.locator("#scanHelpModal").evaluate((modal)=>modal.classList.contains("show")) || await page.locator("#scanHelpModal .scan-help-list li").count()!==3){
+  throw new Error("Scanner photo guide did not open correctly");
+}
+await page.locator("#scanHelpClose").click();
+await page.evaluate(()=>renderLowConfidence({candidate:"Test Hunter Reserve",reason:"catalog_not_found",visionConfidence:.92,dbConfidence:0,minConfidence:.8}));
 await page.locator("[data-private-add-start]").click();
 await page.locator(".private-auth-gate").waitFor();
 const gateActions=await page.locator(".private-auth-gate [data-private-auth]").evaluateAll((buttons)=>buttons.map((button)=>button.getAttribute("data-private-auth")).sort());
@@ -43,7 +52,7 @@ if(gateActions.join(",")!=="register,signin" || await page.locator(".private-aut
 
 await page.evaluate(()=>{
   saveAuth({token:"test-token",user:{id:"user-test",email:"test@example.com",username:"tester"}});
-  renderLowConfidence({candidate:"Test Hunter Reserve",reason:"brand_not_confirmed",visionConfidence:.92,dbConfidence:0,minConfidence:.8});
+  renderLowConfidence({candidate:"Test Hunter Reserve",reason:"catalog_not_found",visionConfidence:.92,dbConfidence:0,minConfidence:.8});
 });
 await page.locator("[data-private-add-start]").click();
 await page.locator("#privateBottleForm").waitFor();
