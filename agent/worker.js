@@ -18,7 +18,7 @@ const DEFAULT_DB_URL = "https://raw.githubusercontent.com/" + REPO + "/main/db/c
 const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters. Krotko, z jajem, ale rzeczowo. quality=jakosc 1-5, value=jakosc/cena 1-5 (5 swietna i tania, 1 slaba i droga). Pisz {{LANG}}. Zwroc tylko JSON.";
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
 const MULTI_CANDIDATE_CONFIDENCE = 0.9;
-const SCAN_ORCHESTRATOR_VERSION = "visual-only-catalog-v9-model-resolver";
+const SCAN_ORCHESTRATOR_VERSION = "visual-only-catalog-v10-strong-identification";
 const SCAN_CATALOG_VERSION = "demo-200-v1";
 const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v6-highres-cutout";
 const CATALOG_MODERATION_VERSION = "catalog-moderation-orchestrator-admin-v1";
@@ -98,7 +98,15 @@ const SCAN_RECORD_OVERRIDES={
   },
   "knob-creek-kentucky-straight-bourbon":{scanDisabled:true},
   "knob-creek-101-22":{scanDisabled:true},
-  "olcc-2163b":{scanDisabled:true}
+  "olcc-2163b":{scanDisabled:true},
+  "olcc-6040b":{
+    aliases:["The Singleton 12 Year","The Singleton 12 Year Old","Singleton 12","The Singleton of Dufftown 12 Year Old"],
+    distillery:"The Singleton",type:"Single Malt Scotch Whisky",category:"Scotch"
+  },
+  "olcc-4358b":{
+    aliases:["The Singleton 15 Year","The Singleton 15 Year Old","Singleton 15","The Singleton of Dufftown 15 Year Old"],
+    distillery:"The Singleton",type:"Single Malt Scotch Whisky",category:"Scotch"
+  }
 };
 const SCAN_EXTRA_RECORDS=[
   {id:"bushmills-original-irish-whiskey",name:"Bushmills Original",aliases:["Bushmills Original","Bushmills Original Irish Whiskey","Bushmills White Label"],distillery:"Old Bushmills Distillery",region:"Ireland",type:"Blended Irish Whiskey",category:"Irish",proof:80,abv:40,mashbill:null,price:null,quality:null,value:null,notes:"Light fruit, vanilla, honey and warm spice",desc:"A smooth blended Irish whiskey combining malt and grain whiskey.",image:"",source:"manual_official",catalog_status:"verified"},
@@ -2227,7 +2235,7 @@ async function handleApi(request, env, cors, executionCtx){
       }
       catch(e){ detail=String(e&&e.message?e.message:e).slice(0,220); }
     }
-    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,security_version:SECURITY_VERSION,auth_protection_version:AUTH_PROTECTION_VERSION,private_bottle_version:PRIVATE_BOTTLE_VERSION,ugc_moderation_version:UGC_MODERATION_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_mode:"visual_only",scan_ocr_enabled:false,scanner_ai_ready:!!env.GEMINI_API_KEY,scanner_primary_model:env.IDENT_MODEL||"gemini-3.5-flash-lite",scanner_fallback_model:env.IDENT_FALLBACK_MODEL||"gemini-3.6-flash",scanner_model_discovery:true,scanner_mobile_foreground:!!env.IMAGES,scanner_budget_version:SCANNER_BUDGET_VERSION,scanner_budget_schema:scanner_budget_schema,scanner_identify_daily_limit:scannerBudgetLimits(env,"identify").actor,scanner_cutout_daily_limit:scannerBudgetLimits(env,"cutout").actor,scanner_analysis_daily_limit:scannerBudgetLimits(env,"analysis").actor,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_moderation_version:CATALOG_MODERATION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,news_agent_version:NEWS_AGENT_VERSION,news_schedule:"Monday and Thursday releases with daily recovery via UTC cron",news_target_per_release:3,news_current_release:newsReleaseSlot(new Date()),news_article_count:news_article_count,news_last_run:news_last_run,local_image_pipeline_version:LOCAL_IMAGE_PIPELINE_VERSION,news_retention_days:NEWS_RETENTION_DAYS,starter_news_count:STARTER_NEWS.length,news_auth_required:true,catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,auth_security_schema:auth_security_schema,auth_rate_schema:auth_rate_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,catalog_moderation_schema:catalog_moderation_schema,telemetry_schema:telemetry_schema,news_schema:news_schema,private_bottle_schema:private_bottle_schema,ugc_moderation_schema:ugc_moderation_schema,news_agent_ready:news_schema,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),local_image_cutout_ready:!!env.IMAGES,cutout_quality_ready:!!(env.IMAGES&&env.GEMINI_API_KEY),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
+    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,security_version:SECURITY_VERSION,auth_protection_version:AUTH_PROTECTION_VERSION,private_bottle_version:PRIVATE_BOTTLE_VERSION,ugc_moderation_version:UGC_MODERATION_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_mode:"visual_only",scan_ocr_enabled:false,scanner_ai_ready:!!env.GEMINI_API_KEY,scanner_primary_model:env.IDENT_MODEL||"gemini-3.6-flash",scanner_fallback_model:env.IDENT_FALLBACK_MODEL||"gemini-3.5-flash-lite",scanner_model_discovery:true,scanner_mobile_foreground:!!env.IMAGES,scanner_budget_version:SCANNER_BUDGET_VERSION,scanner_budget_schema:scanner_budget_schema,scanner_identify_daily_limit:scannerBudgetLimits(env,"identify").actor,scanner_cutout_daily_limit:scannerBudgetLimits(env,"cutout").actor,scanner_analysis_daily_limit:scannerBudgetLimits(env,"analysis").actor,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_moderation_version:CATALOG_MODERATION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,news_agent_version:NEWS_AGENT_VERSION,news_schedule:"Monday and Thursday releases with daily recovery via UTC cron",news_target_per_release:3,news_current_release:newsReleaseSlot(new Date()),news_article_count:news_article_count,news_last_run:news_last_run,local_image_pipeline_version:LOCAL_IMAGE_PIPELINE_VERSION,news_retention_days:NEWS_RETENTION_DAYS,starter_news_count:STARTER_NEWS.length,news_auth_required:true,catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,auth_security_schema:auth_security_schema,auth_rate_schema:auth_rate_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,catalog_moderation_schema:catalog_moderation_schema,telemetry_schema:telemetry_schema,news_schema:news_schema,private_bottle_schema:private_bottle_schema,ugc_moderation_schema:ugc_moderation_schema,news_agent_ready:news_schema,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),local_image_cutout_ready:!!env.IMAGES,cutout_quality_ready:!!(env.IMAGES&&env.GEMINI_API_KEY),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
   }
   if(path==="/auth/google/start" && request.method==="GET"){
     const returnUrl=allowedReturnUrl(env,url.searchParams.get("return")||appUrl(env));
@@ -2927,9 +2935,9 @@ async function callVisualAgent(env, mime, image, foreground){
     imageParts.push({inlineData:{mimeType:"image/webp",data:encodeBase64(foreground)}});
   }
   const payload={
-    __model: env.IDENT_MODEL||"gemini-3.5-flash-lite",
+    __model: env.IDENT_MODEL||"gemini-3.6-flash",
     contents:[{role:"user",parts:[
-      {text:"Rozpoznaj dokladna nazwe butelki whisky lub bourbona: marka, wariant oraz widoczny wiek lub edycja. Kadr moze byc przekrzywiony, zrobiony w slabym swietle i zawierac dlon trzymajaca szyjke, regaly, monitor, stol lub inne butelki. Najpierw znajdz glowna butelke i ignoruj wszystko poza nia. Dlon albo zasloniety korek nie oznacza braku butelki, jezeli korpus i etykieta sa czytelne. Najwieksza wage nadaj logo marki, nazwie wariantu, liczbie wieku, tekstowi glownej etykiety, kolorowi etykiety, ksztaltowi butelki oraz oznaczeniom proof i ABV. Polacz dowody z obu obrazow, ale nie wymyslaj niewidocznego wariantu. Zwroc do czterech realnych mozliwych nazw, gdy widoczne cechy pasuja do kilku wariantow. Jesli to nie jest butelka whisky albo nie da sie rozpoznac marki, ustaw name=\"\" i confidence=0."}
+      {text:"Rozpoznaj dokladna nazwe butelki whisky lub bourbona: marka, wariant oraz widoczny wiek lub edycja. Kadr moze byc przekrzywiony, zrobiony w slabym swietle i zawierac dlon trzymajaca szyjke, regaly, monitor, stol lub inne butelki. Najpierw znajdz glowna butelke i ignoruj wszystko poza nia. Dlon albo zasloniety korek nie oznacza braku butelki, jezeli korpus i etykieta sa czytelne. Najwieksza wage nadaj logo marki, nazwie wariantu, liczbie wieku, tekstowi glownej etykiety, kolorowi etykiety, ksztaltowi butelki oraz oznaczeniom proof i ABV. Marka THE SINGLETON nie oznacza wariantu Single Barrel; przepisz widoczna marke doslownie. Polacz dowody z obu obrazow, ale nie wymyslaj niewidocznego wariantu. Zwroc do czterech realnych mozliwych nazw, gdy widoczne cechy pasuja do kilku wariantow. Jesli to nie jest butelka whisky albo nie da sie rozpoznac marki, ustaw name=\"\" i confidence=0."}
     ].concat(imageParts)}],
     generationConfig:{
       maxOutputTokens:260,
@@ -2983,7 +2991,7 @@ async function geminiModelsForStage(env, payload, stage){
   const visual=stage==="visual_identification" || stage==="bottle_cutout_qa";
   const requested=payload.__model || "";
   const preferred=visual
-    ? [requested,env.IDENT_MODEL,"gemini-3.5-flash-lite","gemini-3.6-flash",env.IDENT_FALLBACK_MODEL,env.MODEL,"gemini-3.1-flash-lite"]
+    ? [requested,env.IDENT_MODEL,"gemini-3.6-flash",env.IDENT_FALLBACK_MODEL,"gemini-3.5-flash-lite",env.MODEL,"gemini-3.1-flash-lite"]
     : [requested,stage==="whisky_news"?env.NEWS_MODEL:"","gemini-3.6-flash","gemini-3.5-flash",env.MODEL,"gemini-3.5-flash-lite"];
   const models=uniqueGeminiModels(preferred);
   const available=await availableGeminiModels(env);
@@ -3258,28 +3266,33 @@ export default {
         const candidates=highConfidenceCandidates.length>=2 ? highConfidenceCandidates : [bestCandidate];
         await enrichScanCandidatesWithCatalogAssets(env,request,candidates);
         let scanPreviewImage="";
+        let scanPreviewError="";
         const needsScanPreview=candidates.some(function(candidate){ return !(candidate&&candidate.result&&candidate.result.image); });
         if(needsScanPreview){
-          if(!env.IMAGES) return scanResponse({error:"image_pipeline_unavailable",retry:true},200,"cutout_failed",{error_code:"image_pipeline_unavailable",candidates:candidates});
-          const cutoutBudget=await consumeScannerBudget(env,request,scanUser,deviceHash,"cutout");
-          if(!cutoutBudget.allowed){
-            if(cutoutBudget.error) return scanResponse({error:cutoutBudget.error,retry:false},503,"budget_error",{error_code:cutoutBudget.error,candidates:candidates});
-            return scanResponse({limited:true,remaining:0,limit:cutoutBudget.limit,budget:"cutout",reason:cutoutBudget.reason},200,"limited",{error_code:"cutout_limit",candidates:candidates});
-          }
-          const cutoutStarted=Date.now();
-          try{
-            const cutout=await transformBottleCutout(env,mime,image);
-            if(!cutout) return scanResponse({error:"image_cutout_failed",retry:true},200,"cutout_failed",{error_code:"empty_cutout",candidates:candidates});
-            const quality=await assessBottleCutout(env,candidates[0].name||bottleName,cutout);
-            if(quality.usage) telemetryUsage.push(quality.usage);
-            telemetryUsage.push({provider:"cloudflare",stage:"scan_candidate_cutout",model:"cloudflare-images",status:quality.acceptable?200:422,attempts:1,duration_ms:Date.now()-cutoutStarted});
-            if(!quality.acceptable){
-              return scanResponse({error:"cutout_quality",retry:true,reason_code:quality.reason_code},200,"cutout_failed",{error_code:"cutout_quality",candidates:candidates});
+          if(!env.IMAGES){
+            scanPreviewError="image_pipeline_unavailable";
+          }else{
+            const cutoutBudget=await consumeScannerBudget(env,request,scanUser,deviceHash,"cutout");
+            if(!cutoutBudget.allowed){
+              scanPreviewError=cutoutBudget.error||"cutout_limit";
+            }else{
+              const cutoutStarted=Date.now();
+              try{
+                const cutout=await transformBottleCutout(env,mime,image);
+                if(!cutout){
+                  scanPreviewError="empty_cutout";
+                }else{
+                  const quality=await assessBottleCutout(env,candidates[0].name||bottleName,cutout);
+                  if(quality.usage) telemetryUsage.push(quality.usage);
+                  telemetryUsage.push({provider:"cloudflare",stage:"scan_candidate_cutout",model:"cloudflare-images",status:quality.acceptable?200:422,attempts:1,duration_ms:Date.now()-cutoutStarted});
+                  if(quality.acceptable) scanPreviewImage="data:image/webp;base64,"+encodeBase64(cutout);
+                  else scanPreviewError="cutout_quality";
+                }
+              }catch(e){
+                scanPreviewError="image_cutout_failed";
+                telemetryUsage.push({provider:"cloudflare",stage:"scan_candidate_cutout",model:"cloudflare-images",status:500,attempts:1,duration_ms:Date.now()-cutoutStarted});
+              }
             }
-            scanPreviewImage="data:image/webp;base64,"+encodeBase64(cutout);
-          }catch(e){
-            telemetryUsage.push({provider:"cloudflare",stage:"scan_candidate_cutout",model:"cloudflare-images",status:500,attempts:1,duration_ms:Date.now()-cutoutStarted});
-            return scanResponse({error:"image_cutout_failed",retry:true},200,"cutout_failed",{error_code:"image_cutout_failed",candidates:candidates});
           }
         }
         const selected=candidates[0];
@@ -3294,7 +3307,8 @@ export default {
         }else{
           result.has_image=!!result.image;
           result.has_catalog_image=!!result.image;
-          result.catalog_asset_missing=false;
+          result.catalog_asset_missing=!result.image;
+          if(scanPreviewError) result.preview_error=scanPreviewError;
         }
         overallConfidence=Number(selected.confidence)||overallConfidence;
         dbConfidence=overallConfidence;

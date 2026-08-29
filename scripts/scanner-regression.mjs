@@ -8,6 +8,7 @@ const workerPath=path.join(root,"agent","worker.js");
 const catalogPath=path.join(root,"db","catalog","scan-index.json");
 const catalogSource=fs.readFileSync(catalogPath,"utf8");
 const workerSource=fs.readFileSync(workerPath,"utf8");
+let cutoutQualityAcceptable=true;
 
 for(const required of [
   'local-bottle-cutout-v2-quality-gated',
@@ -30,7 +31,7 @@ const context={
       const body=JSON.parse(options&&options.body||"{}");
       const prompt=String(body.contents&&body.contents[0]&&body.contents[0].parts&&body.contents[0].parts[0]&&body.contents[0].parts[0].text||"");
       const result=prompt.includes("Ocen wyciety asset")
-        ? {acceptable:true,complete_bottle:true,occlusion_present:false,segmentation_damage:false,centered:true,reason_code:"ok",confidence:.99}
+        ? {acceptable:cutoutQualityAcceptable,complete_bottle:cutoutQualityAcceptable,occlusion_present:!cutoutQualityAcceptable,segmentation_damage:!cutoutQualityAcceptable,centered:true,reason_code:cutoutQualityAcceptable?"ok":"hand_occlusion",confidence:.99}
         : {name:"Bulleit Bottled in Bond",confidence:.97,evidence:["label"],candidates:[]};
       return new Response(JSON.stringify({candidates:[{content:{parts:[{text:JSON.stringify(result)}]}}]}),{status:200,headers:{"Content-Type":"application/json"}});
     }
@@ -124,6 +125,16 @@ const fixtures=[
     label:"Bushmills 12 Year",
     expected:"bushmills-12-year-old-single-malt",
     vision:{name:"Bushmills 12 Year Old Single Malt Irish Whiskey",confidence:.97,candidates:[]}
+  },
+  {
+    label:"The Singleton 12 Year",
+    expected:"olcc-6040b",
+    vision:{name:"The Singleton of Dufftown 12 Year Old",confidence:.97,candidates:[]}
+  },
+  {
+    label:"The Singleton 15 Year",
+    expected:"olcc-4358b",
+    vision:{name:"The Singleton 15 Year Old",confidence:.97,candidates:[]}
   }
 ];
 
@@ -224,6 +235,26 @@ assert(initial.matched==="bulleit-bottled-in-bond-111-22",`Initial scan matched 
 assert(String(initial.result&&initial.result.image||"").startsWith("data:image/webp;base64,"),"Direct scan preview image is missing");
 assert(initial.result&&initial.result.catalog_asset_missing===true,"Direct scan result is not marked for catalog completion");
 
+cutoutQualityAcceptable=false;
+const failedCutoutRequest=new Request("https://bourbon-hunters.darekmaslyk.workers.dev/",{
+  method:"POST",
+  headers:{"Content-Type":"application/json","Origin":"https://backloghero-lang.github.io"},
+  body:JSON.stringify({
+    image:btoa("candidate-bottle-photo-with-hand".repeat(20)),
+    mime:"image/jpeg",
+    lang:"pl",
+    mode:"rate",
+    device_id:"scanner-regression"
+  })
+});
+const failedCutoutResponse=await context.__worker.fetch(failedCutoutRequest,{DB:budgetDb,IMAGES:imagePipeline,GEMINI_API_KEY:"test"},{waitUntil(){}});
+const failedCutout=await failedCutoutResponse.json();
+assert(failedCutoutResponse.status===200,`Failed cutout fallback returned ${failedCutoutResponse.status}: ${JSON.stringify(failedCutout)}`);
+assert(failedCutout.matched==="bulleit-bottled-in-bond-111-22",`Failed cutout lost the recognized bottle: ${JSON.stringify(failedCutout)}`);
+assert(failedCutout.result&&failedCutout.result.preview_error==="cutout_quality","Failed cutout reason is missing from a successful recognition");
+assert(failedCutout.result&&failedCutout.result.catalog_asset_missing===true,"Failed cutout must keep the catalog asset marked as missing");
+cutoutQualityAcceptable=true;
+
 const confirmationRequest=new Request("https://bourbon-hunters.darekmaslyk.workers.dev/",{
   method:"POST",
   headers:{"Content-Type":"application/json","Origin":"https://backloghero-lang.github.io"},
@@ -259,5 +290,6 @@ console.log(JSON.stringify({
   misses,
   single_source_confidence:Number(singleSource.dbConfidence.toFixed(3)),
   direct_result:{matched:initial.matched,preview:true,catalog_asset_missing:initial.result.catalog_asset_missing},
+  cutout_fallback:{matched:failedCutout.matched,preview_error:failedCutout.result.preview_error},
   confirmed_cutout:{matched:confirmation.matched,temporary:confirmation.result.temporary_scan_asset}
 },null,2));

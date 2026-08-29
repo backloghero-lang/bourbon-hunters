@@ -55,20 +55,20 @@ const discoveryResult=await discoveryWorker.__providerTest.callGemini({
 if(discoveryResult.err) throw new Error(`Discovery fallback failed: ${JSON.stringify(discoveryResult.err)}`);
 if(discoveryResult.usage?.model!=="gemini-3.6-flash") throw new Error(`Unexpected discovered model: ${discoveryResult.usage?.model}`);
 if(discoveryCalls.some((url)=>url.includes("gemini-2.5-flash:"))) throw new Error("Unavailable legacy model should be filtered by discovery");
-if(discoveryCalls.length!==3) throw new Error(`Expected discovery plus two model calls, got ${discoveryCalls.length}`);
+if(discoveryCalls.length!==2) throw new Error(`Expected discovery plus the preferred model call, got ${discoveryCalls.length}`);
 
 const directCalls=[];
 const directWorker=loadWorker(async(url)=>{
   const value=String(url);
   directCalls.push(value);
   if(value.includes("/v1beta/models?")) return new Response("unavailable",{status:503});
-  if(value.includes("gemini-2.5-flash-lite:")) return new Response("missing",{status:404});
+  if(value.includes("gemini-3.6-flash:")) return new Response("missing",{status:404});
   if(value.includes("gemini-3.5-flash-lite:")) return successResponse();
   throw new Error(`Unexpected URL: ${value}`);
 });
 
 const directResult=await directWorker.__providerTest.callGemini({GEMINI_API_KEY:"test"},{
-  __model:"gemini-2.5-flash-lite",
+  __model:"gemini-3.6-flash",
   contents:[{role:"user",parts:[{text:"identify"}]}]
 },"visual_identification");
 
