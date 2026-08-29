@@ -42,7 +42,7 @@ if(!await page.locator("#scanHelpModal").evaluate((modal)=>modal.classList.conta
   throw new Error("Scanner photo guide did not open correctly");
 }
 await page.locator("#scanHelpClose").click();
-await page.evaluate(()=>renderLowConfidence({candidate:"Test Hunter Reserve",reason:"catalog_not_found",visionConfidence:.92,dbConfidence:0,minConfidence:.8,prepared_image:"data:image/webp;base64,UklGRg=="}));
+await page.evaluate(()=>renderLowConfidence({candidate:"Test Hunter Reserve",reason:"catalog_not_found",visionConfidence:.92,dbConfidence:0,minConfidence:.8,prepared_image:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII="}));
 if(await page.locator('.private-scan-preview img').count()!==1) throw new Error('Prepared unknown-bottle image is not shown');
 await page.locator("[data-private-add-start]").click();
 await page.locator(".private-auth-gate").waitFor();
