@@ -69,7 +69,7 @@ await page.evaluate(()=>{
 await page.locator("#homeNewsList .news-card").first().waitFor();
 if(newsAuthHeader!=="Bearer news-smoke-token") throw new Error("News request is missing authentication: "+newsAuthHeader);
 const thumbnailSrc=await page.locator("#homeNewsList .news-card img").first().getAttribute("src");
-if(thumbnailSrc!==articles[0].image_url) throw new Error("News thumbnail does not prefer the article image: "+thumbnailSrc);
+if(!thumbnailSrc || !thumbnailSrc.includes("/news/image/news-0")) throw new Error("News thumbnail does not prefer the Worker proxy: "+thumbnailSrc);
 const emptyMetadataThumbnailSrc=await page.locator("#homeNewsList .news-card img").nth(2).getAttribute("src");
 if(!emptyMetadataThumbnailSrc || !emptyMetadataThumbnailSrc.includes("/news/image/news-2")) throw new Error("Article without stored image metadata skipped thumbnail repair: "+emptyMetadataThumbnailSrc);
 await page.locator("#homeNewsList .news-card img").first().evaluate((image)=>{

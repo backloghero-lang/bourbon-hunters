@@ -24,8 +24,8 @@ const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v6-highres-cutout";
 const CATALOG_MODERATION_VERSION = "catalog-moderation-orchestrator-admin-v1";
 const CATALOG_LICENSE_VERSION = "catalog-license-2026-07-18-v1";
 const TELEMETRY_VERSION = "scanner-telemetry-v1";
-const NEWS_AGENT_VERSION = "whisky-news-source-first-v7-discovery-images";
-const NEWS_THUMBNAIL_VERSION = "v3";
+const NEWS_AGENT_VERSION = "whisky-news-source-first-v8-unique-article-images";
+const NEWS_THUMBNAIL_VERSION = "v4";
 const LOCAL_IMAGE_PIPELINE_VERSION = "local-bottle-cutout-v2-quality-gated";
 const NEWS_RETENTION_DAYS = 30;
 const CATALOG_SYSTEM_USER_ID = "catalog-system";
@@ -1737,6 +1737,61 @@ function newsCanonicalFromHtml(html, fallback){
   try{ return canonicalNewsUrl(new URL(decodeNewsText(match[1]),fallback).toString())||canonicalNewsUrl(fallback); }
   catch(e){ return canonicalNewsUrl(fallback); }
 }
+function newsImageCandidatesFromHtml(html, baseUrl){
+  const candidates=[];
+  const seen={};
+  const add=function(raw){
+    let value=String(raw||"").trim();
+    if(!value) return;
+    if(value.indexOf(",")>0 && /\s\d+(?:w|x)(?:\s*,|$)/.test(value)) value=value.split(",")[0].trim().split(/\s+/)[0];
+    try{ value=new URL(decodeNewsText(value),baseUrl).toString(); }catch(e){ return; }
+    value=safeRemoteNewsImage(value);
+    if(!value || newsImageLooksGeneric(value) || seen[value]) return;
+    seen[value]=true;
+    candidates.push(value);
+  };
+  const addStructuredImage=function(value){
+    if(Array.isArray(value)){ value.forEach(addStructuredImage); return; }
+    if(value&&typeof value==="object"){
+      add(value.contentUrl||value.url||value.href||"");
+      return;
+    }
+    add(value);
+  };
+  let match;
+  const structured=/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi;
+  while((match=structured.exec(String(html||"")))){
+    try{
+      const root=JSON.parse(match[1].trim());
+      const visit=function(node){
+        if(Array.isArray(node)){ node.forEach(visit); return; }
+        if(!node||typeof node!=="object") return;
+        const type=Array.isArray(node["@type"])?node["@type"].join(" "):String(node["@type"]||"");
+        if(/Article|NewsArticle|BlogPosting/i.test(type) || node.headline){
+          addStructuredImage(node.image);
+          addStructuredImage(node.thumbnailUrl);
+          addStructuredImage(node.primaryImageOfPage);
+        }
+        if(node["@graph"]) visit(node["@graph"]);
+      };
+      visit(root);
+    }catch(e){}
+  }
+  add(newsMetaValue(html,"og:image:secure_url"));
+  add(newsMetaValue(html,"og:image"));
+  add(newsMetaValue(html,"twitter:image"));
+  const imageLink=String(html||"").match(/<link[^>]+rel=["'][^"']*image_src[^"']*["'][^>]+href=["']([^"']+)["'][^>]*>/i) ||
+    String(html||"").match(/<link[^>]+href=["']([^"']+)["'][^>]+rel=["'][^"']*image_src[^"']*["'][^>]*>/i);
+  add(imageLink&&imageLink[1]);
+  const article=(String(html||"").match(/<article\b[^>]*>([\s\S]*?)<\/article>/i)||[])[1]||"";
+  const imageTags=article.match(/<img\b[^>]*>/gi)||[];
+  imageTags.slice(0,20).forEach(function(tag){
+    const raw=(tag.match(/\b(?:data-src|data-lazy-src|data-original|src)=["']([^"']+)["']/i)||[])[1] ||
+      (tag.match(/\bsrcset=["']([^"']+)["']/i)||[])[1];
+    add(raw);
+  });
+  return candidates;
+}
 async function fetchNewsMetadata(value){
   const sourceUrl=canonicalNewsUrl(value);
   if(!sourceUrl) return null;
@@ -1753,14 +1808,8 @@ async function fetchNewsMetadata(value){
   if(!canonicalUrl || !newsSourceForUrl(canonicalUrl)) return null;
   const title=newsMetaValue(html,"og:title") || decodeNewsText((html.match(/<title[^>]*>([\s\S]*?)<\/title>/i)||[])[1]);
   const description=newsMetaValue(html,"og:description") || newsMetaValue(html,"description");
-  let imageUrl=newsMetaValue(html,"og:image:secure_url") || newsMetaValue(html,"og:image") || newsMetaValue(html,"twitter:image");
-  if(!imageUrl){
-    const imageLink=html.match(/<link[^>]+rel=["'][^"']*image_src[^"']*["'][^>]+href=["']([^"']+)["'][^>]*>/i) ||
-      html.match(/<link[^>]+href=["']([^"']+)["'][^>]+rel=["'][^"']*image_src[^"']*["'][^>]*>/i);
-    imageUrl=decodeNewsText(imageLink&&imageLink[1]||"");
-  }
-  try{ if(imageUrl) imageUrl=new URL(imageUrl,canonicalUrl).toString(); }catch(e){ imageUrl=""; }
-  if(imageUrl && (!/^https:\/\//i.test(imageUrl) || newsImageLooksGeneric(imageUrl))) imageUrl="";
+  const imageCandidates=newsImageCandidatesFromHtml(html,canonicalUrl);
+  const imageUrl=imageCandidates[0]||"";
   return {
     canonical_url:canonicalUrl,
     source_url:sourceUrl,
@@ -1768,6 +1817,7 @@ async function fetchNewsMetadata(value){
     title:title.slice(0,240),
     description:description.slice(0,700),
     image_url:imageUrl.slice(0,1000),
+    image_candidates:imageCandidates.slice(0,8),
     published_at:(newsMetaValue(html,"article:published_time")||newsMetaValue(html,"datePublished")).slice(0,80)
   };
 }
@@ -1853,25 +1903,65 @@ async function downloadNewsThumbnail(remoteUrl, canonicalUrl){
   if(bytes.byteLength<4096 || bytes.byteLength>4000000) return null;
   return {bytes:bytes,contentType:contentType};
 }
+async function newsImageUsedByAnotherArticle(env, articleId, imageUrl){
+  if(!env.DB || !imageUrl) return false;
+  const duplicate=await env.DB.prepare("SELECT id FROM news_articles WHERE status='published' AND image_url=? AND id<>? LIMIT 1")
+    .bind(imageUrl,String(articleId||"")).first().catch(function(){ return null; });
+  return !!duplicate;
+}
+function newsThumbnailHashKey(assetSha){
+  return "news/thumbnail-hashes/"+NEWS_THUMBNAIL_VERSION+"/"+String(assetSha||"").slice(0,64);
+}
+async function newsThumbnailHashUsed(env, key, assetSha){
+  if(!env.BOTTLE_IMAGES || !assetSha) return false;
+  const markerKey=newsThumbnailHashKey(assetSha);
+  const marker=await env.BOTTLE_IMAGES.head(markerKey).catch(function(){ return null; });
+  if(!marker) return false;
+  const articleKey=marker.customMetadata&&marker.customMetadata.articleKey||"";
+  if(!articleKey || articleKey===key) return false;
+  if(await env.BOTTLE_IMAGES.head(articleKey).catch(function(){ return null; })) return true;
+  await env.BOTTLE_IMAGES.delete(markerKey).catch(function(){});
+  return false;
+}
 async function ensureNewsThumbnail(env, row){
   if(!row || !row.id || !env.BOTTLE_IMAGES) return {cached:false,reason:"r2_missing"};
   const key=newsThumbnailKey(row.id);
-  if(await env.BOTTLE_IMAGES.head(key)) return {cached:true,key:key,existing:true};
   let canonicalUrl=canonicalNewsUrl(row.canonical_url);
-  let imageUrl=safeRemoteNewsImage(row.image_url);
   if(!canonicalUrl) return {cached:false,reason:"article_url_missing"};
-  if(!imageUrl || newsImageLooksGeneric(imageUrl)){
-    const metadata=await fetchNewsMetadata(canonicalUrl).catch(function(){ return null; });
-    imageUrl=safeRemoteNewsImage(metadata&&metadata.image_url);
-    if(metadata&&metadata.image_url){
-      await env.DB.prepare("UPDATE news_articles SET image_url=?,updated_at=? WHERE id=?")
-        .bind(metadata.image_url,new Date().toISOString(),row.id).run().catch(function(){});
-    }
+  let imageUrl=safeRemoteNewsImage(row.image_url);
+  const duplicateStored=await newsImageUsedByAnotherArticle(env,row.id,imageUrl);
+  const existing=await env.BOTTLE_IMAGES.head(key);
+  if(existing && imageUrl && !duplicateStored && !newsImageLooksGeneric(imageUrl)) return {cached:true,key:key,existing:true};
+  if(existing){
+    await env.BOTTLE_IMAGES.delete(key).catch(function(){});
+    const previousSha=existing.customMetadata&&existing.customMetadata.assetSha256||"";
+    if(previousSha) await env.BOTTLE_IMAGES.delete(newsThumbnailHashKey(previousSha)).catch(function(){});
   }
-  const downloaded=await downloadNewsThumbnail(imageUrl,canonicalUrl);
+  const metadata=await fetchNewsMetadata(canonicalUrl).catch(function(){ return null; });
+  const candidates=[imageUrl].concat(metadata&&metadata.image_candidates||[],metadata&&metadata.image_url||[]);
+  let downloaded=null;
+  let assetSha="";
+  imageUrl="";
+  for(const candidate of candidates){
+    const safe=safeRemoteNewsImage(candidate);
+    if(!safe || newsImageLooksGeneric(safe) || await newsImageUsedByAnotherArticle(env,row.id,safe)) continue;
+    const candidateDownload=await downloadNewsThumbnail(safe,canonicalUrl);
+    if(!candidateDownload) continue;
+    const candidateSha=await sha256Bytes(candidateDownload.bytes);
+    if(await newsThumbnailHashUsed(env,key,candidateSha)) continue;
+    imageUrl=safe;
+    downloaded=candidateDownload;
+    assetSha=candidateSha;
+    break;
+  }
+  if(downloaded && imageUrl!==row.image_url){
+    await env.DB.prepare("UPDATE news_articles SET image_url=?,updated_at=? WHERE id=?")
+      .bind(imageUrl,new Date().toISOString(),row.id).run().catch(function(){});
+  }
   if(!downloaded) return {cached:false,reason:"source_image_unavailable",source_url:imageUrl};
-  await env.BOTTLE_IMAGES.put(key,downloaded.bytes,{httpMetadata:{contentType:downloaded.contentType,cacheControl:"public, max-age=2592000, immutable"}});
-  return {cached:true,key:key,contentType:downloaded.contentType};
+  await env.BOTTLE_IMAGES.put(key,downloaded.bytes,{httpMetadata:{contentType:downloaded.contentType,cacheControl:"public, max-age=2592000, immutable"},customMetadata:{sourceUrl:imageUrl.slice(0,900),assetSha256:assetSha}});
+  await env.BOTTLE_IMAGES.put(newsThumbnailHashKey(assetSha),new Uint8Array(0),{customMetadata:{articleKey:key}});
+  return {cached:true,key:key,contentType:downloaded.contentType,source_url:imageUrl,updated:imageUrl!==row.image_url};
 }
 async function newsImageResponse(env, articleId, cors){
   articleId=String(articleId||"").trim().slice(0,80);
@@ -1900,7 +1990,8 @@ async function newsImageResponse(env, articleId, cors){
       return new Response(cached.body,{headers:headers});
     }
   }
-  const sourceImage=safeRemoteNewsImage(repaired.source_url||row.image_url);
+  let sourceImage=safeRemoteNewsImage(repaired.source_url||row.image_url);
+  if(await newsImageUsedByAnotherArticle(env,row.id,sourceImage)) sourceImage="";
   if(sourceImage && !newsImageLooksGeneric(sourceImage)) return Response.redirect(sourceImage,302);
   return Response.redirect(assetUrl(env,"assets/news/editorial-fallback-v1.jpg"),302);
 }
@@ -1921,6 +2012,7 @@ async function backfillNewsThumbnails(env, limit){
     }
     const result=await ensureNewsThumbnail(env,row).catch(function(){ return {cached:false}; });
     if(result.cached) cached++;
+    if(result.updated) repaired++;
   }
   return {checked:(rows.results||[]).length,cached:cached,repaired:repaired};
 }
@@ -2057,7 +2149,11 @@ async function discoverNewsMetadata(priorUrls){
   metadata.forEach(function(item){
     if(item&&item.canonical_url&&discoveryImages[item.canonical_url]) item.image_url=discoveryImages[item.canonical_url];
   });
-  return metadata.filter(function(item){ return !!(item&&item.title&&item.canonical_url); }).sort(function(a,b){
+  const valid=metadata.filter(function(item){ return !!(item&&item.title&&item.canonical_url); });
+  const imageCounts={};
+  valid.forEach(function(item){ const image=safeRemoteNewsImage(item.image_url); if(image) imageCounts[image]=(imageCounts[image]||0)+1; });
+  valid.forEach(function(item){ if(item.image_url&&imageCounts[item.image_url]>1) item.image_url=""; });
+  return valid.sort(function(a,b){
     return Date.parse(b.published_at||0)-Date.parse(a.published_at||0);
   });
 }

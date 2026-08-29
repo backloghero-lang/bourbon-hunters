@@ -51,7 +51,26 @@ jobs:
           server_pid=$!
           trap 'kill "$server_pid"' EXIT
           sleep 2
-          pnpm run test:ui
+          pnpm run mobile:bundle
+          tests=(
+            ui-smoke.mjs
+            ui-download-smoke.mjs
+            ui-detail-profile-smoke.mjs
+            ui-news-scroll-smoke.mjs
+            ui-private-bottle-flow-smoke.mjs
+            ui-scanner-confirm-smoke.mjs
+            ui-local-photo-smoke.mjs
+            ui-taxonomy-smoke.mjs
+            ui-mobile-bundle-smoke.mjs
+          )
+          for test in "${tests[@]}"; do
+            echo "::group::$test"
+            if ! node "scripts/$test"; then
+              echo "::error title=Browser smoke failed::$test failed"
+              exit 1
+            fi
+            echo "::endgroup::"
+          done
 
   codeql:
     runs-on: ubuntu-latest

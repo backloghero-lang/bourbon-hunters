@@ -6,7 +6,7 @@ if(!source.includes('const newsUser=await authUser(env,request)') || !source.inc
   throw new Error("News endpoint must require an authenticated user");
 }
 source=source.replace("export default {","globalThis.__workerDefault={");
-source+="\nglobalThis.__newsTest={canonicalNewsUrl,newsSourceForUrl,newsMetaValue,newsCanonicalFromHtml,newsReleaseSlot,newsLinksFromIndex,newsImageMapFromIndex,safeRemoteNewsImage,newsImageLooksGeneric,newsThumbnailKey,STARTER_NEWS,NEWS_DISCOVERY_PAGES,NEWS_RETENTION_DAYS,NEWS_AGENT_VERSION};\n";
+source+="\nglobalThis.__newsTest={canonicalNewsUrl,newsSourceForUrl,newsMetaValue,newsCanonicalFromHtml,newsImageCandidatesFromHtml,newsReleaseSlot,newsLinksFromIndex,newsImageMapFromIndex,safeRemoteNewsImage,newsImageLooksGeneric,newsThumbnailKey,STARTER_NEWS,NEWS_DISCOVERY_PAGES,NEWS_RETENTION_DAYS,NEWS_AGENT_VERSION};\n";
 const context={URL,console,globalThis:null};
 context.globalThis=context;
 vm.runInNewContext(source,context,{filename:"worker.js"});
@@ -19,7 +19,7 @@ if(api.newsSourceForUrl("https://thewhiskeywash.com/story")!=="The Whiskey Wash"
 if(api.newsSourceForUrl("https://distiller.com/articles/example")) throw new Error("Competing application source was accepted");
 if(api.newsSourceForUrl("https://breakingbourbon.com/article/example")!=="Breaking Bourbon") throw new Error("Breaking Bourbon source mapping failed");
 if(api.NEWS_DISCOVERY_PAGES.some((url)=>url.includes("distiller.com"))) throw new Error("Competing application is present in discovery pages");
-if(api.NEWS_AGENT_VERSION!=="whisky-news-source-first-v7-discovery-images") throw new Error("Unexpected news agent version");
+if(api.NEWS_AGENT_VERSION!=="whisky-news-source-first-v8-unique-article-images") throw new Error("Unexpected news agent version");
 if(api.safeRemoteNewsImage("http://cdn.example.test/image.jpg")) throw new Error("Insecure news image URL was accepted");
 if(api.safeRemoteNewsImage("https://127.0.0.1/image.jpg")) throw new Error("Local news image URL was accepted");
 if(api.safeRemoteNewsImage("https://100.64.0.1/image.jpg")) throw new Error("Carrier-grade private news image URL was accepted");
@@ -27,8 +27,9 @@ if(api.safeRemoteNewsImage("https://[fd00::1]/image.jpg")) throw new Error("Priv
 if(api.safeRemoteNewsImage("https://cdn.example.test/image.jpg")!=="https://cdn.example.test/image.jpg") throw new Error("Valid news image URL was rejected");
 if(!api.newsImageLooksGeneric("https://cdn.example.test/site-logo.png")) throw new Error("Generic logo thumbnail was accepted");
 if(api.newsImageLooksGeneric("https://cdn.example.test/articles/new-release.jpg")) throw new Error("Article thumbnail was rejected as generic");
-if(api.newsThumbnailKey("abc")!=="news/thumbnails/v3/abc") throw new Error("Versioned thumbnail key is incorrect");
+if(api.newsThumbnailKey("abc")!=="news/thumbnails/v4/abc") throw new Error("Versioned thumbnail key is incorrect");
 if(!source.includes('news/thumbnails/')) throw new Error("News thumbnails are not cached in R2");
+if(!source.includes("newsThumbnailHashUsed(env,key,candidateSha)")) throw new Error("Duplicate thumbnail content guard is missing");
 if(!source.includes('path.match(/^\\/news\\/image\\/([^/]+)$/)')) throw new Error("News thumbnail proxy route is missing");
 if(!source.includes("backfillNewsThumbnails(env,30)")) throw new Error("Scheduled thumbnail backfill is missing");
 if(!source.includes("repaired.source_url||row.image_url")) throw new Error("Direct article image fallback is missing");
@@ -59,6 +60,11 @@ const html=`<html><head>
 </head></html>`;
 if(api.newsMetaValue(html,"og:title")!=="A new & useful whisky story") throw new Error("Metadata parsing failed");
 if(api.newsCanonicalFromHtml(html,"https://www.whiskymag.com/articles/new-release/")!=="https://whiskymag.com/articles/new-release") throw new Error("HTML canonical parsing failed");
+const structuredImages=api.newsImageCandidatesFromHtml(`<html><head>
+  <meta property="og:image" content="https://cdn.example.test/shared-home.jpg">
+  <script type="application/ld+json">{"@type":"NewsArticle","headline":"Specific story","image":{"url":"https://cdn.example.test/articles/specific-story.jpg"}}</script>
+</head><body><article><img data-src="https://cdn.example.test/articles/body-photo.jpg"></article></body></html>`,"https://whiskyadvocate.com/specific-story");
+if(structuredImages[0]!=="https://cdn.example.test/articles/specific-story.jpg" || !structuredImages.includes("https://cdn.example.test/articles/body-photo.jpg")) throw new Error("Article-specific image discovery failed: "+JSON.stringify(structuredImages));
 if(api.STARTER_NEWS.length!==6) throw new Error("Expected six starter news articles");
 if(api.NEWS_RETENTION_DAYS!==30) throw new Error("News retention must be 30 days");
 if(api.newsReleaseSlot(new Date("2026-08-02T12:00:00Z"))!=="2026-07-30") throw new Error("Sunday must use the Thursday release slot");
