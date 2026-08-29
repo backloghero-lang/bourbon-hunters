@@ -2932,7 +2932,7 @@ function matchBottleWithVisual(db, vision){
   return best;
 }
 
-async function callVisualAgent(env, mime, image, foreground){
+async function callVisualAgent(env, mime, image, foreground, requestedModel){
   const imageParts=[
     {text:"Pierwszy obraz to pelny kadr z telefonu. Drugi obraz, jezeli wystepuje, to automatycznie odseparowany pierwszy plan z tego samego kadru; moze nadal zawierac dlon albo miec drobne uszkodzenia segmentacji."},
     {inlineData:{mimeType:mime,data:image}}
@@ -2941,7 +2941,7 @@ async function callVisualAgent(env, mime, image, foreground){
     imageParts.push({inlineData:{mimeType:"image/webp",data:encodeBase64(foreground)}});
   }
   const payload={
-    __model: env.IDENT_MODEL||"gemini-3.6-flash",
+    __model: requestedModel||env.IDENT_MODEL||"gemini-3.6-flash",
     contents:[{role:"user",parts:[
       {text:"Rozpoznaj dokladna nazwe butelki whisky lub bourbona: marka, wariant oraz widoczny wiek lub edycja. Kadr moze byc przekrzywiony, zrobiony w slabym swietle i zawierac dlon trzymajaca szyjke, regaly, monitor, stol lub inne butelki. Najpierw znajdz glowna butelke i ignoruj wszystko poza nia. Dlon albo zasloniety korek nie oznacza braku butelki, jezeli korpus i etykieta sa czytelne. Najwieksza wage nadaj logo marki, nazwie wariantu, liczbie wieku, tekstowi glownej etykiety, kolorowi etykiety, ksztaltowi butelki oraz oznaczeniom proof i ABV. Brak liczby wieku nie oznacza braku rozpoznania: jezeli marka jest czytelna, zawsze zwroc marke i wszystkie widoczne slowa wariantu. Marka THE SINGLETON nie oznacza wariantu Single Barrel; MALT MASTER'S SELECTION jest prawidlowa nazwa wariantu. Polacz dowody z obu obrazow, ale nie wymyslaj niewidocznego wariantu. Zwroc do czterech realnych mozliwych nazw, gdy widoczne cechy pasuja do kilku wariantow. Jesli to nie jest butelka whisky albo nie da sie rozpoznac marki, ustaw name=\"\" i confidence=0."}
     ].concat(imageParts)}],
@@ -3225,14 +3225,22 @@ export default {
           telemetryUsage.push({provider:"cloudflare",stage:"recognition_foreground",model:"cloudflare-images",status:500,attempts:1,duration_ms:Date.now()-foregroundStarted});
         }
       }
-      const visual=await callVisualAgent(env,mime,recognitionSource,recognitionForeground);
+      let visual=await callVisualAgent(env,mime,recognitionSource,recognitionForeground);
       telemetryUsage.push.apply(telemetryUsage,[visual&&visual.usage].filter(Boolean));
       if(visual&&visual.err){
         const quotaExhausted=visual.err.status===429;
         const providerError=visual.err.status===0?"network":([408,504].includes(visual.err.status)?"timeout":(visual.err.status===503?"overloaded":"unavailable"));
         return scanResponse({error:quotaExhausted?"quota_exhausted":"upstream",status:visual.err.status,provider_error:providerError,retry:!quotaExhausted},quotaExhausted?429:(visual.err.status===0?502:503),quotaExhausted?"quota_exhausted":"upstream_error",{error_code:quotaExhausted?"gemini_quota":"visual_agent_"+providerError});
       }
-      const idj=compactVision((visual&&visual.data)||{});
+      let idj=compactVision((visual&&visual.data)||{});
+      if(!idj.name){
+        const fallbackVisual=await callVisualAgent(env,mime,recognitionSource,recognitionForeground,env.IDENT_FALLBACK_MODEL||"gemini-3.5-flash-lite");
+        telemetryUsage.push.apply(telemetryUsage,[fallbackVisual&&fallbackVisual.usage].filter(Boolean));
+        if(fallbackVisual&&!fallbackVisual.err){
+          const fallbackIdj=compactVision(fallbackVisual.data||{});
+          if(fallbackIdj.name){ visual=fallbackVisual; idj=fallbackIdj; }
+        }
+      }
       bottleName=String(idj.name||"").trim();
       if(!bottleName) return scanResponse({error:"not_bottle",agents:visualAgentTrace(idj,null)},200,"not_bottle",{error_code:"no_visual_identity"});
       matched=matchBottleWithVisual(db,idj);

@@ -9,6 +9,7 @@ const catalogPath=path.join(root,"db","catalog","scan-index.json");
 const catalogSource=fs.readFileSync(catalogPath,"utf8");
 const workerSource=fs.readFileSync(workerPath,"utf8");
 let cutoutQualityAcceptable=true;
+let visualPrimaryEmpty=false;
 
 for(const required of [
   'local-bottle-cutout-v2-quality-gated',
@@ -32,7 +33,9 @@ const context={
       const prompt=String(body.contents&&body.contents[0]&&body.contents[0].parts&&body.contents[0].parts[0]&&body.contents[0].parts[0].text||"");
       const result=prompt.includes("Ocen wyciety asset")
         ? {acceptable:cutoutQualityAcceptable,complete_bottle:cutoutQualityAcceptable,occlusion_present:!cutoutQualityAcceptable,segmentation_damage:!cutoutQualityAcceptable,centered:true,reason_code:cutoutQualityAcceptable?"ok":"hand_occlusion",confidence:.99}
-        : {name:"Bulleit Bottled in Bond",confidence:.97,evidence:["label"],candidates:[]};
+        : (visualPrimaryEmpty&&String(url).includes("gemini-3.6-flash:")
+          ? {name:"",confidence:0,evidence:[],candidates:[]}
+          : {name:"Bulleit Bottled in Bond",confidence:.97,evidence:["label"],candidates:[]});
       return new Response(JSON.stringify({candidates:[{content:{parts:[{text:JSON.stringify(result)}]}}]}),{status:200,headers:{"Content-Type":"application/json"}});
     }
     return new Response(catalogSource,{status:200,headers:{"Content-Type":"application/json"}});
@@ -240,6 +243,24 @@ assert(initial.matched==="bulleit-bottled-in-bond-111-22",`Initial scan matched 
 assert(String(initial.result&&initial.result.image||"").startsWith("data:image/webp;base64,"),"Direct scan preview image is missing");
 assert(initial.result&&initial.result.catalog_asset_missing===true,"Direct scan result is not marked for catalog completion");
 
+visualPrimaryEmpty=true;
+const visualFallbackRequest=new Request("https://bourbon-hunters.darekmaslyk.workers.dev/",{
+  method:"POST",
+  headers:{"Content-Type":"application/json","Origin":"https://backloghero-lang.github.io"},
+  body:JSON.stringify({
+    image:btoa("fallback-bottle-photo".repeat(20)),
+    mime:"image/jpeg",
+    lang:"pl",
+    mode:"rate",
+    device_id:"scanner-regression"
+  })
+});
+const visualFallbackResponse=await context.__worker.fetch(visualFallbackRequest,{DB:budgetDb,IMAGES:imagePipeline,GEMINI_API_KEY:"test"},{waitUntil(){}});
+const visualFallback=await visualFallbackResponse.json();
+assert(visualFallbackResponse.status===200,`Visual fallback returned ${visualFallbackResponse.status}: ${JSON.stringify(visualFallback)}`);
+assert(visualFallback.matched==="bulleit-bottled-in-bond-111-22",`Empty primary response did not fall back: ${JSON.stringify(visualFallback)}`);
+visualPrimaryEmpty=false;
+
 cutoutQualityAcceptable=false;
 const failedCutoutRequest=new Request("https://bourbon-hunters.darekmaslyk.workers.dev/",{
   method:"POST",
@@ -295,6 +316,7 @@ console.log(JSON.stringify({
   misses,
   single_source_confidence:Number(singleSource.dbConfidence.toFixed(3)),
   direct_result:{matched:initial.matched,preview:true,catalog_asset_missing:initial.result.catalog_asset_missing},
+  empty_primary_fallback:{matched:visualFallback.matched},
   cutout_fallback:{matched:failedCutout.matched,preview_error:failedCutout.result.preview_error},
   confirmed_cutout:{matched:confirmation.matched,temporary:confirmation.result.temporary_scan_asset}
 },null,2));
