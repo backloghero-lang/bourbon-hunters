@@ -64,7 +64,7 @@ await browser.close();
 
 if(errors.length) throw new Error(errors.join("\n"));
 if(metrics!==9) throw new Error("Expected 9 admin metrics, got "+metrics);
-if(!systemHealth.includes("v130")) throw new Error("Application version missing from system health");
+if(!systemHealth.includes("v131")) throw new Error("Application version missing from system health");
 if(/gemini|visual-only|model resolver/i.test(systemHealth)) throw new Error("Technical model details remain visible in system health");
 if(technicalTables!==0) throw new Error("Scanner outcome or model tables remain visible");
 if(dimensions.scrollWidth>dimensions.width+1) throw new Error("Mobile horizontal overflow: "+JSON.stringify(dimensions));
