@@ -24,7 +24,7 @@ const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v6-highres-cutout";
 const CATALOG_MODERATION_VERSION = "catalog-moderation-orchestrator-admin-v1";
 const CATALOG_LICENSE_VERSION = "catalog-license-2026-07-18-v1";
 const TELEMETRY_VERSION = "scanner-telemetry-v1";
-const NEWS_AGENT_VERSION = "whisky-news-source-first-v8-unique-article-images";
+const NEWS_AGENT_VERSION = "whisky-news-source-first-v9-editorial-only-images";
 const NEWS_THUMBNAIL_VERSION = "v4";
 const LOCAL_IMAGE_PIPELINE_VERSION = "local-bottle-cutout-v2-quality-gated";
 const NEWS_RETENTION_DAYS = 30;
@@ -2048,15 +2048,25 @@ async function cleanupNews(env){
   if(!(await newsSchemaReady(env))) return {deleted:0};
   const cutoff=new Date(Date.now()-NEWS_RETENTION_DAYS*86400000).toISOString();
   await env.DB.prepare("DELETE FROM news_articles WHERE source_name='Distiller' OR canonical_url LIKE 'https://distiller.com/%' OR canonical_url LIKE 'https://www.distiller.com/%'").run();
+  const published=await env.DB.prepare("SELECT id,canonical_url FROM news_articles WHERE status='published' LIMIT 200").all();
+  const rejected=(published.results||[]).filter(function(row){ return !newsLinkLooksEditorial(row.canonical_url); });
+  if(rejected.length){
+    const now=new Date().toISOString();
+    await env.DB.batch(rejected.map(function(row){
+      return env.DB.prepare("UPDATE news_articles SET status='rejected_non_article',updated_at=? WHERE id=?").bind(now,row.id);
+    }));
+  }
   const result=await env.DB.prepare("DELETE FROM news_articles WHERE created_at<?").bind(cutoff).run();
   await env.DB.prepare("DELETE FROM news_agent_runs WHERE started_at<? AND issue_key<>?").bind(new Date(Date.now()-180*86400000).toISOString(),"starter-news-v1").run();
-  return {deleted:Number(result.meta&&result.meta.changes||0),cutoff:cutoff};
+  return {deleted:Number(result.meta&&result.meta.changes||0),rejected_non_articles:rejected.length,cutoff:cutoff};
 }
 async function newsFeed(env, limit){
   if(!(await newsSchemaReady(env))) return {articles:[],news_ready:false};
+  const take=Math.max(1,Math.min(30,Number(limit)||12));
   const rows=await env.DB.prepare("SELECT * FROM news_articles WHERE status='published' AND source_name IN ('Whisky Advocate','Whisky Magazine','The Whiskey Wash','Breaking Bourbon') ORDER BY COALESCE(article_published_at,created_at) DESC,created_at DESC LIMIT ?")
-    .bind(Math.max(1,Math.min(30,Number(limit)||12))).all();
-  return {articles:(rows.results||[]).map(publicNewsArticle),news_ready:true,agent_version:NEWS_AGENT_VERSION};
+    .bind(Math.min(90,take*3)).all();
+  const articles=(rows.results||[]).filter(function(row){ return newsLinkLooksEditorial(row.canonical_url); }).slice(0,take).map(publicNewsArticle);
+  return {articles:articles,news_ready:true,agent_version:NEWS_AGENT_VERSION};
 }
 function newsLinkLooksEditorial(value){
   const canonical=canonicalNewsUrl(value);
@@ -2066,6 +2076,7 @@ function newsLinkLooksEditorial(value){
   if(path==="/" || /\.(?:jpg|jpeg|png|webp|gif|svg|pdf)$/i.test(path)) return false;
   if(/\/(?:about|contact|advertise|privacy|terms|subscribe|newsletter|search|tag|category)(?:\/|$)/i.test(path)) return false;
   const host=url.hostname;
+  if(host==="whiskyadvocate.com" && /^\/(?:news|videos|glossary|whisky-101|whiskey-life|ratings-reviews|whisky-bars-map)$/i.test(path)) return false;
   if(host==="whiskymag.com") return /^\/articles\/[^/]+/.test(path);
   if(host==="thewhiskeywash.com") return path.indexOf("/category/")!==0 && path.split("/").filter(Boolean).length>=1;
   if(host==="breakingbourbon.com") return /^\/(?:article|news)\//.test(path);

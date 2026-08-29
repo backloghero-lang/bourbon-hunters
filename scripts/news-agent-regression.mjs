@@ -6,7 +6,7 @@ if(!source.includes('const newsUser=await authUser(env,request)') || !source.inc
   throw new Error("News endpoint must require an authenticated user");
 }
 source=source.replace("export default {","globalThis.__workerDefault={");
-source+="\nglobalThis.__newsTest={canonicalNewsUrl,newsSourceForUrl,newsMetaValue,newsCanonicalFromHtml,newsImageCandidatesFromHtml,newsReleaseSlot,newsLinksFromIndex,newsImageMapFromIndex,safeRemoteNewsImage,newsImageLooksGeneric,newsThumbnailKey,STARTER_NEWS,NEWS_DISCOVERY_PAGES,NEWS_RETENTION_DAYS,NEWS_AGENT_VERSION};\n";
+source+="\nglobalThis.__newsTest={canonicalNewsUrl,newsSourceForUrl,newsMetaValue,newsCanonicalFromHtml,newsImageCandidatesFromHtml,newsReleaseSlot,newsLinksFromIndex,newsImageMapFromIndex,newsLinkLooksEditorial,safeRemoteNewsImage,newsImageLooksGeneric,newsThumbnailKey,STARTER_NEWS,NEWS_DISCOVERY_PAGES,NEWS_RETENTION_DAYS,NEWS_AGENT_VERSION};\n";
 const context={URL,console,globalThis:null};
 context.globalThis=context;
 vm.runInNewContext(source,context,{filename:"worker.js"});
@@ -19,7 +19,11 @@ if(api.newsSourceForUrl("https://thewhiskeywash.com/story")!=="The Whiskey Wash"
 if(api.newsSourceForUrl("https://distiller.com/articles/example")) throw new Error("Competing application source was accepted");
 if(api.newsSourceForUrl("https://breakingbourbon.com/article/example")!=="Breaking Bourbon") throw new Error("Breaking Bourbon source mapping failed");
 if(api.NEWS_DISCOVERY_PAGES.some((url)=>url.includes("distiller.com"))) throw new Error("Competing application is present in discovery pages");
-if(api.NEWS_AGENT_VERSION!=="whisky-news-source-first-v8-unique-article-images") throw new Error("Unexpected news agent version");
+if(api.NEWS_AGENT_VERSION!=="whisky-news-source-first-v9-editorial-only-images") throw new Error("Unexpected news agent version");
+for(const path of ["News","Videos","Glossary","Whisky-101","whiskey-life","ratings-reviews","Whisky-Bars-Map"]){
+  if(api.newsLinkLooksEditorial("https://whiskyadvocate.com/"+path)) throw new Error("Non-article page was accepted: "+path);
+}
+if(!api.newsLinkLooksEditorial("https://whiskyadvocate.com/dubai-chocolate-and-whisky-pairing")) throw new Error("Valid Whisky Advocate article was rejected");
 if(api.safeRemoteNewsImage("http://cdn.example.test/image.jpg")) throw new Error("Insecure news image URL was accepted");
 if(api.safeRemoteNewsImage("https://127.0.0.1/image.jpg")) throw new Error("Local news image URL was accepted");
 if(api.safeRemoteNewsImage("https://100.64.0.1/image.jpg")) throw new Error("Carrier-grade private news image URL was accepted");

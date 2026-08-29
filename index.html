@@ -988,7 +988,7 @@
 <script>
 /* ========= KONFIGURACJA ========= */
 const WORKER_URL = "https://bourbon-hunters.darekmaslyk.workers.dev";
-const APP_VERSION = "132";
+const APP_VERSION = "133";
 const API_CONTRACT_VERSION = "bh-api-2026-08-v1";
 const DB_URL = "db/catalog/demo-200.json";
 const PROFILES_URL = "db/profiles-runtime.json";
@@ -3846,6 +3846,7 @@ document.addEventListener("click",function(e){
     if(!ownHas(id)){ OWNED.push(id); ownSave(); syncList("collection",id,true); }
     addScanCollection.disabled=true; addScanCollection.textContent=t("ownAdded");
     renderHomeCollection(); renderProfile(); toast(t("ownAdded"));
+    resetCompletedScan();
     return;
   }
   const heartEl = e.target.closest("[data-heart]");
@@ -4029,6 +4030,7 @@ function submitPrivateBottleForm(e){
       if(OWNED.indexOf(bottle.id)<0) OWNED.push(bottle.id);
       ownSave(); storePrivateBottleDraft(null);
       renderHomeCollection(); renderCollection("owned"); renderProfile();
+      resetShot();
       openDetail(bottle.id,false,true);
       toast(authText("Bottle saved in your private collection.","Butelka zapisana w Twojej prywatnej kolekcji."));
     };
@@ -4093,6 +4095,12 @@ function resetShot(){
   shot.classList.remove("has-shot","is-loading");
   if(retakeQuick) retakeQuick.classList.remove("has-shot");
   document.getElementById("scanResult").innerHTML=""; document.getElementById("err").style.display="none";
+}
+function resetCompletedScan(){
+  storePrivateBottleDraft(null);
+  resetShot();
+  const scanHero=document.querySelector("#view-scan .hero");
+  if(scanHero && document.getElementById("view-scan").classList.contains("active")) scanHero.scrollIntoView({behavior:"smooth",block:"start"});
 }
 function scanSuccessMessage(){
   const messages=lang==="pl"

@@ -36,6 +36,6 @@ const state=await page.evaluate(()=>(
 ));
 await browser.close();
 if(failures.length) throw new Error("Mobile bundle has missing resources:\n"+failures.join("\n"));
-if(state.version!=="132" || state.bottles!==200 || !state.nativeBridge || state.nativeMode) throw new Error("Mobile bundle runtime mismatch: "+JSON.stringify(state));
+if(state.version!=="133" || state.bottles!==200 || !state.nativeBridge || state.nativeMode) throw new Error("Mobile bundle runtime mismatch: "+JSON.stringify(state));
 if(state.headerWidth<300 || state.renderedImages<1) throw new Error("Mobile bundle did not render: "+JSON.stringify(state));
 console.log(JSON.stringify({ok:true,state},null,2));

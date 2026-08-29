@@ -103,6 +103,18 @@ if(process.env.BH_SMOKE_SCREENSHOT) await page.screenshot({path:process.env.BH_S
 responseVariant="catalog";
 const catalog=await runScan("baza");
 if(process.env.BH_SMOKE_SCREENSHOT) await page.screenshot({path:process.env.BH_SMOKE_SCREENSHOT+"-direct-catalog.png",fullPage:true});
+await page.locator('[data-add-scan-collection="'+bottleId+'"]').click();
+await page.evaluate(()=>{ showView("home"); showView("scan"); });
+const completedReset=await page.evaluate(()=>(
+  {
+    result:currentScanResult,
+    image:imgData,
+    mode:currentScanMode,
+    resultHtml:document.getElementById("scanResult").innerHTML,
+    hasResultClass:document.getElementById("appRoot").classList.contains("has-scan-result"),
+    confirming:document.getElementById("view-scan").classList.contains("is-confirming")
+  }
+));
 await browser.close();
 
 if(errors.length) throw new Error(errors.join("\n"));
@@ -117,6 +129,9 @@ if(recognitionRequests!==2) throw new Error(`Recognition composite was not sent:
 if(missing.confirmationCards!==0 || catalog.confirmationCards!==0) throw new Error("Removed confirmation screen is still rendered");
 if(missing.addCatalog!==1 || missing.addCollection!==0) throw new Error("Missing catalog asset has incorrect action: "+JSON.stringify(missing));
 if(catalog.addCatalog!==0 || catalog.addCollection!==1) throw new Error("Catalog bottle has incorrect action: "+JSON.stringify(catalog));
+if(completedReset.result!==null || completedReset.image!==null || completedReset.mode!=="rate" || completedReset.resultHtml || completedReset.hasResultClass || completedReset.confirming){
+  throw new Error("Completed collection add did not reset scanner: "+JSON.stringify(completedReset));
+}
 for(const state of [missing,catalog]){
   if(state.name!=="Eagle Rare 10 Year" || !state.imageType.startsWith("data:image/webp")) throw new Error("Direct result is incomplete: "+JSON.stringify(state));
   if(state.actionButtons!==2 || !state.scanButtonClass.includes("btn-bottle") || state.scanButtonIcons!==1) throw new Error("Result actions are incorrect: "+JSON.stringify(state));
