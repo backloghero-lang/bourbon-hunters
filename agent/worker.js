@@ -2053,7 +2053,7 @@ async function cleanupNews(env){
   if(rejected.length){
     const now=new Date().toISOString();
     await env.DB.batch(rejected.map(function(row){
-      return env.DB.prepare("UPDATE news_articles SET status='rejected_non_article',updated_at=? WHERE id=?").bind(now,row.id);
+      return env.DB.prepare("UPDATE news_articles SET status='hidden',updated_at=? WHERE id=?").bind(now,row.id);
     }));
   }
   const result=await env.DB.prepare("DELETE FROM news_articles WHERE created_at<?").bind(cutoff).run();
