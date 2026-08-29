@@ -21,8 +21,8 @@ assert.match(worker,/"https:\/\/localhost"/);
 assert.match(manifest,/android:scheme="@string\/custom_url_scheme"/);
 assert.match(manifest,/android:host="auth"/);
 assert.match(activity,/BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE/);
-assert.match(gradle,/versionCode 4/);
-assert.match(gradle,/versionName "0\.1\.3-demo"/);
+assert.match(gradle,/versionCode 5/);
+assert.match(gradle,/versionName "0\.1\.4-demo"/);
 assert.match(bridge,/App\.addListener\("appUrlOpen"/);
 assert.match(bridge,/App\.addListener\("backButton"/);
 
