@@ -10,12 +10,13 @@ const catalogSource=fs.readFileSync(catalogPath,"utf8");
 const workerSource=fs.readFileSync(workerPath,"utf8");
 let cutoutQualityAcceptable=true;
 let visualPrimaryEmpty=false;
+let visualBottleName="Bulleit Bottled in Bond";
 
 for(const required of [
   'local-bottle-cutout-v2-quality-gated',
   '.transform({width:960,height:1280,fit:"pad"',
   '"bottle_cutout_qa"',
-  'preview_error="cutout_quality"',
+  'preview_warning="cutout_quality"',
   'scan_candidate_cutout',
   'catalog_not_found',
   'recognition_uncertain'
@@ -35,7 +36,7 @@ const context={
         ? {acceptable:cutoutQualityAcceptable,complete_bottle:cutoutQualityAcceptable,occlusion_present:!cutoutQualityAcceptable,segmentation_damage:!cutoutQualityAcceptable,centered:true,reason_code:cutoutQualityAcceptable?"ok":"hand_occlusion",confidence:.99}
         : (visualPrimaryEmpty&&String(url).includes("gemini-3.6-flash:")
           ? {name:"",confidence:0,evidence:[],candidates:[]}
-          : {name:"Bulleit Bottled in Bond",confidence:.97,evidence:["label"],candidates:[]});
+          : {name:visualBottleName,confidence:.97,evidence:["label"],candidates:[]});
       return new Response(JSON.stringify({candidates:[{content:{parts:[{text:JSON.stringify(result)}]}}]}),{status:200,headers:{"Content-Type":"application/json"}});
     }
     return new Response(catalogSource,{status:200,headers:{"Content-Type":"application/json"}});
@@ -277,9 +278,29 @@ const failedCutoutResponse=await context.__worker.fetch(failedCutoutRequest,{DB:
 const failedCutout=await failedCutoutResponse.json();
 assert(failedCutoutResponse.status===200,`Failed cutout fallback returned ${failedCutoutResponse.status}: ${JSON.stringify(failedCutout)}`);
 assert(failedCutout.matched==="bulleit-bottled-in-bond-111-22",`Failed cutout lost the recognized bottle: ${JSON.stringify(failedCutout)}`);
-assert(failedCutout.result&&failedCutout.result.preview_error==="cutout_quality","Failed cutout reason is missing from a successful recognition");
+assert(failedCutout.result&&failedCutout.result.preview_warning==="cutout_quality","Imperfect cutout warning is missing from a successful recognition");
+assert(/^data:image\/webp;base64,/.test(String(failedCutout.result&&failedCutout.result.image||"")),"Imperfect temporary cutout should still be returned");
 assert(failedCutout.result&&failedCutout.result.catalog_asset_missing===true,"Failed cutout must keep the catalog asset marked as missing");
 cutoutQualityAcceptable=true;
+
+visualBottleName="Codex Unlisted Experimental 27 Year Rye";
+const unknownBottleRequest=new Request("https://bourbon-hunters.darekmaslyk.workers.dev/",{
+  method:"POST",
+  headers:{"Content-Type":"application/json","Origin":"https://backloghero-lang.github.io"},
+  body:JSON.stringify({
+    image:btoa("unknown-bottle-photo".repeat(20)),
+    mime:"image/jpeg",
+    lang:"pl",
+    mode:"rate",
+    device_id:"scanner-regression"
+  })
+});
+const unknownBottleResponse=await context.__worker.fetch(unknownBottleRequest,{DB:budgetDb,IMAGES:imagePipeline,GEMINI_API_KEY:"test"},{waitUntil(){}});
+const unknownBottle=await unknownBottleResponse.json();
+assert(unknownBottleResponse.status===200,`Unknown bottle returned ${unknownBottleResponse.status}: ${JSON.stringify(unknownBottle)}`);
+assert(unknownBottle.reason==="catalog_not_found",`Unknown bottle did not enter the private-add flow: ${JSON.stringify(unknownBottle)}`);
+assert(/^data:image\/webp;base64,/.test(String(unknownBottle.prepared_image||"")),"Unknown bottle did not receive a prepared cutout");
+visualBottleName="Bulleit Bottled in Bond";
 
 const confirmationRequest=new Request("https://bourbon-hunters.darekmaslyk.workers.dev/",{
   method:"POST",
@@ -317,6 +338,7 @@ console.log(JSON.stringify({
   single_source_confidence:Number(singleSource.dbConfidence.toFixed(3)),
   direct_result:{matched:initial.matched,preview:true,catalog_asset_missing:initial.result.catalog_asset_missing},
   empty_primary_fallback:{matched:visualFallback.matched},
-  cutout_fallback:{matched:failedCutout.matched,preview_error:failedCutout.result.preview_error},
+  cutout_fallback:{matched:failedCutout.matched,preview_warning:failedCutout.result.preview_warning},
+  unknown_bottle:{reason:unknownBottle.reason,preview:true},
   confirmed_cutout:{matched:confirmation.matched,temporary:confirmation.result.temporary_scan_asset}
 },null,2));

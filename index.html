@@ -25,6 +25,7 @@
   .private-add-question b{color:#e8d7aa;font-size:14px}.private-add-question span{color:var(--muted);font-size:12px;line-height:1.5}
   .private-auth-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}.private-auth-actions .btn{width:100%;min-width:0}
   .private-bottle-editor form{display:grid;gap:12px;margin-top:16px}.private-bottle-editor label{display:grid;gap:6px;color:#d5ba83;font-size:11px;font-weight:800;text-transform:uppercase}
+  .private-scan-preview{display:flex;align-items:center;justify-content:center;min-height:250px;margin:14px 0;border:1px solid rgba(190,133,54,.42);border-radius:6px;background:rgba(3,6,5,.72);overflow:hidden}.private-scan-preview img{display:block;width:100%;height:300px;object-fit:contain}
   .private-bottle-editor label span{color:#e3634f}.private-bottle-editor input,.private-bottle-editor textarea{width:100%;box-sizing:border-box;border:1px solid rgba(190,133,54,.45);border-radius:6px;background:rgba(5,8,7,.78);color:#f5ead1;padding:12px;font:inherit;text-transform:none;resize:vertical}
   .private-bottle-editor input:focus,.private-bottle-editor textarea:focus{outline:2px solid rgba(48,161,83,.5);border-color:#3aa85d}.private-bottle-editor input[aria-invalid="true"]{border-color:#d85b4b}
   .private-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -4018,16 +4019,21 @@ function submitPrivateBottleForm(e){
   const data={};
   new FormData(form).forEach(function(value,key){ data[key]=String(value||"").trim(); });
   if(!data.name){ const input=form.querySelector('[name="name"]'); if(input){ input.focus(); input.setAttribute("aria-invalid","true"); } return; }
+  const preparedImage=pendingPrivateBottleDraft&&pendingPrivateBottleDraft.image||"";
   if(button){ button.disabled=true; button.textContent=authText("Saving...","Zapisuj\u0119..."); }
   bhApi("/me/private-bottles",{method:"POST",body:JSON.stringify(data)}).then(function(result){
     const bottle=result&&result.bottle;
     if(!bottle||!bottle.id) throw {error:"private_bottle_save_failed"};
-    DB=DB.filter(function(item){ return item.id!==bottle.id; }).concat([bottle]);
-    if(OWNED.indexOf(bottle.id)<0) OWNED.push(bottle.id);
-    ownSave(); storePrivateBottleDraft(null);
-    renderHomeCollection(); renderCollection("owned"); renderProfile();
-    openDetail(bottle.id,false,true);
-    toast(authText("Bottle saved in your private collection.","Butelka zapisana w Twojej prywatnej kolekcji."));
+    const finish=function(){
+      DB=DB.filter(function(item){ return item.id!==bottle.id; }).concat([bottle]);
+      if(OWNED.indexOf(bottle.id)<0) OWNED.push(bottle.id);
+      ownSave(); storePrivateBottleDraft(null);
+      renderHomeCollection(); renderCollection("owned"); renderProfile();
+      openDetail(bottle.id,false,true);
+      toast(authText("Bottle saved in your private collection.","Butelka zapisana w Twojej prywatnej kolekcji."));
+    };
+    if(preparedImage) return saveLocalBottleImage(bottle.id,preparedImage).catch(function(){}).then(finish);
+    finish();
   }).catch(function(err){
     toast(err&&err.error==="private_bottle_schema_missing"?authText("Run D1 migration v72.","Uruchom migracj\u0119 D1 v72."):t("errGeneric"));
     if(button){ button.disabled=false; button.textContent=authText("Save to my collection","Zapisz w mojej kolekcji"); }
@@ -4365,12 +4371,13 @@ function renderLowConfidence(data){
     '<div class="card">'+
       '<div class="name">'+esc(title)+'</div>'+
       '<p class="desc">'+esc(body)+'</p>'+
+      (canAddPrivate&&data.prepared_image?'<div class="private-scan-preview"><img src="'+esc(safeImageSrc(data.prepared_image,""))+'" alt="'+esc(String(data.candidate||""))+'"></div>':'')+
       (!retryOnly?'<div class="row"><div class="pill"><div class="k">'+leftLabel+'</div><div class="v">'+leftValue+'</div></div><div class="pill"><div class="k">'+rightLabel+'</div><div class="v">'+rightValue+'</div></div></div>':'')+
       (canAddPrivate?'<div class="private-add-question"><b>'+esc(authText("Bottle not in the catalog. Add your own?","Nie ma jej w bazie. Chcesz doda\u0107 w\u0142asn\u0105 butelk\u0119?"))+'</b><span>'+esc(authText("It will be private and visible only in your collection.","B\u0119dzie prywatna i widoczna tylko w Twojej kolekcji."))+'</span></div><button class="btn btn-bottle" type="button" data-private-add-start="1" style="width:100%;margin-top:12px">'+esc(authText("Yes, add bottle","Tak, chc\u0119 doda\u0107"))+'</button>':'')+
       (retryOnly?'<button class="scan-help-link" type="button" data-scan-help>&#9432; '+esc(t("scanHelpLabel"))+'</button>':'')+
       '<button class="btn btn-alt" type="button" data-scan-retry="1" style="width:100%;margin-top:14px">'+t("scanRetryPhoto")+'</button>'+
     '</div>';
-  storePrivateBottleDraft(canAddPrivate?{name:String(data.candidate||"").trim()}:null);
+  storePrivateBottleDraft(canAddPrivate?{name:String(data.candidate||"").trim(),image:String(data.prepared_image||"")}:null);
   document.getElementById("scanResult").scrollIntoView({behavior:"smooth",block:"start"});
 }
 function renderPrivateBottleAuthGate(){
@@ -4388,6 +4395,7 @@ function renderPrivateBottleForm(bottle){
   document.getElementById("scanResult").innerHTML='<div class="card private-bottle-editor">'+
     '<div class="name">'+esc(bottle.id?authText("Edit your bottle","Edytuj swoj\u0105 butelk\u0119"):authText("Add your bottle","Dodaj swoj\u0105 butelk\u0119"))+'</div>'+
     '<p class="desc">'+esc(authText("This entry belongs only to your account and will not enter the public catalog.","Ten wpis nale\u017cy tylko do Twojego konta i nie trafi do publicznego katalogu."))+'</p>'+
+    (bottle.image?'<div class="private-scan-preview"><img src="'+esc(safeImageSrc(bottle.image,""))+'" alt="'+esc(bottle.name||"")+'"></div>':'')+
     '<form id="privateBottleForm">'+
       '<input type="hidden" name="id" value="'+esc(bottle.id||"")+'">'+
       '<label>'+esc(authText("Bottle name","Nazwa butelki"))+'<span>*</span><input name="name" maxlength="160" required value="'+esc(bottle.name||"")+'"></label>'+

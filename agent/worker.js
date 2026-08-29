@@ -3176,20 +3176,17 @@ export default {
           if(cutout){
             const quality=await assessBottleCutout(env,result.name||resolvedConfirmedId,cutout);
             if(quality.usage) recordServiceUsage(env,scanId,scanUser&&scanUser.id,quality.usage).catch(function(){});
-            if(quality.acceptable){
-              result.image="data:image/webp;base64,"+encodeBase64(cutout);
-              result.has_image=true;
-              result.source="scan_preview";
-              result.temporary_scan_asset=true;
-              result.catalog_asset_missing=true;
-              result.cutout_quality_checked=quality.checked;
-              recordServiceUsage(env,scanId,scanUser&&scanUser.id,{provider:"cloudflare",stage:"image_cutout",model:"cloudflare-images",status:200,attempts:1,duration_ms:Date.now()-cutoutStarted}).catch(function(){});
-            }else{
-              result.catalog_asset_missing=true;
-              result.preview_error="cutout_quality";
+            result.image="data:image/webp;base64,"+encodeBase64(cutout);
+            result.has_image=true;
+            result.source="scan_preview";
+            result.temporary_scan_asset=true;
+            result.catalog_asset_missing=true;
+            result.cutout_quality_checked=quality.checked;
+            if(!quality.acceptable){
+              result.preview_warning="cutout_quality";
               result.preview_reason=quality.reason_code;
-              recordServiceUsage(env,scanId,scanUser&&scanUser.id,{provider:"cloudflare",stage:"image_cutout",model:"cloudflare-images",status:422,attempts:1,duration_ms:Date.now()-cutoutStarted}).catch(function(){});
             }
+            recordServiceUsage(env,scanId,scanUser&&scanUser.id,{provider:"cloudflare",stage:"image_cutout",model:"cloudflare-images",status:quality.acceptable?200:206,attempts:1,duration_ms:Date.now()-cutoutStarted}).catch(function(){});
           }
         }catch(e){
           result.catalog_asset_missing=true;
@@ -3252,10 +3249,10 @@ export default {
       agentTrace=visualAgentTrace(idj,matched);
       confidentHit=!!(hit && matched.brandAnchored && !matched.ambiguous && overallConfidence>=minConfidence);
     }
-    function lowConfidenceResponse(modeName){
+    async function lowConfidenceResponse(modeName){
       const catalogNotFound=!!(!matched && bottleName && visionConfidence>=Math.max(minConfidence,0.88));
       const reason=!matched?(catalogNotFound?"catalog_not_found":"recognition_uncertain"):(matched.ambiguous?"ambiguous_candidates":"below_confidence_threshold");
-      return scanResponse({
+      const payload={
         error:"low_confidence",
         needsPro:true,
         mode:modeName,
@@ -3267,7 +3264,27 @@ export default {
         minConfidence:minConfidence,
         reason:reason,
         agents:agentTrace
-      },200,"low_confidence",{error_code:reason});
+      };
+      if(catalogNotFound && modeName==="rate" && env.IMAGES){
+        const cutoutBudget=await consumeScannerBudget(env,request,scanUser,deviceHash,"cutout");
+        if(cutoutBudget.allowed){
+          const cutoutStarted=Date.now();
+          try{
+            const cutout=await transformBottleCutout(env,mime,image);
+            if(cutout){
+              const quality=await assessBottleCutout(env,bottleName,cutout);
+              if(quality.usage) telemetryUsage.push(quality.usage);
+              payload.prepared_image="data:image/webp;base64,"+encodeBase64(cutout);
+              payload.temporary_scan_asset=true;
+              if(!quality.acceptable) payload.preview_warning="cutout_quality";
+              telemetryUsage.push({provider:"cloudflare",stage:"unknown_bottle_cutout",model:"cloudflare-images",status:quality.acceptable?200:206,attempts:1,duration_ms:Date.now()-cutoutStarted});
+            }
+          }catch(e){
+            telemetryUsage.push({provider:"cloudflare",stage:"unknown_bottle_cutout",model:"cloudflare-images",status:500,attempts:1,duration_ms:Date.now()-cutoutStarted});
+          }
+        }
+      }
+      return scanResponse(payload,200,"low_confidence",{error_code:reason});
     }
 
     // =================== TRYB RATE ===================
@@ -3282,6 +3299,7 @@ export default {
         await enrichScanCandidatesWithCatalogAssets(env,request,candidates);
         let scanPreviewImage="";
         let scanPreviewError="";
+        let scanPreviewWarning="";
         const needsScanPreview=candidates.some(function(candidate){ return !(candidate&&candidate.result&&candidate.result.image); });
         if(needsScanPreview){
           if(!env.IMAGES){
@@ -3299,9 +3317,9 @@ export default {
                 }else{
                   const quality=await assessBottleCutout(env,candidates[0].name||bottleName,cutout);
                   if(quality.usage) telemetryUsage.push(quality.usage);
-                  telemetryUsage.push({provider:"cloudflare",stage:"scan_candidate_cutout",model:"cloudflare-images",status:quality.acceptable?200:422,attempts:1,duration_ms:Date.now()-cutoutStarted});
-                  if(quality.acceptable) scanPreviewImage="data:image/webp;base64,"+encodeBase64(cutout);
-                  else scanPreviewError="cutout_quality";
+                  telemetryUsage.push({provider:"cloudflare",stage:"scan_candidate_cutout",model:"cloudflare-images",status:quality.acceptable?200:206,attempts:1,duration_ms:Date.now()-cutoutStarted});
+                  scanPreviewImage="data:image/webp;base64,"+encodeBase64(cutout);
+                  if(!quality.acceptable) scanPreviewWarning="cutout_quality";
                 }
               }catch(e){
                 scanPreviewError="image_cutout_failed";
@@ -3319,6 +3337,7 @@ export default {
           result.source="scan_preview";
           result.temporary_scan_asset=true;
           result.catalog_asset_missing=true;
+          if(scanPreviewWarning) result.preview_warning=scanPreviewWarning;
         }else{
           result.has_image=!!result.image;
           result.has_catalog_image=!!result.image;
