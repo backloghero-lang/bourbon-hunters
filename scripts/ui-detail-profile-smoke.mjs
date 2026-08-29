@@ -25,7 +25,12 @@ await page.evaluate(()=>{
 });
 await page.waitForFunction((id)=>typeof bottleById==="function"&&!!bottleById(id),bottleId);
 await page.evaluate((id)=>openDetail(id,false,true),bottleId);
-await page.locator("#detailBody .dphoto img[data-bottle-image]").waitFor();
+await page.waitForFunction(()=>{
+  const image=document.querySelector("#detailBody .dphoto img[data-bottle-image]");
+  if(!image?.complete||image.naturalWidth===0) return false;
+  const rect=image.getBoundingClientRect();
+  return rect.width>0&&rect.height>=480;
+},{timeout:15000});
 const detail=await page.evaluate((id)=>{
   const bottle=bottleById(id);
   const image=document.querySelector("#detailBody .dphoto img[data-bottle-image]");
