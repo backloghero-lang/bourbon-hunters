@@ -29,7 +29,8 @@ await page.waitForFunction(()=>{
   const image=document.querySelector("#detailBody .dphoto img[data-bottle-image]");
   if(!image?.complete||image.naturalWidth===0) return false;
   const rect=image.getBoundingClientRect();
-  return rect.width>0&&rect.height>=480;
+  const stage=image.closest(".dphoto")?.getBoundingClientRect();
+  return rect.width>0&&rect.height>=440&&stage&&rect.height/stage.height>=.75;
 },{timeout:15000});
 const detail=await page.evaluate((id)=>{
   const bottle=bottleById(id);
@@ -45,7 +46,7 @@ const detail=await page.evaluate((id)=>{
   };
 },bottleId);
 if(!detail.source.includes("assets/bourbons/runtime-100/")) throw new Error("Detail does not use the full image: "+JSON.stringify(detail));
-if(detail.renderedHeight<480) throw new Error("Detail bottle is too small: "+JSON.stringify(detail));
+if(detail.renderedHeight<440 || detail.renderedHeight/detail.stageHeight<.75) throw new Error("Detail bottle is too small: "+JSON.stringify(detail));
 if(!detail.listHasImage) throw new Error("List image is missing: "+JSON.stringify(detail));
 if(process.env.BH_DETAIL_SCREENSHOT) await page.screenshot({path:process.env.BH_DETAIL_SCREENSHOT,fullPage:true});
 
