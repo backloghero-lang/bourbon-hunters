@@ -52,11 +52,17 @@ const fallback=await page.evaluate(async()=>{
   const host=document.createElement("div");
   host.innerHTML=bottleImageHtml({id:"fallback-test",name:"Fallback test",image:"assets/bourbons/missing-detail-image.webp",thumb:"assets/bourbons/runtime-100/jim-beam-white-label.png"},false,"Fallback test");
   document.body.appendChild(host);
-  const image=host.querySelector("img[data-bottle-image]");
   await new Promise((resolve,reject)=>{
-    const timeout=setTimeout(()=>reject(new Error("fallback-timeout")),5000);
-    image.addEventListener("load",()=>{ clearTimeout(timeout); resolve(); });
+    const started=Date.now();
+    const check=()=>{
+      const image=host.querySelector("img[data-bottle-image]");
+      if(image?.complete&&image.naturalWidth>0){ resolve(); return; }
+      if(Date.now()-started>=5000){ reject(new Error("fallback-timeout")); return; }
+      requestAnimationFrame(check);
+    };
+    check();
   });
+  const image=host.querySelector("img[data-bottle-image]");
   const result={source:image.getAttribute("src")||"",mystery:!!host.querySelector(".mystery-bottle")};
   host.remove();
   return result;
