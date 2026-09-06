@@ -31,7 +31,7 @@ await page.route("**/catalog/local-cutout",async(route)=>{
 });
 
 async function openMissingBottle(){
-  await page.waitForFunction(()=>typeof bottleById==="function"&&Array.isArray(DB));
+  await page.waitForFunction(()=>typeof bottleById==="function"&&whiskyCatalogLoaded===true);
   await page.evaluate((id)=>{
     AGE_GATE_RUNTIME_OK=true;
     document.getElementById("ageGate")?.classList.remove("show");
@@ -96,6 +96,8 @@ const persistedBlob=await page.evaluate((id)=>openLocalBottleImageDb().then((db)
 if(!persistedBlob) throw new Error("IndexedDB did not persist the local photo as a Blob");
 
 await page.locator("[data-local-photo-remove]").click();
+await page.waitForFunction((id)=>!LOCAL_BOTTLE_IMAGES[id],bottleId);
+await page.evaluate((id)=>openDetail(id,true,true),bottleId);
 await page.waitForFunction(()=>!!document.querySelector("#detailBody .dphoto .mystery-bottle"));
 const finalMystery=await page.locator("#detailBody .dphoto .mystery-bottle").count();
 if(finalMystery!==1) throw new Error("Mystery bottle did not return after local image removal");
