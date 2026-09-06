@@ -19,6 +19,7 @@ await page.route("https://bourbon-hunters.darekmaslyk.workers.dev/**",async(rout
 });
 
 await page.goto(target,{waitUntil:"domcontentloaded"});
+await page.waitForFunction(()=>typeof bottleById==="function"&&typeof openDetail==="function");
 await page.evaluate(()=>{
   AGE_GATE_RUNTIME_OK=true;
   document.getElementById("ageGate")?.classList.remove("show");
@@ -62,6 +63,7 @@ if(!fallback.source.includes("assets/bourbons/runtime-100/jim-beam-white-label.p
 if(process.env.BH_DETAIL_SCREENSHOT) await page.screenshot({path:process.env.BH_DETAIL_SCREENSHOT,fullPage:true});
 
 await page.reload({waitUntil:"domcontentloaded"});
+await page.waitForFunction(()=>typeof showView==="function");
 await page.evaluate(()=>{
   AGE_GATE_RUNTIME_OK=true;
   document.getElementById("ageGate")?.classList.remove("show");
