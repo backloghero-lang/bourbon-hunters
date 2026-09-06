@@ -1,6 +1,6 @@
 {
   "version": "demo-200-v1",
-  "updated": "2026-08-07T19:56:08.535Z",
+  "updated": "2026-09-06T13:47:13.940Z",
   "count": 200,
   "items": [
     {
@@ -236,12 +236,12 @@
       "id": "olcc-8257b",
       "name": "Evan Williams 1783 Small Batch",
       "family": "",
-      "image": "",
-      "status": "missing",
-      "source_url": "",
-      "source_page": "",
-      "license_status": "pending",
-      "notes": "Add a licensed manufacturer, distributor or owner-provided bottle image."
+      "image": "assets/bourbons/demo-200/olcc-8257b.png",
+      "status": "ready",
+      "source_url": "https://evanwilliams.com/images/bottles/ew-1783-upd.png?ver=4",
+      "source_page": "https://evanwilliams.com/ew_bourbon?cta=ew-1783",
+      "license_status": "official_source_review_required",
+      "notes": ""
     },
     {
       "rank": 21,
@@ -548,24 +548,24 @@
       "id": "elijah-craig-toasted-barrel-101-22",
       "name": "Elijah Craig Toasted Barrel",
       "family": "",
-      "image": "",
-      "status": "missing",
-      "source_url": "",
-      "source_page": "",
-      "license_status": "pending",
-      "notes": "Add a licensed manufacturer, distributor or owner-provided bottle image."
+      "image": "assets/bourbons/demo-200/elijah-craig-toasted-barrel-101-22.png",
+      "status": "ready",
+      "source_url": "https://elijahcraig.com/images/bottles/ec-toasted-barrel.png?ver=2",
+      "source_page": "https://elijahcraig.com/our-whiskey",
+      "license_status": "official_source_review_required",
+      "notes": ""
     },
     {
       "rank": 47,
       "id": "popular-1792-small-batch",
       "name": "1792 Small Batch",
       "family": "",
-      "image": "",
-      "status": "missing",
-      "source_url": "",
-      "source_page": "",
-      "license_status": "pending",
-      "notes": "Add a licensed manufacturer, distributor or owner-provided bottle image."
+      "image": "assets/bourbons/demo-200/popular-1792-small-batch.png",
+      "status": "ready",
+      "source_url": "https://www.1792bourbon.com/img/1792-bottle-sm.png",
+      "source_page": "https://www.1792bourbon.com/our-bourbon/",
+      "license_status": "official_source_review_required",
+      "notes": ""
     },
     {
       "rank": 48,
@@ -1280,12 +1280,12 @@
       "id": "popular-chivas-regal-12-year",
       "name": "Chivas Regal 12 Year",
       "family": "",
-      "image": "",
-      "status": "missing",
-      "source_url": "",
-      "source_page": "",
-      "license_status": "pending",
-      "notes": "Add a licensed manufacturer, distributor or owner-provided bottle image."
+      "image": "assets/bourbons/demo-200/popular-chivas-regal-12-year.jpg",
+      "status": "ready",
+      "source_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/Chivas_regal_12yo.jpg/1280px-Chivas_regal_12yo.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Chivas_regal_12yo.jpg",
+      "license_status": "CC BY-SA 4.0",
+      "notes": ""
     },
     {
       "rank": 108,
@@ -1328,12 +1328,12 @@
       "id": "olcc-0352b",
       "name": "Dewar's White Label",
       "family": "",
-      "image": "",
-      "status": "missing",
-      "source_url": "",
-      "source_page": "",
-      "license_status": "pending",
-      "notes": "Add a licensed manufacturer, distributor or owner-provided bottle image."
+      "image": "assets/bourbons/demo-200/olcc-0352b.png",
+      "status": "ready",
+      "source_url": "https://d3hz9tll4wdybl.cloudfront.net/wp-content/uploads/sites/5/2025/09/18074245/FY26_Dewars_White_Label_IPX_Optimised_800x1000.png",
+      "source_page": "https://www.dewars.com/dewars-whiskies/dewars-white-label-whisky/",
+      "license_status": "official_source_review_required",
+      "notes": ""
     },
     {
       "rank": 112,
@@ -1364,12 +1364,12 @@
       "id": "olcc-0368b",
       "name": "The Famous Grouse",
       "family": "",
-      "image": "",
-      "status": "missing",
-      "source_url": "",
-      "source_page": "",
-      "license_status": "pending",
-      "notes": "Add a licensed manufacturer, distributor or owner-provided bottle image."
+      "image": "assets/bourbons/demo-200/olcc-0368b.jpg",
+      "status": "ready",
+      "source_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/af/Famous_Grouse.JPG/1280px-Famous_Grouse.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Famous_Grouse.JPG",
+      "license_status": "CC BY 3.0",
+      "notes": ""
     },
     {
       "rank": 115,
@@ -1388,12 +1388,12 @@
       "id": "popular-monkey-shoulder",
       "name": "Monkey Shoulder",
       "family": "",
-      "image": "",
-      "status": "missing",
-      "source_url": "",
-      "source_page": "",
-      "license_status": "pending",
-      "notes": "Add a licensed manufacturer, distributor or owner-provided bottle image."
+      "image": "assets/bourbons/demo-200/popular-monkey-shoulder.jpg",
+      "status": "ready",
+      "source_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8d/Monkey_Shoulder_scotch_bottle.jpg/1280px-Monkey_Shoulder_scotch_bottle.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Monkey_Shoulder_scotch_bottle.jpg",
+      "license_status": "CC BY-SA 3.0",
+      "notes": ""
     },
     {
       "rank": 117,
@@ -1412,12 +1412,12 @@
       "id": "olcc-0392b",
       "name": "Glenfiddich 15 Year Solera",
       "family": "",
-      "image": "",
-      "status": "missing",
-      "source_url": "",
-      "source_page": "",
-      "license_status": "pending",
-      "notes": "Add a licensed manufacturer, distributor or owner-provided bottle image."
+      "image": "assets/bourbons/demo-200/olcc-0392b.webp",
+      "status": "ready",
+      "source_url": "https://images.ctfassets.net/53l6u5v24bqr/2qmhNu93ca6jdcbpudvkDk/518d22e602a13cb22f29851175a68949/15_YO_1_.webp?fm=webp&w=1200&q=85",
+      "source_page": "https://www.glenfiddich.com/all-products/glenfiddich-xs/xs-15-year-old/",
+      "license_status": "official_source_review_required",
+      "notes": ""
     },
     {
       "rank": 119,
@@ -1436,12 +1436,12 @@
       "id": "olcc-0376b",
       "name": "The Glenlivet 12 Year",
       "family": "",
-      "image": "",
-      "status": "missing",
-      "source_url": "",
-      "source_page": "",
-      "license_status": "pending",
-      "notes": "Add a licensed manufacturer, distributor or owner-provided bottle image."
+      "image": "assets/bourbons/demo-200/olcc-0376b.jpg",
+      "status": "ready",
+      "source_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/58/The_Glenlivet_-_12_yr_Single_Malt.JPG/1280px-The_Glenlivet_-_12_yr_Single_Malt.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source_page": "https://commons.wikimedia.org/wiki/File:The_Glenlivet_-_12_yr_Single_Malt.JPG",
+      "license_status": "CC BY-SA 3.0",
+      "notes": ""
     },
     {
       "rank": 121,
@@ -1508,12 +1508,12 @@
       "id": "popular-the-balvenie-12-year-doublewood",
       "name": "The Balvenie 12 Year DoubleWood",
       "family": "",
-      "image": "",
-      "status": "missing",
-      "source_url": "",
-      "source_page": "",
-      "license_status": "pending",
-      "notes": "Add a licensed manufacturer, distributor or owner-provided bottle image."
+      "image": "assets/bourbons/demo-200/popular-the-balvenie-12-year-doublewood.jpg",
+      "status": "ready",
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/6/6a/Balvenie_Whisky_Doublewood_12_years_old.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Balvenie_Whisky_Doublewood_12_years_old.jpg",
+      "license_status": "CC BY-SA 3.0",
+      "notes": ""
     },
     {
       "rank": 127,
@@ -1592,12 +1592,12 @@
       "id": "popular-ardbeg-10-year",
       "name": "Ardbeg 10 Year",
       "family": "",
-      "image": "",
-      "status": "missing",
-      "source_url": "",
-      "source_page": "",
-      "license_status": "pending",
-      "notes": "Add a licensed manufacturer, distributor or owner-provided bottle image."
+      "image": "assets/bourbons/demo-200/popular-ardbeg-10-year.webp",
+      "status": "ready",
+      "source_url": "https://www.ardbeg.com/cdn/shop/files/Ardbeg-Ten-Bottle.png?v=1770979308&width=800",
+      "source_page": "https://www.ardbeg.com/en-int/products/ardbeg-ten-years-old",
+      "license_status": "official_source_review_required",
+      "notes": ""
     },
     {
       "rank": 134,
@@ -1784,12 +1784,12 @@
       "id": "popular-auchentoshan-three-wood",
       "name": "Auchentoshan Three Wood",
       "family": "",
-      "image": "",
-      "status": "missing",
-      "source_url": "",
-      "source_page": "",
-      "license_status": "pending",
-      "notes": "Add a licensed manufacturer, distributor or owner-provided bottle image."
+      "image": "assets/bourbons/demo-200/popular-auchentoshan-three-wood.webp",
+      "status": "ready",
+      "source_url": "https://www.auchentoshan.com/sites/default/files/styles/original/public/2025-12/whisky-bottle-three-wood-auchentoshan.png.webp?itok=mnA5OJak",
+      "source_page": "https://www.auchentoshan.com/core-range/three-wood",
+      "license_status": "official_source_review_required",
+      "notes": ""
     },
     {
       "rank": 150,
@@ -1868,36 +1868,36 @@
       "id": "bushmills-original-irish-whiskey",
       "name": "Bushmills Original",
       "family": "",
-      "image": "",
-      "status": "missing",
-      "source_url": "",
-      "source_page": "",
-      "license_status": "pending",
-      "notes": "Add a licensed manufacturer, distributor or owner-provided bottle image."
+      "image": "assets/bourbons/demo-200/bushmills-original-irish-whiskey.webp",
+      "status": "ready",
+      "source_url": "https://bushmills.com/cdn/shop/files/bushmills-whiskey-original-front-close-up.png?v=1740610704&width=1946",
+      "source_page": "https://bushmills.com/products/the-original",
+      "license_status": "official_source_review_required",
+      "notes": ""
     },
     {
       "rank": 157,
       "id": "bushmills-black-bush-irish-whiskey",
       "name": "Bushmills Black Bush",
       "family": "",
-      "image": "",
-      "status": "missing",
-      "source_url": "",
-      "source_page": "",
-      "license_status": "pending",
-      "notes": "Add a licensed manufacturer, distributor or owner-provided bottle image."
+      "image": "assets/bourbons/demo-200/bushmills-black-bush-irish-whiskey.webp",
+      "status": "ready",
+      "source_url": "https://bushmills.com/cdn/shop/files/bushmills-whiskey-black-bush_0ffcc362-451f-4d40-a793-d1d4ba85a179.png?v=1739469677\\u0026width=1920",
+      "source_page": "https://bushmills.com/products/black-bush",
+      "license_status": "official_source_review_required",
+      "notes": ""
     },
     {
       "rank": 158,
       "id": "bushmills-10-year-old-single-malt",
       "name": "Bushmills 10 Year Old Single Malt",
       "family": "",
-      "image": "",
-      "status": "missing",
-      "source_url": "",
-      "source_page": "",
-      "license_status": "pending",
-      "notes": "Add a licensed manufacturer, distributor or owner-provided bottle image."
+      "image": "assets/bourbons/demo-200/bushmills-10-year-old-single-malt.webp",
+      "status": "ready",
+      "source_url": "https://bushmills.com/cdn/shop/files/bushmills-single-malt-whiskey-10Y_e721e528-4784-4265-965f-9a437fad383f.png?v=1740697051\\u0026width=1920",
+      "source_page": "https://bushmills.com/products/10-year",
+      "license_status": "official_source_review_required",
+      "notes": ""
     },
     {
       "rank": 159,
@@ -1916,12 +1916,12 @@
       "id": "bushmills-16-year-old-single-malt",
       "name": "Bushmills 16 Year Old Single Malt",
       "family": "",
-      "image": "",
-      "status": "missing",
-      "source_url": "",
-      "source_page": "",
-      "license_status": "pending",
-      "notes": "Add a licensed manufacturer, distributor or owner-provided bottle image."
+      "image": "assets/bourbons/demo-200/bushmills-16-year-old-single-malt.webp",
+      "status": "ready",
+      "source_url": "https://bushmills.com/cdn/shop/files/bushmills-single-malt-whiskey-16Y_f613e853-9f63-4a90-9108-1e0cd3a740a3.png?v=1740697270\\u0026width=1920",
+      "source_page": "https://bushmills.com/products/16-year",
+      "license_status": "official_source_review_required",
+      "notes": ""
     },
     {
       "rank": 161,
@@ -2120,12 +2120,12 @@
       "id": "popular-nikka-from-the-barrel",
       "name": "Nikka From the Barrel",
       "family": "",
-      "image": "",
-      "status": "missing",
-      "source_url": "",
-      "source_page": "",
-      "license_status": "pending",
-      "notes": "Add a licensed manufacturer, distributor or owner-provided bottle image."
+      "image": "assets/bourbons/demo-200/popular-nikka-from-the-barrel.jpg",
+      "status": "ready",
+      "source_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/25/Nikka_Whisky_From_the_Barrel%2C_Japan.jpg/1280px-Nikka_Whisky_From_the_Barrel%2C_Japan.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Nikka_Whisky_From_the_Barrel,_Japan.jpg",
+      "license_status": "CC BY 2.0",
+      "notes": ""
     },
     {
       "rank": 178,
@@ -2396,12 +2396,12 @@
       "id": "popular-canadian-club-1858",
       "name": "Canadian Club 1858",
       "family": "",
-      "image": "",
-      "status": "missing",
-      "source_url": "",
-      "source_page": "",
-      "license_status": "pending",
-      "notes": "Add a licensed manufacturer, distributor or owner-provided bottle image."
+      "image": "assets/bourbons/demo-200/popular-canadian-club-1858.webp",
+      "status": "ready",
+      "source_url": "https://www.canadianclub.com/sites/default/files/styles/original/public/2024-10/canadian-club-bottle-whisky-1858.png.webp?itok=m1hl07wt",
+      "source_page": "https://www.canadianclub.com/products/1858-blended-canadian-whisky-0",
+      "license_status": "official_source_review_required",
+      "notes": ""
     }
   ]
 }

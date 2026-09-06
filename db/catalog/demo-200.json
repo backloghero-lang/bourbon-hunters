@@ -1,6 +1,6 @@
 {
   "version": "demo-200-v1",
-  "updated": "2026-08-07T19:56:08.535Z",
+  "updated": "2026-09-06T13:47:13.940Z",
   "count": 200,
   "bottles": [
     {
@@ -1280,7 +1280,7 @@
           "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą łagodny dąb i ciepłe przyprawy."
         }
       },
-      "image": "",
+      "image": "assets/bourbons/demo-200/olcc-8257b.png",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -1295,13 +1295,13 @@
       "recognition_priority": 100,
       "demo_rank": 20,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "image_provenance": {
-        "status": "source_required",
-        "method": "none",
-        "source_url": "",
-        "source_page": "",
-        "license_status": "pending"
+        "status": "existing_repository_asset",
+        "method": "official_source_override",
+        "source_url": "https://evanwilliams.com/images/bottles/ew-1783-upd.png?ver=4",
+        "source_page": "https://evanwilliams.com/ew_bourbon?cta=ew-1783",
+        "license_status": "official_source_review_required"
       }
     },
     {
@@ -2925,7 +2925,7 @@
           "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą kukurydziana słodycz i opalany dąb."
         }
       },
-      "image": "",
+      "image": "assets/bourbons/demo-200/elijah-craig-toasted-barrel-101-22.png",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -2941,13 +2941,13 @@
       "recognition_priority": 100,
       "demo_rank": 46,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "image_provenance": {
-        "status": "source_required",
-        "method": "none",
-        "source_url": "",
-        "source_page": "",
-        "license_status": "pending"
+        "status": "existing_repository_asset",
+        "method": "official_source_override",
+        "source_url": "https://elijahcraig.com/images/bottles/ec-toasted-barrel.png?ver=2",
+        "source_page": "https://elijahcraig.com/our-whiskey",
+        "license_status": "official_source_review_required"
       }
     },
     {
@@ -2986,7 +2986,7 @@
           "finish": "cieply finisz z wanilia, przyprawami i opaleniem"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/demo-200/popular-1792-small-batch.png",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -3000,13 +3000,13 @@
       "recognition_priority": 100,
       "demo_rank": 47,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "image_provenance": {
-        "status": "source_required",
-        "method": "none",
-        "source_url": "",
-        "source_page": "",
-        "license_status": "pending"
+        "status": "existing_repository_asset",
+        "method": "official_source_override",
+        "source_url": "https://www.1792bourbon.com/img/1792-bottle-sm.png",
+        "source_page": "https://www.1792bourbon.com/our-bourbon/",
+        "license_status": "official_source_review_required"
       }
     },
     {
@@ -6719,7 +6719,7 @@
           "finish": "slodowy finisz z owocami i suchym debem"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/demo-200/popular-chivas-regal-12-year.jpg",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -6733,13 +6733,13 @@
       "recognition_priority": 100,
       "demo_rank": 107,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "image_provenance": {
-        "status": "source_required",
-        "method": "none",
-        "source_url": "",
-        "source_page": "",
-        "license_status": "pending"
+        "status": "existing_repository_asset",
+        "method": "official_source_override",
+        "source_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/Chivas_regal_12yo.jpg/1280px-Chivas_regal_12yo.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "source_page": "https://commons.wikimedia.org/wiki/File:Chivas_regal_12yo.jpg",
+        "license_status": "CC BY-SA 4.0"
       }
     },
     {
@@ -6960,7 +6960,7 @@
           "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą dąb i łagodne przyprawy."
         }
       },
-      "image": "",
+      "image": "assets/bourbons/demo-200/olcc-0352b.png",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -6975,13 +6975,13 @@
       "recognition_priority": 100,
       "demo_rank": 111,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "image_provenance": {
-        "status": "source_required",
-        "method": "none",
-        "source_url": "",
-        "source_page": "",
-        "license_status": "pending"
+        "status": "existing_repository_asset",
+        "method": "official_source_override",
+        "source_url": "https://d3hz9tll4wdybl.cloudfront.net/wp-content/uploads/sites/5/2025/09/18074245/FY26_Dewars_White_Label_IPX_Optimised_800x1000.png",
+        "source_page": "https://www.dewars.com/dewars-whiskies/dewars-white-label-whisky/",
+        "license_status": "official_source_review_required"
       }
     },
     {
@@ -7145,7 +7145,7 @@
           "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą dąb i łagodne przyprawy."
         }
       },
-      "image": "",
+      "image": "assets/bourbons/demo-200/olcc-0368b.jpg",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -7161,13 +7161,13 @@
       "recognition_priority": 100,
       "demo_rank": 114,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "image_provenance": {
-        "status": "source_required",
-        "method": "none",
-        "source_url": "",
-        "source_page": "",
-        "license_status": "pending"
+        "status": "existing_repository_asset",
+        "method": "official_source_override",
+        "source_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/af/Famous_Grouse.JPG/1280px-Famous_Grouse.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "source_page": "https://commons.wikimedia.org/wiki/File:Famous_Grouse.JPG",
+        "license_status": "CC BY 3.0"
       }
     },
     {
@@ -7266,7 +7266,7 @@
           "finish": "slodowy finisz z owocami i suchym debem"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/demo-200/popular-monkey-shoulder.jpg",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -7280,13 +7280,13 @@
       "recognition_priority": 100,
       "demo_rank": 116,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "image_provenance": {
-        "status": "source_required",
-        "method": "none",
-        "source_url": "",
-        "source_page": "",
-        "license_status": "pending"
+        "status": "existing_repository_asset",
+        "method": "official_source_override",
+        "source_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8d/Monkey_Shoulder_scotch_bottle.jpg/1280px-Monkey_Shoulder_scotch_bottle.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "source_page": "https://commons.wikimedia.org/wiki/File:Monkey_Shoulder_scotch_bottle.jpg",
+        "license_status": "CC BY-SA 3.0"
       }
     },
     {
@@ -7391,7 +7391,7 @@
           "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą dąb i łagodne przyprawy."
         }
       },
-      "image": "",
+      "image": "assets/bourbons/demo-200/olcc-0392b.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -7406,13 +7406,13 @@
       "recognition_priority": 100,
       "demo_rank": 118,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "image_provenance": {
-        "status": "source_required",
-        "method": "none",
-        "source_url": "",
-        "source_page": "",
-        "license_status": "pending"
+        "status": "existing_repository_asset",
+        "method": "official_source_override",
+        "source_url": "https://images.ctfassets.net/53l6u5v24bqr/2qmhNu93ca6jdcbpudvkDk/518d22e602a13cb22f29851175a68949/15_YO_1_.webp?fm=webp&w=1200&q=85",
+        "source_page": "https://www.glenfiddich.com/all-products/glenfiddich-xs/xs-15-year-old/",
+        "license_status": "official_source_review_required"
       }
     },
     {
@@ -7518,7 +7518,7 @@
           "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą dąb i łagodne przyprawy."
         }
       },
-      "image": "",
+      "image": "assets/bourbons/demo-200/olcc-0376b.jpg",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -7533,13 +7533,13 @@
       "recognition_priority": 100,
       "demo_rank": 120,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "image_provenance": {
-        "status": "source_required",
-        "method": "none",
-        "source_url": "",
-        "source_page": "",
-        "license_status": "pending"
+        "status": "existing_repository_asset",
+        "method": "official_source_override",
+        "source_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/58/The_Glenlivet_-_12_yr_Single_Malt.JPG/1280px-The_Glenlivet_-_12_yr_Single_Malt.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "source_page": "https://commons.wikimedia.org/wiki/File:The_Glenlivet_-_12_yr_Single_Malt.JPG",
+        "license_status": "CC BY-SA 3.0"
       }
     },
     {
@@ -7898,7 +7898,7 @@
           "finish": "slodowy finisz z owocami i suchym debem"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/demo-200/popular-the-balvenie-12-year-doublewood.jpg",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -7912,13 +7912,13 @@
       "recognition_priority": 100,
       "demo_rank": 126,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "image_provenance": {
-        "status": "source_required",
-        "method": "none",
-        "source_url": "",
-        "source_page": "",
-        "license_status": "pending"
+        "status": "existing_repository_asset",
+        "method": "official_source_override",
+        "source_url": "https://upload.wikimedia.org/wikipedia/commons/6/6a/Balvenie_Whisky_Doublewood_12_years_old.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+        "source_page": "https://commons.wikimedia.org/wiki/File:Balvenie_Whisky_Doublewood_12_years_old.jpg",
+        "license_status": "CC BY-SA 3.0"
       }
     },
     {
@@ -8332,7 +8332,7 @@
           "finish": "slodowy finisz z owocami i suchym debem"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/demo-200/popular-ardbeg-10-year.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -8346,13 +8346,13 @@
       "recognition_priority": 100,
       "demo_rank": 133,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "image_provenance": {
-        "status": "source_required",
-        "method": "none",
-        "source_url": "",
-        "source_page": "",
-        "license_status": "pending"
+        "status": "existing_repository_asset",
+        "method": "official_source_override",
+        "source_url": "https://www.ardbeg.com/cdn/shop/files/Ardbeg-Ten-Bottle.png?v=1770979308&width=800",
+        "source_page": "https://www.ardbeg.com/en-int/products/ardbeg-ten-years-old",
+        "license_status": "official_source_review_required"
       }
     },
     {
@@ -9316,7 +9316,7 @@
           "finish": "slodowy finisz z owocami i suchym debem"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/demo-200/popular-auchentoshan-three-wood.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -9330,13 +9330,13 @@
       "recognition_priority": 100,
       "demo_rank": 149,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "image_provenance": {
-        "status": "source_required",
-        "method": "none",
-        "source_url": "",
-        "source_page": "",
-        "license_status": "pending"
+        "status": "existing_repository_asset",
+        "method": "official_source_override",
+        "source_url": "https://www.auchentoshan.com/sites/default/files/styles/original/public/2025-12/whisky-bottle-three-wood-auchentoshan.png.webp?itok=mnA5OJak",
+        "source_page": "https://www.auchentoshan.com/core-range/three-wood",
+        "license_status": "official_source_review_required"
       }
     },
     {
@@ -9739,7 +9739,7 @@
           "finish": "czysty finisz z miodem i lagodna przyprawa"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/demo-200/bushmills-original-irish-whiskey.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -9753,13 +9753,13 @@
       "recognition_priority": 100,
       "demo_rank": 156,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "image_provenance": {
-        "status": "source_required",
-        "method": "none",
-        "source_url": "",
-        "source_page": "",
-        "license_status": "pending"
+        "status": "existing_repository_asset",
+        "method": "official_source_override",
+        "source_url": "https://bushmills.com/cdn/shop/files/bushmills-whiskey-original-front-close-up.png?v=1740610704&width=1946",
+        "source_page": "https://bushmills.com/products/the-original",
+        "license_status": "official_source_review_required"
       }
     },
     {
@@ -9798,7 +9798,7 @@
           "finish": "czysty finisz z miodem i lagodna przyprawa"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/demo-200/bushmills-black-bush-irish-whiskey.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -9812,13 +9812,13 @@
       "recognition_priority": 100,
       "demo_rank": 157,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "image_provenance": {
-        "status": "source_required",
-        "method": "none",
-        "source_url": "",
-        "source_page": "",
-        "license_status": "pending"
+        "status": "existing_repository_asset",
+        "method": "official_source_override",
+        "source_url": "https://bushmills.com/cdn/shop/files/bushmills-whiskey-black-bush_0ffcc362-451f-4d40-a793-d1d4ba85a179.png?v=1739469677\\u0026width=1920",
+        "source_page": "https://bushmills.com/products/black-bush",
+        "license_status": "official_source_review_required"
       }
     },
     {
@@ -9864,7 +9864,7 @@
           "finish": "czysty finisz z miodem i lagodna przyprawa"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/demo-200/bushmills-10-year-old-single-malt.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -9878,13 +9878,13 @@
       "recognition_priority": 100,
       "demo_rank": 158,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "image_provenance": {
-        "status": "source_required",
-        "method": "none",
-        "source_url": "",
-        "source_page": "",
-        "license_status": "pending"
+        "status": "existing_repository_asset",
+        "method": "official_source_override",
+        "source_url": "https://bushmills.com/cdn/shop/files/bushmills-single-malt-whiskey-10Y_e721e528-4784-4265-965f-9a437fad383f.png?v=1740697051\\u0026width=1920",
+        "source_page": "https://bushmills.com/products/10-year",
+        "license_status": "official_source_review_required"
       }
     },
     {
@@ -9996,7 +9996,7 @@
           "finish": "czysty finisz z miodem i lagodna przyprawa"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/demo-200/bushmills-16-year-old-single-malt.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -10010,13 +10010,13 @@
       "recognition_priority": 100,
       "demo_rank": 160,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "image_provenance": {
-        "status": "source_required",
-        "method": "none",
-        "source_url": "",
-        "source_page": "",
-        "license_status": "pending"
+        "status": "existing_repository_asset",
+        "method": "official_source_override",
+        "source_url": "https://bushmills.com/cdn/shop/files/bushmills-single-malt-whiskey-16Y_f613e853-9f63-4a90-9108-1e0cd3a740a3.png?v=1740697270\\u0026width=1920",
+        "source_page": "https://bushmills.com/products/16-year",
+        "license_status": "official_source_review_required"
       }
     },
     {
@@ -11024,7 +11024,7 @@
           "finish": "precyzyjny finisz z owocami i lagodna przyprawa"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/demo-200/popular-nikka-from-the-barrel.jpg",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -11038,13 +11038,13 @@
       "recognition_priority": 100,
       "demo_rank": 177,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "image_provenance": {
-        "status": "source_required",
-        "method": "none",
-        "source_url": "",
-        "source_page": "",
-        "license_status": "pending"
+        "status": "existing_repository_asset",
+        "method": "official_source_override",
+        "source_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/25/Nikka_Whisky_From_the_Barrel%2C_Japan.jpg/1280px-Nikka_Whisky_From_the_Barrel%2C_Japan.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "source_page": "https://commons.wikimedia.org/wiki/File:Nikka_Whisky_From_the_Barrel,_Japan.jpg",
+        "license_status": "CC BY 2.0"
       }
     },
     {
@@ -12417,7 +12417,7 @@
           "finish": "cieply finisz z wanilia, przyprawami i opaleniem"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/demo-200/popular-canadian-club-1858.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -12431,13 +12431,13 @@
       "recognition_priority": 100,
       "demo_rank": 200,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "image_provenance": {
-        "status": "source_required",
-        "method": "none",
-        "source_url": "",
-        "source_page": "",
-        "license_status": "pending"
+        "status": "existing_repository_asset",
+        "method": "official_source_override",
+        "source_url": "https://www.canadianclub.com/sites/default/files/styles/original/public/2024-10/canadian-club-bottle-whisky-1858.png.webp?itok=m1hl07wt",
+        "source_page": "https://www.canadianclub.com/products/1858-blended-canadian-whisky-0",
+        "license_status": "official_source_review_required"
       }
     }
   ]

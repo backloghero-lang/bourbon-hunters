@@ -988,7 +988,7 @@
 <script>
 /* ========= KONFIGURACJA ========= */
 const WORKER_URL = "https://bourbon-hunters.darekmaslyk.workers.dev";
-const APP_VERSION = "133";
+const APP_VERSION = "135";
 const API_CONTRACT_VERSION = "bh-api-2026-08-v1";
 const DB_URL = "db/catalog/demo-200.json";
 const PROFILES_URL = "db/profiles-runtime.json";
@@ -1499,6 +1499,13 @@ function localBottleImage(b){
   const id=canonicalBottleId(b&&b.id);
   return id&&LOCAL_BOTTLE_IMAGES[id] ? String(LOCAL_BOTTLE_IMAGES[id]) : "";
 }
+function bottleImageSources(b,small){
+  const local=localBottleImage(b);
+  const preferred=officialBottleImage(b,small);
+  const alternate=String((b&&(small?b.image:b.thumb))||"");
+  if(local) return {primary:local,fallback:preferred};
+  return {primary:preferred,fallback:alternate&&alternate!==preferred?alternate:""};
+}
 function revokeLocalBottleImage(id){
   const src=LOCAL_BOTTLE_IMAGES[id];
   if(src&&String(src).indexOf("blob:")===0) URL.revokeObjectURL(src);
@@ -1521,9 +1528,11 @@ function dataUrlToBlob(dataUrl){
 }
 function bottleImage(b,small){ return localBottleImage(b)||officialBottleImage(b,small); }
 function bottleImageHtml(b,small,alt){
-  const src=safeImageSrc(bottleImage(b,small),"");
+  const sources=bottleImageSources(b,small);
+  const src=safeImageSrc(sources.primary,"");
+  const fallback=safeImageSrc(sources.fallback,"");
   return src
-    ? '<img src="'+esc(src)+'" alt="'+esc(alt||b&&b.name||"")+'" data-bottle-image="1" data-mystery-size="'+(small?"small":"large")+'" loading="'+(small?"lazy":"eager")+'" decoding="async">'
+    ? '<img src="'+esc(src)+'" alt="'+esc(alt||b&&b.name||"")+'" data-bottle-image="1" data-bottle-fallback="'+esc(fallback)+'" data-mystery-size="'+(small?"small":"large")+'" loading="'+(small?"lazy":"eager")+'" decoding="async">'
     : mysteryBottleHtml(!!small);
 }
 function openLocalBottleImageDb(){
@@ -3331,11 +3340,11 @@ function newsCardHtml(item){
   const fallbackImage="assets/news/editorial-fallback-v1.jpg";
   const proxyImage=item.id ? safeImageSrc(WORKER_URL+"/news/image/"+encodeURIComponent(item.id)+"?v="+encodeURIComponent(APP_VERSION),"") : "";
   const sourceImage=safeImageSrc(item.image_url,"");
-  const image=proxyImage||sourceImage||fallbackImage;
+  const image=sourceImage||proxyImage||fallbackImage;
   const href=safeHttpUrl(item.url,"#");
   const date=newsDateLabel(item.published_at);
   return '<a class="news-card" href="'+esc(href)+'" target="_blank" rel="noopener noreferrer" data-external-article="'+esc(href==="#"?"":href)+'" aria-label="'+esc((item.title||"")+" - "+t("readArticle"))+'">'+
-    '<img src="'+esc(image)+'" alt="" loading="lazy" referrerpolicy="no-referrer" data-image-source="'+esc(proxyImage&&sourceImage?sourceImage:"")+'" data-image-fallback="'+esc(fallbackImage)+'">'+
+    '<img src="'+esc(image)+'" alt="" loading="lazy" referrerpolicy="no-referrer" data-image-source="'+esc(sourceImage&&proxyImage?proxyImage:"")+'" data-image-fallback="'+esc(fallbackImage)+'">'+
     '<div class="news-card-body"><div class="news-card-meta"><span>'+esc(item.source_name||"Whisky")+'</span>'+(date?'<span>'+esc(date)+'</span>':'')+'</div>'+
     '<h4>'+esc(item.title||"")+'</h4><p>'+esc(excerpt)+'</p></div></a>';
 }
@@ -3890,6 +3899,9 @@ document.addEventListener("click",function(e){
 document.addEventListener("error",function(e){
   const img=e.target;
   if(!img || !img.matches || !img.matches("img[data-bottle-image]")) return;
+  const fallback=safeImageSrc(img.getAttribute("data-bottle-fallback"),"");
+  img.removeAttribute("data-bottle-fallback");
+  if(fallback && fallback!==img.src){ img.src=fallback; return; }
   img.outerHTML=mysteryBottleHtml(img.getAttribute("data-mystery-size")==="small");
 },true);
 document.getElementById("catAll").addEventListener("click",function(){ openExploreFamily("all",false,[]); });

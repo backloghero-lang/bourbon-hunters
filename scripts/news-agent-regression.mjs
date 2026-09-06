@@ -19,7 +19,7 @@ if(api.newsSourceForUrl("https://thewhiskeywash.com/story")!=="The Whiskey Wash"
 if(api.newsSourceForUrl("https://distiller.com/articles/example")) throw new Error("Competing application source was accepted");
 if(api.newsSourceForUrl("https://breakingbourbon.com/article/example")!=="Breaking Bourbon") throw new Error("Breaking Bourbon source mapping failed");
 if(api.NEWS_DISCOVERY_PAGES.some((url)=>url.includes("distiller.com"))) throw new Error("Competing application is present in discovery pages");
-if(api.NEWS_AGENT_VERSION!=="whisky-news-source-first-v9-editorial-only-images") throw new Error("Unexpected news agent version");
+if(api.NEWS_AGENT_VERSION!=="whisky-news-source-first-v10-direct-original-images") throw new Error("Unexpected news agent version");
 for(const path of ["News","Videos","Glossary","Whisky-101","whiskey-life","ratings-reviews","Whisky-Bars-Map"]){
   if(api.newsLinkLooksEditorial("https://whiskyadvocate.com/"+path)) throw new Error("Non-article page was accepted: "+path);
 }
@@ -37,7 +37,7 @@ if(!source.includes("newsThumbnailHashUsed(env,key,candidateSha)")) throw new Er
 if(!source.includes('path.match(/^\\/news\\/image\\/([^/]+)$/)')) throw new Error("News thumbnail proxy route is missing");
 if(!source.includes("backfillNewsThumbnails(env,30)")) throw new Error("Scheduled thumbnail backfill is missing");
 if(!source.includes("repaired.source_url||row.image_url")) throw new Error("Direct article image fallback is missing");
-if(!source.includes("assets/news/editorial-fallback-v1.jpg")) throw new Error("Neutral editorial fallback is missing");
+if(!source.includes('return J({error:"image_unavailable"},404,cors)')) throw new Error("Unavailable Worker thumbnails must allow the UI fallback chain");
 
 const links=api.newsLinksFromIndex(`
   <a href="/articles/new-release/">valid</a>

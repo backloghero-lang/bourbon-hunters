@@ -87,19 +87,77 @@ const GENERIC=new Set("the whisky whiskey kentucky straight proof year years old
 const QUERY_ALIASES=new Map([
   ["popular-bulleit-bourbon","Bulleit Bourbon"]
 ]);
+const PAGE_HINTS=new Map([
+  ["popular-chivas-regal-12-year",["https://www.chivas.com/en/collection/chivas-12/"]],
+  ["popular-chivas-regal-18-year",["https://www.chivas.com/en/collection/chivas-regal-18/"]],
+  ["popular-jameson-irish-whiskey",["https://www.jamesonwhiskey.com/en-us/our-whiskey/jameson-irish-whiskey/"]],
+  ["popular-jameson-black-barrel",["https://www.jamesonwhiskey.com/en-us/our-whiskey/jameson-black-barrel/"]],
+  ["popular-jameson-caskmates-stout-edition",["https://www.jamesonwhiskey.com/en/our-whiskey/jameson-stout-edition/"]],
+  ["bushmills-original-irish-whiskey",["https://bushmills.com/products/the-original"]],
+  ["bushmills-black-bush-irish-whiskey",["https://bushmills.com/products/black-bush"]],
+  ["bushmills-10-year-old-single-malt",["https://bushmills.com/products/10-year"]],
+  ["bushmills-16-year-old-single-malt",["https://bushmills.com/products/16-year"]],
+  ["popular-redbreast-12-year",["https://www.redbreastwhiskey.com/en-us/whiskey-collections/redbreast-12-year-old/"]],
+  ["popular-redbreast-15-year",["https://www.redbreastwhiskey.com/en-us/whiskey-collections/redbreast-15-year-old/"]],
+  ["popular-redbreast-12-year-cask-strength",["https://www.redbreastwhiskey.com/en-us/whiskey-collections/redbreast-12-year-old-cask-strength/"]],
+  ["popular-green-spot",["https://www.spotwhiskey.com/en-us/whiskeys/green-spot/"]],
+  ["popular-yellow-spot-12-year",["https://www.spotwhiskey.com/en-us/whiskeys/yellow-spot/"]],
+  ["popular-powers-gold-label",["https://www.powerswhiskey.com/en-us/our-whiskeys"]],
+  ["popular-powers-three-swallow",["https://www.powerswhiskey.com/en-us/our-whiskeys"]],
+  ["popular-nikka-from-the-barrel",["https://www.nikka.com/en/brands/"]],
+  ["olcc-2619b",["https://www.nikka.com/en/brands/"]],
+  ["olcc-4087b",["https://www.nikka.com/en/brands/"]],
+  ["popular-nikka-days",["https://www.nikka.com/en/brands/"]],
+  ["popular-nikka-yoichi-single-malt",["https://www.nikka.com/en/brands/"]],
+  ["popular-nikka-miyagikyo-single-malt",["https://www.nikka.com/en/brands/"]],
+  ["popular-ardbeg-10-year",["https://www.ardbeg.com/en-int/products/ardbeg-ten-years-old"]],
+  ["popular-the-macallan-12-year-double-cask",["https://www.themacallan.com/en/single-malt-scotch-whisky/double-cask-12-years-old"]],
+  ["popular-the-macallan-12-year-sherry-oak",["https://www.themacallan.com/en/single-malt-scotch-whisky/sherry-oak-12-years-old"]],
+  ["popular-the-macallan-15-year-double-cask",["https://www.themacallan.com/en/single-malt-scotch-whisky/double-cask-15-years-old"]]
+]);
 const PAGE_BLOCKLIST=/cocktail|recipe|whiskey-drinks|drink|story|stories|news|blog|visit|shop|merch|faq|press|event|podcast/i;
 const IMAGE_BLOCKLIST=/logo|icon|cocktail|recipe|serve|social|footer|header-logo|award|distillery|people|person|interview|youtube|thumbnail/i;
 const sleep=(ms)=>new Promise((resolve)=>setTimeout(resolve,ms));
 const decode=(value)=>String(value||"").replace(/&amp;/g,"&").replace(/&#0*39;|&apos;/g,"'").replace(/&quot;/g,'"');
-const norm=(value)=>String(value||"").normalize("NFKD").toLowerCase().replace(/[^a-z0-9]+/g," ").replace(/\s+/g," ").trim();
+const norm=(value)=>String(value||"").normalize("NFKD").toLowerCase().replace(/([0-9])([a-z])/g,"$1 $2").replace(/([a-z])([0-9])/g,"$1 $2").replace(/[^a-z0-9]+/g," ").replace(/\s+/g," ").trim();
+const onlyTerms=only.split("|").map((value)=>norm(value)).filter(Boolean);
 const tokens=(value)=>norm(value).split(" ").filter((token)=>token && (!GENERIC.has(token) || /^\d+$/.test(token)));
 const safeName=(value)=>String(value||"").replace(/[^a-z0-9._-]+/gi,"-").replace(/-+/g,"-").replace(/^-|-$/g,"").toLowerCase();
 const unique=(values)=>Array.from(new Set(values.filter(Boolean)));
 
 async function get(url, binary=false){
-  const response=await fetch(url,{headers:{"User-Agent":"BourbonHuntersDemoAssetBot/1.0 (+https://github.com/backloghero-lang/bourbon-hunters)",Accept:binary?"image/webp,image/png,image/jpeg,*/*;q=0.2":"text/html,application/xml;q=0.9,*/*;q=0.5"},redirect:"follow",signal:AbortSignal.timeout(25000)});
+  const response=await fetch(url,{headers:{"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/140 Safari/537.36 BourbonHuntersDemo/1.0",Accept:binary?"image/webp,image/png,image/jpeg,*/*;q=0.2":"text/html,application/xml;q=0.9,*/*;q=0.5"},redirect:"follow",signal:AbortSignal.timeout(25000)});
   if(!response.ok) throw new Error("HTTP "+response.status);
   return binary?{bytes:Buffer.from(await response.arrayBuffer()),type:response.headers.get("content-type")||"",url:response.url}:{text:await response.text(),type:response.headers.get("content-type")||"",url:response.url};
+}
+
+function bingResultTarget(raw){
+  try{
+    const parsed=new URL(decode(raw),"https://www.bing.com/");
+    if(!/(?:^|\.)bing\.com$/i.test(parsed.hostname)) return parsed.href;
+    const encoded=parsed.searchParams.get("u")||"";
+    if(!encoded.startsWith("a1")) return "";
+    return Buffer.from(encoded.slice(2),"base64url").toString("utf8");
+  }catch(e){ return ""; }
+}
+
+async function searchOfficialProductPages(origin,item){
+  const rootHost=new URL(origin).hostname.replace(/^www\./i,"").toLowerCase();
+  const query=`site:${rootHost} "${queryName(item)}" whisky bottle`;
+  try{
+    const response=await get("https://www.bing.com/search?q="+encodeURIComponent(query));
+    const pages=[];
+    for(const match of response.text.matchAll(/<a\b[^>]*href\s*=\s*(["'])(.*?)\1/gi)){
+      const target=bingResultTarget(match[2]);
+      if(!target) continue;
+      try{
+        const url=new URL(target);
+        const host=url.hostname.replace(/^www\./i,"").toLowerCase();
+        if(host===rootHost || host.endsWith("."+rootHost)) pages.push(url.href);
+      }catch(e){}
+    }
+    return unique(pages);
+  }catch(e){ return []; }
 }
 
 function sitemapLocations(xml){
@@ -200,13 +258,14 @@ function imageCandidates(html,pageUrl,item){
     if(!/^https?:/i.test(url)) return;
     const hay=norm(url+" "+label);
     let score=0;
-    tokens(queryName(item)).forEach((token)=>{ if(new RegExp("(?:^| )"+token+"(?: |$)").test(hay)) score+=/^\d+$/.test(token)?8:4; });
+    let matched=0;
+    tokens(queryName(item)).forEach((token)=>{ if(new RegExp("(?:^| )"+token+"(?: |$)").test(hay)){ matched+=1; score+=/^\d+$/.test(token)?8:4; } });
     if(/bottle|packshot|front/.test(hay)) score+=14;
     else if(/product|hero/.test(hay)) score+=4;
     if(kind==="jsonld") score+=5;
     if(kind==="og") score+=2;
     if(IMAGE_BLOCKLIST.test(hay)) score-=30;
-    out.push({url,label,kind,score});
+    out.push({url,label,kind,score,hay,matched});
   };
   for(const tag of html.match(/<meta\b[^>]*>/gi)||[]){
     const a=attrs(tag),key=String(a.property||a.name||"").toLowerCase();
@@ -255,6 +314,55 @@ function bottleLikeDimensions(dimensions){
   return dimensions.width>=300 && dimensions.height>=400 && dimensions.height/dimensions.width>=0.9;
 }
 
+function plainMetadata(value){
+  return String(value&&value.value||value||"").replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim();
+}
+
+async function commonsImage(item){
+  const params=new URLSearchParams({
+    action:"query",format:"json",generator:"search",gsrnamespace:"6",gsrlimit:"12",
+    gsrsearch:tokens(queryName(item)).join(" "),
+    prop:"imageinfo",iiprop:"url|size|mime|extmetadata",iiurlwidth:"1200"
+  });
+  try{
+    const response=await get("https://commons.wikimedia.org/w/api.php?"+params);
+    const payload=JSON.parse(response.text);
+    const wanted=tokens(queryName(item));
+    const wantedNumbers=norm(queryName(item)).match(/\b\d+\b/g)||[];
+    const candidates=Object.values(payload.query&&payload.query.pages||{}).map((page)=>{
+      const info=page.imageinfo&&page.imageinfo[0]||{};
+      const title=norm(String(page.title||"").replace(/^file:/i,""));
+      const matched=wanted.filter((token)=>new RegExp("(?:^| )"+token+"(?: |$)").test(title));
+      const numberMatch=wantedNumbers.every((number)=>new RegExp("(?:^| )"+number+"(?: |$)").test(title));
+      const license=plainMetadata(info.extmetadata&&info.extmetadata.LicenseShortName);
+      let score=matched.length*6+(numberMatch?8:0);
+      if(/bottle|whisk|bourbon|scotch|irish/.test(title)) score+=5;
+      if(IMAGE_BLOCKLIST.test(title)) score-=30;
+      const titleLength=title.split(" ").filter(Boolean).length;
+      const beverageCue=/bottle|whisk|bourbon|scotch|rye/.test(title);
+      const compactTitle=titleLength<=wanted.length+3;
+      return {page,info,title,license,matched:matched.length,numberMatch,score,beverageCue,compactTitle};
+    }).filter((candidate)=>{
+      const enoughTokens=candidate.matched>=Math.min(2,wanted.length) && candidate.matched/Math.max(1,wanted.length)>=0.55;
+      return enoughTokens && candidate.numberMatch && candidate.beverageCue && /^image\/(?:jpeg|png|webp)$/i.test(candidate.info.mime||"") && /^(?:CC0|Public domain|CC BY(?:-SA)?(?: |$))/i.test(candidate.license);
+    }).sort((left,right)=>right.score-left.score);
+    for(const candidate of candidates){
+      const downloaded=await get(candidate.info.thumburl||candidate.info.url,true);
+      const dimensions={width:Number(candidate.info.thumbwidth||candidate.info.width)||0,height:Number(candidate.info.thumbheight||candidate.info.height)||0};
+      if(downloaded.bytes.length<12000 || !bottleLikeDimensions(dimensions)) continue;
+      const metadata=candidate.info.extmetadata||{};
+      return {
+        page_url:candidate.info.descriptionurl||"https://commons.wikimedia.org/wiki/"+encodeURIComponent(candidate.page.title||""),
+        image_url:downloaded.url,bytes:downloaded.bytes,type:downloaded.type,score:candidate.score,dimensions,
+        source_type:"wikimedia_commons",license_status:candidate.license,
+        attribution:plainMetadata(metadata.Artist)||plainMetadata(metadata.Credit),
+        license_url:plainMetadata(metadata.LicenseUrl)
+      };
+    }
+  }catch(e){}
+  return null;
+}
+
 function extension(type,url){
   if(/webp/i.test(type)) return ".webp";
   if(/png/i.test(type)) return ".png";
@@ -268,7 +376,7 @@ const previous=fs.existsSync(overridesPath)?JSON.parse(fs.readFileSync(overrides
 const overrides=previous.items||{};
 const review=fs.existsSync(reviewPath)?JSON.parse(fs.readFileSync(reviewPath,"utf8").replace(/^\uFEFF/,"")):{rejected:{}};
 const rejectedIds=new Set(Object.keys(review.rejected||{}));
-const missing=(manifest.items||[]).filter((item)=>item.status==="missing" && !rejectedIds.has(item.id) && (!only || norm(item.name).includes(norm(only)))).slice(0,limit);
+const missing=(manifest.items||[]).filter((item)=>item.status==="missing" && !rejectedIds.has(item.id) && (!onlyTerms.length || onlyTerms.some((term)=>norm(item.name).includes(term)))).slice(0,limit);
 const domainCache=new Map();
 const report={version:"official-demo-images-v1",started_at:new Date().toISOString(),requested:missing.length,downloaded:[],skipped:[],failed:[]};
 fs.mkdirSync(outputDir,{recursive:true});
@@ -280,11 +388,26 @@ for(const [index,item] of missing.entries()){
   for(const origin of rule[1]){
     let pages=domainCache.get(origin);
     if(!pages){ pages=await siteUrls(origin); domainCache.set(origin,pages); await sleep(200); }
-    const ranked=pages.map((url)=>({url,score:pageScore(url,item)})).filter((row)=>row.score>=8).sort((a,b)=>b.score-a.score).slice(0,5);
+    const hints=PAGE_HINTS.get(item.id)||[];
+    const searched=await searchOfficialProductPages(origin,item);
+    const searchedSet=new Set(searched);
+    const hintSet=new Set(hints);
+    const ranked=unique([...hints,...searched,...pages]).map((url)=>({url,score:pageScore(url,item),searched:searchedSet.has(url),hinted:hintSet.has(url)})).filter((row)=>{
+      if(row.score>=8 || row.searched || row.hinted) return true;
+      try{return /collection|products?|our-whisk(?:y|ey)|whiskies|bourbons?|range|spirits?/i.test(new URL(row.url).pathname);}catch(e){return false;}
+    }).sort((a,b)=>b.score-a.score).slice(0,14);
     for(const page of ranked){
       try{
         const response=await get(page.url);
-        const images=imageCandidates(response.text,response.url,item).filter((image)=>image.score>=6).slice(0,10);
+        const numbers=norm(queryName(item)).match(/\b\d+\b/g)||[];
+        const exactPage=page.score>=8 || page.hinted;
+        const wanted=tokens(queryName(item));
+        const images=imageCandidates(response.text,response.url,item).filter((image)=>{
+          if(image.score<(exactPage?6:18)) return false;
+          if(exactPage) return true;
+          const enoughTokens=image.matched>=Math.min(2,wanted.length) && image.matched/Math.max(1,wanted.length)>=0.8;
+          return enoughTokens && numbers.every((number)=>new RegExp("(?:^| )"+number+"(?: |$)").test(image.hay));
+        }).slice(0,10);
         for(const candidate of images){
           const downloaded=await get(candidate.url,true);
           if(downloaded.bytes.length<12000 || !/^image\//i.test(downloaded.type)) continue;
@@ -298,13 +421,21 @@ for(const [index,item] of missing.entries()){
     }
     if(resolved) break;
   }
+  if(!resolved) resolved=await commonsImage(item);
   if(!resolved){
     report.failed.push({id:item.id,name:item.name,reason:"official_product_image_not_resolved"});
   }else{
     const ext=extension(resolved.type,resolved.image_url);
     const relative="assets/bourbons/demo-200/"+safeName(item.id)+ext;
     fs.writeFileSync(path.join(root,relative),resolved.bytes);
-    overrides[item.id]={image:relative,source_page:resolved.page_url,source_url:resolved.image_url,source_type:"official_brand_website",license_status:"official_source_review_required",fetched_at:new Date().toISOString()};
+    overrides[item.id]={
+      image:relative,source_page:resolved.page_url,source_url:resolved.image_url,
+      source_type:resolved.source_type||"official_brand_website",
+      license_status:resolved.license_status||"official_source_review_required",
+      fetched_at:new Date().toISOString()
+    };
+    if(resolved.attribution) overrides[item.id].attribution=resolved.attribution;
+    if(resolved.license_url) overrides[item.id].license_url=resolved.license_url;
     report.downloaded.push({id:item.id,name:item.name,image:relative,source_page:resolved.page_url,source_url:resolved.image_url,bytes:resolved.bytes.length,score:resolved.score,dimensions:resolved.dimensions});
   }
   process.stdout.write(`[${index+1}/${missing.length}] ${item.name}: ${resolved?"downloaded":"not found"}\n`);

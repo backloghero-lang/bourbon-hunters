@@ -48,6 +48,20 @@ const detail=await page.evaluate((id)=>{
 if(!detail.source.includes("assets/bourbons/runtime-100/")) throw new Error("Detail does not use the full image: "+JSON.stringify(detail));
 if(detail.renderedHeight<440 || detail.renderedHeight/detail.stageHeight<.75) throw new Error("Detail bottle is too small: "+JSON.stringify(detail));
 if(!detail.listHasImage) throw new Error("List image is missing: "+JSON.stringify(detail));
+const fallback=await page.evaluate(async()=>{
+  const host=document.createElement("div");
+  host.innerHTML=bottleImageHtml({id:"fallback-test",name:"Fallback test",image:"assets/bourbons/missing-detail-image.webp",thumb:"assets/bourbons/runtime-100/jim-beam-white-label.png"},false,"Fallback test");
+  document.body.appendChild(host);
+  const image=host.querySelector("img[data-bottle-image]");
+  await new Promise((resolve,reject)=>{
+    const timeout=setTimeout(()=>reject(new Error("fallback-timeout")),5000);
+    image.addEventListener("load",()=>{ clearTimeout(timeout); resolve(); });
+  });
+  const result={source:image.getAttribute("src")||"",mystery:!!host.querySelector(".mystery-bottle")};
+  host.remove();
+  return result;
+});
+if(!fallback.source.includes("assets/bourbons/runtime-100/jim-beam-white-label.png")||fallback.mystery) throw new Error("Detail thumbnail fallback failed: "+JSON.stringify(fallback));
 if(process.env.BH_DETAIL_SCREENSHOT) await page.screenshot({path:process.env.BH_DETAIL_SCREENSHOT,fullPage:true});
 
 await page.reload({waitUntil:"domcontentloaded"});
@@ -65,4 +79,4 @@ if(process.env.BH_PROFILE_SCREENSHOT) await page.screenshot({path:process.env.BH
 if(errors.length) throw new Error(errors.join("\n"));
 
 await browser.close();
-console.log(JSON.stringify({ok:true,detail,profile},null,2));
+console.log(JSON.stringify({ok:true,detail,fallback,profile},null,2));

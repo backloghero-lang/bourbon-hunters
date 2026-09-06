@@ -24,7 +24,7 @@ const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v6-highres-cutout";
 const CATALOG_MODERATION_VERSION = "catalog-moderation-orchestrator-admin-v1";
 const CATALOG_LICENSE_VERSION = "catalog-license-2026-07-18-v1";
 const TELEMETRY_VERSION = "scanner-telemetry-v1";
-const NEWS_AGENT_VERSION = "whisky-news-source-first-v9-editorial-only-images";
+const NEWS_AGENT_VERSION = "whisky-news-source-first-v10-direct-original-images";
 const NEWS_THUMBNAIL_VERSION = "v4";
 const LOCAL_IMAGE_PIPELINE_VERSION = "local-bottle-cutout-v2-quality-gated";
 const NEWS_RETENTION_DAYS = 30;
@@ -1993,7 +1993,7 @@ async function newsImageResponse(env, articleId, cors){
   let sourceImage=safeRemoteNewsImage(repaired.source_url||row.image_url);
   if(await newsImageUsedByAnotherArticle(env,row.id,sourceImage)) sourceImage="";
   if(sourceImage && !newsImageLooksGeneric(sourceImage)) return Response.redirect(sourceImage,302);
-  return Response.redirect(assetUrl(env,"assets/news/editorial-fallback-v1.jpg"),302);
+  return J({error:"image_unavailable"},404,cors);
 }
 async function backfillNewsThumbnails(env, limit){
   if(!(await newsSchemaReady(env)) || !env.BOTTLE_IMAGES) return {checked:0,cached:0};
