@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const target=process.env.BH_SMOKE_URL||"http://127.0.0.1:8765/index.html";
-const bottleId="olcc-8257b";
+const bottleId="ui-local-photo-missing";
 const photoPath=path.resolve("assets/profile-badges/bottle.png");
 const previewPath=path.resolve("assets/bourbons/clean/austin-nichols-wild-turkey-kentucky-straight-bourbon-whiskey-70cl.webp");
 
@@ -31,10 +31,11 @@ await page.route("**/catalog/local-cutout",async(route)=>{
 });
 
 async function openMissingBottle(){
-  await page.waitForFunction((id)=>typeof bottleById==="function"&&!!bottleById(id),bottleId);
+  await page.waitForFunction(()=>typeof bottleById==="function"&&Array.isArray(DB));
   await page.evaluate((id)=>{
     AGE_GATE_RUNTIME_OK=true;
     document.getElementById("ageGate")?.classList.remove("show");
+    if(!bottleById(id)) DB.push({id,name:"Local photo test bottle",type:"Bourbon",category:"Bourbon",region:"Kentucky"});
     openDetail(id,false,true);
   },bottleId);
 }
