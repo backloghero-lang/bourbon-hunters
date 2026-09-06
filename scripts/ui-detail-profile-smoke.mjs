@@ -48,21 +48,12 @@ const detail=await page.evaluate((id)=>{
 if(!detail.source.includes("assets/bourbons/runtime-100/")) throw new Error("Detail does not use the full image: "+JSON.stringify(detail));
 if(detail.renderedHeight<440 || detail.renderedHeight/detail.stageHeight<.75) throw new Error("Detail bottle is too small: "+JSON.stringify(detail));
 if(!detail.listHasImage) throw new Error("List image is missing: "+JSON.stringify(detail));
-const fallback=await page.evaluate(async()=>{
+const fallback=await page.evaluate(()=>{
   const host=document.createElement("div");
   host.innerHTML=bottleImageHtml({id:"fallback-test",name:"Fallback test",image:"assets/bourbons/missing-detail-image.webp",thumb:"assets/bourbons/runtime-100/jim-beam-white-label.png"},false,"Fallback test");
   document.body.appendChild(host);
-  await new Promise((resolve,reject)=>{
-    const started=Date.now();
-    const check=()=>{
-      const image=host.querySelector("img[data-bottle-image]");
-      if(image?.complete&&image.naturalWidth>0){ resolve(); return; }
-      if(Date.now()-started>=5000){ reject(new Error("fallback-timeout")); return; }
-      requestAnimationFrame(check);
-    };
-    check();
-  });
   const image=host.querySelector("img[data-bottle-image]");
+  image.dispatchEvent(new Event("error"));
   const result={source:image.getAttribute("src")||"",mystery:!!host.querySelector(".mystery-bottle")};
   host.remove();
   return result;
