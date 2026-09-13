@@ -4,8 +4,16 @@ const target=process.env.BH_SMOKE_URL||"http://127.0.0.1:8765/index.html";
 const browser=await chromium.launch(browserLaunchOptions());
 const page=await browser.newPage({viewport:{width:390,height:844},deviceScaleFactor:1});
 const errors=[];
+const missingResources=[];
 page.on("pageerror",(error)=>errors.push("pageerror: "+error.message));
-page.on("console",(message)=>{ if(message.type()==="error") errors.push("console: "+message.text()); });
+page.on("response",(response)=>{
+  if(response.status()===404) missingResources.push(response.url());
+});
+page.on("console",(message)=>{
+  if(message.type()!=="error") return;
+  if(message.text().includes("Failed to load resource: the server responded with a status of 404")) return;
+  errors.push("console: "+message.text());
+});
 await page.route("https://bourbon-hunters.darekmaslyk.workers.dev/**",async(route)=>{
   const pathname=new URL(route.request().url()).pathname;
   let body={};
@@ -62,6 +70,7 @@ const dimensions=await page.evaluate(()=>({
 if(process.env.BH_SMOKE_SCREENSHOT) await page.screenshot({path:process.env.BH_SMOKE_SCREENSHOT,fullPage:true});
 await browser.close();
 
+if(missingResources.length) throw new Error("Missing resources:\n"+[...new Set(missingResources)].join("\n"));
 if(errors.length) throw new Error(errors.join("\n"));
 if(metrics!==9) throw new Error("Expected 9 admin metrics, got "+metrics);
 if(!systemHealth.includes("v136")) throw new Error("Application version missing from system health");
