@@ -24,7 +24,12 @@ await page.evaluate(()=>{
   AGE_GATE_RUNTIME_OK=true;
   document.getElementById("ageGate")?.classList.remove("show");
 });
-await page.waitForFunction((id)=>typeof bottleById==="function"&&!!bottleById(id),bottleId);
+await page.waitForFunction((id)=>{
+  const bottle=typeof bottleById==="function"&&bottleById(id);
+  return bottle?.detail_image_audit==="standardized-v1";
+},bottleId);
+// Let asynchronous startup rendering finish before opening the measured view.
+await page.waitForTimeout(800);
 await page.evaluate((id)=>openDetail(id,false,true),bottleId);
 await page.waitForFunction(()=>{
   const image=document.querySelector("#detailBody .dphoto img[data-bottle-image]");
