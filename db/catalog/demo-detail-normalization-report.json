@@ -1,0 +1,2851 @@
+{
+  "version": "packshot-transparent-960x1280-v1",
+  "generated_at": "2026-09-13T07:57:25.906Z",
+  "applied": true,
+  "total": 200,
+  "ready": 160,
+  "missing": 22,
+  "rejected": 18,
+  "rejection_reasons": {
+    "manual-current-rejection": 18,
+    "source-missing": 22
+  },
+  "items": [
+    {
+      "id": "jim-beam-101-22",
+      "name": "Jim Beam White Label",
+      "source": "assets/bourbons/detail-200/jim-beam-101-22.webp",
+      "output": "assets/bourbons/detail-200/jim-beam-101-22.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 329,
+        "height": 1123
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "maker-s-mark-101-22",
+      "name": "Maker's Mark",
+      "source": "assets/bourbons/detail-200/maker-s-mark-101-22.webp",
+      "output": "assets/bourbons/detail-200/maker-s-mark-101-22.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 457,
+        "height": 1133
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-evan-williams-black-label",
+      "name": "Evan Williams Black Label",
+      "source": "assets/bourbons/detail-200/popular-evan-williams-black-label.webp",
+      "output": "assets/bourbons/detail-200/popular-evan-williams-black-label.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 294,
+        "height": 1123
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "woodford-reserve-bourbon",
+      "name": "Woodford Reserve",
+      "source": "assets/bourbons/detail-200/woodford-reserve-bourbon.webp",
+      "output": "assets/bourbons/detail-200/woodford-reserve-bourbon.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 454,
+        "height": 1180
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-bulleit-bourbon",
+      "name": "Bulleit",
+      "source": "assets/bourbons/detail-200/popular-bulleit-bourbon.webp",
+      "output": "assets/bourbons/detail-200/popular-bulleit-bourbon.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 442,
+        "height": 1125
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "wild-turkey-101-bourbon",
+      "name": "Wild Turkey 101",
+      "source": "assets/bourbons/detail-200/wild-turkey-101-bourbon.webp",
+      "output": "assets/bourbons/detail-200/wild-turkey-101-bourbon.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 361,
+        "height": 1126
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "buffalo-trace-bourbon-1",
+      "name": "Buffalo Trace",
+      "source": "assets/bourbons/detail-200/buffalo-trace-bourbon-1.webp",
+      "status": "rejected",
+      "reason": "manual-current-rejection",
+      "detail": "Wrong product: Buffalo Trace Bourbon Cream instead of Buffalo Trace Bourbon."
+    },
+    {
+      "id": "four-roses",
+      "name": "Four Roses",
+      "source": "assets/bourbons/detail-200/four-roses.webp",
+      "output": "assets/bourbons/detail-200/four-roses.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 344,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "knob-creek-9-year-old-100-proof-bourbon",
+      "name": "Knob Creek 9 Year",
+      "source": "assets/bourbons/detail-200/knob-creek-9-year-old-100-proof-bourbon.webp",
+      "output": "assets/bourbons/detail-200/knob-creek-9-year-old-100-proof-bourbon.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 508,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "elijah-craig-small-batch-bourbon",
+      "name": "Elijah Craig Small Batch",
+      "source": "assets/bourbons/detail-200/elijah-craig-small-batch-bourbon.webp",
+      "output": "assets/bourbons/detail-200/elijah-craig-small-batch-bourbon.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 621,
+        "height": 1125
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "makers-mark-46-bourbon-whisky",
+      "name": "Maker's Mark 46",
+      "source": "assets/bourbons/detail-200/makers-mark-46-bourbon-whisky.webp",
+      "output": "assets/bourbons/detail-200/makers-mark-46-bourbon-whisky.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 460,
+        "height": 1133
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "woodford-reserve-double-oaked-bourbon",
+      "name": "Woodford Reserve Double Oaked",
+      "source": "assets/bourbons/detail-200/woodford-reserve-double-oaked-bourbon.webp",
+      "output": "assets/bourbons/detail-200/woodford-reserve-double-oaked-bourbon.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 545,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-four-roses-small-batch",
+      "name": "Four Roses Small Batch",
+      "source": "assets/bourbons/detail-200/popular-four-roses-small-batch.webp",
+      "output": "assets/bourbons/detail-200/popular-four-roses-small-batch.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 566,
+        "height": 1125
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "four-roses-obsk-single-barrel-bourbon",
+      "name": "Four Roses Single Barrel",
+      "source": "assets/bourbons/detail-200/four-roses-obsk-single-barrel-bourbon.webp",
+      "output": "assets/bourbons/detail-200/four-roses-obsk-single-barrel-bourbon.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 406,
+        "height": 1123
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "olcc-0196b",
+      "name": "Wild Turkey 81",
+      "source": "assets/bourbons/detail-200/olcc-0196b.webp",
+      "output": "assets/bourbons/detail-200/olcc-0196b.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 315,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "wild-turkey-rare-breed-101-23",
+      "name": "Wild Turkey Rare Breed",
+      "source": "assets/bourbons/detail-200/wild-turkey-rare-breed-101-23.webp",
+      "output": "assets/bourbons/detail-200/wild-turkey-rare-breed-101-23.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 350,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "russels-reserve-10-year-bourbon",
+      "name": "Russell's Reserve 10 Year",
+      "source": "assets/bourbons/detail-200/russels-reserve-10-year-bourbon.webp",
+      "output": "assets/bourbons/detail-200/russels-reserve-10-year-bourbon.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 433,
+        "height": 1125
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "russells-reserve-single-barrel-barrel-select-bourbon",
+      "name": "Russell's Reserve Single Barrel",
+      "source": "assets/bourbons/detail-200/russells-reserve-single-barrel-barrel-select-bourbon.webp",
+      "output": "assets/bourbons/detail-200/russells-reserve-single-barrel-barrel-select-bourbon.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 454,
+        "height": 1177
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "olcc-8636b",
+      "name": "Evan Williams Bottled in Bond",
+      "source": "assets/bourbons/detail-200/olcc-8636b.webp",
+      "output": "assets/bourbons/detail-200/olcc-8636b.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 334,
+        "height": 1168
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "olcc-8257b",
+      "name": "Evan Williams 1783 Small Batch",
+      "source": "assets/bourbons/detail-200/olcc-8257b.webp",
+      "output": "assets/bourbons/detail-200/olcc-8257b.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 427,
+        "height": 1139
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-old-forester-86-proof",
+      "name": "Old Forester 86 Proof",
+      "source": "assets/bourbons/detail-200/popular-old-forester-86-proof.webp",
+      "output": "assets/bourbons/detail-200/popular-old-forester-86-proof.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 393,
+        "height": 1142
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "olcc-8227b",
+      "name": "Old Forester 100 Proof",
+      "source": "assets/bourbons/detail-200/olcc-8227b.webp",
+      "output": "assets/bourbons/detail-200/olcc-8227b.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 387,
+        "height": 1126
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "old-forester-1897-bottled-in-bond",
+      "name": "Old Forester 1897 Bottled in Bond",
+      "source": "assets/bourbons/detail-200/old-forester-1897-bottled-in-bond.webp",
+      "output": "assets/bourbons/detail-200/old-forester-1897-bottled-in-bond.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 344,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "old-forester-1910-old-fine-whiskey-bourbon-whiskey",
+      "name": "Old Forester 1910 Old Fine",
+      "source": "assets/bourbons/detail-200/old-forester-1910-old-fine-whiskey-bourbon-whiskey.webp",
+      "output": "assets/bourbons/detail-200/old-forester-1910-old-fine-whiskey-bourbon-whiskey.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 349,
+        "height": 1147
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-old-forester-1920-prohibition-style",
+      "name": "Old Forester 1920 Prohibition Style",
+      "source": "assets/bourbons/detail-200/popular-old-forester-1920-prohibition-style.webp",
+      "output": "assets/bourbons/detail-200/popular-old-forester-1920-prohibition-style.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 354,
+        "height": 1159
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "old-forester-statesman-bourbon",
+      "name": "Old Forester Statesman",
+      "source": "assets/bourbons/detail-200/old-forester-statesman-bourbon.webp",
+      "output": "assets/bourbons/detail-200/old-forester-statesman-bourbon.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 338,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "old-grand-dad",
+      "name": "Old Grand-Dad",
+      "source": "assets/bourbons/detail-200/old-grand-dad.webp",
+      "output": "assets/bourbons/detail-200/old-grand-dad.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 317,
+        "height": 1145
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-old-grand-dad-bonded",
+      "name": "Old Grand-Dad Bonded",
+      "source": "assets/bourbons/detail-200/popular-old-grand-dad-bonded.webp",
+      "output": "assets/bourbons/detail-200/popular-old-grand-dad-bonded.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 421,
+        "height": 1138
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-old-grand-dad-114",
+      "name": "Old Grand-Dad 114",
+      "source": "assets/bourbons/detail-200/popular-old-grand-dad-114.webp",
+      "output": "assets/bourbons/detail-200/popular-old-grand-dad-114.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 524,
+        "height": 1142
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-basil-hayden-kentucky-straight-bourbon",
+      "name": "Basil Hayden Kentucky Straight",
+      "source": "assets/bourbons/detail-200/popular-basil-hayden-kentucky-straight-bourbon.webp",
+      "output": "assets/bourbons/detail-200/popular-basil-hayden-kentucky-straight-bourbon.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 426,
+        "height": 1123
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-basil-hayden-toast",
+      "name": "Basil Hayden Toast",
+      "source": "assets/bourbons/detail-200/popular-basil-hayden-toast.webp",
+      "output": "assets/bourbons/detail-200/popular-basil-hayden-toast.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 309,
+        "height": 1177
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-knob-creek-12-year",
+      "name": "Knob Creek 12 Year",
+      "source": "assets/bourbons/detail-200/popular-knob-creek-12-year.webp",
+      "output": "assets/bourbons/detail-200/popular-knob-creek-12-year.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 513,
+        "height": 1136
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "knob-creek-120-proof-9-year-single-barrel-reserve-bourbon",
+      "name": "Knob Creek Single Barrel Reserve",
+      "source": "assets/bourbons/detail-200/knob-creek-120-proof-9-year-single-barrel-reserve-bourbon.webp",
+      "output": "assets/bourbons/detail-200/knob-creek-120-proof-9-year-single-barrel-reserve-bourbon.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 560,
+        "height": 1180
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "olcc-0133b",
+      "name": "Jim Beam Black",
+      "source": "assets/bourbons/detail-200/olcc-0133b.webp",
+      "output": "assets/bourbons/detail-200/olcc-0133b.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 458,
+        "height": 1180
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "olcc-3982b",
+      "name": "Jim Beam Double Oak",
+      "source": "assets/bourbons/detail-200/olcc-3982b.webp",
+      "output": "assets/bourbons/detail-200/olcc-3982b.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 445,
+        "height": 1136
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "olcc-6947b",
+      "name": "Jim Beam Devil's Cut",
+      "source": "assets/bourbons/detail-200/olcc-6947b.webp",
+      "output": "assets/bourbons/detail-200/olcc-6947b.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 443,
+        "height": 1137
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "jim-beam-single-barrel",
+      "name": "Jim Beam Single Barrel",
+      "source": "assets/bourbons/detail-200/jim-beam-single-barrel.webp",
+      "output": "assets/bourbons/detail-200/jim-beam-single-barrel.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 447,
+        "height": 1144
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-booker-s-bourbon",
+      "name": "Booker's",
+      "source": "assets/bourbons/detail-200/popular-booker-s-bourbon.webp",
+      "output": "assets/bourbons/detail-200/popular-booker-s-bourbon.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 296,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-baker-s-7-year-single-barrel",
+      "name": "Baker's 7 Year Single Barrel",
+      "source": "assets/bourbons/detail-200/popular-baker-s-7-year-single-barrel.webp",
+      "output": "assets/bourbons/detail-200/popular-baker-s-7-year-single-barrel.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 522,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "legent-101-02",
+      "name": "Legent",
+      "source": "assets/bourbons/detail-200/legent-101-02.webp",
+      "output": "assets/bourbons/detail-200/legent-101-02.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 375,
+        "height": 1125
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-larceny-small-batch",
+      "name": "Larceny Small Batch",
+      "source": "assets/bourbons/detail-200/popular-larceny-small-batch.webp",
+      "output": "assets/bourbons/detail-200/popular-larceny-small-batch.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 459,
+        "height": 1125
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "larceny-barrel-proof-101-22",
+      "name": "Larceny Barrel Proof",
+      "source": "assets/bourbons/detail-200/larceny-barrel-proof-101-22.webp",
+      "output": "assets/bourbons/detail-200/larceny-barrel-proof-101-22.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 469,
+        "height": 1125
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "olcc-8573b",
+      "name": "Henry McKenna 10 Year Bottled in Bond",
+      "source": "assets/bourbons/detail-200/olcc-8573b.webp",
+      "output": "assets/bourbons/detail-200/olcc-8573b.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 398,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "heaven-hill-7yo-bottled-in-bond-bourbon",
+      "name": "Heaven Hill 7 Year Bottled in Bond",
+      "source": "assets/bourbons/detail-200/heaven-hill-7yo-bottled-in-bond-bourbon.webp",
+      "output": "assets/bourbons/detail-200/heaven-hill-7yo-bottled-in-bond-bourbon.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 394,
+        "height": 1150
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-elijah-craig-barrel-proof",
+      "name": "Elijah Craig Barrel Proof",
+      "status": "missing",
+      "reason": "source-missing"
+    },
+    {
+      "id": "elijah-craig-toasted-barrel-101-22",
+      "name": "Elijah Craig Toasted Barrel",
+      "source": "assets/bourbons/detail-200/elijah-craig-toasted-barrel-101-22.webp",
+      "output": "assets/bourbons/detail-200/elijah-craig-toasted-barrel-101-22.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 452,
+        "height": 1133
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-1792-small-batch",
+      "name": "1792 Small Batch",
+      "source": "assets/bourbons/detail-200/popular-1792-small-batch.webp",
+      "output": "assets/bourbons/detail-200/popular-1792-small-batch.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 691,
+        "height": 1125
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-1792-full-proof",
+      "name": "1792 Full Proof",
+      "source": "assets/bourbons/detail-200/popular-1792-full-proof.webp",
+      "output": "assets/bourbons/detail-200/popular-1792-full-proof.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 663,
+        "height": 1125
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "1792-bottled-in-bond-kentucky-straight-bourbon",
+      "name": "1792 Bottled in Bond",
+      "source": "assets/bourbons/detail-200/1792-bottled-in-bond-kentucky-straight-bourbon.webp",
+      "output": "assets/bourbons/detail-200/1792-bottled-in-bond-kentucky-straight-bourbon.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 724,
+        "height": 1177
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-1792-single-barrel",
+      "name": "1792 Single Barrel",
+      "source": "assets/bourbons/detail-200/popular-1792-single-barrel.webp",
+      "output": "assets/bourbons/detail-200/popular-1792-single-barrel.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 692,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-benchmark-old-no-8",
+      "name": "Benchmark Old No. 8",
+      "source": "assets/bourbons/detail-200/popular-benchmark-old-no-8.webp",
+      "output": "assets/bourbons/detail-200/popular-benchmark-old-no-8.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 369,
+        "height": 1125
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-benchmark-full-proof",
+      "name": "Benchmark Full Proof",
+      "source": "assets/bourbons/detail-200/popular-benchmark-full-proof.webp",
+      "output": "assets/bourbons/detail-200/popular-benchmark-full-proof.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 463,
+        "height": 1129
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-benchmark-bonded",
+      "name": "Benchmark Bonded",
+      "status": "missing",
+      "reason": "source-missing"
+    },
+    {
+      "id": "popular-benchmark-single-barrel",
+      "name": "Benchmark Single Barrel",
+      "source": "assets/bourbons/detail-200/popular-benchmark-single-barrel.webp",
+      "output": "assets/bourbons/detail-200/popular-benchmark-single-barrel.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 353,
+        "height": 1144
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "weller-special-reserve",
+      "name": "Weller Special Reserve",
+      "source": "assets/bourbons/detail-200/weller-special-reserve.webp",
+      "output": "assets/bourbons/detail-200/weller-special-reserve.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 356,
+        "height": 1125
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "weller-antique-107-101-00",
+      "name": "Weller Antique 107",
+      "source": "assets/bourbons/detail-200/weller-antique-107-101-00.webp",
+      "output": "assets/bourbons/detail-200/weller-antique-107-101-00.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 321,
+        "height": 1123
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-weller-12-year",
+      "name": "Weller 12 Year",
+      "source": "assets/bourbons/detail-200/popular-weller-12-year.webp",
+      "output": "assets/bourbons/detail-200/popular-weller-12-year.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 355,
+        "height": 1141
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "w-l-weller-full-proof-bourbon-single-barrel-select-by-wooden-cork",
+      "name": "Weller Full Proof",
+      "source": "assets/bourbons/detail-200/w-l-weller-full-proof-bourbon-single-barrel-select-by-wooden-cork.webp",
+      "output": "assets/bourbons/detail-200/w-l-weller-full-proof-bourbon-single-barrel-select-by-wooden-cork.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 342,
+        "height": 1133
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "eagle-rare-10-year-kentucky-straight-bourbon-whiskey-700ml",
+      "name": "Eagle Rare 10 Year",
+      "source": "assets/bourbons/detail-200/eagle-rare-10-year-kentucky-straight-bourbon-whiskey-700ml.webp",
+      "output": "assets/bourbons/detail-200/eagle-rare-10-year-kentucky-straight-bourbon-whiskey-700ml.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 242,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "blantons-bourbon",
+      "name": "Blanton's Original Single Barrel",
+      "status": "missing",
+      "reason": "source-missing"
+    },
+    {
+      "id": "popular-e-h-taylor-small-batch",
+      "name": "E.H. Taylor Small Batch",
+      "source": "assets/bourbons/detail-200/popular-e-h-taylor-small-batch.webp",
+      "output": "assets/bourbons/detail-200/popular-e-h-taylor-small-batch.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 240,
+        "height": 1123
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-e-h-taylor-single-barrel",
+      "name": "E.H. Taylor Single Barrel",
+      "status": "missing",
+      "reason": "source-missing"
+    },
+    {
+      "id": "popular-stagg-bourbon",
+      "name": "Stagg",
+      "source": "assets/bourbons/detail-200/popular-stagg-bourbon.webp",
+      "status": "rejected",
+      "reason": "manual-current-rejection",
+      "detail": "Distorted and incomplete bottle silhouette."
+    },
+    {
+      "id": "michters-bourbon",
+      "name": "Michter's US 1 Small Batch",
+      "source": "assets/bourbons/detail-200/michters-bourbon.webp",
+      "status": "rejected",
+      "reason": "manual-current-rejection",
+      "detail": "Bottle is shown with packaging."
+    },
+    {
+      "id": "michters-us-1-toasted-barrel-finish-bourbon-whiskey-2021-release",
+      "name": "Michter's US 1 Toasted Barrel Finish",
+      "source": "assets/bourbons/detail-200/michters-us-1-toasted-barrel-finish-bourbon-whiskey-2021-release.webp",
+      "output": "assets/bourbons/detail-200/michters-us-1-toasted-barrel-finish-bourbon-whiskey-2021-release.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 364,
+        "height": 1169
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "jeffersons-very-small-batch-bourbon",
+      "name": "Jefferson's Very Small Batch",
+      "source": "assets/bourbons/detail-200/jeffersons-very-small-batch-bourbon.webp",
+      "status": "rejected",
+      "reason": "manual-current-rejection",
+      "detail": "Distorted bottle silhouette."
+    },
+    {
+      "id": "jeffersons-reserve-very-old-bourbon",
+      "name": "Jefferson's Reserve",
+      "source": "assets/bourbons/detail-200/jeffersons-reserve-very-old-bourbon.webp",
+      "output": "assets/bourbons/detail-200/jeffersons-reserve-very-old-bourbon.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 613,
+        "height": 1177
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "jeffersons-ocean-aged-at-sea-bourbon-whiskey",
+      "name": "Jefferson's Ocean Aged at Sea",
+      "source": "assets/bourbons/detail-200/jeffersons-ocean-aged-at-sea-bourbon-whiskey.webp",
+      "output": "assets/bourbons/detail-200/jeffersons-ocean-aged-at-sea-bourbon-whiskey.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 634,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-angel-s-envy-port-finish",
+      "name": "Angel's Envy Port Finish",
+      "source": "assets/bourbons/detail-200/popular-angel-s-envy-port-finish.webp",
+      "output": "assets/bourbons/detail-200/popular-angel-s-envy-port-finish.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 433,
+        "height": 1151
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "olcc-12554b",
+      "name": "Angel's Envy Triple Oak",
+      "source": "assets/bourbons/detail-200/olcc-12554b.webp",
+      "output": "assets/bourbons/detail-200/olcc-12554b.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 429,
+        "height": 1178
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-rabbit-hole-cavehill",
+      "name": "Rabbit Hole Cavehill",
+      "source": "assets/bourbons/detail-200/popular-rabbit-hole-cavehill.webp",
+      "output": "assets/bourbons/detail-200/popular-rabbit-hole-cavehill.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 357,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "olcc-9157b",
+      "name": "Rabbit Hole Dareringer",
+      "source": "assets/bourbons/detail-200/olcc-9157b.webp",
+      "status": "rejected",
+      "reason": "manual-current-rejection",
+      "detail": "Bottle is shown with packaging."
+    },
+    {
+      "id": "new-riff-bottled-in-bond-kentucky-straight-bourbon-whiskey",
+      "name": "New Riff Bottled in Bond",
+      "source": "assets/bourbons/detail-200/new-riff-bottled-in-bond-kentucky-straight-bourbon-whiskey.webp",
+      "output": "assets/bourbons/detail-200/new-riff-bottled-in-bond-kentucky-straight-bourbon-whiskey.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 256,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-new-riff-single-barrel-bourbon",
+      "name": "New Riff Single Barrel",
+      "source": "assets/bourbons/detail-200/popular-new-riff-single-barrel-bourbon.webp",
+      "output": "assets/bourbons/detail-200/popular-new-riff-single-barrel-bourbon.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 255,
+        "height": 1123
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-wilderness-trail-high-rye-bourbon",
+      "name": "Wilderness Trail High Rye",
+      "source": "assets/bourbons/detail-200/popular-wilderness-trail-high-rye-bourbon.webp",
+      "output": "assets/bourbons/detail-200/popular-wilderness-trail-high-rye-bourbon.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 547,
+        "height": 1125
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-wilderness-trail-wheated-bourbon",
+      "name": "Wilderness Trail Wheated",
+      "source": "assets/bourbons/detail-200/popular-wilderness-trail-wheated-bourbon.webp",
+      "output": "assets/bourbons/detail-200/popular-wilderness-trail-wheated-bourbon.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 573,
+        "height": 1176
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "green-river-101-22",
+      "name": "Green River",
+      "source": "assets/bourbons/detail-200/green-river-101-22.webp",
+      "output": "assets/bourbons/detail-200/green-river-101-22.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 392,
+        "height": 1126
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "olcc-13310b",
+      "name": "Green River Wheated",
+      "source": "assets/bourbons/detail-200/olcc-13310b.webp",
+      "output": "assets/bourbons/detail-200/olcc-13310b.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 392,
+        "height": 1127
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "green-river-full-proof-101-22",
+      "name": "Green River Full Proof",
+      "source": "assets/bourbons/detail-200/green-river-full-proof-101-22.webp",
+      "output": "assets/bourbons/detail-200/green-river-full-proof-101-22.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 407,
+        "height": 1166
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-bardstown-bourbon-company-origin-series-bourbon",
+      "name": "Bardstown Bourbon Company Origin Series",
+      "source": "assets/bourbons/detail-200/popular-bardstown-bourbon-company-origin-series-bourbon.webp",
+      "output": "assets/bourbons/detail-200/popular-bardstown-bourbon-company-origin-series-bourbon.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 379,
+        "height": 1179
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-bardstown-bourbon-company-origin-high-wheat",
+      "name": "Bardstown Bourbon Company Origin High Wheat",
+      "source": "assets/bourbons/detail-200/popular-bardstown-bourbon-company-origin-high-wheat.webp",
+      "output": "assets/bourbons/detail-200/popular-bardstown-bourbon-company-origin-high-wheat.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 379,
+        "height": 1179
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "olcc-13003b",
+      "name": "Bardstown Bourbon Company Origin Bottled in Bond",
+      "source": "assets/bourbons/detail-200/olcc-13003b.webp",
+      "output": "assets/bourbons/detail-200/olcc-13003b.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 379,
+        "height": 1179
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "penelope-four-grain-straight-bourbon-whiskey",
+      "name": "Penelope Four Grain",
+      "source": "assets/bourbons/detail-200/penelope-four-grain-straight-bourbon-whiskey.webp",
+      "output": "assets/bourbons/detail-200/penelope-four-grain-straight-bourbon-whiskey.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 247,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-penelope-architect-bourbon",
+      "name": "Penelope Architect",
+      "source": "assets/bourbons/detail-200/popular-penelope-architect-bourbon.webp",
+      "output": "assets/bourbons/detail-200/popular-penelope-architect-bourbon.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 239,
+        "height": 1146
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "penelope-barrel-strength-121-22",
+      "name": "Penelope Barrel Strength",
+      "source": "assets/bourbons/detail-200/penelope-barrel-strength-121-22.webp",
+      "output": "assets/bourbons/detail-200/penelope-barrel-strength-121-22.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 261,
+        "height": 1141
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-penelope-toasted-bourbon",
+      "name": "Penelope Toasted",
+      "source": "assets/bourbons/detail-200/popular-penelope-toasted-bourbon.webp",
+      "output": "assets/bourbons/detail-200/popular-penelope-toasted-bourbon.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 255,
+        "height": 1178
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "redwood-empire-pipe-dream-141-01",
+      "name": "Redwood Empire Pipe Dream",
+      "source": "assets/bourbons/detail-200/redwood-empire-pipe-dream-141-01.webp",
+      "output": "assets/bourbons/detail-200/redwood-empire-pipe-dream-141-01.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 275,
+        "height": 1170
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-redwood-empire-pipe-dream-cask-strength",
+      "name": "Redwood Empire Pipe Dream Cask Strength",
+      "source": "assets/bourbons/detail-200/popular-redwood-empire-pipe-dream-cask-strength.webp",
+      "output": "assets/bourbons/detail-200/popular-redwood-empire-pipe-dream-cask-strength.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 264,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-smoke-wagon-small-batch-bourbon",
+      "name": "Smoke Wagon Small Batch",
+      "status": "missing",
+      "reason": "source-missing"
+    },
+    {
+      "id": "popular-smoke-wagon-uncut-unfiltered-bourbon",
+      "name": "Smoke Wagon Uncut Unfiltered",
+      "source": "assets/bourbons/detail-200/popular-smoke-wagon-uncut-unfiltered-bourbon.webp",
+      "output": "assets/bourbons/detail-200/popular-smoke-wagon-uncut-unfiltered-bourbon.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 256,
+        "height": 1140
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "high-west-131-45",
+      "name": "High West",
+      "source": "assets/bourbons/detail-200/high-west-131-45.webp",
+      "output": "assets/bourbons/detail-200/high-west-131-45.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 347,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-horse-soldier-premium-bourbon",
+      "name": "Horse Soldier Premium",
+      "source": "assets/bourbons/detail-200/popular-horse-soldier-premium-bourbon.webp",
+      "output": "assets/bourbons/detail-200/popular-horse-soldier-premium-bourbon.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 493,
+        "height": 1142
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "olcc-12874b",
+      "name": "Horse Soldier Small Batch",
+      "source": "assets/bourbons/detail-200/olcc-12874b.webp",
+      "output": "assets/bourbons/detail-200/olcc-12874b.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 495,
+        "height": 1142
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-early-times-bottled-in-bond",
+      "name": "Early Times Bottled in Bond",
+      "source": "assets/bourbons/detail-200/popular-early-times-bottled-in-bond.webp",
+      "output": "assets/bourbons/detail-200/popular-early-times-bottled-in-bond.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 318,
+        "height": 1134
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-very-old-barton-100-proof",
+      "name": "Very Old Barton 100 Proof",
+      "source": "assets/bourbons/detail-200/popular-very-old-barton-100-proof.webp",
+      "output": "assets/bourbons/detail-200/popular-very-old-barton-100-proof.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 465,
+        "height": 1139
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-fighting-cock-103-proof",
+      "name": "Fighting Cock 103 Proof",
+      "status": "missing",
+      "reason": "source-missing"
+    },
+    {
+      "id": "popular-j-t-s-brown-bottled-in-bond",
+      "name": "J.T.S. Brown Bottled in Bond",
+      "status": "missing",
+      "reason": "source-missing"
+    },
+    {
+      "id": "popular-old-tub-bottled-in-bond",
+      "name": "Old Tub Bottled in Bond",
+      "status": "missing",
+      "reason": "source-missing"
+    },
+    {
+      "id": "popular-coopers-craft-barrel-reserve-100-proof",
+      "name": "Coopers' Craft Barrel Reserve 100 Proof",
+      "status": "missing",
+      "reason": "source-missing"
+    },
+    {
+      "id": "popular-bowman-brothers-small-batch-bourbon",
+      "name": "Bowman Brothers Small Batch",
+      "source": "assets/bourbons/detail-200/popular-bowman-brothers-small-batch-bourbon.webp",
+      "output": "assets/bourbons/detail-200/popular-bowman-brothers-small-batch-bourbon.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 528,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "olcc-0356b",
+      "name": "Johnnie Walker Red Label",
+      "source": "assets/bourbons/detail-200/olcc-0356b.webp",
+      "output": "assets/bourbons/detail-200/olcc-0356b.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 284,
+        "height": 1128
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "olcc-0357b",
+      "name": "Johnnie Walker Black Label 12 Year",
+      "source": "assets/bourbons/detail-200/olcc-0357b.webp",
+      "output": "assets/bourbons/detail-200/olcc-0357b.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 291,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "johnnie-walker-double-black-151-5k",
+      "name": "Johnnie Walker Double Black",
+      "status": "missing",
+      "reason": "source-missing"
+    },
+    {
+      "id": "popular-johnnie-walker-green-label-15-year",
+      "name": "Johnnie Walker Green Label 15 Year",
+      "source": "assets/bourbons/detail-200/popular-johnnie-walker-green-label-15-year.webp",
+      "output": "assets/bourbons/detail-200/popular-johnnie-walker-green-label-15-year.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 263,
+        "height": 1123
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-johnnie-walker-gold-label-reserve",
+      "name": "Johnnie Walker Gold Label Reserve",
+      "source": "assets/bourbons/detail-200/popular-johnnie-walker-gold-label-reserve.webp",
+      "output": "assets/bourbons/detail-200/popular-johnnie-walker-gold-label-reserve.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 275,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "olcc-2209b",
+      "name": "Johnnie Walker Blue Label",
+      "source": "assets/bourbons/detail-200/olcc-2209b.webp",
+      "output": "assets/bourbons/detail-200/olcc-2209b.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 253,
+        "height": 1123
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-chivas-regal-12-year",
+      "name": "Chivas Regal 12 Year",
+      "source": "assets/bourbons/detail-200/popular-chivas-regal-12-year.webp",
+      "output": "assets/bourbons/detail-200/popular-chivas-regal-12-year.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 346,
+        "height": 1142
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-chivas-regal-18-year",
+      "name": "Chivas Regal 18 Year",
+      "source": "assets/bourbons/detail-200/popular-chivas-regal-18-year.webp",
+      "output": "assets/bourbons/detail-200/popular-chivas-regal-18-year.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 443,
+        "height": 1180
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-ballantine-s-finest",
+      "name": "Ballantine's Finest",
+      "source": "assets/bourbons/detail-200/popular-ballantine-s-finest.webp",
+      "output": "assets/bourbons/detail-200/popular-ballantine-s-finest.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 431,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-grant-s-triple-wood",
+      "name": "Grant's Triple Wood",
+      "source": "assets/bourbons/detail-200/popular-grant-s-triple-wood.webp",
+      "output": "assets/bourbons/detail-200/popular-grant-s-triple-wood.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 320,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "olcc-0352b",
+      "name": "Dewar's White Label",
+      "source": "assets/bourbons/detail-200/olcc-0352b.webp",
+      "output": "assets/bourbons/detail-200/olcc-0352b.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 280,
+        "height": 1155
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-dewar-s-12-year",
+      "name": "Dewar's 12 Year",
+      "source": "assets/bourbons/detail-200/popular-dewar-s-12-year.webp",
+      "output": "assets/bourbons/detail-200/popular-dewar-s-12-year.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 432,
+        "height": 1125
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-j-b-rare",
+      "name": "J&B Rare",
+      "source": "assets/bourbons/detail-200/popular-j-b-rare.webp",
+      "output": "assets/bourbons/detail-200/popular-j-b-rare.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 280,
+        "height": 1131
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "olcc-0368b",
+      "name": "The Famous Grouse",
+      "source": "assets/bourbons/detail-200/olcc-0368b.webp",
+      "output": "assets/bourbons/detail-200/olcc-0368b.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 269,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "olcc-0346b",
+      "name": "Cutty Sark Original",
+      "status": "missing",
+      "reason": "source-missing"
+    },
+    {
+      "id": "popular-monkey-shoulder",
+      "name": "Monkey Shoulder",
+      "source": "assets/bourbons/detail-200/popular-monkey-shoulder.webp",
+      "output": "assets/bourbons/detail-200/popular-monkey-shoulder.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 442,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-glenfiddich-12-year",
+      "name": "Glenfiddich 12 Year",
+      "source": "assets/bourbons/detail-200/popular-glenfiddich-12-year.webp",
+      "output": "assets/bourbons/detail-200/popular-glenfiddich-12-year.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 344,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "olcc-0392b",
+      "name": "Glenfiddich 15 Year Solera",
+      "source": "assets/bourbons/detail-200/olcc-0392b.webp",
+      "status": "rejected",
+      "reason": "manual-current-rejection",
+      "detail": "Bottle is shown with packaging."
+    },
+    {
+      "id": "popular-glenfiddich-18-year",
+      "name": "Glenfiddich 18 Year",
+      "source": "assets/bourbons/detail-200/popular-glenfiddich-18-year.webp",
+      "status": "rejected",
+      "reason": "manual-current-rejection",
+      "detail": "Bottle is shown with packaging."
+    },
+    {
+      "id": "olcc-0376b",
+      "name": "The Glenlivet 12 Year",
+      "source": "assets/bourbons/detail-200/olcc-0376b.webp",
+      "output": "assets/bourbons/detail-200/olcc-0376b.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 296,
+        "height": 1130
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "olcc-3834b",
+      "name": "The Glenlivet Founder's Reserve",
+      "source": "assets/bourbons/detail-200/olcc-3834b.webp",
+      "output": "assets/bourbons/detail-200/olcc-3834b.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 292,
+        "height": 1125
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-the-glenlivet-14-year-cognac-cask-selection",
+      "name": "The Glenlivet 14 Year Cognac Cask Selection",
+      "source": "assets/bourbons/detail-200/popular-the-glenlivet-14-year-cognac-cask-selection.webp",
+      "output": "assets/bourbons/detail-200/popular-the-glenlivet-14-year-cognac-cask-selection.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 298,
+        "height": 1138
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-the-macallan-12-year-double-cask",
+      "name": "The Macallan 12 Year Double Cask",
+      "source": "assets/bourbons/detail-200/popular-the-macallan-12-year-double-cask.webp",
+      "output": "assets/bourbons/detail-200/popular-the-macallan-12-year-double-cask.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 286,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-the-macallan-12-year-sherry-oak",
+      "name": "The Macallan 12 Year Sherry Oak",
+      "source": "assets/bourbons/detail-200/popular-the-macallan-12-year-sherry-oak.webp",
+      "output": "assets/bourbons/detail-200/popular-the-macallan-12-year-sherry-oak.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 290,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-the-macallan-15-year-double-cask",
+      "name": "The Macallan 15 Year Double Cask",
+      "source": "assets/bourbons/detail-200/popular-the-macallan-15-year-double-cask.webp",
+      "output": "assets/bourbons/detail-200/popular-the-macallan-15-year-double-cask.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 297,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-the-balvenie-12-year-doublewood",
+      "name": "The Balvenie 12 Year DoubleWood",
+      "status": "missing",
+      "reason": "source-missing"
+    },
+    {
+      "id": "popular-the-balvenie-14-year-caribbean-cask",
+      "name": "The Balvenie 14 Year Caribbean Cask",
+      "source": "assets/bourbons/detail-200/popular-the-balvenie-14-year-caribbean-cask.webp",
+      "output": "assets/bourbons/detail-200/popular-the-balvenie-14-year-caribbean-cask.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 379,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-glenmorangie-the-original-12-year",
+      "name": "Glenmorangie The Original 12 Year",
+      "source": "assets/bourbons/detail-200/popular-glenmorangie-the-original-12-year.webp",
+      "output": "assets/bourbons/detail-200/popular-glenmorangie-the-original-12-year.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 513,
+        "height": 1130
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-glenmorangie-lasanta-12-year",
+      "name": "Glenmorangie Lasanta 12 Year",
+      "source": "assets/bourbons/detail-200/popular-glenmorangie-lasanta-12-year.webp",
+      "status": "rejected",
+      "reason": "manual-current-rejection",
+      "detail": "Bottle is shown with packaging."
+    },
+    {
+      "id": "popular-glenmorangie-quinta-ruban-14-year",
+      "name": "Glenmorangie Quinta Ruban 14 Year",
+      "source": "assets/bourbons/detail-200/popular-glenmorangie-quinta-ruban-14-year.webp",
+      "output": "assets/bourbons/detail-200/popular-glenmorangie-quinta-ruban-14-year.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 514,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-aberlour-12-year-double-cask",
+      "name": "Aberlour 12 Year Double Cask",
+      "source": "assets/bourbons/detail-200/popular-aberlour-12-year-double-cask.webp",
+      "status": "rejected",
+      "reason": "manual-current-rejection",
+      "detail": "Bottle is shown with packaging."
+    },
+    {
+      "id": "popular-aberlour-a-bunadh",
+      "name": "Aberlour A'Bunadh",
+      "source": "assets/bourbons/detail-200/popular-aberlour-a-bunadh.webp",
+      "status": "rejected",
+      "reason": "manual-current-rejection",
+      "detail": "Bottle is shown with packaging."
+    },
+    {
+      "id": "popular-ardbeg-10-year",
+      "name": "Ardbeg 10 Year",
+      "source": "assets/bourbons/detail-200/popular-ardbeg-10-year.webp",
+      "output": "assets/bourbons/detail-200/popular-ardbeg-10-year.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 333,
+        "height": 1125
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-ardbeg-uigeadail",
+      "name": "Ardbeg Uigeadail",
+      "source": "assets/bourbons/detail-200/popular-ardbeg-uigeadail.webp",
+      "output": "assets/bourbons/detail-200/popular-ardbeg-uigeadail.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 330,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-laphroaig-10-year",
+      "name": "Laphroaig 10 Year",
+      "status": "missing",
+      "reason": "source-missing"
+    },
+    {
+      "id": "popular-laphroaig-quarter-cask",
+      "name": "Laphroaig Quarter Cask",
+      "source": "assets/bourbons/detail-200/popular-laphroaig-quarter-cask.webp",
+      "output": "assets/bourbons/detail-200/popular-laphroaig-quarter-cask.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 299,
+        "height": 1140
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-lagavulin-16-year",
+      "name": "Lagavulin 16 Year",
+      "source": "assets/bourbons/detail-200/popular-lagavulin-16-year.webp",
+      "output": "assets/bourbons/detail-200/popular-lagavulin-16-year.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 291,
+        "height": 1125
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-talisker-10-year",
+      "name": "Talisker 10 Year",
+      "source": "assets/bourbons/detail-200/popular-talisker-10-year.webp",
+      "status": "rejected",
+      "reason": "manual-current-rejection",
+      "detail": "Gift set instead of a bottle-only packshot."
+    },
+    {
+      "id": "popular-oban-14-year",
+      "name": "Oban 14 Year",
+      "source": "assets/bourbons/detail-200/popular-oban-14-year.webp",
+      "output": "assets/bourbons/detail-200/popular-oban-14-year.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 273,
+        "height": 1125
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "olcc-2211b",
+      "name": "Highland Park 12 Year Viking Honour",
+      "source": "assets/bourbons/detail-200/olcc-2211b.webp",
+      "output": "assets/bourbons/detail-200/olcc-2211b.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 571,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "olcc-7243b",
+      "name": "Bunnahabhain 12 Year",
+      "source": "assets/bourbons/detail-200/olcc-7243b.webp",
+      "output": "assets/bourbons/detail-200/olcc-7243b.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 447,
+        "height": 1144
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-caol-ila-12-year",
+      "name": "Caol Ila 12 Year",
+      "source": "assets/bourbons/detail-200/popular-caol-ila-12-year.webp",
+      "status": "rejected",
+      "reason": "manual-current-rejection",
+      "detail": "Bottle is shown with packaging."
+    },
+    {
+      "id": "popular-bowmore-12-year",
+      "name": "Bowmore 12 Year",
+      "status": "missing",
+      "reason": "source-missing"
+    },
+    {
+      "id": "popular-the-dalmore-12-year",
+      "name": "The Dalmore 12 Year",
+      "source": "assets/bourbons/detail-200/popular-the-dalmore-12-year.webp",
+      "status": "rejected",
+      "reason": "manual-current-rejection",
+      "detail": "Bottle is shown with packaging."
+    },
+    {
+      "id": "popular-dalwhinnie-15-year",
+      "name": "Dalwhinnie 15 Year",
+      "source": "assets/bourbons/detail-200/popular-dalwhinnie-15-year.webp",
+      "output": "assets/bourbons/detail-200/popular-dalwhinnie-15-year.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 468,
+        "height": 1125
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-the-glendronach-12-year-original",
+      "name": "The GlenDronach 12 Year Original",
+      "source": "assets/bourbons/detail-200/popular-the-glendronach-12-year-original.webp",
+      "output": "assets/bourbons/detail-200/popular-the-glendronach-12-year-original.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 275,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-the-glenallachie-12-year",
+      "name": "The GlenAllachie 12 Year",
+      "source": "assets/bourbons/detail-200/popular-the-glenallachie-12-year.webp",
+      "status": "rejected",
+      "reason": "manual-current-rejection",
+      "detail": "Bottle is shown with packaging."
+    },
+    {
+      "id": "popular-bruichladdich-the-classic-laddie",
+      "name": "Bruichladdich The Classic Laddie",
+      "source": "assets/bourbons/detail-200/popular-bruichladdich-the-classic-laddie.webp",
+      "output": "assets/bourbons/detail-200/popular-bruichladdich-the-classic-laddie.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 462,
+        "height": 1123
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-auchentoshan-three-wood",
+      "name": "Auchentoshan Three Wood",
+      "source": "assets/bourbons/detail-200/popular-auchentoshan-three-wood.webp",
+      "output": "assets/bourbons/detail-200/popular-auchentoshan-three-wood.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 343,
+        "height": 1123
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-jura-10-year",
+      "name": "Jura 10 Year",
+      "status": "missing",
+      "reason": "source-missing"
+    },
+    {
+      "id": "popular-jameson-irish-whiskey",
+      "name": "Jameson Irish",
+      "source": "assets/bourbons/detail-200/popular-jameson-irish-whiskey.webp",
+      "output": "assets/bourbons/detail-200/popular-jameson-irish-whiskey.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 287,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-jameson-black-barrel",
+      "name": "Jameson Black Barrel",
+      "status": "missing",
+      "reason": "source-missing"
+    },
+    {
+      "id": "popular-jameson-caskmates-stout-edition",
+      "name": "Jameson Caskmates Stout Edition",
+      "source": "assets/bourbons/detail-200/popular-jameson-caskmates-stout-edition.webp",
+      "output": "assets/bourbons/detail-200/popular-jameson-caskmates-stout-edition.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 285,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-tullamore-d-e-w-original",
+      "name": "Tullamore D.E.W. Original",
+      "source": "assets/bourbons/detail-200/popular-tullamore-d-e-w-original.webp",
+      "output": "assets/bourbons/detail-200/popular-tullamore-d-e-w-original.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 485,
+        "height": 1152
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-tullamore-d-e-w-12-year-special-reserve",
+      "name": "Tullamore D.E.W. 12 Year Special Reserve",
+      "source": "assets/bourbons/detail-200/popular-tullamore-d-e-w-12-year-special-reserve.webp",
+      "output": "assets/bourbons/detail-200/popular-tullamore-d-e-w-12-year-special-reserve.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 477,
+        "height": 1152
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "bushmills-original-irish-whiskey",
+      "name": "Bushmills Original",
+      "source": "assets/bourbons/detail-200/bushmills-original-irish-whiskey.webp",
+      "output": "assets/bourbons/detail-200/bushmills-original-irish-whiskey.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 297,
+        "height": 1143
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "bushmills-black-bush-irish-whiskey",
+      "name": "Bushmills Black Bush",
+      "source": "assets/bourbons/detail-200/bushmills-black-bush-irish-whiskey.webp",
+      "output": "assets/bourbons/detail-200/bushmills-black-bush-irish-whiskey.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 290,
+        "height": 1125
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "bushmills-10-year-old-single-malt",
+      "name": "Bushmills 10 Year Old Single Malt",
+      "source": "assets/bourbons/detail-200/bushmills-10-year-old-single-malt.webp",
+      "output": "assets/bourbons/detail-200/bushmills-10-year-old-single-malt.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 342,
+        "height": 1125
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "bushmills-12-year-old-single-malt",
+      "name": "Bushmills 12 Year Old Single Malt",
+      "source": "assets/bourbons/detail-200/bushmills-12-year-old-single-malt.webp",
+      "output": "assets/bourbons/detail-200/bushmills-12-year-old-single-malt.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 346,
+        "height": 1125
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "bushmills-16-year-old-single-malt",
+      "name": "Bushmills 16 Year Old Single Malt",
+      "source": "assets/bourbons/detail-200/bushmills-16-year-old-single-malt.webp",
+      "output": "assets/bourbons/detail-200/bushmills-16-year-old-single-malt.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 367,
+        "height": 1180
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-redbreast-12-year",
+      "name": "Redbreast 12 Year",
+      "status": "missing",
+      "reason": "source-missing"
+    },
+    {
+      "id": "popular-redbreast-15-year",
+      "name": "Redbreast 15 Year",
+      "source": "assets/bourbons/detail-200/popular-redbreast-15-year.webp",
+      "status": "rejected",
+      "reason": "manual-current-rejection",
+      "detail": "Bottle is shown with packaging."
+    },
+    {
+      "id": "popular-redbreast-12-year-cask-strength",
+      "name": "Redbreast 12 Year Cask Strength",
+      "source": "assets/bourbons/detail-200/popular-redbreast-12-year-cask-strength.webp",
+      "status": "rejected",
+      "reason": "manual-current-rejection",
+      "detail": "Bottle is shown with packaging."
+    },
+    {
+      "id": "popular-green-spot",
+      "name": "Green Spot",
+      "source": "assets/bourbons/detail-200/popular-green-spot.webp",
+      "output": "assets/bourbons/detail-200/popular-green-spot.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 321,
+        "height": 1125
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-yellow-spot-12-year",
+      "name": "Yellow Spot 12 Year",
+      "status": "missing",
+      "reason": "source-missing"
+    },
+    {
+      "id": "popular-powers-gold-label",
+      "name": "Powers Gold Label",
+      "source": "assets/bourbons/detail-200/popular-powers-gold-label.webp",
+      "output": "assets/bourbons/detail-200/popular-powers-gold-label.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 426,
+        "height": 1132
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-powers-three-swallow",
+      "name": "Powers Three Swallow",
+      "source": "assets/bourbons/detail-200/popular-powers-three-swallow.webp",
+      "output": "assets/bourbons/detail-200/popular-powers-three-swallow.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 415,
+        "height": 1151
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-teeling-small-batch",
+      "name": "Teeling Small Batch",
+      "source": "assets/bourbons/detail-200/popular-teeling-small-batch.webp",
+      "output": "assets/bourbons/detail-200/popular-teeling-small-batch.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 360,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-teeling-single-malt",
+      "name": "Teeling Single Malt",
+      "source": "assets/bourbons/detail-200/popular-teeling-single-malt.webp",
+      "output": "assets/bourbons/detail-200/popular-teeling-single-malt.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 375,
+        "height": 1171
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-proper-no-twelve",
+      "name": "Proper No. Twelve",
+      "source": "assets/bourbons/detail-200/popular-proper-no-twelve.webp",
+      "output": "assets/bourbons/detail-200/popular-proper-no-twelve.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 305,
+        "height": 1131
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "olcc-3824b",
+      "name": "Suntory Whisky Toki",
+      "source": "assets/bourbons/detail-200/olcc-3824b.webp",
+      "output": "assets/bourbons/detail-200/olcc-3824b.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 453,
+        "height": 1123
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-suntory-kakubin",
+      "name": "Suntory Kakubin",
+      "source": "assets/bourbons/detail-200/popular-suntory-kakubin.webp",
+      "output": "assets/bourbons/detail-200/popular-suntory-kakubin.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 478,
+        "height": 1125
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-hibiki-japanese-harmony",
+      "name": "Hibiki Japanese Harmony",
+      "source": "assets/bourbons/detail-200/popular-hibiki-japanese-harmony.webp",
+      "output": "assets/bourbons/detail-200/popular-hibiki-japanese-harmony.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 576,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-yamazaki-distiller-s-reserve",
+      "name": "Yamazaki Distiller's Reserve",
+      "source": "assets/bourbons/detail-200/popular-yamazaki-distiller-s-reserve.webp",
+      "status": "rejected",
+      "reason": "manual-current-rejection",
+      "detail": "Bottle is shown with packaging."
+    },
+    {
+      "id": "popular-yamazaki-12-year",
+      "name": "Yamazaki 12 Year",
+      "source": "assets/bourbons/detail-200/popular-yamazaki-12-year.webp",
+      "output": "assets/bourbons/detail-200/popular-yamazaki-12-year.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 390,
+        "height": 1125
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-hakushu-distiller-s-reserve",
+      "name": "Hakushu Distiller's Reserve",
+      "source": "assets/bourbons/detail-200/popular-hakushu-distiller-s-reserve.webp",
+      "output": "assets/bourbons/detail-200/popular-hakushu-distiller-s-reserve.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 366,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-nikka-from-the-barrel",
+      "name": "Nikka From the Barrel",
+      "status": "missing",
+      "reason": "source-missing"
+    },
+    {
+      "id": "olcc-2619b",
+      "name": "Nikka Coffey Grain",
+      "source": "assets/bourbons/detail-200/olcc-2619b.webp",
+      "output": "assets/bourbons/detail-200/olcc-2619b.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 351,
+        "height": 1132
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "olcc-4087b",
+      "name": "Nikka Coffey Malt",
+      "source": "assets/bourbons/detail-200/olcc-4087b.webp",
+      "output": "assets/bourbons/detail-200/olcc-4087b.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 347,
+        "height": 1151
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-nikka-days",
+      "name": "Nikka Days",
+      "status": "missing",
+      "reason": "source-missing"
+    },
+    {
+      "id": "popular-nikka-yoichi-single-malt",
+      "name": "Nikka Yoichi Single Malt",
+      "source": "assets/bourbons/detail-200/popular-nikka-yoichi-single-malt.webp",
+      "output": "assets/bourbons/detail-200/popular-nikka-yoichi-single-malt.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 356,
+        "height": 1139
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-nikka-miyagikyo-single-malt",
+      "name": "Nikka Miyagikyo Single Malt",
+      "status": "missing",
+      "reason": "source-missing"
+    },
+    {
+      "id": "popular-mars-iwai-tradition",
+      "name": "Mars Iwai Tradition",
+      "source": "assets/bourbons/detail-200/popular-mars-iwai-tradition.webp",
+      "output": "assets/bourbons/detail-200/popular-mars-iwai-tradition.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 322,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-akashi-white-oak",
+      "name": "Akashi White Oak",
+      "source": "assets/bourbons/detail-200/popular-akashi-white-oak.webp",
+      "output": "assets/bourbons/detail-200/popular-akashi-white-oak.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 488,
+        "height": 1125
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-hatozaki-finest",
+      "name": "Hatozaki Finest",
+      "source": "assets/bourbons/detail-200/popular-hatozaki-finest.webp",
+      "output": "assets/bourbons/detail-200/popular-hatozaki-finest.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 335,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "olcc-0146b",
+      "name": "Jack Daniel's Old No. 7",
+      "source": "assets/bourbons/detail-200/olcc-0146b.webp",
+      "status": "rejected",
+      "reason": "manual-current-rejection",
+      "detail": "Wrong product: Jack Daniel's and Coca-Cola premix can."
+    },
+    {
+      "id": "olcc-0148b",
+      "name": "Gentleman Jack",
+      "source": "assets/bourbons/detail-200/olcc-0148b.webp",
+      "output": "assets/bourbons/detail-200/olcc-0148b.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 596,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "jack-daniel-s-bonded-119-43",
+      "name": "Jack Daniel's Bonded",
+      "source": "assets/bourbons/detail-200/jack-daniel-s-bonded-119-43.webp",
+      "output": "assets/bourbons/detail-200/jack-daniel-s-bonded-119-43.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 335,
+        "height": 1123
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "jack-daniel-s-single-barrel-select-140-43",
+      "name": "Jack Daniel's Single Barrel Select",
+      "source": "assets/bourbons/detail-200/jack-daniel-s-single-barrel-select-140-43.webp",
+      "output": "assets/bourbons/detail-200/jack-daniel-s-single-barrel-select-140-43.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 508,
+        "height": 1136
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-jack-daniel-s-tennessee-rye",
+      "name": "Jack Daniel's Tennessee Rye",
+      "source": "assets/bourbons/detail-200/popular-jack-daniel-s-tennessee-rye.webp",
+      "output": "assets/bourbons/detail-200/popular-jack-daniel-s-tennessee-rye.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 352,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-george-dickel-no-12",
+      "name": "George Dickel No. 12",
+      "source": "assets/bourbons/detail-200/popular-george-dickel-no-12.webp",
+      "output": "assets/bourbons/detail-200/popular-george-dickel-no-12.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 331,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "uncle-nearest-1884-small-batch-whiskey",
+      "name": "Uncle Nearest 1884 Small Batch",
+      "source": "assets/bourbons/detail-200/uncle-nearest-1884-small-batch-whiskey.webp",
+      "output": "assets/bourbons/detail-200/uncle-nearest-1884-small-batch-whiskey.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 518,
+        "height": 1123
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-bulleit-rye",
+      "name": "Bulleit Rye",
+      "source": "assets/bourbons/detail-200/popular-bulleit-rye.webp",
+      "output": "assets/bourbons/detail-200/popular-bulleit-rye.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 467,
+        "height": 1131
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-rittenhouse-rye-bottled-in-bond",
+      "name": "Rittenhouse Rye Bottled in Bond",
+      "status": "missing",
+      "reason": "source-missing"
+    },
+    {
+      "id": "olcc-7658b",
+      "name": "Sazerac Rye",
+      "source": "assets/bourbons/detail-200/olcc-7658b.webp",
+      "output": "assets/bourbons/detail-200/olcc-7658b.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 374,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "high-west-double-rye-122-45",
+      "name": "High West Double Rye",
+      "source": "assets/bourbons/detail-200/high-west-double-rye-122-45.webp",
+      "output": "assets/bourbons/detail-200/high-west-double-rye-122-45.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 249,
+        "height": 1125
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-whistlepig-piggyback-6-year-rye",
+      "name": "WhistlePig PiggyBack 6 Year Rye",
+      "source": "assets/bourbons/detail-200/popular-whistlepig-piggyback-6-year-rye.webp",
+      "output": "assets/bourbons/detail-200/popular-whistlepig-piggyback-6-year-rye.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 630,
+        "height": 1124
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-crown-royal-deluxe",
+      "name": "Crown Royal Deluxe",
+      "source": "assets/bourbons/detail-200/popular-crown-royal-deluxe.webp",
+      "output": "assets/bourbons/detail-200/popular-crown-royal-deluxe.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 651,
+        "height": 1165
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-crown-royal-northern-harvest-rye",
+      "name": "Crown Royal Northern Harvest Rye",
+      "source": "assets/bourbons/detail-200/popular-crown-royal-northern-harvest-rye.webp",
+      "output": "assets/bourbons/detail-200/popular-crown-royal-northern-harvest-rye.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 628,
+        "height": 1127
+      },
+      "transparent_source": true
+    },
+    {
+      "id": "popular-canadian-club-1858",
+      "name": "Canadian Club 1858",
+      "source": "assets/bourbons/detail-200/popular-canadian-club-1858.webp",
+      "output": "assets/bourbons/detail-200/popular-canadian-club-1858.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 337,
+        "height": 1125
+      },
+      "transparent_source": true
+    }
+  ]
+}

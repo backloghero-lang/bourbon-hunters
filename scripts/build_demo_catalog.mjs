@@ -18,6 +18,8 @@ const manifestPath = path.join(root, "db", "catalog", "demo-image-manifest.json"
 const reportPath = path.join(root, "db", "catalog", "demo-build-report.json");
 const overridesPath = path.join(root, "db", "catalog", "demo-image-overrides.json");
 const imageReviewPath = path.join(root, "db", "catalog", "demo-image-review.json");
+const imageAuditPath = path.join(root, "db", "catalog", "demo-detail-image-audit.json");
+const imageFetchReportPath = path.join(root, "db", "catalog", "demo-image-fetch-report.json");
 
 const readJson = (file) => JSON.parse(fs.readFileSync(file, "utf8"));
 const toPosix = (value) => value.split(path.sep).join("/");
@@ -109,6 +111,7 @@ function scanRecord(record) {
     taste: record.taste || "",
     finish: record.finish || "",
     image: record.image,
+    thumb: record.thumb || "",
     source: "demo_200",
     catalog_status: "demo"
   };
@@ -117,9 +120,17 @@ function scanRecord(record) {
 const popular = readJson(popularPath);
 const base = readJson(basePath);
 const catalog = readJson(catalogPath);
+const previousDemo = fs.existsSync(demoPath) ? readJson(demoPath) : { bottles: [] };
+const previousDemoById = new Map((previousDemo.bottles || []).map((record) => [record.id, record]));
 const imageOverrides = fs.existsSync(overridesPath) ? readJson(overridesPath).items || {} : {};
 const rejectedImageIds = fs.existsSync(imageReviewPath)
   ? new Set(Object.keys(readJson(imageReviewPath).rejected || {}))
+  : new Set();
+const auditedForReplacement = fs.existsSync(imageAuditPath)
+  ? new Set((readJson(imageAuditPath).items || []).filter((item) => item.status !== "pass").map((item) => item.id))
+  : new Set();
+const latestDownloads = fs.existsSync(imageFetchReportPath)
+  ? new Set((readJson(imageFetchReportPath).downloaded || []).map((item) => item.id))
   : new Set();
 const sourceRecords = [...(base.bottles || []), ...(catalog.bottles || [])];
 const assets = walkImages(path.join(root, "assets", "bourbons"));
@@ -128,8 +139,12 @@ const methods = {};
 
 const bottles = (popular.bottles || []).slice(0, 200).map((record, index) => {
   let resolution = null;
-  const override=rejectedImageIds.has(record.id) ? null : imageOverrides[record.id];
+  const freshOverride=latestDownloads.has(record.id)||imageOverrides[record.id]?.quality_candidate_version==="detail-packshot-candidate-v1";
+  const override=auditedForReplacement.has(record.id)
+    ? (freshOverride ? imageOverrides[record.id] : null)
+    : ((rejectedImageIds.has(record.id)&&!freshOverride) ? null : imageOverrides[record.id]);
   if (override?.image && existsInRepo(override.image)) resolution = { image: override.image, method: "official_source_override", override };
+  else if (auditedForReplacement.has(record.id)) resolution = null;
   else if (record.image && existsInRepo(record.image)) resolution = { image: record.image, method: "popular_record" };
   else resolution = resolveExistingImage(record, sourceRecords, assets);
   if (resolution) methods[resolution.method] = (methods[resolution.method] || 0) + 1;
@@ -139,6 +154,8 @@ const bottles = (popular.bottles || []).slice(0, 200).map((record, index) => {
     demo_public: true,
     demo_image_status: resolution ? "ready" : "missing",
     image: resolution?.image || "",
+    thumb: previousDemoById.get(record.id)?.thumb || previousDemoById.get(record.id)?.image || record.thumb || "",
+    detail_image_audit: resolution ? "candidate" : "rejected-or-missing",
     image_provenance: resolution ? {
       status: "existing_repository_asset",
       method: resolution.method,

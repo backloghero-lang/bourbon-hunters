@@ -46,7 +46,7 @@ const detail=await page.evaluate((id)=>{
     listHasImage:listHtml.includes("data-bottle-image")&&listHtml.includes("jim-beam-white-label.png")
   };
 },bottleId);
-if(!detail.source.includes("assets/bourbons/runtime-100/")) throw new Error("Detail does not use the full image: "+JSON.stringify(detail));
+if(!detail.source.includes("assets/bourbons/detail-200/")) throw new Error("Detail does not use the standardized full image: "+JSON.stringify(detail));
 if(detail.renderedHeight<440 || detail.renderedHeight/detail.stageHeight<.75) throw new Error("Detail bottle is too small: "+JSON.stringify(detail));
 if(!detail.listHasImage) throw new Error("List image is missing: "+JSON.stringify(detail));
 const fallback=await page.evaluate(()=>{
@@ -60,6 +60,15 @@ const fallback=await page.evaluate(()=>{
   return result;
 });
 if(!fallback.source.includes("assets/bourbons/runtime-100/jim-beam-white-label.png")||fallback.mystery) throw new Error("Detail thumbnail fallback failed: "+JSON.stringify(fallback));
+const auditedRejection=await page.evaluate(()=>{
+  const bottle={id:"audited-rejection",name:"Audited rejection",image:"",thumb:"assets/bourbons/runtime-100/jim-beam-white-label.png",demo_image_status:"missing",detail_image_audit:"manual-current-rejection"};
+  return {
+    detail:bottleImageHtml(bottle,false,bottle.name),
+    list:bottleImageHtml(bottle,true,bottle.name)
+  };
+});
+if(auditedRejection.detail.includes("data-bottle-image")) throw new Error("Rejected detail image fell back to the list thumbnail");
+if(!auditedRejection.list.includes("data-bottle-image")||!auditedRejection.list.includes("jim-beam-white-label.png")) throw new Error("Rejected detail image also removed the list thumbnail");
 if(process.env.BH_DETAIL_SCREENSHOT) await page.screenshot({path:process.env.BH_DETAIL_SCREENSHOT,fullPage:true});
 
 await page.reload({waitUntil:"domcontentloaded"});

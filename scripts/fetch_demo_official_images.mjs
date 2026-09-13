@@ -8,8 +8,15 @@ const overridesPath=path.join(root,"db","catalog","demo-image-overrides.json");
 const outputDir=path.join(root,"assets","bourbons","demo-200");
 const reportPath=path.join(root,"db","catalog","demo-image-fetch-report.json");
 const reviewPath=path.join(root,"db","catalog","demo-image-review.json");
+const auditPath=path.join(root,"db","catalog","demo-detail-image-audit.json");
+const detailReviewPath=path.join(root,"db","catalog","demo-detail-manual-review.json");
 const only=String(process.env.BH_IMAGE_ONLY||"").trim().toLowerCase();
 const limit=Math.max(1,Number(process.env.BH_IMAGE_LIMIT)||250);
+const auditMode=process.env.BH_IMAGE_AUDIT==="1";
+const retryRejected=process.env.BH_IMAGE_RETRY_REJECTED==="1";
+const webOnly=process.env.BH_IMAGE_WEB_ONLY==="1";
+const debug=process.env.BH_IMAGE_DEBUG==="1";
+const reviewOnly=process.env.BH_IMAGE_REVIEW_ONLY==="1";
 
 const SOURCE_RULES=[
   [/^(Jim Beam|Old Grand-Dad|Basil Hayden|Knob Creek|Booker's|Baker's|Legent)/i,["https://www.jimbeam.com"]],
@@ -83,7 +90,7 @@ const SOURCE_RULES=[
   [/^Canadian Club/i,["https://www.canadianclub.com"]]
 ];
 
-const GENERIC=new Set("the whisky whiskey kentucky straight proof year years old label edition scotch irish japanese canadian".split(" "));
+const GENERIC=new Set("the s whisky whiskey kentucky straight proof year years old label edition scotch irish japanese canadian".split(" "));
 const QUERY_ALIASES=new Map([
   ["popular-bulleit-bourbon","Bulleit Bourbon"]
 ]);
@@ -117,11 +124,29 @@ const PAGE_HINTS=new Map([
 ]);
 const PAGE_BLOCKLIST=/cocktail|recipe|whiskey-drinks|drink|story|stories|news|blog|visit|shop|merch|faq|press|event|podcast/i;
 const IMAGE_BLOCKLIST=/logo|icon|cocktail|recipe|serve|social|footer|header-logo|award|distillery|people|person|interview|youtube|thumbnail/i;
+const SHOPIFY_STORES=[
+  "https://www.thebottleclub.com",
+  "https://thedrinksociety.co.nz",
+  "https://www.tenleymarketliquor.com",
+  "https://beveragewarehousemi.com",
+  "https://uptownliquor.com.au",
+  "https://elcerritoliquor.com",
+  "https://canawineco.com",
+  "https://boozefinders.com",
+  "https://prizefighterbottleshop.com",
+  "https://qualityliquorstore.com",
+  "https://caskcartel.com",
+  "https://lovescotch.com",
+  "https://www.blackwellswines.com",
+  "https://remedyliquor.com",
+  "https://woodencork.com"
+];
 const sleep=(ms)=>new Promise((resolve)=>setTimeout(resolve,ms));
 const decode=(value)=>String(value||"").replace(/&amp;/g,"&").replace(/&#0*39;|&apos;/g,"'").replace(/&quot;/g,'"');
 const norm=(value)=>String(value||"").normalize("NFKD").toLowerCase().replace(/([0-9])([a-z])/g,"$1 $2").replace(/([a-z])([0-9])/g,"$1 $2").replace(/[^a-z0-9]+/g," ").replace(/\s+/g," ").trim();
 const onlyTerms=only.split("|").map((value)=>norm(value)).filter(Boolean);
 const tokens=(value)=>norm(value).split(" ").filter((token)=>token && (!GENERIC.has(token) || /^\d+$/.test(token)));
+const hasToken=(text,token)=>new RegExp("(?:^| )"+token+(token.endsWith("s")?"":"s?")+"(?: |$)").test(text);
 const safeName=(value)=>String(value||"").replace(/[^a-z0-9._-]+/gi,"-").replace(/-+/g,"-").replace(/^-|-$/g,"").toLowerCase();
 const unique=(values)=>Array.from(new Set(values.filter(Boolean)));
 
@@ -363,6 +388,98 @@ async function commonsImage(item){
   return null;
 }
 
+async function webPackshot(item){
+  const query=`"${queryName(item)}" bottle product packshot transparent`;
+  try{
+    const response=await get("https://www.bing.com/images/search?q="+encodeURIComponent(query)+"&qft="+encodeURIComponent("+filterui:imagesize-large"));
+    const wanted=tokens(queryName(item));
+    const wantedNumbers=norm(queryName(item)).match(/\b\d+\b/g)||[];
+    const candidates=[];
+    let tagsWithMetadata=0,identityMatches=0;
+    const debugRows=[];
+    for(const tag of response.text.match(/<a\b[^>]*>/gi)||[]){
+      const a=attrs(tag);
+      if(!a.m) continue;
+      let data=null; try{ data=JSON.parse(a.m); }catch(e){ continue; }
+      if(!data.murl||!data.purl) continue;
+      tagsWithMetadata++;
+      const hay=norm([data.t,data.desc,data.murl,data.purl].join(" "));
+      if(debugRows.length<5) debugRows.push({title:data.t||"",url:data.murl,hay,matched:wanted.filter((token)=>hasToken(hay,token))});
+      if(IMAGE_BLOCKLIST.test(hay)||/gift box|gift set|bundle|cocktail|with glasses|miniature set/.test(hay)) continue;
+      const matched=wanted.filter((token)=>hasToken(hay,token));
+      const numberMatch=wantedNumbers.every((number)=>new RegExp("(?:^| )"+number+"(?: |$)").test(hay));
+      if(matched.length<Math.min(2,wanted.length)||matched.length/Math.max(1,wanted.length)<0.65||!numberMatch) continue;
+      identityMatches++;
+      const width=Number(data.mw||data.w||0),height=Number(data.mh||data.h||0);
+      let score=matched.length*8+(numberMatch?10:0);
+      if(/\.png(?:\?|$)/i.test(data.murl)) score+=12;
+      if(/transparent|packshot|product/.test(hay)) score+=8;
+      if(height>=1000) score+=10;
+      if(width>=500) score+=5;
+      if(/amazon|ebay|pinterest|facebook|instagram/i.test(data.purl)) score-=18;
+      const rule=SOURCE_RULES.find(([pattern])=>pattern.test(item.name));
+      if(rule&&rule[1].some((origin)=>{ try{return new URL(data.purl).hostname.endsWith(new URL(origin).hostname.replace(/^www\./,""));}catch(e){return false;} })) score+=30;
+      candidates.push({url:data.murl,page_url:data.purl,score,dimensions:width&&height?{width,height}:null});
+    }
+    candidates.sort((left,right)=>right.score-left.score);
+    if(debug) process.stdout.write(`[debug] ${item.name}: wanted=${wanted.join("|")} metadata=${tagsWithMetadata} identity=${identityMatches} candidates=${candidates.length} sample=${JSON.stringify(debugRows)}\n`);
+    for(const candidate of candidates.slice(0,14)){
+      try{
+        const downloaded=await get(candidate.url,true);
+        if(downloaded.bytes.length<30000||!/^image\/(?:jpeg|png|webp)/i.test(downloaded.type)){
+          if(debug) process.stdout.write(`[debug] reject bytes/type ${downloaded.bytes.length} ${downloaded.type} ${candidate.url}\n`);
+          continue;
+        }
+        const dimensions=imageDimensions(downloaded.bytes,downloaded.type)||candidate.dimensions;
+        if(!dimensions||dimensions.width<350||dimensions.height<700||dimensions.height/dimensions.width<0.9){
+          if(debug) process.stdout.write(`[debug] reject dimensions ${JSON.stringify(dimensions)} ${candidate.url}\n`);
+          continue;
+        }
+        return {
+          page_url:candidate.page_url,image_url:downloaded.url,bytes:downloaded.bytes,type:downloaded.type,
+          score:candidate.score,dimensions,source_type:"web_packshot_search",license_status:"source_review_required"
+        };
+      }catch(e){ if(debug) process.stdout.write(`[debug] download failed ${String(e?.message||e)} ${candidate.url}\n`); }
+    }
+  }catch(e){}
+  return null;
+}
+
+async function shopifyPackshot(item){
+  const wanted=tokens(queryName(item));
+  const wantedNumbers=norm(queryName(item)).match(/\b\d+\b/g)||[];
+  for(const store of SHOPIFY_STORES){
+    try{
+      const params=new URLSearchParams({q:queryName(item),"resources[type]":"product","resources[limit]":"10"});
+      const response=await get(store+"/search/suggest.json?"+params);
+      const payload=JSON.parse(response.text);
+      const products=payload.resources?.results?.products||[];
+      const ranked=products.map((product)=>{
+        const title=norm(product.title||"");
+        const matched=wanted.filter((token)=>hasToken(title,token));
+        const numberMatch=wantedNumbers.every((number)=>hasToken(title,number));
+        const firstMatch=!wanted.length||hasToken(title,wanted[0]);
+        const blocked=/gift box|gift set|bundle|with glasses|miniature set|ornament|empty bottle|apple|honey|cherry|peach|vanilla|orange|cinnamon|fire/.test(title);
+        return {product,title,matched,numberMatch,firstMatch,blocked,score:matched.length/Math.max(1,wanted.length)};
+      }).filter((row)=>row.product.image&&row.firstMatch&&row.numberMatch&&!row.blocked&&row.matched.length>=Math.min(2,wanted.length)&&row.score>=(wanted.length<=4?1:.86))
+        .filter((row)=>!detailRejectedIds.has(item.id)||String(row.product.image)!==String(overrides[item.id]?.source_url||""))
+        .sort((left,right)=>right.score-left.score||left.title.length-right.title.length);
+      for(const row of ranked.slice(0,3)){
+        try{
+          const downloaded=await get(row.product.image,true);
+          const dimensions=imageDimensions(downloaded.bytes,downloaded.type);
+          if(downloaded.bytes.length<30000||!/^image\/(?:jpeg|png|webp)/i.test(downloaded.type)||!dimensions||dimensions.width<350||dimensions.height<700) continue;
+          return {
+            page_url:new URL(row.product.url,store).href,image_url:downloaded.url,bytes:downloaded.bytes,type:downloaded.type,
+            score:Math.round(row.score*100),dimensions,source_type:"retailer_product_catalog",license_status:"source_review_required"
+          };
+        }catch(e){}
+      }
+    }catch(e){}
+  }
+  return null;
+}
+
 function extension(type,url){
   if(/webp/i.test(type)) return ".webp";
   if(/png/i.test(type)) return ".png";
@@ -374,18 +491,28 @@ function extension(type,url){
 const manifest=JSON.parse(fs.readFileSync(manifestPath,"utf8"));
 const previous=fs.existsSync(overridesPath)?JSON.parse(fs.readFileSync(overridesPath,"utf8").replace(/^\uFEFF/,"")):{version:"official-demo-images-v1",items:{}};
 const overrides=previous.items||{};
+const previousFetch=fs.existsSync(reportPath)?JSON.parse(fs.readFileSync(reportPath,"utf8")):{downloaded:[]};
+for(const item of previousFetch.downloaded||[]) if(overrides[item.id]) overrides[item.id].quality_candidate_version="detail-packshot-candidate-v1";
 const review=fs.existsSync(reviewPath)?JSON.parse(fs.readFileSync(reviewPath,"utf8").replace(/^\uFEFF/,"")):{rejected:{}};
 const rejectedIds=new Set(Object.keys(review.rejected||{}));
-const missing=(manifest.items||[]).filter((item)=>item.status==="missing" && !rejectedIds.has(item.id) && (!onlyTerms.length || onlyTerms.some((term)=>norm(item.name).includes(term)))).slice(0,limit);
+const detailReview=fs.existsSync(detailReviewPath)?JSON.parse(fs.readFileSync(detailReviewPath,"utf8")):{rejected:{}};
+const detailRejectedIds=new Set([...Object.keys(detailReview.rejected||{}),...Object.keys(detailReview.current_rejected||{})]);
+const audit=fs.existsSync(auditPath)?JSON.parse(fs.readFileSync(auditPath,"utf8")):{items:[]};
+const auditIds=new Set((audit.items||[]).filter((item)=>item.status!=="pass").map((item)=>item.id));
+const missing=(manifest.items||[]).filter((item)=>
+  (reviewOnly?detailRejectedIds.has(item.id):(auditMode?auditIds.has(item.id):item.status==="missing")) &&
+  (retryRejected||!rejectedIds.has(item.id)) &&
+  (!onlyTerms.length || onlyTerms.some((term)=>norm(item.name).includes(term)))
+).slice(0,limit);
 const domainCache=new Map();
 const report={version:"official-demo-images-v1",started_at:new Date().toISOString(),requested:missing.length,downloaded:[],skipped:[],failed:[]};
 fs.mkdirSync(outputDir,{recursive:true});
 
 for(const [index,item] of missing.entries()){
   const rule=SOURCE_RULES.find(([pattern])=>pattern.test(item.name));
-  if(!rule){ report.skipped.push({id:item.id,name:item.name,reason:"official_domain_missing"}); continue; }
   let resolved=null;
-  for(const origin of rule[1]){
+  if(!webOnly&&!rule){ report.skipped.push({id:item.id,name:item.name,reason:"official_domain_missing"}); continue; }
+  for(const origin of webOnly?[]:rule[1]){
     let pages=domainCache.get(origin);
     if(!pages){ pages=await siteUrls(origin); domainCache.set(origin,pages); await sleep(200); }
     const hints=PAGE_HINTS.get(item.id)||[];
@@ -421,7 +548,9 @@ for(const [index,item] of missing.entries()){
     }
     if(resolved) break;
   }
+  if(!resolved) resolved=await shopifyPackshot(item);
   if(!resolved) resolved=await commonsImage(item);
+  if(!resolved) resolved=await webPackshot(item);
   if(!resolved){
     report.failed.push({id:item.id,name:item.name,reason:"official_product_image_not_resolved"});
   }else{
@@ -432,6 +561,7 @@ for(const [index,item] of missing.entries()){
       image:relative,source_page:resolved.page_url,source_url:resolved.image_url,
       source_type:resolved.source_type||"official_brand_website",
       license_status:resolved.license_status||"official_source_review_required",
+      quality_candidate_version:"detail-packshot-candidate-v1",
       fetched_at:new Date().toISOString()
     };
     if(resolved.attribution) overrides[item.id].attribution=resolved.attribution;

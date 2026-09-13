@@ -1,0 +1,5334 @@
+{
+  "version": "demo-detail-image-audit-v1",
+  "generated_at": "2026-09-13T07:57:51.730Z",
+  "catalog_size": 200,
+  "present": 160,
+  "missing": 40,
+  "passed": 160,
+  "review": 0,
+  "flag_counts": {
+    "missing": 40
+  },
+  "items": [
+    {
+      "id": "jim-beam-101-22",
+      "name": "Jim Beam White Label",
+      "image": "assets/bourbons/detail-200/jim-beam-101-22.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/jim-beam-101-22.webp"
+      },
+      "bottle_bbox": {
+        "x": 160,
+        "y": 39,
+        "width": 168,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 81.98,
+      "bright_ratio": 0.145,
+      "bright_alpha_fringe_ratio": 0.075,
+      "transparent_ratio": 0.768,
+      "border_deviation": 0.06
+    },
+    {
+      "id": "maker-s-mark-101-22",
+      "name": "Maker's Mark",
+      "image": "assets/bourbons/detail-200/maker-s-mark-101-22.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/maker-s-mark-101-22.webp"
+      },
+      "bottle_bbox": {
+        "x": 128,
+        "y": 39,
+        "width": 231,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 83.02,
+      "bright_ratio": 0.004,
+      "bright_alpha_fringe_ratio": 0.003,
+      "transparent_ratio": 0.745,
+      "border_deviation": 0.26
+    },
+    {
+      "id": "popular-evan-williams-black-label",
+      "name": "Evan Williams Black Label",
+      "image": "assets/bourbons/detail-200/popular-evan-williams-black-label.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-evan-williams-black-label.webp"
+      },
+      "bottle_bbox": {
+        "x": 169,
+        "y": 39,
+        "width": 150,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 56.4,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.005,
+      "transparent_ratio": 0.802,
+      "border_deviation": 0.13
+    },
+    {
+      "id": "woodford-reserve-bourbon",
+      "name": "Woodford Reserve",
+      "image": "assets/bourbons/detail-200/woodford-reserve-bourbon.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/woodford-reserve-bourbon.webp"
+      },
+      "bottle_bbox": {
+        "x": 134,
+        "y": 39,
+        "width": 220,
+        "height": 571
+      },
+      "bottle_height_ratio": 0.878,
+      "effective_bottle_pixels": 1124,
+      "sharpness": 87.23,
+      "bright_ratio": 0.015,
+      "bright_alpha_fringe_ratio": 0.133,
+      "transparent_ratio": 0.721,
+      "border_deviation": 0.19
+    },
+    {
+      "id": "popular-bulleit-bourbon",
+      "name": "Bulleit",
+      "image": "assets/bourbons/detail-200/popular-bulleit-bourbon.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-bulleit-bourbon.webp"
+      },
+      "bottle_bbox": {
+        "x": 131,
+        "y": 39,
+        "width": 225,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 82.31,
+      "bright_ratio": 0.009,
+      "bright_alpha_fringe_ratio": 0.002,
+      "transparent_ratio": 0.673,
+      "border_deviation": 0.06
+    },
+    {
+      "id": "wild-turkey-101-bourbon",
+      "name": "Wild Turkey 101",
+      "image": "assets/bourbons/detail-200/wild-turkey-101-bourbon.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/wild-turkey-101-bourbon.webp"
+      },
+      "bottle_bbox": {
+        "x": 152,
+        "y": 39,
+        "width": 184,
+        "height": 571
+      },
+      "bottle_height_ratio": 0.878,
+      "effective_bottle_pixels": 1124,
+      "sharpness": 81.19,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.007,
+      "transparent_ratio": 0.775,
+      "border_deviation": 0.35
+    },
+    {
+      "id": "buffalo-trace-bourbon-1",
+      "name": "Buffalo Trace",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "four-roses",
+      "name": "Four Roses",
+      "image": "assets/bourbons/detail-200/four-roses.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/four-roses.webp"
+      },
+      "bottle_bbox": {
+        "x": 156,
+        "y": 39,
+        "width": 176,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 58.24,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0,
+      "transparent_ratio": 0.775,
+      "border_deviation": 0.22
+    },
+    {
+      "id": "knob-creek-9-year-old-100-proof-bourbon",
+      "name": "Knob Creek 9 Year",
+      "image": "assets/bourbons/detail-200/knob-creek-9-year-old-100-proof-bourbon.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/knob-creek-9-year-old-100-proof-bourbon.webp"
+      },
+      "bottle_bbox": {
+        "x": 115,
+        "y": 39,
+        "width": 258,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 91.73,
+      "bright_ratio": 0.011,
+      "bright_alpha_fringe_ratio": 0.013,
+      "transparent_ratio": 0.63,
+      "border_deviation": 0.22
+    },
+    {
+      "id": "elijah-craig-small-batch-bourbon",
+      "name": "Elijah Craig Small Batch",
+      "image": "assets/bourbons/detail-200/elijah-craig-small-batch-bourbon.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/elijah-craig-small-batch-bourbon.webp"
+      },
+      "bottle_bbox": {
+        "x": 86,
+        "y": 25,
+        "width": 316,
+        "height": 586
+      },
+      "bottle_height_ratio": 0.902,
+      "effective_bottle_pixels": 1154,
+      "sharpness": 102.45,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.006,
+      "transparent_ratio": 0.498,
+      "border_deviation": 0.24
+    },
+    {
+      "id": "makers-mark-46-bourbon-whisky",
+      "name": "Maker's Mark 46",
+      "image": "assets/bourbons/detail-200/makers-mark-46-bourbon-whisky.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/makers-mark-46-bourbon-whisky.webp"
+      },
+      "bottle_bbox": {
+        "x": 128,
+        "y": 39,
+        "width": 232,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 77.37,
+      "bright_ratio": 0.022,
+      "bright_alpha_fringe_ratio": 0.007,
+      "transparent_ratio": 0.728,
+      "border_deviation": 0.57
+    },
+    {
+      "id": "woodford-reserve-double-oaked-bourbon",
+      "name": "Woodford Reserve Double Oaked",
+      "image": "assets/bourbons/detail-200/woodford-reserve-double-oaked-bourbon.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/woodford-reserve-double-oaked-bourbon.webp"
+      },
+      "bottle_bbox": {
+        "x": 105,
+        "y": 39,
+        "width": 278,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 87.37,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.004,
+      "transparent_ratio": 0.627,
+      "border_deviation": 0.37
+    },
+    {
+      "id": "popular-four-roses-small-batch",
+      "name": "Four Roses Small Batch",
+      "image": "assets/bourbons/detail-200/popular-four-roses-small-batch.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-four-roses-small-batch.webp"
+      },
+      "bottle_bbox": {
+        "x": 100,
+        "y": 39,
+        "width": 294,
+        "height": 575
+      },
+      "bottle_height_ratio": 0.885,
+      "effective_bottle_pixels": 1132,
+      "sharpness": 103.78,
+      "bright_ratio": 0.006,
+      "bright_alpha_fringe_ratio": 0.138,
+      "transparent_ratio": 0.623,
+      "border_deviation": 0.04
+    },
+    {
+      "id": "four-roses-obsk-single-barrel-bourbon",
+      "name": "Four Roses Single Barrel",
+      "image": "assets/bourbons/detail-200/four-roses-obsk-single-barrel-bourbon.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/four-roses-obsk-single-barrel-bourbon.webp"
+      },
+      "bottle_bbox": {
+        "x": 141,
+        "y": 39,
+        "width": 207,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 92.31,
+      "bright_ratio": 0.001,
+      "bright_alpha_fringe_ratio": 0.001,
+      "transparent_ratio": 0.718,
+      "border_deviation": 0.27
+    },
+    {
+      "id": "olcc-0196b",
+      "name": "Wild Turkey 81",
+      "image": "assets/bourbons/detail-200/olcc-0196b.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/olcc-0196b.webp"
+      },
+      "bottle_bbox": {
+        "x": 163,
+        "y": 39,
+        "width": 161,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 80.65,
+      "bright_ratio": 0.011,
+      "bright_alpha_fringe_ratio": 0.002,
+      "transparent_ratio": 0.789,
+      "border_deviation": 0.32
+    },
+    {
+      "id": "wild-turkey-rare-breed-101-23",
+      "name": "Wild Turkey Rare Breed",
+      "image": "assets/bourbons/detail-200/wild-turkey-rare-breed-101-23.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/wild-turkey-rare-breed-101-23.webp"
+      },
+      "bottle_bbox": {
+        "x": 155,
+        "y": 40,
+        "width": 178,
+        "height": 570
+      },
+      "bottle_height_ratio": 0.877,
+      "effective_bottle_pixels": 1122,
+      "sharpness": 84.72,
+      "bright_ratio": 0.015,
+      "bright_alpha_fringe_ratio": 0.126,
+      "transparent_ratio": 0.768,
+      "border_deviation": 0.35
+    },
+    {
+      "id": "russels-reserve-10-year-bourbon",
+      "name": "Russell's Reserve 10 Year",
+      "image": "assets/bourbons/detail-200/russels-reserve-10-year-bourbon.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/russels-reserve-10-year-bourbon.webp"
+      },
+      "bottle_bbox": {
+        "x": 134,
+        "y": 39,
+        "width": 220,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 86.67,
+      "bright_ratio": 0.029,
+      "bright_alpha_fringe_ratio": 0.002,
+      "transparent_ratio": 0.696,
+      "border_deviation": 0.31
+    },
+    {
+      "id": "russells-reserve-single-barrel-barrel-select-bourbon",
+      "name": "Russell's Reserve Single Barrel",
+      "image": "assets/bourbons/detail-200/russells-reserve-single-barrel-barrel-select-bourbon.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/russells-reserve-single-barrel-barrel-select-bourbon.webp"
+      },
+      "bottle_bbox": {
+        "x": 133,
+        "y": 39,
+        "width": 222,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 74.91,
+      "bright_ratio": 0.025,
+      "bright_alpha_fringe_ratio": 0.007,
+      "transparent_ratio": 0.71,
+      "border_deviation": 0.12
+    },
+    {
+      "id": "olcc-8636b",
+      "name": "Evan Williams Bottled in Bond",
+      "image": "assets/bourbons/detail-200/olcc-8636b.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/olcc-8636b.webp"
+      },
+      "bottle_bbox": {
+        "x": 162,
+        "y": 39,
+        "width": 164,
+        "height": 573
+      },
+      "bottle_height_ratio": 0.882,
+      "effective_bottle_pixels": 1128,
+      "sharpness": 86.81,
+      "bright_ratio": 0.197,
+      "bright_alpha_fringe_ratio": 0.103,
+      "transparent_ratio": 0.775,
+      "border_deviation": 0.31
+    },
+    {
+      "id": "olcc-8257b",
+      "name": "Evan Williams 1783 Small Batch",
+      "image": "assets/bourbons/detail-200/olcc-8257b.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/olcc-8257b.webp"
+      },
+      "bottle_bbox": {
+        "x": 136,
+        "y": 39,
+        "width": 215,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 72.62,
+      "bright_ratio": 0.005,
+      "bright_alpha_fringe_ratio": 0.009,
+      "transparent_ratio": 0.731,
+      "border_deviation": 0.1
+    },
+    {
+      "id": "popular-old-forester-86-proof",
+      "name": "Old Forester 86 Proof",
+      "image": "assets/bourbons/detail-200/popular-old-forester-86-proof.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-old-forester-86-proof.webp"
+      },
+      "bottle_bbox": {
+        "x": 145,
+        "y": 40,
+        "width": 197,
+        "height": 570
+      },
+      "bottle_height_ratio": 0.877,
+      "effective_bottle_pixels": 1122,
+      "sharpness": 81.64,
+      "bright_ratio": 0.011,
+      "bright_alpha_fringe_ratio": 0.005,
+      "transparent_ratio": 0.741,
+      "border_deviation": 0.16
+    },
+    {
+      "id": "olcc-8227b",
+      "name": "Old Forester 100 Proof",
+      "image": "assets/bourbons/detail-200/olcc-8227b.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/olcc-8227b.webp"
+      },
+      "bottle_bbox": {
+        "x": 145,
+        "y": 39,
+        "width": 198,
+        "height": 571
+      },
+      "bottle_height_ratio": 0.878,
+      "effective_bottle_pixels": 1124,
+      "sharpness": 76.75,
+      "bright_ratio": 0.006,
+      "bright_alpha_fringe_ratio": 0,
+      "transparent_ratio": 0.741,
+      "border_deviation": 0.26
+    },
+    {
+      "id": "old-forester-1897-bottled-in-bond",
+      "name": "Old Forester 1897 Bottled in Bond",
+      "image": "assets/bourbons/detail-200/old-forester-1897-bottled-in-bond.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/old-forester-1897-bottled-in-bond.webp"
+      },
+      "bottle_bbox": {
+        "x": 157,
+        "y": 39,
+        "width": 175,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 77.83,
+      "bright_ratio": 0.011,
+      "bright_alpha_fringe_ratio": 0,
+      "transparent_ratio": 0.774,
+      "border_deviation": 0.31
+    },
+    {
+      "id": "old-forester-1910-old-fine-whiskey-bourbon-whiskey",
+      "name": "Old Forester 1910 Old Fine",
+      "image": "assets/bourbons/detail-200/old-forester-1910-old-fine-whiskey-bourbon-whiskey.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/old-forester-1910-old-fine-whiskey-bourbon-whiskey.webp"
+      },
+      "bottle_bbox": {
+        "x": 157,
+        "y": 40,
+        "width": 174,
+        "height": 570
+      },
+      "bottle_height_ratio": 0.877,
+      "effective_bottle_pixels": 1122,
+      "sharpness": 78.78,
+      "bright_ratio": 0.004,
+      "bright_alpha_fringe_ratio": 0.018,
+      "transparent_ratio": 0.777,
+      "border_deviation": 0.12
+    },
+    {
+      "id": "popular-old-forester-1920-prohibition-style",
+      "name": "Old Forester 1920 Prohibition Style",
+      "image": "assets/bourbons/detail-200/popular-old-forester-1920-prohibition-style.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-old-forester-1920-prohibition-style.webp"
+      },
+      "bottle_bbox": {
+        "x": 156,
+        "y": 39,
+        "width": 175,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 76.52,
+      "bright_ratio": 0.014,
+      "bright_alpha_fringe_ratio": 0.011,
+      "transparent_ratio": 0.775,
+      "border_deviation": 0.25
+    },
+    {
+      "id": "old-forester-statesman-bourbon",
+      "name": "Old Forester Statesman",
+      "image": "assets/bourbons/detail-200/old-forester-statesman-bourbon.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/old-forester-statesman-bourbon.webp"
+      },
+      "bottle_bbox": {
+        "x": 158,
+        "y": 39,
+        "width": 172,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 73.2,
+      "bright_ratio": 0.01,
+      "bright_alpha_fringe_ratio": 0.007,
+      "transparent_ratio": 0.778,
+      "border_deviation": 0.04
+    },
+    {
+      "id": "old-grand-dad",
+      "name": "Old Grand-Dad",
+      "image": "assets/bourbons/detail-200/old-grand-dad.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/old-grand-dad.webp"
+      },
+      "bottle_bbox": {
+        "x": 164,
+        "y": 39,
+        "width": 159,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 76.03,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.021,
+      "transparent_ratio": 0.781,
+      "border_deviation": 0.19
+    },
+    {
+      "id": "popular-old-grand-dad-bonded",
+      "name": "Old Grand-Dad Bonded",
+      "image": "assets/bourbons/detail-200/popular-old-grand-dad-bonded.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-old-grand-dad-bonded.webp"
+      },
+      "bottle_bbox": {
+        "x": 138,
+        "y": 25,
+        "width": 212,
+        "height": 586
+      },
+      "bottle_height_ratio": 0.902,
+      "effective_bottle_pixels": 1154,
+      "sharpness": 99.39,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.007,
+      "transparent_ratio": 0.653,
+      "border_deviation": 0.12
+    },
+    {
+      "id": "popular-old-grand-dad-114",
+      "name": "Old Grand-Dad 114",
+      "image": "assets/bourbons/detail-200/popular-old-grand-dad-114.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-old-grand-dad-114.webp"
+      },
+      "bottle_bbox": {
+        "x": 112,
+        "y": 40,
+        "width": 263,
+        "height": 571
+      },
+      "bottle_height_ratio": 0.878,
+      "effective_bottle_pixels": 1124,
+      "sharpness": 85.4,
+      "bright_ratio": 0.002,
+      "bright_alpha_fringe_ratio": 0.001,
+      "transparent_ratio": 0.664,
+      "border_deviation": 0.33
+    },
+    {
+      "id": "popular-basil-hayden-kentucky-straight-bourbon",
+      "name": "Basil Hayden Kentucky Straight",
+      "image": "assets/bourbons/detail-200/popular-basil-hayden-kentucky-straight-bourbon.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-basil-hayden-kentucky-straight-bourbon.webp"
+      },
+      "bottle_bbox": {
+        "x": 136,
+        "y": 25,
+        "width": 217,
+        "height": 586
+      },
+      "bottle_height_ratio": 0.902,
+      "effective_bottle_pixels": 1154,
+      "sharpness": 104.53,
+      "bright_ratio": 0.009,
+      "bright_alpha_fringe_ratio": 0.006,
+      "transparent_ratio": 0.652,
+      "border_deviation": 0.17
+    },
+    {
+      "id": "popular-basil-hayden-toast",
+      "name": "Basil Hayden Toast",
+      "image": "assets/bourbons/detail-200/popular-basil-hayden-toast.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-basil-hayden-toast.webp"
+      },
+      "bottle_bbox": {
+        "x": 169,
+        "y": 39,
+        "width": 150,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 83.63,
+      "bright_ratio": 0.01,
+      "bright_alpha_fringe_ratio": 0.128,
+      "transparent_ratio": 0.793,
+      "border_deviation": 0.14
+    },
+    {
+      "id": "popular-knob-creek-12-year",
+      "name": "Knob Creek 12 Year",
+      "image": "assets/bourbons/detail-200/popular-knob-creek-12-year.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-knob-creek-12-year.webp"
+      },
+      "bottle_bbox": {
+        "x": 114,
+        "y": 39,
+        "width": 259,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 89.08,
+      "bright_ratio": 0.006,
+      "bright_alpha_fringe_ratio": 0.003,
+      "transparent_ratio": 0.629,
+      "border_deviation": 0.09
+    },
+    {
+      "id": "knob-creek-120-proof-9-year-single-barrel-reserve-bourbon",
+      "name": "Knob Creek Single Barrel Reserve",
+      "image": "assets/bourbons/detail-200/knob-creek-120-proof-9-year-single-barrel-reserve-bourbon.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/knob-creek-120-proof-9-year-single-barrel-reserve-bourbon.webp"
+      },
+      "bottle_bbox": {
+        "x": 108,
+        "y": 39,
+        "width": 272,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 84.56,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0,
+      "transparent_ratio": 0.605,
+      "border_deviation": 0.04
+    },
+    {
+      "id": "olcc-0133b",
+      "name": "Jim Beam Black",
+      "image": "assets/bourbons/detail-200/olcc-0133b.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/olcc-0133b.webp"
+      },
+      "bottle_bbox": {
+        "x": 133,
+        "y": 39,
+        "width": 222,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 66.81,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.027,
+      "transparent_ratio": 0.706,
+      "border_deviation": 0.25
+    },
+    {
+      "id": "olcc-3982b",
+      "name": "Jim Beam Double Oak",
+      "image": "assets/bourbons/detail-200/olcc-3982b.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/olcc-3982b.webp"
+      },
+      "bottle_bbox": {
+        "x": 132,
+        "y": 39,
+        "width": 224,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 71.39,
+      "bright_ratio": 0.002,
+      "bright_alpha_fringe_ratio": 0.188,
+      "transparent_ratio": 0.7,
+      "border_deviation": 0.14
+    },
+    {
+      "id": "olcc-6947b",
+      "name": "Jim Beam Devil's Cut",
+      "image": "assets/bourbons/detail-200/olcc-6947b.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/olcc-6947b.webp"
+      },
+      "bottle_bbox": {
+        "x": 132,
+        "y": 39,
+        "width": 224,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 66.53,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.003,
+      "transparent_ratio": 0.706,
+      "border_deviation": 0.07
+    },
+    {
+      "id": "jim-beam-single-barrel",
+      "name": "Jim Beam Single Barrel",
+      "image": "assets/bourbons/detail-200/jim-beam-single-barrel.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/jim-beam-single-barrel.webp"
+      },
+      "bottle_bbox": {
+        "x": 132,
+        "y": 39,
+        "width": 224,
+        "height": 571
+      },
+      "bottle_height_ratio": 0.878,
+      "effective_bottle_pixels": 1124,
+      "sharpness": 75.6,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.002,
+      "transparent_ratio": 0.707,
+      "border_deviation": 0.05
+    },
+    {
+      "id": "popular-booker-s-bourbon",
+      "name": "Booker's",
+      "image": "assets/bourbons/detail-200/popular-booker-s-bourbon.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-booker-s-bourbon.webp"
+      },
+      "bottle_bbox": {
+        "x": 169,
+        "y": 39,
+        "width": 150,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 68.59,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0,
+      "transparent_ratio": 0.796,
+      "border_deviation": 0.19
+    },
+    {
+      "id": "popular-baker-s-7-year-single-barrel",
+      "name": "Baker's 7 Year Single Barrel",
+      "image": "assets/bourbons/detail-200/popular-baker-s-7-year-single-barrel.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-baker-s-7-year-single-barrel.webp"
+      },
+      "bottle_bbox": {
+        "x": 111,
+        "y": 26,
+        "width": 266,
+        "height": 598
+      },
+      "bottle_height_ratio": 0.92,
+      "effective_bottle_pixels": 1178,
+      "sharpness": 78.41,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0,
+      "transparent_ratio": 0.559,
+      "border_deviation": 0.1
+    },
+    {
+      "id": "legent-101-02",
+      "name": "Legent",
+      "image": "assets/bourbons/detail-200/legent-101-02.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/legent-101-02.webp"
+      },
+      "bottle_bbox": {
+        "x": 148,
+        "y": 39,
+        "width": 191,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 68.14,
+      "bright_ratio": 0.003,
+      "bright_alpha_fringe_ratio": 0.007,
+      "transparent_ratio": 0.718,
+      "border_deviation": 0.17
+    },
+    {
+      "id": "popular-larceny-small-batch",
+      "name": "Larceny Small Batch",
+      "image": "assets/bourbons/detail-200/popular-larceny-small-batch.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-larceny-small-batch.webp"
+      },
+      "bottle_bbox": {
+        "x": 127,
+        "y": 40,
+        "width": 233,
+        "height": 570
+      },
+      "bottle_height_ratio": 0.877,
+      "effective_bottle_pixels": 1122,
+      "sharpness": 76.23,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.001,
+      "transparent_ratio": 0.689,
+      "border_deviation": 0.13
+    },
+    {
+      "id": "larceny-barrel-proof-101-22",
+      "name": "Larceny Barrel Proof",
+      "image": "assets/bourbons/detail-200/larceny-barrel-proof-101-22.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/larceny-barrel-proof-101-22.webp"
+      },
+      "bottle_bbox": {
+        "x": 124,
+        "y": 39,
+        "width": 239,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 57.86,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.002,
+      "transparent_ratio": 0.686,
+      "border_deviation": 0.21
+    },
+    {
+      "id": "olcc-8573b",
+      "name": "Henry McKenna 10 Year Bottled in Bond",
+      "image": "assets/bourbons/detail-200/olcc-8573b.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/olcc-8573b.webp"
+      },
+      "bottle_bbox": {
+        "x": 143,
+        "y": 39,
+        "width": 202,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 65.83,
+      "bright_ratio": 0.001,
+      "bright_alpha_fringe_ratio": 0,
+      "transparent_ratio": 0.746,
+      "border_deviation": 0.34
+    },
+    {
+      "id": "heaven-hill-7yo-bottled-in-bond-bourbon",
+      "name": "Heaven Hill 7 Year Bottled in Bond",
+      "image": "assets/bourbons/detail-200/heaven-hill-7yo-bottled-in-bond-bourbon.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/heaven-hill-7yo-bottled-in-bond-bourbon.webp"
+      },
+      "bottle_bbox": {
+        "x": 146,
+        "y": 39,
+        "width": 196,
+        "height": 571
+      },
+      "bottle_height_ratio": 0.878,
+      "effective_bottle_pixels": 1124,
+      "sharpness": 75.33,
+      "bright_ratio": 0.008,
+      "bright_alpha_fringe_ratio": 0.01,
+      "transparent_ratio": 0.718,
+      "border_deviation": 0.11
+    },
+    {
+      "id": "popular-elijah-craig-barrel-proof",
+      "name": "Elijah Craig Barrel Proof",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "elijah-craig-toasted-barrel-101-22",
+      "name": "Elijah Craig Toasted Barrel",
+      "image": "assets/bourbons/detail-200/elijah-craig-toasted-barrel-101-22.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/elijah-craig-toasted-barrel-101-22.webp"
+      },
+      "bottle_bbox": {
+        "x": 129,
+        "y": 39,
+        "width": 229,
+        "height": 573
+      },
+      "bottle_height_ratio": 0.882,
+      "effective_bottle_pixels": 1128,
+      "sharpness": 89.21,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0,
+      "transparent_ratio": 0.694,
+      "border_deviation": 0.14
+    },
+    {
+      "id": "popular-1792-small-batch",
+      "name": "1792 Small Batch",
+      "image": "assets/bourbons/detail-200/popular-1792-small-batch.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-1792-small-batch.webp"
+      },
+      "bottle_bbox": {
+        "x": 68,
+        "y": 39,
+        "width": 352,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 100.54,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.01,
+      "transparent_ratio": 0.557,
+      "border_deviation": 0.25
+    },
+    {
+      "id": "popular-1792-full-proof",
+      "name": "1792 Full Proof",
+      "image": "assets/bourbons/detail-200/popular-1792-full-proof.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-1792-full-proof.webp"
+      },
+      "bottle_bbox": {
+        "x": 75,
+        "y": 37,
+        "width": 338,
+        "height": 574
+      },
+      "bottle_height_ratio": 0.883,
+      "effective_bottle_pixels": 1130,
+      "sharpness": 65.62,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.004,
+      "transparent_ratio": 0.582,
+      "border_deviation": 0.16
+    },
+    {
+      "id": "1792-bottled-in-bond-kentucky-straight-bourbon",
+      "name": "1792 Bottled in Bond",
+      "image": "assets/bourbons/detail-200/1792-bottled-in-bond-kentucky-straight-bourbon.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/1792-bottled-in-bond-kentucky-straight-bourbon.webp"
+      },
+      "bottle_bbox": {
+        "x": 68,
+        "y": 39,
+        "width": 352,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 105.3,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.001,
+      "transparent_ratio": 0.554,
+      "border_deviation": 0.24
+    },
+    {
+      "id": "popular-1792-single-barrel",
+      "name": "1792 Single Barrel",
+      "image": "assets/bourbons/detail-200/popular-1792-single-barrel.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-1792-single-barrel.webp"
+      },
+      "bottle_bbox": {
+        "x": 68,
+        "y": 40,
+        "width": 352,
+        "height": 570
+      },
+      "bottle_height_ratio": 0.877,
+      "effective_bottle_pixels": 1122,
+      "sharpness": 96.24,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0,
+      "transparent_ratio": 0.555,
+      "border_deviation": 0.46
+    },
+    {
+      "id": "popular-benchmark-old-no-8",
+      "name": "Benchmark Old No. 8",
+      "image": "assets/bourbons/detail-200/popular-benchmark-old-no-8.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-benchmark-old-no-8.webp"
+      },
+      "bottle_bbox": {
+        "x": 150,
+        "y": 39,
+        "width": 188,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 52.26,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.007,
+      "transparent_ratio": 0.743,
+      "border_deviation": 0.09
+    },
+    {
+      "id": "popular-benchmark-full-proof",
+      "name": "Benchmark Full Proof",
+      "image": "assets/bourbons/detail-200/popular-benchmark-full-proof.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-benchmark-full-proof.webp"
+      },
+      "bottle_bbox": {
+        "x": 126,
+        "y": 25,
+        "width": 235,
+        "height": 586
+      },
+      "bottle_height_ratio": 0.902,
+      "effective_bottle_pixels": 1154,
+      "sharpness": 71.87,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.009,
+      "transparent_ratio": 0.64,
+      "border_deviation": 0.19
+    },
+    {
+      "id": "popular-benchmark-bonded",
+      "name": "Benchmark Bonded",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "popular-benchmark-single-barrel",
+      "name": "Benchmark Single Barrel",
+      "image": "assets/bourbons/detail-200/popular-benchmark-single-barrel.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-benchmark-single-barrel.webp"
+      },
+      "bottle_bbox": {
+        "x": 156,
+        "y": 39,
+        "width": 176,
+        "height": 571
+      },
+      "bottle_height_ratio": 0.878,
+      "effective_bottle_pixels": 1124,
+      "sharpness": 63.99,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.009,
+      "transparent_ratio": 0.769,
+      "border_deviation": 0.34
+    },
+    {
+      "id": "weller-special-reserve",
+      "name": "Weller Special Reserve",
+      "image": "assets/bourbons/detail-200/weller-special-reserve.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/weller-special-reserve.webp"
+      },
+      "bottle_bbox": {
+        "x": 153,
+        "y": 39,
+        "width": 181,
+        "height": 574
+      },
+      "bottle_height_ratio": 0.883,
+      "effective_bottle_pixels": 1130,
+      "sharpness": 73.69,
+      "bright_ratio": 0.02,
+      "bright_alpha_fringe_ratio": 0,
+      "transparent_ratio": 0.779,
+      "border_deviation": 0.2
+    },
+    {
+      "id": "weller-antique-107-101-00",
+      "name": "Weller Antique 107",
+      "image": "assets/bourbons/detail-200/weller-antique-107-101-00.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/weller-antique-107-101-00.webp"
+      },
+      "bottle_bbox": {
+        "x": 162,
+        "y": 40,
+        "width": 164,
+        "height": 574
+      },
+      "bottle_height_ratio": 0.883,
+      "effective_bottle_pixels": 1130,
+      "sharpness": 69.44,
+      "bright_ratio": 0.017,
+      "bright_alpha_fringe_ratio": 0.002,
+      "transparent_ratio": 0.798,
+      "border_deviation": 0.08
+    },
+    {
+      "id": "popular-weller-12-year",
+      "name": "Weller 12 Year",
+      "image": "assets/bourbons/detail-200/popular-weller-12-year.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-weller-12-year.webp"
+      },
+      "bottle_bbox": {
+        "x": 155,
+        "y": 40,
+        "width": 178,
+        "height": 571
+      },
+      "bottle_height_ratio": 0.878,
+      "effective_bottle_pixels": 1124,
+      "sharpness": 64.79,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.002,
+      "transparent_ratio": 0.783,
+      "border_deviation": 0.16
+    },
+    {
+      "id": "w-l-weller-full-proof-bourbon-single-barrel-select-by-wooden-cork",
+      "name": "Weller Full Proof",
+      "image": "assets/bourbons/detail-200/w-l-weller-full-proof-bourbon-single-barrel-select-by-wooden-cork.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/w-l-weller-full-proof-bourbon-single-barrel-select-by-wooden-cork.webp"
+      },
+      "bottle_bbox": {
+        "x": 157,
+        "y": 39,
+        "width": 173,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 54.4,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.005,
+      "transparent_ratio": 0.792,
+      "border_deviation": 0.05
+    },
+    {
+      "id": "eagle-rare-10-year-kentucky-straight-bourbon-whiskey-700ml",
+      "name": "Eagle Rare 10 Year",
+      "image": "assets/bourbons/detail-200/eagle-rare-10-year-kentucky-straight-bourbon-whiskey-700ml.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/eagle-rare-10-year-kentucky-straight-bourbon-whiskey-700ml.webp"
+      },
+      "bottle_bbox": {
+        "x": 182,
+        "y": 38,
+        "width": 124,
+        "height": 573
+      },
+      "bottle_height_ratio": 0.882,
+      "effective_bottle_pixels": 1128,
+      "sharpness": 73.02,
+      "bright_ratio": 0.007,
+      "bright_alpha_fringe_ratio": 0.002,
+      "transparent_ratio": 0.826,
+      "border_deviation": 0.39
+    },
+    {
+      "id": "blantons-bourbon",
+      "name": "Blanton's Original Single Barrel",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "popular-e-h-taylor-small-batch",
+      "name": "E.H. Taylor Small Batch",
+      "image": "assets/bourbons/detail-200/popular-e-h-taylor-small-batch.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-e-h-taylor-small-batch.webp"
+      },
+      "bottle_bbox": {
+        "x": 183,
+        "y": 38,
+        "width": 122,
+        "height": 577
+      },
+      "bottle_height_ratio": 0.888,
+      "effective_bottle_pixels": 1136,
+      "sharpness": 74.92,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.006,
+      "transparent_ratio": 0.843,
+      "border_deviation": 0.09
+    },
+    {
+      "id": "popular-e-h-taylor-single-barrel",
+      "name": "E.H. Taylor Single Barrel",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "popular-stagg-bourbon",
+      "name": "Stagg",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "michters-bourbon",
+      "name": "Michter's US 1 Small Batch",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "michters-us-1-toasted-barrel-finish-bourbon-whiskey-2021-release",
+      "name": "Michter's US 1 Toasted Barrel Finish",
+      "image": "assets/bourbons/detail-200/michters-us-1-toasted-barrel-finish-bourbon-whiskey-2021-release.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/michters-us-1-toasted-barrel-finish-bourbon-whiskey-2021-release.webp"
+      },
+      "bottle_bbox": {
+        "x": 154,
+        "y": 39,
+        "width": 179,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 69.64,
+      "bright_ratio": 0.002,
+      "bright_alpha_fringe_ratio": 0,
+      "transparent_ratio": 0.768,
+      "border_deviation": 0.21
+    },
+    {
+      "id": "jeffersons-very-small-batch-bourbon",
+      "name": "Jefferson's Very Small Batch",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "jeffersons-reserve-very-old-bourbon",
+      "name": "Jefferson's Reserve",
+      "image": "assets/bourbons/detail-200/jeffersons-reserve-very-old-bourbon.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/jeffersons-reserve-very-old-bourbon.webp"
+      },
+      "bottle_bbox": {
+        "x": 95,
+        "y": 39,
+        "width": 298,
+        "height": 571
+      },
+      "bottle_height_ratio": 0.878,
+      "effective_bottle_pixels": 1124,
+      "sharpness": 105.84,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.001,
+      "transparent_ratio": 0.612,
+      "border_deviation": 0.16
+    },
+    {
+      "id": "jeffersons-ocean-aged-at-sea-bourbon-whiskey",
+      "name": "Jefferson's Ocean Aged at Sea",
+      "image": "assets/bourbons/detail-200/jeffersons-ocean-aged-at-sea-bourbon-whiskey.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/jeffersons-ocean-aged-at-sea-bourbon-whiskey.webp"
+      },
+      "bottle_bbox": {
+        "x": 82,
+        "y": 39,
+        "width": 323,
+        "height": 571
+      },
+      "bottle_height_ratio": 0.878,
+      "effective_bottle_pixels": 1124,
+      "sharpness": 80.82,
+      "bright_ratio": 0.001,
+      "bright_alpha_fringe_ratio": 0.001,
+      "transparent_ratio": 0.564,
+      "border_deviation": 0.22
+    },
+    {
+      "id": "popular-angel-s-envy-port-finish",
+      "name": "Angel's Envy Port Finish",
+      "image": "assets/bourbons/detail-200/popular-angel-s-envy-port-finish.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-angel-s-envy-port-finish.webp"
+      },
+      "bottle_bbox": {
+        "x": 136,
+        "y": 39,
+        "width": 216,
+        "height": 575
+      },
+      "bottle_height_ratio": 0.885,
+      "effective_bottle_pixels": 1132,
+      "sharpness": 80.58,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.007,
+      "transparent_ratio": 0.754,
+      "border_deviation": 0.14
+    },
+    {
+      "id": "olcc-12554b",
+      "name": "Angel's Envy Triple Oak",
+      "image": "assets/bourbons/detail-200/olcc-12554b.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/olcc-12554b.webp"
+      },
+      "bottle_bbox": {
+        "x": 140,
+        "y": 39,
+        "width": 208,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 85.29,
+      "bright_ratio": 0.007,
+      "bright_alpha_fringe_ratio": 0.001,
+      "transparent_ratio": 0.751,
+      "border_deviation": 0.24
+    },
+    {
+      "id": "popular-rabbit-hole-cavehill",
+      "name": "Rabbit Hole Cavehill",
+      "image": "assets/bourbons/detail-200/popular-rabbit-hole-cavehill.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-rabbit-hole-cavehill.webp"
+      },
+      "bottle_bbox": {
+        "x": 153,
+        "y": 39,
+        "width": 182,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 73.17,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.003,
+      "transparent_ratio": 0.745,
+      "border_deviation": 0.18
+    },
+    {
+      "id": "olcc-9157b",
+      "name": "Rabbit Hole Dareringer",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "new-riff-bottled-in-bond-kentucky-straight-bourbon-whiskey",
+      "name": "New Riff Bottled in Bond",
+      "image": "assets/bourbons/detail-200/new-riff-bottled-in-bond-kentucky-straight-bourbon-whiskey.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/new-riff-bottled-in-bond-kentucky-straight-bourbon-whiskey.webp"
+      },
+      "bottle_bbox": {
+        "x": 179,
+        "y": 39,
+        "width": 130,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 40.59,
+      "bright_ratio": 0.001,
+      "bright_alpha_fringe_ratio": 0.001,
+      "transparent_ratio": 0.831,
+      "border_deviation": 0.17
+    },
+    {
+      "id": "popular-new-riff-single-barrel-bourbon",
+      "name": "New Riff Single Barrel",
+      "image": "assets/bourbons/detail-200/popular-new-riff-single-barrel-bourbon.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-new-riff-single-barrel-bourbon.webp"
+      },
+      "bottle_bbox": {
+        "x": 177,
+        "y": 39,
+        "width": 132,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 42.62,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.001,
+      "transparent_ratio": 0.827,
+      "border_deviation": 0.31
+    },
+    {
+      "id": "popular-wilderness-trail-high-rye-bourbon",
+      "name": "Wilderness Trail High Rye",
+      "image": "assets/bourbons/detail-200/popular-wilderness-trail-high-rye-bourbon.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-wilderness-trail-high-rye-bourbon.webp"
+      },
+      "bottle_bbox": {
+        "x": 104,
+        "y": 39,
+        "width": 279,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 77.05,
+      "bright_ratio": 0.003,
+      "bright_alpha_fringe_ratio": 0.006,
+      "transparent_ratio": 0.626,
+      "border_deviation": 0.09
+    },
+    {
+      "id": "popular-wilderness-trail-wheated-bourbon",
+      "name": "Wilderness Trail Wheated",
+      "image": "assets/bourbons/detail-200/popular-wilderness-trail-wheated-bourbon.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-wilderness-trail-wheated-bourbon.webp"
+      },
+      "bottle_bbox": {
+        "x": 105,
+        "y": 39,
+        "width": 278,
+        "height": 571
+      },
+      "bottle_height_ratio": 0.878,
+      "effective_bottle_pixels": 1124,
+      "sharpness": 86.94,
+      "bright_ratio": 0.003,
+      "bright_alpha_fringe_ratio": 0.004,
+      "transparent_ratio": 0.626,
+      "border_deviation": 0.24
+    },
+    {
+      "id": "green-river-101-22",
+      "name": "Green River",
+      "image": "assets/bourbons/detail-200/green-river-101-22.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/green-river-101-22.webp"
+      },
+      "bottle_bbox": {
+        "x": 144,
+        "y": 39,
+        "width": 200,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 73.76,
+      "bright_ratio": 0.002,
+      "bright_alpha_fringe_ratio": 0.013,
+      "transparent_ratio": 0.729,
+      "border_deviation": 0.09
+    },
+    {
+      "id": "olcc-13310b",
+      "name": "Green River Wheated",
+      "image": "assets/bourbons/detail-200/olcc-13310b.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/olcc-13310b.webp"
+      },
+      "bottle_bbox": {
+        "x": 144,
+        "y": 39,
+        "width": 200,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 72.98,
+      "bright_ratio": 0.002,
+      "bright_alpha_fringe_ratio": 0.013,
+      "transparent_ratio": 0.729,
+      "border_deviation": 0.07
+    },
+    {
+      "id": "green-river-full-proof-101-22",
+      "name": "Green River Full Proof",
+      "image": "assets/bourbons/detail-200/green-river-full-proof-101-22.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/green-river-full-proof-101-22.webp"
+      },
+      "bottle_bbox": {
+        "x": 144,
+        "y": 39,
+        "width": 200,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 80.55,
+      "bright_ratio": 0.005,
+      "bright_alpha_fringe_ratio": 0.013,
+      "transparent_ratio": 0.728,
+      "border_deviation": 0.04
+    },
+    {
+      "id": "popular-bardstown-bourbon-company-origin-series-bourbon",
+      "name": "Bardstown Bourbon Company Origin Series",
+      "image": "assets/bourbons/detail-200/popular-bardstown-bourbon-company-origin-series-bourbon.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-bardstown-bourbon-company-origin-series-bourbon.webp"
+      },
+      "bottle_bbox": {
+        "x": 152,
+        "y": 39,
+        "width": 184,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 91.48,
+      "bright_ratio": 0.135,
+      "bright_alpha_fringe_ratio": 0.03,
+      "transparent_ratio": 0.732,
+      "border_deviation": 0.24
+    },
+    {
+      "id": "popular-bardstown-bourbon-company-origin-high-wheat",
+      "name": "Bardstown Bourbon Company Origin High Wheat",
+      "image": "assets/bourbons/detail-200/popular-bardstown-bourbon-company-origin-high-wheat.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-bardstown-bourbon-company-origin-high-wheat.webp"
+      },
+      "bottle_bbox": {
+        "x": 152,
+        "y": 39,
+        "width": 184,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 75.22,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.003,
+      "transparent_ratio": 0.732,
+      "border_deviation": 0.34
+    },
+    {
+      "id": "olcc-13003b",
+      "name": "Bardstown Bourbon Company Origin Bottled in Bond",
+      "image": "assets/bourbons/detail-200/olcc-13003b.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/olcc-13003b.webp"
+      },
+      "bottle_bbox": {
+        "x": 152,
+        "y": 39,
+        "width": 184,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 74.13,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.002,
+      "transparent_ratio": 0.732,
+      "border_deviation": 0.39
+    },
+    {
+      "id": "penelope-four-grain-straight-bourbon-whiskey",
+      "name": "Penelope Four Grain",
+      "image": "assets/bourbons/detail-200/penelope-four-grain-straight-bourbon-whiskey.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/penelope-four-grain-straight-bourbon-whiskey.webp"
+      },
+      "bottle_bbox": {
+        "x": 181,
+        "y": 39,
+        "width": 126,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 79.14,
+      "bright_ratio": 0.106,
+      "bright_alpha_fringe_ratio": 0.033,
+      "transparent_ratio": 0.824,
+      "border_deviation": 0.06
+    },
+    {
+      "id": "popular-penelope-architect-bourbon",
+      "name": "Penelope Architect",
+      "image": "assets/bourbons/detail-200/popular-penelope-architect-bourbon.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-penelope-architect-bourbon.webp"
+      },
+      "bottle_bbox": {
+        "x": 184,
+        "y": 39,
+        "width": 120,
+        "height": 571
+      },
+      "bottle_height_ratio": 0.878,
+      "effective_bottle_pixels": 1124,
+      "sharpness": 38.21,
+      "bright_ratio": 0.001,
+      "bright_alpha_fringe_ratio": 0.009,
+      "transparent_ratio": 0.838,
+      "border_deviation": 0.18
+    },
+    {
+      "id": "penelope-barrel-strength-121-22",
+      "name": "Penelope Barrel Strength",
+      "image": "assets/bourbons/detail-200/penelope-barrel-strength-121-22.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/penelope-barrel-strength-121-22.webp"
+      },
+      "bottle_bbox": {
+        "x": 178,
+        "y": 39,
+        "width": 131,
+        "height": 571
+      },
+      "bottle_height_ratio": 0.878,
+      "effective_bottle_pixels": 1124,
+      "sharpness": 61.88,
+      "bright_ratio": 0.029,
+      "bright_alpha_fringe_ratio": 0.014,
+      "transparent_ratio": 0.823,
+      "border_deviation": 0.04
+    },
+    {
+      "id": "popular-penelope-toasted-bourbon",
+      "name": "Penelope Toasted",
+      "image": "assets/bourbons/detail-200/popular-penelope-toasted-bourbon.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-penelope-toasted-bourbon.webp"
+      },
+      "bottle_bbox": {
+        "x": 182,
+        "y": 39,
+        "width": 124,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 63.38,
+      "bright_ratio": 0.037,
+      "bright_alpha_fringe_ratio": 0.004,
+      "transparent_ratio": 0.835,
+      "border_deviation": 0.04
+    },
+    {
+      "id": "redwood-empire-pipe-dream-141-01",
+      "name": "Redwood Empire Pipe Dream",
+      "image": "assets/bourbons/detail-200/redwood-empire-pipe-dream-141-01.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/redwood-empire-pipe-dream-141-01.webp"
+      },
+      "bottle_bbox": {
+        "x": 176,
+        "y": 39,
+        "width": 135,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 77.49,
+      "bright_ratio": 0.135,
+      "bright_alpha_fringe_ratio": 0.194,
+      "transparent_ratio": 0.819,
+      "border_deviation": 0.23
+    },
+    {
+      "id": "popular-redwood-empire-pipe-dream-cask-strength",
+      "name": "Redwood Empire Pipe Dream Cask Strength",
+      "image": "assets/bourbons/detail-200/popular-redwood-empire-pipe-dream-cask-strength.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-redwood-empire-pipe-dream-cask-strength.webp"
+      },
+      "bottle_bbox": {
+        "x": 177,
+        "y": 40,
+        "width": 134,
+        "height": 571
+      },
+      "bottle_height_ratio": 0.878,
+      "effective_bottle_pixels": 1124,
+      "sharpness": 51.13,
+      "bright_ratio": 0.028,
+      "bright_alpha_fringe_ratio": 0.014,
+      "transparent_ratio": 0.821,
+      "border_deviation": 0.11
+    },
+    {
+      "id": "popular-smoke-wagon-small-batch-bourbon",
+      "name": "Smoke Wagon Small Batch",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "popular-smoke-wagon-uncut-unfiltered-bourbon",
+      "name": "Smoke Wagon Uncut Unfiltered",
+      "image": "assets/bourbons/detail-200/popular-smoke-wagon-uncut-unfiltered-bourbon.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-smoke-wagon-uncut-unfiltered-bourbon.webp"
+      },
+      "bottle_bbox": {
+        "x": 180,
+        "y": 40,
+        "width": 128,
+        "height": 570
+      },
+      "bottle_height_ratio": 0.877,
+      "effective_bottle_pixels": 1122,
+      "sharpness": 61.9,
+      "bright_ratio": 0.004,
+      "bright_alpha_fringe_ratio": 0.015,
+      "transparent_ratio": 0.825,
+      "border_deviation": 0.03
+    },
+    {
+      "id": "high-west-131-45",
+      "name": "High West",
+      "image": "assets/bourbons/detail-200/high-west-131-45.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/high-west-131-45.webp"
+      },
+      "bottle_bbox": {
+        "x": 155,
+        "y": 25,
+        "width": 177,
+        "height": 585
+      },
+      "bottle_height_ratio": 0.9,
+      "effective_bottle_pixels": 1152,
+      "sharpness": 93.08,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.003,
+      "transparent_ratio": 0.698,
+      "border_deviation": 0.1
+    },
+    {
+      "id": "popular-horse-soldier-premium-bourbon",
+      "name": "Horse Soldier Premium",
+      "image": "assets/bourbons/detail-200/popular-horse-soldier-premium-bourbon.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-horse-soldier-premium-bourbon.webp"
+      },
+      "bottle_bbox": {
+        "x": 120,
+        "y": 40,
+        "width": 248,
+        "height": 570
+      },
+      "bottle_height_ratio": 0.877,
+      "effective_bottle_pixels": 1122,
+      "sharpness": 84.54,
+      "bright_ratio": 0.03,
+      "bright_alpha_fringe_ratio": 0.01,
+      "transparent_ratio": 0.672,
+      "border_deviation": 0.06
+    },
+    {
+      "id": "olcc-12874b",
+      "name": "Horse Soldier Small Batch",
+      "image": "assets/bourbons/detail-200/olcc-12874b.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/olcc-12874b.webp"
+      },
+      "bottle_bbox": {
+        "x": 120,
+        "y": 40,
+        "width": 248,
+        "height": 570
+      },
+      "bottle_height_ratio": 0.877,
+      "effective_bottle_pixels": 1122,
+      "sharpness": 84.21,
+      "bright_ratio": 0.03,
+      "bright_alpha_fringe_ratio": 0.013,
+      "transparent_ratio": 0.671,
+      "border_deviation": 0.17
+    },
+    {
+      "id": "popular-early-times-bottled-in-bond",
+      "name": "Early Times Bottled in Bond",
+      "image": "assets/bourbons/detail-200/popular-early-times-bottled-in-bond.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-early-times-bottled-in-bond.webp"
+      },
+      "bottle_bbox": {
+        "x": 163,
+        "y": 39,
+        "width": 161,
+        "height": 573
+      },
+      "bottle_height_ratio": 0.882,
+      "effective_bottle_pixels": 1128,
+      "sharpness": 70.17,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0,
+      "transparent_ratio": 0.782,
+      "border_deviation": 0.3
+    },
+    {
+      "id": "popular-very-old-barton-100-proof",
+      "name": "Very Old Barton 100 Proof",
+      "image": "assets/bourbons/detail-200/popular-very-old-barton-100-proof.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-very-old-barton-100-proof.webp"
+      },
+      "bottle_bbox": {
+        "x": 127,
+        "y": 39,
+        "width": 234,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 77.57,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.002,
+      "transparent_ratio": 0.735,
+      "border_deviation": 0.19
+    },
+    {
+      "id": "popular-fighting-cock-103-proof",
+      "name": "Fighting Cock 103 Proof",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "popular-j-t-s-brown-bottled-in-bond",
+      "name": "J.T.S. Brown Bottled in Bond",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "popular-old-tub-bottled-in-bond",
+      "name": "Old Tub Bottled in Bond",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "popular-coopers-craft-barrel-reserve-100-proof",
+      "name": "Coopers' Craft Barrel Reserve 100 Proof",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "popular-bowman-brothers-small-batch-bourbon",
+      "name": "Bowman Brothers Small Batch",
+      "image": "assets/bourbons/detail-200/popular-bowman-brothers-small-batch-bourbon.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-bowman-brothers-small-batch-bourbon.webp"
+      },
+      "bottle_bbox": {
+        "x": 109,
+        "y": 39,
+        "width": 269,
+        "height": 571
+      },
+      "bottle_height_ratio": 0.878,
+      "effective_bottle_pixels": 1124,
+      "sharpness": 73.33,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.002,
+      "transparent_ratio": 0.706,
+      "border_deviation": 0.3
+    },
+    {
+      "id": "olcc-0356b",
+      "name": "Johnnie Walker Red Label",
+      "image": "assets/bourbons/detail-200/olcc-0356b.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/olcc-0356b.webp"
+      },
+      "bottle_bbox": {
+        "x": 172,
+        "y": 39,
+        "width": 144,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 89.18,
+      "bright_ratio": 0.001,
+      "bright_alpha_fringe_ratio": 0.003,
+      "transparent_ratio": 0.781,
+      "border_deviation": 0.08
+    },
+    {
+      "id": "olcc-0357b",
+      "name": "Johnnie Walker Black Label 12 Year",
+      "image": "assets/bourbons/detail-200/olcc-0357b.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/olcc-0357b.webp"
+      },
+      "bottle_bbox": {
+        "x": 169,
+        "y": 39,
+        "width": 149,
+        "height": 571
+      },
+      "bottle_height_ratio": 0.878,
+      "effective_bottle_pixels": 1124,
+      "sharpness": 83.26,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0,
+      "transparent_ratio": 0.784,
+      "border_deviation": 0.07
+    },
+    {
+      "id": "johnnie-walker-double-black-151-5k",
+      "name": "Johnnie Walker Double Black",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "popular-johnnie-walker-green-label-15-year",
+      "name": "Johnnie Walker Green Label 15 Year",
+      "image": "assets/bourbons/detail-200/popular-johnnie-walker-green-label-15-year.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-johnnie-walker-green-label-15-year.webp"
+      },
+      "bottle_bbox": {
+        "x": 177,
+        "y": 40,
+        "width": 134,
+        "height": 571
+      },
+      "bottle_height_ratio": 0.878,
+      "effective_bottle_pixels": 1124,
+      "sharpness": 81.08,
+      "bright_ratio": 0.012,
+      "bright_alpha_fringe_ratio": 0.198,
+      "transparent_ratio": 0.801,
+      "border_deviation": 0.09
+    },
+    {
+      "id": "popular-johnnie-walker-gold-label-reserve",
+      "name": "Johnnie Walker Gold Label Reserve",
+      "image": "assets/bourbons/detail-200/popular-johnnie-walker-gold-label-reserve.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-johnnie-walker-gold-label-reserve.webp"
+      },
+      "bottle_bbox": {
+        "x": 174,
+        "y": 39,
+        "width": 140,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 89.31,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0,
+      "transparent_ratio": 0.796,
+      "border_deviation": 0.23
+    },
+    {
+      "id": "olcc-2209b",
+      "name": "Johnnie Walker Blue Label",
+      "image": "assets/bourbons/detail-200/olcc-2209b.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/olcc-2209b.webp"
+      },
+      "bottle_bbox": {
+        "x": 179,
+        "y": 40,
+        "width": 130,
+        "height": 571
+      },
+      "bottle_height_ratio": 0.878,
+      "effective_bottle_pixels": 1124,
+      "sharpness": 44.84,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.006,
+      "transparent_ratio": 0.798,
+      "border_deviation": 0.03
+    },
+    {
+      "id": "popular-chivas-regal-12-year",
+      "name": "Chivas Regal 12 Year",
+      "image": "assets/bourbons/detail-200/popular-chivas-regal-12-year.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-chivas-regal-12-year.webp"
+      },
+      "bottle_bbox": {
+        "x": 157,
+        "y": 39,
+        "width": 174,
+        "height": 573
+      },
+      "bottle_height_ratio": 0.882,
+      "effective_bottle_pixels": 1128,
+      "sharpness": 81.88,
+      "bright_ratio": 0.002,
+      "bright_alpha_fringe_ratio": 0.033,
+      "transparent_ratio": 0.759,
+      "border_deviation": 0.08
+    },
+    {
+      "id": "popular-chivas-regal-18-year",
+      "name": "Chivas Regal 18 Year",
+      "image": "assets/bourbons/detail-200/popular-chivas-regal-18-year.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-chivas-regal-18-year.webp"
+      },
+      "bottle_bbox": {
+        "x": 136,
+        "y": 40,
+        "width": 216,
+        "height": 571
+      },
+      "bottle_height_ratio": 0.878,
+      "effective_bottle_pixels": 1124,
+      "sharpness": 82.47,
+      "bright_ratio": 0.019,
+      "bright_alpha_fringe_ratio": 0,
+      "transparent_ratio": 0.718,
+      "border_deviation": 0.14
+    },
+    {
+      "id": "popular-ballantine-s-finest",
+      "name": "Ballantine's Finest",
+      "image": "assets/bourbons/detail-200/popular-ballantine-s-finest.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-ballantine-s-finest.webp"
+      },
+      "bottle_bbox": {
+        "x": 134,
+        "y": 40,
+        "width": 219,
+        "height": 571
+      },
+      "bottle_height_ratio": 0.878,
+      "effective_bottle_pixels": 1124,
+      "sharpness": 92.75,
+      "bright_ratio": 0.008,
+      "bright_alpha_fringe_ratio": 0.004,
+      "transparent_ratio": 0.69,
+      "border_deviation": 0.12
+    },
+    {
+      "id": "popular-grant-s-triple-wood",
+      "name": "Grant's Triple Wood",
+      "image": "assets/bourbons/detail-200/popular-grant-s-triple-wood.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-grant-s-triple-wood.webp"
+      },
+      "bottle_bbox": {
+        "x": 162,
+        "y": 40,
+        "width": 164,
+        "height": 571
+      },
+      "bottle_height_ratio": 0.878,
+      "effective_bottle_pixels": 1124,
+      "sharpness": 83.64,
+      "bright_ratio": 0.006,
+      "bright_alpha_fringe_ratio": 0,
+      "transparent_ratio": 0.772,
+      "border_deviation": 0.25
+    },
+    {
+      "id": "olcc-0352b",
+      "name": "Dewar's White Label",
+      "image": "assets/bourbons/detail-200/olcc-0352b.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/olcc-0352b.webp"
+      },
+      "bottle_bbox": {
+        "x": 174,
+        "y": 39,
+        "width": 140,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 90.43,
+      "bright_ratio": 0.005,
+      "bright_alpha_fringe_ratio": 0.26,
+      "transparent_ratio": 0.802,
+      "border_deviation": 0.1
+    },
+    {
+      "id": "popular-dewar-s-12-year",
+      "name": "Dewar's 12 Year",
+      "image": "assets/bourbons/detail-200/popular-dewar-s-12-year.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-dewar-s-12-year.webp"
+      },
+      "bottle_bbox": {
+        "x": 134,
+        "y": 39,
+        "width": 220,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 79.62,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.006,
+      "transparent_ratio": 0.727,
+      "border_deviation": 0.25
+    },
+    {
+      "id": "popular-j-b-rare",
+      "name": "J&B Rare",
+      "image": "assets/bourbons/detail-200/popular-j-b-rare.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-j-b-rare.webp"
+      },
+      "bottle_bbox": {
+        "x": 173,
+        "y": 39,
+        "width": 142,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 68.13,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.008,
+      "transparent_ratio": 0.802,
+      "border_deviation": 0.13
+    },
+    {
+      "id": "olcc-0368b",
+      "name": "The Famous Grouse",
+      "image": "assets/bourbons/detail-200/olcc-0368b.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/olcc-0368b.webp"
+      },
+      "bottle_bbox": {
+        "x": 175,
+        "y": 39,
+        "width": 137,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 75.6,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.001,
+      "transparent_ratio": 0.8,
+      "border_deviation": 0.2
+    },
+    {
+      "id": "olcc-0346b",
+      "name": "Cutty Sark Original",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "popular-monkey-shoulder",
+      "name": "Monkey Shoulder",
+      "image": "assets/bourbons/detail-200/popular-monkey-shoulder.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-monkey-shoulder.webp"
+      },
+      "bottle_bbox": {
+        "x": 131,
+        "y": 39,
+        "width": 226,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 95.14,
+      "bright_ratio": 0.066,
+      "bright_alpha_fringe_ratio": 0,
+      "transparent_ratio": 0.692,
+      "border_deviation": 0.12
+    },
+    {
+      "id": "popular-glenfiddich-12-year",
+      "name": "Glenfiddich 12 Year",
+      "image": "assets/bourbons/detail-200/popular-glenfiddich-12-year.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-glenfiddich-12-year.webp"
+      },
+      "bottle_bbox": {
+        "x": 156,
+        "y": 40,
+        "width": 176,
+        "height": 571
+      },
+      "bottle_height_ratio": 0.878,
+      "effective_bottle_pixels": 1124,
+      "sharpness": 61.45,
+      "bright_ratio": 0.002,
+      "bright_alpha_fringe_ratio": 0.01,
+      "transparent_ratio": 0.736,
+      "border_deviation": 0.16
+    },
+    {
+      "id": "olcc-0392b",
+      "name": "Glenfiddich 15 Year Solera",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "popular-glenfiddich-18-year",
+      "name": "Glenfiddich 18 Year",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "olcc-0376b",
+      "name": "The Glenlivet 12 Year",
+      "image": "assets/bourbons/detail-200/olcc-0376b.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/olcc-0376b.webp"
+      },
+      "bottle_bbox": {
+        "x": 169,
+        "y": 39,
+        "width": 150,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 73.01,
+      "bright_ratio": 0.01,
+      "bright_alpha_fringe_ratio": 0,
+      "transparent_ratio": 0.794,
+      "border_deviation": 0.36
+    },
+    {
+      "id": "olcc-3834b",
+      "name": "The Glenlivet Founder's Reserve",
+      "image": "assets/bourbons/detail-200/olcc-3834b.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/olcc-3834b.webp"
+      },
+      "bottle_bbox": {
+        "x": 169,
+        "y": 40,
+        "width": 150,
+        "height": 571
+      },
+      "bottle_height_ratio": 0.878,
+      "effective_bottle_pixels": 1124,
+      "sharpness": 72.8,
+      "bright_ratio": 0.009,
+      "bright_alpha_fringe_ratio": 0.001,
+      "transparent_ratio": 0.795,
+      "border_deviation": 0.18
+    },
+    {
+      "id": "popular-the-glenlivet-14-year-cognac-cask-selection",
+      "name": "The Glenlivet 14 Year Cognac Cask Selection",
+      "image": "assets/bourbons/detail-200/popular-the-glenlivet-14-year-cognac-cask-selection.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-the-glenlivet-14-year-cognac-cask-selection.webp"
+      },
+      "bottle_bbox": {
+        "x": 169,
+        "y": 39,
+        "width": 150,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 79.22,
+      "bright_ratio": 0.01,
+      "bright_alpha_fringe_ratio": 0.006,
+      "transparent_ratio": 0.794,
+      "border_deviation": 0.24
+    },
+    {
+      "id": "popular-the-macallan-12-year-double-cask",
+      "name": "The Macallan 12 Year Double Cask",
+      "image": "assets/bourbons/detail-200/popular-the-macallan-12-year-double-cask.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-the-macallan-12-year-double-cask.webp"
+      },
+      "bottle_bbox": {
+        "x": 171,
+        "y": 39,
+        "width": 146,
+        "height": 586
+      },
+      "bottle_height_ratio": 0.902,
+      "effective_bottle_pixels": 1154,
+      "sharpness": 83.59,
+      "bright_ratio": 0.002,
+      "bright_alpha_fringe_ratio": 0.001,
+      "transparent_ratio": 0.796,
+      "border_deviation": 0.33
+    },
+    {
+      "id": "popular-the-macallan-12-year-sherry-oak",
+      "name": "The Macallan 12 Year Sherry Oak",
+      "image": "assets/bourbons/detail-200/popular-the-macallan-12-year-sherry-oak.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-the-macallan-12-year-sherry-oak.webp"
+      },
+      "bottle_bbox": {
+        "x": 170,
+        "y": 39,
+        "width": 148,
+        "height": 586
+      },
+      "bottle_height_ratio": 0.902,
+      "effective_bottle_pixels": 1154,
+      "sharpness": 87.24,
+      "bright_ratio": 0.001,
+      "bright_alpha_fringe_ratio": 0,
+      "transparent_ratio": 0.79,
+      "border_deviation": 0.24
+    },
+    {
+      "id": "popular-the-macallan-15-year-double-cask",
+      "name": "The Macallan 15 Year Double Cask",
+      "image": "assets/bourbons/detail-200/popular-the-macallan-15-year-double-cask.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-the-macallan-15-year-double-cask.webp"
+      },
+      "bottle_bbox": {
+        "x": 168,
+        "y": 39,
+        "width": 152,
+        "height": 586
+      },
+      "bottle_height_ratio": 0.902,
+      "effective_bottle_pixels": 1154,
+      "sharpness": 88.8,
+      "bright_ratio": 0.011,
+      "bright_alpha_fringe_ratio": 0,
+      "transparent_ratio": 0.784,
+      "border_deviation": 0.17
+    },
+    {
+      "id": "popular-the-balvenie-12-year-doublewood",
+      "name": "The Balvenie 12 Year DoubleWood",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "popular-the-balvenie-14-year-caribbean-cask",
+      "name": "The Balvenie 14 Year Caribbean Cask",
+      "image": "assets/bourbons/detail-200/popular-the-balvenie-14-year-caribbean-cask.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-the-balvenie-14-year-caribbean-cask.webp"
+      },
+      "bottle_bbox": {
+        "x": 147,
+        "y": 39,
+        "width": 193,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 76.66,
+      "bright_ratio": 0.017,
+      "bright_alpha_fringe_ratio": 0.007,
+      "transparent_ratio": 0.736,
+      "border_deviation": 0.27
+    },
+    {
+      "id": "popular-glenmorangie-the-original-12-year",
+      "name": "Glenmorangie The Original 12 Year",
+      "image": "assets/bourbons/detail-200/popular-glenmorangie-the-original-12-year.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-glenmorangie-the-original-12-year.webp"
+      },
+      "bottle_bbox": {
+        "x": 111,
+        "y": 39,
+        "width": 268,
+        "height": 571
+      },
+      "bottle_height_ratio": 0.878,
+      "effective_bottle_pixels": 1124,
+      "sharpness": 91.06,
+      "bright_ratio": 0.024,
+      "bright_alpha_fringe_ratio": 0.406,
+      "transparent_ratio": 0.788,
+      "border_deviation": 0.36
+    },
+    {
+      "id": "popular-glenmorangie-lasanta-12-year",
+      "name": "Glenmorangie Lasanta 12 Year",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "popular-glenmorangie-quinta-ruban-14-year",
+      "name": "Glenmorangie Quinta Ruban 14 Year",
+      "image": "assets/bourbons/detail-200/popular-glenmorangie-quinta-ruban-14-year.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-glenmorangie-quinta-ruban-14-year.webp"
+      },
+      "bottle_bbox": {
+        "x": 110,
+        "y": 39,
+        "width": 270,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 79.12,
+      "bright_ratio": 0.033,
+      "bright_alpha_fringe_ratio": 0.525,
+      "transparent_ratio": 0.786,
+      "border_deviation": 0.42
+    },
+    {
+      "id": "popular-aberlour-12-year-double-cask",
+      "name": "Aberlour 12 Year Double Cask",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "popular-aberlour-a-bunadh",
+      "name": "Aberlour A'Bunadh",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "popular-ardbeg-10-year",
+      "name": "Ardbeg 10 Year",
+      "image": "assets/bourbons/detail-200/popular-ardbeg-10-year.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-ardbeg-10-year.webp"
+      },
+      "bottle_bbox": {
+        "x": 159,
+        "y": 39,
+        "width": 170,
+        "height": 571
+      },
+      "bottle_height_ratio": 0.878,
+      "effective_bottle_pixels": 1124,
+      "sharpness": 37.87,
+      "bright_ratio": 0.001,
+      "bright_alpha_fringe_ratio": 0,
+      "transparent_ratio": 0.771,
+      "border_deviation": 0.03
+    },
+    {
+      "id": "popular-ardbeg-uigeadail",
+      "name": "Ardbeg Uigeadail",
+      "image": "assets/bourbons/detail-200/popular-ardbeg-uigeadail.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-ardbeg-uigeadail.webp"
+      },
+      "bottle_bbox": {
+        "x": 160,
+        "y": 39,
+        "width": 168,
+        "height": 571
+      },
+      "bottle_height_ratio": 0.878,
+      "effective_bottle_pixels": 1124,
+      "sharpness": 35.19,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0,
+      "transparent_ratio": 0.771,
+      "border_deviation": 0.04
+    },
+    {
+      "id": "popular-laphroaig-10-year",
+      "name": "Laphroaig 10 Year",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "popular-laphroaig-quarter-cask",
+      "name": "Laphroaig Quarter Cask",
+      "image": "assets/bourbons/detail-200/popular-laphroaig-quarter-cask.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-laphroaig-quarter-cask.webp"
+      },
+      "bottle_bbox": {
+        "x": 169,
+        "y": 40,
+        "width": 150,
+        "height": 570
+      },
+      "bottle_height_ratio": 0.877,
+      "effective_bottle_pixels": 1122,
+      "sharpness": 71.88,
+      "bright_ratio": 0.006,
+      "bright_alpha_fringe_ratio": 0.006,
+      "transparent_ratio": 0.792,
+      "border_deviation": 0.05
+    },
+    {
+      "id": "popular-lagavulin-16-year",
+      "name": "Lagavulin 16 Year",
+      "image": "assets/bourbons/detail-200/popular-lagavulin-16-year.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-lagavulin-16-year.webp"
+      },
+      "bottle_bbox": {
+        "x": 170,
+        "y": 39,
+        "width": 148,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 79,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.059,
+      "transparent_ratio": 0.8,
+      "border_deviation": 0.11
+    },
+    {
+      "id": "popular-talisker-10-year",
+      "name": "Talisker 10 Year",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "popular-oban-14-year",
+      "name": "Oban 14 Year",
+      "image": "assets/bourbons/detail-200/popular-oban-14-year.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-oban-14-year.webp"
+      },
+      "bottle_bbox": {
+        "x": 174,
+        "y": 40,
+        "width": 139,
+        "height": 570
+      },
+      "bottle_height_ratio": 0.877,
+      "effective_bottle_pixels": 1122,
+      "sharpness": 81.47,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.051,
+      "transparent_ratio": 0.81,
+      "border_deviation": 0.09
+    },
+    {
+      "id": "olcc-2211b",
+      "name": "Highland Park 12 Year Viking Honour",
+      "image": "assets/bourbons/detail-200/olcc-2211b.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/olcc-2211b.webp"
+      },
+      "bottle_bbox": {
+        "x": 99,
+        "y": 30,
+        "width": 291,
+        "height": 581
+      },
+      "bottle_height_ratio": 0.894,
+      "effective_bottle_pixels": 1144,
+      "sharpness": 110.9,
+      "bright_ratio": 0.008,
+      "bright_alpha_fringe_ratio": 0.003,
+      "transparent_ratio": 0.541,
+      "border_deviation": 0.16
+    },
+    {
+      "id": "olcc-7243b",
+      "name": "Bunnahabhain 12 Year",
+      "image": "assets/bourbons/detail-200/olcc-7243b.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/olcc-7243b.webp"
+      },
+      "bottle_bbox": {
+        "x": 132,
+        "y": 40,
+        "width": 224,
+        "height": 570
+      },
+      "bottle_height_ratio": 0.877,
+      "effective_bottle_pixels": 1122,
+      "sharpness": 57.95,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.002,
+      "transparent_ratio": 0.705,
+      "border_deviation": 0.05
+    },
+    {
+      "id": "popular-caol-ila-12-year",
+      "name": "Caol Ila 12 Year",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "popular-bowmore-12-year",
+      "name": "Bowmore 12 Year",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "popular-the-dalmore-12-year",
+      "name": "The Dalmore 12 Year",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "popular-dalwhinnie-15-year",
+      "name": "Dalwhinnie 15 Year",
+      "image": "assets/bourbons/detail-200/popular-dalwhinnie-15-year.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-dalwhinnie-15-year.webp"
+      },
+      "bottle_bbox": {
+        "x": 125,
+        "y": 40,
+        "width": 238,
+        "height": 571
+      },
+      "bottle_height_ratio": 0.878,
+      "effective_bottle_pixels": 1124,
+      "sharpness": 90.91,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.036,
+      "transparent_ratio": 0.68,
+      "border_deviation": 0.25
+    },
+    {
+      "id": "popular-the-glendronach-12-year-original",
+      "name": "The GlenDronach 12 Year Original",
+      "image": "assets/bourbons/detail-200/popular-the-glendronach-12-year-original.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-the-glendronach-12-year-original.webp"
+      },
+      "bottle_bbox": {
+        "x": 174,
+        "y": 39,
+        "width": 140,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 70.57,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0,
+      "transparent_ratio": 0.804,
+      "border_deviation": 0.17
+    },
+    {
+      "id": "popular-the-glenallachie-12-year",
+      "name": "The GlenAllachie 12 Year",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "popular-bruichladdich-the-classic-laddie",
+      "name": "Bruichladdich The Classic Laddie",
+      "image": "assets/bourbons/detail-200/popular-bruichladdich-the-classic-laddie.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-bruichladdich-the-classic-laddie.webp"
+      },
+      "bottle_bbox": {
+        "x": 127,
+        "y": 39,
+        "width": 235,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 44.18,
+      "bright_ratio": 0.001,
+      "bright_alpha_fringe_ratio": 0.001,
+      "transparent_ratio": 0.672,
+      "border_deviation": 0.09
+    },
+    {
+      "id": "popular-auchentoshan-three-wood",
+      "name": "Auchentoshan Three Wood",
+      "image": "assets/bourbons/detail-200/popular-auchentoshan-three-wood.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-auchentoshan-three-wood.webp"
+      },
+      "bottle_bbox": {
+        "x": 151,
+        "y": 32,
+        "width": 185,
+        "height": 585
+      },
+      "bottle_height_ratio": 0.9,
+      "effective_bottle_pixels": 1152,
+      "sharpness": 82.64,
+      "bright_ratio": 0.002,
+      "bright_alpha_fringe_ratio": 0.006,
+      "transparent_ratio": 0.726,
+      "border_deviation": 0.25
+    },
+    {
+      "id": "popular-jura-10-year",
+      "name": "Jura 10 Year",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "popular-jameson-irish-whiskey",
+      "name": "Jameson Irish",
+      "image": "assets/bourbons/detail-200/popular-jameson-irish-whiskey.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-jameson-irish-whiskey.webp"
+      },
+      "bottle_bbox": {
+        "x": 171,
+        "y": 39,
+        "width": 146,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 61.6,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.002,
+      "transparent_ratio": 0.797,
+      "border_deviation": 0.25
+    },
+    {
+      "id": "popular-jameson-black-barrel",
+      "name": "Jameson Black Barrel",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "popular-jameson-caskmates-stout-edition",
+      "name": "Jameson Caskmates Stout Edition",
+      "image": "assets/bourbons/detail-200/popular-jameson-caskmates-stout-edition.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-jameson-caskmates-stout-edition.webp"
+      },
+      "bottle_bbox": {
+        "x": 171,
+        "y": 39,
+        "width": 146,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 51.52,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.001,
+      "transparent_ratio": 0.796,
+      "border_deviation": 0.17
+    },
+    {
+      "id": "popular-tullamore-d-e-w-original",
+      "name": "Tullamore D.E.W. Original",
+      "image": "assets/bourbons/detail-200/popular-tullamore-d-e-w-original.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-tullamore-d-e-w-original.webp"
+      },
+      "bottle_bbox": {
+        "x": 116,
+        "y": 39,
+        "width": 249,
+        "height": 571
+      },
+      "bottle_height_ratio": 0.878,
+      "effective_bottle_pixels": 1124,
+      "sharpness": 85.36,
+      "bright_ratio": 0.017,
+      "bright_alpha_fringe_ratio": 0.005,
+      "transparent_ratio": 0.72,
+      "border_deviation": 0.17
+    },
+    {
+      "id": "popular-tullamore-d-e-w-12-year-special-reserve",
+      "name": "Tullamore D.E.W. 12 Year Special Reserve",
+      "image": "assets/bourbons/detail-200/popular-tullamore-d-e-w-12-year-special-reserve.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-tullamore-d-e-w-12-year-special-reserve.webp"
+      },
+      "bottle_bbox": {
+        "x": 118,
+        "y": 39,
+        "width": 244,
+        "height": 571
+      },
+      "bottle_height_ratio": 0.878,
+      "effective_bottle_pixels": 1124,
+      "sharpness": 78.4,
+      "bright_ratio": 0.005,
+      "bright_alpha_fringe_ratio": 0.001,
+      "transparent_ratio": 0.721,
+      "border_deviation": 0.07
+    },
+    {
+      "id": "bushmills-original-irish-whiskey",
+      "name": "Bushmills Original",
+      "image": "assets/bourbons/detail-200/bushmills-original-irish-whiskey.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/bushmills-original-irish-whiskey.webp"
+      },
+      "bottle_bbox": {
+        "x": 169,
+        "y": 39,
+        "width": 149,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 88.71,
+      "bright_ratio": 0.159,
+      "bright_alpha_fringe_ratio": 0.003,
+      "transparent_ratio": 0.777,
+      "border_deviation": 0.23
+    },
+    {
+      "id": "bushmills-black-bush-irish-whiskey",
+      "name": "Bushmills Black Bush",
+      "image": "assets/bourbons/detail-200/bushmills-black-bush-irish-whiskey.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/bushmills-black-bush-irish-whiskey.webp"
+      },
+      "bottle_bbox": {
+        "x": 170,
+        "y": 39,
+        "width": 148,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 68.41,
+      "bright_ratio": 0.009,
+      "bright_alpha_fringe_ratio": 0.001,
+      "transparent_ratio": 0.773,
+      "border_deviation": 0.3
+    },
+    {
+      "id": "bushmills-10-year-old-single-malt",
+      "name": "Bushmills 10 Year Old Single Malt",
+      "image": "assets/bourbons/detail-200/bushmills-10-year-old-single-malt.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/bushmills-10-year-old-single-malt.webp"
+      },
+      "bottle_bbox": {
+        "x": 157,
+        "y": 39,
+        "width": 174,
+        "height": 571
+      },
+      "bottle_height_ratio": 0.878,
+      "effective_bottle_pixels": 1124,
+      "sharpness": 82.28,
+      "bright_ratio": 0.001,
+      "bright_alpha_fringe_ratio": 0.001,
+      "transparent_ratio": 0.76,
+      "border_deviation": 0.25
+    },
+    {
+      "id": "bushmills-12-year-old-single-malt",
+      "name": "Bushmills 12 Year Old Single Malt",
+      "image": "assets/bourbons/detail-200/bushmills-12-year-old-single-malt.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/bushmills-12-year-old-single-malt.webp"
+      },
+      "bottle_bbox": {
+        "x": 156,
+        "y": 39,
+        "width": 176,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 79.25,
+      "bright_ratio": 0.002,
+      "bright_alpha_fringe_ratio": 0.406,
+      "transparent_ratio": 0.747,
+      "border_deviation": 0.08
+    },
+    {
+      "id": "bushmills-16-year-old-single-malt",
+      "name": "Bushmills 16 Year Old Single Malt",
+      "image": "assets/bourbons/detail-200/bushmills-16-year-old-single-malt.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/bushmills-16-year-old-single-malt.webp"
+      },
+      "bottle_bbox": {
+        "x": 155,
+        "y": 39,
+        "width": 178,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 80.75,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.022,
+      "transparent_ratio": 0.74,
+      "border_deviation": 0.39
+    },
+    {
+      "id": "popular-redbreast-12-year",
+      "name": "Redbreast 12 Year",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "popular-redbreast-15-year",
+      "name": "Redbreast 15 Year",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "popular-redbreast-12-year-cask-strength",
+      "name": "Redbreast 12 Year Cask Strength",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "popular-green-spot",
+      "name": "Green Spot",
+      "image": "assets/bourbons/detail-200/popular-green-spot.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-green-spot.webp"
+      },
+      "bottle_bbox": {
+        "x": 162,
+        "y": 39,
+        "width": 164,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 81.9,
+      "bright_ratio": 0.015,
+      "bright_alpha_fringe_ratio": 0.008,
+      "transparent_ratio": 0.769,
+      "border_deviation": 0.32
+    },
+    {
+      "id": "popular-yellow-spot-12-year",
+      "name": "Yellow Spot 12 Year",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "popular-powers-gold-label",
+      "name": "Powers Gold Label",
+      "image": "assets/bourbons/detail-200/popular-powers-gold-label.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-powers-gold-label.webp"
+      },
+      "bottle_bbox": {
+        "x": 136,
+        "y": 39,
+        "width": 215,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 89.45,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.006,
+      "transparent_ratio": 0.706,
+      "border_deviation": 0.08
+    },
+    {
+      "id": "popular-powers-three-swallow",
+      "name": "Powers Three Swallow",
+      "image": "assets/bourbons/detail-200/popular-powers-three-swallow.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-powers-three-swallow.webp"
+      },
+      "bottle_bbox": {
+        "x": 140,
+        "y": 39,
+        "width": 207,
+        "height": 585
+      },
+      "bottle_height_ratio": 0.9,
+      "effective_bottle_pixels": 1152,
+      "sharpness": 85.34,
+      "bright_ratio": 0.002,
+      "bright_alpha_fringe_ratio": 0.134,
+      "transparent_ratio": 0.693,
+      "border_deviation": 0.37
+    },
+    {
+      "id": "popular-teeling-small-batch",
+      "name": "Teeling Small Batch",
+      "image": "assets/bourbons/detail-200/popular-teeling-small-batch.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-teeling-small-batch.webp"
+      },
+      "bottle_bbox": {
+        "x": 152,
+        "y": 39,
+        "width": 184,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 52,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.001,
+      "transparent_ratio": 0.781,
+      "border_deviation": 0.23
+    },
+    {
+      "id": "popular-teeling-single-malt",
+      "name": "Teeling Single Malt",
+      "image": "assets/bourbons/detail-200/popular-teeling-single-malt.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-teeling-single-malt.webp"
+      },
+      "bottle_bbox": {
+        "x": 152,
+        "y": 39,
+        "width": 183,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 50.08,
+      "bright_ratio": 0.001,
+      "bright_alpha_fringe_ratio": 0.007,
+      "transparent_ratio": 0.75,
+      "border_deviation": 0.04
+    },
+    {
+      "id": "popular-proper-no-twelve",
+      "name": "Proper No. Twelve",
+      "image": "assets/bourbons/detail-200/popular-proper-no-twelve.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-proper-no-twelve.webp"
+      },
+      "bottle_bbox": {
+        "x": 166,
+        "y": 39,
+        "width": 155,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 34.67,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.006,
+      "transparent_ratio": 0.792,
+      "border_deviation": 0.06
+    },
+    {
+      "id": "olcc-3824b",
+      "name": "Suntory Whisky Toki",
+      "image": "assets/bourbons/detail-200/olcc-3824b.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/olcc-3824b.webp"
+      },
+      "bottle_bbox": {
+        "x": 121,
+        "y": 32,
+        "width": 246,
+        "height": 587
+      },
+      "bottle_height_ratio": 0.903,
+      "effective_bottle_pixels": 1156,
+      "sharpness": 108.39,
+      "bright_ratio": 0.125,
+      "bright_alpha_fringe_ratio": 0,
+      "transparent_ratio": 0.622,
+      "border_deviation": 0.03
+    },
+    {
+      "id": "popular-suntory-kakubin",
+      "name": "Suntory Kakubin",
+      "image": "assets/bourbons/detail-200/popular-suntory-kakubin.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-suntory-kakubin.webp"
+      },
+      "bottle_bbox": {
+        "x": 122,
+        "y": 25,
+        "width": 244,
+        "height": 586
+      },
+      "bottle_height_ratio": 0.902,
+      "effective_bottle_pixels": 1154,
+      "sharpness": 111.37,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.003,
+      "transparent_ratio": 0.586,
+      "border_deviation": 0.28
+    },
+    {
+      "id": "popular-hibiki-japanese-harmony",
+      "name": "Hibiki Japanese Harmony",
+      "image": "assets/bourbons/detail-200/popular-hibiki-japanese-harmony.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-hibiki-japanese-harmony.webp"
+      },
+      "bottle_bbox": {
+        "x": 88,
+        "y": 33,
+        "width": 311,
+        "height": 586
+      },
+      "bottle_height_ratio": 0.902,
+      "effective_bottle_pixels": 1154,
+      "sharpness": 97.5,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.003,
+      "transparent_ratio": 0.518,
+      "border_deviation": 0.04
+    },
+    {
+      "id": "popular-yamazaki-distiller-s-reserve",
+      "name": "Yamazaki Distiller's Reserve",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "popular-yamazaki-12-year",
+      "name": "Yamazaki 12 Year",
+      "image": "assets/bourbons/detail-200/popular-yamazaki-12-year.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-yamazaki-12-year.webp"
+      },
+      "bottle_bbox": {
+        "x": 138,
+        "y": 32,
+        "width": 211,
+        "height": 586
+      },
+      "bottle_height_ratio": 0.902,
+      "effective_bottle_pixels": 1154,
+      "sharpness": 76.03,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0,
+      "transparent_ratio": 0.679,
+      "border_deviation": 0.38
+    },
+    {
+      "id": "popular-hakushu-distiller-s-reserve",
+      "name": "Hakushu Distiller's Reserve",
+      "image": "assets/bourbons/detail-200/popular-hakushu-distiller-s-reserve.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-hakushu-distiller-s-reserve.webp"
+      },
+      "bottle_bbox": {
+        "x": 150,
+        "y": 39,
+        "width": 187,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 75.16,
+      "bright_ratio": 0.001,
+      "bright_alpha_fringe_ratio": 0.015,
+      "transparent_ratio": 0.733,
+      "border_deviation": 0.17
+    },
+    {
+      "id": "popular-nikka-from-the-barrel",
+      "name": "Nikka From the Barrel",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "olcc-2619b",
+      "name": "Nikka Coffey Grain",
+      "image": "assets/bourbons/detail-200/olcc-2619b.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/olcc-2619b.webp"
+      },
+      "bottle_bbox": {
+        "x": 155,
+        "y": 39,
+        "width": 178,
+        "height": 571
+      },
+      "bottle_height_ratio": 0.878,
+      "effective_bottle_pixels": 1124,
+      "sharpness": 78.05,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.002,
+      "transparent_ratio": 0.751,
+      "border_deviation": 0.22
+    },
+    {
+      "id": "olcc-4087b",
+      "name": "Nikka Coffey Malt",
+      "image": "assets/bourbons/detail-200/olcc-4087b.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/olcc-4087b.webp"
+      },
+      "bottle_bbox": {
+        "x": 158,
+        "y": 39,
+        "width": 172,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 78.27,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0,
+      "transparent_ratio": 0.76,
+      "border_deviation": 0.28
+    },
+    {
+      "id": "popular-nikka-days",
+      "name": "Nikka Days",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "popular-nikka-yoichi-single-malt",
+      "name": "Nikka Yoichi Single Malt",
+      "image": "assets/bourbons/detail-200/popular-nikka-yoichi-single-malt.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-nikka-yoichi-single-malt.webp"
+      },
+      "bottle_bbox": {
+        "x": 154,
+        "y": 39,
+        "width": 179,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 75.35,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.002,
+      "transparent_ratio": 0.742,
+      "border_deviation": 0.19
+    },
+    {
+      "id": "popular-nikka-miyagikyo-single-malt",
+      "name": "Nikka Miyagikyo Single Malt",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "popular-mars-iwai-tradition",
+      "name": "Mars Iwai Tradition",
+      "image": "assets/bourbons/detail-200/popular-mars-iwai-tradition.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-mars-iwai-tradition.webp"
+      },
+      "bottle_bbox": {
+        "x": 162,
+        "y": 39,
+        "width": 164,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 60.36,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0,
+      "transparent_ratio": 0.768,
+      "border_deviation": 0.34
+    },
+    {
+      "id": "popular-akashi-white-oak",
+      "name": "Akashi White Oak",
+      "image": "assets/bourbons/detail-200/popular-akashi-white-oak.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-akashi-white-oak.webp"
+      },
+      "bottle_bbox": {
+        "x": 120,
+        "y": 39,
+        "width": 248,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 89.5,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.004,
+      "transparent_ratio": 0.672,
+      "border_deviation": 0.1
+    },
+    {
+      "id": "popular-hatozaki-finest",
+      "name": "Hatozaki Finest",
+      "image": "assets/bourbons/detail-200/popular-hatozaki-finest.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-hatozaki-finest.webp"
+      },
+      "bottle_bbox": {
+        "x": 158,
+        "y": 39,
+        "width": 171,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 71.21,
+      "bright_ratio": 0.031,
+      "bright_alpha_fringe_ratio": 0.002,
+      "transparent_ratio": 0.87,
+      "border_deviation": 0.08
+    },
+    {
+      "id": "olcc-0146b",
+      "name": "Jack Daniel's Old No. 7",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "olcc-0148b",
+      "name": "Gentleman Jack",
+      "image": "assets/bourbons/detail-200/olcc-0148b.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/olcc-0148b.webp"
+      },
+      "bottle_bbox": {
+        "x": 92,
+        "y": 39,
+        "width": 304,
+        "height": 574
+      },
+      "bottle_height_ratio": 0.883,
+      "effective_bottle_pixels": 1130,
+      "sharpness": 109.36,
+      "bright_ratio": 0.001,
+      "bright_alpha_fringe_ratio": 0,
+      "transparent_ratio": 0.605,
+      "border_deviation": 0.28
+    },
+    {
+      "id": "jack-daniel-s-bonded-119-43",
+      "name": "Jack Daniel's Bonded",
+      "image": "assets/bourbons/detail-200/jack-daniel-s-bonded-119-43.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/jack-daniel-s-bonded-119-43.webp"
+      },
+      "bottle_bbox": {
+        "x": 158,
+        "y": 39,
+        "width": 177,
+        "height": 586
+      },
+      "bottle_height_ratio": 0.902,
+      "effective_bottle_pixels": 1154,
+      "sharpness": 74.11,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.023,
+      "transparent_ratio": 0.763,
+      "border_deviation": 0.14
+    },
+    {
+      "id": "jack-daniel-s-single-barrel-select-140-43",
+      "name": "Jack Daniel's Single Barrel Select",
+      "image": "assets/bourbons/detail-200/jack-daniel-s-single-barrel-select-140-43.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/jack-daniel-s-single-barrel-select-140-43.webp"
+      },
+      "bottle_bbox": {
+        "x": 116,
+        "y": 39,
+        "width": 256,
+        "height": 576
+      },
+      "bottle_height_ratio": 0.886,
+      "effective_bottle_pixels": 1134,
+      "sharpness": 78.2,
+      "bright_ratio": 0.006,
+      "bright_alpha_fringe_ratio": 0.039,
+      "transparent_ratio": 0.687,
+      "border_deviation": 0.6
+    },
+    {
+      "id": "popular-jack-daniel-s-tennessee-rye",
+      "name": "Jack Daniel's Tennessee Rye",
+      "image": "assets/bourbons/detail-200/popular-jack-daniel-s-tennessee-rye.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-jack-daniel-s-tennessee-rye.webp"
+      },
+      "bottle_bbox": {
+        "x": 154,
+        "y": 39,
+        "width": 180,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 78.46,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0,
+      "transparent_ratio": 0.751,
+      "border_deviation": 0.21
+    },
+    {
+      "id": "popular-george-dickel-no-12",
+      "name": "George Dickel No. 12",
+      "image": "assets/bourbons/detail-200/popular-george-dickel-no-12.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-george-dickel-no-12.webp"
+      },
+      "bottle_bbox": {
+        "x": 159,
+        "y": 39,
+        "width": 169,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 62,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.001,
+      "transparent_ratio": 0.792,
+      "border_deviation": 0.18
+    },
+    {
+      "id": "uncle-nearest-1884-small-batch-whiskey",
+      "name": "Uncle Nearest 1884 Small Batch",
+      "image": "assets/bourbons/detail-200/uncle-nearest-1884-small-batch-whiskey.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/uncle-nearest-1884-small-batch-whiskey.webp"
+      },
+      "bottle_bbox": {
+        "x": 113,
+        "y": 40,
+        "width": 263,
+        "height": 578
+      },
+      "bottle_height_ratio": 0.889,
+      "effective_bottle_pixels": 1138,
+      "sharpness": 94.85,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.002,
+      "transparent_ratio": 0.731,
+      "border_deviation": 0.21
+    },
+    {
+      "id": "popular-bulleit-rye",
+      "name": "Bulleit Rye",
+      "image": "assets/bourbons/detail-200/popular-bulleit-rye.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-bulleit-rye.webp"
+      },
+      "bottle_bbox": {
+        "x": 126,
+        "y": 39,
+        "width": 236,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 73.93,
+      "bright_ratio": 0.001,
+      "bright_alpha_fringe_ratio": 0.013,
+      "transparent_ratio": 0.656,
+      "border_deviation": 0.08
+    },
+    {
+      "id": "popular-rittenhouse-rye-bottled-in-bond",
+      "name": "Rittenhouse Rye Bottled in Bond",
+      "image": "",
+      "status": "missing",
+      "flags": [
+        "missing"
+      ]
+    },
+    {
+      "id": "olcc-7658b",
+      "name": "Sazerac Rye",
+      "image": "assets/bourbons/detail-200/olcc-7658b.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/olcc-7658b.webp"
+      },
+      "bottle_bbox": {
+        "x": 143,
+        "y": 30,
+        "width": 202,
+        "height": 590
+      },
+      "bottle_height_ratio": 0.908,
+      "effective_bottle_pixels": 1162,
+      "sharpness": 92.57,
+      "bright_ratio": 0.007,
+      "bright_alpha_fringe_ratio": 0.001,
+      "transparent_ratio": 0.709,
+      "border_deviation": 0.86
+    },
+    {
+      "id": "high-west-double-rye-122-45",
+      "name": "High West Double Rye",
+      "image": "assets/bourbons/detail-200/high-west-double-rye-122-45.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/high-west-double-rye-122-45.webp"
+      },
+      "bottle_bbox": {
+        "x": 180,
+        "y": 40,
+        "width": 127,
+        "height": 570
+      },
+      "bottle_height_ratio": 0.877,
+      "effective_bottle_pixels": 1122,
+      "sharpness": 71.99,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.005,
+      "transparent_ratio": 0.816,
+      "border_deviation": 0.04
+    },
+    {
+      "id": "popular-whistlepig-piggyback-6-year-rye",
+      "name": "WhistlePig PiggyBack 6 Year Rye",
+      "image": "assets/bourbons/detail-200/popular-whistlepig-piggyback-6-year-rye.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-whistlepig-piggyback-6-year-rye.webp"
+      },
+      "bottle_bbox": {
+        "x": 84,
+        "y": 28,
+        "width": 320,
+        "height": 582
+      },
+      "bottle_height_ratio": 0.895,
+      "effective_bottle_pixels": 1146,
+      "sharpness": 89.81,
+      "bright_ratio": 0.002,
+      "bright_alpha_fringe_ratio": 0,
+      "transparent_ratio": 0.52,
+      "border_deviation": 0.16
+    },
+    {
+      "id": "popular-crown-royal-deluxe",
+      "name": "Crown Royal Deluxe",
+      "image": "assets/bourbons/detail-200/popular-crown-royal-deluxe.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-crown-royal-deluxe.webp"
+      },
+      "bottle_bbox": {
+        "x": 84,
+        "y": 39,
+        "width": 320,
+        "height": 572
+      },
+      "bottle_height_ratio": 0.88,
+      "effective_bottle_pixels": 1126,
+      "sharpness": 97.49,
+      "bright_ratio": 0.011,
+      "bright_alpha_fringe_ratio": 0.05,
+      "transparent_ratio": 0.6,
+      "border_deviation": 0.29
+    },
+    {
+      "id": "popular-crown-royal-northern-harvest-rye",
+      "name": "Crown Royal Northern Harvest Rye",
+      "image": "assets/bourbons/detail-200/popular-crown-royal-northern-harvest-rye.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-crown-royal-northern-harvest-rye.webp"
+      },
+      "bottle_bbox": {
+        "x": 85,
+        "y": 40,
+        "width": 319,
+        "height": 571
+      },
+      "bottle_height_ratio": 0.878,
+      "effective_bottle_pixels": 1124,
+      "sharpness": 102.66,
+      "bright_ratio": 0.003,
+      "bright_alpha_fringe_ratio": 0.003,
+      "transparent_ratio": 0.604,
+      "border_deviation": 0.11
+    },
+    {
+      "id": "popular-canadian-club-1858",
+      "name": "Canadian Club 1858",
+      "image": "assets/bourbons/detail-200/popular-canadian-club-1858.webp",
+      "status": "pass",
+      "flags": [],
+      "encoded": {
+        "width": 960,
+        "height": 1280,
+        "format": "webp",
+        "alpha": true
+      },
+      "source": {
+        "width": 960,
+        "height": 1280,
+        "path": "assets/bourbons/detail-200/popular-canadian-club-1858.webp"
+      },
+      "bottle_bbox": {
+        "x": 152,
+        "y": 33,
+        "width": 183,
+        "height": 583
+      },
+      "bottle_height_ratio": 0.897,
+      "effective_bottle_pixels": 1148,
+      "sharpness": 81.56,
+      "bright_ratio": 0,
+      "bright_alpha_fringe_ratio": 0.001,
+      "transparent_ratio": 0.733,
+      "border_deviation": 0.05
+    }
+  ]
+}

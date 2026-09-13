@@ -1,6 +1,6 @@
 {
   "version": "official-demo-images-v1",
-  "updated": "2026-09-06T13:46:59.612Z",
+  "updated": "2026-09-13T07:50:39.752Z",
   "items": {
     "wild-turkey-rare-breed-101-23": {
       "image": "assets/bourbons/demo-200/wild-turkey-rare-breed-101-23.webp",
@@ -12,11 +12,12 @@
     },
     "popular-bulleit-bourbon": {
       "image": "assets/bourbons/demo-200/popular-bulleit-bourbon.webp",
-      "source_page": "https://www.bulleit.com/en-gb/whiskeys/bulleit-bourbon",
-      "source_url": "https://images.ctfassets.net/awz4vj3h97d6/5kAcTq3PMSt24Yis9e7Cmi/f0af05bc8061697cc003a239048ce238/bulleit-bourbon.jpg?fm=webp&w=1200&q=85",
-      "source_type": "official_brand_website",
-      "license_status": "official_source_review_required",
-      "fetched_at": "2026-08-07T19:39:23.700Z"
+      "source_page": "https://elcerritoliquor.com/products/bulleit-bourbon-kentucky-straight-bourbon-whiskey-750ml?_pos=3&_psq=Bulleit+Bourbon&_psid=2c53168ab&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/Bulleit_Straight_Bourbon_Frontier_Whiskey_750ml.webp?v=1770895924",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:28:33.707Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
     },
     "popular-four-roses-small-batch": {
       "image": "assets/bourbons/demo-200/popular-four-roses-small-batch.png",
@@ -36,19 +37,21 @@
     },
     "olcc-6947b": {
       "image": "assets/bourbons/demo-200/olcc-6947b.webp",
-      "source_page": "https://www.jimbeam.com/bourbons/jim-beam-devils-cut",
-      "source_url": "https://www.jimbeam.com/sites/default/files/styles/original/public/2025-07/jim-beam-bottle-bourbon-whiskey-devils-cut.jpg.webp?itok=qYyxjNcZ",
-      "source_type": "official_brand_website",
-      "license_status": "official_source_review_required",
-      "fetched_at": "2026-08-07T19:39:42.705Z"
+      "source_page": "https://www.thebottleclub.com/products/jimbeam-devilscut?_pos=4&_psq=Jim+Beam+Devil%27s+Cut&_psid=a6de6eff3&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/jim-beam-devil-s-cut-bourbon-whiskey-70-cl-whisky-1157151139.jpg?v=1745258355",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:29:11.036Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
     },
     "jim-beam-single-barrel": {
       "image": "assets/bourbons/demo-200/jim-beam-single-barrel.webp",
-      "source_page": "https://www.jimbeam.com/bourbons/jim-beam-single-barrel",
-      "source_url": "https://www.jimbeam.com/sites/default/files/styles/original/public/2024-06/jim-beam-bourbon-bottle-whiskey-single-barrel-ambient.jpg.webp?itok=VfMNOPvo",
-      "source_type": "official_brand_website",
-      "license_status": "official_source_review_required",
-      "fetched_at": "2026-08-07T19:39:43.219Z"
+      "source_page": "https://thedrinksociety.co.nz/products/jim-beam-single-barrel-54-kentucky-bourbon-whiskey-750ml?_pos=1&_psq=Jim+Beam+Single+Barrel&_psid=78f9c64c6&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/products/tds-jim-beam-single-barrel-108.jpg?v=1628666070",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:29:12.350Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
     },
     "redwood-empire-pipe-dream-141-01": {
       "image": "assets/bourbons/demo-200/redwood-empire-pipe-dream-141-01.png",
@@ -64,31 +67,35 @@
       "source_url": "https://www.cooperscraft.com/wp-content/uploads/2020/11/100p-bottle.png",
       "source_type": "official_brand_website",
       "license_status": "official_source_review_required",
-      "fetched_at": "2026-08-07T19:41:08.241Z"
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:56:30.645Z"
     },
     "olcc-0356b": {
-      "image": "assets/bourbons/demo-200/olcc-0356b.webp",
-      "source_page": "https://www.johnniewalker.com/en-hk/our-whisky/core-range/johnnie-walker-red-label",
-      "source_url": "https://images.ctfassets.net/waruwpig3jxu/7BAYWajVKS9kI3XREDkpfh/554b9597fb8d6376840740ae35980092/red-750ml_producthero_halffront_desktop.webp?w=1200&q=85&fm=webp",
-      "source_type": "official_brand_website",
-      "license_status": "official_source_review_required",
-      "fetched_at": "2026-08-07T19:41:33.964Z"
+      "image": "assets/bourbons/demo-200/olcc-0356b.jpg",
+      "source_page": "https://www.thebottleclub.com/products/johnnie-walker-red-label?_pos=1&_psq=Johnnie+Walker+Red+Label&_psid=9112f813e&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/johnnie-walker-red-label-whisky-70-cl-whisky-1242700406.jpg?v=1780591213",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T20:14:59.878Z"
     },
     "olcc-0357b": {
       "image": "assets/bourbons/demo-200/olcc-0357b.webp",
-      "source_page": "https://www.johnniewalker.com/en-hk/our-whisky/core-range/johnnie-walker-black-label",
-      "source_url": "https://images.ctfassets.net/waruwpig3jxu/rYk8WxpJ1ellZvibRckWT/0e8df23f16b39c6d986faf6f68af8fee/black-750ml_producthero_lifestyle-01_desktop.webp?w=1200&q=85&fm=webp",
-      "source_type": "official_brand_website",
-      "license_status": "official_source_review_required",
-      "fetched_at": "2026-08-07T19:41:35.746Z"
+      "source_page": "https://elcerritoliquor.com/products/johnie-walker-black-label-whiskey-375ml?_pos=2&_psq=Johnnie+Walker+Black+Label+12+Year&_psid=2bafd6135&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/products/Johnnie_Walker_Black_Label_12_Year_Old_Blended_Scotch_Whisky.png?v=1769065240",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:30:56.554Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
     },
     "johnnie-walker-double-black-151-5k": {
       "image": "assets/bourbons/demo-200/johnnie-walker-double-black-151-5k.webp",
-      "source_page": "https://www.johnniewalker.com/en-hk/our-whisky/core-range/johnnie-walker-double-black",
-      "source_url": "https://images.ctfassets.net/waruwpig3jxu/2KL8hhvxPn9bpLV8gKjV1z/67d422d6e03122816ee7d3ee91f8749f/producthero_halffront_desktop.webp?w=1200&q=85&fm=webp",
-      "source_type": "official_brand_website",
-      "license_status": "official_source_review_required",
-      "fetched_at": "2026-08-07T19:41:37.560Z"
+      "source_page": "https://www.tenleymarketliquor.com/products/johnnie-walker-double-black-label-blended-scotch-whisky?_pos=1&_psq=Johnnie+Walker+Double+Black&_psid=f2df544fc&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0571/5407/6783/files/mi-johnnie-walker-double-black-dba157560a0b2ed9.jpg?v=1710599347",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:49:41.056Z"
     },
     "popular-johnnie-walker-green-label-15-year": {
       "image": "assets/bourbons/demo-200/popular-johnnie-walker-green-label-15-year.webp",
@@ -100,11 +107,12 @@
     },
     "olcc-2209b": {
       "image": "assets/bourbons/demo-200/olcc-2209b.webp",
-      "source_page": "https://www.johnniewalker.com/en-hk/our-whisky/core-range/johnnie-walker-blue-label",
-      "source_url": "https://images.ctfassets.net/waruwpig3jxu/3RFFcZIRhkQkbU4sHocZcd/03869d6751da65f04a3fe76d3dfddad1/JW_Blue_LabelBottle_HalfFront_1440x1440.webp?w=1200&q=85&fm=webp",
+      "source_page": "https://www.johnniewalker.com/en-hk/our-whisky/limited-editions/johnnie-walker-blue-label-ice-chalet",
+      "source_url": "https://images.ctfassets.net/waruwpig3jxu/18M64xS3b5ajWzlABoMyfq/1220709e306021070356bf1e847a76e8/Johnnie_Walker_Ice_Chalet_Front_w3000.avif?fm=webp&w=1200&q=85",
       "source_type": "official_brand_website",
       "license_status": "official_source_review_required",
-      "fetched_at": "2026-08-07T19:41:44.587Z"
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:57:25.690Z"
     },
     "olcc-0346b": {
       "image": "assets/bourbons/demo-200/olcc-0346b.jpg",
@@ -112,7 +120,8 @@
       "source_url": "https://cutty-sark.com/m_enhance/170?style_name=product_media_full&filename=cutty-sark-original-00&ext=jpg&h=700&w=680&rule=680w",
       "source_type": "official_brand_website",
       "license_status": "official_source_review_required",
-      "fetched_at": "2026-08-07T19:41:51.172Z"
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:57:27.313Z"
     },
     "popular-glenmorangie-the-original-12-year": {
       "image": "assets/bourbons/demo-200/popular-glenmorangie-the-original-12-year.webp",
@@ -124,11 +133,12 @@
     },
     "popular-glenmorangie-quinta-ruban-14-year": {
       "image": "assets/bourbons/demo-200/popular-glenmorangie-quinta-ruban-14-year.webp",
-      "source_page": "https://www.glenmorangie.com/en-us/products/the-quinta-ruban",
+      "source_page": "https://www.glenmorangie.com/products/the-quinta-ruban",
       "source_url": "https://www.glenmorangie.com/cdn/shop/files/Glenmorangie_Quinta_Ruban_bottle.png?v=1712754078",
       "source_type": "official_brand_website",
       "license_status": "official_source_review_required",
-      "fetched_at": "2026-08-07T19:42:06.647Z"
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:57:57.380Z"
     },
     "popular-ardbeg-uigeadail": {
       "image": "assets/bourbons/demo-200/popular-ardbeg-uigeadail.webp",
@@ -160,7 +170,8 @@
       "source_url": "https://www.tullamoredew.com/assets/TD-Original-New-Bottle-700ml.png",
       "source_type": "official_brand_website",
       "license_status": "official_source_review_required",
-      "fetched_at": "2026-08-07T19:42:59.389Z"
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:59:21.878Z"
     },
     "popular-tullamore-d-e-w-12-year-special-reserve": {
       "image": "assets/bourbons/demo-200/popular-tullamore-d-e-w-12-year-special-reserve.png",
@@ -168,7 +179,8 @@
       "source_url": "https://www.tullamoredew.com/assets/TD-12YO-New-Bottle-700ml.png",
       "source_type": "official_brand_website",
       "license_status": "official_source_review_required",
-      "fetched_at": "2026-08-07T19:43:00.366Z"
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:59:23.311Z"
     },
     "olcc-3824b": {
       "image": "assets/bourbons/demo-200/olcc-3824b.webp",
@@ -244,35 +256,39 @@
     },
     "popular-laphroaig-10-year": {
       "image": "assets/bourbons/demo-200/popular-laphroaig-10-year.webp",
-      "source_page": "https://www.laphroaig.com/de-de/whiskies/laphroaig-10-cask-strength-batch-12",
-      "source_url": "https://www.laphroaig.com/sites/default/files/2023-05/laph_remind_me.webp",
-      "source_type": "official_brand_website",
-      "license_status": "official_source_review_required",
-      "fetched_at": "2026-08-07T19:53:18.329Z"
+      "source_page": "https://www.thebottleclub.com/products/laphroaig-10yo-malt-whisky-half-bottle?_pos=10&_psq=Laphroaig+10+Year&_psid=3fd66c7c1&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/laphroaig-10-year-old-malt-whisky-half-bottle-35-cl-whisky-32840880062579.jpg?v=1703661618",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:50:06.141Z"
     },
     "popular-teeling-small-batch": {
-      "image": "assets/bourbons/demo-200/popular-teeling-small-batch.jpg",
-      "source_page": "https://www.teelingwhiskey.com/teeling-whiskeys/small-batch-whiskey/",
-      "source_url": "https://d1mp96cehvcx4f.cloudfront.net/wp-content/uploads/2023/10/06184524/FY24_Teeling_Small_Batch_Mob_06_11-1.jpg",
-      "source_type": "official_brand_website",
-      "license_status": "official_source_review_required",
-      "fetched_at": "2026-08-07T19:53:47.140Z"
+      "image": "assets/bourbons/demo-200/popular-teeling-small-batch.webp",
+      "source_page": "https://www.thebottleclub.com/products/teeling-small-batch-whiskey-70-cl?_pos=1&_psq=Teeling+Small+Batch&_psid=ee2a3acab&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/teeling-small-batch-whiskey-70-cl-whisky-1157644230.jpg?v=1745333716",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:32:46.996Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
     },
     "popular-teeling-single-malt": {
-      "image": "assets/bourbons/demo-200/popular-teeling-single-malt.jpg",
-      "source_page": "https://www.teelingwhiskey.com/teeling-whiskeys/single-malt-irish-whiskey/",
-      "source_url": "https://d1mp96cehvcx4f.cloudfront.net/wp-content/uploads/2023/10/06190643/FY24_Teeling_Single_Malt_Mob_06_11.jpg",
-      "source_type": "official_brand_website",
-      "license_status": "official_source_review_required",
-      "fetched_at": "2026-08-07T19:53:47.749Z"
+      "image": "assets/bourbons/demo-200/popular-teeling-single-malt.webp",
+      "source_page": "https://elcerritoliquor.com/products/teeling-single-malt-irish-whiskey-750ml?_pos=1&_psq=Teeling+Single+Malt&_psid=d19898f98&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/TeelingSingleMaltIrishWhiskey750ml.jpg?v=1761547754",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:32:47.921Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
     },
     "popular-mars-iwai-tradition": {
       "image": "assets/bourbons/demo-200/popular-mars-iwai-tradition.webp",
-      "source_page": "https://www.hombo.co.jp/product/iwai-tradition/",
-      "source_url": "https://www.hombo.co.jp/hombo-mars/wp-content/uploads/2010/06/4976881520455.webp",
-      "source_type": "official_brand_website",
-      "license_status": "official_source_review_required",
-      "fetched_at": "2026-08-07T19:54:21.746Z"
+      "source_page": "https://elcerritoliquor.com/products/mars-iwai-tradition-natsu-umeshu-cask-finish-japanese-whisky?_pos=3&_psq=Mars+Iwai+Tradition&_psid=e91c0861b&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/Mars_Iwai_Tradition_Natsu_Umeshu_Cask_Finish_Japanese_Whisky.png?v=1770374082",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:33:04.959Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
     },
     "popular-hatozaki-finest": {
       "image": "assets/bourbons/demo-200/popular-hatozaki-finest.webp",
@@ -280,15 +296,17 @@
       "source_url": "https://hatozakiwhisky.com/cdn/shop/files/Finest-Blended-EU-UK.png?v=1750255786\\u0026width=900",
       "source_type": "official_brand_website",
       "license_status": "official_source_review_required",
-      "fetched_at": "2026-08-07T19:54:31.990Z"
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T20:00:43.152Z"
     },
     "olcc-8257b": {
-      "image": "assets/bourbons/demo-200/olcc-8257b.png",
-      "source_page": "https://evanwilliams.com/ew_bourbon?cta=ew-1783",
-      "source_url": "https://evanwilliams.com/images/bottles/ew-1783-upd.png?ver=4",
-      "source_type": "official_brand_website",
-      "license_status": "official_source_review_required",
-      "fetched_at": "2026-09-06T13:26:51.550Z"
+      "image": "assets/bourbons/demo-200/olcc-8257b.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/evan-williams-1783-small-batch-kentucky-straight-bourbon-whiskey-750ml?_pos=1&_psq=Evan+Williams+1783+Small+Batch&_psid=a3bd9ec70&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-evan-williams-1783-small-batch.jpg?v=1726466537",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:43:15.793Z"
     },
     "elijah-craig-toasted-barrel-101-22": {
       "image": "assets/bourbons/demo-200/elijah-craig-toasted-barrel-101-22.png",
@@ -299,22 +317,22 @@
       "fetched_at": "2026-09-06T13:27:35.408Z"
     },
     "popular-1792-small-batch": {
-      "image": "assets/bourbons/demo-200/popular-1792-small-batch.png",
-      "source_page": "https://www.1792bourbon.com/our-bourbon/",
-      "source_url": "https://www.1792bourbon.com/img/1792-bottle-sm.png",
-      "source_type": "official_brand_website",
-      "license_status": "official_source_review_required",
-      "fetched_at": "2026-09-06T13:27:36.510Z"
+      "image": "assets/bourbons/demo-200/popular-1792-small-batch.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/1782-small-batch-kentucky-straight-bourbon-whiskey-750ml?_pos=1&_psq=1792+Small+Batch&_psid=caa570595&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/products/tds-1792-small-batch.jpg?v=1677132258",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:43:27.989Z"
     },
     "popular-chivas-regal-12-year": {
-      "image": "assets/bourbons/demo-200/popular-chivas-regal-12-year.jpg",
-      "source_page": "https://commons.wikimedia.org/wiki/File:Chivas_regal_12yo.jpg",
-      "source_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/Chivas_regal_12yo.jpg/1280px-Chivas_regal_12yo.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "source_type": "wikimedia_commons",
-      "license_status": "CC BY-SA 4.0",
-      "fetched_at": "2026-09-06T13:31:03.538Z",
-      "attribution": "Keeezawa",
-      "license_url": "https://creativecommons.org/licenses/by-sa/4.0"
+      "image": "assets/bourbons/demo-200/popular-chivas-regal-12-year.webp",
+      "source_page": "https://www.thebottleclub.com/products/chivas-regal-12y?_pos=1&_psq=Chivas+Regal+12+Year&_psid=2e2744917&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/chivas-regal-12-year-old-blended-scotch-whisky-70-cl-whisky-32846258634867.jpg?v=1703659022",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:31:01.244Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
     },
     "olcc-0352b": {
       "image": "assets/bourbons/demo-200/olcc-0352b.png",
@@ -325,52 +343,49 @@
       "fetched_at": "2026-09-06T13:31:19.309Z"
     },
     "olcc-0368b": {
-      "image": "assets/bourbons/demo-200/olcc-0368b.jpg",
-      "source_page": "https://commons.wikimedia.org/wiki/File:Famous_Grouse.JPG",
-      "source_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/af/Famous_Grouse.JPG/1280px-Famous_Grouse.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "source_type": "wikimedia_commons",
-      "license_status": "CC BY 3.0",
-      "fetched_at": "2026-09-06T13:31:37.902Z",
-      "attribution": "Popperipopp",
-      "license_url": "https://creativecommons.org/licenses/by/3.0"
+      "image": "assets/bourbons/demo-200/olcc-0368b.webp",
+      "source_page": "https://www.thebottleclub.com/products/thefamous-grouse?_pos=2&_psq=The+Famous+Grouse&_psid=ea6f1ec15&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/the-famous-grouse-whisky-70-cl-whisky-1157644220.jpg?v=1745333586",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:31:09.982Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
     },
     "popular-monkey-shoulder": {
-      "image": "assets/bourbons/demo-200/popular-monkey-shoulder.jpg",
-      "source_page": "https://commons.wikimedia.org/wiki/File:Monkey_Shoulder_scotch_bottle.jpg",
-      "source_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8d/Monkey_Shoulder_scotch_bottle.jpg/1280px-Monkey_Shoulder_scotch_bottle.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "source_type": "wikimedia_commons",
-      "license_status": "CC BY-SA 3.0",
-      "fetched_at": "2026-09-06T13:31:42.737Z",
-      "attribution": "Clément Bucco-Lechat",
-      "license_url": "https://creativecommons.org/licenses/by-sa/3.0"
+      "image": "assets/bourbons/demo-200/popular-monkey-shoulder.webp",
+      "source_page": "https://www.thebottleclub.com/products/monkey-shoulder-blended-malt-scotch-whisky?_pos=1&_psq=Monkey+Shoulder&_psid=c4ff209bb&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/monkey-shoulder-blended-malt-scotch-whisky-70-cl-whisky-32840944287859.jpg?v=1703662157",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:31:14.952Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
     },
     "olcc-0392b": {
       "image": "assets/bourbons/demo-200/olcc-0392b.webp",
-      "source_page": "https://www.glenfiddich.com/all-products/glenfiddich-xs/xs-15-year-old/",
-      "source_url": "https://images.ctfassets.net/53l6u5v24bqr/2qmhNu93ca6jdcbpudvkDk/518d22e602a13cb22f29851175a68949/15_YO_1_.webp?fm=webp&w=1200&q=85",
-      "source_type": "official_brand_website",
-      "license_status": "official_source_review_required",
-      "fetched_at": "2026-09-06T13:31:55.338Z"
+      "source_page": "https://qualityliquorstore.com/products/glenfiddich-special-reserve-15-year-scotch?_pos=1&_psq=Glenfiddich+15+Year+Solera&_psid=c746ce5cb&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0635/3289/2418/files/buy-glenfiddich-15__93959.jpg?v=1767739196",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:49:53.617Z"
     },
     "olcc-0376b": {
-      "image": "assets/bourbons/demo-200/olcc-0376b.jpg",
-      "source_page": "https://commons.wikimedia.org/wiki/File:The_Glenlivet_-_12_yr_Single_Malt.JPG",
-      "source_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/58/The_Glenlivet_-_12_yr_Single_Malt.JPG/1280px-The_Glenlivet_-_12_yr_Single_Malt.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "source_type": "wikimedia_commons",
-      "license_status": "CC BY-SA 3.0",
-      "fetched_at": "2026-09-06T13:32:05.169Z",
-      "attribution": "ChickenFalls",
-      "license_url": "https://creativecommons.org/licenses/by-sa/3.0"
+      "image": "assets/bourbons/demo-200/olcc-0376b.webp",
+      "source_page": "https://beveragewarehousemi.com/products/glenlivet-12-yr-750ml?_pos=1&_psq=The+Glenlivet+12+Year&_psid=8b1c13f2c&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0101/9412/4851/products/TheGlenlivet_12YO_750mL.jpg?v=1645543497",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:57:37.886Z"
     },
     "popular-the-balvenie-12-year-doublewood": {
-      "image": "assets/bourbons/demo-200/popular-the-balvenie-12-year-doublewood.jpg",
-      "source_page": "https://commons.wikimedia.org/wiki/File:Balvenie_Whisky_Doublewood_12_years_old.jpg",
-      "source_url": "https://upload.wikimedia.org/wikipedia/commons/6/6a/Balvenie_Whisky_Doublewood_12_years_old.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-      "source_type": "wikimedia_commons",
-      "license_status": "CC BY-SA 3.0",
-      "fetched_at": "2026-09-06T13:32:17.034Z",
-      "attribution": "Pbrundel at Dutch Wikipedia",
-      "license_url": "http://creativecommons.org/licenses/by-sa/3.0/"
+      "image": "assets/bourbons/demo-200/popular-the-balvenie-12-year-doublewood.webp",
+      "source_page": "https://www.thebottleclub.com/products/the-balvenie-doublewood-12-malt-whisky?_pos=1&_psq=The+Balvenie+12+Year+DoubleWood&_psid=82e780fb7&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/the-balvenie-doublewood-12-year-old-single-malt-scotch-whisky-70-cl-whisky-32841110225011.jpg?v=1703662153",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:50:00.901Z"
     },
     "popular-ardbeg-10-year": {
       "image": "assets/bourbons/demo-200/popular-ardbeg-10-year.webp",
@@ -390,11 +405,12 @@
     },
     "bushmills-original-irish-whiskey": {
       "image": "assets/bourbons/demo-200/bushmills-original-irish-whiskey.webp",
-      "source_page": "https://bushmills.com/products/the-original",
-      "source_url": "https://bushmills.com/cdn/shop/files/bushmills-whiskey-original-front-close-up.png?v=1740610704&width=1946",
-      "source_type": "official_brand_website",
-      "license_status": "official_source_review_required",
-      "fetched_at": "2026-09-06T13:32:52.415Z"
+      "source_page": "https://thedrinksociety.co.nz/products/bushmills-original-blended-irish-whiskey-700ml?_pos=6&_psq=Bushmills+Original&_psid=577c9c04a&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-bushmills-original.jpg?v=1725519933",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:44:31.568Z"
     },
     "popular-canadian-club-1858": {
       "image": "assets/bourbons/demo-200/popular-canadian-club-1858.webp",
@@ -410,7 +426,8 @@
       "source_url": "https://bushmills.com/cdn/shop/files/bushmills-whiskey-black-bush_0ffcc362-451f-4d40-a793-d1d4ba85a179.png?v=1739469677\\u0026width=1920",
       "source_type": "official_brand_website",
       "license_status": "official_source_review_required",
-      "fetched_at": "2026-09-06T13:42:56.372Z"
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:59:25.829Z"
     },
     "bushmills-10-year-old-single-malt": {
       "image": "assets/bourbons/demo-200/bushmills-10-year-old-single-malt.webp",
@@ -418,25 +435,1304 @@
       "source_url": "https://bushmills.com/cdn/shop/files/bushmills-single-malt-whiskey-10Y_e721e528-4784-4265-965f-9a437fad383f.png?v=1740697051\\u0026width=1920",
       "source_type": "official_brand_website",
       "license_status": "official_source_review_required",
-      "fetched_at": "2026-09-06T13:42:57.568Z"
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:59:26.568Z"
     },
     "bushmills-16-year-old-single-malt": {
       "image": "assets/bourbons/demo-200/bushmills-16-year-old-single-malt.webp",
-      "source_page": "https://bushmills.com/products/16-year",
-      "source_url": "https://bushmills.com/cdn/shop/files/bushmills-single-malt-whiskey-16Y_f613e853-9f63-4a90-9108-1e0cd3a740a3.png?v=1740697270\\u0026width=1920",
-      "source_type": "official_brand_website",
-      "license_status": "official_source_review_required",
-      "fetched_at": "2026-09-06T13:42:58.799Z"
+      "source_page": "https://beveragewarehousemi.com/products/bushmills-malt-16-yr-irish?_pos=1&_psq=Bushmills+16+Year+Old+Single+Malt&_psid=977da155a&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0101/9412/4851/products/Bushmills16yrSingleMalt-BottleShot.png?v=1646512422",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:32:29.136Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
     },
     "popular-nikka-from-the-barrel": {
-      "image": "assets/bourbons/demo-200/popular-nikka-from-the-barrel.jpg",
-      "source_page": "https://commons.wikimedia.org/wiki/File:Nikka_Whisky_From_the_Barrel,_Japan.jpg",
-      "source_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/25/Nikka_Whisky_From_the_Barrel%2C_Japan.jpg/1280px-Nikka_Whisky_From_the_Barrel%2C_Japan.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "source_type": "wikimedia_commons",
-      "license_status": "CC BY 2.0",
-      "fetched_at": "2026-09-06T13:45:42.470Z",
-      "attribution": "Dominic Lockyer",
-      "license_url": "https://creativecommons.org/licenses/by/2.0"
+      "image": "assets/bourbons/demo-200/popular-nikka-from-the-barrel.webp",
+      "source_page": "https://www.thebottleclub.com/products/nikka-from-the-barrel-whisky?_pos=1&_psq=Nikka+From+the+Barrel&_psid=a4c53e040&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/nikka-from-the-barrel-whisky-50-cl-whisky-1104538965.jpg?v=1740841853",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:50:26.372Z"
+    },
+    "maker-s-mark-101-22": {
+      "image": "assets/bourbons/demo-200/maker-s-mark-101-22.webp",
+      "source_page": "https://elcerritoliquor.com/products/makers-mark-kentucky-straight-bourbon-whisky-1lt?_pos=8&_psq=Maker%27s+Mark&_psid=8e97bc50b&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/Maker_s_Mark_Kentucky_Straight_Bourbon_Whisky_1Lt.jpg?v=1769777726",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:28:30.146Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-evan-williams-black-label": {
+      "image": "assets/bourbons/demo-200/popular-evan-williams-black-label.webp",
+      "source_page": "https://www.thebottleclub.com/products/evan-williams-kentucky-black-label-straight-bourbon-whiskey-70-cl?_pos=1&_psq=Evan+Williams+Black+Label&_psid=11461a3f6&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/evan-williams-kentucky-black-label-straight-bourbon-whiskey-70-cl-whisky-28383603458163.jpg?v=1703669189",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:28:31.400Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "four-roses": {
+      "image": "assets/bourbons/demo-200/four-roses.webp",
+      "source_page": "https://elcerritoliquor.com/products/four-roses-6-year-old-kentucky-straight-bourbon-1960s-ferraretto-import-750ml?_pos=8&_psq=Four+Roses&_psid=d9ca4098f&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/956D271A-6BD3-48E8-9F5F-A688EDF8A56A.png?v=1785724033",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:28:36.688Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "knob-creek-9-year-old-100-proof-bourbon": {
+      "image": "assets/bourbons/demo-200/knob-creek-9-year-old-100-proof-bourbon.webp",
+      "source_page": "https://www.thebottleclub.com/products/knob-creek?_pos=1&_psq=Knob+Creek+9+Year&_psid=3ae7b36e4&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/knob-creek-whiskey-70-cl-whisky-32840876064883.jpg?v=1703659628",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:28:38.160Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-chivas-regal-18-year": {
+      "image": "assets/bourbons/demo-200/popular-chivas-regal-18-year.webp",
+      "source_page": "https://www.tenleymarketliquor.com/products/chivas-regal-18-year?_pos=1&_psq=Chivas+Regal+18+Year&_psid=95e92b80d&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0571/5407/6783/files/mi-chivas-regal-18-year-c64a81b5dd397374.jpg?v=1710640998",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T20:15:04.697Z"
+    },
+    "popular-crown-royal-deluxe": {
+      "image": "assets/bourbons/demo-200/popular-crown-royal-deluxe.webp",
+      "source_page": "https://www.crownroyal.com/canadian-whisky/crown-royal-deluxe",
+      "source_url": "https://images.ctfassets.net/wf4e4r4dkfx8/QtEDCC1fwvletzY1gQofh/1f40f09b7580db98e4fbc8f666e95e05/CR_Black.png?fm=webp&w=1200&q=85",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T20:00:59.709Z"
+    },
+    "russels-reserve-10-year-bourbon": {
+      "image": "assets/bourbons/demo-200/russels-reserve-10-year-bourbon.webp",
+      "source_page": "https://beveragewarehousemi.com/products/russells-reserve-10-yr?_pos=1&_psq=Russell%27s+Reserve+10+Year&_psid=aa94213ab&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0101/9412/4851/files/Russells_sReserveBourbon10Years-BottleShot.png?v=1684688233",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:43:14.531Z"
+    },
+    "russells-reserve-single-barrel-barrel-select-bourbon": {
+      "image": "assets/bourbons/demo-200/russells-reserve-single-barrel-barrel-select-bourbon.webp",
+      "source_page": "https://elcerritoliquor.com/products/russells-reserve-single-barrel-kentucky-straight-rye-whiskey-750ml?_pos=4&_psq=Russell%27s+Reserve+Single+Barrel&_psid=dc83c2bf1&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/Russell_s_Reserve_Single_Barrel_Kentucky_Straight_Rye_Whiskey_750ml.jpg?v=1769775895",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:28:45.755Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "jim-beam-101-22": {
+      "image": "assets/bourbons/demo-200/jim-beam-101-22.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/jim-beam-white-label-kentucky-bourbon-whiskey-700ml?_pos=1&_psq=Jim+Beam+White+Label&_psid=d8e4aa673&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-jim-beam-700.jpg?v=1777427874",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:28:29.270Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "woodford-reserve-bourbon": {
+      "image": "assets/bourbons/demo-200/woodford-reserve-bourbon.webp",
+      "source_page": "https://elcerritoliquor.com/products/woodford-reserve-double-double-oaked-bourbon?_pos=1&_psq=Woodford+Reserve&_psid=86048201d&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/Woodford_Reserve_Distillery_Series_Double_Double_Oaked_Straight_Bourbon_Whiskey.webp?v=1782701988",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:28:32.839Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "wild-turkey-101-bourbon": {
+      "image": "assets/bourbons/demo-200/wild-turkey-101-bourbon.webp",
+      "source_page": "https://elcerritoliquor.com/products/wild-turkey-101-8-year-old-bourbon?_pos=4&_psq=Wild+Turkey+101&_psid=c9d2bb43a&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/Wild_Turkey_101_8_Year_Old_Bourbon_Whiskey.png?v=1769636122",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:28:34.484Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "buffalo-trace-bourbon-1": {
+      "image": "assets/bourbons/demo-200/buffalo-trace-bourbon-1.webp",
+      "source_page": "https://www.thebottleclub.com/products/buffalo-trace-kentucky-straight-bourbon-whiskey-cream-liqueur-70-cl?_pos=3&_psq=Buffalo+Trace&_psid=a2d213d3b&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/buffalo-trace-kentucky-straight-bourbon-whiskey-cream-liqueur-70-cl-liqueurs-other-spirits-1156410499.jpg?v=1744887071",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:48:13.590Z"
+    },
+    "elijah-craig-small-batch-bourbon": {
+      "image": "assets/bourbons/demo-200/elijah-craig-small-batch-bourbon.webp",
+      "source_page": "https://www.thebottleclub.com/products/elijah-craig-small-batch-bourbon?_pos=1&_psq=Elijah+Craig+Small+Batch&_psid=f0639c58e&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/elijah-craig-small-batch-bourbon-whiskey-70-cl-whisky-32841656041587.jpg?v=1703677555",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:43:11.471Z"
+    },
+    "makers-mark-46-bourbon-whisky": {
+      "image": "assets/bourbons/demo-200/makers-mark-46-bourbon-whisky.webp",
+      "source_page": "https://elcerritoliquor.com/products/makers-mark-46-kentucky-straight-bourbon-whisky-750ml?_pos=3&_psq=Maker%27s+Mark+46&_psid=c9f4312a2&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/Maker_s_Mark_46_Kentucky_Straight_Bourbon_Whisky_750ml.jpg?v=1769777712",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:28:40.183Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "woodford-reserve-double-oaked-bourbon": {
+      "image": "assets/bourbons/demo-200/woodford-reserve-double-oaked-bourbon.webp",
+      "source_page": "https://www.thebottleclub.com/products/woodford-reserve-double-oaked-whiskey?_pos=1&_psq=Woodford+Reserve+Double+Oaked&_psid=517e3650f&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/woodford-reserve-double-oaked-whiskey-70-cl-whisky-1157673698.jpg?v=1745344635",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T20:13:46.610Z"
+    },
+    "four-roses-obsk-single-barrel-bourbon": {
+      "image": "assets/bourbons/demo-200/four-roses-obsk-single-barrel-bourbon.webp",
+      "source_page": "https://elcerritoliquor.com/products/four-roses-single-barrel-recipe-obsf-bourbon-whiskey-750ml?_pos=5&_psq=Four+Roses+Single+Barrel&_psid=154cc5783&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/Four_Roses_Single_Barrel_Recipe_OBSF_Bourbon_Whiskey_750ml.webp?v=1770017154",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:28:43.104Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "olcc-0196b": {
+      "image": "assets/bourbons/demo-200/olcc-0196b.webp",
+      "source_page": "https://www.thebottleclub.com/products/wild-turkey-81-whiskey?_pos=1&_psq=Wild+Turkey+81&_psid=9b0b3f505&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/wild-turkey-81-whiskey-70-cl-whisky-1157673702.jpg?v=1745344647",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:28:44.523Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-old-forester-86-proof": {
+      "image": "assets/bourbons/demo-200/popular-old-forester-86-proof.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/old-forester-86-proof-kentucky-straight-bourbon-whiskey-1l?_pos=9&_psq=Old+Forester+86+Proof&_psid=e902fdbd1&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-old-forester-86-proof.jpg?v=1746512566",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:43:16.972Z"
+    },
+    "olcc-8227b": {
+      "image": "assets/bourbons/demo-200/olcc-8227b.webp",
+      "source_page": "https://beveragewarehousemi.com/products/old-forester-100?_pos=2&_psq=Old+Forester+100+Proof&_psid=aab89fa05&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0101/9412/4851/products/OldForester_100_Proof_RGB-HighRes-3000x3000.jpg?v=1648922956",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:43:20.095Z"
+    },
+    "old-forester-1897-bottled-in-bond": {
+      "image": "assets/bourbons/demo-200/old-forester-1897-bottled-in-bond.webp",
+      "source_page": "https://www.tenleymarketliquor.com/products/old-forester-1897-bottled-in-bond-bourbon?_pos=1&_psq=Old+Forester+1897+Bottled+in+Bond&_psid=a17b07d66&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0571/5407/6783/files/mi-old-forester-1897-b1d56d7826430586.jpg?v=1711566112",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:28:51.235Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "old-forester-1910-old-fine-whiskey-bourbon-whiskey": {
+      "image": "assets/bourbons/demo-200/old-forester-1910-old-fine-whiskey-bourbon-whiskey.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/old-forester-1910-old-fine-whisky-kentucky-straight-bourbon-whisky-750ml?_pos=1&_psq=Old+Forester+1910+Old+Fine&_psid=923c4a5a8&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-old-forester-1910.jpg?v=1691640419",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:28:53.076Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-old-forester-1920-prohibition-style": {
+      "image": "assets/bourbons/demo-200/popular-old-forester-1920-prohibition-style.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/old-forester-1920-prohibition-style-kentucky-straight-bourbon-whisky-750ml?_pos=1&_psq=Old+Forester+1920+Prohibition+Style&_psid=38d9e235f&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-old-forester-1920-new.jpg?v=1730268747",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:28:54.997Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "old-forester-statesman-bourbon": {
+      "image": "assets/bourbons/demo-200/old-forester-statesman-bourbon.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/old-forester-statesman-kentucky-straight-bourbon-whisky-750ml?_pos=6&_psq=Old+Forester+Statesman&_psid=a54443290&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/products/tds-old-forester-statesman.jpg?v=1632985290",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:28:56.516Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "old-grand-dad": {
+      "image": "assets/bourbons/demo-200/old-grand-dad.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/old-grand-dad-kentucky-straight-bourbon-whiskey-1l?_pos=3&_psq=Old+Grand-Dad&_psid=77bb497cb&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-old-grand-dad-1l.jpg?v=1775279735",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:54:32.369Z"
+    },
+    "popular-old-grand-dad-bonded": {
+      "image": "assets/bourbons/demo-200/popular-old-grand-dad-bonded.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/old-grand-dad-100-proof-bonded-kentucky-straight-bourbon-whiskey-1l?_pos=6&_psq=Old+Grand-Dad+Bonded&_psid=e9cc50bf0&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/products/tds-old-grand-dad-bonded-100-proof.jpg?v=1677035970",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:28:59.268Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-old-grand-dad-114": {
+      "image": "assets/bourbons/demo-200/popular-old-grand-dad-114.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/old-grand-dad-114-proof-barrel-strength-kentucky-straight-bourbon-whiskey-750ml?_pos=3&_psq=Old+Grand-Dad+114&_psid=09aabe488&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-old-grand-dad-114.jpg?v=1723177117",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:43:21.312Z"
+    },
+    "popular-basil-hayden-kentucky-straight-bourbon": {
+      "image": "assets/bourbons/demo-200/popular-basil-hayden-kentucky-straight-bourbon.webp",
+      "source_page": "https://elcerritoliquor.com/products/basil-haydens-kentucky-straight-bourbon-whiskey-750ml?_pos=2&_psq=Basil+Hayden+Kentucky+Straight&_psid=871a36717&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/BasilHayden_sKentuckyStraightBourbonWhiskey750ml.jpg?v=1761768544",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:29:01.498Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-basil-hayden-toast": {
+      "image": "assets/bourbons/demo-200/popular-basil-hayden-toast.webp",
+      "source_page": "https://www.tenleymarketliquor.com/products/basil-hayden-toast-bourbon-whiskey?_pos=1&_psq=Basil+Hayden+Toast&_psid=59e302e5d&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0571/5407/6783/files/mi-basil-hayden-toast-bourbon-whiskey-4c3e0a157d5a2ba9.png?v=1710376267",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:29:05.362Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-knob-creek-12-year": {
+      "image": "assets/bourbons/demo-200/popular-knob-creek-12-year.webp",
+      "source_page": "https://uptownliquor.com.au/products/knob-creek-12-year-old-small-batch-bourbon-whiskey-750ml?_pos=1&_psq=Knob+Creek+12+Year&_psid=affa6e1d7&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0283/5320/0206/files/tds-knob-creek-12yo_1800x1800_1fbf1c57-7b7d-420e-98ea-6542f63801ba.png?v=1778829345",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:29:07.409Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "knob-creek-120-proof-9-year-single-barrel-reserve-bourbon": {
+      "image": "assets/bourbons/demo-200/knob-creek-120-proof-9-year-single-barrel-reserve-bourbon.webp",
+      "source_page": "https://caskcartel.com/products/knob-creek-old-town-single-barrel-reserve-9-year-old-straight-bourbon-whiskey?_pos=2&_psq=Knob+Creek+Single+Barrel+Reserve&_psid=ae7b595af&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0050/2395/7103/products/kmgdcbygnoomekuprsxx.jpg?v=1613592592",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T20:13:52.502Z"
+    },
+    "olcc-0133b": {
+      "image": "assets/bourbons/demo-200/olcc-0133b.webp",
+      "source_page": "https://beveragewarehousemi.com/products/jim-beam-black?_pos=2&_psq=Jim+Beam+Black&_psid=d99f7ad1d&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0101/9412/4851/products/jim-beam-black-bourbon-whiskey_750-0_front.png?v=1633402572",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:43:23.634Z"
+    },
+    "popular-booker-s-bourbon": {
+      "image": "assets/bourbons/demo-200/popular-booker-s-bourbon.webp",
+      "source_page": "https://www.thebottleclub.com/products/bookers-true-barrel-bourbon-batch-2020-whiskey-70-cl?_pos=1&_psq=Booker%27s&_psid=ac83cba37&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/booker-s-true-barrel-bourbon-batch-2021-whiskey-70-cl-whisky-28387627106419.jpg?v=1703666369",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:43:24.842Z"
+    },
+    "popular-baker-s-7-year-single-barrel": {
+      "image": "assets/bourbons/demo-200/popular-baker-s-7-year-single-barrel.webp",
+      "source_page": "https://elcerritoliquor.com/products/bakers-single-barrel-7-year-old-kentucky-straight-bourbon?_pos=1&_psq=Baker%27s+7+Year+Single+Barrel&_psid=8923227d6&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/Baker_s_Single_Barrel_7_Year_Old_Kentucky_Straight_Bourbon_750ml.webp?v=1771329687",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:29:14.437Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "legent-101-02": {
+      "image": "assets/bourbons/demo-200/legent-101-02.webp",
+      "source_page": "https://elcerritoliquor.com/products/legent-partially-finished-in-wine-sherry-casks-kentucky-straight-bourbon-whiskey-750ml?_pos=1&_psq=Legent&_psid=efdd9c688&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/LegentPartiallyFinishedinWine_SherryCasksKentuckyStraightBourbonWhiskey750ml.jpg?v=1761914502",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:29:15.865Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-larceny-small-batch": {
+      "image": "assets/bourbons/demo-200/popular-larceny-small-batch.webp",
+      "source_page": "https://elcerritoliquor.com/products/larceny-small-batch-kentucky-straight-bourbon-whiskey-750ml?_pos=1&_psq=Larceny+Small+Batch&_psid=9d578b68c&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/John_E._Fitzgerald_Larceny_Very_Small_Batch_Kentucky_Straight_Bourbon_Whiskey_750ml.webp?v=1771330749",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:29:16.675Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "larceny-barrel-proof-101-22": {
+      "image": "assets/bourbons/demo-200/larceny-barrel-proof-101-22.webp",
+      "source_page": "https://elcerritoliquor.com/products/larceny-barrel-proof-kentucky-straight-bourbon-whiskey-batch-c923?_pos=10&_psq=Larceny+Barrel+Proof&_psid=4fcee6add&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/IMG-1876.webp?v=1697352662",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:29:17.574Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "heaven-hill-7yo-bottled-in-bond-bourbon": {
+      "image": "assets/bourbons/demo-200/heaven-hill-7yo-bottled-in-bond-bourbon.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/heaven-hill-7-year-old-bottled-in-bond-kentucky-straight-bourbon-whiskey-750ml?_pos=4&_psq=Heaven+Hill+7+Year+Bottled+in+Bond&_psid=43c80e967&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-heaven-hill-7yo-bottled-bond.jpg?v=1710816478",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:29:23.383Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-elijah-craig-barrel-proof": {
+      "image": "assets/bourbons/demo-200/popular-elijah-craig-barrel-proof.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/elijah-craig-x-the-drink-society-death-by-chocolate-single-barrel-snapback-cap?_pos=6&_psq=Elijah+Craig+Barrel+Proof&_psid=648795e8a&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-ec-hat.jpg?v=1775574499",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:48:20.478Z"
+    },
+    "popular-1792-full-proof": {
+      "image": "assets/bourbons/demo-200/popular-1792-full-proof.webp",
+      "source_page": "https://elcerritoliquor.com/products/1792-full-proof-bourbon-single-barrel-el-cerrito-liquor-exclusive?_pos=1&_psq=1792+Full+Proof&_psid=9ebee453d&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/1792_Full_Proof_Single_Barrel_El_Cerrito_Liquor_Store_Pick_Kentucky_Straight_Bourbon_Whiskey_2.png?v=1769515501",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:29:24.755Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-1792-single-barrel": {
+      "image": "assets/bourbons/demo-200/popular-1792-single-barrel.webp",
+      "source_page": "https://elcerritoliquor.com/products/1792-bourbon-single-barrel-750ml?_pos=2&_psq=1792+Single+Barrel&_psid=04514dd3d&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/1792_Single_Barrel_Kentucky_Straight_Bourbon_Whiskey_750ml.webp?v=1769515767",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:29:30.424Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-benchmark-old-no-8": {
+      "image": "assets/bourbons/demo-200/popular-benchmark-old-no-8.webp",
+      "source_page": "https://elcerritoliquor.com/products/benchmark-bourbon-old-no-8-750ml?_pos=1&_psq=Benchmark+Old+No.+8&_psid=684eb90c8&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/McAfee_s_Benchmark_Old_No._8_Brand_Kentucky_Straight_Bourbon_Whiskey.webp?v=1770020356",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:29:31.362Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-benchmark-full-proof": {
+      "image": "assets/bourbons/demo-200/popular-benchmark-full-proof.webp",
+      "source_page": "https://elcerritoliquor.com/products/benchmark-full-proof-kentucky-straight-bourbon-whiskey-750ml?_pos=1&_psq=Benchmark+Full+Proof&_psid=48dae291a&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/McAfee_s_Benchmark_Full_Proof_Extra_Strong_Kentucky_Straight_Bourbon_Whiskey_750ml.webp?v=1770020393",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:29:32.130Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-benchmark-single-barrel": {
+      "image": "assets/bourbons/demo-200/popular-benchmark-single-barrel.webp",
+      "source_page": "https://elcerritoliquor.com/products/mcafee-brothers-benchmark-single-barrel-hand-picked-kentucky-straight-bourbon-whiskey?_pos=1&_psq=Benchmark+Single+Barrel&_psid=81c6c03f5&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/McAfee_Brothers_Benchmark_Single_Barrel_Kentucky_Straight_Bourbon_Whiskey.webp?v=1770020337",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:29:36.355Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "weller-special-reserve": {
+      "image": "assets/bourbons/demo-200/weller-special-reserve.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/w-l-weller-kentucky-bourbon-special-reserve-whiskey-750ml?_pos=1&_psq=Weller+Special+Reserve&_psid=d218af36c&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/products/tds-weller-reserve.jpg?v=1590821874",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:29:37.661Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "weller-antique-107-101-00": {
+      "image": "assets/bourbons/demo-200/weller-antique-107-101-00.webp",
+      "source_page": "https://elcerritoliquor.com/products/w-l-weller-antique-107-bourbon-750ml?_pos=1&_psq=Weller+Antique+107&_psid=56399dda0&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/W._L._Weller_Old_Weller_Antique_107_Kentucky_Straight_Wheated_Bourbon_Whiskey.webp?v=1768815456",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:29:38.193Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-weller-12-year": {
+      "image": "assets/bourbons/demo-200/popular-weller-12-year.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/w-l-weller-12-year-old-kentucky-straight-bourbon-whiskey-750ml?_pos=1&_psq=Weller+12+Year&_psid=e695d92b5&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-weller-12yo.jpg?v=1699850529",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:55:10.145Z"
+    },
+    "w-l-weller-full-proof-bourbon-single-barrel-select-by-wooden-cork": {
+      "image": "assets/bourbons/demo-200/w-l-weller-full-proof-bourbon-single-barrel-select-by-wooden-cork.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/w-l-weller-full-proof-kentucky-straight-wheated-bourbon-whiskey-750ml?_pos=1&_psq=Weller+Full+Proof&_psid=61f7ffd94&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-weller-full-proof.jpg?v=1733374936",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:29:39.916Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "eagle-rare-10-year-kentucky-straight-bourbon-whiskey-700ml": {
+      "image": "assets/bourbons/demo-200/eagle-rare-10-year-kentucky-straight-bourbon-whiskey-700ml.webp",
+      "source_page": "https://www.thebottleclub.com/products/eagle-rare-10-year-old-bourbon-whiskey-70cl?_pos=1&_psq=Eagle+Rare+10+Year&_psid=1d6b2cdf1&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/eagle-rare-10-year-old-bourbon-whiskey-70-cl-whisky-1157126209.jpg?v=1745241076",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:43:29.036Z"
+    },
+    "blantons-bourbon": {
+      "image": "assets/bourbons/demo-200/blantons-bourbon.webp",
+      "source_page": "https://elcerritoliquor.com/products/blantons-original-single-barrel-bourbon-750ml?_pos=1&_psq=Blanton%27s+Original+Single+Barrel&_psid=0b5c04dbd&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/Blantons_The_Original_Single_Barrel_Kentucky_Straight_Bourbon_Whiskey_750ml.webp?v=1768802593",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:48:32.571Z"
+    },
+    "popular-e-h-taylor-small-batch": {
+      "image": "assets/bourbons/demo-200/popular-e-h-taylor-small-batch.webp",
+      "source_page": "https://elcerritoliquor.com/products/colonel-e-h-taylor-small-batch-bourbon-750ml?_pos=1&_psq=E.H.+Taylor+Small+Batch&_psid=cf8681017&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/Colonel_E.H._Taylor_Small_Batch_Bourbon_Whiskey_750ml.webp?v=1766480876",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:29:44.274Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-e-h-taylor-single-barrel": {
+      "image": "assets/bourbons/demo-200/popular-e-h-taylor-single-barrel.webp",
+      "source_page": "https://uptownliquor.com.au/products/colonel-e-h-taylor-single-barrel-bourbon-750ml?_pos=1&_psq=E.H.+Taylor+Single+Barrel&_psid=ea7df1640&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0283/5320/0206/products/e.h.taylorsinglebarrel.jpg?v=1612650164",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:48:35.521Z"
+    },
+    "popular-stagg-bourbon": {
+      "image": "assets/bourbons/demo-200/popular-stagg-bourbon.webp",
+      "source_page": "https://uptownliquor.com.au/products/stagg-bourbon-2022-batch-19-22b-750ml?_pos=1&_psq=Stagg&_psid=fd08036bb&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0283/5320/0206/files/StaggBatch19-22B.png?v=1738563992",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:48:38.957Z"
+    },
+    "michters-bourbon": {
+      "image": "assets/bourbons/demo-200/michters-bourbon.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/michters-us-1-small-batch-unblended-american-whiskey-750ml?_pos=2&_psq=Michter%27s+US+1+Small+Batch&_psid=41b99264c&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-michters-unblended-gb_60237eb0-f257-4c1a-b003-664fe0969212.jpg?v=1781010907",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:48:39.852Z"
+    },
+    "michters-us-1-toasted-barrel-finish-bourbon-whiskey-2021-release": {
+      "image": "assets/bourbons/demo-200/michters-us-1-toasted-barrel-finish-bourbon-whiskey-2021-release.webp",
+      "source_page": "https://elcerritoliquor.com/products/michters-limited-release-us-1-toasted-barrel-finish-sour-mash-whiskey-750ml?_pos=1&_psq=Michter%27s+US+1+Toasted+Barrel+Finish&_psid=c521f25c1&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/products/2025_Michter_s_US-1_Limited_Release_Toasted_Barrel_Finish_Sour_Mash_Bourbon_Whiskey_750ml.jpg?v=1776158858",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:29:48.769Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "jeffersons-very-small-batch-bourbon": {
+      "image": "assets/bourbons/demo-200/jeffersons-very-small-batch-bourbon.webp",
+      "source_page": "https://uptownliquor.com.au/products/jeffersons-very-small-batch-bourbon-750ml?_pos=1&_psq=Jefferson%27s+Very+Small+Batch&_psid=4e494543d&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0283/5320/0206/files/2_33ca012d-de20-4c71-bee5-a3dc031d768f.png?v=1689317016",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:48:42.346Z"
+    },
+    "jeffersons-reserve-very-old-bourbon": {
+      "image": "assets/bourbons/demo-200/jeffersons-reserve-very-old-bourbon.webp",
+      "source_page": "https://www.tenleymarketliquor.com/products/jeffersons-reserve-bourbon?_pos=1&_psq=Jefferson%27s+Reserve&_psid=798763d62&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0571/5407/6783/files/mi-jeffersons-reserve-very-old-bourbon-06101a65d2007b4e.jpg?v=1710982488",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T20:14:11.531Z"
+    },
+    "jeffersons-ocean-aged-at-sea-bourbon-whiskey": {
+      "image": "assets/bourbons/demo-200/jeffersons-ocean-aged-at-sea-bourbon-whiskey.webp",
+      "source_page": "https://elcerritoliquor.com/products/jeffersons-ocean-aged-at-sea-very-small-batch-straight-bourbon-whiskey-750ml?_pos=1&_psq=Jefferson%27s+Ocean+Aged+at+Sea&_psid=87f75addf&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/Jefferson_s_Ocean_Aged_at_Sea_Very_Small_Batch_Straight_Bourbon_Whiskey_750ml.jpg?v=1770023486",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:29:51.330Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-angel-s-envy-port-finish": {
+      "image": "assets/bourbons/demo-200/popular-angel-s-envy-port-finish.webp",
+      "source_page": "https://elcerritoliquor.com/products/angels-envy-bourbon-whiskey-750ml?_pos=1&_psq=Angel%27s+Envy+Port+Finish&_psid=f546b3add&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/Angel_s_Envy_Port_Wine_Barrel_Finish_Kentucky_Straight_Bourbon_Whiskey_750ml.webp?v=1770013234",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:29:52.403Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "olcc-12554b": {
+      "image": "assets/bourbons/demo-200/olcc-12554b.webp",
+      "source_page": "https://qualityliquorstore.com/products/angel-s-envy-triple-oak-bourbon?_pos=1&_psq=Angel%27s+Envy+Triple+Oak&_psid=464edd230&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0635/3289/2418/files/angels-envy-triple-oak.jpg?v=1765206404",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:48:47.087Z"
+    },
+    "olcc-9157b": {
+      "image": "assets/bourbons/demo-200/olcc-9157b.webp",
+      "source_page": "https://elcerritoliquor.com/products/rabbit-hole-dareringer-straight-bourbon-finished-in-px-sherry-casks-750ml?_pos=1&_psq=Rabbit+Hole+Dareringer&_psid=6887064f9&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/Rabbit_Hole_Dareringer_PX_Sherry_Casks_Kentucky_Straight_Bourbon_Whiskey_750ml.webp?v=1769503723",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:48:50.310Z"
+    },
+    "new-riff-bottled-in-bond-kentucky-straight-bourbon-whiskey": {
+      "image": "assets/bourbons/demo-200/new-riff-bottled-in-bond-kentucky-straight-bourbon-whiskey.webp",
+      "source_page": "https://elcerritoliquor.com/products/new-riff-bottled-in-bond-kentucky-rye-whiskey-750ml?_pos=2&_psq=New+Riff+Bottled+in+Bond&_psid=572229c03&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/New_Riff_Bottled_in_Bond_Kentucky_Rye_Whiskey_750ml.png?v=1769585390",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:30:00.556Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-new-riff-single-barrel-bourbon": {
+      "image": "assets/bourbons/demo-200/popular-new-riff-single-barrel-bourbon.webp",
+      "source_page": "https://remedyliquor.com/products/new-riff-bourbon-private-single-barrel-select-kentucky-4yr-750ml?_pos=1&_psq=New+Riff+Single+Barrel&_psid=e4e274f35&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0647/0644/5540/files/New_Riff_SB.jpg?v=1770185842",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T20:14:28.895Z"
+    },
+    "popular-wilderness-trail-high-rye-bourbon": {
+      "image": "assets/bourbons/demo-200/popular-wilderness-trail-high-rye-bourbon.webp",
+      "source_page": "https://elcerritoliquor.com/products/wilderness-trail-green-label-kentucky-straight-rye-whiskey-750ml?_pos=2&_psq=Wilderness+Trail+High+Rye&_psid=f42782551&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/Wilderness_Trail_Green_Label_Kentucky_Straight_Rye_Whiskey_750ml.jpg?v=1762146410",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:30:02.211Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-wilderness-trail-wheated-bourbon": {
+      "image": "assets/bourbons/demo-200/popular-wilderness-trail-wheated-bourbon.webp",
+      "source_page": "https://elcerritoliquor.com/products/wilderness-trail-yellow-label-wheated-bottled-in-bond-sweet-mash-small-batch-kentucky-straight-bourbon-whiskey-750ml?_pos=4&_psq=Wilderness+Trail+Wheated&_psid=c16fd6fdd&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/Wilderness_Trail_Yellow_Label_Wheated_Bottled_in_Bond_Sweet_Mash_Small_Batch_Kentucky_Straight_Bourbon_Whiskey_750ml.jpg?v=1770109452",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:30:03.263Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "green-river-101-22": {
+      "image": "assets/bourbons/demo-200/green-river-101-22.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/green-river-kentucky-straight-bourbon-whiskey-750ml?_pos=3&_psq=Green+River&_psid=0162a62e0&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-green-river-bourbon.jpg?v=1705638065",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:43:41.017Z"
+    },
+    "olcc-13310b": {
+      "image": "assets/bourbons/demo-200/olcc-13310b.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/green-river-kentucky-straight-wheated-bourbon-whiskey-750ml?_pos=1&_psq=Green+River+Wheated&_psid=3c1b5c2d8&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-green-river-wheated-bourbon.jpg?v=1705638759",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:43:42.488Z"
+    },
+    "green-river-full-proof-101-22": {
+      "image": "assets/bourbons/demo-200/green-river-full-proof-101-22.webp",
+      "source_page": "https://elcerritoliquor.com/products/green-river-full-proof-kentucky-straight-bourbon?_pos=1&_psq=Green+River+Full+Proof&_psid=d1194a070&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/Green_River_Full_Proof_Straight_Bourbon_Whiskey_750ml.jpg?v=1770891198",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:30:07.064Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "penelope-four-grain-straight-bourbon-whiskey": {
+      "image": "assets/bourbons/demo-200/penelope-four-grain-straight-bourbon-whiskey.webp",
+      "source_page": "https://elcerritoliquor.com/products/penelope-four-grain-bourbon-whiskey?_pos=3&_psq=Penelope+Four+Grain&_psid=1744c4885&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/Penelope_Four_Grain_Straight_Bourbon_Whiskey_750ml.png?v=1770017492",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:30:08.959Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-penelope-architect-bourbon": {
+      "image": "assets/bourbons/demo-200/popular-penelope-architect-bourbon.webp",
+      "source_page": "https://elcerritoliquor.com/products/penelope-architect-bourbon-750ml?_pos=1&_psq=Penelope+Architect&_psid=c3cf1cf45&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/products/Penelope_Architect_Straight_Bourbon_Whiskey_750ml.png?v=1770017513",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:30:10.318Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "penelope-barrel-strength-121-22": {
+      "image": "assets/bourbons/demo-200/penelope-barrel-strength-121-22.webp",
+      "source_page": "https://www.thebottleclub.com/products/penelope-barrel-strength-bourbon-whiskey-75-cl?_pos=1&_psq=Penelope+Barrel+Strength&_psid=16963ea24&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/penelope-barrel-strength-bourbon-whiskey-75-cl-whisky-1190520413.jpg?v=1756745347",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:43:43.575Z"
+    },
+    "popular-penelope-toasted-bourbon": {
+      "image": "assets/bourbons/demo-200/popular-penelope-toasted-bourbon.webp",
+      "source_page": "https://qualityliquorstore.com/products/penelope-toasted-series-rye-whiskey?_pos=3&_psq=Penelope+Toasted&_psid=162f14100&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0635/3289/2418/files/penelope_cd381b5c-d4f2-4988-b547-17b91dc05bc3.jpg?v=1765206042",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:48:55.254Z"
+    },
+    "popular-redwood-empire-pipe-dream-cask-strength": {
+      "image": "assets/bourbons/demo-200/popular-redwood-empire-pipe-dream-cask-strength.webp",
+      "source_page": "https://elcerritoliquor.com/products/redwood-empire-pipe-dream-bourbon-whiskey-cask-strength-750ml?_pos=1&_psq=Redwood+Empire+Pipe+Dream+Cask+Strength&_psid=f393285d2&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/products/Redwood_Empire_Pipe_Dream_Cask_Strength_Bourbon_Whiskey_750ml.png?v=1777971379",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:30:12.719Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-smoke-wagon-small-batch-bourbon": {
+      "image": "assets/bourbons/demo-200/popular-smoke-wagon-small-batch-bourbon.webp",
+      "source_page": "https://elcerritoliquor.com/products/smoke-wagon-straight-bourbon-whiskey-halloween-glow-in-the-dark-edition-2024-6-pack-pre-sale?_pos=1&_psq=Smoke+Wagon+Small+Batch&_psid=6f3396b8f&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/2024_Smoke_Wagon_Halloween_Edition_Small_Batch_Straight_Bourbon_Whiskey_6-Pack_Pre-Sale.webp?v=1769768261",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:48:58.171Z"
+    },
+    "popular-smoke-wagon-uncut-unfiltered-bourbon": {
+      "image": "assets/bourbons/demo-200/popular-smoke-wagon-uncut-unfiltered-bourbon.webp",
+      "source_page": "https://elcerritoliquor.com/products/smoke-wagon-uncut-unfiltered-bourbon-whiskey?_pos=1&_psq=Smoke+Wagon+Uncut+Unfiltered&_psid=272a4072e&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/Smoke_Wagon_Uncut_Unfiltered_Straight_Bourbon_Whiskey_750ml.webp?v=1769768690",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:30:15.090Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "high-west-131-45": {
+      "image": "assets/bourbons/demo-200/high-west-131-45.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/high-west-american-prairie-bourbon-whiskey-750ml?_pos=5&_psq=High+West&_psid=851db5c41&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/products/tds-high-west-american-prarie.jpg?v=1620901861",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:43:49.569Z"
+    },
+    "popular-johnnie-walker-gold-label-reserve": {
+      "image": "assets/bourbons/demo-200/popular-johnnie-walker-gold-label-reserve.jpg",
+      "source_page": "https://www.thebottleclub.com/products/johnnie-walker-johnnie-walker-gold-label-reserve-20cl-single?_pos=2&_psq=Johnnie+Walker+Gold+Label+Reserve&_psid=abc3ca892&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/johnnie-walker-johnnie-walker-gold-label-reserve-20cl-single-whisky-1239450537.jpg?v=1779288731",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:49:42.548Z"
+    },
+    "popular-ballantine-s-finest": {
+      "image": "assets/bourbons/demo-200/popular-ballantine-s-finest.webp",
+      "source_page": "https://www.thebottleclub.com/products/ballentines-finest?_pos=1&_psq=Ballantine%27s+Finest&_psid=639363eaf&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/ballantines-finest-whisky-70-cl-whisky-1156169798.jpg?v=1744816164",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:31:04.474Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-grant-s-triple-wood": {
+      "image": "assets/bourbons/demo-200/popular-grant-s-triple-wood.webp",
+      "source_page": "https://www.thebottleclub.com/products/grants-family-whiskey-1l?_pos=2&_psq=Grant%27s+Triple+Wood&_psid=2758d707e&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/grant-s-family-reserve-triple-wood-blended-whisky-1-l-whisky-28387387572339.jpg?v=1703661019",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:31:05.682Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-dewar-s-12-year": {
+      "image": "assets/bourbons/demo-200/popular-dewar-s-12-year.webp",
+      "source_page": "https://elcerritoliquor.com/products/dewars-double-aged-1st-fill-bourbon-casks-12-year-old-blended-scotch-whiskey-1-75lt?_pos=1&_psq=Dewar%27s+12+Year&_psid=eb5f3208d&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/Dewar_sDoubleAged1stFillBourbonCasks12YearOldBlendedScotch1.75Lt.jpg?v=1761827747",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:31:06.619Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-j-b-rare": {
+      "image": "assets/bourbons/demo-200/popular-j-b-rare.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/j-b-rare-urban-honey-whisky-liqueur-700ml?_pos=2&_psq=J%26B+Rare&_psid=217fde57b&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/products/tds-jb-rare-honey.jpg?v=1653285571",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:31:08.476Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-glenfiddich-12-year": {
+      "image": "assets/bourbons/demo-200/popular-glenfiddich-12-year.webp",
+      "source_page": "https://www.thebottleclub.com/products/glenfiddich-12yo-malt-whisky-miniature?_pos=3&_psq=Glenfiddich+12+Year&_psid=d88c3dd28&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/glenfiddich-12-year-old-malt-whisky-miniature-5-cl-spirit-miniatures-32846163312755.jpg?v=1703661633",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:31:16.271Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-glenfiddich-18-year": {
+      "image": "assets/bourbons/demo-200/popular-glenfiddich-18-year.webp",
+      "source_page": "https://www.thebottleclub.com/products/glenfiddich-18y?_pos=1&_psq=Glenfiddich+18+Year&_psid=d6962f734&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/glenfiddich-18-year-old-single-malt-scotch-whisky-70-cl-whisky-28398639546483.jpg?v=1703659064",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:49:54.885Z"
+    },
+    "olcc-3834b": {
+      "image": "assets/bourbons/demo-200/olcc-3834b.webp",
+      "source_page": "https://www.thebottleclub.com/products/glenlivet-12y?_pos=1&_psq=The+Glenlivet+Founder%27s+Reserve&_psid=8d2ccc9fe&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/the-glenlivet-founders-reserve-whisky-70-cl-whisky-32846306902131.jpg?v=1703659221",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:31:22.983Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-the-macallan-12-year-double-cask": {
+      "image": "assets/bourbons/demo-200/popular-the-macallan-12-year-double-cask.webp",
+      "source_page": "https://elcerritoliquor.com/products/the-macallan-12-years-double-cask-750ml?_pos=1&_psq=The+Macallan+12+Year+Double+Cask&_psid=b838b02f9&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/Macallan_Double_Cask_12_Year_Old_Single_Malt_Scotch_Whisky_750ml.webp?v=1768907627",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:31:27.436Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-the-macallan-12-year-sherry-oak": {
+      "image": "assets/bourbons/demo-200/popular-the-macallan-12-year-sherry-oak.webp",
+      "source_page": "https://elcerritoliquor.com/products/macallan-sherry-oak-12-yr-single-malt-scotch-whisky-750ml?_pos=2&_psq=The+Macallan+12+Year+Sherry+Oak&_psid=09d561dec&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/Macallan_Sherry_Oak_Cask_12_Year_Old_Single_Malt_Scotch_Whisky_750ml.webp?v=1768915660",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:31:29.360Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-the-macallan-15-year-double-cask": {
+      "image": "assets/bourbons/demo-200/popular-the-macallan-15-year-double-cask.webp",
+      "source_page": "https://elcerritoliquor.com/products/the-macallan-15-year-double-cask-750ml?_pos=1&_psq=The+Macallan+15+Year+Double+Cask&_psid=1d9222ff9&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/Macallan_Double_Cask_15_Year_Old_Single_Malt_Scotch_Whisky_750ml_1.webp?v=1751623456",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:31:31.341Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-the-balvenie-14-year-caribbean-cask": {
+      "image": "assets/bourbons/demo-200/popular-the-balvenie-14-year-caribbean-cask.webp",
+      "source_page": "https://beveragewarehousemi.com/products/balvenie-caribbean-cask-14-yr?_pos=1&_psq=The+Balvenie+14+Year+Caribbean+Cask&_psid=cce6e5c33&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0101/9412/4851/products/BALVENIE_750ML_14_YEAR_BOTTLE_TRANSPARENT.png?v=1660596511",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:44:02.942Z"
+    },
+    "popular-glenmorangie-lasanta-12-year": {
+      "image": "assets/bourbons/demo-200/popular-glenmorangie-lasanta-12-year.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/glenmorangie-12-year-old-lasanta-sherry-cask-single-malt-scotch-whisky-700ml?_pos=2&_psq=Glenmorangie+Lasanta+12+Year&_psid=6e20b6826&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-glenmorangie-12yo-lasanta.jpg?v=1701321382",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:50:02.363Z"
+    },
+    "popular-aberlour-a-bunadh": {
+      "image": "assets/bourbons/demo-200/popular-aberlour-a-bunadh.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/aberlour-abunadh-batch-73-cask-strength-single-malt-scotch-whisky-700ml?_pos=1&_psq=Aberlour+A%27Bunadh&_psid=17f6ca891&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-aberlour-abunadh-all.jpg?v=1716437302",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:50:05.053Z"
+    },
+    "popular-talisker-10-year": {
+      "image": "assets/bourbons/demo-200/popular-talisker-10-year.webp",
+      "source_page": "https://www.thebottleclub.com/products/drinks-by-the-dram-single-cracker-talisker-10-year-old?_pos=5&_psq=Talisker+10+Year&_psid=8f20397f1&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/drinks-by-the-dram-single-cracker-talisker-10-year-old-spirit-miniatures-14310462849139.png?v=1703663978",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:50:07.229Z"
+    },
+    "popular-oban-14-year": {
+      "image": "assets/bourbons/demo-200/popular-oban-14-year.webp",
+      "source_page": "https://www.malts.com/en/products/oban-14-year-old-single-malt-scotch-whisky-70cl",
+      "source_url": "https://images.ctfassets.net/glsfy1cpffmh/71KGvgnMBoVKqTtbPcZFmG/3bd57b38a3fa99ac78b2467e1cfa7fc8/oban-14yo-70cl-gb-malts-back-grip-digital-render.png?fm=webp&q=85&fit=fill&w=1200",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:58:34.714Z"
+    },
+    "olcc-7243b": {
+      "image": "assets/bourbons/demo-200/olcc-7243b.webp",
+      "source_page": "https://www.blackwellswines.com/products/bunnahabhain-12-year-old-scotch-whiskey?_pos=1&_psq=Bunnahabhain+12+Year&_psid=f5ab6096d&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0363/8621/files/Bunnahabhain_12_Year_Old_Scotch_Whisky.jpg?v=1748981592",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T20:15:23.716Z"
+    },
+    "popular-caol-ila-12-year": {
+      "image": "assets/bourbons/demo-200/popular-caol-ila-12-year.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/caol-ila-12-years-old-single-malt-scotch-whisky-1l?_pos=2&_psq=Caol+Ila+12+Year&_psid=64e5411f2&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/products/tds-caol-ila-12-1L.jpg?v=1602139418",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:50:09.525Z"
+    },
+    "popular-bowmore-12-year": {
+      "image": "assets/bourbons/demo-200/popular-bowmore-12-year.webp",
+      "source_page": "https://www.thebottleclub.com/products/bowmore-12-year-old-sherry-oak-cask-islay-single-malt-scotch-whisky-70-cl?_pos=2&_psq=Bowmore+12+Year&_psid=6eeb9b049&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/bowmore-12-year-old-sherry-oak-cask-islay-single-malt-scotch-whisky-70-cl-spirit-1183127788.jpg?v=1754329391",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:50:10.304Z"
+    },
+    "popular-the-dalmore-12-year": {
+      "image": "assets/bourbons/demo-200/popular-the-dalmore-12-year.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/the-dalmore-12-year-old-single-malt-scotch-whisky-1l?_pos=6&_psq=The+Dalmore+12+Year&_psid=febeeb6a9&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/products/tds-dalmore-12yo-1l.jpg?v=1679026272",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:50:11.705Z"
+    },
+    "popular-dalwhinnie-15-year": {
+      "image": "assets/bourbons/demo-200/popular-dalwhinnie-15-year.webp",
+      "source_page": "https://www.malts.com/en/products/dalwhinnie-15-year-old-single-malt-scotch-whisky-70cl",
+      "source_url": "https://images.ctfassets.net/glsfy1cpffmh/44sdOOXcTPYwNzkiVy5xMw/4224636d1a94071d1c9c52a8643da2a2/dalwhinnie-15yo-70cl-gb-malts-back-grip-digital-render.png?fm=webp&q=85&fit=fill&w=1200",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:59:00.564Z"
+    },
+    "popular-the-glendronach-12-year-original": {
+      "image": "assets/bourbons/demo-200/popular-the-glendronach-12-year-original.webp",
+      "source_page": "https://www.thebottleclub.com/products/the-glendronach-12-year-old-original-single-malt-whisky-70-cl?_pos=1&_psq=The+GlenDronach+12+Year+Original&_psid=e494f4a0c&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/the-glendronach-12-year-old-original-single-malt-whisky-70-cl-whisky-32841546727539.jpg?v=1703676002",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:32:04.652Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-the-glenallachie-12-year": {
+      "image": "assets/bourbons/demo-200/popular-the-glenallachie-12-year.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/glenallachie-12-year-old-speyside-single-malt-scotch-whisky-700ml?_pos=10&_psq=The+GlenAllachie+12+Year&_psid=413111ec1&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-glenallachie-12yo.jpg?v=1727767453",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:50:13.046Z"
+    },
+    "popular-bruichladdich-the-classic-laddie": {
+      "image": "assets/bourbons/demo-200/popular-bruichladdich-the-classic-laddie.webp",
+      "source_page": "https://elcerritoliquor.com/products/bruichladdich-the-classic-laddie-scottish-barley-unpeated-islay-single-malt-scotch-whisky?_pos=1&_psq=Bruichladdich+The+Classic+Laddie&_psid=6dd93a2d2&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/Bruichladdich_The_Classic_Laddie_Scottish_Barley_Unpeated_Single_Malt_Scotch_Whisky_750ml.webp?v=1769681737",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:32:06.596Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-jura-10-year": {
+      "image": "assets/bourbons/demo-200/popular-jura-10-year.webp",
+      "source_page": "https://www.thebottleclub.com/products/jura-10y?_pos=1&_psq=Jura+10+Year&_psid=17a7675bd&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/jura-10-year-old-whisky-70-cl-whisky-15794110726259.jpg?v=1703659108",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:50:14.158Z"
+    },
+    "popular-jameson-irish-whiskey": {
+      "image": "assets/bourbons/demo-200/popular-jameson-irish-whiskey.webp",
+      "source_page": "https://www.thebottleclub.com/products/jameson?_pos=2&_psq=Jameson+Irish&_psid=684daff60&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/jameson-irish-whiskey-70-cl-whisky-15793774526579.jpg?v=1703658805",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:32:11.622Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-jameson-black-barrel": {
+      "image": "assets/bourbons/demo-200/popular-jameson-black-barrel.webp",
+      "source_page": "https://www.thebottleclub.com/products/jameson-black-barrel-blended-irish-whiskey-70-cl?_pos=1&_psq=Jameson+Black+Barrel&_psid=8b906caaf&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/jameson-black-barrel-blended-irish-whiskey-70-cl-whisky-28345205948531.jpg?v=1703672458",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:50:15.768Z"
+    },
+    "popular-jameson-caskmates-stout-edition": {
+      "image": "assets/bourbons/demo-200/popular-jameson-caskmates-stout-edition.webp",
+      "source_page": "https://www.thebottleclub.com/products/jameson-caskmates-stout-edition-irish-whiskey-70-cl?_pos=1&_psq=Jameson+Caskmates+Stout+Edition&_psid=63154ba9e&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/jameson-caskmates-stout-edition-irish-whiskey-70-cl-whisky-32826871775347.jpg?v=1703672461",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:32:14.626Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-redbreast-12-year": {
+      "image": "assets/bourbons/demo-200/popular-redbreast-12-year.webp",
+      "source_page": "https://www.thebottleclub.com/products/redbreast-12-year-old-whiskey-70-cl?_pos=3&_psq=Redbreast+12+Year&_psid=5c5200d76&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/redbreast-12-year-old-whiskey-70-cl-whisky-32841019064435.jpg?v=1703667558",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:50:16.910Z"
+    },
+    "popular-redbreast-15-year": {
+      "image": "assets/bourbons/demo-200/popular-redbreast-15-year.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/redbreast-15-year-old-single-pot-still-irish-whiskey-700ml?_pos=2&_psq=Redbreast+15+Year&_psid=786daae2f&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-redbreast-15yo-new.jpg?v=1730182447",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:50:18.205Z"
+    },
+    "popular-green-spot": {
+      "image": "assets/bourbons/demo-200/popular-green-spot.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/green-spot-chateau-leoville-barton-pot-still-irish-whisky-700ml?_pos=2&_psq=Green+Spot&_psid=40e3362f1&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/products/tds-green-spot-chateau-leoville-barton.jpg?v=1598707582",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:59:34.491Z"
+    },
+    "popular-yellow-spot-12-year": {
+      "image": "assets/bourbons/demo-200/popular-yellow-spot-12-year.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/yellow-spot-12-year-old-single-pot-still-irish-whiskey-700ml?_pos=2&_psq=Yellow+Spot+12+Year&_psid=721e5145d&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/products/tds-yellow-spot-12-2.jpg?v=1602058234",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:50:23.634Z"
+    },
+    "popular-powers-gold-label": {
+      "image": "assets/bourbons/demo-200/popular-powers-gold-label.webp",
+      "source_page": "https://www.thebottleclub.com/products/powers-gold-label-blended-irish-whisky-70-cl?_pos=1&_psq=Powers+Gold+Label&_psid=c1bb1a5ec&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/powers-gold-label-blended-irish-whisky-70-cl-whisky-32841604104307.jpg?v=1703676802",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:44:44.170Z"
+    },
+    "popular-powers-three-swallow": {
+      "image": "assets/bourbons/demo-200/popular-powers-three-swallow.webp",
+      "source_page": "https://beveragewarehousemi.com/products/powers-three-swallow?_pos=1&_psq=Powers+Three+Swallow&_psid=508e49216&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0101/9412/4851/products/three_swallow_bottle_1.png?v=1633041259",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:32:45.326Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-proper-no-twelve": {
+      "image": "assets/bourbons/demo-200/popular-proper-no-twelve.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/proper-no-twelve-blended-irish-whiskey-1l?_pos=2&_psq=Proper+No.+Twelve&_psid=e3527b06a&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/products/tds-proper-twelve-1l.jpg?v=1618622364",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:32:49.676Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-suntory-kakubin": {
+      "image": "assets/bourbons/demo-200/popular-suntory-kakubin.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/suntory-kakubin-blended-japanese-whisky-700ml?_pos=1&_psq=Suntory+Kakubin&_psid=150659840&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/products/tds-suntory-kakubin.jpg?v=1661328213",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:32:51.194Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-yamazaki-distiller-s-reserve": {
+      "image": "assets/bourbons/demo-200/popular-yamazaki-distiller-s-reserve.webp",
+      "source_page": "https://www.tenleymarketliquor.com/products/yamazaki-single-malt-whisky-distiller-s-reserve?_pos=1&_psq=Yamazaki+Distiller%27s+Reserve&_psid=70f15eed4&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0571/5407/6783/files/the-yamazaki-single-malt-whisky-distillers-reserve-whisky.webp?v=1719001838",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:50:25.276Z"
+    },
+    "popular-hakushu-distiller-s-reserve": {
+      "image": "assets/bourbons/demo-200/popular-hakushu-distiller-s-reserve.webp",
+      "source_page": "https://www.thebottleclub.com/products/hakushu-single-malt?_pos=1&_psq=Hakushu+Distiller%27s+Reserve&_psid=705c42375&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/hakushu-distiller-s-reserve-whisky-70-cl-whisky-28385795407987.jpg?v=1703659631",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:32:53.308Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "olcc-2619b": {
+      "image": "assets/bourbons/demo-200/olcc-2619b.webp",
+      "source_page": "https://www.blackwellswines.com/products/nikka-grain-whisky?_pos=1&_psq=Nikka+Coffey+Grain&_psid=052d148f9&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0363/8621/products/Nikka_Coffey_Grain_Whisky.jpg?v=1745293626",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T20:15:44.302Z"
+    },
+    "olcc-4087b": {
+      "image": "assets/bourbons/demo-200/olcc-4087b.webp",
+      "source_page": "https://www.blackwellswines.com/products/nikka-coffey-malt-whisky?_pos=1&_psq=Nikka+Coffey+Malt&_psid=6dac0f75c&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0363/8621/products/Nikka_Coffey_Malt_Whisky.jpg?v=1745293663",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T20:15:47.769Z"
+    },
+    "popular-nikka-days": {
+      "image": "assets/bourbons/demo-200/popular-nikka-days.webp",
+      "source_page": "https://www.thebottleclub.com/products/nikka-days-japanese-blended-whisky-70-cl?_pos=1&_psq=Nikka+Days&_psid=3a6b2d1c5&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/nikka-days-japanese-blended-whisky-70-cl-whisky-32846230880371.jpg?v=1703667063",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:50:27.649Z"
+    },
+    "popular-nikka-yoichi-single-malt": {
+      "image": "assets/bourbons/demo-200/popular-nikka-yoichi-single-malt.webp",
+      "source_page": "https://uptownliquor.com.au/products/nikka-yoichi-single-malt-japanese-whisky-700ml?_pos=1&_psq=Nikka+Yoichi+Single+Malt&_psid=d6f4d850a&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0283/5320/0206/products/nikka_yoichi_nas__49631.1486004053.jpg?v=1613256225",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:44:55.899Z"
+    },
+    "popular-nikka-miyagikyo-single-malt": {
+      "image": "assets/bourbons/demo-200/popular-nikka-miyagikyo-single-malt.webp",
+      "source_page": "https://www.thebottleclub.com/products/nikka-miyagikyo-sigle-malt-japanese-whisky-70-cl?_pos=1&_psq=Nikka+Miyagikyo+Single+Malt&_psid=aa413fdf6&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/nikka-miyagikyo-single-malt-90th-anniversary-japanese-whisky-70-cl-whisky-1104359801.jpg?v=1740841847",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:50:28.666Z"
+    },
+    "popular-akashi-white-oak": {
+      "image": "assets/bourbons/demo-200/popular-akashi-white-oak.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/akashi-white-oak-red-label-blended-whisky-500ml?_pos=3&_psq=Akashi+White+Oak&_psid=aa5391f80&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/products/tds-akashi-red.jpg?v=1598702449",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:33:07.380Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "olcc-0146b": {
+      "image": "assets/bourbons/demo-200/olcc-0146b.webp",
+      "source_page": "https://www.thebottleclub.com/products/jack-daniels-old-no-7-tennessee-whiskey-cola-premixed-can-12-x-330ml-multipack?_pos=2&_psq=Jack+Daniel%27s+Old+No.+7&_psid=785dd9f50&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/jack-daniel-s-old-no-7-tennessee-whiskey-coca-cola-premixed-can-multipack-12-x-330-ml-ready-made-cocktails-1126626513.jpg?v=1739311139",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:50:29.851Z"
+    },
+    "olcc-0148b": {
+      "image": "assets/bourbons/demo-200/olcc-0148b.webp",
+      "source_page": "https://www.thebottleclub.com/products/jack-daniel-s-gentleman-jack-whiskey?_pos=2&_psq=Gentleman+Jack&_psid=38e38cccb&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/jack-daniel-s-gentleman-jack-whiskey-70-cl-whisky-1157131670.jpg?v=1745254279",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:33:13.825Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-jack-daniel-s-tennessee-rye": {
+      "image": "assets/bourbons/demo-200/popular-jack-daniel-s-tennessee-rye.webp",
+      "source_page": "https://www.thebottleclub.com/products/jack-daniels-tennessee-rye-straight-whisky-70-cl?_pos=1&_psq=Jack+Daniel%27s+Tennessee+Rye&_psid=a7d90c782&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/jack-daniel-s-tennessee-rye-straight-whiskey-70-cl-whisky-32846778794099.jpg?v=1703663653",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:50:30.905Z"
+    },
+    "popular-george-dickel-no-12": {
+      "image": "assets/bourbons/demo-200/popular-george-dickel-no-12.webp",
+      "source_page": "https://uptownliquor.com.au/products/george-dickel-no-12-tennessee-whiskey-750ml?_pos=6&_psq=George+Dickel+No.+12&_psid=78e2ed3e3&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0283/5320/0206/files/George_Dickel_No_12_750ml_10000330_1_1800x_4aadd92e-2378-43aa-b9da-f5fe79cc2be4.webp?v=1768466111",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:33:17.778Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "uncle-nearest-1884-small-batch-whiskey": {
+      "image": "assets/bourbons/demo-200/uncle-nearest-1884-small-batch-whiskey.webp",
+      "source_page": "https://www.thebottleclub.com/products/uncle-nearest-1884-small-batch-whiskey-70-cl?_pos=1&_psq=Uncle+Nearest+1884+Small+Batch&_psid=12c6af433&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/uncle-nearest-1884-small-batch-tennessee-whiskey-70-cl-whisky-1157651147.jpg?v=1745341146",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:33:19.374Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-bulleit-rye": {
+      "image": "assets/bourbons/demo-200/popular-bulleit-rye.webp",
+      "source_page": "https://elcerritoliquor.com/products/bulleit-95-small-batch-american-straight-rye-mash-whiskey-1lt?_pos=2&_psq=Bulleit+Rye&_psid=6c33c0c43&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/Bulleit95SmallBatchAmericanStraightRyeMashWhiskey1Lt.jpg?v=1761283224",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:33:20.331Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-rittenhouse-rye-bottled-in-bond": {
+      "image": "assets/bourbons/demo-200/popular-rittenhouse-rye-bottled-in-bond.webp",
+      "source_page": "https://elcerritoliquor.com/products/rittenhouse-rye-bottle-in-bond-rye-single-barrel-el-cerrito-liquor-exclusive?_pos=1&_psq=Rittenhouse+Rye+Bottled+in+Bond&_psid=3c593ca45&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/Rittenhouse_Rye_Bottle_In_Bond_Single_Barrel_El_Cerrito_Liquor_Store_Pick_Rye_Whiskey.webp?v=1751891645",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:33:21.538Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "olcc-7658b": {
+      "image": "assets/bourbons/demo-200/olcc-7658b.webp",
+      "source_page": "https://elcerritoliquor.com/products/sazerac-6-year-old-rye-whiskey-750ml?_pos=3&_psq=Sazerac+Rye&_psid=45082939c&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/products/Sazerac_6_year_Old_Straight_Rye_Whiskey_750ml.png?v=1769509695",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:33:23.530Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "high-west-double-rye-122-45": {
+      "image": "assets/bourbons/demo-200/high-west-double-rye-122-45.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/high-west-double-rye-whiskey-750ml?_pos=5&_psq=High+West+Double+Rye&_psid=fe714faad&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/products/tds-high-west-double-rye.jpg?v=1559366040",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:45:00.259Z"
+    },
+    "popular-whistlepig-piggyback-6-year-rye": {
+      "image": "assets/bourbons/demo-200/popular-whistlepig-piggyback-6-year-rye.webp",
+      "source_page": "https://www.thebottleclub.com/products/whistlepig-piggyback-100-rye-6-year-old-whiskey-70-cl?_pos=1&_psq=WhistlePig+PiggyBack+6+Year+Rye&_psid=872c7b31f&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/whistlepig-piggyback-100-rye-6-year-old-whiskey-70-cl-whisky-32841792946291.jpg?v=1703680583",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:33:27.422Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "popular-crown-royal-northern-harvest-rye": {
+      "image": "assets/bourbons/demo-200/popular-crown-royal-northern-harvest-rye.webp",
+      "source_page": "https://elcerritoliquor.com/products/crown-royal-northern-harvest-rye-canadian-whisky?_pos=1&_psq=Crown+Royal+Northern+Harvest+Rye&_psid=8d9a722ef&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/Crown_Royal_Northern_Harvest_Rye_Canadian_Whisky.jpg?v=1771409255",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "fetched_at": "2026-09-06T19:33:29.395Z",
+      "quality_candidate_version": "detail-packshot-candidate-v1"
+    },
+    "1792-bottled-in-bond-kentucky-straight-bourbon": {
+      "image": "assets/bourbons/demo-200/1792-bottled-in-bond-kentucky-straight-bourbon.png",
+      "source_page": "https://www.1792bourbon.com/our-bourbon/",
+      "source_url": "https://www.1792bourbon.com/img/1792-Bottled-In-Bond-Bottle-Straight-On.png",
+      "source_type": "official_brand_website",
+      "license_status": "official_source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T19:54:58.432Z"
+    },
+    "popular-horse-soldier-premium-bourbon": {
+      "image": "assets/bourbons/demo-200/popular-horse-soldier-premium-bourbon.webp",
+      "source_page": "https://qualityliquorstore.com/products/horse-soldier-premium-straight-bourbon?_pos=1&_psq=Horse+Soldier+Premium&_psid=e53060ec8&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0635/3289/2418/files/horse-soldier-premium-straight-bourbon__02368.jpg?v=1765204917",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T20:14:34.757Z"
+    },
+    "olcc-12874b": {
+      "image": "assets/bourbons/demo-200/olcc-12874b.webp",
+      "source_page": "https://qualityliquorstore.com/products/horse-soldier-signature-small-batch-bourbon?_pos=1&_psq=Horse+Soldier+Small+Batch&_psid=aadbeb8d1&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0635/3289/2418/files/horse-soldier-signature-small-batch-bourbon__43505.jpg?v=1765204803",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T20:14:38.431Z"
+    },
+    "olcc-8573b": {
+      "image": "assets/bourbons/demo-200/olcc-8573b.webp",
+      "source_page": "https://boozefinders.com/products/henry-mckenna-straight-bourbon-single-barrel-bottled-in-bond-10-yr-100?_pos=1&_psq=Henry+McKenna+10+Year+Bottled+in+Bond&_psid=da5768e74&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0716/4408/6464/files/henry-mckenna-straight-bourbon-single-barrel-bottled-in-bond-10-yr-100.png?v=1779138568",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:48:18.389Z"
+    },
+    "popular-rabbit-hole-cavehill": {
+      "image": "assets/bourbons/demo-200/popular-rabbit-hole-cavehill.webp",
+      "source_page": "https://qualityliquorstore.com/products/rabbit-hole-cavehill-bourbon-750ml?_pos=1&_psq=Rabbit+Hole+Cavehill&_psid=67bce4471&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0635/3289/2418/files/rabbit-hole-cavehill-bourbon-750ml__42182.jpg?v=1765204774",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T20:14:18.459Z"
+    },
+    "popular-early-times-bottled-in-bond": {
+      "image": "assets/bourbons/demo-200/popular-early-times-bottled-in-bond.jpg",
+      "source_page": "https://caskcartel.com/products/early-times-old-style-bottled-in-bond-straight-bourbon-whiskey?_pos=1&_psq=Early+Times+Bottled+in+Bond&_psid=e582e1ef9&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0050/2395/7103/files/Early_Times_Old_Style_Bottled_In_Bond_Straight_Bourbon_Whiskey.jpg?v=1767040203",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:49:03.045Z"
+    },
+    "popular-bowman-brothers-small-batch-bourbon": {
+      "image": "assets/bourbons/demo-200/popular-bowman-brothers-small-batch-bourbon.webp",
+      "source_page": "https://qualityliquorstore.com/products/bowman-brothers-small-batch-bourbon?_pos=1&_psq=Bowman+Brothers+Small+Batch&_psid=49d1b0f82&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0635/3289/2418/files/buy-bowman-brothers-virginia-bourbon-62368-_1.jpg?v=1767744657",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:49:38.695Z"
+    },
+    "popular-aberlour-12-year-double-cask": {
+      "image": "assets/bourbons/demo-200/popular-aberlour-12-year-double-cask.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/aberlour-12-year-old-double-cask-matured-single-malt-scotch-whisky-1l?_pos=8&_psq=Aberlour+12+Year+Double+Cask&_psid=23e1deb49&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-aberlour-12yo-1l-new.jpg?v=1716696006",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:50:03.776Z"
+    },
+    "olcc-2211b": {
+      "image": "assets/bourbons/demo-200/olcc-2211b.webp",
+      "source_page": "https://www.blackwellswines.com/products/highland-park-12-year-old-scotch-whisky?_pos=1&_psq=Highland+Park+12+Year+Viking+Honour&_psid=d13bd3dd8&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0363/8621/products/Highland_Park_12_Year_Old_Viking_Honour_Scotch_Whisky.jpg?v=1745419315",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-06T20:15:21.110Z"
+    },
+    "popular-redbreast-12-year-cask-strength": {
+      "image": "assets/bourbons/demo-200/popular-redbreast-12-year-cask-strength.webp",
+      "source_page": "https://canawineco.com/products/redbreast-12-year-old-cask-strength-single-pot-still-irish-whiskey-750ml?_pos=1&_psq=Redbreast+12+Year+Cask+Strength&_psid=79ef50d77&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0607/1586/0223/files/Redbreast12YearOldCaskStrengthBatchB1_21FlaskFineWineWhisky.webp?v=1747862479",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:50:22.387Z"
+    },
+    "popular-very-old-barton-100-proof": {
+      "image": "assets/bourbons/demo-200/popular-very-old-barton-100-proof.webp",
+      "source_page": "https://uptownliquor.com.au/products/very-old-barton-100-proof-kentucky-straight-bourbon-whiskey-750ml?_pos=2&_psq=Very+Old+Barton+100+Proof&_psid=cbd6ff896&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0283/5320/0206/files/VeryOldBarton100Proof.png?v=1747630807",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:49:05.470Z"
+    },
+    "popular-the-glenlivet-14-year-cognac-cask-selection": {
+      "image": "assets/bourbons/demo-200/popular-the-glenlivet-14-year-cognac-cask-selection.webp",
+      "source_page": "https://qualityliquorstore.com/products/glenlivet-14-year-cognac-cask-selection?_pos=1&_psq=The+Glenlivet+14+Year+Cognac+Cask+Selection&_psid=2ae038963&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0635/3289/2418/files/the-glenlivet-glenlivet-14-year-cognac-cask-selection__51197.jpg?v=1763510910",
+      "source_type": "retailer_product_catalog",
+      "license_status": "source_review_required",
+      "quality_candidate_version": "detail-packshot-candidate-v1",
+      "fetched_at": "2026-09-13T07:49:59.714Z"
     }
   }
 }

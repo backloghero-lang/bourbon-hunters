@@ -988,7 +988,7 @@
 <script>
 /* ========= KONFIGURACJA ========= */
 const WORKER_URL = "https://bourbon-hunters.darekmaslyk.workers.dev";
-const APP_VERSION = "135";
+const APP_VERSION = "136";
 const API_CONTRACT_VERSION = "bh-api-2026-08-v1";
 const DB_URL = "db/catalog/demo-200.json";
 const PROFILES_URL = "db/profiles-runtime.json";
@@ -1494,7 +1494,15 @@ function canonicalBottleId(id){
   return id;
 }
 function bottleById(id){ id=canonicalBottleId(id); return DB.find(function(b){ return b.id===id; })||null; }
-function officialBottleImage(b,small){ return String((b&&(small?(b.thumb||b.image):(b.image||b.thumb)))||""); }
+function bottleHasAuditedDetailImage(b){
+  if(!b||!Object.prototype.hasOwnProperty.call(b,"detail_image_audit")) return true;
+  return b.demo_image_status==="ready"&&String(b.image||"").length>0;
+}
+function officialBottleImage(b,small){
+  if(!b) return "";
+  if(small) return String(b.thumb||b.image||"");
+  return bottleHasAuditedDetailImage(b)?String(b.image||""):"";
+}
 function localBottleImage(b){
   const id=canonicalBottleId(b&&b.id);
   return id&&LOCAL_BOTTLE_IMAGES[id] ? String(LOCAL_BOTTLE_IMAGES[id]) : "";
@@ -1502,7 +1510,7 @@ function localBottleImage(b){
 function bottleImageSources(b,small){
   const local=localBottleImage(b);
   const preferred=officialBottleImage(b,small);
-  const alternate=String((b&&(small?b.image:b.thumb))||"");
+  const alternate=String((b&&(small?b.image:(bottleHasAuditedDetailImage(b)?b.thumb:"")))||"");
   if(local) return {primary:local,fallback:preferred};
   return {primary:preferred,fallback:alternate&&alternate!==preferred?alternate:""};
 }

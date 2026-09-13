@@ -1,6 +1,6 @@
 {
   "version": "demo-200-v1",
-  "updated": "2026-09-06T13:47:13.940Z",
+  "updated": "2026-09-13T07:51:10.961Z",
   "count": 200,
   "bottles": [
     {
@@ -27,7 +27,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/runtime-100/jim-beam-white-label.png",
+      "image": "assets/bourbons/detail-200/jim-beam-101-22.webp",
+      "thumb": "assets/bourbons/runtime-100/jim-beam-white-label.png",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -53,7 +54,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/runtime-100/makers-mark-101-proof-bourbon-whisky.png",
+      "image": "assets/bourbons/detail-200/maker-s-mark-101-22.webp",
+      "thumb": "assets/bourbons/runtime-100/makers-mark-101-proof-bourbon-whisky.png",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -80,7 +82,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/runtime-100/evan-williams-kentucky-straight-bourbon-black-label.png",
+      "image": "assets/bourbons/detail-200/popular-evan-williams-black-label.webp",
+      "thumb": "assets/bourbons/runtime-100/evan-williams-kentucky-straight-bourbon-black-label.png",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -120,7 +123,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/clean/woodford-reserve-bourbon.webp",
+      "image": "assets/bourbons/detail-200/woodford-reserve-bourbon.webp",
+      "thumb": "assets/bourbons/clean/woodford-reserve-bourbon.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -149,7 +153,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/popular-bulleit-bourbon.webp",
+      "image": "assets/bourbons/detail-200/popular-bulleit-bourbon.webp",
+      "thumb": "assets/bourbons/demo-200/popular-bulleit-bourbon.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -175,7 +180,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/clean/wild-turkey-101-bourbon.webp",
+      "image": "assets/bourbons/detail-200/wild-turkey-101-bourbon.webp",
+      "thumb": "assets/bourbons/clean/wild-turkey-101-bourbon.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -206,7 +212,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/clean/buffalo-trace-bourbon-1.webp",
+      "image": "",
+      "thumb": "assets/bourbons/clean/buffalo-trace-bourbon-1.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -234,7 +241,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/clean/four-roses.webp",
+      "image": "assets/bourbons/detail-200/four-roses.webp",
+      "thumb": "assets/bourbons/clean/four-roses.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -272,7 +280,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/clean/knob-creek-kentucky-straight-bourbon.webp",
+      "image": "assets/bourbons/detail-200/knob-creek-9-year-old-100-proof-bourbon.webp",
+      "thumb": "assets/bourbons/clean/knob-creek-kentucky-straight-bourbon.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -299,7 +308,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/clean/elijah-craig-small-batch-bourbon.webp",
+      "image": "assets/bourbons/detail-200/elijah-craig-small-batch-bourbon.webp",
+      "thumb": "assets/bourbons/clean/elijah-craig-small-batch-bourbon.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -328,7 +338,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/clean/makers-mark-46-bourbon-whisky.webp",
+      "image": "assets/bourbons/detail-200/makers-mark-46-bourbon-whisky.webp",
+      "thumb": "assets/bourbons/clean/makers-mark-46-bourbon-whisky.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -357,7 +368,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/clean/woodford-reserve-double-oaked-bourbon.webp",
+      "image": "assets/bourbons/detail-200/woodford-reserve-double-oaked-bourbon.webp",
+      "thumb": "assets/bourbons/clean/woodford-reserve-double-oaked-bourbon.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -384,7 +396,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/popular-four-roses-small-batch.png",
+      "image": "assets/bourbons/detail-200/popular-four-roses-small-batch.webp",
+      "thumb": "assets/bourbons/demo-200/popular-four-roses-small-batch.png",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -428,7 +441,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/clean/four-roses-obsk-single-barrel-bourbon.webp",
+      "image": "assets/bourbons/detail-200/four-roses-obsk-single-barrel-bourbon.webp",
+      "thumb": "assets/bourbons/clean/four-roses-obsk-single-barrel-bourbon.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -454,7 +468,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/clean/wild-turkey-bourbon.webp",
+      "image": "assets/bourbons/detail-200/olcc-0196b.webp",
+      "thumb": "assets/bourbons/clean/wild-turkey-bourbon.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -483,7 +498,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/wild-turkey-rare-breed-101-23.webp",
+      "image": "assets/bourbons/detail-200/wild-turkey-rare-breed-101-23.webp",
+      "thumb": "assets/bourbons/demo-200/wild-turkey-rare-breed-101-23.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -515,7 +531,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/clean/russels-reserve-10-year-bourbon.webp",
+      "image": "assets/bourbons/detail-200/russels-reserve-10-year-bourbon.webp",
+      "thumb": "assets/bourbons/clean/russels-reserve-10-year-bourbon.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -543,7 +560,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/clean/russells-reserve-single-barrel-barrel-select-bourbon.webp",
+      "image": "assets/bourbons/detail-200/russells-reserve-single-barrel-barrel-select-bourbon.webp",
+      "thumb": "assets/bourbons/clean/russells-reserve-single-barrel-barrel-select-bourbon.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -571,7 +589,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/olcc-8636b.png",
+      "image": "assets/bourbons/detail-200/olcc-8636b.webp",
+      "thumb": "assets/bourbons/demo-200/olcc-8636b.png",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -598,7 +617,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/olcc-8257b.png",
+      "image": "assets/bourbons/detail-200/olcc-8257b.webp",
+      "thumb": "assets/bourbons/demo-200/olcc-8257b.png",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -625,7 +645,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/clean/old-forester-bourbon.webp",
+      "image": "assets/bourbons/detail-200/popular-old-forester-86-proof.webp",
+      "thumb": "assets/bourbons/clean/old-forester-bourbon.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -651,7 +672,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/clean/old-forester-bourbon.webp",
+      "image": "assets/bourbons/detail-200/olcc-8227b.webp",
+      "thumb": "assets/bourbons/clean/old-forester-bourbon.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -680,7 +702,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/runtime-100/old-forester-1897-bottled-in-bond.png",
+      "image": "assets/bourbons/detail-200/old-forester-1897-bottled-in-bond.webp",
+      "thumb": "assets/bourbons/runtime-100/old-forester-1897-bottled-in-bond.png",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -717,7 +740,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/clean/old-forester-1910-old-fine-whiskey-bourbon-whiskey.webp",
+      "image": "assets/bourbons/detail-200/old-forester-1910-old-fine-whiskey-bourbon-whiskey.webp",
+      "thumb": "assets/bourbons/clean/old-forester-1910-old-fine-whiskey-bourbon-whiskey.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -743,7 +767,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-old-forester-1920-prohibition-style.webp",
+      "thumb": "assets/bourbons/demo-200/popular-old-forester-1920-prohibition-style.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -769,7 +794,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/clean/old-forester-statesman-bourbon.webp",
+      "image": "assets/bourbons/detail-200/old-forester-statesman-bourbon.webp",
+      "thumb": "assets/bourbons/clean/old-forester-statesman-bourbon.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -795,7 +821,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/runtime-100/old-grand-dad.png",
+      "image": "assets/bourbons/detail-200/old-grand-dad.webp",
+      "thumb": "assets/bourbons/runtime-100/old-grand-dad.png",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -823,7 +850,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/runtime-100/old-grand-dad-bonded-100-proof.png",
+      "image": "assets/bourbons/detail-200/popular-old-grand-dad-bonded.webp",
+      "thumb": "assets/bourbons/runtime-100/old-grand-dad-bonded-100-proof.png",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -849,7 +877,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-old-grand-dad-114.webp",
+      "thumb": "assets/bourbons/demo-200/popular-old-grand-dad-114.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -879,7 +908,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-basil-hayden-kentucky-straight-bourbon.webp",
+      "thumb": "assets/bourbons/demo-200/popular-basil-hayden-kentucky-straight-bourbon.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -907,7 +937,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/runtime-100/basil-hayden-toast-kentucky-straight-bourbon.png",
+      "image": "assets/bourbons/detail-200/popular-basil-hayden-toast.webp",
+      "thumb": "assets/bourbons/runtime-100/basil-hayden-toast-kentucky-straight-bourbon.png",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -940,7 +971,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/clean/knob-creek-bourbon-12-year.webp",
+      "image": "assets/bourbons/detail-200/popular-knob-creek-12-year.webp",
+      "thumb": "assets/bourbons/clean/knob-creek-bourbon-12-year.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -981,7 +1013,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/runtime-100/knob-creek-9-year-old-single-barrel-reserve.png",
+      "image": "assets/bourbons/detail-200/knob-creek-120-proof-9-year-single-barrel-reserve-bourbon.webp",
+      "thumb": "assets/bourbons/runtime-100/knob-creek-9-year-old-single-barrel-reserve.png",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1011,7 +1044,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/olcc-0133b.webp",
+      "thumb": "assets/bourbons/demo-200/olcc-0133b.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1037,7 +1071,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/olcc-3982b.webp",
+      "image": "assets/bourbons/detail-200/olcc-3982b.webp",
+      "thumb": "assets/bourbons/demo-200/olcc-3982b.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1063,7 +1098,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/olcc-6947b.webp",
+      "image": "assets/bourbons/detail-200/olcc-6947b.webp",
+      "thumb": "assets/bourbons/demo-200/olcc-6947b.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1087,7 +1123,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/jim-beam-single-barrel.webp",
+      "image": "assets/bourbons/detail-200/jim-beam-single-barrel.webp",
+      "thumb": "assets/bourbons/demo-200/jim-beam-single-barrel.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1115,7 +1152,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-booker-s-bourbon.webp",
+      "thumb": "assets/bourbons/demo-200/popular-booker-s-bourbon.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1150,7 +1188,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-baker-s-7-year-single-barrel.webp",
+      "thumb": "assets/bourbons/demo-200/popular-baker-s-7-year-single-barrel.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1177,7 +1216,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/legent-101-02.webp",
+      "thumb": "assets/bourbons/demo-200/legent-101-02.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1203,7 +1243,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-larceny-small-batch.webp",
+      "thumb": "assets/bourbons/demo-200/popular-larceny-small-batch.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1229,7 +1270,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/larceny-barrel-proof-101-22.webp",
+      "thumb": "assets/bourbons/demo-200/larceny-barrel-proof-101-22.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1263,7 +1305,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/olcc-8573b.webp",
+      "thumb": "",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1294,7 +1337,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/runtime-100/heaven-hill-7yo-bottled-in-bond-bourbon.png",
+      "image": "assets/bourbons/detail-200/heaven-hill-7yo-bottled-in-bond-bourbon.webp",
+      "thumb": "assets/bourbons/runtime-100/heaven-hill-7yo-bottled-in-bond-bourbon.png",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1321,7 +1365,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/clean/elijah-craig-barrel-proof-batch-c925.webp",
+      "image": "",
+      "thumb": "assets/bourbons/clean/elijah-craig-barrel-proof-batch-c925.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1350,7 +1395,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/elijah-craig-toasted-barrel-101-22.png",
+      "image": "assets/bourbons/detail-200/elijah-craig-toasted-barrel-101-22.webp",
+      "thumb": "assets/bourbons/demo-200/elijah-craig-toasted-barrel-101-22.png",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1376,7 +1422,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/popular-1792-small-batch.png",
+      "image": "assets/bourbons/detail-200/popular-1792-small-batch.webp",
+      "thumb": "assets/bourbons/demo-200/popular-1792-small-batch.png",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1404,7 +1451,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/runtime-100/1792-full-proof-kentucky-straight-bourbon.png",
+      "image": "assets/bourbons/detail-200/popular-1792-full-proof.webp",
+      "thumb": "assets/bourbons/runtime-100/1792-full-proof-kentucky-straight-bourbon.png",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1432,7 +1480,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/runtime-100/1792-bottled-in-bond-kentucky-straight-bourbon.png",
+      "image": "assets/bourbons/detail-200/1792-bottled-in-bond-kentucky-straight-bourbon.webp",
+      "thumb": "assets/bourbons/runtime-100/1792-bottled-in-bond-kentucky-straight-bourbon.png",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1460,7 +1509,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/runtime-100/1792-single-barrel-kentucky-straight-bourbon.png",
+      "image": "assets/bourbons/detail-200/popular-1792-single-barrel.webp",
+      "thumb": "assets/bourbons/runtime-100/1792-single-barrel-kentucky-straight-bourbon.png",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1487,7 +1537,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-benchmark-old-no-8.webp",
+      "thumb": "assets/bourbons/demo-200/popular-benchmark-old-no-8.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1511,7 +1562,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-benchmark-full-proof.webp",
+      "thumb": "assets/bourbons/demo-200/popular-benchmark-full-proof.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1538,6 +1590,7 @@
       "taste": "",
       "finish": "",
       "image": "",
+      "thumb": "",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1561,7 +1614,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-benchmark-single-barrel.webp",
+      "thumb": "assets/bourbons/demo-200/popular-benchmark-single-barrel.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1591,7 +1645,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/runtime-100/weller-special-reserve.png",
+      "image": "assets/bourbons/detail-200/weller-special-reserve.webp",
+      "thumb": "assets/bourbons/runtime-100/weller-special-reserve.png",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1620,7 +1675,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/weller-antique-107-101-00.webp",
+      "thumb": "assets/bourbons/demo-200/weller-antique-107-101-00.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1652,7 +1708,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-weller-12-year.webp",
+      "thumb": "assets/bourbons/demo-200/popular-weller-12-year.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1683,7 +1740,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/w-l-weller-full-proof-bourbon-single-barrel-select-by-wooden-cork.webp",
+      "thumb": "assets/bourbons/demo-200/w-l-weller-full-proof-bourbon-single-barrel-select-by-wooden-cork.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1713,7 +1771,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/clean/eagle-rare-10-year-kentucky-straight-bourbon-whiskey-700ml.webp",
+      "image": "assets/bourbons/detail-200/eagle-rare-10-year-kentucky-straight-bourbon-whiskey-700ml.webp",
+      "thumb": "assets/bourbons/clean/eagle-rare-10-year-kentucky-straight-bourbon-whiskey-700ml.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1749,7 +1808,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/clean/blantons-bourbon.webp",
+      "image": "",
+      "thumb": "assets/bourbons/clean/blantons-bourbon.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1775,7 +1835,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-e-h-taylor-small-batch.webp",
+      "thumb": "assets/bourbons/demo-200/popular-e-h-taylor-small-batch.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1802,6 +1863,7 @@
       "taste": "",
       "finish": "",
       "image": "",
+      "thumb": "assets/bourbons/demo-200/popular-e-h-taylor-single-barrel.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1831,7 +1893,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/clean/stagg-kentucky-straight-bourbon-batch-18.webp",
+      "image": "",
+      "thumb": "assets/bourbons/clean/stagg-kentucky-straight-bourbon-batch-18.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1863,7 +1926,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/clean/michters-bourbon.webp",
+      "image": "",
+      "thumb": "assets/bourbons/clean/michters-bourbon.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1894,7 +1958,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/clean/michters-us-1-toasted-barrel-finish-bourbon-whiskey-2021-release.webp",
+      "image": "assets/bourbons/detail-200/michters-us-1-toasted-barrel-finish-bourbon-whiskey-2021-release.webp",
+      "thumb": "assets/bourbons/clean/michters-us-1-toasted-barrel-finish-bourbon-whiskey-2021-release.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1923,7 +1988,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/clean/jeffersons-very-small-batch-bourbon.webp",
+      "image": "",
+      "thumb": "assets/bourbons/clean/jeffersons-very-small-batch-bourbon.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1952,7 +2018,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/clean/jeffersons-reserve-very-old-bourbon.webp",
+      "image": "assets/bourbons/detail-200/jeffersons-reserve-very-old-bourbon.webp",
+      "thumb": "assets/bourbons/clean/jeffersons-reserve-very-old-bourbon.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -1983,7 +2050,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/clean/jeffersons-ocean-aged-at-sea-bourbon-whiskey.webp",
+      "image": "assets/bourbons/detail-200/jeffersons-ocean-aged-at-sea-bourbon-whiskey.webp",
+      "thumb": "assets/bourbons/clean/jeffersons-ocean-aged-at-sea-bourbon-whiskey.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2012,7 +2080,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-angel-s-envy-port-finish.webp",
+      "thumb": "assets/bourbons/demo-200/popular-angel-s-envy-port-finish.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2038,7 +2107,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/olcc-12554b.webp",
+      "thumb": "assets/bourbons/demo-200/olcc-12554b.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2066,7 +2136,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/rabbit-hole-cavehill-kentucky-straight-bourbon.jpg",
+      "image": "assets/bourbons/detail-200/popular-rabbit-hole-cavehill.webp",
+      "thumb": "assets/bourbons/rabbit-hole-cavehill-kentucky-straight-bourbon.jpg",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2093,6 +2164,7 @@
       "taste": "",
       "finish": "",
       "image": "",
+      "thumb": "assets/bourbons/demo-200/olcc-9157b.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2122,7 +2194,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/clean/new-riff-bottled-in-bond-kentucky-straight-bourbon-whiskey.webp",
+      "image": "assets/bourbons/detail-200/new-riff-bottled-in-bond-kentucky-straight-bourbon-whiskey.webp",
+      "thumb": "assets/bourbons/clean/new-riff-bottled-in-bond-kentucky-straight-bourbon-whiskey.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2148,7 +2221,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-new-riff-single-barrel-bourbon.webp",
+      "thumb": "assets/bourbons/demo-200/popular-new-riff-single-barrel-bourbon.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2175,7 +2249,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-wilderness-trail-high-rye-bourbon.webp",
+      "thumb": "assets/bourbons/demo-200/popular-wilderness-trail-high-rye-bourbon.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2201,7 +2276,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-wilderness-trail-wheated-bourbon.webp",
+      "thumb": "assets/bourbons/demo-200/popular-wilderness-trail-wheated-bourbon.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2229,7 +2305,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/green-river-101-22.webp",
+      "thumb": "assets/bourbons/demo-200/green-river-101-22.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2256,7 +2333,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/olcc-13310b.webp",
+      "thumb": "assets/bourbons/demo-200/olcc-13310b.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2285,7 +2363,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/green-river-full-proof-101-22.webp",
+      "thumb": "assets/bourbons/demo-200/green-river-full-proof-101-22.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2312,7 +2391,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/popular-bardstown-bourbon-company-origin-series-bourbon.png",
+      "image": "assets/bourbons/detail-200/popular-bardstown-bourbon-company-origin-series-bourbon.webp",
+      "thumb": "assets/bourbons/demo-200/popular-bardstown-bourbon-company-origin-series-bourbon.png",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2338,7 +2418,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/popular-bardstown-bourbon-company-origin-high-wheat.png",
+      "image": "assets/bourbons/detail-200/popular-bardstown-bourbon-company-origin-high-wheat.webp",
+      "thumb": "assets/bourbons/demo-200/popular-bardstown-bourbon-company-origin-high-wheat.png",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2365,7 +2446,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/olcc-13003b.png",
+      "image": "assets/bourbons/detail-200/olcc-13003b.webp",
+      "thumb": "assets/bourbons/demo-200/olcc-13003b.png",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2398,7 +2480,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/runtime-100/penelope-four-grain-straight-bourbon-whiskey.png",
+      "image": "assets/bourbons/detail-200/penelope-four-grain-straight-bourbon-whiskey.webp",
+      "thumb": "assets/bourbons/runtime-100/penelope-four-grain-straight-bourbon-whiskey.png",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2426,7 +2509,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/runtime-100/penelope-architect-straight-bourbon.png",
+      "image": "assets/bourbons/detail-200/popular-penelope-architect-bourbon.webp",
+      "thumb": "assets/bourbons/runtime-100/penelope-architect-straight-bourbon.png",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2455,7 +2539,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/penelope-barrel-strength-121-22.webp",
+      "thumb": "assets/bourbons/demo-200/penelope-barrel-strength-121-22.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2481,7 +2566,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-penelope-toasted-bourbon.webp",
+      "thumb": "assets/bourbons/demo-200/popular-penelope-toasted-bourbon.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2513,7 +2599,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/redwood-empire-pipe-dream-141-01.png",
+      "image": "assets/bourbons/detail-200/redwood-empire-pipe-dream-141-01.webp",
+      "thumb": "assets/bourbons/demo-200/redwood-empire-pipe-dream-141-01.png",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2539,7 +2626,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-redwood-empire-pipe-dream-cask-strength.webp",
+      "thumb": "assets/bourbons/demo-200/popular-redwood-empire-pipe-dream-cask-strength.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2566,6 +2654,7 @@
       "taste": "",
       "finish": "",
       "image": "",
+      "thumb": "assets/bourbons/demo-200/popular-smoke-wagon-small-batch-bourbon.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2591,7 +2680,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-smoke-wagon-uncut-unfiltered-bourbon.webp",
+      "thumb": "assets/bourbons/demo-200/popular-smoke-wagon-uncut-unfiltered-bourbon.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2619,7 +2709,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/high-west-131-45.webp",
+      "thumb": "assets/bourbons/demo-200/high-west-131-45.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2646,7 +2737,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-horse-soldier-premium-bourbon.webp",
+      "thumb": "assets/bourbons/detail-200/popular-horse-soldier-premium-bourbon.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2673,7 +2765,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/olcc-12874b.webp",
+      "thumb": "assets/bourbons/detail-200/olcc-12874b.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2699,7 +2792,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-early-times-bottled-in-bond.webp",
+      "thumb": "",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2728,7 +2822,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/very-old-barton-kentucky-straight-bourbon.jpg",
+      "image": "assets/bourbons/detail-200/popular-very-old-barton-100-proof.webp",
+      "thumb": "assets/bourbons/very-old-barton-kentucky-straight-bourbon.jpg",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2756,6 +2851,7 @@
       "taste": "",
       "finish": "",
       "image": "",
+      "thumb": "",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2783,6 +2879,7 @@
       "taste": "",
       "finish": "",
       "image": "",
+      "thumb": "",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2809,6 +2906,7 @@
       "taste": "",
       "finish": "",
       "image": "",
+      "thumb": "",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2834,7 +2932,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/popular-coopers-craft-barrel-reserve-100-proof.webp",
+      "image": "",
+      "thumb": "assets/bourbons/demo-200/popular-coopers-craft-barrel-reserve-100-proof.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2861,7 +2960,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-bowman-brothers-small-batch-bourbon.webp",
+      "thumb": "",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2889,7 +2989,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/olcc-0356b.webp",
+      "image": "assets/bourbons/detail-200/olcc-0356b.webp",
+      "thumb": "assets/bourbons/demo-200/olcc-0356b.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2923,7 +3024,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/olcc-0357b.webp",
+      "image": "assets/bourbons/detail-200/olcc-0357b.webp",
+      "thumb": "assets/bourbons/demo-200/olcc-0357b.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2951,7 +3053,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/johnnie-walker-double-black-151-5k.webp",
+      "image": "",
+      "thumb": "assets/bourbons/demo-200/johnnie-walker-double-black-151-5k.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -2980,7 +3083,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/popular-johnnie-walker-green-label-15-year.webp",
+      "image": "assets/bourbons/detail-200/popular-johnnie-walker-green-label-15-year.webp",
+      "thumb": "assets/bourbons/demo-200/popular-johnnie-walker-green-label-15-year.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3006,7 +3110,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-johnnie-walker-gold-label-reserve.webp",
+      "thumb": "assets/bourbons/demo-200/popular-johnnie-walker-gold-label-reserve.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3035,7 +3140,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/olcc-2209b.webp",
+      "image": "assets/bourbons/detail-200/olcc-2209b.webp",
+      "thumb": "assets/bourbons/demo-200/olcc-2209b.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3064,7 +3170,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/popular-chivas-regal-12-year.jpg",
+      "image": "assets/bourbons/detail-200/popular-chivas-regal-12-year.webp",
+      "thumb": "assets/bourbons/demo-200/popular-chivas-regal-12-year.jpg",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3093,7 +3200,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-chivas-regal-18-year.webp",
+      "thumb": "assets/bourbons/demo-200/popular-chivas-regal-18-year.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3119,7 +3227,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-ballantine-s-finest.webp",
+      "thumb": "assets/bourbons/demo-200/popular-ballantine-s-finest.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3147,7 +3256,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-grant-s-triple-wood.webp",
+      "thumb": "assets/bourbons/demo-200/popular-grant-s-triple-wood.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3173,7 +3283,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/olcc-0352b.png",
+      "image": "assets/bourbons/detail-200/olcc-0352b.webp",
+      "thumb": "assets/bourbons/demo-200/olcc-0352b.png",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3203,7 +3314,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-dewar-s-12-year.webp",
+      "thumb": "assets/bourbons/demo-200/popular-dewar-s-12-year.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3231,7 +3343,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-j-b-rare.webp",
+      "thumb": "assets/bourbons/demo-200/popular-j-b-rare.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3257,7 +3370,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/olcc-0368b.jpg",
+      "image": "assets/bourbons/detail-200/olcc-0368b.webp",
+      "thumb": "assets/bourbons/demo-200/olcc-0368b.jpg",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3284,7 +3398,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/olcc-0346b.jpg",
+      "image": "",
+      "thumb": "assets/bourbons/demo-200/olcc-0346b.jpg",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3308,7 +3423,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/popular-monkey-shoulder.jpg",
+      "image": "assets/bourbons/detail-200/popular-monkey-shoulder.webp",
+      "thumb": "assets/bourbons/demo-200/popular-monkey-shoulder.jpg",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3337,7 +3453,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-glenfiddich-12-year.webp",
+      "thumb": "assets/bourbons/demo-200/popular-glenfiddich-12-year.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3367,7 +3484,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/olcc-0392b.webp",
+      "image": "",
+      "thumb": "assets/bourbons/demo-200/olcc-0392b.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3397,6 +3515,7 @@
       "taste": "",
       "finish": "",
       "image": "",
+      "thumb": "assets/bourbons/demo-200/popular-glenfiddich-18-year.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3427,7 +3546,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/olcc-0376b.jpg",
+      "image": "assets/bourbons/detail-200/olcc-0376b.webp",
+      "thumb": "assets/bourbons/demo-200/olcc-0376b.jpg",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3456,7 +3576,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/olcc-3834b.webp",
+      "thumb": "assets/bourbons/demo-200/olcc-3834b.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3486,7 +3607,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-the-glenlivet-14-year-cognac-cask-selection.webp",
+      "thumb": "",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3516,7 +3638,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-the-macallan-12-year-double-cask.webp",
+      "thumb": "assets/bourbons/demo-200/popular-the-macallan-12-year-double-cask.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3546,7 +3669,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-the-macallan-12-year-sherry-oak.webp",
+      "thumb": "assets/bourbons/demo-200/popular-the-macallan-12-year-sherry-oak.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3576,7 +3700,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-the-macallan-15-year-double-cask.webp",
+      "thumb": "assets/bourbons/demo-200/popular-the-macallan-15-year-double-cask.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3607,7 +3732,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/popular-the-balvenie-12-year-doublewood.jpg",
+      "image": "",
+      "thumb": "assets/bourbons/demo-200/popular-the-balvenie-12-year-doublewood.jpg",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3637,7 +3763,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-the-balvenie-14-year-caribbean-cask.webp",
+      "thumb": "assets/bourbons/demo-200/popular-the-balvenie-14-year-caribbean-cask.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3667,7 +3794,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/popular-glenmorangie-the-original-12-year.webp",
+      "image": "assets/bourbons/detail-200/popular-glenmorangie-the-original-12-year.webp",
+      "thumb": "assets/bourbons/demo-200/popular-glenmorangie-the-original-12-year.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3697,6 +3825,7 @@
       "taste": "",
       "finish": "",
       "image": "",
+      "thumb": "assets/bourbons/demo-200/popular-glenmorangie-lasanta-12-year.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3725,7 +3854,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/popular-glenmorangie-quinta-ruban-14-year.webp",
+      "image": "assets/bourbons/detail-200/popular-glenmorangie-quinta-ruban-14-year.webp",
+      "thumb": "assets/bourbons/demo-200/popular-glenmorangie-quinta-ruban-14-year.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3755,6 +3885,7 @@
       "taste": "",
       "finish": "",
       "image": "",
+      "thumb": "",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3782,6 +3913,7 @@
       "taste": "",
       "finish": "",
       "image": "",
+      "thumb": "assets/bourbons/demo-200/popular-aberlour-a-bunadh.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3810,7 +3942,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/popular-ardbeg-10-year.webp",
+      "image": "assets/bourbons/detail-200/popular-ardbeg-10-year.webp",
+      "thumb": "assets/bourbons/demo-200/popular-ardbeg-10-year.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3834,7 +3967,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/popular-ardbeg-uigeadail.webp",
+      "image": "assets/bourbons/detail-200/popular-ardbeg-uigeadail.webp",
+      "thumb": "assets/bourbons/demo-200/popular-ardbeg-uigeadail.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3863,7 +3997,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/popular-laphroaig-10-year.webp",
+      "image": "",
+      "thumb": "assets/bourbons/demo-200/popular-laphroaig-10-year.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3887,7 +4022,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/popular-laphroaig-quarter-cask.webp",
+      "image": "assets/bourbons/detail-200/popular-laphroaig-quarter-cask.webp",
+      "thumb": "assets/bourbons/demo-200/popular-laphroaig-quarter-cask.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3916,7 +4052,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/popular-lagavulin-16-year.webp",
+      "image": "assets/bourbons/detail-200/popular-lagavulin-16-year.webp",
+      "thumb": "assets/bourbons/demo-200/popular-lagavulin-16-year.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3946,6 +4083,7 @@
       "taste": "",
       "finish": "",
       "image": "",
+      "thumb": "assets/bourbons/demo-200/popular-talisker-10-year.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -3974,7 +4112,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-oban-14-year.webp",
+      "thumb": "assets/bourbons/demo-200/popular-oban-14-year.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4004,7 +4143,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/olcc-2211b.webp",
+      "thumb": "assets/bourbons/detail-200/olcc-2211b.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4036,7 +4176,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/olcc-7243b.webp",
+      "thumb": "assets/bourbons/demo-200/olcc-7243b.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4066,6 +4207,7 @@
       "taste": "",
       "finish": "",
       "image": "",
+      "thumb": "assets/bourbons/demo-200/popular-caol-ila-12-year.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4095,6 +4237,7 @@
       "taste": "",
       "finish": "",
       "image": "",
+      "thumb": "assets/bourbons/demo-200/popular-bowmore-12-year.jpg",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4125,6 +4268,7 @@
       "taste": "",
       "finish": "",
       "image": "",
+      "thumb": "assets/bourbons/demo-200/popular-the-dalmore-12-year.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4153,7 +4297,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-dalwhinnie-15-year.webp",
+      "thumb": "assets/bourbons/demo-200/popular-dalwhinnie-15-year.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4183,7 +4328,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-the-glendronach-12-year-original.webp",
+      "thumb": "assets/bourbons/demo-200/popular-the-glendronach-12-year-original.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4214,6 +4360,7 @@
       "taste": "",
       "finish": "",
       "image": "",
+      "thumb": "assets/bourbons/demo-200/popular-the-glenallachie-12-year.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4239,7 +4386,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-bruichladdich-the-classic-laddie.webp",
+      "thumb": "assets/bourbons/demo-200/popular-bruichladdich-the-classic-laddie.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4263,7 +4411,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/popular-auchentoshan-three-wood.webp",
+      "image": "assets/bourbons/detail-200/popular-auchentoshan-three-wood.webp",
+      "thumb": "assets/bourbons/demo-200/popular-auchentoshan-three-wood.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4293,6 +4442,7 @@
       "taste": "",
       "finish": "",
       "image": "",
+      "thumb": "assets/bourbons/demo-200/popular-jura-10-year.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4321,7 +4471,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-jameson-irish-whiskey.webp",
+      "thumb": "assets/bourbons/demo-200/popular-jameson-irish-whiskey.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4346,6 +4497,7 @@
       "taste": "",
       "finish": "",
       "image": "",
+      "thumb": "assets/bourbons/demo-200/popular-jameson-black-barrel.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4371,7 +4523,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-jameson-caskmates-stout-edition.webp",
+      "thumb": "assets/bourbons/demo-200/popular-jameson-caskmates-stout-edition.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4398,7 +4551,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/popular-tullamore-d-e-w-original.png",
+      "image": "assets/bourbons/detail-200/popular-tullamore-d-e-w-original.webp",
+      "thumb": "assets/bourbons/demo-200/popular-tullamore-d-e-w-original.png",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4427,7 +4581,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/popular-tullamore-d-e-w-12-year-special-reserve.png",
+      "image": "assets/bourbons/detail-200/popular-tullamore-d-e-w-12-year-special-reserve.webp",
+      "thumb": "assets/bourbons/demo-200/popular-tullamore-d-e-w-12-year-special-reserve.png",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4455,7 +4610,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/bushmills-original-irish-whiskey.webp",
+      "image": "assets/bourbons/detail-200/bushmills-original-irish-whiskey.webp",
+      "thumb": "assets/bourbons/demo-200/bushmills-original-irish-whiskey.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4481,7 +4637,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/bushmills-black-bush-irish-whiskey.webp",
+      "image": "assets/bourbons/detail-200/bushmills-black-bush-irish-whiskey.webp",
+      "thumb": "assets/bourbons/demo-200/bushmills-black-bush-irish-whiskey.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4514,7 +4671,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/bushmills-10-year-old-single-malt.webp",
+      "image": "assets/bourbons/detail-200/bushmills-10-year-old-single-malt.webp",
+      "thumb": "assets/bourbons/demo-200/bushmills-10-year-old-single-malt.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4546,7 +4704,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/clean/bushmills-12-year-old-single-malt.webp",
+      "image": "assets/bourbons/detail-200/bushmills-12-year-old-single-malt.webp",
+      "thumb": "assets/bourbons/clean/bushmills-12-year-old-single-malt.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4579,7 +4738,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/bushmills-16-year-old-single-malt.webp",
+      "image": "assets/bourbons/detail-200/bushmills-16-year-old-single-malt.webp",
+      "thumb": "assets/bourbons/demo-200/bushmills-16-year-old-single-malt.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4609,6 +4769,7 @@
       "taste": "",
       "finish": "",
       "image": "",
+      "thumb": "assets/bourbons/demo-200/popular-redbreast-12-year.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4638,6 +4799,7 @@
       "taste": "",
       "finish": "",
       "image": "",
+      "thumb": "assets/bourbons/demo-200/popular-redbreast-15-year.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4667,6 +4829,7 @@
       "taste": "",
       "finish": "",
       "image": "",
+      "thumb": "",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4693,7 +4856,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-green-spot.webp",
+      "thumb": "assets/bourbons/demo-200/popular-green-spot.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4723,6 +4887,7 @@
       "taste": "",
       "finish": "",
       "image": "",
+      "thumb": "assets/bourbons/demo-200/popular-yellow-spot-12-year.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4749,7 +4914,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-powers-gold-label.webp",
+      "thumb": "assets/bourbons/demo-200/popular-powers-gold-label.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4773,7 +4939,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-powers-three-swallow.webp",
+      "thumb": "assets/bourbons/demo-200/popular-powers-three-swallow.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4800,7 +4967,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/popular-teeling-small-batch.jpg",
+      "image": "assets/bourbons/detail-200/popular-teeling-small-batch.webp",
+      "thumb": "assets/bourbons/demo-200/popular-teeling-small-batch.jpg",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4824,7 +4992,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/popular-teeling-single-malt.jpg",
+      "image": "assets/bourbons/detail-200/popular-teeling-single-malt.webp",
+      "thumb": "assets/bourbons/demo-200/popular-teeling-single-malt.jpg",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4851,7 +5020,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-proper-no-twelve.webp",
+      "thumb": "assets/bourbons/demo-200/popular-proper-no-twelve.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4881,7 +5051,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/olcc-3824b.webp",
+      "image": "assets/bourbons/detail-200/olcc-3824b.webp",
+      "thumb": "assets/bourbons/demo-200/olcc-3824b.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4910,7 +5081,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-suntory-kakubin.webp",
+      "thumb": "assets/bourbons/demo-200/popular-suntory-kakubin.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4936,7 +5108,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/popular-hibiki-japanese-harmony.webp",
+      "image": "assets/bourbons/detail-200/popular-hibiki-japanese-harmony.webp",
+      "thumb": "assets/bourbons/demo-200/popular-hibiki-japanese-harmony.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4963,6 +5136,7 @@
       "taste": "",
       "finish": "",
       "image": "",
+      "thumb": "assets/bourbons/demo-200/popular-yamazaki-distiller-s-reserve.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -4991,7 +5165,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/popular-yamazaki-12-year.webp",
+      "image": "assets/bourbons/detail-200/popular-yamazaki-12-year.webp",
+      "thumb": "assets/bourbons/demo-200/popular-yamazaki-12-year.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -5017,7 +5192,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-hakushu-distiller-s-reserve.webp",
+      "thumb": "assets/bourbons/demo-200/popular-hakushu-distiller-s-reserve.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -5044,7 +5220,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/popular-nikka-from-the-barrel.jpg",
+      "image": "",
+      "thumb": "assets/bourbons/demo-200/popular-nikka-from-the-barrel.jpg",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -5070,7 +5247,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/olcc-2619b.webp",
+      "thumb": "assets/bourbons/demo-200/olcc-2619b.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -5094,7 +5272,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/olcc-4087b.webp",
+      "thumb": "assets/bourbons/demo-200/olcc-4087b.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -5119,6 +5298,7 @@
       "taste": "",
       "finish": "",
       "image": "",
+      "thumb": "assets/bourbons/demo-200/popular-nikka-days.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -5144,7 +5324,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-nikka-yoichi-single-malt.webp",
+      "thumb": "assets/bourbons/demo-200/popular-nikka-yoichi-single-malt.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -5171,6 +5352,7 @@
       "taste": "",
       "finish": "",
       "image": "",
+      "thumb": "assets/bourbons/demo-200/popular-nikka-miyagikyo-single-malt.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -5196,7 +5378,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/popular-mars-iwai-tradition.webp",
+      "image": "assets/bourbons/detail-200/popular-mars-iwai-tradition.webp",
+      "thumb": "assets/bourbons/demo-200/popular-mars-iwai-tradition.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -5222,7 +5405,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-akashi-white-oak.webp",
+      "thumb": "assets/bourbons/demo-200/popular-akashi-white-oak.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -5249,7 +5433,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/popular-hatozaki-finest.webp",
+      "image": "assets/bourbons/detail-200/popular-hatozaki-finest.webp",
+      "thumb": "assets/bourbons/demo-200/popular-hatozaki-finest.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -5280,6 +5465,7 @@
       "taste": "",
       "finish": "",
       "image": "",
+      "thumb": "assets/bourbons/demo-200/olcc-0146b.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -5305,7 +5491,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/olcc-0148b.webp",
+      "thumb": "assets/bourbons/demo-200/olcc-0148b.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -5334,7 +5521,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/jack-daniel-s-bonded-119-43.webp",
+      "image": "assets/bourbons/detail-200/jack-daniel-s-bonded-119-43.webp",
+      "thumb": "assets/bourbons/demo-200/jack-daniel-s-bonded-119-43.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -5364,7 +5552,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/jack-daniel-s-single-barrel-select-140-43.webp",
+      "image": "assets/bourbons/detail-200/jack-daniel-s-single-barrel-select-140-43.webp",
+      "thumb": "assets/bourbons/demo-200/jack-daniel-s-single-barrel-select-140-43.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -5391,7 +5580,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-jack-daniel-s-tennessee-rye.webp",
+      "thumb": "assets/bourbons/demo-200/popular-jack-daniel-s-tennessee-rye.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -5417,7 +5607,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-george-dickel-no-12.webp",
+      "thumb": "assets/bourbons/demo-200/popular-george-dickel-no-12.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -5445,7 +5636,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/uncle-nearest-1884-small-batch-whiskey.jpg",
+      "image": "assets/bourbons/detail-200/uncle-nearest-1884-small-batch-whiskey.webp",
+      "thumb": "assets/bourbons/uncle-nearest-1884-small-batch-whiskey.jpg",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -5471,7 +5663,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-bulleit-rye.webp",
+      "thumb": "assets/bourbons/demo-200/popular-bulleit-rye.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -5499,6 +5692,7 @@
       "taste": "",
       "finish": "",
       "image": "",
+      "thumb": "assets/bourbons/demo-200/popular-rittenhouse-rye-bottled-in-bond.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -5529,7 +5723,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/olcc-7658b.webp",
+      "thumb": "assets/bourbons/demo-200/olcc-7658b.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -5558,7 +5753,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/high-west-double-rye-122-45.webp",
+      "thumb": "assets/bourbons/demo-200/high-west-double-rye-122-45.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -5587,7 +5783,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-whistlepig-piggyback-6-year-rye.webp",
+      "thumb": "assets/bourbons/demo-200/popular-whistlepig-piggyback-6-year-rye.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -5613,7 +5810,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-crown-royal-deluxe.webp",
+      "thumb": "assets/bourbons/demo-200/popular-crown-royal-deluxe.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -5639,7 +5837,8 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-crown-royal-northern-harvest-rye.webp",
+      "thumb": "assets/bourbons/demo-200/popular-crown-royal-northern-harvest-rye.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     },
@@ -5665,9 +5864,11 @@
       "nose": "",
       "taste": "",
       "finish": "",
-      "image": "assets/bourbons/demo-200/popular-canadian-club-1858.webp",
+      "image": "assets/bourbons/detail-200/popular-canadian-club-1858.webp",
+      "thumb": "assets/bourbons/demo-200/popular-canadian-club-1858.webp",
       "source": "demo_200",
       "catalog_status": "demo"
     }
-  ]
+  ],
+  "detail_image_standard": "packshot-transparent-960x1280-v1"
 }
