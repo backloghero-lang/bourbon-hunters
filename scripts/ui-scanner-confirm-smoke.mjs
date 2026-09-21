@@ -104,6 +104,8 @@ responseVariant="catalog";
 const catalog=await runScan("baza");
 if(process.env.BH_SMOKE_SCREENSHOT) await page.screenshot({path:process.env.BH_SMOKE_SCREENSHOT+"-direct-catalog.png",fullPage:true});
 await page.locator('[data-add-scan-collection="'+bottleId+'"]').click();
+await page.locator('[data-scan-image-choice="photo"]').click();
+await page.waitForTimeout(900);
 await page.evaluate(()=>{ showView("home"); showView("scan"); });
 const completedReset=await page.evaluate(()=>(
   {
