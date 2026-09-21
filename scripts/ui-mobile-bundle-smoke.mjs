@@ -4,6 +4,9 @@ import path from "node:path";
 
 const target=process.env.BH_MOBILE_SMOKE_URL||"http://127.0.0.1:8765/mobile-dist/index.html";
 const root=path.resolve(import.meta.dirname,"..");
+const appSource=fs.readFileSync(path.join(root,"index.html"),"utf8");
+const appVersion=appSource.match(/const APP_VERSION = "([^"]+)"/)?.[1];
+if(!appVersion) throw new Error("Application version missing from index.html");
 const catalog=JSON.parse(fs.readFileSync(path.join(root,"db","catalog","demo-200.json"),"utf8"));
 for(const bottle of catalog.bottles||[]){
   if(!bottle.image) throw new Error(`${bottle.name}: detail image path is missing`);
@@ -61,7 +64,7 @@ const detailAudit=await page.evaluate(async()=>{
 });
 await browser.close();
 if(failures.length) throw new Error("Mobile bundle has missing resources:\n"+failures.join("\n"));
-if(state.version!=="142" || state.bottles!==200 || !state.nativeBridge || state.nativeMode || !state.fourRosesDetail.includes("/detail-200/")) throw new Error("Mobile bundle runtime mismatch: "+JSON.stringify(state));
+if(state.version!==appVersion || state.bottles!==200 || !state.nativeBridge || state.nativeMode || !state.fourRosesDetail.includes("/detail-200/")) throw new Error("Mobile bundle runtime mismatch: "+JSON.stringify(state));
 if(state.headerWidth<300 || state.renderedImages<1) throw new Error("Mobile bundle did not render: "+JSON.stringify(state));
 if(detailAudit.checked!==200 || detailAudit.failures.length) throw new Error("Mobile detail image audit failed: "+JSON.stringify(detailAudit));
 console.log(JSON.stringify({ok:true,state,detailAudit},null,2));
