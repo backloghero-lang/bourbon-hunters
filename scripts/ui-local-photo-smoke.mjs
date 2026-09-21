@@ -69,10 +69,10 @@ const saveDiagnostics=await page.evaluate((id)=>({
   hasRenderedImage:document.querySelector("#detailBody .dphoto img[data-bottle-image]")?.src.startsWith("blob:")||false,
   toast:document.getElementById("toast")?.textContent||"",
   stageHeight:Math.round(document.querySelector("#detailBody .dphoto")?.getBoundingClientRect().height||0),
-  imageMaxHeight:getComputedStyle(document.querySelector("#detailBody .dphoto img[data-bottle-image]")).maxHeight
+  imageHeight:Math.round(document.querySelector("#detailBody .dphoto img[data-bottle-image]")?.getBoundingClientRect().height||0)
 }),bottleId);
 if(!saveDiagnostics.hasRenderedImage) throw new Error(`Local image was not rendered: ${JSON.stringify(saveDiagnostics)}; ${errors.join("; ")}`);
-if(saveDiagnostics.stageHeight<500||saveDiagnostics.imageMaxHeight!=="98%") throw new Error(`Detail bottle is still too small: ${JSON.stringify(saveDiagnostics)}`);
+if(saveDiagnostics.stageHeight<500||saveDiagnostics.imageHeight/saveDiagnostics.stageHeight<.9) throw new Error(`Detail bottle is still too small: ${JSON.stringify(saveDiagnostics)}`);
 if(process.env.BH_SMOKE_SCREENSHOT) await page.screenshot({path:process.env.BH_SMOKE_SCREENSHOT,fullPage:true});
 const savedSrc=await page.locator("#detailBody .dphoto img[data-bottle-image]").getAttribute("src");
 if(!savedSrc?.startsWith("blob:")) throw new Error("Saved local image does not use an object URL");
