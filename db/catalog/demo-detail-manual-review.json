@@ -1,5 +1,8 @@
 {
   "version": "demo-detail-manual-review-v1",
+  "accepted": {
+    "popular-aberlour-12-year-double-cask": "Exact bottle-only packshot confirmed after replacement."
+  },
   "current_rejected": {
     "buffalo-trace-bourbon-1": "Wrong product: Buffalo Trace Bourbon Cream instead of Buffalo Trace Bourbon.",
     "popular-stagg-bourbon": "Distorted and incomplete bottle silhouette.",
@@ -10,7 +13,6 @@
     "olcc-0392b": "Bottle is shown with packaging.",
     "popular-glenfiddich-18-year": "Bottle is shown with packaging.",
     "popular-glenmorangie-lasanta-12-year": "Bottle is shown with packaging.",
-    "popular-aberlour-12-year-double-cask": "Bottle is shown with packaging.",
     "popular-aberlour-a-bunadh": "Bottle is shown with packaging.",
     "popular-talisker-10-year": "Gift set instead of a bottle-only packshot.",
     "popular-caol-ila-12-year": "Bottle is shown with packaging.",
@@ -20,7 +22,12 @@
     "popular-redbreast-12-year-cask-strength": "Bottle is shown with packaging.",
     "popular-yamazaki-distiller-s-reserve": "Bottle is shown with packaging.",
     "olcc-0146b": "Wrong product: Jack Daniel's and Coca-Cola premix can.",
-    "popular-rittenhouse-rye-bottled-in-bond": "Background-removal artifact remains below the bottle."
+    "popular-rittenhouse-rye-bottled-in-bond": "Background-removal artifact remains below the bottle.",
+    "popular-elijah-craig-barrel-proof": "Wrong product: source shows Elijah Craig Toasted Barrel.",
+    "popular-e-h-taylor-single-barrel": "Bottle is shown with its tube and a glass.",
+    "johnnie-walker-double-black-151-5k": "Bottle packshot is cropped and incomplete.",
+    "popular-bowmore-12-year": "Packaging only, without the bottle.",
+    "popular-yellow-spot-12-year": "Bottle is shown with packaging."
   },
   "rejected": {
     "olcc-8257b": "Image shows the 2024 American Hero 1.75L edition, not the regular Evan Williams 1783 Small Batch.",

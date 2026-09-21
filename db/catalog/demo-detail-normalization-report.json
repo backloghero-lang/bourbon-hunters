@@ -1,15 +1,12 @@
 {
   "version": "packshot-transparent-960x1280-v1",
-  "generated_at": "2026-09-13T07:57:25.906Z",
+  "generated_at": "2026-09-21T14:28:43.096Z",
   "applied": true,
   "total": 200,
-  "ready": 160,
-  "missing": 22,
-  "rejected": 18,
-  "rejection_reasons": {
-    "manual-current-rejection": 18,
-    "source-missing": 22
-  },
+  "ready": 200,
+  "missing": 0,
+  "rejected": 0,
+  "rejection_reasons": {},
   "items": [
     {
       "id": "jim-beam-101-22",
@@ -21,9 +18,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 329,
-        "height": 1123
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -37,9 +38,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 457,
-        "height": 1133
+        "width": 453,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -53,9 +58,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 294,
-        "height": 1123
+        "width": 295,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -69,9 +78,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 454,
-        "height": 1180
+        "width": 432,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -85,9 +98,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 442,
-        "height": 1125
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -101,19 +118,35 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 361,
-        "height": 1126
+        "height": 1124
       },
       "transparent_source": true
     },
     {
       "id": "buffalo-trace-bourbon-1",
       "name": "Buffalo Trace",
-      "source": "assets/bourbons/detail-200/buffalo-trace-bourbon-1.webp",
-      "status": "rejected",
-      "reason": "manual-current-rejection",
-      "detail": "Wrong product: Buffalo Trace Bourbon Cream instead of Buffalo Trace Bourbon."
+      "source": "assets/bourbons/clean/buffalo-trace-bourbon-1.webp",
+      "output": "assets/bourbons/detail-200/buffalo-trace-bourbon-1.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 760,
+        "height": 1000
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 335,
+        "height": 976
+      },
+      "transparent_source": true
     },
     {
       "id": "four-roses",
@@ -122,6 +155,10 @@
       "output": "assets/bourbons/detail-200/four-roses.webp",
       "status": "ready",
       "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "output_dimensions": {
         "width": 960,
         "height": 1280
       },
@@ -141,6 +178,10 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 508,
         "height": 1124
@@ -157,9 +198,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 621,
-        "height": 1125
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -173,9 +218,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 460,
-        "height": 1133
+        "width": 457,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -186,6 +235,10 @@
       "output": "assets/bourbons/detail-200/woodford-reserve-double-oaked-bourbon.webp",
       "status": "ready",
       "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "output_dimensions": {
         "width": 960,
         "height": 1280
       },
@@ -205,9 +258,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 566,
-        "height": 1125
+        "width": 567,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -221,9 +278,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 406,
-        "height": 1123
+        "width": 405,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -234,6 +295,10 @@
       "output": "assets/bourbons/detail-200/olcc-0196b.webp",
       "status": "ready",
       "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "output_dimensions": {
         "width": 960,
         "height": 1280
       },
@@ -253,6 +318,10 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 350,
         "height": 1124
@@ -269,9 +338,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 433,
-        "height": 1125
+        "width": 431,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -285,9 +358,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 454,
-        "height": 1177
+        "width": 433,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -301,9 +378,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 334,
-        "height": 1168
+        "width": 321,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -317,9 +398,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 427,
-        "height": 1139
+        "width": 421,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -333,9 +418,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 393,
-        "height": 1142
+        "width": 387,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -349,9 +438,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 387,
-        "height": 1126
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -362,6 +455,10 @@
       "output": "assets/bourbons/detail-200/old-forester-1897-bottled-in-bond.webp",
       "status": "ready",
       "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "output_dimensions": {
         "width": 960,
         "height": 1280
       },
@@ -381,9 +478,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 349,
-        "height": 1147
+        "width": 342,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -397,9 +498,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 354,
-        "height": 1159
+        "width": 344,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -410,6 +515,10 @@
       "output": "assets/bourbons/detail-200/old-forester-statesman-bourbon.webp",
       "status": "ready",
       "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "output_dimensions": {
         "width": 960,
         "height": 1280
       },
@@ -429,9 +538,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 317,
-        "height": 1145
+        "width": 311,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -445,9 +558,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 421,
-        "height": 1138
+        "width": 416,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -461,9 +578,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 524,
-        "height": 1142
+        "width": 517,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -477,9 +598,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 426,
-        "height": 1123
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -493,9 +618,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 309,
-        "height": 1177
+        "width": 296,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -509,9 +638,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 513,
-        "height": 1136
+        "width": 508,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -525,9 +658,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 560,
-        "height": 1180
+        "width": 533,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -541,9 +678,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 458,
-        "height": 1180
+        "width": 436,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -557,9 +698,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 445,
-        "height": 1136
+        "width": 440,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -573,9 +718,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 443,
-        "height": 1137
+        "width": 438,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -589,9 +738,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 447,
-        "height": 1144
+        "width": 440,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -602,6 +755,10 @@
       "output": "assets/bourbons/detail-200/popular-booker-s-bourbon.webp",
       "status": "ready",
       "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "output_dimensions": {
         "width": 960,
         "height": 1280
       },
@@ -621,6 +778,10 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 522,
         "height": 1124
@@ -637,9 +798,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 375,
-        "height": 1125
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -653,9 +818,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 459,
-        "height": 1125
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -669,9 +838,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 469,
-        "height": 1125
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -682,6 +855,10 @@
       "output": "assets/bourbons/detail-200/olcc-8573b.webp",
       "status": "ready",
       "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "output_dimensions": {
         "width": 960,
         "height": 1280
       },
@@ -701,17 +878,35 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 394,
-        "height": 1150
+        "width": 386,
+        "height": 1124
       },
       "transparent_source": true
     },
     {
       "id": "popular-elijah-craig-barrel-proof",
       "name": "Elijah Craig Barrel Proof",
-      "status": "missing",
-      "reason": "source-missing"
+      "source": "assets/bourbons/clean/elijah-craig-barrel-proof-batch-c925.webp",
+      "output": "assets/bourbons/detail-200/popular-elijah-craig-barrel-proof.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 760,
+        "height": 1000
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 371,
+        "height": 917
+      },
+      "transparent_source": true
     },
     {
       "id": "elijah-craig-toasted-barrel-101-22",
@@ -723,9 +918,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 452,
-        "height": 1133
+        "width": 449,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -739,9 +938,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 691,
-        "height": 1125
+        "width": 690,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -755,9 +958,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 663,
-        "height": 1125
+        "width": 664,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -771,9 +978,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 724,
-        "height": 1177
+        "width": 692,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -784,6 +995,10 @@
       "output": "assets/bourbons/detail-200/popular-1792-single-barrel.webp",
       "status": "ready",
       "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "output_dimensions": {
         "width": 960,
         "height": 1280
       },
@@ -803,9 +1018,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 369,
-        "height": 1125
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -819,17 +1038,35 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 463,
-        "height": 1129
+        "width": 461,
+        "height": 1124
       },
       "transparent_source": true
     },
     {
       "id": "popular-benchmark-bonded",
       "name": "Benchmark Bonded",
-      "status": "missing",
-      "reason": "source-missing"
+      "source": "assets/bourbons/manual-detail/popular-benchmark-bonded.png",
+      "output": "assets/bourbons/detail-200/popular-benchmark-bonded.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 1000,
+        "height": 1000
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 304,
+        "height": 981
+      },
+      "transparent_source": false
     },
     {
       "id": "popular-benchmark-single-barrel",
@@ -841,9 +1078,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 353,
-        "height": 1144
+        "width": 347,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -857,9 +1098,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 356,
-        "height": 1125
+        "width": 355,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -873,9 +1118,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 321,
-        "height": 1123
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -889,9 +1138,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 355,
-        "height": 1141
+        "width": 350,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -905,9 +1158,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 342,
-        "height": 1133
+        "width": 339,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -921,6 +1178,10 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 242,
         "height": 1124
@@ -930,8 +1191,22 @@
     {
       "id": "blantons-bourbon",
       "name": "Blanton's Original Single Barrel",
-      "status": "missing",
-      "reason": "source-missing"
+      "source": "assets/bourbons/manual-detail/blantons-bourbon.png",
+      "output": "assets/bourbons/detail-200/blantons-bourbon.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 2237,
+        "height": 4513
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 793,
+        "height": 1600
+      },
+      "transparent_source": true
     },
     {
       "id": "popular-e-h-taylor-small-batch",
@@ -943,33 +1218,75 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 240,
-        "height": 1123
+        "height": 1124
       },
       "transparent_source": true
     },
     {
       "id": "popular-e-h-taylor-single-barrel",
       "name": "E.H. Taylor Single Barrel",
-      "status": "missing",
-      "reason": "source-missing"
+      "source": "assets/bourbons/demo-200/popular-e-h-taylor-single-barrel.webp",
+      "output": "assets/bourbons/detail-200/popular-e-h-taylor-single-barrel.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 469,
+        "height": 1031
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 203,
+        "height": 921
+      },
+      "transparent_source": false
     },
     {
       "id": "popular-stagg-bourbon",
       "name": "Stagg",
-      "source": "assets/bourbons/detail-200/popular-stagg-bourbon.webp",
-      "status": "rejected",
-      "reason": "manual-current-rejection",
-      "detail": "Distorted and incomplete bottle silhouette."
+      "source": "assets/bourbons/clean/stagg-kentucky-straight-bourbon-batch-18.webp",
+      "output": "assets/bourbons/detail-200/popular-stagg-bourbon.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 760,
+        "height": 1000
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 332,
+        "height": 928
+      },
+      "transparent_source": true
     },
     {
       "id": "michters-bourbon",
       "name": "Michter's US 1 Small Batch",
-      "source": "assets/bourbons/detail-200/michters-bourbon.webp",
-      "status": "rejected",
-      "reason": "manual-current-rejection",
-      "detail": "Bottle is shown with packaging."
+      "source": "assets/bourbons/clean/michters-bourbon.webp",
+      "output": "assets/bourbons/detail-200/michters-bourbon.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 760,
+        "height": 1000
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 302,
+        "height": 978
+      },
+      "transparent_source": true
     },
     {
       "id": "michters-us-1-toasted-barrel-finish-bourbon-whiskey-2021-release",
@@ -981,19 +1298,35 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 364,
-        "height": 1169
+        "width": 351,
+        "height": 1124
       },
       "transparent_source": true
     },
     {
       "id": "jeffersons-very-small-batch-bourbon",
       "name": "Jefferson's Very Small Batch",
-      "source": "assets/bourbons/detail-200/jeffersons-very-small-batch-bourbon.webp",
-      "status": "rejected",
-      "reason": "manual-current-rejection",
-      "detail": "Distorted bottle silhouette."
+      "source": "assets/bourbons/manual-detail/jeffersons-very-small-batch-bourbon.jpg",
+      "output": "assets/bourbons/detail-200/jeffersons-very-small-batch-bourbon.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 1500,
+        "height": 1500
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 850,
+        "height": 1122
+      },
+      "transparent_source": false
     },
     {
       "id": "jeffersons-reserve-very-old-bourbon",
@@ -1005,9 +1338,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 613,
-        "height": 1177
+        "width": 585,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1018,6 +1355,10 @@
       "output": "assets/bourbons/detail-200/jeffersons-ocean-aged-at-sea-bourbon-whiskey.webp",
       "status": "ready",
       "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "output_dimensions": {
         "width": 960,
         "height": 1280
       },
@@ -1037,9 +1378,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 433,
-        "height": 1151
+        "width": 422,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1053,9 +1398,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 429,
-        "height": 1178
+        "width": 409,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1069,6 +1418,10 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 357,
         "height": 1124
@@ -1078,10 +1431,22 @@
     {
       "id": "olcc-9157b",
       "name": "Rabbit Hole Dareringer",
-      "source": "assets/bourbons/detail-200/olcc-9157b.webp",
-      "status": "rejected",
-      "reason": "manual-current-rejection",
-      "detail": "Bottle is shown with packaging."
+      "source": "assets/bourbons/manual-detail/olcc-9157b.png",
+      "output": "assets/bourbons/detail-200/olcc-9157b.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 1250,
+        "height": 3500
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 463,
+        "height": 1527
+      },
+      "transparent_source": true
     },
     {
       "id": "new-riff-bottled-in-bond-kentucky-straight-bourbon-whiskey",
@@ -1090,6 +1455,10 @@
       "output": "assets/bourbons/detail-200/new-riff-bottled-in-bond-kentucky-straight-bourbon-whiskey.webp",
       "status": "ready",
       "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "output_dimensions": {
         "width": 960,
         "height": 1280
       },
@@ -1109,9 +1478,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 255,
-        "height": 1123
+        "width": 256,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1125,9 +1498,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 547,
-        "height": 1125
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1141,9 +1518,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 573,
-        "height": 1176
+        "width": 548,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1157,9 +1538,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 392,
-        "height": 1126
+        "width": 393,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1173,9 +1558,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 392,
-        "height": 1127
+        "width": 391,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1189,9 +1578,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 407,
-        "height": 1166
+        "width": 391,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1205,9 +1598,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 379,
-        "height": 1179
+        "width": 361,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1221,9 +1618,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 379,
-        "height": 1179
+        "width": 361,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1237,9 +1638,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 379,
-        "height": 1179
+        "width": 361,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1250,6 +1655,10 @@
       "output": "assets/bourbons/detail-200/penelope-four-grain-straight-bourbon-whiskey.webp",
       "status": "ready",
       "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "output_dimensions": {
         "width": 960,
         "height": 1280
       },
@@ -1269,9 +1678,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 239,
-        "height": 1146
+        "width": 234,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1285,9 +1698,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 261,
-        "height": 1141
+        "width": 258,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1301,9 +1718,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 255,
-        "height": 1178
+        "width": 243,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1317,9 +1738,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 275,
-        "height": 1170
+        "width": 264,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1333,6 +1758,10 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 264,
         "height": 1124
@@ -1342,8 +1771,22 @@
     {
       "id": "popular-smoke-wagon-small-batch-bourbon",
       "name": "Smoke Wagon Small Batch",
-      "status": "missing",
-      "reason": "source-missing"
+      "source": "assets/bourbons/manual-detail/popular-smoke-wagon-small-batch-bourbon.jpg",
+      "output": "assets/bourbons/detail-200/popular-smoke-wagon-small-batch-bourbon.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 1200,
+        "height": 1200
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 261,
+        "height": 1175
+      },
+      "transparent_source": false
     },
     {
       "id": "popular-smoke-wagon-uncut-unfiltered-bourbon",
@@ -1355,9 +1798,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 256,
-        "height": 1140
+        "width": 253,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1368,6 +1815,10 @@
       "output": "assets/bourbons/detail-200/high-west-131-45.webp",
       "status": "ready",
       "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "output_dimensions": {
         "width": 960,
         "height": 1280
       },
@@ -1387,9 +1838,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 493,
-        "height": 1142
+        "width": 486,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1403,9 +1858,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 495,
-        "height": 1142
+        "width": 487,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1419,9 +1878,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 318,
-        "height": 1134
+        "width": 315,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1435,35 +1898,95 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 465,
-        "height": 1139
+        "width": 460,
+        "height": 1124
       },
       "transparent_source": true
     },
     {
       "id": "popular-fighting-cock-103-proof",
       "name": "Fighting Cock 103 Proof",
-      "status": "missing",
-      "reason": "source-missing"
+      "source": "assets/bourbons/manual-detail/popular-fighting-cock-103-proof.png",
+      "output": "assets/bourbons/detail-200/popular-fighting-cock-103-proof.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 490,
+        "height": 686
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 178,
+        "height": 686
+      },
+      "transparent_source": true
     },
     {
       "id": "popular-j-t-s-brown-bottled-in-bond",
       "name": "J.T.S. Brown Bottled in Bond",
-      "status": "missing",
-      "reason": "source-missing"
+      "source": "assets/bourbons/manual-detail/popular-j-t-s-brown-bottled-in-bond.jpg",
+      "output": "assets/bourbons/detail-200/popular-j-t-s-brown-bottled-in-bond.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 1200,
+        "height": 1200
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 309,
+        "height": 1179
+      },
+      "transparent_source": false
     },
     {
       "id": "popular-old-tub-bottled-in-bond",
       "name": "Old Tub Bottled in Bond",
-      "status": "missing",
-      "reason": "source-missing"
+      "source": "assets/bourbons/manual-detail/popular-old-tub-bottled-in-bond.png",
+      "output": "assets/bourbons/detail-200/popular-old-tub-bottled-in-bond.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 1000,
+        "height": 1000
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 256,
+        "height": 1000
+      },
+      "transparent_source": true
     },
     {
       "id": "popular-coopers-craft-barrel-reserve-100-proof",
       "name": "Coopers' Craft Barrel Reserve 100 Proof",
-      "status": "missing",
-      "reason": "source-missing"
+      "source": "assets/bourbons/manual-detail/popular-coopers-craft-barrel-reserve-100-proof.jpg",
+      "output": "assets/bourbons/detail-200/popular-coopers-craft-barrel-reserve-100-proof.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 900,
+        "height": 900
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 352,
+        "height": 869
+      },
+      "transparent_source": false
     },
     {
       "id": "popular-bowman-brothers-small-batch-bourbon",
@@ -1472,6 +1995,10 @@
       "output": "assets/bourbons/detail-200/popular-bowman-brothers-small-batch-bourbon.webp",
       "status": "ready",
       "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "output_dimensions": {
         "width": 960,
         "height": 1280
       },
@@ -1491,9 +2018,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 284,
-        "height": 1128
+        "width": 283,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1507,6 +2038,10 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 291,
         "height": 1124
@@ -1516,8 +2051,22 @@
     {
       "id": "johnnie-walker-double-black-151-5k",
       "name": "Johnnie Walker Double Black",
-      "status": "missing",
-      "reason": "source-missing"
+      "source": "assets/bourbons/demo-200/johnnie-walker-double-black-151-5k.webp",
+      "output": "assets/bourbons/detail-200/johnnie-walker-double-black-151-5k.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 1132,
+        "height": 1952
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 362,
+        "height": 1563
+      },
+      "transparent_source": false
     },
     {
       "id": "popular-johnnie-walker-green-label-15-year",
@@ -1529,9 +2078,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 263,
-        "height": 1123
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1542,6 +2095,10 @@
       "output": "assets/bourbons/detail-200/popular-johnnie-walker-gold-label-reserve.webp",
       "status": "ready",
       "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "output_dimensions": {
         "width": 960,
         "height": 1280
       },
@@ -1561,9 +2118,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 253,
-        "height": 1123
+        "width": 254,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1577,9 +2138,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 346,
-        "height": 1142
+        "width": 340,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1593,9 +2158,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 443,
-        "height": 1180
+        "width": 423,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1606,6 +2175,10 @@
       "output": "assets/bourbons/detail-200/popular-ballantine-s-finest.webp",
       "status": "ready",
       "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "output_dimensions": {
         "width": 960,
         "height": 1280
       },
@@ -1625,6 +2198,10 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 320,
         "height": 1124
@@ -1641,9 +2218,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 280,
-        "height": 1155
+        "width": 273,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1657,9 +2238,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 432,
-        "height": 1125
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1673,9 +2258,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 280,
-        "height": 1131
+        "width": 278,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1689,6 +2278,10 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 269,
         "height": 1124
@@ -1698,8 +2291,22 @@
     {
       "id": "olcc-0346b",
       "name": "Cutty Sark Original",
-      "status": "missing",
-      "reason": "source-missing"
+      "source": "assets/bourbons/manual-detail/olcc-0346b.png",
+      "output": "assets/bourbons/detail-200/olcc-0346b.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 300,
+        "height": 600
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 163,
+        "height": 538
+      },
+      "transparent_source": true
     },
     {
       "id": "popular-monkey-shoulder",
@@ -1708,6 +2315,10 @@
       "output": "assets/bourbons/detail-200/popular-monkey-shoulder.webp",
       "status": "ready",
       "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "output_dimensions": {
         "width": 960,
         "height": 1280
       },
@@ -1727,6 +2338,10 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 344,
         "height": 1124
@@ -1736,18 +2351,42 @@
     {
       "id": "olcc-0392b",
       "name": "Glenfiddich 15 Year Solera",
-      "source": "assets/bourbons/detail-200/olcc-0392b.webp",
-      "status": "rejected",
-      "reason": "manual-current-rejection",
-      "detail": "Bottle is shown with packaging."
+      "source": "assets/bourbons/manual-detail/olcc-0392b.png",
+      "output": "assets/bourbons/detail-200/olcc-0392b.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 300,
+        "height": 600
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 129,
+        "height": 516
+      },
+      "transparent_source": true
     },
     {
       "id": "popular-glenfiddich-18-year",
       "name": "Glenfiddich 18 Year",
-      "source": "assets/bourbons/detail-200/popular-glenfiddich-18-year.webp",
-      "status": "rejected",
-      "reason": "manual-current-rejection",
-      "detail": "Bottle is shown with packaging."
+      "source": "assets/bourbons/manual-detail/popular-glenfiddich-18-year.webp",
+      "output": "assets/bourbons/detail-200/popular-glenfiddich-18-year.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 600,
+        "height": 831
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 206,
+        "height": 707
+      },
+      "transparent_source": true
     },
     {
       "id": "olcc-0376b",
@@ -1759,9 +2398,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 296,
-        "height": 1130
+        "width": 294,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1775,9 +2418,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 292,
-        "height": 1125
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1791,9 +2438,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 298,
-        "height": 1138
+        "width": 295,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1804,6 +2455,10 @@
       "output": "assets/bourbons/detail-200/popular-the-macallan-12-year-double-cask.webp",
       "status": "ready",
       "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "output_dimensions": {
         "width": 960,
         "height": 1280
       },
@@ -1823,6 +2478,10 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 290,
         "height": 1124
@@ -1839,6 +2498,10 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 297,
         "height": 1124
@@ -1848,8 +2511,22 @@
     {
       "id": "popular-the-balvenie-12-year-doublewood",
       "name": "The Balvenie 12 Year DoubleWood",
-      "status": "missing",
-      "reason": "source-missing"
+      "source": "assets/bourbons/manual-detail/popular-the-balvenie-12-year-doublewood-bottle.png",
+      "output": "assets/bourbons/detail-200/popular-the-balvenie-12-year-doublewood.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 1000,
+        "height": 1000
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 330,
+        "height": 978
+      },
+      "transparent_source": false
     },
     {
       "id": "popular-the-balvenie-14-year-caribbean-cask",
@@ -1858,6 +2535,10 @@
       "output": "assets/bourbons/detail-200/popular-the-balvenie-14-year-caribbean-cask.webp",
       "status": "ready",
       "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "output_dimensions": {
         "width": 960,
         "height": 1280
       },
@@ -1877,19 +2558,35 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 513,
-        "height": 1130
+        "width": 510,
+        "height": 1124
       },
       "transparent_source": true
     },
     {
       "id": "popular-glenmorangie-lasanta-12-year",
       "name": "Glenmorangie Lasanta 12 Year",
-      "source": "assets/bourbons/detail-200/popular-glenmorangie-lasanta-12-year.webp",
-      "status": "rejected",
-      "reason": "manual-current-rejection",
-      "detail": "Bottle is shown with packaging."
+      "source": "assets/bourbons/demo-200/popular-glenmorangie-lasanta-12-year.webp",
+      "output": "assets/bourbons/detail-200/popular-glenmorangie-lasanta-12-year.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 421,
+        "height": 1328
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 352,
+        "height": 1210
+      },
+      "transparent_source": false
     },
     {
       "id": "popular-glenmorangie-quinta-ruban-14-year",
@@ -1898,6 +2595,10 @@
       "output": "assets/bourbons/detail-200/popular-glenmorangie-quinta-ruban-14-year.webp",
       "status": "ready",
       "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "output_dimensions": {
         "width": 960,
         "height": 1280
       },
@@ -1911,17 +2612,41 @@
       "id": "popular-aberlour-12-year-double-cask",
       "name": "Aberlour 12 Year Double Cask",
       "source": "assets/bourbons/detail-200/popular-aberlour-12-year-double-cask.webp",
-      "status": "rejected",
-      "reason": "manual-current-rejection",
-      "detail": "Bottle is shown with packaging."
+      "output": "assets/bourbons/detail-200/popular-aberlour-12-year-double-cask.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 413,
+        "height": 1124
+      },
+      "transparent_source": true
     },
     {
       "id": "popular-aberlour-a-bunadh",
       "name": "Aberlour A'Bunadh",
-      "source": "assets/bourbons/detail-200/popular-aberlour-a-bunadh.webp",
-      "status": "rejected",
-      "reason": "manual-current-rejection",
-      "detail": "Bottle is shown with packaging."
+      "source": "assets/bourbons/manual-detail/popular-aberlour-a-bunadh.png",
+      "output": "assets/bourbons/detail-200/popular-aberlour-a-bunadh.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 786,
+        "height": 1572
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 405,
+        "height": 1103
+      },
+      "transparent_source": true
     },
     {
       "id": "popular-ardbeg-10-year",
@@ -1933,9 +2658,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 333,
-        "height": 1125
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1949,6 +2678,10 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 330,
         "height": 1124
@@ -1958,8 +2691,22 @@
     {
       "id": "popular-laphroaig-10-year",
       "name": "Laphroaig 10 Year",
-      "status": "missing",
-      "reason": "source-missing"
+      "source": "assets/bourbons/manual-detail/popular-laphroaig-10-year.webp",
+      "output": "assets/bourbons/detail-200/popular-laphroaig-10-year.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 1080,
+        "height": 1080
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 288,
+        "height": 974
+      },
+      "transparent_source": true
     },
     {
       "id": "popular-laphroaig-quarter-cask",
@@ -1971,9 +2718,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 299,
-        "height": 1140
+        "width": 295,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -1987,19 +2738,35 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 291,
-        "height": 1125
+        "height": 1124
       },
       "transparent_source": true
     },
     {
       "id": "popular-talisker-10-year",
       "name": "Talisker 10 Year",
-      "source": "assets/bourbons/detail-200/popular-talisker-10-year.webp",
-      "status": "rejected",
-      "reason": "manual-current-rejection",
-      "detail": "Gift set instead of a bottle-only packshot."
+      "source": "assets/bourbons/demo-200/popular-talisker-10-year.webp",
+      "output": "assets/bourbons/detail-200/popular-talisker-10-year.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 334,
+        "height": 1328
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 258,
+        "height": 994
+      },
+      "transparent_source": false
     },
     {
       "id": "popular-oban-14-year",
@@ -2011,9 +2778,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 273,
-        "height": 1125
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -2024,6 +2795,10 @@
       "output": "assets/bourbons/detail-200/olcc-2211b.webp",
       "status": "ready",
       "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "output_dimensions": {
         "width": 960,
         "height": 1280
       },
@@ -2043,33 +2818,75 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 447,
-        "height": 1144
+        "width": 439,
+        "height": 1124
       },
       "transparent_source": true
     },
     {
       "id": "popular-caol-ila-12-year",
       "name": "Caol Ila 12 Year",
-      "source": "assets/bourbons/detail-200/popular-caol-ila-12-year.webp",
-      "status": "rejected",
-      "reason": "manual-current-rejection",
-      "detail": "Bottle is shown with packaging."
+      "source": "assets/bourbons/manual-detail/popular-caol-ila-12-year.jpg",
+      "output": "assets/bourbons/detail-200/popular-caol-ila-12-year.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 582,
+        "height": 1884
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 421,
+        "height": 893
+      },
+      "transparent_source": false
     },
     {
       "id": "popular-bowmore-12-year",
       "name": "Bowmore 12 Year",
-      "status": "missing",
-      "reason": "source-missing"
+      "source": "assets/bourbons/manual-detail/popular-bowmore-12-year.webp",
+      "output": "assets/bourbons/detail-200/popular-bowmore-12-year.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 1000,
+        "height": 1000
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 248,
+        "height": 960
+      },
+      "transparent_source": true
     },
     {
       "id": "popular-the-dalmore-12-year",
       "name": "The Dalmore 12 Year",
-      "source": "assets/bourbons/detail-200/popular-the-dalmore-12-year.webp",
-      "status": "rejected",
-      "reason": "manual-current-rejection",
-      "detail": "Bottle is shown with packaging."
+      "source": "assets/bourbons/demo-200/popular-the-dalmore-12-year.webp",
+      "output": "assets/bourbons/detail-200/popular-the-dalmore-12-year.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 723,
+        "height": 1328
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 528,
+        "height": 1241
+      },
+      "transparent_source": false
     },
     {
       "id": "popular-dalwhinnie-15-year",
@@ -2081,9 +2898,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 468,
-        "height": 1125
+        "width": 467,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -2097,6 +2918,10 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 275,
         "height": 1124
@@ -2106,10 +2931,22 @@
     {
       "id": "popular-the-glenallachie-12-year",
       "name": "The GlenAllachie 12 Year",
-      "source": "assets/bourbons/detail-200/popular-the-glenallachie-12-year.webp",
-      "status": "rejected",
-      "reason": "manual-current-rejection",
-      "detail": "Bottle is shown with packaging."
+      "source": "assets/bourbons/manual-detail/popular-the-glenallachie-12-year-1.png",
+      "output": "assets/bourbons/detail-200/popular-the-glenallachie-12-year.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 481,
+        "height": 1560
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 447,
+        "height": 1418
+      },
+      "transparent_source": true
     },
     {
       "id": "popular-bruichladdich-the-classic-laddie",
@@ -2121,9 +2958,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 462,
-        "height": 1123
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -2137,17 +2978,35 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 343,
-        "height": 1123
+        "height": 1124
       },
       "transparent_source": true
     },
     {
       "id": "popular-jura-10-year",
       "name": "Jura 10 Year",
-      "status": "missing",
-      "reason": "source-missing"
+      "source": "assets/bourbons/demo-200/popular-jura-10-year.webp",
+      "output": "assets/bourbons/detail-200/popular-jura-10-year.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 486,
+        "height": 1328
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 404,
+        "height": 1230
+      },
+      "transparent_source": false
     },
     {
       "id": "popular-jameson-irish-whiskey",
@@ -2156,6 +3015,10 @@
       "output": "assets/bourbons/detail-200/popular-jameson-irish-whiskey.webp",
       "status": "ready",
       "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "output_dimensions": {
         "width": 960,
         "height": 1280
       },
@@ -2168,8 +3031,22 @@
     {
       "id": "popular-jameson-black-barrel",
       "name": "Jameson Black Barrel",
-      "status": "missing",
-      "reason": "source-missing"
+      "source": "assets/bourbons/demo-200/popular-jameson-black-barrel.webp",
+      "output": "assets/bourbons/detail-200/popular-jameson-black-barrel.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 540,
+        "height": 1328
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 331,
+        "height": 1260
+      },
+      "transparent_source": false
     },
     {
       "id": "popular-jameson-caskmates-stout-edition",
@@ -2178,6 +3055,10 @@
       "output": "assets/bourbons/detail-200/popular-jameson-caskmates-stout-edition.webp",
       "status": "ready",
       "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "output_dimensions": {
         "width": 960,
         "height": 1280
       },
@@ -2197,9 +3078,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 485,
-        "height": 1152
+        "width": 473,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -2213,9 +3098,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 477,
-        "height": 1152
+        "width": 465,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -2229,9 +3118,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 297,
-        "height": 1143
+        "width": 293,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -2245,9 +3138,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 290,
-        "height": 1125
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -2261,9 +3158,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 342,
-        "height": 1125
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -2277,9 +3178,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 346,
-        "height": 1125
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -2293,33 +3198,75 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 367,
-        "height": 1180
+        "width": 350,
+        "height": 1124
       },
       "transparent_source": true
     },
     {
       "id": "popular-redbreast-12-year",
       "name": "Redbreast 12 Year",
-      "status": "missing",
-      "reason": "source-missing"
+      "source": "assets/bourbons/manual-detail/popular-redbreast-12-year.png",
+      "output": "assets/bourbons/detail-200/popular-redbreast-12-year.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 575,
+        "height": 1541
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 485,
+        "height": 1170
+      },
+      "transparent_source": true
     },
     {
       "id": "popular-redbreast-15-year",
       "name": "Redbreast 15 Year",
-      "source": "assets/bourbons/detail-200/popular-redbreast-15-year.webp",
-      "status": "rejected",
-      "reason": "manual-current-rejection",
-      "detail": "Bottle is shown with packaging."
+      "source": "assets/bourbons/manual-detail/popular-redbreast-15-year.jpg",
+      "output": "assets/bourbons/detail-200/popular-redbreast-15-year.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 2000,
+        "height": 2000
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 565,
+        "height": 1500
+      },
+      "transparent_source": false
     },
     {
       "id": "popular-redbreast-12-year-cask-strength",
       "name": "Redbreast 12 Year Cask Strength",
-      "source": "assets/bourbons/detail-200/popular-redbreast-12-year-cask-strength.webp",
-      "status": "rejected",
-      "reason": "manual-current-rejection",
-      "detail": "Bottle is shown with packaging."
+      "source": "assets/bourbons/manual-detail/popular-redbreast-12-year-cask-strength.jpg",
+      "output": "assets/bourbons/detail-200/popular-redbreast-12-year-cask-strength.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 2000,
+        "height": 2000
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 565,
+        "height": 1500
+      },
+      "transparent_source": false
     },
     {
       "id": "popular-green-spot",
@@ -2331,17 +3278,35 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 321,
-        "height": 1125
+        "height": 1124
       },
       "transparent_source": true
     },
     {
       "id": "popular-yellow-spot-12-year",
       "name": "Yellow Spot 12 Year",
-      "status": "missing",
-      "reason": "source-missing"
+      "source": "assets/bourbons/demo-200/popular-yellow-spot-12-year.webp",
+      "output": "assets/bourbons/detail-200/popular-yellow-spot-12-year.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 406,
+        "height": 954
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 258,
+        "height": 905
+      },
+      "transparent_source": false
     },
     {
       "id": "popular-powers-gold-label",
@@ -2353,9 +3318,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 426,
-        "height": 1132
+        "width": 423,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -2369,9 +3338,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 415,
-        "height": 1151
+        "width": 406,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -2382,6 +3355,10 @@
       "output": "assets/bourbons/detail-200/popular-teeling-small-batch.webp",
       "status": "ready",
       "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "output_dimensions": {
         "width": 960,
         "height": 1280
       },
@@ -2401,9 +3378,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 375,
-        "height": 1171
+        "width": 361,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -2417,9 +3398,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 305,
-        "height": 1131
+        "width": 303,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -2433,9 +3418,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 453,
-        "height": 1123
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -2449,9 +3438,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 478,
-        "height": 1125
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -2465,6 +3458,10 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 576,
         "height": 1124
@@ -2474,10 +3471,22 @@
     {
       "id": "popular-yamazaki-distiller-s-reserve",
       "name": "Yamazaki Distiller's Reserve",
-      "source": "assets/bourbons/detail-200/popular-yamazaki-distiller-s-reserve.webp",
-      "status": "rejected",
-      "reason": "manual-current-rejection",
-      "detail": "Bottle is shown with packaging."
+      "source": "assets/bourbons/demo-200/popular-yamazaki-distiller-s-reserve.webp",
+      "output": "assets/bourbons/detail-200/popular-yamazaki-distiller-s-reserve.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 486,
+        "height": 1328
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 323,
+        "height": 1162
+      },
+      "transparent_source": false
     },
     {
       "id": "popular-yamazaki-12-year",
@@ -2489,9 +3498,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 390,
-        "height": 1125
+        "width": 388,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -2505,6 +3518,10 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 366,
         "height": 1124
@@ -2514,8 +3531,22 @@
     {
       "id": "popular-nikka-from-the-barrel",
       "name": "Nikka From the Barrel",
-      "status": "missing",
-      "reason": "source-missing"
+      "source": "assets/bourbons/demo-200/popular-nikka-from-the-barrel.webp",
+      "output": "assets/bourbons/detail-200/popular-nikka-from-the-barrel.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 550,
+        "height": 1328
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 436,
+        "height": 865
+      },
+      "transparent_source": false
     },
     {
       "id": "olcc-2619b",
@@ -2527,9 +3558,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 351,
-        "height": 1132
+        "width": 349,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -2543,17 +3578,35 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 347,
-        "height": 1151
+        "width": 340,
+        "height": 1124
       },
       "transparent_source": true
     },
     {
       "id": "popular-nikka-days",
       "name": "Nikka Days",
-      "status": "missing",
-      "reason": "source-missing"
+      "source": "assets/bourbons/demo-200/popular-nikka-days.webp",
+      "output": "assets/bourbons/detail-200/popular-nikka-days.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 604,
+        "height": 1328
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 527,
+        "height": 956
+      },
+      "transparent_source": false
     },
     {
       "id": "popular-nikka-yoichi-single-malt",
@@ -2565,17 +3618,35 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 356,
-        "height": 1139
+        "width": 351,
+        "height": 1124
       },
       "transparent_source": true
     },
     {
       "id": "popular-nikka-miyagikyo-single-malt",
       "name": "Nikka Miyagikyo Single Malt",
-      "status": "missing",
-      "reason": "source-missing"
+      "source": "assets/bourbons/demo-200/popular-nikka-miyagikyo-single-malt.webp",
+      "output": "assets/bourbons/detail-200/popular-nikka-miyagikyo-single-malt.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 561,
+        "height": 1328
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 319,
+        "height": 1002
+      },
+      "transparent_source": false
     },
     {
       "id": "popular-mars-iwai-tradition",
@@ -2584,6 +3655,10 @@
       "output": "assets/bourbons/detail-200/popular-mars-iwai-tradition.webp",
       "status": "ready",
       "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "output_dimensions": {
         "width": 960,
         "height": 1280
       },
@@ -2603,9 +3678,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 488,
-        "height": 1125
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -2619,6 +3698,10 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 335,
         "height": 1124
@@ -2628,10 +3711,22 @@
     {
       "id": "olcc-0146b",
       "name": "Jack Daniel's Old No. 7",
-      "source": "assets/bourbons/detail-200/olcc-0146b.webp",
-      "status": "rejected",
-      "reason": "manual-current-rejection",
-      "detail": "Wrong product: Jack Daniel's and Coca-Cola premix can."
+      "source": "assets/bourbons/manual-detail/olcc-0146b.png",
+      "output": "assets/bourbons/detail-200/olcc-0146b.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 1000,
+        "height": 1000
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 322,
+        "height": 991
+      },
+      "transparent_source": false
     },
     {
       "id": "olcc-0148b",
@@ -2640,6 +3735,10 @@
       "output": "assets/bourbons/detail-200/olcc-0148b.webp",
       "status": "ready",
       "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "output_dimensions": {
         "width": 960,
         "height": 1280
       },
@@ -2659,9 +3758,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 335,
-        "height": 1123
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -2675,9 +3778,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 508,
-        "height": 1136
+        "width": 503,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -2688,6 +3795,10 @@
       "output": "assets/bourbons/detail-200/popular-jack-daniel-s-tennessee-rye.webp",
       "status": "ready",
       "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "output_dimensions": {
         "width": 960,
         "height": 1280
       },
@@ -2707,6 +3818,10 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 331,
         "height": 1124
@@ -2723,9 +3838,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 518,
-        "height": 1123
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -2739,17 +3858,35 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 467,
-        "height": 1131
+        "width": 464,
+        "height": 1124
       },
       "transparent_source": true
     },
     {
       "id": "popular-rittenhouse-rye-bottled-in-bond",
       "name": "Rittenhouse Rye Bottled in Bond",
-      "status": "missing",
-      "reason": "source-missing"
+      "source": "assets/bourbons/demo-200/popular-rittenhouse-rye-bottled-in-bond.webp",
+      "output": "assets/bourbons/detail-200/popular-rittenhouse-rye-bottled-in-bond.webp",
+      "status": "ready",
+      "source_dimensions": {
+        "width": 1032,
+        "height": 1057
+      },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "bottle_dimensions": {
+        "width": 241,
+        "height": 902
+      },
+      "transparent_source": false
     },
     {
       "id": "olcc-7658b",
@@ -2758,6 +3895,10 @@
       "output": "assets/bourbons/detail-200/olcc-7658b.webp",
       "status": "ready",
       "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "output_dimensions": {
         "width": 960,
         "height": 1280
       },
@@ -2777,9 +3918,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
         "width": 249,
-        "height": 1125
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -2790,6 +3935,10 @@
       "output": "assets/bourbons/detail-200/popular-whistlepig-piggyback-6-year-rye.webp",
       "status": "ready",
       "source_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
+      "output_dimensions": {
         "width": 960,
         "height": 1280
       },
@@ -2809,9 +3958,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 651,
-        "height": 1165
+        "width": 628,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -2825,9 +3978,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 628,
-        "height": 1127
+        "width": 626,
+        "height": 1124
       },
       "transparent_source": true
     },
@@ -2841,9 +3998,13 @@
         "width": 960,
         "height": 1280
       },
+      "output_dimensions": {
+        "width": 960,
+        "height": 1280
+      },
       "bottle_dimensions": {
-        "width": 337,
-        "height": 1125
+        "width": 341,
+        "height": 1124
       },
       "transparent_source": true
     }

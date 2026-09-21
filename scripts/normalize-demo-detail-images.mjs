@@ -11,6 +11,7 @@ const reportPath=path.join(root,"db","catalog","demo-detail-normalization-report
 const manifestPath=path.join(root,"db","catalog","demo-image-manifest.json");
 const buildReportPath=path.join(root,"db","catalog","demo-build-report.json");
 const manualReviewPath=path.join(root,"db","catalog","demo-detail-manual-review.json");
+const preparationPath=path.join(root,"db","catalog","demo-detail-preparation.json");
 const fetchReportPath=path.join(root,"db","catalog","demo-image-fetch-report.json");
 const overridesPath=path.join(root,"db","catalog","demo-image-overrides.json");
 const outputDir=path.join(root,"assets","bourbons","detail-200");
@@ -21,8 +22,10 @@ const localPath=(relative)=>path.join(root,...String(relative||"").split("/"));
 const demo=readJson(demoPath);
 const scan=readJson(scanPath);
 const manualReview=fs.existsSync(manualReviewPath)?readJson(manualReviewPath):{};
+const preparation=fs.existsSync(preparationPath)?(readJson(preparationPath).items||{}):{};
 const manualRejected=manualReview.rejected||{};
 const currentRejected=manualReview.current_rejected||{};
+const manualAccepted=new Set(Object.keys(manualReview.accepted||{}));
 const latestDownloads=fs.existsSync(fetchReportPath)?new Set((readJson(fetchReportPath).downloaded||[]).map((item)=>item.id)):new Set();
 const qualityCandidates=fs.existsSync(overridesPath)
   ? new Set(Object.entries(readJson(overridesPath).items||{}).filter(([,item])=>item?.quality_candidate_version==="detail-packshot-candidate-v1").map(([id])=>id))
@@ -92,12 +95,34 @@ function components(data,width,height,channels){
 }
 
 async function normalize(record){
-  if(!record.image||!fs.existsSync(localPath(record.image))) return {id:record.id,name:record.name,status:"missing",reason:"source-missing"};
-  const sourcePath=record.image;
-  if(currentRejected[record.id]) return {id:record.id,name:record.name,source:sourcePath,status:"rejected",reason:"manual-current-rejection",detail:currentRejected[record.id]};
+  const prepared=preparation[record.id]||{};
+  const sourcePath=prepared.source||record.image;
+  const explicitlyAccepted=prepared.accepted===true||manualAccepted.has(record.id);
+  if(!sourcePath||!fs.existsSync(localPath(sourcePath))) return {id:record.id,name:record.name,status:"missing",reason:"source-missing",source:sourcePath||""};
+  if(currentRejected[record.id]&&!explicitlyAccepted) return {id:record.id,name:record.name,source:sourcePath,status:"rejected",reason:"manual-current-rejection",detail:currentRejected[record.id]};
   if(manualRejected[record.id]&&!latestDownloads.has(record.id)&&!qualityCandidates.has(record.id)) return {id:record.id,name:record.name,source:sourcePath,status:"rejected",reason:"manual-visual-rejection",detail:manualRejected[record.id]};
-  const decoded=sharp(localPath(sourcePath),{failOn:"none"}).rotate().ensureAlpha();
-  const metadata=await decoded.metadata();
+  let decoded=sharp(localPath(sourcePath),{failOn:"none"}).rotate().ensureAlpha();
+  const sourceMetadata=await decoded.metadata();
+  let preparedWidth=sourceMetadata.width||1,preparedHeight=sourceMetadata.height||1;
+  if(prepared.crop){
+    const crop=prepared.crop;
+    const left=Math.max(0,Math.round((sourceMetadata.width||1)*crop.left));
+    const top=Math.max(0,Math.round((sourceMetadata.height||1)*crop.top));
+    const cropWidth=Math.min((sourceMetadata.width||1)-left,Math.max(1,Math.round((sourceMetadata.width||1)*crop.width)));
+    const cropHeight=Math.min((sourceMetadata.height||1)-top,Math.max(1,Math.round((sourceMetadata.height||1)*crop.height)));
+    decoded=decoded
+      .extract({left,top,width:cropWidth,height:cropHeight})
+      .extend({top:16,bottom:16,left:16,right:16,background:{r:255,g:255,b:255,alpha:sourceMetadata.hasAlpha?0:1}});
+    preparedWidth=cropWidth+32;
+    preparedHeight=cropHeight+32;
+  }
+  if(prepared.remove_background===true) decoded=decoded.flatten({background:{r:255,g:255,b:255}}).ensureAlpha();
+  let metadata={width:preparedWidth,height:preparedHeight};
+  if(prepared.crop){
+    const rendered=await decoded.png().toBuffer({resolveWithObject:true});
+    decoded=sharp(rendered.data,{failOn:"none"}).ensureAlpha();
+    metadata={width:rendered.info.width,height:rendered.info.height};
+  }
   const scale=Math.min(1,1600/Math.max(metadata.width||1,metadata.height||1));
   const width=Math.max(1,Math.round((metadata.width||1)*scale)),height=Math.max(1,Math.round((metadata.height||1)*scale));
   const raw=await decoded.resize(width,height,{fit:"fill"}).raw().toBuffer({resolveWithObject:true});
@@ -107,13 +132,25 @@ async function normalize(record){
   const transparentRatio=transparent/(width*height);
   const border=backgroundStats(pixels,width,height,channels);
   if(transparentRatio<0.04){
-    if(border.deviation>24) return {id:record.id,name:record.name,source:sourcePath,status:"rejected",reason:"complex-background",border_deviation:Number(border.deviation.toFixed(2))};
+    if(border.deviation>24&&!explicitlyAccepted) return {id:record.id,name:record.name,source:sourcePath,status:"rejected",reason:"complex-background",border_deviation:Number(border.deviation.toFixed(2))};
     removePlainBackground(pixels,width,height,channels,border.average);
   }
-  const parts=components(pixels,width,height,channels),primary=parts[0],secondary=parts[1];
+  const parts=components(pixels,width,height,channels);
+  let primary=parts[0];
   if(!primary) return {id:record.id,name:record.name,source:sourcePath,status:"rejected",reason:"no-bottle-foreground"};
+  if(prepared.include_aligned_components===true){
+    const aligned=parts.filter((part)=>part.area>=primary.area*.004&&part.maxX>=primary.minX&&part.minX<=primary.maxX);
+    primary={
+      ...primary,
+      minX:Math.min(...aligned.map((part)=>part.minX)),minY:Math.min(...aligned.map((part)=>part.minY)),
+      maxX:Math.max(...aligned.map((part)=>part.maxX)),maxY:Math.max(...aligned.map((part)=>part.maxY))
+    };
+    primary.width=primary.maxX-primary.minX+1;
+    primary.height=primary.maxY-primary.minY+1;
+  }
+  const secondary=parts.find((part)=>part!==parts[0]);
   if(primary.height<500) return {id:record.id,name:record.name,source:sourcePath,status:"rejected",reason:"low-effective-resolution",bottle_height:primary.height};
-  if(secondary&&secondary.area/primary.area>0.18) return {id:record.id,name:record.name,source:sourcePath,status:"rejected",reason:"multiple-products",secondary_ratio:Number((secondary.area/primary.area).toFixed(3))};
+  if(secondary&&secondary.area/primary.area>0.18&&!explicitlyAccepted) return {id:record.id,name:record.name,source:sourcePath,status:"rejected",reason:"multiple-products",secondary_ratio:Number((secondary.area/primary.area).toFixed(3))};
   const marginX=Math.max(8,Math.round(primary.width*.035)),marginY=Math.max(8,Math.round(primary.height*.025));
   const left=Math.max(0,primary.minX-marginX),top=Math.max(0,primary.minY-marginY);
   const right=Math.min(width-1,primary.maxX+marginX),bottom=Math.min(height-1,primary.maxY+marginY);
@@ -128,7 +165,7 @@ async function normalize(record){
       .webp({quality:93,alphaQuality:100,smartSubsample:true})
       .toFile(localPath(output));
   }
-  return {id:record.id,name:record.name,source:sourcePath,output,status:"ready",source_dimensions:{width:metadata.width||0,height:metadata.height||0},bottle_dimensions:{width:primary.width,height:primary.height},transparent_source:transparentRatio>=.04};
+  return {id:record.id,name:record.name,source:sourcePath,output,status:"ready",source_dimensions:{width:metadata.width||0,height:metadata.height||0},output_dimensions:{width:960,height:1280},bottle_dimensions:{width:primary.width,height:primary.height},transparent_source:transparentRatio>=.04};
 }
 
 const results=[];

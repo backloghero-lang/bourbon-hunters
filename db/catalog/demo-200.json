@@ -1,6 +1,6 @@
 {
   "version": "demo-200-v1",
-  "updated": "2026-09-13T07:51:10.961Z",
+  "updated": "2026-09-13T09:44:23.039Z",
   "count": 200,
   "bottles": [
     {
@@ -444,7 +444,7 @@
           "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą kukurydziana słodycz i opalany dąb."
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/buffalo-trace-bourbon-1.webp",
       "status": "sold_out",
       "source": "popular_200_curated",
       "source_refs": [
@@ -461,9 +461,9 @@
       "recognition_priority": 100,
       "demo_rank": 7,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/clean/buffalo-trace-bourbon-1.webp",
-      "detail_image_audit": "manual-current-rejection",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
@@ -2836,7 +2836,7 @@
       "demo_rank": 43,
       "demo_public": true,
       "demo_image_status": "ready",
-      "thumb": "",
+      "thumb": "assets/bourbons/detail-200/olcc-8573b.webp",
       "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
@@ -2950,7 +2950,7 @@
           "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą kukurydziana słodycz i opalany dąb."
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-elijah-craig-barrel-proof.webp",
       "status": "sold_out",
       "source": "popular_200_curated",
       "source_refs": [
@@ -2965,15 +2965,15 @@
       "recognition_priority": 100,
       "demo_rank": 45,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/clean/elijah-craig-barrel-proof-batch-c925.webp",
-      "detail_image_audit": "source-missing",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
-        "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-ec-hat.jpg?v=1775574499",
-        "source_page": "https://thedrinksociety.co.nz/products/elijah-craig-x-the-drink-society-death-by-chocolate-single-barrel-snapback-cap?_pos=6&_psq=Elijah+Craig+Barrel+Proof&_psid=648795e8a&_ss=e",
-        "license_status": "source_review_required"
+        "source_url": "https://elijahcraig.com/images/bottles/ec-toasted-barrel.png?ver=2",
+        "source_page": "https://elijahcraig.com/our-whiskey",
+        "license_status": "official_source_review_required"
       }
     },
     {
@@ -3454,7 +3454,7 @@
           "finish": "cieply finisz z wanilia, przyprawami i opaleniem"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-benchmark-bonded.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -3468,9 +3468,9 @@
       "recognition_priority": 100,
       "demo_rank": 53,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "",
-      "detail_image_audit": "source-missing",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "source_required",
         "method": "none",
@@ -3919,7 +3919,7 @@
           "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą kukurydziana słodycz i opalany dąb."
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/blantons-bourbon.webp",
       "status": "available",
       "source": "popular_200_curated",
       "source_refs": [
@@ -3937,9 +3937,9 @@
       "recognition_priority": 100,
       "demo_rank": 60,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/clean/blantons-bourbon.webp",
-      "detail_image_audit": "source-missing",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
@@ -4045,7 +4045,7 @@
           "finish": "cieply finisz z wanilia, przyprawami i opaleniem"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-e-h-taylor-single-barrel.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -4059,14 +4059,14 @@
       "recognition_priority": 100,
       "demo_rank": 62,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/demo-200/popular-e-h-taylor-single-barrel.webp",
-      "detail_image_audit": "source-missing",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
-        "source_url": "https://cdn.shopify.com/s/files/1/0283/5320/0206/products/e.h.taylorsinglebarrel.jpg?v=1612650164",
-        "source_page": "https://uptownliquor.com.au/products/colonel-e-h-taylor-single-barrel-bourbon-750ml?_pos=1&_psq=E.H.+Taylor+Single+Barrel&_psid=ea7df1640&_ss=e",
+        "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-colonel-eh-single-glencairn.jpg?v=1786681532",
+        "source_page": "https://thedrinksociety.co.nz/products/colonel-e-h-taylor-9-year-old-single-barrel-select-wha-2-kentucky-straight-bourbon-whiskey-750ml?_pos=1&_psq=E.H.+Taylor+Single+Barrel&_psid=3760c0486&_ss=e",
         "license_status": "source_review_required"
       }
     },
@@ -4110,7 +4110,7 @@
           "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą kukurydziana słodycz i opalany dąb."
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-stagg-bourbon.webp",
       "status": "sold_out",
       "source": "popular_200_curated",
       "source_refs": [
@@ -4127,9 +4127,9 @@
       "recognition_priority": 100,
       "demo_rank": 63,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/clean/stagg-kentucky-straight-bourbon-batch-18.webp",
-      "detail_image_audit": "manual-current-rejection",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
@@ -4180,7 +4180,7 @@
           "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą kukurydziana słodycz i opalany dąb."
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/michters-bourbon.webp",
       "status": "available",
       "source": "popular_200_curated",
       "source_refs": [
@@ -4196,9 +4196,9 @@
       "recognition_priority": 100,
       "demo_rank": 64,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/clean/michters-bourbon.webp",
-      "detail_image_audit": "manual-current-rejection",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
@@ -4314,7 +4314,7 @@
           "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą kukurydziana słodycz i opalany dąb."
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/jeffersons-very-small-batch-bourbon.webp",
       "status": "available",
       "source": "popular_200_curated",
       "source_refs": [
@@ -4329,9 +4329,9 @@
       "recognition_priority": 100,
       "demo_rank": 66,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/clean/jeffersons-very-small-batch-bourbon.webp",
-      "detail_image_audit": "manual-current-rejection",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
@@ -4703,7 +4703,7 @@
           "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą łagodny dąb i ciepłe przyprawy."
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/olcc-9157b.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -4718,14 +4718,14 @@
       "recognition_priority": 100,
       "demo_rank": 72,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/demo-200/olcc-9157b.webp",
-      "detail_image_audit": "manual-current-rejection",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
-        "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/Rabbit_Hole_Dareringer_PX_Sherry_Casks_Kentucky_Straight_Bourbon_Whiskey_750ml.webp?v=1769503723",
-        "source_page": "https://elcerritoliquor.com/products/rabbit-hole-dareringer-straight-bourbon-finished-in-px-sherry-casks-750ml?_pos=1&_psq=Rabbit+Hole+Dareringer&_psid=6887064f9&_ss=e",
+        "source_url": "https://cdn.shopify.com/s/files/1/0607/1586/0223/files/ita_pO5A3LA3kSM57iEn6k41i9Cb.webp?v=1770073406",
+        "source_page": "https://canawineco.com/products/rabbit-hole-dareringer-founders-collection-px-cask-finished-cask-strength-kentucky-straight-bourbon-whiskey?_pos=1&_psq=Rabbit+Hole+Dareringer&_psid=eb9c38aa9&_ss=e",
         "license_status": "source_review_required"
       }
     },
@@ -5789,7 +5789,7 @@
           "finish": "cieply finisz z wanilia, przyprawami i opaleniem"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-smoke-wagon-small-batch-bourbon.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -5803,14 +5803,14 @@
       "recognition_priority": 100,
       "demo_rank": 89,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/demo-200/popular-smoke-wagon-small-batch-bourbon.webp",
-      "detail_image_audit": "source-missing",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
         "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/2024_Smoke_Wagon_Halloween_Edition_Small_Batch_Straight_Bourbon_Whiskey_6-Pack_Pre-Sale.webp?v=1769768261",
-        "source_page": "https://elcerritoliquor.com/products/smoke-wagon-straight-bourbon-whiskey-halloween-glow-in-the-dark-edition-2024-6-pack-pre-sale?_pos=1&_psq=Smoke+Wagon+Small+Batch&_psid=6f3396b8f&_ss=e",
+        "source_page": "https://elcerritoliquor.com/products/smoke-wagon-straight-bourbon-whiskey-halloween-glow-in-the-dark-edition-2024-6-pack-pre-sale?_pos=1&_psq=Smoke+Wagon+Small+Batch&_psid=b635c8a53&_ss=e",
         "license_status": "source_review_required"
       }
     },
@@ -6116,7 +6116,7 @@
       "demo_rank": 94,
       "demo_public": true,
       "demo_image_status": "ready",
-      "thumb": "",
+      "thumb": "assets/bourbons/detail-200/popular-early-times-bottled-in-bond.webp",
       "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
@@ -6229,7 +6229,7 @@
           "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą łagodny dąb i ciepłe przyprawy."
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-fighting-cock-103-proof.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -6244,9 +6244,9 @@
       "recognition_priority": 100,
       "demo_rank": 96,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "",
-      "detail_image_audit": "source-missing",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "source_required",
         "method": "none",
@@ -6292,7 +6292,7 @@
           "finish": "cieply finisz z wanilia, przyprawami i opaleniem"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-j-t-s-brown-bottled-in-bond.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -6306,9 +6306,9 @@
       "recognition_priority": 100,
       "demo_rank": 97,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "",
-      "detail_image_audit": "source-missing",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "source_required",
         "method": "none",
@@ -6353,7 +6353,7 @@
           "finish": "cieply finisz z wanilia, przyprawami i opaleniem"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-old-tub-bottled-in-bond.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -6367,9 +6367,9 @@
       "recognition_priority": 100,
       "demo_rank": 98,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "",
-      "detail_image_audit": "source-missing",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "source_required",
         "method": "none",
@@ -6414,7 +6414,7 @@
           "finish": "cieply finisz z wanilia, przyprawami i opaleniem"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-coopers-craft-barrel-reserve-100-proof.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -6428,9 +6428,9 @@
       "recognition_priority": 100,
       "demo_rank": 99,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/demo-200/popular-coopers-craft-barrel-reserve-100-proof.webp",
-      "detail_image_audit": "source-missing",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
@@ -6491,7 +6491,7 @@
       "demo_rank": 100,
       "demo_public": true,
       "demo_image_status": "ready",
-      "thumb": "",
+      "thumb": "assets/bourbons/detail-200/popular-bowman-brothers-small-batch-bourbon.webp",
       "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
@@ -6675,7 +6675,7 @@
           "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą dąb i łagodne przyprawy."
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/johnnie-walker-double-black-151-5k.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -6690,15 +6690,15 @@
       "recognition_priority": 100,
       "demo_rank": 103,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/demo-200/johnnie-walker-double-black-151-5k.webp",
-      "detail_image_audit": "source-missing",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
-        "source_url": "https://cdn.shopify.com/s/files/1/0571/5407/6783/files/mi-johnnie-walker-double-black-dba157560a0b2ed9.jpg?v=1710599347",
-        "source_page": "https://www.tenleymarketliquor.com/products/johnnie-walker-double-black-label-blended-scotch-whisky?_pos=1&_psq=Johnnie+Walker+Double+Black&_psid=f2df544fc&_ss=e",
-        "license_status": "source_review_required"
+        "source_url": "https://images.ctfassets.net/waruwpig3jxu/2KL8hhvxPn9bpLV8gKjV1z/f13bd58df6728c69941feeb303081a6b/producthero_halffront_desktop.webp?w=1200&q=85&fm=webp",
+        "source_page": "https://www.johnniewalker.com/en-us/our-whisky/core-range/johnnie-walker-double-black",
+        "license_status": "official_source_review_required"
       }
     },
     {
@@ -7435,7 +7435,7 @@
           "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą dąb i łagodne przyprawy."
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/olcc-0346b.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -7451,9 +7451,9 @@
       "recognition_priority": 100,
       "demo_rank": 115,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/demo-200/olcc-0346b.jpg",
-      "detail_image_audit": "source-missing",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
@@ -7625,7 +7625,7 @@
           "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą dąb i łagodne przyprawy."
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/olcc-0392b.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -7640,15 +7640,15 @@
       "recognition_priority": 100,
       "demo_rank": 118,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/demo-200/olcc-0392b.webp",
-      "detail_image_audit": "manual-current-rejection",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
-        "source_url": "https://cdn.shopify.com/s/files/1/0635/3289/2418/files/buy-glenfiddich-15__93959.jpg?v=1767739196",
-        "source_page": "https://qualityliquorstore.com/products/glenfiddich-special-reserve-15-year-scotch?_pos=1&_psq=Glenfiddich+15+Year+Solera&_psid=c746ce5cb&_ss=e",
-        "license_status": "source_review_required"
+        "source_url": "https://images.ctfassets.net/53l6u5v24bqr/1AyUlAvAMX1QQo1ZlrH399/b607350472e3a3eeff62123d2fce1ca6/15_YO__6700_A%C3%8C___10000_.png?fm=webp&w=1200&q=85",
+        "source_page": "https://www.glenfiddich.com/all-products/glenfiddich-xs/xs-15-year-old/",
+        "license_status": "official_source_review_required"
       }
     },
     {
@@ -7690,7 +7690,7 @@
           "finish": "slodowy finisz z owocami i suchym debem"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-glenfiddich-18-year.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -7704,15 +7704,15 @@
       "recognition_priority": 100,
       "demo_rank": 119,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/demo-200/popular-glenfiddich-18-year.webp",
-      "detail_image_audit": "manual-current-rejection",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
-        "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/glenfiddich-18-year-old-single-malt-scotch-whisky-70-cl-whisky-28398639546483.jpg?v=1703659064",
-        "source_page": "https://www.thebottleclub.com/products/glenfiddich-18y?_pos=1&_psq=Glenfiddich+18+Year&_psid=d6962f734&_ss=e",
-        "license_status": "source_review_required"
+        "source_url": "https://images.ctfassets.net/53l6u5v24bqr/40ahgaxqc7fhCU6bx7VhDa/761b728bc4586c376874a9096f52c851/18_YO__6700_A%C3%8C___10000_.png?fm=webp&w=1200&q=85",
+        "source_page": "https://www.glenfiddich.com/all-products/glenfiddich-xs/xs-18-year-old/",
+        "license_status": "official_source_review_required"
       }
     },
     {
@@ -7902,7 +7902,7 @@
       "demo_rank": 122,
       "demo_public": true,
       "demo_image_status": "ready",
-      "thumb": "",
+      "thumb": "assets/bourbons/detail-200/popular-the-glenlivet-14-year-cognac-cask-selection.webp",
       "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
@@ -8148,7 +8148,7 @@
           "finish": "slodowy finisz z owocami i suchym debem"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-the-balvenie-12-year-doublewood.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -8162,14 +8162,14 @@
       "recognition_priority": 100,
       "demo_rank": 126,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/demo-200/popular-the-balvenie-12-year-doublewood.jpg",
-      "detail_image_audit": "source-missing",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
         "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/the-balvenie-doublewood-12-year-old-single-malt-scotch-whisky-70-cl-whisky-32841110225011.jpg?v=1703662153",
-        "source_page": "https://www.thebottleclub.com/products/the-balvenie-doublewood-12-malt-whisky?_pos=1&_psq=The+Balvenie+12+Year+DoubleWood&_psid=82e780fb7&_ss=e",
+        "source_page": "https://www.thebottleclub.com/products/the-balvenie-doublewood-12-malt-whisky?_pos=1&_psq=The+Balvenie+12+Year+DoubleWood&_psid=816e3adb6&_ss=e",
         "license_status": "source_review_required"
       }
     },
@@ -8342,7 +8342,7 @@
           "finish": "slodowy finisz z owocami i suchym debem"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-glenmorangie-lasanta-12-year.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -8356,15 +8356,15 @@
       "recognition_priority": 100,
       "demo_rank": 129,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/demo-200/popular-glenmorangie-lasanta-12-year.webp",
-      "detail_image_audit": "manual-current-rejection",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
-        "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-glenmorangie-12yo-lasanta.jpg?v=1701321382",
-        "source_page": "https://thedrinksociety.co.nz/products/glenmorangie-12-year-old-lasanta-sherry-cask-single-malt-scotch-whisky-700ml?_pos=2&_psq=Glenmorangie+Lasanta+12+Year&_psid=6e20b6826&_ss=e",
-        "license_status": "source_review_required"
+        "source_url": "https://www.glenmorangie.com/cdn/shop/files/Original-12-Beauty-Shot_high.width-1920x-prop_2.png?v=1720437335&width=1050",
+        "source_page": "https://www.glenmorangie.com/pages/glenmorangie-original-12-de",
+        "license_status": "official_source_review_required"
       }
     },
     {
@@ -8470,7 +8470,7 @@
           "finish": "slodowy finisz z owocami i suchym debem"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-aberlour-12-year-double-cask.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -8484,14 +8484,14 @@
       "recognition_priority": 100,
       "demo_rank": 131,
       "demo_public": true,
-      "demo_image_status": "missing",
-      "thumb": "",
-      "detail_image_audit": "manual-current-rejection",
+      "demo_image_status": "ready",
+      "thumb": "assets/bourbons/detail-200/popular-aberlour-12-year-double-cask.webp",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
-        "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-aberlour-12yo-1l-new.jpg?v=1716696006",
-        "source_page": "https://thedrinksociety.co.nz/products/aberlour-12-year-old-double-cask-matured-single-malt-scotch-whisky-1l?_pos=8&_psq=Aberlour+12+Year+Double+Cask&_psid=23e1deb49&_ss=e",
+        "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/products/tds-aberlour-12-double.jpg?v=1622529638",
+        "source_page": "https://thedrinksociety.co.nz/products/aberlour-12-year-old-double-cask-matured-single-malt-scotch-whisky-700ml?_pos=7&_psq=Aberlour+12+Year+Double+Cask&_psid=8b8ce9a1f&_ss=e",
         "license_status": "source_review_required"
       }
     },
@@ -8532,7 +8532,7 @@
           "finish": "slodowy finisz z owocami i suchym debem"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-aberlour-a-bunadh.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -8546,14 +8546,14 @@
       "recognition_priority": 100,
       "demo_rank": 132,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/demo-200/popular-aberlour-a-bunadh.webp",
-      "detail_image_audit": "manual-current-rejection",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
-        "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-aberlour-abunadh-all.jpg?v=1716437302",
-        "source_page": "https://thedrinksociety.co.nz/products/aberlour-abunadh-batch-73-cask-strength-single-malt-scotch-whisky-700ml?_pos=1&_psq=Aberlour+A%27Bunadh&_psid=17f6ca891&_ss=e",
+        "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-aberlour-abunadh-all_d6407be9-2da8-44be-933b-b2f23ce03d59.jpg?v=1716437580",
+        "source_page": "https://thedrinksociety.co.nz/products/aberlour-abunadh-batch-76-cask-strength-single-malt-scotch-whisky-700ml?_pos=5&_psq=Aberlour+A%27Bunadh&_psid=de2a8480f&_ss=e",
         "license_status": "source_review_required"
       }
     },
@@ -8719,7 +8719,7 @@
           "finish": "slodowy finisz z owocami i suchym debem"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-laphroaig-10-year.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -8733,15 +8733,15 @@
       "recognition_priority": 100,
       "demo_rank": 135,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/demo-200/popular-laphroaig-10-year.webp",
-      "detail_image_audit": "source-missing",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
-        "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/laphroaig-10-year-old-malt-whisky-half-bottle-35-cl-whisky-32840880062579.jpg?v=1703661618",
-        "source_page": "https://www.thebottleclub.com/products/laphroaig-10yo-malt-whisky-half-bottle?_pos=10&_psq=Laphroaig+10+Year&_psid=3fd66c7c1&_ss=e",
-        "license_status": "source_review_required"
+        "source_url": "https://www.laphroaig.com/sites/default/files/2023-05/laph_remind_me.webp",
+        "source_page": "https://www.laphroaig.com/de-de/whiskies/laphroaig-10-cask-strength-batch-12",
+        "license_status": "official_source_review_required"
       }
     },
     {
@@ -8906,7 +8906,7 @@
           "finish": "slodowy finisz z owocami i suchym debem"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-talisker-10-year.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -8920,15 +8920,15 @@
       "recognition_priority": 100,
       "demo_rank": 138,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/demo-200/popular-talisker-10-year.webp",
-      "detail_image_audit": "manual-current-rejection",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
-        "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/drinks-by-the-dram-single-cracker-talisker-10-year-old-spirit-miniatures-14310462849139.png?v=1703663978",
-        "source_page": "https://www.thebottleclub.com/products/drinks-by-the-dram-single-cracker-talisker-10-year-old?_pos=5&_psq=Talisker+10+Year&_psid=8f20397f1&_ss=e",
-        "license_status": "source_review_required"
+        "source_url": "https://images.ctfassets.net/glsfy1cpffmh/3ERMrkYZYS7v3epQ6nBTn5/1503b022c1c395e4f36c59083723a9ca/Talisker_Katie_Tunn_Bottle_Beach.jpg?fm=webp&q=85&fit=fill&w=1200",
+        "source_page": "https://www.malts.com/en/products/talisker-10-year-old-single-malt-scotch-whisky-70-cl-in-a-gift-set-with-enamel-cup-greeting-card",
+        "license_status": "official_source_review_required"
       }
     },
     {
@@ -9169,7 +9169,7 @@
           "finish": "slodowy finisz z owocami i suchym debem"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-caol-ila-12-year.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -9183,15 +9183,15 @@
       "recognition_priority": 100,
       "demo_rank": 142,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/demo-200/popular-caol-ila-12-year.webp",
-      "detail_image_audit": "manual-current-rejection",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
-        "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/products/tds-caol-ila-12-1L.jpg?v=1602139418",
-        "source_page": "https://thedrinksociety.co.nz/products/caol-ila-12-years-old-single-malt-scotch-whisky-1l?_pos=2&_psq=Caol+Ila+12+Year&_psid=64e5411f2&_ss=e",
-        "license_status": "source_review_required"
+        "source_url": "https://images.ctfassets.net/glsfy1cpffmh/2OHI9CL0RfBNzA3Kb5eJFi/f20393b290514d308331149b4c7e499b/caol-ila-12-year-old-islay-single-malt-scotch-whisky-70cl-in-a-high-quality-gift-set-with-glasses-greeting-card-transparent.png?fm=webp&q=85&fit=fill&w=1200",
+        "source_page": "https://www.malts.com/en/products/caol-ila-12-year-old-islay-single-malt-scotch-whisky-70cl-in-a-high-quality-gift-set-with-glasses-greeting-card",
+        "license_status": "official_source_review_required"
       }
     },
     {
@@ -9233,7 +9233,7 @@
           "finish": "slodowy finisz z owocami i suchym debem"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-bowmore-12-year.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -9247,15 +9247,15 @@
       "recognition_priority": 100,
       "demo_rank": 143,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/demo-200/popular-bowmore-12-year.jpg",
-      "detail_image_audit": "source-missing",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
-        "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/bowmore-12-year-old-sherry-oak-cask-islay-single-malt-scotch-whisky-70-cl-spirit-1183127788.jpg?v=1754329391",
-        "source_page": "https://www.thebottleclub.com/products/bowmore-12-year-old-sherry-oak-cask-islay-single-malt-scotch-whisky-70-cl?_pos=2&_psq=Bowmore+12+Year&_psid=6eeb9b049&_ss=e",
-        "license_status": "source_review_required"
+        "source_url": "https://www.bowmore.com/sites/default/files/styles/original/public/2025-06/Bowmore%2012%20Year%20Old%20Box%20Front.png.webp?itok=QuTK2ES9",
+        "source_page": "https://www.bowmore.com/whiskies/12-year-old",
+        "license_status": "official_source_review_required"
       }
     },
     {
@@ -9298,7 +9298,7 @@
           "finish": "slodowy finisz z owocami i suchym debem"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-the-dalmore-12-year.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -9312,15 +9312,15 @@
       "recognition_priority": 100,
       "demo_rank": 144,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/demo-200/popular-the-dalmore-12-year.webp",
-      "detail_image_audit": "manual-current-rejection",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
-        "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/products/tds-dalmore-12yo-1l.jpg?v=1679026272",
-        "source_page": "https://thedrinksociety.co.nz/products/the-dalmore-12-year-old-single-malt-scotch-whisky-1l?_pos=6&_psq=The+Dalmore+12+Year&_psid=febeeb6a9&_ss=e",
-        "license_status": "source_review_required"
+        "source_url": "https://www.thedalmore.com/media/r2lnabms/d12_2023_gm_700_bottleandcarton_noshadow_shopify.png?width=960&height=1200&v=1db189b134b6fb0",
+        "source_page": "https://www.thedalmore.com/es-es/nuestras-colecciones/coleccion-principal/the-dalmore-12/",
+        "license_status": "official_source_review_required"
       }
     },
     {
@@ -9492,7 +9492,7 @@
           "finish": "slodowy finisz z owocami i suchym debem"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-the-glenallachie-12-year.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -9506,15 +9506,15 @@
       "recognition_priority": 100,
       "demo_rank": 147,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/demo-200/popular-the-glenallachie-12-year.webp",
-      "detail_image_audit": "manual-current-rejection",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
-        "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-glenallachie-12yo.jpg?v=1727767453",
-        "source_page": "https://thedrinksociety.co.nz/products/glenallachie-12-year-old-speyside-single-malt-scotch-whisky-700ml?_pos=10&_psq=The+GlenAllachie+12+Year&_psid=413111ec1&_ss=e",
-        "license_status": "source_review_required"
+        "source_url": "https://theglenallachie.com/wp-content/uploads/2020/10/Chinquapin-Virgin-Oak-12-1-900x1408.png",
+        "source_page": "https://theglenallachie.com/whisky/glenallachie-12-years-old-chinquapin-virgin-oak/",
+        "license_status": "official_source_review_required"
       }
     },
     {
@@ -9676,7 +9676,7 @@
           "finish": "slodowy finisz z owocami i suchym debem"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-jura-10-year.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -9690,14 +9690,14 @@
       "recognition_priority": 100,
       "demo_rank": 150,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/demo-200/popular-jura-10-year.webp",
-      "detail_image_audit": "source-missing",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
         "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/jura-10-year-old-whisky-70-cl-whisky-15794110726259.jpg?v=1703659108",
-        "source_page": "https://www.thebottleclub.com/products/jura-10y?_pos=1&_psq=Jura+10+Year&_psid=17a7675bd&_ss=e",
+        "source_page": "https://www.thebottleclub.com/products/jura-10y?_pos=1&_psq=Jura+10+Year&_psid=709987494&_ss=e",
         "license_status": "source_review_required"
       }
     },
@@ -9799,7 +9799,7 @@
           "finish": "czysty finisz z miodem i lagodna przyprawa"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-jameson-black-barrel.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -9813,14 +9813,14 @@
       "recognition_priority": 100,
       "demo_rank": 152,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/demo-200/popular-jameson-black-barrel.webp",
-      "detail_image_audit": "source-missing",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
         "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/jameson-black-barrel-blended-irish-whiskey-70-cl-whisky-28345205948531.jpg?v=1703672458",
-        "source_page": "https://www.thebottleclub.com/products/jameson-black-barrel-blended-irish-whiskey-70-cl?_pos=1&_psq=Jameson+Black+Barrel&_psid=8b906caaf&_ss=e",
+        "source_page": "https://www.thebottleclub.com/products/jameson-black-barrel-blended-irish-whiskey-70-cl?_pos=1&_psq=Jameson+Black+Barrel&_psid=76d6b69a2&_ss=e",
         "license_status": "source_review_required"
       }
     },
@@ -10378,7 +10378,7 @@
           "finish": "czysty finisz z miodem i lagodna przyprawa"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-redbreast-12-year.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -10392,14 +10392,14 @@
       "recognition_priority": 100,
       "demo_rank": 161,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/demo-200/popular-redbreast-12-year.webp",
-      "detail_image_audit": "source-missing",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
         "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/redbreast-12-year-old-whiskey-70-cl-whisky-32841019064435.jpg?v=1703667558",
-        "source_page": "https://www.thebottleclub.com/products/redbreast-12-year-old-whiskey-70-cl?_pos=3&_psq=Redbreast+12+Year&_psid=5c5200d76&_ss=e",
+        "source_page": "https://www.thebottleclub.com/products/redbreast-12-year-old-whiskey-70-cl?_pos=3&_psq=Redbreast+12+Year&_psid=21c84d16e&_ss=e",
         "license_status": "source_review_required"
       }
     },
@@ -10442,7 +10442,7 @@
           "finish": "czysty finisz z miodem i lagodna przyprawa"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-redbreast-15-year.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -10456,14 +10456,14 @@
       "recognition_priority": 100,
       "demo_rank": 162,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/demo-200/popular-redbreast-15-year.webp",
-      "detail_image_audit": "manual-current-rejection",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
-        "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-redbreast-15yo-new.jpg?v=1730182447",
-        "source_page": "https://thedrinksociety.co.nz/products/redbreast-15-year-old-single-pot-still-irish-whiskey-700ml?_pos=2&_psq=Redbreast+15+Year&_psid=786daae2f&_ss=e",
+        "source_url": "https://cdn.shopify.com/s/files/1/0283/5320/0206/products/redbreast15.jpg?v=1607831887",
+        "source_page": "https://uptownliquor.com.au/products/redbreast-15-years-irish-whiskey-700ml?_pos=1&_psq=Redbreast+15+Year&_psid=9d7921c15&_ss=e",
         "license_status": "source_review_required"
       }
     },
@@ -10506,7 +10506,7 @@
           "finish": "czysty finisz z miodem i lagodna przyprawa"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-redbreast-12-year-cask-strength.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -10520,14 +10520,14 @@
       "recognition_priority": 100,
       "demo_rank": 163,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "",
-      "detail_image_audit": "manual-current-rejection",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
-        "source_url": "https://cdn.shopify.com/s/files/1/0607/1586/0223/files/Redbreast12YearOldCaskStrengthBatchB1_21FlaskFineWineWhisky.webp?v=1747862479",
-        "source_page": "https://canawineco.com/products/redbreast-12-year-old-cask-strength-single-pot-still-irish-whiskey-750ml?_pos=1&_psq=Redbreast+12+Year+Cask+Strength&_psid=79ef50d77&_ss=e",
+        "source_url": "https://cdn.shopify.com/s/files/1/0635/3289/2418/files/redbreast-cask-strength.jpg?v=1767741827",
+        "source_page": "https://qualityliquorstore.com/products/redbreast-12-year-old-cask-strength-whiskey?_pos=1&_psq=Redbreast+12+Year+Cask+Strength&_psid=3bef7fa81&_ss=e",
         "license_status": "source_review_required"
       }
     },
@@ -10632,7 +10632,7 @@
           "finish": "czysty finisz z miodem i lagodna przyprawa"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-yellow-spot-12-year.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -10646,14 +10646,14 @@
       "recognition_priority": 100,
       "demo_rank": 165,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/demo-200/popular-yellow-spot-12-year.webp",
-      "detail_image_audit": "source-missing",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
-        "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/products/tds-yellow-spot-12-2.jpg?v=1602058234",
-        "source_page": "https://thedrinksociety.co.nz/products/yellow-spot-12-year-old-single-pot-still-irish-whiskey-700ml?_pos=2&_psq=Yellow+Spot+12+Year&_psid=721e5145d&_ss=e",
+        "source_url": "https://cdn.shopify.com/s/files/1/0571/5407/6783/files/57e00e78-aa22-491c-bd4f-282288b7a4db.webp?v=1711487199",
+        "source_page": "https://www.tenleymarketliquor.com/products/yellow-spot-12-year-irish-whiskey?_pos=1&_psq=Yellow+Spot+12+Year&_psid=f81b36bc5&_ss=e",
         "license_status": "source_review_required"
       }
     },
@@ -11189,7 +11189,7 @@
           "finish": "precyzyjny finisz z owocami i lagodna przyprawa"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-yamazaki-distiller-s-reserve.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -11203,15 +11203,15 @@
       "recognition_priority": 100,
       "demo_rank": 174,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/demo-200/popular-yamazaki-distiller-s-reserve.webp",
-      "detail_image_audit": "manual-current-rejection",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
-        "source_url": "https://cdn.shopify.com/s/files/1/0571/5407/6783/files/the-yamazaki-single-malt-whisky-distillers-reserve-whisky.webp?v=1719001838",
-        "source_page": "https://www.tenleymarketliquor.com/products/yamazaki-single-malt-whisky-distiller-s-reserve?_pos=1&_psq=Yamazaki+Distiller%27s+Reserve&_psid=70f15eed4&_ss=e",
-        "license_status": "source_review_required"
+        "source_url": "https://house.suntory.com/sites/default/files/styles/original/public/2025-02/HakuJapaneseVodka_750ml_3DRendering_Still.png.webp?itok=Wbyt698I",
+        "source_page": "https://house.suntory.com/yamazaki-whisky/yamazaki-distillers-reserve",
+        "license_status": "official_source_review_required"
       }
     },
     {
@@ -11376,7 +11376,7 @@
           "finish": "precyzyjny finisz z owocami i lagodna przyprawa"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-nikka-from-the-barrel.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -11390,14 +11390,14 @@
       "recognition_priority": 100,
       "demo_rank": 177,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/demo-200/popular-nikka-from-the-barrel.jpg",
-      "detail_image_audit": "source-missing",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
         "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/nikka-from-the-barrel-whisky-50-cl-whisky-1104538965.jpg?v=1740841853",
-        "source_page": "https://www.thebottleclub.com/products/nikka-from-the-barrel-whisky?_pos=1&_psq=Nikka+From+the+Barrel&_psid=a4c53e040&_ss=e",
+        "source_page": "https://www.thebottleclub.com/products/nikka-from-the-barrel-whisky?_pos=1&_psq=Nikka+From+the+Barrel&_psid=ee297ef52&_ss=e",
         "license_status": "source_review_required"
       }
     },
@@ -11557,7 +11557,7 @@
           "finish": "precyzyjny finisz z owocami i lagodna przyprawa"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-nikka-days.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -11571,14 +11571,14 @@
       "recognition_priority": 100,
       "demo_rank": 180,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/demo-200/popular-nikka-days.webp",
-      "detail_image_audit": "source-missing",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
         "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/nikka-days-japanese-blended-whisky-70-cl-whisky-32846230880371.jpg?v=1703667063",
-        "source_page": "https://www.thebottleclub.com/products/nikka-days-japanese-blended-whisky-70-cl?_pos=1&_psq=Nikka+Days&_psid=3a6b2d1c5&_ss=e",
+        "source_page": "https://www.thebottleclub.com/products/nikka-days-japanese-blended-whisky-70-cl?_pos=1&_psq=Nikka+Days&_psid=cb1a9e1a5&_ss=e",
         "license_status": "source_review_required"
       }
     },
@@ -11679,7 +11679,7 @@
           "finish": "precyzyjny finisz z owocami i lagodna przyprawa"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-nikka-miyagikyo-single-malt.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -11693,14 +11693,14 @@
       "recognition_priority": 100,
       "demo_rank": 182,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/demo-200/popular-nikka-miyagikyo-single-malt.webp",
-      "detail_image_audit": "source-missing",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
         "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/nikka-miyagikyo-single-malt-90th-anniversary-japanese-whisky-70-cl-whisky-1104359801.jpg?v=1740841847",
-        "source_page": "https://www.thebottleclub.com/products/nikka-miyagikyo-sigle-malt-japanese-whisky-70-cl?_pos=1&_psq=Nikka+Miyagikyo+Single+Malt&_psid=aa413fdf6&_ss=e",
+        "source_page": "https://www.thebottleclub.com/products/nikka-miyagikyo-sigle-malt-japanese-whisky-70-cl?_pos=1&_psq=Nikka+Miyagikyo+Single+Malt&_psid=8436a08ef&_ss=e",
         "license_status": "source_review_required"
       }
     },
@@ -11928,7 +11928,7 @@
           "finish": "Przewidywany profil stylu: zbalansowane domknięcie z nutą łagodny dąb i ciepłe przyprawy."
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/olcc-0146b.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -11943,15 +11943,15 @@
       "recognition_priority": 100,
       "demo_rank": 186,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/demo-200/olcc-0146b.webp",
-      "detail_image_audit": "manual-current-rejection",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",
-        "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/jack-daniel-s-old-no-7-tennessee-whiskey-coca-cola-premixed-can-multipack-12-x-330-ml-ready-made-cocktails-1126626513.jpg?v=1739311139",
-        "source_page": "https://www.thebottleclub.com/products/jack-daniels-old-no-7-tennessee-whiskey-cola-premixed-can-12-x-330ml-multipack?_pos=2&_psq=Jack+Daniel%27s+Old+No.+7&_psid=785dd9f50&_ss=e",
-        "license_status": "source_review_required"
+        "source_url": "https://live-jd24-backend.pantheonsite.io/sites/default/files/2026-04/JDTA%20SE%20Bottle.png",
+        "source_page": "https://www.jackdaniels.com/whiskey/old-no-7",
+        "license_status": "official_source_review_required"
       }
     },
     {
@@ -12435,7 +12435,7 @@
           "finish": "wytrawny finisz z zytnia przyprawa i debem"
         }
       },
-      "image": "",
+      "image": "assets/bourbons/detail-200/popular-rittenhouse-rye-bottled-in-bond.webp",
       "status": "catalog",
       "source": "popular_200_curated",
       "source_refs": [
@@ -12449,9 +12449,9 @@
       "recognition_priority": 100,
       "demo_rank": 194,
       "demo_public": true,
-      "demo_image_status": "missing",
+      "demo_image_status": "ready",
       "thumb": "assets/bourbons/demo-200/popular-rittenhouse-rye-bottled-in-bond.webp",
-      "detail_image_audit": "source-missing",
+      "detail_image_audit": "standardized-v1",
       "image_provenance": {
         "status": "existing_repository_asset",
         "method": "official_source_override",

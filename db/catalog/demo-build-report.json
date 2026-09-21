@@ -1,15 +1,15 @@
 {
   "ok": true,
   "version": "demo-200-v1",
-  "updated": "2026-09-13T07:51:10.961Z",
+  "updated": "2026-09-13T09:44:23.039Z",
   "requested": 200,
   "public_records": 200,
   "scanner_records": 200,
-  "missing_images": 40,
+  "missing_images": 0,
   "resolution_methods": {
     "official_source_override": 195,
     "popular_record": 1
   },
-  "detail_images_ready": 160,
+  "detail_images_ready": 200,
   "detail_image_standard": "packshot-transparent-960x1280-v1"
 }
