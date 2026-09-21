@@ -18,7 +18,7 @@ const DEFAULT_DB_URL = "https://raw.githubusercontent.com/" + REPO + "/main/db/c
 const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters. Krotko, z jajem, ale rzeczowo. quality=jakosc 1-5, value=jakosc/cena 1-5 (5 swietna i tania, 1 slaba i droga). Pisz {{LANG}}. Zwroc tylko JSON.";
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
 const MULTI_CANDIDATE_CONFIDENCE = 0.9;
-const SCAN_ORCHESTRATOR_VERSION = "visual-web-search-confirmed-photo-v11";
+const SCAN_ORCHESTRATOR_VERSION = "visual-web-search-confirmed-photo-v12";
 const SCAN_CATALOG_VERSION = "demo-200-v1";
 const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v6-highres-cutout";
 const CATALOG_MODERATION_VERSION = "catalog-moderation-orchestrator-admin-v1";
@@ -3159,7 +3159,8 @@ async function callGemini(env, payload, stage){
       catch(e){ st=0; dt="network"; }
       if(rr&&rr.ok){ r=rr; break outer; }
       if(rr){ st=rr.status; dt=(await rr.text()).slice(0,400); }
-      if(st===401 || st===403 || st===429) break outer;
+      if(st===401 || st===403) break outer;
+      if(st===429) break;
       if(st===400 || st===404) break;
       const retryable=st===0||st===408||st===500||st===502||st===503||st===504;
       if(!retryable) break;

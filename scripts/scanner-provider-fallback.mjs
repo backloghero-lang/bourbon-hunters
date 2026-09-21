@@ -88,12 +88,12 @@ const quotaResult=await quotaWorker.__providerTest.callGemini({GEMINI_API_KEY:"t
   contents:[{role:"user",parts:[{text:"identify"}]}]
 },"visual_identification");
 if(quotaResult.err?.status!==429) throw new Error(`Quota should remain visible: ${JSON.stringify(quotaResult)}`);
-if(quotaCalls.length!==2) throw new Error(`Quota must not fan out across models, got ${quotaCalls.length} calls`);
+if(quotaCalls.length!==4) throw new Error(`Quota should try every available fallback model, got ${quotaCalls.length} calls`);
 
 console.log(JSON.stringify({
   ok:true,
   discovery_fallback_model:discoveryResult.usage.model,
   direct_fallback_model:directResult.usage.model,
   invalid_model_404_continues:true,
-  quota_429_stops:true
+  quota_429_falls_back:true
 },null,2));
