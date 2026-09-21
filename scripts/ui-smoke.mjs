@@ -1,5 +1,10 @@
 import { chromium,browserLaunchOptions } from "./playwright-runtime.mjs";
+import { readFileSync } from "node:fs";
+import path from "node:path";
 const target=process.env.BH_SMOKE_URL||"http://127.0.0.1:8765/index.html";
+const appSource=readFileSync(path.resolve(process.cwd(),"index.html"),"utf8");
+const appVersion=appSource.match(/const APP_VERSION = "([^"]+)"/)?.[1];
+if(!appVersion) throw new Error("Application version missing from index.html");
 
 const browser=await chromium.launch(browserLaunchOptions());
 const page=await browser.newPage({viewport:{width:390,height:844},deviceScaleFactor:1});
@@ -73,7 +78,7 @@ await browser.close();
 if(missingResources.length) throw new Error("Missing resources:\n"+[...new Set(missingResources)].join("\n"));
 if(errors.length) throw new Error(errors.join("\n"));
 if(metrics!==9) throw new Error("Expected 9 admin metrics, got "+metrics);
-if(!systemHealth.includes("v138")) throw new Error("Application version missing from system health");
+if(!systemHealth.includes("v"+appVersion)) throw new Error("Application version missing from system health");
 if(/gemini|visual-only|model resolver/i.test(systemHealth)) throw new Error("Technical model details remain visible in system health");
 if(technicalTables!==0) throw new Error("Scanner outcome or model tables remain visible");
 if(dimensions.scrollWidth>dimensions.width+1) throw new Error("Mobile horizontal overflow: "+JSON.stringify(dimensions));
