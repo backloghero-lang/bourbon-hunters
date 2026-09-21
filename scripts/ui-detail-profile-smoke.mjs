@@ -52,6 +52,7 @@ const detail=await page.evaluate((id)=>{
   };
 },bottleId);
 if(!detail.source.includes("assets/bourbons/detail-200/")) throw new Error("Detail does not use the standardized full image: "+JSON.stringify(detail));
+if(!detail.source.includes("v=138")) throw new Error("Detail image is not cache-versioned: "+JSON.stringify(detail));
 if(detail.renderedHeight<400 || detail.renderedHeight/detail.stageHeight<.7) throw new Error("Detail bottle is too small: "+JSON.stringify(detail));
 if(!detail.listHasImage) throw new Error("List image is missing: "+JSON.stringify(detail));
 const fallback=await page.evaluate(()=>{

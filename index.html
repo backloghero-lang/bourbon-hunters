@@ -988,7 +988,7 @@
 <script>
 /* ========= KONFIGURACJA ========= */
 const WORKER_URL = "https://bourbon-hunters.darekmaslyk.workers.dev";
-const APP_VERSION = "137";
+const APP_VERSION = "138";
 const API_CONTRACT_VERSION = "bh-api-2026-08-v1";
 const DB_URL = "db/catalog/demo-200.json";
 const PROFILES_URL = "db/profiles-runtime.json";
@@ -2947,7 +2947,11 @@ function safeImageSrc(value, fallback){
   if(/^data:image\/(?:png|jpe?g|webp|gif);base64,[a-z0-9+/=\s]+$/i.test(raw)) return raw;
   try{
     const parsed=new URL(raw,location.href);
-    if(parsed.protocol==="https:" || parsed.protocol==="http:" || parsed.protocol==="blob:") return parsed.href;
+    if(parsed.protocol==="https:" || parsed.protocol==="http:"){
+      if(parsed.origin===location.origin && /\/(?:assets|design|icons)\//.test(parsed.pathname)) parsed.searchParams.set("v",APP_VERSION);
+      return parsed.href;
+    }
+    if(parsed.protocol==="blob:") return parsed.href;
   }catch(e){}
   return fallback||"";
 }
