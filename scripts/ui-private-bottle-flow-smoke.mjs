@@ -60,6 +60,7 @@ await page.locator("#privateBottleForm").waitFor();
 await page.locator('#privateBottleForm [name="distillery"]').fill("Hunter Distillery");
 await page.locator('#privateBottleForm [name="category"]').fill("Single Malt");
 await page.locator('#privateBottleForm [name="abv"]').fill("46");
+await page.locator('#privateBottleForm [data-private-image-choice="photo"]').click();
 await page.locator('#privateBottleForm button[type="submit"]').click();
 await page.waitForTimeout(1200);
 if(!await page.locator('[data-private-edit="private-user-test"]').count()){
