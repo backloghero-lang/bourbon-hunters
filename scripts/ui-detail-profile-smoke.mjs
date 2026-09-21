@@ -1,6 +1,11 @@
 import { chromium,browserLaunchOptions } from "./playwright-runtime.mjs";
+import { readFileSync } from "node:fs";
+import path from "node:path";
 const target=process.env.BH_SMOKE_URL||"http://127.0.0.1:8765/index.html";
 const bottleId="jim-beam-101-22";
+const appSource=readFileSync(path.resolve(process.cwd(),"index.html"),"utf8");
+const appVersion=appSource.match(/const APP_VERSION = "([^"]+)"/)?.[1];
+if(!appVersion) throw new Error("Application version missing from index.html");
 
 const browser=await chromium.launch(browserLaunchOptions());
 const page=await browser.newPage({viewport:{width:390,height:844},deviceScaleFactor:1});
@@ -52,7 +57,7 @@ const detail=await page.evaluate((id)=>{
   };
 },bottleId);
 if(!detail.source.includes("assets/bourbons/detail-200/")) throw new Error("Detail does not use the standardized full image: "+JSON.stringify(detail));
-if(!detail.source.includes("v=138")) throw new Error("Detail image is not cache-versioned: "+JSON.stringify(detail));
+if(!detail.source.includes("v="+appVersion)) throw new Error("Detail image is not cache-versioned: "+JSON.stringify(detail));
 if(detail.renderedHeight<400 || detail.renderedHeight/detail.stageHeight<.7) throw new Error("Detail bottle is too small: "+JSON.stringify(detail));
 if(!detail.listHasImage) throw new Error("List image is missing: "+JSON.stringify(detail));
 const fallback=await page.evaluate(()=>{
