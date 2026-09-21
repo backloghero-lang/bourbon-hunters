@@ -44,6 +44,7 @@ const runtimeDirs = [
   "assets/detail",
   "assets/fonts",
   "assets/intro",
+  "assets/bourbons/detail-200",
   "assets/bourbons/list-thumbs",
   "assets/news",
   "assets/profile-badges",

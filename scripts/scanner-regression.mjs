@@ -299,7 +299,8 @@ const unknownBottleResponse=await context.__worker.fetch(unknownBottleRequest,{D
 const unknownBottle=await unknownBottleResponse.json();
 assert(unknownBottleResponse.status===200,`Unknown bottle returned ${unknownBottleResponse.status}: ${JSON.stringify(unknownBottle)}`);
 assert(unknownBottle.reason==="catalog_not_found",`Unknown bottle did not enter the private-add flow: ${JSON.stringify(unknownBottle)}`);
-assert(/^data:image\/webp;base64,/.test(String(unknownBottle.prepared_image||"")),"Unknown bottle did not receive a prepared cutout");
+assert(unknownBottle.image_choice_required===true,"Unknown bottle should wait for the user's image choice before cutout");
+assert(!unknownBottle.prepared_image,"Unknown bottle must not be cut out before confirmation");
 visualBottleName="Bulleit Bottled in Bond";
 
 const confirmationRequest=new Request("https://bourbon-hunters.darekmaslyk.workers.dev/",{

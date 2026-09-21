@@ -390,8 +390,8 @@
   /* unified bottle image frame */
   .dphoto{position:relative;width:100%;height:clamp(500px,68dvh,680px);border-radius:18px;border:1px solid rgba(226,176,112,.22);display:grid;place-items:center;margin:16px 0;background:linear-gradient(180deg,rgba(4,3,2,.02),rgba(4,2,1,.12)),url("assets/detail/bottle-detail-bg.png") center bottom/cover no-repeat;overflow:hidden;box-shadow:inset 0 0 54px rgba(0,0,0,.36),0 18px 36px rgba(0,0,0,.24)}
   .dphoto:before{content:"";position:absolute;inset:0;background:url("design/figma-assets/asset-pack-v1/noise-overlay.png") center/cover repeat;opacity:.12;pointer-events:none}
-  .dphoto img{position:relative;z-index:1;width:auto!important;height:auto!important;max-width:94%!important;max-height:96%!important;object-fit:contain!important;object-position:center!important;filter:contrast(1.04) saturate(1.04) drop-shadow(0 18px 22px rgba(0,0,0,.55))}
-  .dphoto.agent-cutout img{max-width:98%!important;max-height:98%!important}
+  .dphoto img{position:relative;z-index:1;display:block;width:94%!important;height:96%!important;max-width:none!important;max-height:none!important;object-fit:contain!important;object-position:center!important;filter:contrast(1.04) saturate(1.04) drop-shadow(0 18px 22px rgba(0,0,0,.55))}
+  .dphoto.agent-cutout img{width:98%!important;height:98%!important}
   @media (max-height:720px){.dphoto{height:clamp(430px,64dvh,540px)}}
   .local-photo-actions{position:absolute;z-index:4;left:12px;right:12px;bottom:12px;display:flex;gap:10px;align-items:flex-end;justify-content:space-between;pointer-events:none}
   .local-photo-actions button{min-height:38px;max-width:48%;border:1px solid rgba(226,176,112,.58);border-radius:8px;background:rgba(12,8,5,.9);backdrop-filter:blur(8px);color:var(--gold);font-size:11px;font-weight:900;padding:9px 12px;cursor:pointer;pointer-events:auto;box-shadow:0 8px 20px rgba(0,0,0,.42)}
@@ -523,6 +523,14 @@
   .scan-result-actions.single{grid-template-columns:minmax(0,1fr)}
   .scan-result-actions .btn{min-width:0;min-height:50px;margin:0!important;padding:10px 8px;display:flex;align-items:center;justify-content:center;gap:7px;font-size:13px;line-height:1.15}
   .scan-result-actions svg{width:19px;height:19px;flex:0 0 19px}
+  .scan-image-choice{margin:14px 16px 0;padding:14px;border:1px solid rgba(226,176,112,.34);border-radius:14px;background:rgba(10,8,5,.72)}
+  .scan-image-choice[hidden]{display:none}
+  .scan-image-choice-title{font-size:13px;font-weight:900;color:#F6E1BC;margin-bottom:10px;text-align:center}
+  .scan-image-choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .scan-image-choice-tile{min-height:72px;border:1px solid rgba(226,176,112,.62);border-radius:10px;background:linear-gradient(180deg,rgba(40,86,58,.9),rgba(13,41,27,.92));color:#EFF9F1;font-weight:900;cursor:pointer}
+  .scan-image-choice-tile small{display:block;margin-top:5px;font-size:10px;font-weight:700;color:#BFD9C4}
+  .scan-image-choice-tile.disabled{border-color:rgba(180,180,180,.22);background:rgba(70,70,70,.28);color:rgba(220,220,220,.52);cursor:not-allowed}
+  .scan-image-choice-tile.disabled small{color:rgba(220,220,220,.4)}
   .btn-go{display:none;min-height:112px;background:url("design/figma-assets/scanner-pack-v1/scan-button.png") center top/86px 86px no-repeat;color:#F6E1BC;text-shadow:0 2px 8px #000;box-shadow:none;padding:86px 0 0;font-size:12px;letter-spacing:.9px;text-transform:uppercase}
   .btn-alt{background:rgba(0,0,0,.25);color:var(--amber2);border:1px solid var(--amber)}
   .btn[disabled]{opacity:.4;cursor:default}
@@ -988,7 +996,7 @@
 <script>
 /* ========= KONFIGURACJA ========= */
 const WORKER_URL = "https://bourbon-hunters.darekmaslyk.workers.dev";
-const APP_VERSION = "138";
+const APP_VERSION = "145";
 const API_CONTRACT_VERSION = "bh-api-2026-08-v1";
 const DB_URL = "db/catalog/demo-200.json";
 const PROFILES_URL = "db/profiles-runtime.json";
@@ -1228,7 +1236,7 @@ Object.assign(I18N.pl,{
   recommendationNeedText:"Dodaj kr\u00f3tki komentarz.", recommendationSaved:"Polecenie zapisane.", commentsTitle:"Komentarze \u0142owc\u00f3w",
   showComments:"Poka\u017c komentarze", hideText:"Zwi\u0144", moreText:"Wi\u0119cej", recommendedBy:"Poleca",
   catalogPreviewTitle:"Podgl\u0105d butelki", catalogProcessing:"Wycinam butelk\u0119 ze zdj\u0119cia...", catalogProcessingCopy:"Agent obrazu przygotowuje czysty podgl\u0105d pasuj\u0105cy do aplikacji.",
-  acceptImage:"Akceptuj\u0119 i dodaj\u0119", retakeImage:"Zr\u00f3b zdj\u0119cie ponownie", saveWithoutImage:"Zapisz bez zdj\u0119cia", addToCatalog:"Uzupe\u0142nij i dodaj do katalogu", addToCollection:"Dodaj do kolekcji", catalogLicenseNote:"Akceptuj\u0105c, pozwalasz Bourbon Hunters bezterminowo u\u017cywa\u0107 gotowego assetu katalogowego. Oryginalne zdj\u0119cie i pliki robocze zostan\u0105 usuni\u0119te.",
+  acceptImage:"Akceptuj\u0119 i dodaj\u0119", retakeImage:"Zr\u00f3b zdj\u0119cie ponownie", saveWithoutImage:"Zapisz bez zdj\u0119cia", addToCatalog:"Uzupe\u0142nij i dodaj do katalogu", addToCollection:"Dodaj do kolekcji", scanImageChoiceTitle:"Jak chcesz doda\u0107 zdj\u0119cie?", scanImageInternet:"Internet", scanImagePhoto:"Twoje zdj\u0119cie", scanImagePro:"Dost\u0119pne w wersji Pro", scanImagePhotoNote:"Przygotuj\u0119 butelk\u0119 z wykonanego zdj\u0119cia.", catalogLicenseNote:"Akceptuj\u0105c, pozwalasz Bourbon Hunters bezterminowo u\u017cywa\u0107 gotowego assetu katalogowego. Oryginalne zdj\u0119cie i pliki robocze zostan\u0105 usuni\u0119te.",
   catalogNoPreview:"Nie uda\u0142o si\u0119 przygotowa\u0107 wyci\u0119cia.", catalogNoPreviewCopy:"Mo\u017cesz zrobi\u0107 nowe zdj\u0119cie albo zapisa\u0107 same dane.", catalogSaved:"Butelka zapisana i dodana do Ostatnio dodanych.", catalogLogin:"Zaloguj si\u0119, aby doda\u0107 butelk\u0119 do katalogu.", catalogError:"Nie uda\u0142o si\u0119 zapisa\u0107 butelki.", catalogHit:"Mam trafienie",
   addLocalBottlePhoto:"Dodaj swoje zdj\u0119cie", changeLocalBottlePhoto:"Zmie\u0144 zdj\u0119cie", removeLocalBottlePhoto:"Usu\u0144 lokalne zdj\u0119cie",
   localBottlePhotoNote:"Zdj\u0119cie jest zapisane tylko na tym urz\u0105dzeniu.", localBottlePhotoSaved:"Lokalne zdj\u0119cie zosta\u0142o zapisane.",
@@ -1270,7 +1278,7 @@ Object.assign(I18N.en,{
   showComments:"Show comments", hideText:"Collapse", moreText:"More", recommendedBy:"Recommended by",
   reportComment:"Report", blockUser:"Block user", reportCommentConfirm:"Report this comment for moderation?", blockUserConfirm:"Block this user and hide each other's comments?", reportSent:"Comment reported.", userBlocked:"User blocked.", moderationUnavailable:"Comment moderation is not ready yet.",
   catalogPreviewTitle:"Bottle preview", catalogProcessing:"Cutting the bottle from the photo...", catalogProcessingCopy:"The image agent is preparing a clean preview for the app.",
-  acceptImage:"Accept and add", retakeImage:"Take another photo", saveWithoutImage:"Save without photo", addToCatalog:"Complete and add to catalog", addToCollection:"Add to collection", catalogLicenseNote:"By accepting, you allow Bourbon Hunters to keep and use the finished catalog asset. The original photo and working files will be deleted.",
+  acceptImage:"Accept and add", retakeImage:"Take another photo", saveWithoutImage:"Save without photo", addToCatalog:"Complete and add to catalog", addToCollection:"Add to collection", scanImageChoiceTitle:"How should the bottle photo be added?", scanImageInternet:"Internet", scanImagePhoto:"Your photo", scanImagePro:"Available in Pro", scanImagePhotoNote:"I will prepare the bottle from your photo.", catalogLicenseNote:"By accepting, you allow Bourbon Hunters to keep and use the finished catalog asset. The original photo and working files will be deleted.",
   catalogNoPreview:"The bottle cutout could not be prepared.", catalogNoPreviewCopy:"Take another photo or save the bottle data without an image.", catalogSaved:"Bottle saved and added to Recently added.", catalogLogin:"Sign in to add a bottle to the catalog.", catalogError:"The bottle could not be saved.", catalogHit:"Found a match",
   addLocalBottlePhoto:"Add your photo", changeLocalBottlePhoto:"Change photo", removeLocalBottlePhoto:"Remove local photo",
   localBottlePhotoNote:"This photo is stored only on this device.", localBottlePhotoSaved:"Local photo saved.",
@@ -1499,7 +1507,13 @@ function bottleHasAuditedDetailImage(b){
 }
 function officialBottleImage(b,small){
   if(!b) return "";
-  if(small) return String(b.thumb||b.image||"");
+  if(small){
+    const thumb=String(b.thumb||"");
+    // List sources can be product photos on a white canvas. Reuse the audited
+    // transparent detail asset for every catalog card, not just one source pack.
+    if(bottleHasAuditedDetailImage(b)) return String(b.image||thumb);
+    return String(thumb||b.image||"");
+  }
   return bottleHasAuditedDetailImage(b)?String(b.image||""):"";
 }
 function localBottleImage(b){
@@ -3030,8 +3044,6 @@ function prepareBottleDataset(list){
   return (list||[]).map(function(b){
     const copy=Object.assign({},b);
     if(runtimeIds.has(copy.id)){
-      copy.originalImage=b.image;
-      copy.image=RUNTIME_IMAGE_DIR+copy.id+".png";
       copy.thumb=RUNTIME_THUMB_DIR+copy.id+".png";
       copy.cutoutStatus="runtime";
     }
@@ -3753,6 +3765,13 @@ document.addEventListener("click",function(e){
   }
   const scanRetryAction=e.target.closest("[data-scan-retry]");
   if(scanRetryAction){ e.preventDefault(); storePrivateBottleDraft(null); resetShot(); fileInput.click(); return; }
+  const privateImageChoice=e.target.closest("[data-private-image-choice]");
+  if(privateImageChoice){
+    e.preventDefault();
+    if(privateImageChoice.getAttribute("data-private-image-choice")==="internet") toast(t("scanImagePro"));
+    else { pendingPrivateImageChoice="photo"; toast(t("scanImagePhotoNote")); }
+    return;
+  }
   const privateAddStart=e.target.closest("[data-private-add-start]");
   if(privateAddStart){
     e.preventDefault();
@@ -3859,14 +3878,24 @@ document.addEventListener("click",function(e){
   if(catalogDecision){ e.preventDefault(); confirmCatalogDecision(catalogDecision.getAttribute("data-catalog-decision")); return; }
   const addCatalog=e.target.closest("[data-add-catalog]");
   if(addCatalog){ e.preventDefault(); e.stopPropagation(); startCatalogSubmission(); return; }
+  const imageChoice=e.target.closest("[data-scan-image-choice]");
+  if(imageChoice){
+    e.preventDefault(); e.stopPropagation();
+    const id=imageChoice.getAttribute("data-choice-id")||document.getElementById("scanImageChoice")?.getAttribute("data-choice-id");
+    if(imageChoice.getAttribute("data-scan-image-choice")==="internet"){
+      toast(t("scanImagePro"));
+    }else if(id){
+      const panel=document.getElementById("scanImageChoice"); if(panel) panel.hidden=true;
+      scanCollectionAfterPhoto=canonicalBottleId(id);
+      scan("rate",scanCollectionAfterPhoto,"photo");
+    }
+    return;
+  }
   const addScanCollection=e.target.closest("[data-add-scan-collection]");
   if(addScanCollection){
     e.preventDefault(); e.stopPropagation();
     const id=addScanCollection.getAttribute("data-add-scan-collection");
-    if(!ownHas(id)){ OWNED.push(id); ownSave(); syncList("collection",id,true); }
-    addScanCollection.disabled=true; addScanCollection.textContent=t("ownAdded");
-    renderHomeCollection(); renderProfile(); toast(t("ownAdded"));
-    resetCompletedScan();
+    showScanImageChoice(id);
     return;
   }
   const heartEl = e.target.closest("[data-heart]");
@@ -4044,8 +4073,16 @@ function submitPrivateBottleForm(e){
   new FormData(form).forEach(function(value,key){ data[key]=String(value||"").trim(); });
   if(!data.name){ const input=form.querySelector('[name="name"]'); if(input){ input.focus(); input.setAttribute("aria-invalid","true"); } return; }
   const preparedImage=pendingPrivateBottleDraft&&pendingPrivateBottleDraft.image||"";
+  if(!preparedImage && pendingPrivateImageChoice!=="photo"){ toast(t("scanImageChoiceTitle")); return; }
   if(button){ button.disabled=true; button.textContent=authText("Saving...","Zapisuj\u0119..."); }
-  bhApi("/me/private-bottles",{method:"POST",body:JSON.stringify(data)}).then(function(result){
+  const preparedImagePromise=preparedImage?Promise.resolve(preparedImage):bhApi("/catalog/local-cutout",{method:"POST",body:JSON.stringify({image:imgData,mime:imgMime,device_id:DEVICE_ID,bottle_id:"",bottle_name:data.name})}).then(function(result){
+    if(!result||!result.image) throw {error:"image_cutout_failed"};
+    return String(result.image);
+  });
+  preparedImagePromise.then(function(finalImage){
+    return bhApi("/me/private-bottles",{method:"POST",body:JSON.stringify(data)}).then(function(result){ return {result:result,finalImage:finalImage}; });
+  }).then(function(saved){
+    const result=saved.result, finalImage=saved.finalImage;
     const bottle=result&&result.bottle;
     if(!bottle||!bottle.id) throw {error:"private_bottle_save_failed"};
     const finish=function(){
@@ -4057,7 +4094,8 @@ function submitPrivateBottleForm(e){
       openDetail(bottle.id,false,true);
       toast(authText("Bottle saved in your private collection.","Butelka zapisana w Twojej prywatnej kolekcji."));
     };
-    if(preparedImage) return saveLocalBottleImage(bottle.id,preparedImage).catch(function(){}).then(finish);
+    pendingPrivateImageChoice="";
+    if(finalImage) return saveLocalBottleImage(bottle.id,finalImage).catch(function(){}).then(finish);
     finish();
   }).catch(function(err){
     toast(err&&err.error==="private_bottle_schema_missing"?authText("Run D1 migration v72.","Uruchom migracj\u0119 D1 v72."):t("errGeneric"));
@@ -4099,7 +4137,7 @@ if(localPhotoModal) localPhotoModal.addEventListener("click",function(event){
 });
 /* ================= SKANER ================= */
 let imgData=null, scanRecognitionImage=null, scanImageQuality=null, imgMime="image/jpeg", busy=false, loadTimer=null, scanPreviewUrl="";
-let currentScanResult=null, currentScanMode="rate", catalogSubmissionId="", catalogRetakePending=false;
+let currentScanResult=null, currentScanMode="rate", catalogSubmissionId="", catalogRetakePending=false, scanCollectionAfterPhoto="", pendingPrivateImageChoice="";
 const shot=document.getElementById("shot"), fileInput=document.getElementById("file"), galleryInput=document.getElementById("galleryFile");
 const scanPreview=document.getElementById("scanPreview");
 const goRate=document.getElementById("goRate");
@@ -4380,6 +4418,13 @@ function renderLowConfidence(data){
   const margin=pct(data.agents&&data.agents.orchestrator&&data.agents.orchestrator.candidate_margin);
   const canAddPrivate=reason==="catalog_not_found";
   const retryOnly=!canAddPrivate;
+  const candidateData=data.candidate_data||{};
+  const candidateMeta=[candidateData.distillery,candidateData.region,candidateData.type,candidateData.age,
+    candidateData.proof!=null?String(candidateData.proof)+" proof":"",candidateData.abv!=null?String(candidateData.abv)+"% ABV":""].filter(Boolean);
+  const candidateSources=Array.isArray(candidateData.sources)?candidateData.sources.slice(0,4).map(function(source){
+    const url=safeHttpUrl(source&&source.url||"","");
+    return url?'<a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+esc(source.title||url)+'</a>':"";
+  }).filter(Boolean).join("<br>"):"";
   let title=t("lowConfTitle"), body=t("lowConfBody"), leftLabel=(lang==="pl"?"Dopasowanie do bazy":"Database match"), leftValue=dbConfidence+"%", rightLabel=(lang==="pl"?"Wymagane":"Required"), rightValue=min+"%";
   if(reason==="catalog_not_found"){
     title=(lang==="pl"?"Rozpoznano: ":"Recognized: ")+String(data.candidate||"").trim();
@@ -4402,13 +4447,15 @@ function renderLowConfidence(data){
     '<div class="card">'+
       '<div class="name">'+esc(title)+'</div>'+
       '<p class="desc">'+esc(body)+'</p>'+
+      (canAddPrivate&&candidateMeta.length?'<p class="desc"><b>'+esc(candidateMeta.join(" · ") )+'</b></p>':'')+
+      (canAddPrivate&&candidateSources?'<div class="links"><div class="sec-t">'+esc(t("sourcesT"))+'</div>'+candidateSources+'</div>':'')+
       (canAddPrivate&&data.prepared_image?'<div class="private-scan-preview"><img src="'+esc(safeImageSrc(data.prepared_image,""))+'" alt="'+esc(String(data.candidate||""))+'"></div>':'')+
       (!retryOnly?'<div class="row"><div class="pill"><div class="k">'+leftLabel+'</div><div class="v">'+leftValue+'</div></div><div class="pill"><div class="k">'+rightLabel+'</div><div class="v">'+rightValue+'</div></div></div>':'')+
       (canAddPrivate?'<div class="private-add-question"><b>'+esc(authText("Bottle not in the catalog. Add your own?","Nie ma jej w bazie. Chcesz doda\u0107 w\u0142asn\u0105 butelk\u0119?"))+'</b><span>'+esc(authText("It will be private and visible only in your collection.","B\u0119dzie prywatna i widoczna tylko w Twojej kolekcji."))+'</span></div><button class="btn btn-bottle" type="button" data-private-add-start="1" style="width:100%;margin-top:12px">'+esc(authText("Yes, add bottle","Tak, chc\u0119 doda\u0107"))+'</button>':'')+
       (retryOnly?'<button class="scan-help-link" type="button" data-scan-help>&#9432; '+esc(t("scanHelpLabel"))+'</button>':'')+
       '<button class="btn btn-alt" type="button" data-scan-retry="1" style="width:100%;margin-top:14px">'+t("scanRetryPhoto")+'</button>'+
     '</div>';
-  storePrivateBottleDraft(canAddPrivate?{name:String(data.candidate||"").trim(),image:String(data.prepared_image||"")}:null);
+  storePrivateBottleDraft(canAddPrivate?Object.assign({name:String(data.candidate||"").trim(),image:String(data.prepared_image||"")},candidateData):null);
   document.getElementById("scanResult").scrollIntoView({behavior:"smooth",block:"start"});
 }
 function renderPrivateBottleAuthGate(){
@@ -4421,12 +4468,14 @@ function renderPrivateBottleAuthGate(){
 }
 function renderPrivateBottleForm(bottle){
   bottle=bottle||pendingPrivateBottleDraft||{};
+  if(!bottle.image) pendingPrivateImageChoice="";
   storePrivateBottleDraft(bottle);
   showView("scan");
   document.getElementById("scanResult").innerHTML='<div class="card private-bottle-editor">'+
     '<div class="name">'+esc(bottle.id?authText("Edit your bottle","Edytuj swoj\u0105 butelk\u0119"):authText("Add your bottle","Dodaj swoj\u0105 butelk\u0119"))+'</div>'+
     '<p class="desc">'+esc(authText("This entry belongs only to your account and will not enter the public catalog.","Ten wpis nale\u017cy tylko do Twojego konta i nie trafi do publicznego katalogu."))+'</p>'+
     (bottle.image?'<div class="private-scan-preview"><img src="'+esc(safeImageSrc(bottle.image,""))+'" alt="'+esc(bottle.name||"")+'"></div>':'')+
+    '<div class="scan-image-choice" style="margin:14px 0"><div class="scan-image-choice-title">'+esc(t("scanImageChoiceTitle"))+'</div><div class="scan-image-choice-grid"><button type="button" class="scan-image-choice-tile disabled" data-private-image-choice="internet"><span>'+esc(t("scanImageInternet"))+'</span><small>'+esc(t("scanImagePro"))+'</small></button><button type="button" class="scan-image-choice-tile" data-private-image-choice="photo"><span>'+esc(t("scanImagePhoto"))+'</span><small>'+esc(t("scanImagePhotoNote"))+'</small></button></div></div>'+
     '<form id="privateBottleForm">'+
       '<input type="hidden" name="id" value="'+esc(bottle.id||"")+'">'+
       '<label>'+esc(authText("Bottle name","Nazwa butelki"))+'<span>*</span><input name="name" maxlength="160" required value="'+esc(bottle.name||"")+'"></label>'+
@@ -4479,7 +4528,21 @@ function prepareConfirmedCandidateAsset(result, mode){
     toast(scannerBudgetErrorMessage(err,t("catalogError")));
   });
 }
-function scan(mode,confirmedId){
+function addScanToCollection(id){
+  id=canonicalBottleId(id);
+  if(!id) return;
+  if(!ownHas(id)){ OWNED.push(id); ownSave(); syncList("collection",id,true); }
+  renderHomeCollection(); renderProfile(); toast(t("ownAdded"));
+  resetCompletedScan();
+}
+function showScanImageChoice(id){
+  const panel=document.getElementById("scanImageChoice");
+  if(!panel) return;
+  panel.setAttribute("data-choice-id",canonicalBottleId(id));
+  panel.hidden=false;
+  panel.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function scan(mode,confirmedId,imageChoice){
   if(!imgData||busy) return; if(!WORKER_URL){ showErr("WORKER_URL?"); return; }
   startLoading(mode);
   const headers={};
@@ -4488,7 +4551,7 @@ function scan(mode,confirmedId){
   form.append("image",base64ToBlob(imgData,imgMime),"bottle."+(imgMime==="image/webp"?"webp":imgMime==="image/png"?"png":"jpg"));
   if(scanRecognitionImage) form.append("recognition_image",base64ToBlob(scanRecognitionImage,"image/webp"),"label.webp");
   form.append("image_quality",JSON.stringify(scanImageQuality||{}));
-  form.append("lang",lang); form.append("mode",mode); form.append("confirmed_id",confirmedId||""); form.append("device_id",DEVICE_ID);
+  form.append("lang",lang); form.append("mode",mode); form.append("confirmed_id",confirmedId||""); form.append("image_choice",imageChoice||""); form.append("device_id",DEVICE_ID);
   fetch(WORKER_URL,{method:"POST",headers:headers,body:form})
   .then(function(r){
     return r.json().catch(function(){ return {error:"invalid_response"}; }).then(function(data){
@@ -4502,6 +4565,7 @@ function scan(mode,confirmedId){
           lang:lang,
           mode:mode,
           confirmed_id:confirmedId||"",
+          image_choice:imageChoice||"",
           device_id:DEVICE_ID
         })}).then(function(legacyResponse){ return legacyResponse.json(); });
       }
@@ -4541,6 +4605,11 @@ function scan(mode,confirmedId){
     data.result.in_app_catalog=!!local || !!(data.matched && data.result.source==="baza" && data.result.isNew!==true);
     data.result.scan_confidence=data.confidence;
     renderScan(data.result, data.mode);
+    if(scanCollectionAfterPhoto){
+      const collectionId=scanCollectionAfterPhoto;
+      scanCollectionAfterPhoto="";
+      setTimeout(function(){ addScanToCollection(collectionId); },180);
+    }
     if(catalogRetakePending && !data.result.in_app_catalog){
       catalogRetakePending=false;
       setTimeout(startCatalogSubmission,350);
@@ -4582,10 +4651,16 @@ function renderScan(res, mode){
     : ((!knownCatalog && (!res.image || res.catalog_asset_missing))
       ? '<button class="btn btn-bottle" type="button" data-add-catalog="1" style="width:100%;margin-top:14px">'+esc(t("addToCatalog"))+'</button>'
       : '<button class="btn btn-bottle" type="button" data-add-scan-collection="'+esc(res.scan_match_id||res.id)+'" style="width:100%;margin-top:14px">'+esc(ownHas(res.scan_match_id||res.id)?t("ownAdded"):t("addToCollection"))+'</button>');
+  const imageChoicePanel='<div id="scanImageChoice" class="scan-image-choice" hidden>'+
+    '<div class="scan-image-choice-title">'+esc(t("scanImageChoiceTitle"))+'</div>'+
+    '<div class="scan-image-choice-grid">'+
+      '<button type="button" class="scan-image-choice-tile disabled" data-scan-image-choice="internet"><span>'+esc(t("scanImageInternet"))+'</span><small>'+esc(t("scanImagePro"))+'</small></button>'+
+      '<button type="button" class="scan-image-choice-tile" data-scan-image-choice="photo"><span>'+esc(t("scanImagePhoto"))+'</span><small>'+esc(t("scanImagePhotoNote"))+'</small></button>'+
+    '</div></div>';
   const extra = (mode!=="analyze") ? '<button class="btn btn-alt" id="goAnalyzeBtn">'+t("aiBtn")+'</button>' : '';
   const scanAgain='<button class="btn btn-bottle" type="button" data-scan-new="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 10-2.3 5.7"/><path d="M20 4v7h-7"/></svg><span>'+esc(t("scanAgain"))+'</span></button>';
   const resultActions='<div class="scan-result-actions'+(extra?'':' single')+'">'+extra+scanAgain+'</div>';
-  document.getElementById("scanResult").innerHTML=head+body+catalogAction+'</div>'+resultActions;
+  document.getElementById("scanResult").innerHTML=head+body+catalogAction+imageChoicePanel+'</div>'+resultActions;
   document.getElementById("scanResult").scrollIntoView({behavior:"smooth",block:"start"});
 }
 applyLang();

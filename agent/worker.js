@@ -18,7 +18,7 @@ const DEFAULT_DB_URL = "https://raw.githubusercontent.com/" + REPO + "/main/db/c
 const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters. Krotko, z jajem, ale rzeczowo. quality=jakosc 1-5, value=jakosc/cena 1-5 (5 swietna i tania, 1 slaba i droga). Pisz {{LANG}}. Zwroc tylko JSON.";
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
 const MULTI_CANDIDATE_CONFIDENCE = 0.9;
-const SCAN_ORCHESTRATOR_VERSION = "visual-only-catalog-v10-strong-identification";
+const SCAN_ORCHESTRATOR_VERSION = "visual-web-search-confirmed-photo-v11";
 const SCAN_CATALOG_VERSION = "demo-200-v1";
 const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v6-highres-cutout";
 const CATALOG_MODERATION_VERSION = "catalog-moderation-orchestrator-admin-v1";
@@ -2876,8 +2876,16 @@ function compactVision(vision){
   return {
     name:String(vision.name||"").slice(0,180),
     confidence:clamp01(vision.confidence),
+    type:String(vision.type||"").slice(0,100),
+    category:String(vision.category||"").slice(0,100),
+    distillery:String(vision.distillery||vision.producer||"").slice(0,160),
+    region:String(vision.region||"").slice(0,100),
+    proof:Number.isFinite(Number(vision.proof))?Number(vision.proof):null,
+    abv:Number.isFinite(Number(vision.abv))?Number(vision.abv):null,
+    age:String(vision.age||vision.age_statement||"").slice(0,40),
     evidence:Array.isArray(vision.evidence)?vision.evidence.slice(0,5).map(function(v){ return String(v||"").slice(0,120); }) : [],
-    candidates:candidates
+    candidates:candidates,
+    sources:Array.isArray(vision.sources)?vision.sources.slice(0,6).map(function(s){ return {title:String(s&&s.title||"").slice(0,180),url:String(s&&s.url||"").slice(0,500)}; }).filter(function(s){ return s.url; }) : []
   };
 }
 
@@ -3050,8 +3058,9 @@ async function callVisualAgent(env, mime, image, foreground, requestedModel){
   const payload={
     __model: requestedModel||env.IDENT_MODEL||"gemini-3.6-flash",
     contents:[{role:"user",parts:[
-      {text:"Rozpoznaj dokladna nazwe butelki whisky lub bourbona: marka, wariant oraz widoczny wiek lub edycja. Kadr moze byc przekrzywiony, zrobiony w slabym swietle i zawierac dlon trzymajaca szyjke, regaly, monitor, stol lub inne butelki. Najpierw znajdz glowna butelke i ignoruj wszystko poza nia. Dlon albo zasloniety korek nie oznacza braku butelki, jezeli korpus i etykieta sa czytelne. Najwieksza wage nadaj logo marki, nazwie wariantu, liczbie wieku, tekstowi glownej etykiety, kolorowi etykiety, ksztaltowi butelki oraz oznaczeniom proof i ABV. Brak liczby wieku nie oznacza braku rozpoznania: jezeli marka jest czytelna, zawsze zwroc marke i wszystkie widoczne slowa wariantu. Marka THE SINGLETON nie oznacza wariantu Single Barrel; MALT MASTER'S SELECTION jest prawidlowa nazwa wariantu. Polacz dowody z obu obrazow, ale nie wymyslaj niewidocznego wariantu. Zwroc do czterech realnych mozliwych nazw, gdy widoczne cechy pasuja do kilku wariantow. Jesli to nie jest butelka whisky albo nie da sie rozpoznac marki, ustaw name=\"\" i confidence=0."}
+      {text:"Rozpoznaj dokladna nazwe butelki whisky lub bourbona. Uzyj obrazu oraz wyszukiwania Google, aby zweryfikowac marke, wariant, wiek i proof; wyszukiwanie ma pomoc takze wtedy, gdy produktu nie ma w naszym katalogu. Nie wybieraj najblizszego rekordu z katalogu tylko dlatego, ze nazwa jest podobna. Kadr moze byc przekrzywiony, zrobiony w slabym swietle i zawierac dlon, regaly, monitor, stol lub inne butelki. Najpierw znajdz glowna butelke. Najwieksza wage nadaj logo, nazwie wariantu, liczbie wieku, tekstowi etykiety, ksztaltowi butelki oraz proof i ABV. Brak wieku oznacz pustym age, nie zgaduj. Zwroc pelna nazwe i parametry znalezionego produktu, maksymalnie czterech realnych kandydatow oraz evidence. Jesli to nie jest butelka albo nie da sie potwierdzic marki, ustaw name=\"\" i confidence=0. Zwroc tylko JSON."}
     ].concat(imageParts)}],
+    tools:[{google_search:{}}],
     generationConfig:{
       maxOutputTokens:260,
       responseMimeType:"application/json",
@@ -3060,10 +3069,12 @@ async function callVisualAgent(env, mime, image, foreground, requestedModel){
         properties:{
           name:{type:"STRING"},
           confidence:{type:"NUMBER",minimum:0,maximum:1},
+          type:{type:"STRING"},category:{type:"STRING"},distillery:{type:"STRING"},region:{type:"STRING"},
+          proof:{type:"NUMBER"},abv:{type:"NUMBER"},age:{type:"STRING"},
           evidence:{type:"ARRAY",items:{type:"STRING"},maxItems:5},
           candidates:{type:"ARRAY",items:{type:"OBJECT",properties:{name:{type:"STRING"},confidence:{type:"NUMBER",minimum:0,maximum:1}},required:["name","confidence"]},maxItems:4}
         },
-        required:["name","confidence","evidence","candidates"]
+        required:["name","confidence","type","category","distillery","region","proof","abv","age","evidence","candidates"]
       }
     }
   };
@@ -3210,6 +3221,7 @@ export default {
     }
     const lang=["pl","en","es"].includes(body.lang)?body.lang:"pl";
     const mode=body.mode==="analyze"?"analyze":"rate";
+    const imageChoice=body.image_choice==="photo"?"photo":"";
     const confirmedId=String(body.confirmed_id||"").trim().slice(0,180);
     if(!image||image.length<100) return J({error:"no image"},400,cors);
     if(imageBytes>6000000) return J({error:"image too large"},413,cors);
@@ -3271,7 +3283,7 @@ export default {
       hit=(db.bottles||[]).find(function(bottle){ return bottle&&bottle.id===resolvedConfirmedId&&!bottle.scan_disabled; })||null;
       if(!hit) return scanResponse({error:"confirmed_bottle_not_found"},404,"error",{error_code:"confirmed_bottle_not_found"});
       const result=Object.assign({},hit);
-      if(!result.image){
+      if(imageChoice==="photo" || !result.image){
         const cutoutBudget=await consumeScannerBudget(env,request,scanUser,deviceHash,"cutout");
         if(!cutoutBudget.allowed){
           if(cutoutBudget.error) return scanResponse({error:cutoutBudget.error,retry:false},503,"budget_error",{error_code:cutoutBudget.error});
@@ -3287,7 +3299,7 @@ export default {
             result.has_image=true;
             result.source="scan_preview";
             result.temporary_scan_asset=true;
-            result.catalog_asset_missing=true;
+        result.catalog_asset_missing=true;
             result.cutout_quality_checked=quality.checked;
             if(!quality.acceptable){
               result.preview_warning="cutout_quality";
@@ -3336,12 +3348,12 @@ export default {
         const providerError=visual.err.status===0?"network":([408,504].includes(visual.err.status)?"timeout":(visual.err.status===503?"overloaded":"unavailable"));
         return scanResponse({error:quotaExhausted?"quota_exhausted":"upstream",status:visual.err.status,provider_error:providerError,retry:!quotaExhausted},quotaExhausted?429:(visual.err.status===0?502:503),quotaExhausted?"quota_exhausted":"upstream_error",{error_code:quotaExhausted?"gemini_quota":"visual_agent_"+providerError});
       }
-      let idj=compactVision((visual&&visual.data)||{});
+      let idj=compactVision(Object.assign({},(visual&&visual.data)||{},{sources:(visual&&visual.sources)||[]}));
       if(!idj.name){
         const fallbackVisual=await callVisualAgent(env,mime,recognitionSource,recognitionForeground,env.IDENT_FALLBACK_MODEL||"gemini-3.5-flash-lite");
         telemetryUsage.push.apply(telemetryUsage,[fallbackVisual&&fallbackVisual.usage].filter(Boolean));
         if(fallbackVisual&&!fallbackVisual.err){
-          const fallbackIdj=compactVision(fallbackVisual.data||{});
+          const fallbackIdj=compactVision(Object.assign({},fallbackVisual.data||{},{sources:fallbackVisual.sources||[]}));
           if(fallbackIdj.name){ visual=fallbackVisual; idj=fallbackIdj; }
         }
       }
@@ -3369,28 +3381,11 @@ export default {
         ocrConfidence:ocrConfidence,
         dbConfidence:dbConfidence,
         minConfidence:minConfidence,
+        candidate_data:agentTrace&&agentTrace.visual ? agentTrace.visual : null,
         reason:reason,
         agents:agentTrace
       };
-      if(catalogNotFound && modeName==="rate" && env.IMAGES){
-        const cutoutBudget=await consumeScannerBudget(env,request,scanUser,deviceHash,"cutout");
-        if(cutoutBudget.allowed){
-          const cutoutStarted=Date.now();
-          try{
-            const cutout=await transformBottleCutout(env,mime,image);
-            if(cutout){
-              const quality=await assessBottleCutout(env,bottleName,cutout);
-              if(quality.usage) telemetryUsage.push(quality.usage);
-              payload.prepared_image="data:image/webp;base64,"+encodeBase64(cutout);
-              payload.temporary_scan_asset=true;
-              if(!quality.acceptable) payload.preview_warning="cutout_quality";
-              telemetryUsage.push({provider:"cloudflare",stage:"unknown_bottle_cutout",model:"cloudflare-images",status:quality.acceptable?200:206,attempts:1,duration_ms:Date.now()-cutoutStarted});
-            }
-          }catch(e){
-            telemetryUsage.push({provider:"cloudflare",stage:"unknown_bottle_cutout",model:"cloudflare-images",status:500,attempts:1,duration_ms:Date.now()-cutoutStarted});
-          }
-        }
-      }
+      if(catalogNotFound && modeName==="rate") payload.image_choice_required=true;
       return scanResponse(payload,200,"low_confidence",{error_code:reason});
     }
 
