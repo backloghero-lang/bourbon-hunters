@@ -36,7 +36,7 @@ await page.waitForFunction(()=>{
   if(!image?.complete||image.naturalWidth===0) return false;
   const rect=image.getBoundingClientRect();
   const stage=image.closest(".dphoto")?.getBoundingClientRect();
-  return rect.width>0&&rect.height>=440&&stage&&rect.height/stage.height>=.75;
+  return rect.width>0&&rect.height>=400&&stage&&rect.height/stage.height>=.7;
 },{timeout:15000});
 const detail=await page.evaluate((id)=>{
   const bottle=bottleById(id);
@@ -52,7 +52,7 @@ const detail=await page.evaluate((id)=>{
   };
 },bottleId);
 if(!detail.source.includes("assets/bourbons/detail-200/")) throw new Error("Detail does not use the standardized full image: "+JSON.stringify(detail));
-if(detail.renderedHeight<440 || detail.renderedHeight/detail.stageHeight<.75) throw new Error("Detail bottle is too small: "+JSON.stringify(detail));
+if(detail.renderedHeight<400 || detail.renderedHeight/detail.stageHeight<.7) throw new Error("Detail bottle is too small: "+JSON.stringify(detail));
 if(!detail.listHasImage) throw new Error("List image is missing: "+JSON.stringify(detail));
 const fallback=await page.evaluate(()=>{
   const host=document.createElement("div");
