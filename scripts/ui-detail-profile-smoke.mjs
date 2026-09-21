@@ -53,7 +53,7 @@ const detail=await page.evaluate((id)=>{
     renderedHeight:Math.round(rect.height),
     renderedWidth:Math.round(rect.width),
     stageHeight:Math.round(document.querySelector("#detailBody .dphoto").getBoundingClientRect().height),
-    listHasImage:listHtml.includes("data-bottle-image")&&listHtml.includes("jim-beam-white-label.png")
+    listHasImage:listHtml.includes("data-bottle-image")&&listHtml.includes("assets/bourbons/detail-200/jim-beam-101-22.webp")
   };
 },bottleId);
 if(!detail.source.includes("assets/bourbons/detail-200/")) throw new Error("Detail does not use the standardized full image: "+JSON.stringify(detail));
