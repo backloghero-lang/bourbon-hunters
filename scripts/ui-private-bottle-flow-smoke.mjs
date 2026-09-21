@@ -14,6 +14,7 @@ await page.route("https://bourbon-hunters.darekmaslyk.workers.dev/**",async(rout
   else if(pathname==="/recommendations") body={recommendations:[]};
   else if(pathname==="/catalog/recent") body={items:[]};
   else if(pathname==="/news") body={articles:[],news_ready:true};
+  else if(pathname==="/catalog/local-cutout") body={ok:true,image:"data:image/webp;base64,UklGRiAAAABXRUJQVlA4TAAAAADQAgCdASoBAAEAAUAmJaQAA3AA/vuUAAA=",mime:"image/webp",quality_checked:true};
   else if(pathname==="/me/private-bottles"){
     const input=JSON.parse(route.request().postData()||"{}");
     body={ok:true,bottle:{
