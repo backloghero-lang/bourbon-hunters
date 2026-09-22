@@ -54,7 +54,7 @@ const retryResult=await retryWorker.__providerTest.callGemini({
 
 if(retryResult.err) throw new Error(`Same-model retry failed: ${JSON.stringify(retryResult.err)}`);
 if(retryResult.usage?.model!=="gemini-3.6-flash") throw new Error(`Unexpected retry model: ${retryResult.usage?.model}`);
-if(retryCalls.length!==3) throw new Error(`Expected discovery plus two calls to one model, got ${retryCalls.length}`);
+if(retryCalls.length!==3) throw new Error(`Expected discovery and a same-model retry ending in success, got ${retryCalls.length}`);
 
 const invalidCalls=[];
 const invalidWorker=loadWorker(async(url)=>{
