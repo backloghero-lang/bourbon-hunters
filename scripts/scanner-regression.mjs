@@ -40,7 +40,7 @@ const context={
       }
       const result=prompt.includes("Ocen wyciety asset")
         ? {acceptable:cutoutQualityAcceptable,complete_bottle:cutoutQualityAcceptable,occlusion_present:!cutoutQualityAcceptable,segmentation_damage:!cutoutQualityAcceptable,centered:true,reason_code:cutoutQualityAcceptable?"ok":"hand_occlusion",confidence:.99}
-        : (visualEmptyResponses>0&&String(url).includes("gemini-3.6-flash:")
+        : (visualEmptyResponses>0&&String(url).includes("gemini-3.5-flash-lite:")
           ? (visualEmptyResponses--,{name:"",confidence:0,evidence:[],candidates:[]})
           : {name:visualBottleName,confidence:.97,evidence:["label"],candidates:[]});
       return new Response(JSON.stringify({candidates:[{content:{parts:[{text:JSON.stringify(result)}]}}]}),{status:200,headers:{"Content-Type":"application/json"}});
@@ -268,7 +268,7 @@ assert(String(initial.result&&initial.result.image||"").startsWith("data:image/w
 assert(initial.result&&initial.result.catalog_asset_missing===true,"Direct scan result is not marked for catalog completion");
 
 visualEmptyResponses=1;
-const visualFallbackRequest=new Request("https://bourbon-hunters.darekmaslyk.workers.dev/",{
+const uncertainVisualRequest=new Request("https://bourbon-hunters.darekmaslyk.workers.dev/",{
   method:"POST",
   headers:{"Content-Type":"application/json","Origin":"https://backloghero-lang.github.io"},
   body:JSON.stringify({
@@ -279,10 +279,10 @@ const visualFallbackRequest=new Request("https://bourbon-hunters.darekmaslyk.wor
     device_id:"scanner-regression"
   })
 });
-const visualFallbackResponse=await context.__worker.fetch(visualFallbackRequest,{DB:budgetDb,IMAGES:imagePipeline,GEMINI_API_KEY:"test"},{waitUntil(){}});
-const visualFallback=await visualFallbackResponse.json();
-assert(visualFallbackResponse.status===200,`Visual fallback returned ${visualFallbackResponse.status}: ${JSON.stringify(visualFallback)}`);
-assert(visualFallback.matched==="bulleit-bottled-in-bond-111-22",`Empty primary response did not fall back: ${JSON.stringify(visualFallback)}`);
+const uncertainVisualResponse=await context.__worker.fetch(uncertainVisualRequest,{DB:budgetDb,IMAGES:imagePipeline,GEMINI_API_KEY:"test"},{waitUntil(){}});
+const uncertainVisual=await uncertainVisualResponse.json();
+assert(uncertainVisualResponse.status===200,`Uncertain visual response returned ${uncertainVisualResponse.status}: ${JSON.stringify(uncertainVisual)}`);
+assert(uncertainVisual.error==="not_bottle",`An empty result should request a better photo without another model: ${JSON.stringify(uncertainVisual)}`);
 visualEmptyResponses=0;
 
 cutoutQualityAcceptable=false;
@@ -361,7 +361,7 @@ console.log(JSON.stringify({
   misses,
   single_source_confidence:Number(singleSource.dbConfidence.toFixed(3)),
   direct_result:{matched:initial.matched,preview:true,catalog_asset_missing:initial.result.catalog_asset_missing},
-  empty_primary_fallback:{matched:visualFallback.matched},
+  uncertain_photo:{error:uncertainVisual.error},
   cutout_fallback:{matched:failedCutout.matched,preview_warning:failedCutout.result.preview_warning},
   unknown_bottle:{reason:unknownBottle.reason,preview:true},
   confirmed_cutout:{matched:confirmation.matched,temporary:confirmation.result.temporary_scan_asset}

@@ -33,10 +33,10 @@ const retryWorker=loadWorker(async(url)=>{
   retryCalls.push(value);
   if(value.includes("/v1beta/models?")){
     return new Response(JSON.stringify({models:[
-      {name:"models/gemini-3.6-flash",supportedGenerationMethods:["generateContent"]}
+      {name:"models/gemini-3.5-flash-lite",supportedGenerationMethods:["generateContent"]}
     ]}),{status:200,headers:{"Content-Type":"application/json"}});
   }
-  if(value.includes("gemini-3.6-flash:")){
+  if(value.includes("gemini-3.5-flash-lite:")){
     generationAttempt++;
     return generationAttempt===1 ? new Response("overloaded",{status:503}) : successResponse();
   }
@@ -45,15 +45,15 @@ const retryWorker=loadWorker(async(url)=>{
 
 const retryResult=await retryWorker.__providerTest.callGemini({
   GEMINI_API_KEY:"test",
-  IDENT_MODEL:"gemini-3.6-flash"
+  IDENT_MODEL:"gemini-3.5-flash-lite"
 },{
-  __model:"gemini-3.6-flash",
+  __model:"gemini-3.5-flash-lite",
   contents:[{role:"user",parts:[{text:"identify"}]}],
   generationConfig:{temperature:0,thinkingConfig:{thinkingBudget:0}}
 },"visual_identification");
 
 if(retryResult.err) throw new Error(`Same-model retry failed: ${JSON.stringify(retryResult.err)}`);
-if(retryResult.usage?.model!=="gemini-3.6-flash") throw new Error(`Unexpected retry model: ${retryResult.usage?.model}`);
+if(retryResult.usage?.model!=="gemini-3.5-flash-lite") throw new Error(`Unexpected retry model: ${retryResult.usage?.model}`);
 if(retryCalls.length!==3) throw new Error(`Expected discovery and a same-model retry ending in success, got ${retryCalls.length}`);
 
 const invalidCalls=[];
@@ -61,12 +61,12 @@ const invalidWorker=loadWorker(async(url)=>{
   const value=String(url);
   invalidCalls.push(value);
   if(value.includes("/v1beta/models?")) return new Response("unavailable",{status:503});
-  if(value.includes("gemini-3.6-flash:")) return new Response("missing",{status:404});
+  if(value.includes("gemini-3.5-flash-lite:")) return new Response("missing",{status:404});
   throw new Error(`Unexpected URL: ${value}`);
 });
 
 const invalidResult=await invalidWorker.__providerTest.callGemini({GEMINI_API_KEY:"test"},{
-  __model:"gemini-3.6-flash",
+  __model:"gemini-3.5-flash-lite",
   contents:[{role:"user",parts:[{text:"identify"}]}]
 },"visual_identification");
 

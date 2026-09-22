@@ -18,7 +18,7 @@ const DEFAULT_DB_URL = "https://raw.githubusercontent.com/" + REPO + "/main/db/c
 const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters. Krotko, z jajem, ale rzeczowo. quality=jakosc 1-5, value=jakosc/cena 1-5 (5 swietna i tania, 1 slaba i droga). Pisz {{LANG}}. Zwroc tylko JSON.";
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
 const MULTI_CANDIDATE_CONFIDENCE = 0.9;
-const SCAN_ORCHESTRATOR_VERSION = "exact-label-free-tier-v15";
+const SCAN_ORCHESTRATOR_VERSION = "grounded-flash-lite-v16";
 const SCAN_CATALOG_VERSION = "demo-200-v1";
 const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v6-highres-cutout";
 const CATALOG_MODERATION_VERSION = "catalog-moderation-orchestrator-admin-v1";
@@ -2348,7 +2348,7 @@ async function handleApi(request, env, cors, executionCtx){
       }
       catch(e){ detail=String(e&&e.message?e.message:e).slice(0,220); }
     }
-    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,security_version:SECURITY_VERSION,auth_protection_version:AUTH_PROTECTION_VERSION,private_bottle_version:PRIVATE_BOTTLE_VERSION,ugc_moderation_version:UGC_MODERATION_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_mode:"visual_only",scan_ocr_enabled:false,scanner_ai_ready:!!env.GEMINI_API_KEY,scanner_primary_model:env.IDENT_MODEL||"gemini-3.6-flash",scanner_fallback_model:env.IDENT_FALLBACK_MODEL||"gemini-3.5-flash-lite",scanner_model_discovery:true,scanner_mobile_foreground:!!env.IMAGES,scanner_budget_version:SCANNER_BUDGET_VERSION,scanner_budget_schema:scanner_budget_schema,scanner_identify_daily_limit:scannerBudgetLimits(env,"identify").actor,scanner_cutout_daily_limit:scannerBudgetLimits(env,"cutout").actor,scanner_analysis_daily_limit:scannerBudgetLimits(env,"analysis").actor,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_moderation_version:CATALOG_MODERATION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,news_agent_version:NEWS_AGENT_VERSION,news_schedule:"Monday and Thursday releases with daily recovery via UTC cron",news_target_per_release:3,news_current_release:newsReleaseSlot(new Date()),news_article_count:news_article_count,news_last_run:news_last_run,local_image_pipeline_version:LOCAL_IMAGE_PIPELINE_VERSION,news_retention_days:NEWS_RETENTION_DAYS,starter_news_count:STARTER_NEWS.length,news_auth_required:true,catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,auth_security_schema:auth_security_schema,auth_rate_schema:auth_rate_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,catalog_moderation_schema:catalog_moderation_schema,telemetry_schema:telemetry_schema,news_schema:news_schema,private_bottle_schema:private_bottle_schema,ugc_moderation_schema:ugc_moderation_schema,news_agent_ready:news_schema,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),local_image_cutout_ready:!!env.IMAGES,cutout_quality_ready:!!(env.IMAGES&&env.GEMINI_API_KEY),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
+    return J({ok:true,worker:"bourbon-hunters",auth_version:AUTH_VERSION,security_version:SECURITY_VERSION,auth_protection_version:AUTH_PROTECTION_VERSION,private_bottle_version:PRIVATE_BOTTLE_VERSION,ugc_moderation_version:UGC_MODERATION_VERSION,scan_orchestrator_version:SCAN_ORCHESTRATOR_VERSION,scan_mode:"visual_only",scan_ocr_enabled:false,scanner_ai_ready:!!env.GEMINI_API_KEY,scanner_primary_model:env.IDENT_MODEL||"gemini-3.5-flash-lite",scanner_fallback_model:null,scanner_google_search:String(env.GEMINI_SEARCH_GROUNDING||"0")==="1",scanner_model_discovery:true,scanner_mobile_foreground:!!env.IMAGES,scanner_budget_version:SCANNER_BUDGET_VERSION,scanner_budget_schema:scanner_budget_schema,scanner_identify_daily_limit:scannerBudgetLimits(env,"identify").actor,scanner_cutout_daily_limit:scannerBudgetLimits(env,"cutout").actor,scanner_analysis_daily_limit:scannerBudgetLimits(env,"analysis").actor,scan_catalog_version:SCAN_CATALOG_VERSION,catalog_submission_version:CATALOG_SUBMISSION_VERSION,catalog_moderation_version:CATALOG_MODERATION_VERSION,catalog_license_version:CATALOG_LICENSE_VERSION,telemetry_version:TELEMETRY_VERSION,news_agent_version:NEWS_AGENT_VERSION,news_schedule:"Monday and Thursday releases with daily recovery via UTC cron",news_target_per_release:3,news_current_release:newsReleaseSlot(new Date()),news_article_count:news_article_count,news_last_run:news_last_run,local_image_pipeline_version:LOCAL_IMAGE_PIPELINE_VERSION,news_retention_days:NEWS_RETENTION_DAYS,starter_news_count:STARTER_NEWS.length,news_auth_required:true,catalog_draft_retention_hours:24,telemetry_retention_days:telemetryRetentionDays(env),pbkdf2_iterations:PBKDF2_ITERATIONS,d1:!!env.DB,schema:schema,reset_schema:reset_schema,profile_schema:profile_schema,recommendations_schema:recommendations_schema,identity_schema:identity_schema,auth_security_schema:auth_security_schema,auth_rate_schema:auth_rate_schema,catalog_schema:catalog_schema,catalog_data_schema:catalog_data_schema,catalog_moderation_schema:catalog_moderation_schema,telemetry_schema:telemetry_schema,news_schema:news_schema,private_bottle_schema:private_bottle_schema,ugc_moderation_schema:ugc_moderation_schema,news_agent_ready:news_schema,operational_telemetry_ready:telemetry_schema&&operationalTelemetryEnabled(env),image_pipeline_ready:!!(env.IMAGES&&env.BOTTLE_IMAGES),local_image_cutout_ready:!!env.IMAGES,cutout_quality_ready:!!(env.IMAGES&&env.GEMINI_API_KEY),email_ready:mailConfigured(env),google_ready:googleReady(env),google_redirect_uri:env.GOOGLE_REDIRECT_URI?googleRedirectUri(env,request):"",detail:detail,time:new Date().toISOString()},200,cors);
   }
   if(path==="/auth/google/start" && request.method==="GET"){
     const returnUrl=allowedReturnUrl(env,url.searchParams.get("return")||appUrl(env));
@@ -3104,7 +3104,7 @@ async function callVisualAgent(env, mime, image, foreground, requestedModel){
     ? "Uzyj obrazu oraz wyszukiwania Google do weryfikacji."
     : "Odczytaj nazwe bezposrednio z widocznej etykiety. Nie uzalezniaj odpowiedzi od dostepu do internetu. Gdy marka, wariant i oznaczenie wieku sa wyraznie czytelne, ustaw wysoka confidence.";
   const payload={
-    __model: requestedModel||env.IDENT_MODEL||"gemini-3.6-flash",
+    __model: requestedModel||env.IDENT_MODEL||"gemini-3.5-flash-lite",
     contents:[{role:"user",parts:[
       {text:"Rozpoznaj dokladny wariant butelki whisky lub bourbona. "+verificationInstruction+" Nie wystarczy marka: odczytaj i zachowaj wszystkie elementy rozrozniajace produkt, zwlaszcza wiek, proof/ABV, Small Batch, Single Barrel/Single Cask, Barrel Proof/Cask Strength/Full Proof, Bottled in Bond, Double Oaked/Toasted, high-rye/wheated/four-grain/sour-mash, batch/release/edition oraz rodzaj finiszu lub beczki. Dla Scotch, Irish i innych whisky rozrozniaj m.in. Single Malt, Blended, Single Grain, Single Pot Still, triple distilled, peated/unpeated oraz sherry, port, rum, wine, cognac i Mizunara casks. Nie wybieraj najblizszego produktu tylko dlatego, ze marka jest podobna. Kadr moze zawierac dlon, tlo i inne obiekty; najpierw znajdz glowna butelke. Brak widocznej informacji oznacz pustym polem, nie zgaduj. Pole name ma zawierac pelna handlowa nazwe wariantu. Jesli wariantu nie da sie potwierdzic, obniz confidence i podaj realnych kandydatow. Jesli to nie jest butelka albo nie da sie potwierdzic marki, ustaw name=\"\" i confidence=0. Zwroc tylko JSON."}
     ].concat(imageParts)}],
@@ -3166,7 +3166,7 @@ async function geminiModelsForStage(env, payload, stage){
   const visual=stage==="visual_identification" || stage==="bottle_cutout_qa";
   const requested=payload.__model || "";
   const preferred=visual
-    ? [requested||env.IDENT_MODEL||"gemini-3.6-flash"]
+    ? [requested||env.IDENT_MODEL||"gemini-3.5-flash-lite"]
     : [requested,stage==="whisky_news"?env.NEWS_MODEL:"","gemini-3.6-flash","gemini-3.5-flash",env.MODEL,"gemini-3.5-flash-lite"];
   const models=uniqueGeminiModels(preferred);
   const available=await availableGeminiModels(env);
@@ -3401,14 +3401,6 @@ export default {
         return scanResponse({error:quotaExhausted?"quota_exhausted":"upstream",status:visual.err.status,provider_error:providerError,retry:!quotaExhausted},quotaExhausted?429:(visual.err.status===0?502:503),quotaExhausted?"quota_exhausted":"upstream_error",{error_code:quotaExhausted?"gemini_quota":"visual_agent_"+providerError});
       }
       let idj=compactVision(Object.assign({},(visual&&visual.data)||{},{sources:(visual&&visual.sources)||[]}));
-      if(!idj.name){
-        const fallbackVisual=await callVisualAgent(env,mime,recognitionSource,recognitionForeground,env.IDENT_MODEL||"gemini-3.6-flash");
-        telemetryUsage.push.apply(telemetryUsage,[fallbackVisual&&fallbackVisual.usage].filter(Boolean));
-        if(fallbackVisual&&!fallbackVisual.err){
-          const fallbackIdj=compactVision(Object.assign({},fallbackVisual.data||{},{sources:fallbackVisual.sources||[]}));
-          if(fallbackIdj.name){ visual=fallbackVisual; idj=fallbackIdj; }
-        }
-      }
       bottleName=String(idj.name||"").trim();
       if(!bottleName) return scanResponse({error:"not_bottle",agents:visualAgentTrace(idj,null)},200,"not_bottle",{error_code:"no_visual_identity"});
       matched=matchBottleWithVisual(db,idj);
