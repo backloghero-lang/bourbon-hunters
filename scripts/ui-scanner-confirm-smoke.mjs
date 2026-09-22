@@ -104,8 +104,6 @@ responseVariant="catalog";
 const catalog=await runScan("baza");
 if(process.env.BH_SMOKE_SCREENSHOT) await page.screenshot({path:process.env.BH_SMOKE_SCREENSHOT+"-direct-catalog.png",fullPage:true});
 await page.locator('[data-add-scan-collection="'+bottleId+'"]').click();
-await page.locator('[data-scan-image-choice="photo"]').click();
-await page.waitForTimeout(900);
 await page.evaluate(()=>{ showView("home"); showView("scan"); });
 const completedReset=await page.evaluate(()=>(
   {
@@ -126,8 +124,8 @@ if(unifiedFilters.familyRows!==1 || unifiedFilters.styleRows!==1 || unifiedFilte
 if(!migratedCollection.includes("knob-creek-120-proof-9-year-single-barrel-reserve-bourbon") || !migratedCollection.includes("michters-single-barrel-10-year-old-bourbon")){
   throw new Error("Legacy collection IDs were not migrated: "+JSON.stringify(migratedCollection));
 }
-if(scannerRequests!==3 || confirmedRequests!==1) throw new Error(`Unexpected scanner requests: total=${scannerRequests}, confirmed=${confirmedRequests}`);
-if(recognitionRequests!==3) throw new Error(`Recognition composite was not sent: ${recognitionRequests}/3`);
+if(scannerRequests!==2 || confirmedRequests!==0) throw new Error(`Unexpected scanner requests: total=${scannerRequests}, confirmed=${confirmedRequests}`);
+if(recognitionRequests!==2) throw new Error(`Recognition composite was not sent: ${recognitionRequests}/2`);
 if(missing.confirmationCards!==0 || catalog.confirmationCards!==0) throw new Error("Removed confirmation screen is still rendered");
 if(missing.addCatalog!==1 || missing.addCollection!==0) throw new Error("Missing catalog asset has incorrect action: "+JSON.stringify(missing));
 if(catalog.addCatalog!==0 || catalog.addCollection!==1) throw new Error("Catalog bottle has incorrect action: "+JSON.stringify(catalog));

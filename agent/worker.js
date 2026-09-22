@@ -18,7 +18,7 @@ const DEFAULT_DB_URL = "https://raw.githubusercontent.com/" + REPO + "/main/db/c
 const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters. Krotko, z jajem, ale rzeczowo. quality=jakosc 1-5, value=jakosc/cena 1-5 (5 swietna i tania, 1 slaba i droga). Pisz {{LANG}}. Zwroc tylko JSON.";
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
 const MULTI_CANDIDATE_CONFIDENCE = 0.9;
-const SCAN_ORCHESTRATOR_VERSION = "visual-web-search-confirmed-photo-v12";
+const SCAN_ORCHESTRATOR_VERSION = "exact-variant-single-model-v13";
 const SCAN_CATALOG_VERSION = "demo-200-v1";
 const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v6-highres-cutout";
 const CATALOG_MODERATION_VERSION = "catalog-moderation-orchestrator-admin-v1";
@@ -2867,6 +2867,17 @@ function ageMarker(value){
   const match=norm(value).match(/\b(\d{1,2})\s*(?:year|years|yr|yrs|yo)\b/);
   return match ? match[1] : "";
 }
+function explicitAgeMarker(value){
+  const marked=ageMarker(value);
+  if(marked) return marked;
+  const numeric=String(value||"").trim().match(/^(\d{1,2})$/);
+  return numeric ? numeric[1] : "";
+}
+function optionalFiniteNumber(value){
+  if(value===null || value===undefined || String(value).trim()==="") return null;
+  const number=Number(value);
+  return Number.isFinite(number) ? number : null;
+}
 
 function compactVision(vision){
   vision=vision||{};
@@ -2880,9 +2891,14 @@ function compactVision(vision){
     category:String(vision.category||"").slice(0,100),
     distillery:String(vision.distillery||vision.producer||"").slice(0,160),
     region:String(vision.region||"").slice(0,100),
-    proof:Number.isFinite(Number(vision.proof))?Number(vision.proof):null,
-    abv:Number.isFinite(Number(vision.abv))?Number(vision.abv):null,
+    proof:optionalFiniteNumber(vision.proof),
+    abv:optionalFiniteNumber(vision.abv),
     age:String(vision.age||vision.age_statement||"").slice(0,40),
+    variant:String(vision.variant||"").slice(0,120),
+    edition:String(vision.edition||"").slice(0,120),
+    cask_finish:String(vision.cask_finish||vision.finish||"").slice(0,120),
+    batch:String(vision.batch||"").slice(0,80),
+    release:String(vision.release||"").slice(0,80),
     evidence:Array.isArray(vision.evidence)?vision.evidence.slice(0,5).map(function(v){ return String(v||"").slice(0,120); }) : [],
     candidates:candidates,
     sources:Array.isArray(vision.sources)?vision.sources.slice(0,6).map(function(s){ return {title:String(s&&s.title||"").slice(0,180),url:String(s&&s.url||"").slice(0,500)}; }).filter(function(s){ return s.url; }) : []
@@ -2904,6 +2920,24 @@ function variantMarkers(text){
     finished:/\bfinish(?:ed)?\b|\bsherry cask\b|\bport cask\b|\bfrench oak\b/.test(text),
     double_oaked:/\bdouble oak(?:ed)?\b|\bdouble barrel(?:ed)?\b/.test(text),
     small_batch:/\bsmall batch\b/.test(text),
+    single_malt:/\bsingle malt\b/.test(text),
+    single_grain:/\bsingle grain\b/.test(text),
+    blended:/\bblended\b|\bblend\b/.test(text),
+    sherry_cask:/\bsherry\b|\boloroso\b|\bpedro ximenez\b|\bpx cask\b/.test(text),
+    port_cask:/\bport(?: wine)?\b/.test(text),
+    rum_cask:/\brum cask\b|\brum finish/.test(text),
+    wine_cask:/\bwine cask\b|\bcabernet\b|\bsauternes\b|\bamarone\b|\bmadeira\b/.test(text),
+    cognac_cask:/\bcognac\b|\bbrandy cask\b/.test(text),
+    mizunara:/\bmizunara\b/.test(text),
+    toasted:/\btoasted\b|\btoast(?:ed)? barrel\b/.test(text),
+    peated:/\bpeated\b|\bpeat smoke\b|\bsmoky\b/.test(text),
+    unpeated:/\bunpeated\b/.test(text),
+    high_rye:/\bhigh rye\b/.test(text),
+    four_grain:/\bfour grain\b|\b4 grain\b/.test(text),
+    sour_mash:/\bsour mash\b/.test(text),
+    pot_still:/\b(?:single )?pot still\b/.test(text),
+    triple_distilled:/\btriple distilled\b/.test(text),
+    limited:/\blimited\b|\bspecial edition\b/.test(text),
     recipe:recipe
   };
 }
@@ -2964,7 +2998,8 @@ function visualAgentTrace(vision, matched){
 function matchBottleWithVisual(db, vision){
   vision=compactVision(vision);
   const visualNames=[];
-  if(vision.name) visualNames.push({name:vision.name,confidence:vision.confidence||0.65,source:"visual"});
+  const visualIdentity=[vision.name,vision.variant,vision.edition,vision.cask_finish,vision.batch,vision.release,vision.age].filter(Boolean).join(" ");
+  if(vision.name) visualNames.push({name:visualIdentity||vision.name,confidence:vision.confidence||0.65,source:"visual"});
   (vision.candidates||[]).forEach(function(c){ if(c.name) visualNames.push({name:c.name,confidence:c.confidence||0.55,source:"visual_candidate"}); });
   const visualDistinctive=observedDistinctiveTokens(visualNames);
   if(!visualDistinctive.length) return null;
@@ -3005,20 +3040,29 @@ function matchBottleWithVisual(db, vision){
     const observedNumbers=toks(bestVisual.name).filter(function(token){ return /^\d{1,4}$/.test(token); });
     const bottleNumbers=toks(b&&b.name).filter(function(token){ return /^\d{1,4}$/.test(token); });
     const numericConflict=!!(observedNumbers.length&&bottleNumbers.length&&!sharedTokens(observedNumbers,bottleNumbers).length);
-    const observedAge=ageMarker(bestVisual.name);
-    const bottleAge=ageMarker([(b&&b.name)||"",Array.isArray(b&&b.aliases)?b.aliases.join(" "):""].join(" "));
+    const observedAge=explicitAgeMarker(vision.age)||ageMarker(bestVisual.name);
+    const bottleAge=explicitAgeMarker(b&&b.age)||ageMarker([(b&&b.name)||"",Array.isArray(b&&b.aliases)?b.aliases.join(" "):""].join(" "));
     const ageConflict=!!(observedAge&&bottleAge&&observedAge!==bottleAge);
+    const observedVariant=variantMarkers([bestVisual.name,vision.type,vision.category].filter(Boolean).join(" "));
+    const bottleVariant=variantMarkers([b&&b.name,Array.isArray(b&&b.aliases)?b.aliases.join(" "):"",b&&b.type,b&&b.category].filter(Boolean).join(" "));
+    const variantKeys=["bonded","single_barrel","barrel_proof","rye","bourbon","malt","wheat","finished","double_oaked","small_batch","single_malt","single_grain","blended","sherry_cask","port_cask","rum_cask","wine_cask","cognac_cask","mizunara","toasted","peated","unpeated","high_rye","four_grain","sour_mash","pot_still","triple_distilled","limited"];
+    const variantConflicts=variantKeys.filter(function(key){ return observedVariant[key]&&!bottleVariant[key]; });
+    if(observedVariant.recipe&&bottleVariant.recipe&&observedVariant.recipe!==bottleVariant.recipe) variantConflicts.push("recipe");
+    const proofConflict=vision.proof!=null&&b&&b.proof!=null&&Math.abs(Number(vision.proof)-Number(b.proof))>2;
+    const abvConflict=vision.abv!=null&&b&&b.abv!=null&&Math.abs(Number(vision.abv)-Number(b.abv))>1;
     let confidence=bestVisual.confidence;
     if(unmatchedObserved.length) confidence=Math.min(confidence,Math.max(0.7,0.94-unmatchedObserved.length*0.06));
     if(numericConflict) confidence=Math.min(confidence,0.68);
     if(ageConflict) confidence=Math.min(confidence,0.55);
+    if(variantConflicts.length) confidence=Math.min(confidence,variantConflicts.length>1?0.42:0.56);
+    if(proofConflict||abvConflict) confidence=Math.min(confidence,0.52);
     rows.push({
       bottle:b,
       dbConfidence:confidence,
       brandAnchored:true,
       brandAnchors:brandAnchors,
       matchedFields:["visual","brand_anchor"],
-      evidence:{visual:bestVisual.confidence,database:bestVisual.lexical,primary:bestVisual.primaryLexical,exact:bestVisual.exact,primaryExact:bestVisual.primaryExact,source:bestVisual.source,brandAnchors:brandAnchors,unmatchedObserved:unmatchedObserved,numericConflict:numericConflict,observedAge:observedAge,bottleAge:bottleAge,ageConflict:ageConflict}
+      evidence:{visual:bestVisual.confidence,database:bestVisual.lexical,primary:bestVisual.primaryLexical,exact:bestVisual.exact,primaryExact:bestVisual.primaryExact,source:bestVisual.source,brandAnchors:brandAnchors,unmatchedObserved:unmatchedObserved,numericConflict:numericConflict,observedAge:observedAge,bottleAge:bottleAge,ageConflict:ageConflict,variantConflicts:variantConflicts,proofConflict:proofConflict,abvConflict:abvConflict}
     });
   });
   rows.sort(function(a,b){
@@ -3058,11 +3102,11 @@ async function callVisualAgent(env, mime, image, foreground, requestedModel){
   const payload={
     __model: requestedModel||env.IDENT_MODEL||"gemini-3.6-flash",
     contents:[{role:"user",parts:[
-      {text:"Rozpoznaj dokladna nazwe butelki whisky lub bourbona. Uzyj obrazu oraz wyszukiwania Google, aby zweryfikowac marke, wariant, wiek i proof; wyszukiwanie ma pomoc takze wtedy, gdy produktu nie ma w naszym katalogu. Nie wybieraj najblizszego rekordu z katalogu tylko dlatego, ze nazwa jest podobna. Kadr moze byc przekrzywiony, zrobiony w slabym swietle i zawierac dlon, regaly, monitor, stol lub inne butelki. Najpierw znajdz glowna butelke. Najwieksza wage nadaj logo, nazwie wariantu, liczbie wieku, tekstowi etykiety, ksztaltowi butelki oraz proof i ABV. Brak wieku oznacz pustym age, nie zgaduj. Zwroc pelna nazwe i parametry znalezionego produktu, maksymalnie czterech realnych kandydatow oraz evidence. Jesli to nie jest butelka albo nie da sie potwierdzic marki, ustaw name=\"\" i confidence=0. Zwroc tylko JSON."}
+      {text:"Rozpoznaj dokladny wariant butelki whisky lub bourbona. Uzyj obrazu oraz wyszukiwania Google do weryfikacji. Nie wystarczy marka: odczytaj i zachowaj wszystkie elementy rozrozniajace produkt, zwlaszcza wiek, proof/ABV, Small Batch, Single Barrel/Single Cask, Barrel Proof/Cask Strength/Full Proof, Bottled in Bond, Double Oaked/Toasted, high-rye/wheated/four-grain/sour-mash, batch/release/edition oraz rodzaj finiszu lub beczki. Dla Scotch, Irish i innych whisky rozrozniaj m.in. Single Malt, Blended, Single Grain, Single Pot Still, triple distilled, peated/unpeated oraz sherry, port, rum, wine, cognac i Mizunara casks. Nie wybieraj najblizszego produktu tylko dlatego, ze marka jest podobna. Kadr moze zawierac dlon, tlo i inne obiekty; najpierw znajdz glowna butelke. Brak widocznej informacji oznacz pustym polem, nie zgaduj. Pole name ma zawierac pelna handlowa nazwe wariantu. Jesli wariantu nie da sie potwierdzic, obniz confidence i podaj realnych kandydatow. Jesli to nie jest butelka albo nie da sie potwierdzic marki, ustaw name=\"\" i confidence=0. Zwroc tylko JSON."}
     ].concat(imageParts)}],
     tools:[{google_search:{}}],
     generationConfig:{
-      maxOutputTokens:260,
+      maxOutputTokens:420,
       responseMimeType:"application/json",
       responseSchema:{
         type:"OBJECT",
@@ -3071,16 +3115,17 @@ async function callVisualAgent(env, mime, image, foreground, requestedModel){
           confidence:{type:"NUMBER",minimum:0,maximum:1},
           type:{type:"STRING"},category:{type:"STRING"},distillery:{type:"STRING"},region:{type:"STRING"},
           proof:{type:"NUMBER"},abv:{type:"NUMBER"},age:{type:"STRING"},
+          variant:{type:"STRING"},edition:{type:"STRING"},cask_finish:{type:"STRING"},batch:{type:"STRING"},release:{type:"STRING"},
           evidence:{type:"ARRAY",items:{type:"STRING"},maxItems:5},
           candidates:{type:"ARRAY",items:{type:"OBJECT",properties:{name:{type:"STRING"},confidence:{type:"NUMBER",minimum:0,maximum:1}},required:["name","confidence"]},maxItems:4}
         },
-        required:["name","confidence","type","category","distillery","region","proof","abv","age","evidence","candidates"]
+        required:["name","confidence","type","category","distillery","region","proof","abv","age","variant","edition","cask_finish","batch","release","evidence","candidates"]
       }
     }
   };
   const r=await callGemini(env,payload,"visual_identification");
   if(r.err) return {err:r.err,data:{},usage:r.usage};
-  return {data:parseJson(r.txt)||{},usage:r.usage};
+  return {data:parseJson(r.txt)||{},usage:r.usage,sources:r.sources||[]};
 }
 
 function cleanGeminiModelName(value){
@@ -3115,7 +3160,7 @@ async function geminiModelsForStage(env, payload, stage){
   const visual=stage==="visual_identification" || stage==="bottle_cutout_qa";
   const requested=payload.__model || "";
   const preferred=visual
-    ? [requested,env.IDENT_MODEL,"gemini-3.6-flash",env.IDENT_FALLBACK_MODEL,"gemini-3.5-flash-lite",env.MODEL,"gemini-3.1-flash-lite"]
+    ? [requested||env.IDENT_MODEL||"gemini-3.6-flash"]
     : [requested,stage==="whisky_news"?env.NEWS_MODEL:"","gemini-3.6-flash","gemini-3.5-flash",env.MODEL,"gemini-3.5-flash-lite"];
   const models=uniqueGeminiModels(preferred);
   const available=await availableGeminiModels(env);
@@ -3150,7 +3195,7 @@ async function callGemini(env, payload, stage){
   outer: for(let m=0;m<models.length;m++){
     usedModel=models[m];
     const url="https://generativelanguage.googleapis.com/v1beta/models/"+usedModel+":generateContent?key="+env.GEMINI_API_KEY;
-    const attemptsPerModel=stage==="visual_identification"?1:2;
+    const attemptsPerModel=2;
     const requestPayload=geminiPayloadForModel(payload,usedModel);
     for(let a=0;a<attemptsPerModel;a++){
       attempts++;
@@ -3351,7 +3396,7 @@ export default {
       }
       let idj=compactVision(Object.assign({},(visual&&visual.data)||{},{sources:(visual&&visual.sources)||[]}));
       if(!idj.name){
-        const fallbackVisual=await callVisualAgent(env,mime,recognitionSource,recognitionForeground,env.IDENT_FALLBACK_MODEL||"gemini-3.5-flash-lite");
+        const fallbackVisual=await callVisualAgent(env,mime,recognitionSource,recognitionForeground,env.IDENT_MODEL||"gemini-3.6-flash");
         telemetryUsage.push.apply(telemetryUsage,[fallbackVisual&&fallbackVisual.usage].filter(Boolean));
         if(fallbackVisual&&!fallbackVisual.err){
           const fallbackIdj=compactVision(Object.assign({},fallbackVisual.data||{},{sources:fallbackVisual.sources||[]}));

@@ -26,55 +26,52 @@ function successResponse(){
   }),{status:200,headers:{"Content-Type":"application/json"}});
 }
 
-const discoveryCalls=[];
-const discoveryWorker=loadWorker(async(url)=>{
+const retryCalls=[];
+let generationAttempt=0;
+const retryWorker=loadWorker(async(url)=>{
   const value=String(url);
-  discoveryCalls.push(value);
+  retryCalls.push(value);
   if(value.includes("/v1beta/models?")){
     return new Response(JSON.stringify({models:[
-      {name:"models/gemini-3.5-flash-lite",supportedGenerationMethods:["generateContent"]},
       {name:"models/gemini-3.6-flash",supportedGenerationMethods:["generateContent"]}
     ]}),{status:200,headers:{"Content-Type":"application/json"}});
   }
-  if(value.includes("gemini-3.5-flash-lite:")){
-    return new Response(JSON.stringify({error:{code:404,message:"Model not found"}}),{status:404});
+  if(value.includes("gemini-3.6-flash:")){
+    generationAttempt++;
+    return generationAttempt===1 ? new Response("overloaded",{status:503}) : successResponse();
   }
-  if(value.includes("gemini-3.6-flash:")) return successResponse();
   throw new Error(`Unexpected URL: ${value}`);
 });
 
-const discoveryResult=await discoveryWorker.__providerTest.callGemini({
+const retryResult=await retryWorker.__providerTest.callGemini({
   GEMINI_API_KEY:"test",
-  MODEL:"gemini-2.5-flash"
+  IDENT_MODEL:"gemini-3.6-flash"
 },{
-  __model:"gemini-2.5-flash-lite",
+  __model:"gemini-3.6-flash",
   contents:[{role:"user",parts:[{text:"identify"}]}],
   generationConfig:{temperature:0,thinkingConfig:{thinkingBudget:0}}
 },"visual_identification");
 
-if(discoveryResult.err) throw new Error(`Discovery fallback failed: ${JSON.stringify(discoveryResult.err)}`);
-if(discoveryResult.usage?.model!=="gemini-3.6-flash") throw new Error(`Unexpected discovered model: ${discoveryResult.usage?.model}`);
-if(discoveryCalls.some((url)=>url.includes("gemini-2.5-flash:"))) throw new Error("Unavailable legacy model should be filtered by discovery");
-if(discoveryCalls.length!==2) throw new Error(`Expected discovery plus the preferred model call, got ${discoveryCalls.length}`);
+if(retryResult.err) throw new Error(`Same-model retry failed: ${JSON.stringify(retryResult.err)}`);
+if(retryResult.usage?.model!=="gemini-3.6-flash") throw new Error(`Unexpected retry model: ${retryResult.usage?.model}`);
+if(retryCalls.length!==3) throw new Error(`Expected discovery plus two calls to one model, got ${retryCalls.length}`);
 
-const directCalls=[];
-const directWorker=loadWorker(async(url)=>{
+const invalidCalls=[];
+const invalidWorker=loadWorker(async(url)=>{
   const value=String(url);
-  directCalls.push(value);
+  invalidCalls.push(value);
   if(value.includes("/v1beta/models?")) return new Response("unavailable",{status:503});
   if(value.includes("gemini-3.6-flash:")) return new Response("missing",{status:404});
-  if(value.includes("gemini-3.5-flash-lite:")) return successResponse();
   throw new Error(`Unexpected URL: ${value}`);
 });
 
-const directResult=await directWorker.__providerTest.callGemini({GEMINI_API_KEY:"test"},{
+const invalidResult=await invalidWorker.__providerTest.callGemini({GEMINI_API_KEY:"test"},{
   __model:"gemini-3.6-flash",
   contents:[{role:"user",parts:[{text:"identify"}]}]
 },"visual_identification");
 
-if(directResult.err) throw new Error(`404 fallback failed: ${JSON.stringify(directResult.err)}`);
-if(directResult.usage?.model!=="gemini-3.5-flash-lite") throw new Error(`Unexpected direct fallback: ${directResult.usage?.model}`);
-if(directCalls.length!==3) throw new Error(`Expected list failure and two model calls, got ${directCalls.length}`);
+if(invalidResult.err?.status!==404) throw new Error(`Invalid model should fail without switching models: ${JSON.stringify(invalidResult)}`);
+if(invalidCalls.length!==2) throw new Error(`Invalid model should not fan out, got ${invalidCalls.length} calls`);
 
 const quotaCalls=[];
 const quotaWorker=loadWorker(async(url)=>{
@@ -88,12 +85,12 @@ const quotaResult=await quotaWorker.__providerTest.callGemini({GEMINI_API_KEY:"t
   contents:[{role:"user",parts:[{text:"identify"}]}]
 },"visual_identification");
 if(quotaResult.err?.status!==429) throw new Error(`Quota should remain visible: ${JSON.stringify(quotaResult)}`);
-if(quotaCalls.length!==4) throw new Error(`Quota should try every available fallback model, got ${quotaCalls.length} calls`);
+if(quotaCalls.length!==2) throw new Error(`Quota must stop without retrying, got ${quotaCalls.length} calls`);
 
 console.log(JSON.stringify({
   ok:true,
-  discovery_fallback_model:discoveryResult.usage.model,
-  direct_fallback_model:directResult.usage.model,
-  invalid_model_404_continues:true,
-  quota_429_falls_back:true
+  scanner_model:retryResult.usage.model,
+  transient_error_retries_same_model:true,
+  invalid_model_404_stops:true,
+  quota_429_stops:true
 },null,2));

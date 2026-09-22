@@ -9,7 +9,7 @@ const catalogPath=path.join(root,"db","catalog","scan-index.json");
 const catalogSource=fs.readFileSync(catalogPath,"utf8");
 const workerSource=fs.readFileSync(workerPath,"utf8");
 let cutoutQualityAcceptable=true;
-let visualPrimaryEmpty=false;
+let visualEmptyResponses=0;
 let visualBottleName="Bulleit Bottled in Bond";
 
 for(const required of [
@@ -34,8 +34,8 @@ const context={
       const prompt=String(body.contents&&body.contents[0]&&body.contents[0].parts&&body.contents[0].parts[0]&&body.contents[0].parts[0].text||"");
       const result=prompt.includes("Ocen wyciety asset")
         ? {acceptable:cutoutQualityAcceptable,complete_bottle:cutoutQualityAcceptable,occlusion_present:!cutoutQualityAcceptable,segmentation_damage:!cutoutQualityAcceptable,centered:true,reason_code:cutoutQualityAcceptable?"ok":"hand_occlusion",confidence:.99}
-        : (visualPrimaryEmpty&&String(url).includes("gemini-3.6-flash:")
-          ? {name:"",confidence:0,evidence:[],candidates:[]}
+        : (visualEmptyResponses>0&&String(url).includes("gemini-3.6-flash:")
+          ? (visualEmptyResponses--,{name:"",confidence:0,evidence:[],candidates:[]})
           : {name:visualBottleName,confidence:.97,evidence:["label"],candidates:[]});
       return new Response(JSON.stringify({candidates:[{content:{parts:[{text:JSON.stringify(result)}]}}]}),{status:200,headers:{"Content-Type":"application/json"}});
     }
@@ -161,6 +161,21 @@ assert(singleSource&&singleSource.dbConfidence>=.8,`Visual-only exact match must
 const unsupportedBushmillsAge=match({name:"Bushmills 15 Year Old Single Malt Irish Whiskey",confidence:.97,candidates:[]});
 assert(!unsupportedBushmillsAge||unsupportedBushmillsAge.dbConfidence<.8,`Unsupported Bushmills age must not become a confident catalog hit: ${unsupportedBushmillsAge&&unsupportedBushmillsAge.dbConfidence}`);
 
+const variantDb=scanner.applyScanCatalogOverrides({version:"variant-regression-v1",bottles:[
+  {id:"case-study-small-batch",name:"Case Study Small Batch Bourbon",type:"Kentucky Straight Bourbon Whiskey",category:"Small Batch",proof:90,abv:45},
+  {id:"case-study-barrel-proof",name:"Case Study Barrel Proof Bourbon",type:"Kentucky Straight Bourbon Whiskey",category:"Barrel Proof",proof:125,abv:62.5},
+  {id:"north-star-sherry",name:"North Star 12 Year Single Malt Sherry Cask",type:"Single Malt Scotch Whisky",category:"Scotch",age:12},
+  {id:"north-star-port",name:"North Star 12 Year Single Malt Port Cask",type:"Single Malt Scotch Whisky",category:"Scotch",age:12},
+  {id:"heritage-12",name:"Heritage 12 Year Single Malt",type:"Single Malt Scotch Whisky",category:"Scotch",age:12},
+  {id:"heritage-15",name:"Heritage 15 Year Single Malt",type:"Single Malt Scotch Whisky",category:"Scotch",age:15}
+]});
+const exactBarrelProof=scanner.matchBottleWithVisual(variantDb,{name:"Case Study Bourbon",variant:"Barrel Proof",proof:125,abv:62.5,confidence:.98,candidates:[]});
+assert(exactBarrelProof?.bottle?.id==="case-study-barrel-proof",`Barrel Proof variant was confused: ${JSON.stringify(exactBarrelProof?.candidates||[])}`);
+const exactPortCask=scanner.matchBottleWithVisual(variantDb,{name:"North Star 12 Year Single Malt",cask_finish:"Port Cask",age:"12",confidence:.98,candidates:[]});
+assert(exactPortCask?.bottle?.id==="north-star-port",`Port Cask finish was confused: ${JSON.stringify(exactPortCask?.candidates||[])}`);
+const exactAge=scanner.matchBottleWithVisual(variantDb,{name:"Heritage Single Malt",age:"15",confidence:.98,candidates:[]});
+assert(exactAge?.bottle?.id==="heritage-15",`Separate age field was ignored: ${JSON.stringify(exactAge?.candidates||[])}`);
+
 const counts={};
 for(const bottle of db.bottles) counts[norm(bottle.name)]=(counts[norm(bottle.name)]||0)+1;
 const eligible=db.bottles.filter((bottle)=>!bottle.scan_disabled&&counts[norm(bottle.name)]===1&&norm(bottle.name).split(" ").length>=2);
@@ -240,11 +255,11 @@ const initialRequest=new Request("https://bourbon-hunters.darekmaslyk.workers.de
 const initialResponse=await context.__worker.fetch(initialRequest,{DB:budgetDb,IMAGES:imagePipeline,GEMINI_API_KEY:"test"},{waitUntil(){}});
 const initial=await initialResponse.json();
 assert(initialResponse.status===200,`Initial cutout returned ${initialResponse.status}: ${JSON.stringify(initial)}`);
-assert(initial.matched==="bulleit-bottled-in-bond-111-22",`Initial scan matched ${initial.matched||"nothing"}`);
+assert(initial.matched==="bulleit-bottled-in-bond-111-22",`Initial scan matched ${initial.matched||"nothing"}: ${JSON.stringify(initial)}`);
 assert(String(initial.result&&initial.result.image||"").startsWith("data:image/webp;base64,"),"Direct scan preview image is missing");
 assert(initial.result&&initial.result.catalog_asset_missing===true,"Direct scan result is not marked for catalog completion");
 
-visualPrimaryEmpty=true;
+visualEmptyResponses=1;
 const visualFallbackRequest=new Request("https://bourbon-hunters.darekmaslyk.workers.dev/",{
   method:"POST",
   headers:{"Content-Type":"application/json","Origin":"https://backloghero-lang.github.io"},
@@ -260,7 +275,7 @@ const visualFallbackResponse=await context.__worker.fetch(visualFallbackRequest,
 const visualFallback=await visualFallbackResponse.json();
 assert(visualFallbackResponse.status===200,`Visual fallback returned ${visualFallbackResponse.status}: ${JSON.stringify(visualFallback)}`);
 assert(visualFallback.matched==="bulleit-bottled-in-bond-111-22",`Empty primary response did not fall back: ${JSON.stringify(visualFallback)}`);
-visualPrimaryEmpty=false;
+visualEmptyResponses=0;
 
 cutoutQualityAcceptable=false;
 const failedCutoutRequest=new Request("https://bourbon-hunters.darekmaslyk.workers.dev/",{

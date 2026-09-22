@@ -996,7 +996,7 @@
 <script>
 /* ========= KONFIGURACJA ========= */
 const WORKER_URL = "https://bourbon-hunters.darekmaslyk.workers.dev";
-const APP_VERSION = "145";
+const APP_VERSION = "146";
 const API_CONTRACT_VERSION = "bh-api-2026-08-v1";
 const DB_URL = "db/catalog/demo-200.json";
 const PROFILES_URL = "db/profiles-runtime.json";
@@ -3895,7 +3895,7 @@ document.addEventListener("click",function(e){
   if(addScanCollection){
     e.preventDefault(); e.stopPropagation();
     const id=addScanCollection.getAttribute("data-add-scan-collection");
-    showScanImageChoice(id);
+    addScanToCollection(id);
     return;
   }
   const heartEl = e.target.closest("[data-heart]");
