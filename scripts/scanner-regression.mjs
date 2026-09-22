@@ -11,6 +11,7 @@ const workerSource=fs.readFileSync(workerPath,"utf8");
 let cutoutQualityAcceptable=true;
 let visualEmptyResponses=0;
 let visualBottleName="Bulleit Bottled in Bond";
+let visualSearchGroundingCalls=0;
 
 for(const required of [
   'local-bottle-cutout-v2-quality-gated',
@@ -32,6 +33,7 @@ const context={
     if(String(url).includes("generativelanguage.googleapis.com")){
       const body=JSON.parse(options&&options.body||"{}");
       const prompt=String(body.contents&&body.contents[0]&&body.contents[0].parts&&body.contents[0].parts[0]&&body.contents[0].parts[0].text||"");
+      if(!prompt.includes("Ocen wyciety asset")&&Array.isArray(body.tools)&&body.tools.some((tool)=>tool&&tool.google_search)) visualSearchGroundingCalls++;
       const result=prompt.includes("Ocen wyciety asset")
         ? {acceptable:cutoutQualityAcceptable,complete_bottle:cutoutQualityAcceptable,occlusion_present:!cutoutQualityAcceptable,segmentation_damage:!cutoutQualityAcceptable,centered:true,reason_code:cutoutQualityAcceptable?"ok":"hand_occlusion",confidence:.99}
         : (visualEmptyResponses>0&&String(url).includes("gemini-3.6-flash:")
@@ -255,6 +257,7 @@ const initialRequest=new Request("https://bourbon-hunters.darekmaslyk.workers.de
 const initialResponse=await context.__worker.fetch(initialRequest,{DB:budgetDb,IMAGES:imagePipeline,GEMINI_API_KEY:"test"},{waitUntil(){}});
 const initial=await initialResponse.json();
 assert(initialResponse.status===200,`Initial cutout returned ${initialResponse.status}: ${JSON.stringify(initial)}`);
+assert(visualSearchGroundingCalls===0,"Free-tier scanner unexpectedly enabled Google Search grounding");
 assert(initial.matched==="bulleit-bottled-in-bond-111-22",`Initial scan matched ${initial.matched||"nothing"}: ${JSON.stringify(initial)}`);
 assert(String(initial.result&&initial.result.image||"").startsWith("data:image/webp;base64,"),"Direct scan preview image is missing");
 assert(initial.result&&initial.result.catalog_asset_missing===true,"Direct scan result is not marked for catalog completion");

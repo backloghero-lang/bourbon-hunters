@@ -7,7 +7,7 @@
 //   3b) tryb "analyze"-> rozbudowany opis + historia destylarni z linkami (Gemini + Google Search), fakty z bazy jako grunt.
 //
 // SEKRETY: GEMINI_API_KEY (wymagany)
-// ZMIENNE: MODEL, IDENT_MODEL, IDENT_FALLBACK_MODEL, CUTOUT_QA_MODEL, NEWS_MODEL, TEMP_RATE, TEMP_ANALYZE, THINK_ANALYZE, MAX_RATE, MAX_ANALYZE, DAILY_LIMIT, SCAN_IP_DAILY_LIMIT, LOCAL_CUTOUT_DAILY_LIMIT, LOCAL_CUTOUT_IP_DAILY_LIMIT, ANALYZE_DAILY_LIMIT, ANALYZE_IP_DAILY_LIMIT, ALLOW_ORIGIN, PROMPT_URL, DB_URL, APP_URL, GOOGLE_REDIRECT_URI
+// ZMIENNE: MODEL, IDENT_MODEL, GEMINI_SEARCH_GROUNDING, CUTOUT_QA_MODEL, NEWS_MODEL, TEMP_RATE, TEMP_ANALYZE, THINK_ANALYZE, MAX_RATE, MAX_ANALYZE, DAILY_LIMIT, SCAN_IP_DAILY_LIMIT, LOCAL_CUTOUT_DAILY_LIMIT, LOCAL_CUTOUT_IP_DAILY_LIMIT, ANALYZE_DAILY_LIMIT, ANALYZE_IP_DAILY_LIMIT, ALLOW_ORIGIN, PROMPT_URL, DB_URL, APP_URL, GOOGLE_REDIRECT_URI
 // SEKRETY OAuth: GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, opcjonalnie GOOGLE_STATE_SECRET
 // KV: DS_KV (limit + zapis nowosci). Klucze nowosci: "new:<id>".
 // D1: DB (konta, sesje, wishlist, kolekcja, oceny).
@@ -18,7 +18,7 @@ const DEFAULT_DB_URL = "https://raw.githubusercontent.com/" + REPO + "/main/db/c
 const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters. Krotko, z jajem, ale rzeczowo. quality=jakosc 1-5, value=jakosc/cena 1-5 (5 swietna i tania, 1 slaba i droga). Pisz {{LANG}}. Zwroc tylko JSON.";
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
 const MULTI_CANDIDATE_CONFIDENCE = 0.9;
-const SCAN_ORCHESTRATOR_VERSION = "exact-variant-single-model-v13";
+const SCAN_ORCHESTRATOR_VERSION = "exact-variant-free-tier-v14";
 const SCAN_CATALOG_VERSION = "demo-200-v1";
 const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v6-highres-cutout";
 const CATALOG_MODERATION_VERSION = "catalog-moderation-orchestrator-admin-v1";
@@ -3104,7 +3104,6 @@ async function callVisualAgent(env, mime, image, foreground, requestedModel){
     contents:[{role:"user",parts:[
       {text:"Rozpoznaj dokladny wariant butelki whisky lub bourbona. Uzyj obrazu oraz wyszukiwania Google do weryfikacji. Nie wystarczy marka: odczytaj i zachowaj wszystkie elementy rozrozniajace produkt, zwlaszcza wiek, proof/ABV, Small Batch, Single Barrel/Single Cask, Barrel Proof/Cask Strength/Full Proof, Bottled in Bond, Double Oaked/Toasted, high-rye/wheated/four-grain/sour-mash, batch/release/edition oraz rodzaj finiszu lub beczki. Dla Scotch, Irish i innych whisky rozrozniaj m.in. Single Malt, Blended, Single Grain, Single Pot Still, triple distilled, peated/unpeated oraz sherry, port, rum, wine, cognac i Mizunara casks. Nie wybieraj najblizszego produktu tylko dlatego, ze marka jest podobna. Kadr moze zawierac dlon, tlo i inne obiekty; najpierw znajdz glowna butelke. Brak widocznej informacji oznacz pustym polem, nie zgaduj. Pole name ma zawierac pelna handlowa nazwe wariantu. Jesli wariantu nie da sie potwierdzic, obniz confidence i podaj realnych kandydatow. Jesli to nie jest butelka albo nie da sie potwierdzic marki, ustaw name=\"\" i confidence=0. Zwroc tylko JSON."}
     ].concat(imageParts)}],
-    tools:[{google_search:{}}],
     generationConfig:{
       maxOutputTokens:420,
       responseMimeType:"application/json",
@@ -3123,6 +3122,9 @@ async function callVisualAgent(env, mime, image, foreground, requestedModel){
       }
     }
   };
+  // Google Search grounding is unavailable on the Gemini API free tier. Keep it
+  // opt-in so free projects can still use multimodal bottle recognition.
+  if(String(env.GEMINI_SEARCH_GROUNDING||"0")==="1") payload.tools=[{google_search:{}}];
   const r=await callGemini(env,payload,"visual_identification");
   if(r.err) return {err:r.err,data:{},usage:r.usage};
   return {data:parseJson(r.txt)||{},usage:r.usage,sources:r.sources||[]};
