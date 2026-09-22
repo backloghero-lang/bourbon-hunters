@@ -261,8 +261,8 @@ const initialRequest=new Request("https://bourbon-hunters.darekmaslyk.workers.de
 const initialResponse=await context.__worker.fetch(initialRequest,{DB:budgetDb,IMAGES:imagePipeline,GEMINI_API_KEY:"test"},{waitUntil(){}});
 const initial=await initialResponse.json();
 assert(initialResponse.status===200,`Initial cutout returned ${initialResponse.status}: ${JSON.stringify(initial)}`);
-assert(visualSearchGroundingCalls===0,"Free-tier scanner unexpectedly enabled Google Search grounding");
-assert(lastVisualPrompt.includes("Nie uzalezniaj odpowiedzi od dostepu do internetu"),"Free-tier prompt still expects unavailable web search");
+assert(visualSearchGroundingCalls>0,"Paid scanner did not enable Google Search grounding");
+assert(lastVisualPrompt.includes("wyszukiwania Google"),"Grounded scanner prompt does not request Google verification");
 assert(initial.matched==="bulleit-bottled-in-bond-111-22",`Initial scan matched ${initial.matched||"nothing"}: ${JSON.stringify(initial)}`);
 assert(String(initial.result&&initial.result.image||"").startsWith("data:image/webp;base64,"),"Direct scan preview image is missing");
 assert(initial.result&&initial.result.catalog_asset_missing===true,"Direct scan result is not marked for catalog completion");
