@@ -18,7 +18,7 @@ const DEFAULT_DB_URL = "https://raw.githubusercontent.com/" + REPO + "/main/db/c
 const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters. Krotko, z jajem, ale rzeczowo. quality=jakosc 1-5, value=jakosc/cena 1-5 (5 swietna i tania, 1 slaba i droga). Pisz {{LANG}}. Zwroc tylko JSON.";
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
 const MULTI_CANDIDATE_CONFIDENCE = 0.9;
-const SCAN_ORCHESTRATOR_VERSION = "grounded-flash-lite-v16";
+const SCAN_ORCHESTRATOR_VERSION = "locked-label-grounding-v17";
 const SCAN_CATALOG_VERSION = "demo-200-v1";
 const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v6-highres-cutout";
 const CATALOG_MODERATION_VERSION = "catalog-moderation-orchestrator-admin-v1";
@@ -2886,6 +2886,7 @@ function compactVision(vision){
   }).filter(function(c){ return c.name; }) : [];
   return {
     name:String(vision.name||"").slice(0,180),
+    brand:String(vision.brand||"").slice(0,120),
     confidence:clamp01(vision.confidence),
     type:String(vision.type||"").slice(0,100),
     category:String(vision.category||"").slice(0,100),
@@ -3099,14 +3100,10 @@ async function callVisualAgent(env, mime, image, foreground, requestedModel){
   if(foreground&&foreground.byteLength){
     imageParts.push({inlineData:{mimeType:"image/webp",data:encodeBase64(foreground)}});
   }
-  const searchGrounding=true;
-  const verificationInstruction=searchGrounding
-    ? "Uzyj obrazu oraz wyszukiwania Google do weryfikacji."
-    : "Odczytaj nazwe bezposrednio z widocznej etykiety. Nie uzalezniaj odpowiedzi od dostepu do internetu. Gdy marka, wariant i oznaczenie wieku sa wyraznie czytelne, ustaw wysoka confidence.";
   const payload={
     __model:"gemini-3.5-flash-lite",
     contents:[{role:"user",parts:[
-      {text:"Rozpoznaj dokladny wariant butelki whisky lub bourbona. "+verificationInstruction+" Nie wystarczy marka: odczytaj i zachowaj wszystkie elementy rozrozniajace produkt, zwlaszcza wiek, proof/ABV, Small Batch, Single Barrel/Single Cask, Barrel Proof/Cask Strength/Full Proof, Bottled in Bond, Double Oaked/Toasted, high-rye/wheated/four-grain/sour-mash, batch/release/edition oraz rodzaj finiszu lub beczki. Dla Scotch, Irish i innych whisky rozrozniaj m.in. Single Malt, Blended, Single Grain, Single Pot Still, triple distilled, peated/unpeated oraz sherry, port, rum, wine, cognac i Mizunara casks. Nie wybieraj najblizszego produktu tylko dlatego, ze marka jest podobna. Kadr moze zawierac dlon, tlo i inne obiekty; najpierw znajdz glowna butelke. Brak widocznej informacji oznacz pustym polem, nie zgaduj. Pole name ma zawierac pelna handlowa nazwe wariantu. Jesli wariantu nie da sie potwierdzic, obniz confidence i podaj realnych kandydatow. Jesli to nie jest butelka albo nie da sie potwierdzic marki, ustaw name=\"\" i confidence=0. Zwroc tylko JSON."}
+      {text:"Odczytaj etykiete butelki whisky lub bourbona literalnie z obrazu. To etap OCR bez wyszukiwania internetu. Pole brand musi zawierac marke widoczna na etykiecie, a name pelna widoczna nazwe wariantu. Nie wolno podstawic podobnej marki ani produktu z pamieci. Zachowaj wiek, proof/ABV, Small Batch, Single Barrel/Single Cask, Barrel Proof/Cask Strength/Full Proof, Bottled in Bond, Double Oaked/Toasted, batch/release/edition oraz rodzaj finiszu lub beczki. Dla Scotch, Irish i innych whisky rozrozniaj Single Malt, Blended, Single Grain, Single Pot Still, triple distilled, peated/unpeated oraz rodzaj beczki. Brak widocznej informacji oznacz pustym polem, nie zgaduj. Jesli marki nie da sie literalnie odczytac, ustaw name=\"\", brand=\"\" i confidence=0. Zwroc tylko JSON."}
     ].concat(imageParts)}],
     generationConfig:{
       maxOutputTokens:420,
@@ -3114,7 +3111,7 @@ async function callVisualAgent(env, mime, image, foreground, requestedModel){
       responseSchema:{
         type:"OBJECT",
         properties:{
-          name:{type:"STRING"},
+          name:{type:"STRING"},brand:{type:"STRING"},
           confidence:{type:"NUMBER",minimum:0,maximum:1},
           type:{type:"STRING"},category:{type:"STRING"},distillery:{type:"STRING"},region:{type:"STRING"},
           proof:{type:"NUMBER"},abv:{type:"NUMBER"},age:{type:"STRING"},
@@ -3126,10 +3123,48 @@ async function callVisualAgent(env, mime, image, foreground, requestedModel){
       }
     }
   };
-  // The scanner runs on a paid Gemini project, so search verification is on by
-  // default. Set GEMINI_SEARCH_GROUNDING=0 only for emergency rollback.
-  if(searchGrounding) payload.tools=[{google_search:{}}];
   const r=await callGemini(env,payload,"visual_identification");
+  if(r.err) return {err:r.err,data:{},usage:r.usage};
+  return {data:parseJson(r.txt)||{},usage:r.usage,sources:r.sources||[]};
+}
+
+function groundedIdentityCompatible(label, verified){
+  label=compactVision(label);
+  verified=compactVision(verified);
+  const lockedBrand=distinctiveTokens(label.brand||label.name).slice(0,label.brand?4:1);
+  const verifiedIdentity=distinctiveTokens([verified.brand,verified.name].filter(Boolean).join(" "));
+  if(!lockedBrand.length || !sharedTokens(lockedBrand,verifiedIdentity).length) return false;
+  const labelAge=explicitAgeMarker(label.age)||ageMarker(label.name);
+  const verifiedAge=explicitAgeMarker(verified.age)||ageMarker(verified.name);
+  if(labelAge&&verifiedAge&&labelAge!==verifiedAge) return false;
+  const labelMarkers=variantMarkers([label.name,label.variant,label.edition,label.cask_finish].filter(Boolean).join(" "));
+  const verifiedMarkers=variantMarkers([verified.name,verified.variant,verified.edition,verified.cask_finish].filter(Boolean).join(" "));
+  const lockedMarkers=["bonded","single_barrel","barrel_proof","double_oaked","small_batch","single_malt","single_grain","blended","sherry_cask","port_cask","rum_cask","wine_cask","cognac_cask","mizunara","toasted","peated","unpeated","high_rye","four_grain","pot_still","triple_distilled"];
+  return !lockedMarkers.some(function(key){ return labelMarkers[key]&&!verifiedMarkers[key]; });
+}
+
+async function callGroundedProductVerifier(env, label){
+  const locked={brand:label.brand||"",name:label.name||"",age:label.age||"",proof:label.proof,abv:label.abv,type:label.type||"",variant:label.variant||"",edition:label.edition||"",cask_finish:label.cask_finish||""};
+  const payload={
+    __model:"gemini-3.5-flash-lite",
+    contents:[{role:"user",parts:[{text:"Zweryfikuj w Google dokladny produkt whisky lub bourbon opisany przez literalny odczyt etykiety: "+JSON.stringify(locked)+". Marka z pola brand jest zablokowanym dowodem z obrazu: nie wolno jej zmieniac ani podstawic podobnej marki. Znajdz dokladny wariant i potwierdz wiek, ABV/proof, edycje oraz finish. Jesli nie da sie potwierdzic produktu tej samej marki i wariantu, zwroc name=\"\" i confidence=0. Zwroc tylko JSON."}]}],
+    tools:[{google_search:{}}],
+    generationConfig:{
+      maxOutputTokens:420,responseMimeType:"application/json",
+      responseSchema:{
+        type:"OBJECT",
+        properties:{
+          name:{type:"STRING"},brand:{type:"STRING"},confidence:{type:"NUMBER",minimum:0,maximum:1},
+          type:{type:"STRING"},category:{type:"STRING"},distillery:{type:"STRING"},region:{type:"STRING"},proof:{type:"NUMBER"},abv:{type:"NUMBER"},age:{type:"STRING"},
+          variant:{type:"STRING"},edition:{type:"STRING"},cask_finish:{type:"STRING"},batch:{type:"STRING"},release:{type:"STRING"},
+          evidence:{type:"ARRAY",items:{type:"STRING"},maxItems:5},
+          candidates:{type:"ARRAY",items:{type:"OBJECT",properties:{name:{type:"STRING"},confidence:{type:"NUMBER",minimum:0,maximum:1}},required:["name","confidence"]},maxItems:3}
+        },
+        required:["name","brand","confidence","type","category","distillery","region","proof","abv","age","variant","edition","cask_finish","batch","release","evidence","candidates"]
+      }
+    }
+  };
+  const r=await callGemini(env,payload,"grounded_product_verification");
   if(r.err) return {err:r.err,data:{},usage:r.usage};
   return {data:parseJson(r.txt)||{},usage:r.usage,sources:r.sources||[]};
 }
@@ -3163,7 +3198,7 @@ async function availableGeminiModels(env){
   return null;
 }
 async function geminiModelsForStage(env, payload, stage){
-  const visual=stage==="visual_identification" || stage==="bottle_cutout_qa";
+  const visual=stage==="visual_identification" || stage==="grounded_product_verification" || stage==="bottle_cutout_qa";
   const requested=payload.__model || "";
   const preferred=visual
     ? [requested||env.IDENT_MODEL||"gemini-3.5-flash-lite"]
@@ -3404,6 +3439,25 @@ export default {
       bottleName=String(idj.name||"").trim();
       if(!bottleName) return scanResponse({error:"not_bottle",agents:visualAgentTrace(idj,null)},200,"not_bottle",{error_code:"no_visual_identity"});
       matched=matchBottleWithVisual(db,idj);
+      const exactCatalogHit=!!(matched && matched.brandAnchored && !matched.ambiguous && matched.dbConfidence>=minConfidence && matched.evidence && (matched.evidence.exact||matched.evidence.primaryExact));
+      if(!exactCatalogHit){
+        const grounded=await callGroundedProductVerifier(env,idj);
+        telemetryUsage.push.apply(telemetryUsage,[grounded&&grounded.usage].filter(Boolean));
+        if(grounded&&grounded.err){
+          const quotaExhausted=grounded.err.status===429;
+          const providerError=grounded.err.status===0?"network":([408,504].includes(grounded.err.status)?"timeout":(grounded.err.status===503?"overloaded":"unavailable"));
+          return scanResponse({error:quotaExhausted?"quota_exhausted":"upstream",status:grounded.err.status,provider_error:providerError,retry:!quotaExhausted},quotaExhausted?429:(grounded.err.status===0?502:503),quotaExhausted?"quota_exhausted":"upstream_error",{error_code:quotaExhausted?"gemini_quota":"grounded_verifier_"+providerError});
+        }
+        const verified=compactVision(Object.assign({},grounded&&grounded.data||{},{sources:grounded&&grounded.sources||[]}));
+        if(verified.name && groundedIdentityCompatible(idj,verified)){
+          idj=compactVision(Object.assign({},idj,verified,{sources:verified.sources}));
+          bottleName=String(idj.name||"").trim();
+          matched=matchBottleWithVisual(db,idj);
+        }else{
+          idj=compactVision(Object.assign({},idj,{confidence:Math.min(idj.confidence,0.79),sources:verified.sources}));
+          matched=null;
+        }
+      }
       hit=matched&&matched.bottle ? matched.bottle : null;
       visionConfidence=clamp01(idj.confidence);
       ocrConfidence=0;
