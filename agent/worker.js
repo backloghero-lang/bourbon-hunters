@@ -18,7 +18,7 @@ const DEFAULT_DB_URL = "https://raw.githubusercontent.com/" + REPO + "/main/db/c
 const FALLBACK_PROMPT = "Jestes Hunter, kowboj-znawca bourbona z Bourbon Hunters. Krotko, z jajem, ale rzeczowo. quality=jakosc 1-5, value=jakosc/cena 1-5 (5 swietna i tania, 1 slaba i droga). Pisz {{LANG}}. Zwroc tylko JSON.";
 const DEFAULT_MATCH_CONFIDENCE = 0.8;
 const MULTI_CANDIDATE_CONFIDENCE = 0.9;
-const SCAN_ORCHESTRATOR_VERSION = "locked-label-grounding-v17";
+const SCAN_ORCHESTRATOR_VERSION = "image-web-before-catalog-v18";
 const SCAN_CATALOG_VERSION = "demo-200-v1";
 const CATALOG_SUBMISSION_VERSION = "community-catalog-images-v6-highres-cutout";
 const CATALOG_MODERATION_VERSION = "catalog-moderation-orchestrator-admin-v1";
@@ -3128,26 +3128,28 @@ async function callVisualAgent(env, mime, image, foreground, requestedModel){
   return {data:parseJson(r.txt)||{},usage:r.usage,sources:r.sources||[]};
 }
 
-function groundedIdentityCompatible(label, verified){
-  label=compactVision(label);
+function groundedIdentitySelfConsistent(verified){
   verified=compactVision(verified);
-  const lockedBrand=distinctiveTokens(label.brand||label.name).slice(0,label.brand?4:1);
-  const verifiedIdentity=distinctiveTokens([verified.brand,verified.name].filter(Boolean).join(" "));
+  const lockedBrand=distinctiveTokens(verified.brand).slice(0,4);
+  const verifiedIdentity=distinctiveTokens(verified.name);
   if(!lockedBrand.length || !sharedTokens(lockedBrand,verifiedIdentity).length) return false;
-  const labelAge=explicitAgeMarker(label.age)||ageMarker(label.name);
-  const verifiedAge=explicitAgeMarker(verified.age)||ageMarker(verified.name);
-  if(labelAge&&verifiedAge&&labelAge!==verifiedAge) return false;
-  const labelMarkers=variantMarkers([label.name,label.variant,label.edition,label.cask_finish].filter(Boolean).join(" "));
-  const verifiedMarkers=variantMarkers([verified.name,verified.variant,verified.edition,verified.cask_finish].filter(Boolean).join(" "));
+  const fieldAge=explicitAgeMarker(verified.age);
+  const nameAge=ageMarker(verified.name);
+  if(fieldAge&&nameAge&&fieldAge!==nameAge) return false;
+  const structuredMarkers=variantMarkers([verified.variant,verified.edition,verified.cask_finish].filter(Boolean).join(" "));
+  const nameMarkers=variantMarkers(verified.name);
   const lockedMarkers=["bonded","single_barrel","barrel_proof","double_oaked","small_batch","single_malt","single_grain","blended","sherry_cask","port_cask","rum_cask","wine_cask","cognac_cask","mizunara","toasted","peated","unpeated","high_rye","four_grain","pot_still","triple_distilled"];
-  return !lockedMarkers.some(function(key){ return labelMarkers[key]&&!verifiedMarkers[key]; });
+  return !lockedMarkers.some(function(key){ return structuredMarkers[key]&&!nameMarkers[key]; });
 }
 
-async function callGroundedProductVerifier(env, label){
+async function callGroundedProductVerifier(env, label, mime, image){
   const locked={brand:label.brand||"",name:label.name||"",age:label.age||"",proof:label.proof,abv:label.abv,type:label.type||"",variant:label.variant||"",edition:label.edition||"",cask_finish:label.cask_finish||""};
   const payload={
     __model:"gemini-3.5-flash-lite",
-    contents:[{role:"user",parts:[{text:"Zweryfikuj w Google dokladny produkt whisky lub bourbon opisany przez literalny odczyt etykiety: "+JSON.stringify(locked)+". Marka z pola brand jest zablokowanym dowodem z obrazu: nie wolno jej zmieniac ani podstawic podobnej marki. Znajdz dokladny wariant i potwierdz wiek, ABV/proof, edycje oraz finish. Jesli nie da sie potwierdzic produktu tej samej marki i wariantu, zwroc name=\"\" i confidence=0. Zwroc tylko JSON."}]}],
+    contents:[{role:"user",parts:[
+      {text:"Niezaleznie od wstepnego OCR ponownie odczytaj zalaczone zdjecie, a nastepnie zweryfikuj produkt w Google. Wstepny OCR jest tylko wskazowka i moze byc bledny: "+JSON.stringify(locked)+". Pole brand musi byc marka rzeczywiscie widoczna na zdjeciu. Pole name musi byc dokladnym produktem tej samej marki potwierdzonym w wynikach Google. Porownaj wiek, ABV/proof, edycje, finish i charakterystyczne oznaczenia. Nie korzystaj z katalogu aplikacji i nie wybieraj produktu tylko dlatego, ze istnieje w bazie. Jesli obraz i internet nie potwierdzaja tej samej marki oraz wariantu, zwroc name=\"\", brand=\"\" i confidence=0. Zwroc tylko JSON."},
+      {inlineData:{mimeType:mime,data:image}}
+    ]}],
     tools:[{google_search:{}}],
     generationConfig:{
       maxOutputTokens:420,responseMimeType:"application/json",
@@ -3438,25 +3440,22 @@ export default {
       let idj=compactVision(Object.assign({},(visual&&visual.data)||{},{sources:(visual&&visual.sources)||[]}));
       bottleName=String(idj.name||"").trim();
       if(!bottleName) return scanResponse({error:"not_bottle",agents:visualAgentTrace(idj,null)},200,"not_bottle",{error_code:"no_visual_identity"});
-      matched=matchBottleWithVisual(db,idj);
-      const exactCatalogHit=!!(matched && matched.brandAnchored && !matched.ambiguous && matched.dbConfidence>=minConfidence && matched.evidence && (matched.evidence.exact||matched.evidence.primaryExact));
-      if(!exactCatalogHit){
-        const grounded=await callGroundedProductVerifier(env,idj);
-        telemetryUsage.push.apply(telemetryUsage,[grounded&&grounded.usage].filter(Boolean));
-        if(grounded&&grounded.err){
-          const quotaExhausted=grounded.err.status===429;
-          const providerError=grounded.err.status===0?"network":([408,504].includes(grounded.err.status)?"timeout":(grounded.err.status===503?"overloaded":"unavailable"));
-          return scanResponse({error:quotaExhausted?"quota_exhausted":"upstream",status:grounded.err.status,provider_error:providerError,retry:!quotaExhausted},quotaExhausted?429:(grounded.err.status===0?502:503),quotaExhausted?"quota_exhausted":"upstream_error",{error_code:quotaExhausted?"gemini_quota":"grounded_verifier_"+providerError});
-        }
-        const verified=compactVision(Object.assign({},grounded&&grounded.data||{},{sources:grounded&&grounded.sources||[]}));
-        if(verified.name && groundedIdentityCompatible(idj,verified)){
-          idj=compactVision(Object.assign({},idj,verified,{sources:verified.sources}));
-          bottleName=String(idj.name||"").trim();
-          matched=matchBottleWithVisual(db,idj);
-        }else{
-          idj=compactVision(Object.assign({},idj,{confidence:Math.min(idj.confidence,0.79),sources:verified.sources}));
-          matched=null;
-        }
+      const grounded=await callGroundedProductVerifier(env,idj,mime,recognitionSource);
+      telemetryUsage.push.apply(telemetryUsage,[grounded&&grounded.usage].filter(Boolean));
+      if(grounded&&grounded.err){
+        const quotaExhausted=grounded.err.status===429;
+        const providerError=grounded.err.status===0?"network":([408,504].includes(grounded.err.status)?"timeout":(grounded.err.status===503?"overloaded":"unavailable"));
+        return scanResponse({error:quotaExhausted?"quota_exhausted":"upstream",status:grounded.err.status,provider_error:providerError,retry:!quotaExhausted},quotaExhausted?429:(grounded.err.status===0?502:503),quotaExhausted?"quota_exhausted":"upstream_error",{error_code:quotaExhausted?"gemini_quota":"grounded_verifier_"+providerError});
+      }
+      const verified=compactVision(Object.assign({},grounded&&grounded.data||{},{sources:grounded&&grounded.sources||[]}));
+      const hasGroundedSources=verified.sources.length>0;
+      if(verified.name && verified.confidence>=Math.max(minConfidence,0.88) && hasGroundedSources && groundedIdentitySelfConsistent(verified)){
+        idj=verified;
+        bottleName=String(idj.name||"").trim();
+        matched=matchBottleWithVisual(db,idj);
+      }else{
+        idj=compactVision(Object.assign({},idj,{confidence:Math.min(idj.confidence,0.79),sources:verified.sources}));
+        matched=null;
       }
       hit=matched&&matched.bottle ? matched.bottle : null;
       visionConfidence=clamp01(idj.confidence);

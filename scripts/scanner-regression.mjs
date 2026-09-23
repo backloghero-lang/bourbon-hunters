@@ -28,7 +28,7 @@ for(const required of [
 }
 
 let source=workerSource.replace("export default {","globalThis.__worker={");
-source+="\nglobalThis.__scannerTest={applyScanCatalogOverrides,matchBottleWithVisual,groundedIdentityCompatible};";
+source+="\nglobalThis.__scannerTest={applyScanCatalogOverrides,matchBottleWithVisual,groundedIdentitySelfConsistent};";
 const context={
   console,
   fetch:async(url,options)=>{
@@ -38,16 +38,20 @@ const context={
       if(prompt.includes("Odczytaj etykiete butelki")){
         lastVisualPrompt=prompt;
       }
-      if(prompt.includes("Zweryfikuj w Google dokladny produkt")){
+      if(prompt.includes("Niezaleznie od wstepnego OCR")){
         lastGroundedPrompt=prompt;
         if(Array.isArray(body.tools)&&body.tools.some((tool)=>tool&&tool.google_search)) visualSearchGroundingCalls++;
       }
+      const brand=visualBottleName.startsWith("The Singleton")?"The Singleton":visualBottleName.split(" ").slice(0,2).join(" ");
       const result=prompt.includes("Ocen wyciety asset")
         ? {acceptable:cutoutQualityAcceptable,complete_bottle:cutoutQualityAcceptable,occlusion_present:!cutoutQualityAcceptable,segmentation_damage:!cutoutQualityAcceptable,centered:true,reason_code:cutoutQualityAcceptable?"ok":"hand_occlusion",confidence:.99}
         : (visualEmptyResponses>0&&String(url).includes("gemini-3.5-flash-lite:")
           ? (visualEmptyResponses--,{name:"",confidence:0,evidence:[],candidates:[]})
-          : {name:visualBottleName,confidence:.97,evidence:["label"],candidates:[]});
-      return new Response(JSON.stringify({candidates:[{content:{parts:[{text:JSON.stringify(result)}]}}]}),{status:200,headers:{"Content-Type":"application/json"}});
+          : {name:visualBottleName,brand,confidence:.97,evidence:["label"],candidates:[]});
+      const groundedMetadata=prompt.includes("Niezaleznie od wstepnego OCR")
+        ? {groundingMetadata:{groundingChunks:[{web:{title:"Manufacturer",uri:"https://example.com/product"}}]}}
+        : {};
+      return new Response(JSON.stringify({candidates:[{content:{parts:[{text:JSON.stringify(result)}]},...groundedMetadata}]}),{status:200,headers:{"Content-Type":"application/json"}});
     }
     return new Response(catalogSource,{status:200,headers:{"Content-Type":"application/json"}});
   },
@@ -265,7 +269,7 @@ const initialRequest=new Request("https://bourbon-hunters.darekmaslyk.workers.de
 const initialResponse=await context.__worker.fetch(initialRequest,{DB:budgetDb,IMAGES:imagePipeline,GEMINI_API_KEY:"test"},{waitUntil(){}});
 const initial=await initialResponse.json();
 assert(initialResponse.status===200,`Initial cutout returned ${initialResponse.status}: ${JSON.stringify(initial)}`);
-assert(visualSearchGroundingCalls===0,"Exact catalog hit unnecessarily used Google Search");
+assert(visualSearchGroundingCalls>0,"Exact catalog hit bypassed mandatory image and Google verification");
 assert(lastVisualPrompt.includes("literalnie z obrazu"),"Label-reading stage is not locked to the image");
 assert(initial.matched==="bulleit-bottled-in-bond-111-22",`Initial scan matched ${initial.matched||"nothing"}: ${JSON.stringify(initial)}`);
 assert(String(initial.result&&initial.result.image||"").startsWith("data:image/webp;base64,"),"Direct scan preview image is missing");
@@ -329,11 +333,10 @@ assert(unknownBottle.reason==="catalog_not_found",`Unknown bottle did not enter 
 assert(unknownBottle.image_choice_required===true,"Unknown bottle should wait for the user's image choice before cutout");
 assert(!unknownBottle.prepared_image,"Unknown bottle must not be cut out before confirmation");
 assert(visualSearchGroundingCalls>0,"Unknown bottle did not use Google verification");
-assert(lastGroundedPrompt.includes("zablokowanym dowodem z obrazu"),"Grounded verifier did not lock the image label");
-assert(scanner.groundedIdentityCompatible(
-  {brand:"Auchentoshan",name:"Auchentoshan 12 Year",age:"12"},
-  {brand:"The Macallan",name:"The Macallan 12 Year Sherry Oak",age:"12"}
-)===false,"Google result from another brand was not rejected");
+assert(lastGroundedPrompt.includes("Nie korzystaj z katalogu aplikacji"),"Grounded verifier was not isolated from the catalog");
+assert(scanner.groundedIdentitySelfConsistent(
+  {brand:"Auchentoshan",name:"The Macallan 12 Year Sherry Oak",age:"12"}
+)===false,"Internally inconsistent Google identity was not rejected");
 visualBottleName="Bulleit Bottled in Bond";
 
 const confirmationRequest=new Request("https://bourbon-hunters.darekmaslyk.workers.dev/",{
