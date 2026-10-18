@@ -1,0 +1,163 @@
+﻿[
+    {
+        "name":  "barrel.png",
+        "path":  "design/figma-assets/asset-pack-v1/barrel.png",
+        "width":  76,
+        "height":  98,
+        "bytes":  16315
+    },
+    {
+        "name":  "bottom-nav.png",
+        "path":  "design/figma-assets/asset-pack-v1/bottom-nav.png",
+        "width":  532,
+        "height":  78,
+        "bytes":  53715
+    },
+    {
+        "name":  "brand-lockup.png",
+        "path":  "design/figma-assets/asset-pack-v1/brand-lockup.png",
+        "width":  290,
+        "height":  170,
+        "bytes":  75588
+    },
+    {
+        "name":  "buttons.png",
+        "path":  "design/figma-assets/asset-pack-v1/buttons.png",
+        "width":  704,
+        "height":  44,
+        "bytes":  43220
+    },
+    {
+        "name":  "category-cards.png",
+        "path":  "design/figma-assets/asset-pack-v1/category-cards.png",
+        "width":  525,
+        "height":  148,
+        "bytes":  117573
+    },
+    {
+        "name":  "color-palette.png",
+        "path":  "design/figma-assets/asset-pack-v1/color-palette.png",
+        "width":  420,
+        "height":  74,
+        "bytes":  39607
+    },
+    {
+        "name":  "divider.png",
+        "path":  "design/figma-assets/asset-pack-v1/divider.png",
+        "width":  402,
+        "height":  40,
+        "bytes":  17833
+    },
+    {
+        "name":  "embers.png",
+        "path":  "design/figma-assets/asset-pack-v1/embers.png",
+        "width":  168,
+        "height":  58,
+        "bytes":  12961
+    },
+    {
+        "name":  "featured-card.png",
+        "path":  "design/figma-assets/asset-pack-v1/featured-card.png",
+        "width":  530,
+        "height":  252,
+        "bytes":  236227
+    },
+    {
+        "name":  "glow.png",
+        "path":  "design/figma-assets/asset-pack-v1/glow.png",
+        "width":  169,
+        "height":  58,
+        "bytes":  15885
+    },
+    {
+        "name":  "header.png",
+        "path":  "design/figma-assets/asset-pack-v1/header.png",
+        "width":  600,
+        "height":  163,
+        "bytes":  167964
+    },
+    {
+        "name":  "icon-set.png",
+        "path":  "design/figma-assets/asset-pack-v1/icon-set.png",
+        "width":  760,
+        "height":  74,
+        "bytes":  60936
+    },
+    {
+        "name":  "language.png",
+        "path":  "design/figma-assets/asset-pack-v1/language.png",
+        "width":  131,
+        "height":  131,
+        "bytes":  20146
+    },
+    {
+        "name":  "logo.png",
+        "path":  "design/figma-assets/asset-pack-v1/logo.png",
+        "width":  188,
+        "height":  188,
+        "bytes":  58435
+    },
+    {
+        "name":  "noise-overlay.png",
+        "path":  "design/figma-assets/asset-pack-v1/noise-overlay.png",
+        "width":  168,
+        "height":  58,
+        "bytes":  12325
+    },
+    {
+        "name":  "notification.png",
+        "path":  "design/figma-assets/asset-pack-v1/notification.png",
+        "width":  131,
+        "height":  131,
+        "bytes":  22422
+    },
+    {
+        "name":  "scan-button.png",
+        "path":  "design/figma-assets/asset-pack-v1/scan-button.png",
+        "width":  97,
+        "height":  98,
+        "bytes":  14621
+    },
+    {
+        "name":  "search-bar.png",
+        "path":  "design/figma-assets/asset-pack-v1/search-bar.png",
+        "width":  410,
+        "height":  80,
+        "bytes":  30106
+    },
+    {
+        "name":  "search-icon-tile.png",
+        "path":  "design/figma-assets/asset-pack-v1/search-icon-tile.png",
+        "width":  82,
+        "height":  93,
+        "bytes":  9209
+    },
+    {
+        "name":  "smoke.png",
+        "path":  "design/figma-assets/asset-pack-v1/smoke.png",
+        "width":  168,
+        "height":  58,
+        "bytes":  15205
+    },
+    {
+        "name":  "source-board.png",
+        "path":  "design/figma-assets/asset-pack-v1/source-board.png",
+        "width":  1536,
+        "height":  1024,
+        "bytes":  1969837
+    },
+    {
+        "name":  "stamp.png",
+        "path":  "design/figma-assets/asset-pack-v1/stamp.png",
+        "width":  142,
+        "height":  118,
+        "bytes":  24933
+    },
+    {
+        "name":  "type-badges.png",
+        "path":  "design/figma-assets/asset-pack-v1/type-badges.png",
+        "width":  304,
+        "height":  230,
+        "bytes":  107190
+    }
+]

@@ -1,0 +1,78 @@
+{
+  "name": "Home Runtime Pack v2",
+  "description": "Optimized home screen assets used directly by the Bourbon Hunters PWA.",
+  "assets": [
+    {
+      "name": "home-header-v3.jpg",
+      "path": "design/figma-assets/home-pack-v2/home-header-v3.jpg",
+      "width": 1200,
+      "height": 444
+    },
+    {
+      "name": "app-background-v3.jpg",
+      "path": "design/figma-assets/home-pack-v2/app-background-v3.jpg",
+      "width": 900,
+      "height": 1787
+    },
+    {
+      "name": "card-background-v1.jpg",
+      "path": "design/figma-assets/home-pack-v2/card-background-v1.jpg",
+      "width": 1100,
+      "height": 477
+    },
+    {
+      "name": "small-batch.png",
+      "path": "design/figma-assets/home-pack-v2/small-batch.png",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "single-barrel.png",
+      "path": "design/figma-assets/home-pack-v2/single-barrel.png",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "bottled-in-bond.png",
+      "path": "design/figma-assets/home-pack-v2/bottled-in-bond.png",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "barrel-proof.png",
+      "path": "design/figma-assets/home-pack-v2/barrel-proof.png",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "rye-whiskey.png",
+      "path": "design/figma-assets/home-pack-v2/rye-whiskey.png",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "limited-edition.png",
+      "path": "design/figma-assets/home-pack-v2/limited-edition.png",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "collection-add.png",
+      "path": "design/figma-assets/home-pack-v2/collection-add.png",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "wishlist-barrel.png",
+      "path": "design/figma-assets/home-pack-v2/wishlist-barrel.png",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "rolling-barrel.png",
+      "path": "design/figma-assets/home-pack-v2/rolling-barrel.png",
+      "width": 192,
+      "height": 160
+    }
+  ]
+}

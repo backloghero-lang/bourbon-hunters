@@ -1,0 +1,55 @@
+{
+  "version": 3,
+  "updated": "2026-08-05T18:36:03.279Z",
+  "count": 1050,
+  "target": 10000,
+  "price_limits": {
+    "PLN": 1000,
+    "USD": 350
+  },
+  "profile_policy": "Tasting text marked style_estimate is an original expected style profile, not a verified producer tasting note.",
+  "sources": [
+    "Existing Bourbon Hunters catalog",
+    "TTB Public COLA Registry",
+    "Oregon OLCC Monthly Pricing"
+  ],
+  "source_rows": {
+    "existing": 346,
+    "ttb": 17626,
+    "olcc_current_whisky": 1077,
+    "olcc_eligible": 805,
+    "popular": 200
+  },
+  "deduplicated": 12880,
+  "selected_verified_price": 850,
+  "selected_recognition_only": 200,
+  "missing": {
+    "proof": 237,
+    "abv": 228,
+    "distillery": 757,
+    "price": 106
+  },
+  "original_count": 10000,
+  "dedupe_version": "catalog-identity-safe-v1",
+  "duplicate_records_removed": 66,
+  "duplicate_groups_merged": 64,
+  "retail_filter_version": "retail-relevance-2026-v3-quality-first",
+  "retail_max_usd": 500,
+  "retail_records_removed": 528,
+  "retail_removal_reasons": {
+    "high-age-collector-release": 70,
+    "old-batch-release": 5,
+    "historic-dated-release": 48,
+    "private-or-event-release": 28,
+    "stale-limited-release": 4,
+    "unverified-limited-label": 230,
+    "ultra-allocated": 20,
+    "numbered-barrel-or-cask": 99,
+    "luxury-collector-release": 24
+  },
+  "product_consolidation_version": "retail-product-v2",
+  "product_duplicates_removed": 191,
+  "product_redirect_count": 191,
+  "retail_max_pln": 1500,
+  "image_quality_version": "single-bottle-transparent-v3-no-watermarks"
+}

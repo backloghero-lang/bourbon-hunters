@@ -1,0 +1,32 @@
+{
+  "version": 3,
+  "updated": "2026-08-05T18:36:03.279Z",
+  "policy": "retail-relevance-2026-v3-quality-first",
+  "max_usd": 500,
+  "max_pln": 1500,
+  "before": 9004,
+  "after": 1050,
+  "removed": 7976,
+  "quality_removed": 7976,
+  "reasons": {
+    "recognition-only-incomplete": 7976
+  },
+  "legacy_filter": {
+    "removed": 528,
+    "reasons": {
+      "high-age-collector-release": 70,
+      "old-batch-release": 5,
+      "historic-dated-release": 48,
+      "private-or-event-release": 28,
+      "stale-limited-release": 4,
+      "unverified-limited-label": 230,
+      "ultra-allocated": 20,
+      "numbered-barrel-or-cask": 99,
+      "luxury-collector-release": 24
+    }
+  },
+  "product_consolidation_version": "retail-product-v2",
+  "product_duplicates_removed": 191,
+  "product_redirect_count": 191,
+  "popular_catalog_count": 200
+}

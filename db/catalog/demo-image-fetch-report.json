@@ -1,0 +1,465 @@
+{
+  "version": "official-demo-images-v1",
+  "started_at": "2026-09-13T09:46:17.618Z",
+  "requested": 39,
+  "downloaded": [
+    {
+      "id": "buffalo-trace-bourbon-1",
+      "name": "Buffalo Trace",
+      "image": "assets/bourbons/demo-200/buffalo-trace-bourbon-1.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/buffalo-trace-cream-bourbon-whiskey-liqueur-750ml?_pos=1&_psq=Buffalo+Trace&_psid=379cbcd15&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-buffalo-trace-cream_1.jpg?v=1684804909",
+      "bytes": 38094,
+      "score": 100,
+      "dimensions": {
+        "width": 720,
+        "height": 960
+      }
+    },
+    {
+      "id": "popular-elijah-craig-barrel-proof",
+      "name": "Elijah Craig Barrel Proof",
+      "image": "assets/bourbons/demo-200/popular-elijah-craig-barrel-proof.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/elijah-craig-toasted-barrel-kentucky-straight-bourbon-whiskey-750ml?_pos=2&_psq=Elijah+Craig+Barrel+Proof&_psid=8a09efba5&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-elijah-craig-toasted-barrel.jpg?v=1723701162",
+      "bytes": 52030,
+      "score": 100,
+      "dimensions": {
+        "width": 720,
+        "height": 960
+      }
+    },
+    {
+      "id": "blantons-bourbon",
+      "name": "Blanton's Original Single Barrel",
+      "image": "assets/bourbons/demo-200/blantons-bourbon.webp",
+      "source_page": "https://elcerritoliquor.com/products/blantons-single-barrel-bourbon-bottled-in-1992-750ml?_pos=3&_psq=Blanton%27s+Original+Single+Barrel&_psid=95bfe58bf&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/1992_Blanton_s_The_Original_Single_Barrel_Kentucky_Straight_Bourbon_Whiskey_750ml.png?v=1768807862",
+      "bytes": 98170,
+      "score": 100,
+      "dimensions": {
+        "width": 1080,
+        "height": 1350
+      }
+    },
+    {
+      "id": "popular-e-h-taylor-single-barrel",
+      "name": "E.H. Taylor Single Barrel",
+      "image": "assets/bourbons/demo-200/popular-e-h-taylor-single-barrel.webp",
+      "source_page": "https://uptownliquor.com.au/products/colonel-e-h-taylor-single-barrel-bourbon-750ml?_pos=1&_psq=E.H.+Taylor+Single+Barrel&_psid=b2d0a397f&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0283/5320/0206/products/e.h.taylorsinglebarrel.jpg?v=1612650164",
+      "bytes": 108564,
+      "score": 100,
+      "dimensions": {
+        "width": 1041,
+        "height": 1041
+      }
+    },
+    {
+      "id": "popular-stagg-bourbon",
+      "name": "Stagg",
+      "image": "assets/bourbons/demo-200/popular-stagg-bourbon.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/stagg-jr-batch-25d-129-2-proof-64-6-barrel-proof-kentucky-straight-bourbon-whiskey-750ml?_pos=1&_psq=Stagg&_psid=fe17bd5fa&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-stagg-jr-batch-18_1_4869a313-0972-4fb0-a534-c2a8725e3c72.jpg?v=1708928512",
+      "bytes": 46540,
+      "score": 100,
+      "dimensions": {
+        "width": 720,
+        "height": 960
+      }
+    },
+    {
+      "id": "michters-bourbon",
+      "name": "Michter's US 1 Small Batch",
+      "image": "assets/bourbons/demo-200/michters-bourbon.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/michters-us-1-small-batch-kentucky-bourbon-whiskey-750ml?_pos=1&_psq=Michter%27s+US+1+Small+Batch&_psid=539afcdf0&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-michters-bourbon-gb.jpg?v=1772490432",
+      "bytes": 109840,
+      "score": 100,
+      "dimensions": {
+        "width": 720,
+        "height": 960
+      }
+    },
+    {
+      "id": "jeffersons-very-small-batch-bourbon",
+      "name": "Jefferson's Very Small Batch",
+      "image": "assets/bourbons/demo-200/jeffersons-very-small-batch-bourbon.webp",
+      "source_page": "https://www.tenleymarketliquor.com/products/jeffersons-very-small-batch-bourbon?_pos=1&_psq=Jefferson%27s+Very+Small+Batch&_psid=2319b6687&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0571/5407/6783/files/mi-jeffersons-very-small-batch-bourbon-ad9b2af79f9a102d.jpg?v=1710982213",
+      "bytes": 149294,
+      "score": 100,
+      "dimensions": {
+        "width": 857,
+        "height": 1500
+      }
+    },
+    {
+      "id": "olcc-9157b",
+      "name": "Rabbit Hole Dareringer",
+      "image": "assets/bourbons/demo-200/olcc-9157b.webp",
+      "source_page": "https://elcerritoliquor.com/products/rabbit-hole-dareringer-straight-bourbon-finished-in-px-sherry-casks-750ml?_pos=1&_psq=Rabbit+Hole+Dareringer&_psid=bec8aff45&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/Rabbit_Hole_Dareringer_PX_Sherry_Casks_Kentucky_Straight_Bourbon_Whiskey_750ml.webp?v=1769503723",
+      "bytes": 30454,
+      "score": 100,
+      "dimensions": {
+        "width": 640,
+        "height": 799
+      }
+    },
+    {
+      "id": "popular-smoke-wagon-small-batch-bourbon",
+      "name": "Smoke Wagon Small Batch",
+      "image": "assets/bourbons/demo-200/popular-smoke-wagon-small-batch-bourbon.webp",
+      "source_page": "https://elcerritoliquor.com/products/smoke-wagon-straight-bourbon-whiskey-halloween-glow-in-the-dark-edition-2024-6-pack-pre-sale?_pos=1&_psq=Smoke+Wagon+Small+Batch&_psid=b635c8a53&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0579/7222/8275/files/2024_Smoke_Wagon_Halloween_Edition_Small_Batch_Straight_Bourbon_Whiskey_6-Pack_Pre-Sale.webp?v=1769768261",
+      "bytes": 121234,
+      "score": 100,
+      "dimensions": {
+        "width": 1024,
+        "height": 1280
+      }
+    },
+    {
+      "id": "johnnie-walker-double-black-151-5k",
+      "name": "Johnnie Walker Double Black",
+      "image": "assets/bourbons/demo-200/johnnie-walker-double-black-151-5k.webp",
+      "source_page": "https://www.tenleymarketliquor.com/products/johnnie-walker-double-black-label-blended-scotch-whisky?_pos=1&_psq=Johnnie+Walker+Double+Black&_psid=f2df544fc&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0571/5407/6783/files/mi-johnnie-walker-double-black-dba157560a0b2ed9.jpg?v=1710599347",
+      "bytes": 100132,
+      "score": 100,
+      "dimensions": {
+        "width": 2000,
+        "height": 2000
+      }
+    },
+    {
+      "id": "olcc-0392b",
+      "name": "Glenfiddich 15 Year Solera",
+      "image": "assets/bourbons/demo-200/olcc-0392b.webp",
+      "source_page": "https://www.thebottleclub.com/products/glenfiddich-15y?_pos=1&_psq=Glenfiddich+15+Year+Solera&_psid=8fa7d6388&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/glenfiddich-solera-15-year-old-single-malt-scotch-whisky-70-cl-whisky-32843667308659.jpg?v=1703659062",
+      "bytes": 137486,
+      "score": 100,
+      "dimensions": {
+        "width": 1080,
+        "height": 1350
+      }
+    },
+    {
+      "id": "popular-glenfiddich-18-year",
+      "name": "Glenfiddich 18 Year",
+      "image": "assets/bourbons/demo-200/popular-glenfiddich-18-year.webp",
+      "source_page": "https://www.thebottleclub.com/products/glenfiddich-18y?_pos=1&_psq=Glenfiddich+18+Year&_psid=8652fdfa1&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/glenfiddich-18-year-old-single-malt-scotch-whisky-70-cl-whisky-28398639546483.jpg?v=1703659064",
+      "bytes": 62834,
+      "score": 100,
+      "dimensions": {
+        "width": 1080,
+        "height": 1350
+      }
+    },
+    {
+      "id": "popular-the-balvenie-12-year-doublewood",
+      "name": "The Balvenie 12 Year DoubleWood",
+      "image": "assets/bourbons/demo-200/popular-the-balvenie-12-year-doublewood.webp",
+      "source_page": "https://www.thebottleclub.com/products/the-balvenie-doublewood-12-malt-whisky?_pos=1&_psq=The+Balvenie+12+Year+DoubleWood&_psid=816e3adb6&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/the-balvenie-doublewood-12-year-old-single-malt-scotch-whisky-70-cl-whisky-32841110225011.jpg?v=1703662153",
+      "bytes": 70762,
+      "score": 100,
+      "dimensions": {
+        "width": 1080,
+        "height": 1350
+      }
+    },
+    {
+      "id": "popular-glenmorangie-lasanta-12-year",
+      "name": "Glenmorangie Lasanta 12 Year",
+      "image": "assets/bourbons/demo-200/popular-glenmorangie-lasanta-12-year.webp",
+      "source_page": "https://www.thebottleclub.com/products/glenmorangie-la-santa?_pos=1&_psq=Glenmorangie+Lasanta+12+Year&_psid=57a9d562a&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/whisky-glenmorangie-lasanta-12-year-old-whisky-70-cl-30881198342259.jpg?v=1702058842",
+      "bytes": 97026,
+      "score": 100,
+      "dimensions": {
+        "width": 1080,
+        "height": 1350
+      }
+    },
+    {
+      "id": "popular-aberlour-a-bunadh",
+      "name": "Aberlour A'Bunadh",
+      "image": "assets/bourbons/demo-200/popular-aberlour-a-bunadh.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/aberlour-abunadh-batch-73-cask-strength-single-malt-scotch-whisky-700ml?_pos=1&_psq=Aberlour+A%27Bunadh&_psid=de2a8480f&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-aberlour-abunadh-all.jpg?v=1716437302",
+      "bytes": 210490,
+      "score": 100,
+      "dimensions": {
+        "width": 720,
+        "height": 960
+      }
+    },
+    {
+      "id": "popular-laphroaig-10-year",
+      "name": "Laphroaig 10 Year",
+      "image": "assets/bourbons/demo-200/popular-laphroaig-10-year.webp",
+      "source_page": "https://www.thebottleclub.com/products/laphroaig-10y?_pos=1&_psq=Laphroaig+10+Year&_psid=8d4745abe&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/laphroaig-10-year-old-malt-whisky-70-cl-whisky-1157604701.jpg?v=1745320147",
+      "bytes": 55806,
+      "score": 100,
+      "dimensions": {
+        "width": 1080,
+        "height": 1350
+      }
+    },
+    {
+      "id": "popular-talisker-10-year",
+      "name": "Talisker 10 Year",
+      "image": "assets/bourbons/demo-200/popular-talisker-10-year.webp",
+      "source_page": "https://www.thebottleclub.com/products/talisker-10-year-old?_pos=1&_psq=Talisker+10+Year&_psid=73da0f94e&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/talisker-10-year-old-whisky-70-cl-whisky-32846587101299.jpg?v=1703659567",
+      "bytes": 87610,
+      "score": 100,
+      "dimensions": {
+        "width": 1080,
+        "height": 1350
+      }
+    },
+    {
+      "id": "popular-caol-ila-12-year",
+      "name": "Caol Ila 12 Year",
+      "image": "assets/bourbons/demo-200/popular-caol-ila-12-year.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/caol-ila-12-years-old-single-malt-scotch-whisky-1l?_pos=2&_psq=Caol+Ila+12+Year&_psid=56f8422c2&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/products/tds-caol-ila-12-1L.jpg?v=1602139418",
+      "bytes": 67292,
+      "score": 100,
+      "dimensions": {
+        "width": 720,
+        "height": 960
+      }
+    },
+    {
+      "id": "popular-bowmore-12-year",
+      "name": "Bowmore 12 Year",
+      "image": "assets/bourbons/demo-200/popular-bowmore-12-year.jpg",
+      "source_page": "https://www.thebottleclub.com/products/bowmore-12y?_pos=1&_psq=Bowmore+12+Year&_psid=ec78efd5a&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/bowmore-12-year-old-whisky-70-cl-whisky-1221483805.jpg?v=1771418678",
+      "bytes": 64324,
+      "score": 100,
+      "dimensions": {
+        "height": 1350,
+        "width": 1000
+      }
+    },
+    {
+      "id": "popular-the-dalmore-12-year",
+      "name": "The Dalmore 12 Year",
+      "image": "assets/bourbons/demo-200/popular-the-dalmore-12-year.webp",
+      "source_page": "https://www.thebottleclub.com/products/dalmore-12y?_pos=1&_psq=The+Dalmore+12+Year&_psid=117914c70&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/dalmore-12-year-old-whisky-70-cl-whisky-1156459210.jpg?v=1744913236",
+      "bytes": 66958,
+      "score": 100,
+      "dimensions": {
+        "width": 1080,
+        "height": 1350
+      }
+    },
+    {
+      "id": "popular-the-glenallachie-12-year",
+      "name": "The GlenAllachie 12 Year",
+      "image": "assets/bourbons/demo-200/popular-the-glenallachie-12-year.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/glenallachie-12-year-old-speyside-single-malt-scotch-whisky-700ml?_pos=10&_psq=The+GlenAllachie+12+Year&_psid=613460f00&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-glenallachie-12yo.jpg?v=1727767453",
+      "bytes": 145044,
+      "score": 100,
+      "dimensions": {
+        "width": 720,
+        "height": 960
+      }
+    },
+    {
+      "id": "popular-jura-10-year",
+      "name": "Jura 10 Year",
+      "image": "assets/bourbons/demo-200/popular-jura-10-year.webp",
+      "source_page": "https://www.thebottleclub.com/products/jura-10y?_pos=1&_psq=Jura+10+Year&_psid=709987494&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/jura-10-year-old-whisky-70-cl-whisky-15794110726259.jpg?v=1703659108",
+      "bytes": 44686,
+      "score": 100,
+      "dimensions": {
+        "width": 1080,
+        "height": 1350
+      }
+    },
+    {
+      "id": "popular-jameson-black-barrel",
+      "name": "Jameson Black Barrel",
+      "image": "assets/bourbons/demo-200/popular-jameson-black-barrel.webp",
+      "source_page": "https://www.thebottleclub.com/products/jameson-black-barrel-blended-irish-whiskey-70-cl?_pos=1&_psq=Jameson+Black+Barrel&_psid=76d6b69a2&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/jameson-black-barrel-blended-irish-whiskey-70-cl-whisky-28345205948531.jpg?v=1703672458",
+      "bytes": 52544,
+      "score": 100,
+      "dimensions": {
+        "width": 1080,
+        "height": 1350
+      }
+    },
+    {
+      "id": "popular-redbreast-12-year",
+      "name": "Redbreast 12 Year",
+      "image": "assets/bourbons/demo-200/popular-redbreast-12-year.webp",
+      "source_page": "https://www.thebottleclub.com/products/redbreast-12-year-old-whiskey-70-cl?_pos=3&_psq=Redbreast+12+Year&_psid=21c84d16e&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/redbreast-12-year-old-whiskey-70-cl-whisky-32841019064435.jpg?v=1703667558",
+      "bytes": 63722,
+      "score": 100,
+      "dimensions": {
+        "width": 1080,
+        "height": 1350
+      }
+    },
+    {
+      "id": "popular-redbreast-15-year",
+      "name": "Redbreast 15 Year",
+      "image": "assets/bourbons/demo-200/popular-redbreast-15-year.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/redbreast-15-year-old-single-pot-still-irish-whiskey-700ml?_pos=2&_psq=Redbreast+15+Year&_psid=342202747&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/files/tds-redbreast-15yo-new.jpg?v=1730182447",
+      "bytes": 67754,
+      "score": 100,
+      "dimensions": {
+        "width": 720,
+        "height": 960
+      }
+    },
+    {
+      "id": "popular-redbreast-12-year-cask-strength",
+      "name": "Redbreast 12 Year Cask Strength",
+      "image": "assets/bourbons/demo-200/popular-redbreast-12-year-cask-strength.webp",
+      "source_page": "https://canawineco.com/products/redbreast-12-year-old-cask-strength-single-pot-still-irish-whiskey-750ml?_pos=1&_psq=Redbreast+12+Year+Cask+Strength&_psid=79ef50d77&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0607/1586/0223/files/Redbreast12YearOldCaskStrengthBatchB1_21FlaskFineWineWhisky.webp?v=1747862479",
+      "bytes": 47414,
+      "score": 100,
+      "dimensions": {
+        "width": 800,
+        "height": 800
+      }
+    },
+    {
+      "id": "popular-yellow-spot-12-year",
+      "name": "Yellow Spot 12 Year",
+      "image": "assets/bourbons/demo-200/popular-yellow-spot-12-year.webp",
+      "source_page": "https://thedrinksociety.co.nz/products/yellow-spot-12-year-old-single-pot-still-irish-whiskey-700ml?_pos=2&_psq=Yellow+Spot+12+Year&_psid=57ea8357a&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0246/9753/6596/products/tds-yellow-spot-12-2.jpg?v=1602058234",
+      "bytes": 85978,
+      "score": 100,
+      "dimensions": {
+        "width": 720,
+        "height": 960
+      }
+    },
+    {
+      "id": "popular-yamazaki-distiller-s-reserve",
+      "name": "Yamazaki Distiller's Reserve",
+      "image": "assets/bourbons/demo-200/popular-yamazaki-distiller-s-reserve.webp",
+      "source_page": "https://www.thebottleclub.com/products/yamazaki-reserve?_pos=1&_psq=Yamazaki+Distiller%27s+Reserve&_psid=3968ed6d7&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/yamazaki-distiller-s-reserve-whisky-70-cl-whisky-1157673694.jpg?v=1745344519",
+      "bytes": 53528,
+      "score": 100,
+      "dimensions": {
+        "width": 1080,
+        "height": 1350
+      }
+    },
+    {
+      "id": "popular-nikka-from-the-barrel",
+      "name": "Nikka From the Barrel",
+      "image": "assets/bourbons/demo-200/popular-nikka-from-the-barrel.webp",
+      "source_page": "https://www.thebottleclub.com/products/nikka-from-the-barrel-whisky?_pos=1&_psq=Nikka+From+the+Barrel&_psid=ee297ef52&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/nikka-from-the-barrel-whisky-50-cl-whisky-1104538965.jpg?v=1740841853",
+      "bytes": 58006,
+      "score": 100,
+      "dimensions": {
+        "width": 1080,
+        "height": 1350
+      }
+    },
+    {
+      "id": "popular-nikka-days",
+      "name": "Nikka Days",
+      "image": "assets/bourbons/demo-200/popular-nikka-days.webp",
+      "source_page": "https://www.thebottleclub.com/products/nikka-days-japanese-blended-whisky-70-cl?_pos=1&_psq=Nikka+Days&_psid=cb1a9e1a5&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/nikka-days-japanese-blended-whisky-70-cl-whisky-32846230880371.jpg?v=1703667063",
+      "bytes": 33788,
+      "score": 100,
+      "dimensions": {
+        "width": 1080,
+        "height": 1350
+      }
+    },
+    {
+      "id": "popular-nikka-miyagikyo-single-malt",
+      "name": "Nikka Miyagikyo Single Malt",
+      "image": "assets/bourbons/demo-200/popular-nikka-miyagikyo-single-malt.webp",
+      "source_page": "https://www.thebottleclub.com/products/nikka-miyagikyo-sigle-malt-japanese-whisky-70-cl?_pos=1&_psq=Nikka+Miyagikyo+Single+Malt&_psid=8436a08ef&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/nikka-miyagikyo-single-malt-90th-anniversary-japanese-whisky-70-cl-whisky-1104359801.jpg?v=1740841847",
+      "bytes": 66786,
+      "score": 100,
+      "dimensions": {
+        "width": 1080,
+        "height": 1350
+      }
+    },
+    {
+      "id": "olcc-0146b",
+      "name": "Jack Daniel's Old No. 7",
+      "image": "assets/bourbons/demo-200/olcc-0146b.webp",
+      "source_page": "https://www.thebottleclub.com/products/jack-daniels-old-no-7-guitar-case-whiskey-70-cl?_pos=1&_psq=Jack+Daniel%27s+Old+No.+7&_psid=23571137c&_ss=e",
+      "source_url": "https://cdn.shopify.com/s/files/1/0078/7038/2195/files/jack-daniel-s-old-no-7-guitar-case-whiskey-70-cl-whisky-32304632266867.jpg?v=1703681313",
+      "bytes": 43416,
+      "score": 100,
+      "dimensions": {
+        "width": 1080,
+        "height": 1350
+      }
+    }
+  ],
+  "skipped": [],
+  "failed": [
+    {
+      "id": "popular-benchmark-bonded",
+      "name": "Benchmark Bonded",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-fighting-cock-103-proof",
+      "name": "Fighting Cock 103 Proof",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-j-t-s-brown-bottled-in-bond",
+      "name": "J.T.S. Brown Bottled in Bond",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-old-tub-bottled-in-bond",
+      "name": "Old Tub Bottled in Bond",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-coopers-craft-barrel-reserve-100-proof",
+      "name": "Coopers' Craft Barrel Reserve 100 Proof",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "olcc-0346b",
+      "name": "Cutty Sark Original",
+      "reason": "official_product_image_not_resolved"
+    },
+    {
+      "id": "popular-rittenhouse-rye-bottled-in-bond",
+      "name": "Rittenhouse Rye Bottled in Bond",
+      "reason": "official_product_image_not_resolved"
+    }
+  ],
+  "completed_at": "2026-09-13T09:47:38.001Z",
+  "downloaded_count": 32,
+  "failed_count": 7,
+  "skipped_count": 0
+}
