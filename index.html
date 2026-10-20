@@ -87,6 +87,15 @@
   .hscroll{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;touch-action:pan-y;padding-bottom:6px;margin:0 -16px;padding-left:16px;padding-right:16px}
   .hscroll::-webkit-scrollbar{display:none}
   .swipe-dots{display:flex;justify-content:center;align-items:center;gap:6px;margin:8px 0 4px;min-height:8px}
+  .swipe-arrow{display:none}
+  @media (hover:hover) and (pointer:fine){
+    .hscroll,.cats{cursor:grab;user-select:none}
+    .hscroll.is-dragging,.cats.is-dragging{cursor:grabbing}
+    .swipe-dot{cursor:pointer}
+    .swipe-arrow{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;margin:0 6px;border-radius:50%;border:1px solid rgba(201,138,58,.55);background:rgba(16,12,8,.75);color:#e2b070;font:700 18px/1 Georgia,serif;cursor:pointer}
+    .swipe-arrow:hover{background:rgba(201,138,58,.22)}
+    .swipe-arrow:focus-visible{outline:2px solid #f1c169;outline-offset:2px}
+  }
   .swipe-dot{width:6px;height:6px;border-radius:999px;background:rgba(226,176,112,.28);transition:width .2s,background .2s,opacity .2s;opacity:.8}
   .swipe-dot.on{width:18px;background:#E2B070;opacity:1}
   .feat{scroll-snap-align:start;flex:0 0 86%;height:196px;background:
@@ -643,22 +652,22 @@
   <section class="view active" id="view-home">
     <div class="sec-head"><h3 data-i18n="featured">Polecane</h3><a id="featuredAll" data-i18n="viewAll">Zobacz wszystkie</a></div>
     <div class="hscroll" id="featuredRow"></div>
-    <div class="swipe-dots" id="featuredDots" aria-hidden="true"></div>
+    <div class="swipe-dots" id="featuredDots"></div>
 
     <div class="sec-head"><h3 data-i18n="byCat">Kategorie</h3><a id="catAll" data-i18n="viewAll">Zobacz wszystkie</a></div>
     <div class="cats" id="catGrid"></div>
-    <div class="swipe-dots" id="catDots" aria-hidden="true"></div>
+    <div class="swipe-dots" id="catDots"></div>
 
     <div class="sec-head"><h3 data-i18n="recent">Ostatnio dodane</h3><a id="recentAll" data-i18n="viewAll">Zobacz wszystkie</a></div>
     <div class="hscroll" id="recentRow"></div>
-    <div class="swipe-dots" id="recentDots" aria-hidden="true"></div>
+    <div class="swipe-dots" id="recentDots"></div>
 
     <div class="sec-head"><h3 data-i18n="newsTitle">Whisky news</h3><a id="newsAll" data-i18n="viewAll">Zobacz wszystkie</a></div>
     <div class="news-list" id="homeNewsList" aria-live="polite"></div>
 
     <div class="sec-head"><h3 data-i18n="homeCollection">Moja kolekcja</h3><a id="homeCollectionAll" data-i18n="viewAll">Zobacz wszystkie</a></div>
     <div class="hscroll" id="homeCollectionRow"></div>
-    <div class="swipe-dots" id="homeCollectionDots" aria-hidden="true"></div>
+    <div class="swipe-dots" id="homeCollectionDots"></div>
   </section>
 
   <!-- EXPLORE -->
@@ -1006,7 +1015,7 @@
 /* ========= KONFIGURACJA ========= */
 const WORKER_URL = "https://bourbon-hunters.darekmaslyk.workers.dev";
 const SCAN_URL = "https://bourbon-hunters-scan.darekmaslyk.workers.dev";
-const APP_VERSION = "153";
+const APP_VERSION = "154";
 const API_CONTRACT_VERSION = "bh-api-2026-08-v1";
 const DB_URL = "db/catalog/demo-200.json";
 const PROFILES_URL = "db/profiles-runtime.json";
@@ -3258,8 +3267,19 @@ function setupSwipeDots(scrollerId, dotsId){
   const scroller=document.getElementById(scrollerId), dots=document.getElementById(dotsId);
   if(!scroller||!dots) return;
   const items=Array.from(scroller.children);
-  dots.innerHTML=items.map(function(){ return '<span class="swipe-dot"></span>'; }).join("");
-  const dotEls=Array.from(dots.children);
+  // na komputerze: strzalki po bokach kropek i klikalne kropki (na telefonie przesuwa sie palcem)
+  dots.innerHTML='<button type="button" class="swipe-arrow" data-dir="-1" aria-label="Poprzednie">‹</button>'+
+    items.map(function(_,i){ return '<span class="swipe-dot" data-i="'+i+'"></span>'; }).join("")+
+    '<button type="button" class="swipe-arrow" data-dir="1" aria-label="Następne">›</button>';
+  const dotEls=Array.from(dots.querySelectorAll(".swipe-dot"));
+  if(!dots._bhNavBound){
+    dots.addEventListener("click",function(e){
+      const arrow=e.target.closest(".swipe-arrow"), dot=e.target.closest(".swipe-dot");
+      if(arrow) snapCarouselSmooth(scroller,carouselIndex(scroller)+Number(arrow.getAttribute("data-dir")));
+      else if(dot) snapCarouselSmooth(scroller,Number(dot.getAttribute("data-i")));
+    });
+    dots._bhNavBound=true;
+  }
   function update(){
     if(!items.length) return;
     const center=scroller.scrollLeft + scroller.clientWidth/2;
@@ -3286,10 +3306,45 @@ function setupSwipeDots(scrollerId, dotsId){
     scroller.addEventListener("touchend",settleUpdate,{passive:true});
     scroller.addEventListener("pointerup",settleUpdate,{passive:true});
     if("onscrollend" in window) scroller.addEventListener("scrollend",update,{passive:true});
+    bindMouseDrag(scroller);
     scroller._bhDotBound=true;
   }
   requestAnimationFrame(update);
   setTimeout(update,260);
+}
+// Przeciaganie rzedow myszka na komputerze (dotyk obsluguja touchstart/touchmove wyzej).
+// Podczas przeciagania wylaczamy scroll-snap, zeby rzad nie odskakiwal; po puszczeniu dociagamy do karty.
+function bindMouseDrag(scroller){
+  let down=false, startX=0, startLeft=0, startIndex=0, moved=false;
+  scroller.addEventListener("pointerdown",function(e){
+    if(e.pointerType!=="mouse" || e.button!==0) return;
+    down=true; moved=false; startX=e.clientX; startLeft=scroller.scrollLeft; startIndex=carouselIndex(scroller);
+  });
+  window.addEventListener("pointermove",function(e){
+    if(!down) return;
+    const dx=e.clientX-startX;
+    if(!moved && Math.abs(dx)>6){ moved=true; swipeMoved=true; scroller.style.scrollSnapType="none"; scroller.style.scrollBehavior="auto"; scroller.classList.add("is-dragging"); }
+    if(moved){ scroller.scrollLeft=startLeft-dx; if(scroller._bhDotUpdate) scroller._bhDotUpdate(); e.preventDefault(); }
+  });
+  window.addEventListener("pointerup",function(e){
+    if(!down) return;
+    down=false;
+    scroller.classList.remove("is-dragging");
+    if(!moved) return;
+    const dx=e.clientX-startX;
+    snapCarouselSmooth(scroller,startIndex+(dx<-40?1:(dx>40?-1:0)));
+  });
+  // klik po przeciagnieciu nie otwiera karty
+  scroller.addEventListener("dragstart",function(e){ e.preventDefault(); });
+}
+// Plynne przewiniecie do karty. Na czas animacji wylaczamy scroll-snap i scroll-behavior:smooth z CSS,
+// bo oba przerywaja ustawianie scrollLeft co klatke (rzad stal w miejscu na komputerze).
+function snapCarouselSmooth(scroller,index){
+  scroller.style.scrollSnapType="none";
+  scroller.style.scrollBehavior="auto";
+  snapCarouselTo(scroller,index,"smooth");
+  clearTimeout(scroller._bhSnapTimer);
+  scroller._bhSnapTimer=setTimeout(function(){ scroller.style.scrollSnapType=""; scroller.style.scrollBehavior=""; },320);
 }
 function carouselItems(scroller){
   return scroller ? Array.from(scroller.children).filter(function(el){ return el.offsetWidth>0; }) : [];
